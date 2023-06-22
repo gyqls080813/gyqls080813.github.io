@@ -12,7 +12,7 @@
 
 # theme                  : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "mint"
+minimal_mistakes_skin    : "aqua"
 
 # Site Settings
 locale                   : "ko-KR"
@@ -23,7 +23,7 @@ name                     : "이민엽"
 description              : ""
 url                      : "https://gyqls080813.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "gyqls080813"
+repository               : "https://github.com/gyqls080813/gyqls080813.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
@@ -109,11 +109,11 @@ author:
   bio              : "연세대학교 환경에너지공학부
   친환경바이오연구실"
   location         : "강원도 원주시"
-  email            : "gyqls0808133@gmail.com"
+  email            :
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
+      # url: "mailto:gyqls0808133@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -125,7 +125,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
+      # url: "https://github.com/gyqls080813"
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
@@ -219,7 +219,7 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
+paginate: 6 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
