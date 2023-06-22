@@ -104,11 +104,11 @@ analytics:
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "이민엽"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
-  email            :
+  bio              : "연세대학교 환경에너지공학부 친환경바이오연구실"
+  location         : "강원도 원주시"
+  email            : "gyqls0808133@gmail.com"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
