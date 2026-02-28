@@ -5,7 +5,7 @@ title: Home
 
 <section class="hero">
   <p class="hero-label">Frontend Developer</p>
-  <h1>gyqls080813</h1>
+  <h1>이민엽</h1>
   <p class="hero-desc">알고리즘, CS, 그리고 오늘 배운 것들을 기록하는 공간입니다.</p>
 
   <div class="skills">
