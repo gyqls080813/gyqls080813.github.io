@@ -2,7 +2,16 @@
 layout: default
 ---
 <article>
-  <h1>{{ page.title }}</h1>
-  <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}</p>
+  <div class="post-header">
+    <div>
+      {% if page.categories %}
+      {% for cat in page.categories %}
+      <a href="{{ '/categories/' | append: cat | relative_url }}" class="cat-tag">{{ cat }}</a>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <h1>{{ page.title }}</h1>
+    <p class="post-meta">{{ page.date | date: "%Y년 %m월 %d일" }}</p>
+  </div>
   {{ content }}
 </article>
