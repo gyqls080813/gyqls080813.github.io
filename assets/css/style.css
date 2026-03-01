@@ -674,6 +674,15 @@ article hr {
   border-color: var(--accent-border);
 }
 
+/* ===== ABOUT INTRO ===== */
+.about-intro {
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 640px;
+}
+
 /* ===== CATEGORIES ===== */
 ul.category-list {
   list-style: none;
