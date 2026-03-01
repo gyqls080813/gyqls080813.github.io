@@ -128,6 +128,49 @@ main {
   padding: calc(var(--nav-h) + 3rem) 1.5rem 5rem;
 }
 
+/* ===== HOME SPLIT LAYOUT ===== */
+.home-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  min-height: calc(100vh - var(--nav-h) - 6rem);
+}
+
+.home-intro {
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+}
+
+.home-name {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.18;
+  color: var(--text-1);
+  margin-bottom: 1rem;
+}
+
+.home-bio {
+  font-size: 0.95rem;
+  color: var(--text-2);
+  margin-bottom: 1.75rem;
+  line-height: 1.8;
+}
+
+.home-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.project-grid-v {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
 /* ===== HERO ===== */
 .hero {
   padding: 3.5rem 0 2.5rem;
@@ -537,6 +580,100 @@ article hr {
   margin: 2rem 0;
 }
 
+/* ===== PROJECT GRID ===== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 1.4rem;
+  text-decoration: none !important;
+  color: inherit;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  cursor: pointer;
+}
+
+.project-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-card-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.project-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.project-lang {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--text-3);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.project-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.project-card:hover .project-card__title {
+  color: var(--accent);
+}
+
+.project-card__desc {
+  font-size: 0.85rem;
+  color: var(--text-2);
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.project-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.project-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  transition: color 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.project-card:hover .project-tag {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
 /* ===== CATEGORIES ===== */
 ul.category-list {
   list-style: none;
@@ -664,6 +801,20 @@ a:hover {
 
   .about-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: auto;
+  }
+
+  .home-intro {
+    position: static;
   }
 }
 
