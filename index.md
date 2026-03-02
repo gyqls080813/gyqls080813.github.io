@@ -133,17 +133,3 @@ title: Home
     </ul>
   </div>
 </div>
-
-<div class="divider"></div>
-
-<span class="section-title">Recent Posts</span>
-
-<ul class="post-list">
-  {% for post in site.posts %}
-    <li>
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p class="post-meta">{{ post.date | date: "%Y.%m.%d" }}{% if post.categories %} · {% for cat in post.categories %}<a href="{{ '/categories/' | append: cat | relative_url }}" class="cat-tag">{{ cat }}</a>{% endfor %}{% endif %}</p>
-      {% if post.excerpt %}<p>{{ post.excerpt | strip_html | truncate: 100 }}</p>{% endif %}
-    </li>
-  {% endfor %}
-</ul>
