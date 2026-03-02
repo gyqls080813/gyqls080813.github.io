@@ -1100,6 +1100,19 @@ a:hover {
   user-select: none;
 }
 
+/* 카테고리 공통 (프로젝트/논문) — 배경 없이, 굵은 텍스트로 구분 */
+.chip--category {
+  background: transparent;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
 /* 프로젝트 */
 .chip--project {
   background: rgba(16, 185, 129, 0.1);
@@ -1114,7 +1127,7 @@ a:hover {
   color: #a78bfa;
 }
 
-/* 프론트엔드 개발 */
+/* FrontEnd */
 .chip--frontend {
   background: rgba(49, 120, 198, 0.1);
   border: 1px solid rgba(49, 120, 198, 0.25);
