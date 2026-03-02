@@ -1394,26 +1394,68 @@ a:hover {
   }
 }
 
-/* ===== 2-COLUMN PORTFOLIO LAYOUT ===== */
+/* ===== 4-CELL PORTFOLIO GRID ===== */
 .portfolio-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  gap: 2.5rem;
-  align-items: center;
+  grid-template-rows: auto auto;
+  gap: 1rem 2.5rem;
+  align-items: stretch;
   padding-top: 2.5rem;
 }
 
-.portfolio-left {
-  position: sticky;
-  top: calc(var(--nav-h) + 2rem);
+/* Cell 1,1 — 프로필 사진 */
+.portfolio-photo-cell {
   display: flex;
   flex-direction: column;
 }
 
-/* ===== PROFILE PHOTO ===== */
+.portfolio-photo-cell .profile-photo {
+  flex: 1;
+  min-height: 200px;
+  margin-bottom: 0;
+}
+
+/* Cell 1,2 — Tech Stack */
+.portfolio-tech-cell {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.portfolio-tech-cell .tech-bento {
+  flex: 1;
+}
+
+/* Cell 2,1 — 이름 / bio / 버튼 */
+.portfolio-info-cell {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.25rem;
+}
+
+/* Cell 2,2 — 핵심 강점 */
+.portfolio-highlight-cell {
+  min-width: 0;
+  padding-top: 1rem;
+}
+
+/* 하위 호환을 위해 portfolio-left/right 유지 */
+.portfolio-left {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== PORTFOLIO RIGHT ===== */
+.portfolio-right {
+  min-width: 0;
+  padding-top: 0.25rem;
+}
+
+
 .profile-photo {
   width: 100%;
-  aspect-ratio: 1;
+  min-height: 240px;
   border-radius: var(--radius-l);
   background: var(--bg-secondary);
   border: 1px solid var(--border);
@@ -1522,8 +1564,34 @@ a:hover {
 @media (max-width: 660px) {
   .portfolio-layout {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-rows: auto;
+    gap: 1.25rem;
     padding-top: 1.5rem;
+  }
+
+  .portfolio-photo-cell,
+  .portfolio-info-cell {
+    align-items: center;
+    text-align: center;
+  }
+
+  .portfolio-photo-cell .profile-photo {
+    width: 180px;
+    flex: none;
+    min-height: 180px;
+  }
+
+  .profile-links {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .portfolio-info-cell {
+    padding-top: 0;
+  }
+
+  .portfolio-highlight-cell {
+    padding-top: 0;
   }
 
   .portfolio-left {
@@ -1532,17 +1600,8 @@ a:hover {
     text-align: center;
   }
 
-  .profile-photo {
-    width: 180px;
-  }
-
   .profile-bio {
     max-width: 420px;
-  }
-
-  .profile-links {
-    flex-direction: row;
-    justify-content: center;
   }
 
   .tech-row__label {
