@@ -837,3 +837,309 @@ a:hover {
     font-size: 0.82rem;
   }
 }
+
+/* ===== TECH STACK GRID ===== */
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.tech-category {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 1.25rem;
+  transition: border-color 0.18s var(--ease);
+}
+
+.tech-category:hover {
+  border-color: var(--border-hover);
+}
+
+.tech-category__label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.tech-category .skills {
+  margin-bottom: 0;
+}
+
+/* ===== SKILL BADGE COLORS ===== */
+.skill-badge.html {
+  border-color: rgba(228, 77, 38, 0.45);
+  color: #e44d26;
+}
+
+.skill-badge.html:hover {
+  border-color: #e44d26;
+  background: rgba(228, 77, 38, 0.08);
+}
+
+.skill-badge.css {
+  border-color: rgba(38, 77, 228, 0.45);
+  color: #264de4;
+}
+
+.skill-badge.css:hover {
+  border-color: #264de4;
+  background: rgba(38, 77, 228, 0.08);
+}
+
+.skill-badge.js {
+  border-color: rgba(240, 219, 79, 0.45);
+  color: #f0db4f;
+}
+
+.skill-badge.js:hover {
+  border-color: #f0db4f;
+  background: rgba(240, 219, 79, 0.08);
+}
+
+.skill-badge.ts {
+  border-color: rgba(49, 120, 198, 0.45);
+  color: #3178c6;
+}
+
+.skill-badge.ts:hover {
+  border-color: #3178c6;
+  background: rgba(49, 120, 198, 0.08);
+}
+
+.skill-badge.react {
+  border-color: rgba(97, 218, 251, 0.45);
+  color: #61dafb;
+}
+
+.skill-badge.react:hover {
+  border-color: #61dafb;
+  background: rgba(97, 218, 251, 0.08);
+}
+
+.skill-badge.next {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.skill-badge.next:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skill-badge.python {
+  border-color: rgba(55, 118, 171, 0.45);
+  color: #3776ab;
+}
+
+.skill-badge.python:hover {
+  border-color: #3776ab;
+  background: rgba(55, 118, 171, 0.08);
+}
+
+.skill-badge.git {
+  border-color: rgba(240, 80, 51, 0.45);
+  color: #f05033;
+}
+
+.skill-badge.git:hover {
+  border-color: #f05033;
+  background: rgba(240, 80, 51, 0.08);
+}
+
+/* ===== PROJECT FULL CARDS ===== */
+.project-card-full {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-l);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.project-card-full:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-card-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+}
+
+.project-card-full__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.project-card-full__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin: 0.25rem 0 0.15rem;
+}
+
+.project-card-full:hover .project-card-full__title {
+  color: var(--accent);
+}
+
+.project-card-full__sub {
+  font-size: 0.78rem;
+  color: var(--text-3);
+  font-family: 'Fira Code', monospace;
+  margin: 0;
+}
+
+.project-card-full__desc {
+  font-size: 0.88rem;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.project-card-full__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.project-card-full:hover .project-tag {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.project-card-full__links {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.project-card-full__links .btn {
+  font-size: 0.8rem;
+  padding: 0.4rem 1rem;
+}
+
+/* ===== PROJECT STATUS BADGE ===== */
+.project-status {
+  display: inline-block;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-status.done {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.project-status.wip {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
+.project-status.research {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+}
+
+/* ===== TIMELINE ===== */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -1.75rem;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 0 1px var(--accent);
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 0;
+}
+
+.timeline-date {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.timeline-title {
+  font-size: 0.975rem;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+}
+
+.timeline-desc {
+  font-size: 0.84rem;
+  color: var(--text-3);
+  margin: 0;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ===== RESPONSIVE — new sections ===== */
+@media (max-width: 768px) {
+  .tech-stack-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card-full {
+    padding: 1.25rem;
+  }
+}
