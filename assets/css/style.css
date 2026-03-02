@@ -1436,18 +1436,39 @@ a:hover {
   flex: 1;
 }
 
-/* Cell 2,1 — 이름 / bio / 버튼 */
+/* Cell 2 — 이름 / bio / 버튼 (전체 너비) */
 .portfolio-info-cell {
-  display: flex;
-  flex-direction: column;
-  padding-top: 1.25rem;
+  grid-column: 1 / -1;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
-/* Cell 2,2 — 핵심 강점 */
-.portfolio-highlight-cell {
-  min-width: 0;
-  padding-top: 1rem;
+.profile-info-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
+
+.profile-info-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.portfolio-info-cell .profile-bio {
+  margin-bottom: 0;
+}
+
+.portfolio-info-cell .profile-links {
+  flex-direction: row;
+  flex-shrink: 0;
+  gap: 0.75rem;
+}
+
+.portfolio-info-cell .profile-links .btn {
+  min-width: 120px;
+}
+
 
 /* 하위 호환을 위해 portfolio-left/right 유지 */
 .portfolio-left {
@@ -1596,11 +1617,18 @@ a:hover {
   }
 
   .portfolio-info-cell {
-    padding-top: 0;
+    padding-top: 0.75rem;
   }
 
-  .portfolio-highlight-cell {
-    padding-top: 0;
+  .profile-info-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .portfolio-info-cell .profile-links {
+    width: 100%;
+    flex-direction: column;
   }
 
   .portfolio-left {
