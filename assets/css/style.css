@@ -1651,3 +1651,148 @@ a:hover {
     grid-column: 1;
   }
 }
+
+/* ===== EXPERIENCE + PROJECTS COMBINED TIMELINE ===== */
+.exp-timeline {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-top: 1.25rem;
+}
+
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 1px;
+  background: var(--border);
+}
+
+.exp-item {
+  position: relative;
+  margin-bottom: 2.75rem;
+}
+
+.exp-item:last-child {
+  margin-bottom: 0;
+}
+
+.exp-item .timeline-dot {
+  position: absolute;
+  left: -2rem;
+  top: 6px;
+}
+
+.exp-item__meta {
+  margin-bottom: 1rem;
+}
+
+.exp-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin: 0.2rem 0 0.3rem;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.exp-item__projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ===== EXP PROJECT CARD ===== */
+.exp-project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  transition: border-color 0.22s var(--ease), background 0.22s var(--ease), transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+}
+
+.exp-project-card:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.08);
+}
+
+.exp-project-card__accent {
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 70%);
+}
+
+.exp-project-card__accent.research {
+  background: linear-gradient(90deg, #8b5cf6 0%, transparent 70%);
+}
+
+.exp-project-card__body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.exp-project-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.exp-project-card__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.02em;
+  margin: 0.25rem 0 0.15rem;
+  background: none;
+  -webkit-text-fill-color: initial;
+  transition: color 0.18s var(--ease);
+}
+
+.exp-project-card:hover .exp-project-card__title {
+  color: var(--accent);
+}
+
+.exp-project-card__sub {
+  font-size: 0.76rem;
+  color: var(--text-3);
+  font-family: 'Fira Code', monospace;
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.exp-project-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.75;
+  margin: 0 0 0.85rem;
+}
+
+.exp-project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.exp-project-card:hover .project-tag {
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.exp-project-icon {
+  font-size: 3rem;
+  line-height: 1;
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition: opacity 0.25s var(--ease), transform 0.35s var(--ease);
+  user-select: none;
+}
+
+.exp-project-card:hover .exp-project-icon {
+  opacity: 0.9;
+  transform: scale(1.08) rotate(-5deg);
+}
