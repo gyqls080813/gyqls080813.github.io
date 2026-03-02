@@ -310,6 +310,12 @@ main {
   padding: 0;
 }
 
+.section-title--invisible {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ===== POST LIST ===== */
 ul.post-list {
   list-style: none;
