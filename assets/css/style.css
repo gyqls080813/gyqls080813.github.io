@@ -1439,6 +1439,7 @@ a:hover {
 /* Cell 2 — 이름 / bio / 버튼 (전체 너비) */
 .portfolio-info-cell {
   grid-column: 1 / -1;
+  display: block;
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
