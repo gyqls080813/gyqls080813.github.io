@@ -1065,6 +1065,55 @@ a:hover {
   color: #a78bfa;
 }
 
+.project-status.project {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+/* ===== PROJECT STATUS GROUP ===== */
+.project-status-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
+}
+
+.project-status-group .project-status {
+  margin-bottom: 0;
+}
+
+/* ===== PROJECT SUB TAGS ===== */
+.project-sub-tag {
+  display: inline-block;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.12rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-sub-tag.frontend {
+  background: rgba(49, 120, 198, 0.12);
+  border: 1px solid rgba(49, 120, 198, 0.3);
+  color: #60a5fa;
+}
+
+.project-sub-tag.ai {
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+}
+
+.project-sub-tag.embedded {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+
 /* ===== TIMELINE ===== */
 .timeline {
   position: relative;
