@@ -1080,7 +1080,9 @@ a:hover {
   padding: 0.6rem 1.25rem;
   background: rgba(255, 255, 255, 0.03);
   border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .card-type {
