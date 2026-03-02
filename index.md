@@ -24,7 +24,6 @@ title: Home
 
     <div class="hero-buttons">
       <a href="https://github.com/gyqls080813" class="btn btn-primary" target="_blank" rel="noopener">GitHub</a>
-      <a href="{{ '/about' | relative_url }}" class="btn btn-secondary">About Me</a>
     </div>
   </div>
 
@@ -93,14 +92,14 @@ title: Home
   <div class="about-card">
     <h3>🛠 Tech Stack</h3>
     <div class="skills" style="justify-content: flex-start; margin: 0;">
-      <span class="skill-badge">HTML</span>
-      <span class="skill-badge">CSS</span>
-      <span class="skill-badge">JavaScript</span>
-      <span class="skill-badge">TypeScript</span>
-      <span class="skill-badge">React</span>
-      <span class="skill-badge">Next.js</span>
-      <span class="skill-badge">Python</span>
-      <span class="skill-badge">Git</span>
+      <span class="skill-badge html">HTML</span>
+      <span class="skill-badge css">CSS</span>
+      <span class="skill-badge js">JavaScript</span>
+      <span class="skill-badge ts">TypeScript</span>
+      <span class="skill-badge react">React</span>
+      <span class="skill-badge next">Next.js</span>
+      <span class="skill-badge python">Python</span>
+      <span class="skill-badge git">Git</span>
     </div>
   </div>
 
