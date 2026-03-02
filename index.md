@@ -84,7 +84,7 @@ title: Home
 
 <span class="section-title" id="about">About Me</span>
 
-<p class="about-intro">
+<p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.8;">
   프론트엔드 개발에 관심이 많은 개발자입니다. 알고리즘, CS 지식, 그리고 새롭게 배운 것들을 이 블로그에 기록하고 있습니다. 더 나은 사용자 경험을 만드는 것을 목표로 꾸준히 성장하고 있습니다. 🚀
 </p>
 
@@ -105,9 +105,9 @@ title: Home
 
   <div class="about-card">
     <h3>📚 관심 분야</h3>
-    <ul style="list-style: none; padding: 0; color: var(--text-2); font-size: 0.9rem;">
+    <ul style="list-style: none; padding: 0; color: var(--text-secondary); font-size: 0.9rem;">
       <li style="padding: 0.3rem 0;">⚡ 프론트엔드 웹 개발</li>
-      <li style="padding: 0.3rem 0;">🧠 알고리즘 &amp; 자료구조</li>
+      <li style="padding: 0.3rem 0;">🧠 알고리즘 & 자료구조</li>
       <li style="padding: 0.3rem 0;">💻 컴퓨터 과학 기초</li>
       <li style="padding: 0.3rem 0;">🎨 UI/UX 디자인</li>
     </ul>
@@ -115,7 +115,7 @@ title: Home
 
   <div class="about-card">
     <h3>📝 Blog Categories</h3>
-    <ul style="list-style: none; padding: 0; color: var(--text-2); font-size: 0.9rem;">
+    <ul style="list-style: none; padding: 0; color: var(--text-secondary); font-size: 0.9rem;">
       <li style="padding: 0.3rem 0;"><a href="{{ '/categories/algorithm/' | relative_url }}" class="cat-tag">Algorithm</a> 알고리즘 풀이</li>
       <li style="padding: 0.3rem 0;"><a href="{{ '/categories/cs/' | relative_url }}" class="cat-tag">CS</a> 컴퓨터 과학</li>
       <li style="padding: 0.3rem 0;"><a href="{{ '/categories/language/' | relative_url }}" class="cat-tag">Language</a> 언어 학습</li>
@@ -127,7 +127,7 @@ title: Home
     <h3>🔗 Contact</h3>
     <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
       <li style="padding: 0.3rem 0;">
-        <a href="https://github.com/gyqls080813" target="_blank" rel="noopener" style="color: var(--text-2);">⚡ GitHub → gyqls080813</a>
+        <a href="https://github.com/gyqls080813" target="_blank" rel="noopener" style="color: var(--text-secondary);">⚡ GitHub → gyqls080813</a>
       </li>
     </ul>
   </div>
