@@ -1408,10 +1408,12 @@ a:hover {
 .portfolio-photo-cell {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .portfolio-photo-cell .profile-photo {
   flex: 1;
+  height: 100%;
   min-height: 200px;
   margin-bottom: 0;
 }
@@ -1421,6 +1423,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  height: 100%;
 }
 
 .portfolio-tech-cell .tech-bento {
