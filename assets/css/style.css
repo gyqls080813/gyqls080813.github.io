@@ -2,26 +2,26 @@
 
 /* ===== VARIABLES ===== */
 :root {
-  --bg-primary: #0b0f0e;
-  --bg-secondary: #111815;
-  --bg-card: #151c1a;
-  --bg-card-hover: #1a2320;
-  --border: #1f2b28;
-  --border-hover: #2d3f3a;
-  --text-1: #eef2f0;
-  --text-2: #849d96;
-  --text-3: #4a6660;
-  --accent: #10b981;
-  /* emerald — single accent */
-  --accent-dim: rgba(16, 185, 129, 0.1);
-  --accent-border: rgba(16, 185, 129, 0.28);
+  --bg-primary: #0d0e17;
+  --bg-secondary: #111225;
+  --bg-card: #14152a;
+  --bg-card-hover: #1a1b35;
+  --border: #1e2040;
+  --border-hover: #2e3060;
+  --text-1: #eef0f8;
+  --text-2: #8b8fbd;
+  --text-3: #4a4e80;
+  --accent: #818cf8;
+  /* indigo ??single accent */
+  --accent-dim: rgba(129, 140, 248, 0.1);
+  --accent-border: rgba(129, 140, 248, 0.28);
   --radius-s: 6px;
   --radius-m: 10px;
   --radius-l: 14px;
   --nav-h: 60px;
   --max-w: 860px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --text-secondary: #849d96;
+  --text-secondary: #8b8fbd;
 }
 
 /* ===== RESET ===== */
@@ -72,7 +72,7 @@ header {
   inset: 0 0 auto 0;
   z-index: 100;
   height: var(--nav-h);
-  background: rgba(10, 12, 16, 0.85);
+  background: rgba(11, 10, 22, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
@@ -404,7 +404,7 @@ ul.post-list {
   border-radius: 4px;
   background: var(--accent-dim);
   border: 1px solid var(--accent-border);
-  color: #34d399;
+  color: #a5b4fc;
   font-family: 'Fira Code', monospace;
   letter-spacing: 0.02em;
   margin-right: 0.3rem;
@@ -413,9 +413,9 @@ ul.post-list {
 }
 
 .cat-tag:hover {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(129, 140, 248, 0.2);
   text-decoration: none;
-  color: #6ee7b7;
+  color: #c7d2fe;
 }
 
 /* ===== ARTICLE ===== */
@@ -480,14 +480,14 @@ article p {
 }
 
 article a {
-  color: #34d399;
+  color: #a5b4fc;
   text-decoration: underline;
   text-decoration-color: rgba(52, 211, 153, 0.3);
   text-underline-offset: 2px;
 }
 
 article a:hover {
-  color: #6ee7b7;
+  color: #c7d2fe;
   text-decoration-color: rgba(110, 231, 183, 0.6);
 }
 
@@ -517,7 +517,7 @@ article code {
   font-size: 0.83em;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  color: #6ee7b7;
+  color: #c7d2fe;
   padding: 0.1em 0.4em;
   border-radius: 4px;
 }
@@ -613,7 +613,7 @@ article hr {
   border-color: var(--accent-border);
   background: var(--bg-card-hover);
   transform: translateY(-3px);
-  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 8px 32px rgba(129, 140, 248, 0.08);
   color: inherit;
   text-decoration: none !important;
 }
@@ -976,7 +976,7 @@ a:hover {
   border-color: var(--accent-border);
   background: var(--bg-card-hover);
   transform: translateY(-3px);
-  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 8px 32px rgba(129, 140, 248, 0.08);
 }
 
 .project-card-full__header {
@@ -1048,9 +1048,9 @@ a:hover {
 }
 
 .project-status.done {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: rgba(129, 140, 248, 0.12);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: #a5b4fc;
 }
 
 .project-status.wip {
@@ -1066,9 +1066,9 @@ a:hover {
 }
 
 .project-status.project {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: rgba(129, 140, 248, 0.12);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: #a5b4fc;
 }
 
 /* ===== CARD CHIP ROW (Option A) ===== */
@@ -1100,7 +1100,7 @@ a:hover {
   user-select: none;
 }
 
-/* 카테고리 공통 (프로젝트/논문) — 배경 없이, 굵은 텍스트로 구분 */
+/* 카테고리 공통 (?�로?�트/?�문) ??배경 ?�이, 굵�? ?�스?�로 구분 */
 .chip--category {
   background: transparent;
   border: none;
@@ -1113,14 +1113,14 @@ a:hover {
   opacity: 0.9;
 }
 
-/* 프로젝트 */
+/* ?�로?�트 */
 .chip--project {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: rgba(129, 140, 248, 0.1);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: #a5b4fc;
 }
 
-/* 논문 */
+/* ?�문 */
 .chip--research {
   background: rgba(139, 92, 246, 0.1);
   border: 1px solid rgba(139, 92, 246, 0.3);
@@ -1141,7 +1141,7 @@ a:hover {
   color: #c084fc;
 }
 
-/* 임베디드 */
+/* ?�베?�드 */
 .chip--embedded {
   background: rgba(245, 158, 11, 0.1);
   border: 1px solid rgba(245, 158, 11, 0.25);
@@ -1266,7 +1266,7 @@ a:hover {
   font-family: 'Fira Code', monospace;
 }
 
-/* ===== RESPONSIVE — new sections ===== */
+/* ===== RESPONSIVE ??new sections ===== */
 @media (max-width: 768px) {
   .tech-stack-grid {
     grid-template-columns: 1fr;
@@ -1316,7 +1316,7 @@ a:hover {
   transform: translateX(-50%);
   width: 720px;
   height: 440px;
-  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse at center, rgba(129, 140, 248, 0.12) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1396,7 +1396,7 @@ a:hover {
   border-color: var(--accent-border);
   background: var(--bg-card-hover);
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.09);
+  box-shadow: 0 12px 40px rgba(129, 140, 248, 0.09);
 }
 
 .showcase-card__accent {
@@ -1505,7 +1505,7 @@ a:hover {
   max-width: 680px;
 }
 
-/* ===== RESPONSIVE — showcase & hero ===== */
+/* ===== RESPONSIVE ??showcase & hero ===== */
 @media (max-width: 640px) {
   .hero-full {
     padding: 3.5rem 0 2.5rem;
@@ -1536,7 +1536,7 @@ a:hover {
   padding-top: 2.5rem;
 }
 
-/* Cell 1,1 — 프로필 사진 */
+/* Cell 1,1 ???�로???�진 */
 .portfolio-photo-cell {
   display: flex;
   flex-direction: column;
@@ -1550,7 +1550,7 @@ a:hover {
   margin-bottom: 0;
 }
 
-/* Cell 1,2 — Tech Stack */
+/* Cell 1,2 ??Tech Stack */
 .portfolio-tech-cell {
   display: flex;
   flex-direction: column;
@@ -1562,7 +1562,7 @@ a:hover {
   flex: 1;
 }
 
-/* Cell 2 — 이름 / bio / 버튼 (전체 너비) */
+/* Cell 2 ???�름 / bio / 버튼 (?�체 ?�비) */
 .portfolio-info-cell {
   grid-column: 1 / -1;
   display: block;
@@ -1597,7 +1597,7 @@ a:hover {
 }
 
 
-/* 하위 호환을 위해 portfolio-left/right 유지 */
+/* ?�위 ?�환???�해 portfolio-left/right ?��? */
 .portfolio-left {
   display: flex;
   flex-direction: column;
@@ -1717,7 +1717,7 @@ a:hover {
   gap: 0.35rem;
 }
 
-/* ===== RESPONSIVE — portfolio layout ===== */
+/* ===== RESPONSIVE ??portfolio layout ===== */
 @media (max-width: 660px) {
   .portfolio-layout {
     grid-template-columns: 1fr;
@@ -1988,7 +1988,7 @@ a:hover {
   border-color: var(--accent-border);
   background: var(--bg-card-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(16, 185, 129, 0.08);
+  box-shadow: 0 8px 28px rgba(129, 140, 248, 0.08);
 }
 
 .exp-project-card__accent {
