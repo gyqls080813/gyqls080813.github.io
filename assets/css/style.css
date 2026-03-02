@@ -1071,51 +1071,68 @@ a:hover {
   color: #34d399;
 }
 
-/* ===== CARD META BAR ===== */
-.card-meta-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.6rem 1.25rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid var(--border);
-  flex-wrap: nowrap;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.card-type {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.card-type-icon {
-  font-size: 0.9rem;
-  line-height: 1;
-}
-
-.card-role {
+/* ===== CARD CHIP ROW (Option A) ===== */
+.card-chip-row {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   flex-wrap: wrap;
+  margin-bottom: 0.65rem;
 }
 
-.card-role-label {
+.card-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-family: 'Fira Code', monospace;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 600;
-  color: var(--text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
+  padding: 0.18rem 0.55rem;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
 }
 
-/* project-status inside meta-bar: remove default margin */
-.card-meta-bar .project-status {
-  margin-bottom: 0;
+.card-chip-sep {
+  color: var(--text-3);
+  font-size: 0.75rem;
+  line-height: 1;
+  user-select: none;
+}
+
+/* 프로젝트 */
+.chip--project {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+/* 논문 */
+.chip--research {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+}
+
+/* 프론트엔드 개발 */
+.chip--frontend {
+  background: rgba(49, 120, 198, 0.1);
+  border: 1px solid rgba(49, 120, 198, 0.25);
+  color: #60a5fa;
+}
+
+/* AI */
+.chip--ai {
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  color: #c084fc;
+}
+
+/* 임베디드 */
+.chip--embedded {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
 }
 
 /* ===== PROJECT STATUS GROUP ===== */
