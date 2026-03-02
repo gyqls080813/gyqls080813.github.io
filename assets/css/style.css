@@ -1548,3 +1548,106 @@ a:hover {
     min-width: 56px;
   }
 }
+
+/* ===== TECH BENTO GRID ===== */
+.tech-bento {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.tech-bento-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 1.1rem 1.15rem 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.22s var(--ease), background 0.22s var(--ease), box-shadow 0.22s var(--ease), transform 0.22s var(--ease);
+}
+
+.tech-bento-cell.full {
+  grid-column: 1 / -1;
+}
+
+/* Top gradient accent (always visible, brightens on hover) */
+.tech-bento-cell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  opacity: 0.45;
+  transition: opacity 0.22s var(--ease);
+}
+
+.tech-bento-cell:hover::before {
+  opacity: 1;
+}
+
+.tech-bento-cell:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}
+
+/* Category-specific gradients */
+.frontend-cell::before {
+  background: linear-gradient(90deg, #e44d26 0%, #264de4 33%, #f0db4f 66%, #3178c6 100%);
+}
+
+.frontend-cell:hover {
+  box-shadow: 0 6px 24px rgba(228, 77, 38, 0.07);
+}
+
+.framework-cell::before {
+  background: linear-gradient(90deg, #61dafb 0%, #a0a0a0 100%);
+}
+
+.framework-cell:hover {
+  box-shadow: 0 6px 24px rgba(97, 218, 251, 0.07);
+}
+
+.other-cell::before {
+  background: linear-gradient(90deg, #3776ab 0%, #f05033 55%, #2b2b2b 100%);
+}
+
+.other-cell:hover {
+  box-shadow: 0 6px 24px rgba(55, 118, 171, 0.07);
+}
+
+/* Bento category label */
+.bento-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+/* Pill-shaped, slightly bigger badges inside bento */
+.tech-bento-cell .skills {
+  margin-bottom: 0;
+  gap: 0.4rem;
+}
+
+.tech-bento-cell .skill-badge {
+  font-size: 0.76rem;
+  padding: 0.28rem 0.75rem;
+  border-radius: 99px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .tech-bento {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-bento-cell.full {
+    grid-column: 1;
+  }
+}
