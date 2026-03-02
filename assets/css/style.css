@@ -1071,6 +1071,51 @@ a:hover {
   color: #34d399;
 }
 
+/* ===== CARD META BAR ===== */
+.card-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.card-type {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-type-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.card-role {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.card-role-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* project-status inside meta-bar: remove default margin */
+.card-meta-bar .project-status {
+  margin-bottom: 0;
+}
+
 /* ===== PROJECT STATUS GROUP ===== */
 .project-status-group {
   display: flex;
