@@ -5,9 +5,55 @@ layout: default
 <div class="split-hero">
     <div class="split-hero__left">
         <!-- 왼쪽 절반 (사진 영역) -->
-        <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="Profile Photo" class="profile-img">
+        <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="이민엽 프론트엔드 개발자" class="profile-img">
     </div>
     <div class="split-hero__right">
-        <!-- 오른쪽 절반 (현재 비움) -->
+        <div class="hero-content">
+            <h1 class="hero-greeting fade-up">안녕하세요, 이민엽입니다.</h1>
+            <p class="hero-philosophy fade-up" style="animation-delay: 0.1s;">
+                저는 직관적인 사용자 인터페이스와<br />누구나 읽기 좋은 코드를 지향하는 프론트엔드 개발자입니다.
+            </p>
+
+            <div class="hero-tech-wrapper fade-up" style="animation-delay: 0.2s;">
+                <span class="section-title section-title--sm">Tech Stack</span>
+                <div class="tech-bento">
+                    <div class="tech-bento-cell full frontend-cell">
+                        <p class="bento-label">Frontend</p>
+                        <div class="skills">
+                            <span class="skill-badge html">HTML</span>
+                            <span class="skill-badge css">CSS</span>
+                            <span class="skill-badge js">JavaScript</span>
+                            <span class="skill-badge ts">TypeScript</span>
+                        </div>
+                    </div>
+                    <div class="tech-bento-cell framework-cell">
+                        <p class="bento-label">Framework</p>
+                        <div class="skills">
+                            <span class="skill-badge react">React</span>
+                            <span class="skill-badge next">Next.js</span>
+                        </div>
+                    </div>
+                    <div class="tech-bento-cell other-cell">
+                        <p class="bento-label">Language & Tools</p>
+                        <div class="skills">
+                            <span class="skill-badge python">Python</span>
+                            <span class="skill-badge git">Git</span>
+                            <span class="skill-badge">GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    (function () {
+        var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+        document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
+    })();
+</script>
