@@ -15,24 +15,9 @@
 </head>
 
 <body class="layout-{{ page.layout | default: 'default' }}">
-  <header>
-    <nav>
-      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.author }}.dev</a>
-      <div class="nav-links">
-        <a href="{{ '/#portfolio' | relative_url }}">Projects</a>
-        <a href="{{ '/#tech' | relative_url }}">Stack</a>
-        <a href="{{ '/#experience' | relative_url }}">Experience</a>
-        <a href="{{ '/categories' | relative_url }}">Blog</a>
-        <a href="{{ '/#about' | relative_url }}">About</a>
-      </div>
-    </nav>
-  </header>
   <main>
     {{ content }}
   </main>
-  <footer>
-    <p>© {{ 'now' | date: "%Y" }} <strong>{{ site.author }}</strong> · Built with Jekyll &amp; ❤️</p>
-  </footer>
 </body>
 
 </html>
