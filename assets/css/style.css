@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
 /* ===== VARIABLES ===== */
 :root {
@@ -19,7 +19,7 @@
   --radius-m: 10px;
   --radius-l: 14px;
   --nav-h: 60px;
-  --max-w: 860px;
+  --max-w: 100%;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --text-secondary: #888888;
 }
@@ -35,6 +35,11 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -44,6 +49,11 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -81,7 +91,7 @@ header {
 header nav {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -124,16 +134,21 @@ header nav {
 
 /* ===== LAYOUT ===== */
 main {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: calc(var(--nav-h) + 3rem) 1.5rem 5rem;
+  width: 100%;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: calc(var(--nav-h) + 3rem) 0 5rem !important;
+  overflow-x: hidden;
 }
 
 /* ===== HOME SPLIT LAYOUT ===== */
 .home-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  width: 100%;
+  gap: 0;
+  margin: 0;
+  padding: 0;
   align-items: start;
   min-height: calc(100vh - var(--nav-h) - 6rem);
 }
@@ -800,11 +815,11 @@ a:hover {
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   header nav {
-    padding: 0 1rem;
+    padding: 0;
   }
 
   main {
-    padding: calc(var(--nav-h) + 2rem) 1rem 4rem;
+    padding: calc(var(--nav-h) + 2rem) 0 4rem;
   }
 
   .hero {
@@ -1052,7 +1067,7 @@ a:hover {
   user-select: none;
 }
 
-/* 카테고리 공통 (?�로?�트/?�문) ??배경 ?�이, 굵�? ?�스?�로 구분 */
+/* 카테고리 공통 (?�로?�트/?�문) ??배경 ?�이, 굵�? ?�스?�로 구분 */
 .chip--category {
   background: transparent;
   border: none;
@@ -1065,10 +1080,10 @@ a:hover {
   opacity: 0.9;
 }
 
-/* ?�로?�트 */
+/* ?�로?�트 */
 /* chip--project removed */
 
-/* ?�문 */
+/* ?�문 */
 /* chip--research removed */
 
 /* FrontEnd */
@@ -1077,7 +1092,7 @@ a:hover {
 /* AI */
 /* chip--ai removed */
 
-/* ?�베?�드 */
+/* ?�베?�드 */
 /* chip--embedded removed */
 
 /* ===== PROJECT STATUS GROUP ===== */
@@ -1460,15 +1475,19 @@ a:hover {
 
 /* ===== 4-CELL PORTFOLIO GRID ===== */
 .portfolio-layout {
+  width: 100%;
+  max-width: 100vw;
   display: grid;
-  grid-template-columns: 260px 1fr;
-  grid-template-rows: auto auto;
-  gap: 1rem 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  /* Split equally */
+  gap: 0;
+  /* Remove gap if we want them to touch */
   align-items: stretch;
-  padding-top: 2.5rem;
+  padding: 0;
+  margin: 0;
 }
 
-/* Cell 1,1 ???�로???�진 */
+/* Cell 1,1 ???�로???�진 */
 .portfolio-photo-cell {
   display: flex;
   flex-direction: column;
@@ -1494,7 +1513,7 @@ a:hover {
   flex: 1;
 }
 
-/* Cell 2 ???�름 / bio / 버튼 (?�체 ?�비) */
+/* Cell 2 ???�름 / bio / 버튼 (?�체 ?�비) */
 .portfolio-info-cell {
   grid-column: 1 / -1;
   display: block;
@@ -1529,7 +1548,7 @@ a:hover {
 }
 
 
-/* ?�위 ?�환???�해 portfolio-left/right ?��? */
+/* ?�위 ?�환???�해 portfolio-left/right ?��? */
 .portfolio-left {
   display: flex;
   flex-direction: column;
