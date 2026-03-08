@@ -2304,3 +2304,18 @@ a:hover {
   object-fit: cover;
   display: block;
 }
+/* OVERRIDE ALL PADDING */
+.layout-home {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+body.layout-home {
+  min-height: 100vh !important;
+}
+
+/* Force Reset all nested Elements */
+.layout-home * {
+  box-sizing: border-box !important;
+}
