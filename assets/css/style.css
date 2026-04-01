@@ -2362,8 +2362,8 @@ a:hover {
 .portfolio-shortcuts {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 1rem;
+  gap: 12rem;
+  margin-top: 2rem;
 }
 
 .portfolio-shortcut-card {
