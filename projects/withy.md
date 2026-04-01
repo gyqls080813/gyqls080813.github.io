@@ -9,6 +9,13 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 {
   "steps": [
     {
+      "screenId": "screen-splash",
+      "title": "스플래시 스크린",
+      "desc": "서비스에 처음 진입할 때 렌더링되는 <strong>스플래시 화면</strong>입니다.<br>Framer Motion과 Tailwind를 결합해 구현된 실제 애니메이션 컴포넌트입니다.",
+      "tooltipPos": { "bottom": "15%", "left": "50%", "transform": "translateX(-50%)" },
+      "requiresClick": false
+    },
+    {
       "screenId": "screen-home",
       "title": "Welcome to WITHY",
       "desc": "넷플릭스, 유튜브 화면 공유의 끊김과 저화질을 해결하기 위해 탄생했습니다.<br><br>독자적인 <strong>타임라인 직접 동기화 기술</strong>로 완벽한 몰입감과 <strong>AI 클린 채팅</strong>을 선사하는 실시간 스트리밍 같이보기 서비스입니다.",
@@ -26,8 +33,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
     {
       "screenId": "screen-room",
       "title": "실시간 파티방 동기화",
-      "desc": "파티에 입장했습니다! 방장이 영상을 컨트롤하면 <strong>WebSocket</strong> 통신을 통해 <strong>밀리세컨드 단위</strong>로 모든 참여자의 영상 시점이 똑같이 제어됩니다.<br><br>또한, gRPC 기반의 AI가 채팅을 실시간으로 감시하여 욕설과 스포일러를 채팅창에서 원천 차단합니다.<br><br><span style='font-size:0.85rem;color:#888;'>(* 실제 대기실 컴포넌트 레이아웃입니다.)</span>",
-      "tooltipPos": { "bottom": "15%", "right": "10%" },
+      "desc": "파티 대기실에 입장했습니다! 방장이 영상을 컨트롤하면 <strong>WebSocket</strong> 통신을 통해 밀리세컨드 단위로 모든 참여자의 시점이 제어됩니다.<br><br><span style='font-size:0.85rem;color:#cecece;'>(* 우측 가짜 채팅방을 폐기하고, 위디의 진짜 풀스크린 대기실 컴포넌트를 그대로 포팅했습니다.)</span>",
+      "tooltipPos": { "top": "50%", "left": "50%", "transform": "translate(-50%, -50%)" },
       "requiresClick": false
     },
     {
@@ -54,10 +61,43 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 /* Render SVG icons */
 .lucide { width: 1.25rem; height: 1.25rem; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+/* Splash Screen Animations */
+@keyframes chrSync { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.95; transform: scale(0.98); } }
+@keyframes redNeon { 0%, 100% { filter: drop-shadow(0 0 8px rgba(220,38,38,0.5)); } 50% { filter: drop-shadow(0 0 15px rgba(220,38,38,0.8)); } }
+.animate-chr-sync { animation: chrSync 2s ease-in-out infinite; }
+.animate-red-neon { animation: redNeon 1.5s ease-in-out infinite; }
+.white-neon-glow { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 </style>
 
-<!-- SCREEN 1: REAL HOME COMPONENT -->
-<div class="screen-view t-screen flex h-full text-white" id="screen-home" style="background:#0a0a0a;">
+<!-- =======================
+     SCREEN 0: SPLASH SCREEN
+======================== -->
+<div class="screen-view t-screen flex flex-col items-center justify-center bg-black w-full h-full" id="screen-splash">
+    <div class="relative flex flex-col items-center transform transition-transform duration-1000 ease-in-out hover:-translate-y-24 hover:scale-75">
+        <!-- 1. Character & Logo Group -->
+        <div class="relative w-[400px] h-[400px]">
+            <div class="absolute inset-0 z-10 animate-chr-sync">
+                <img src="/WITHY/public/withy/Withy_chr.png" alt="Withy Character" class="object-contain w-full h-full drop-shadow-2xl">
+            </div>
+            <div class="absolute inset-0 z-20 animate-red-neon ml-4">
+                <img src="/WITHY/public/withy/Withy_logo.png" alt="Withy Logo" class="object-contain w-full h-full">
+            </div>
+        </div>
+
+        <!-- 2. Text -->
+        <div class="mt-[-20px] z-30 white-neon-glow">
+            <p class="text-white text-3xl font-black tracking-[0.25em] uppercase italic text-center">
+                Watch with WITHY
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- =======================
+     SCREEN 1: REAL HOME COMPONENT
+======================== -->
+<div class="screen-view t-screen flex h-full text-white w-full" id="screen-home" style="background:#0a0a0a;">
     
     <!-- Navbar (Sidebar) Component -->
     <aside class="w-20 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
@@ -221,60 +261,54 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 2: ROOM ENTRY (Actual Withy Waiting Room Structure)
 ======================== -->
-<div class="screen-view t-screen flex h-full text-white w-full" id="screen-room" style="background:#000;">
-   
-   <!-- Left: Video Player Area (using the GIF to simulate active content) -->
-   <div class="flex-1 flex flex-col border-r border-white/10 bg-black">
-       <!-- Waiting Room Header -->
-       <header class="h-16 border-b border-white/10 flex items-center justify-between px-6 shrink-0 bg-[#0a0a0c]">
-           <div class="flex items-center gap-4">
-               <button class="p-2 hover:bg-white/10 rounded-full transition"><svg class="lucide"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg></button>
-               <div>
-                   <h1 class="font-bold text-lg select-none">하울의 움직이는 성</h1>
-                   <div class="text-xs text-neutral-400 mt-0.5">대기실 번호: 1A2B3C</div>
-               </div>
-           </div>
-           <div class="flex gap-2">
-               <span class="px-3 py-1.5 bg-red-600/20 text-red-500 rounded-lg text-sm font-bold border border-red-500/20">방장</span>
-               <button class="px-4 py-1.5 bg-red-600 hover:bg-red-700 rounded-lg text-sm font-bold flex items-center gap-2">
-                   <svg class="lucide w-4 h-4"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> 지금 재생
-               </button>
-           </div>
-       </header>
+<div class="screen-view t-screen w-full h-full bg-black relative overflow-hidden" id="screen-room">
+    
+    <!-- Background Video Layer (Fake Iframe placeholder) -->
+    <div class="absolute inset-0 w-full h-full z-0 flex flex-col items-center justify-center text-white bg-[#0a0a0c]">
+        <!-- Fullscreen GIF representing background video/ad mode -->
+        <img src="/WITHY/docs/assets/gif/party_enter.gif" alt="Waiting Room Background" class="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm pointer-events-none">
+        
+        <!-- Overlay Activate Button (from page.tsx) -->
+        <div class="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-6 z-50">
+            <button class="flex items-center gap-3 px-12 py-6 bg-red-600 hover:bg-red-700 rounded-2xl font-bold text-2xl transition-all shadow-2xl cursor-pointer">
+                <svg class="lucide w-7 h-7"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+                파티 시작하기
+            </button>
+        </div>
+    </div>
 
-       <!-- Main Video Area -->
-       <div class="flex-1 relative overflow-hidden bg-black flex items-center justify-center">
-            <!-- Overlay active mode warning or full GIF -->
-            <img src="/WITHY/docs/assets/gif/party_enter.gif" alt="Party Room Output" class="absolute inset-0 w-full h-full object-contain opacity-60">
-            <div class="z-10 bg-black/60 backdrop-blur-md p-10 rounded-3xl border border-white/10 text-center animate-in zoom-in">
-               <svg class="lucide w-16 h-16 text-red-500 mx-auto mb-4 animate-pulse"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" x2="12" y1="3" y2="15"></line></svg>
-               <h2 class="text-3xl font-black text-white mb-2">대기실 동기화 완료!</h2>
-               <p class="text-gray-300">웹소켓 서버(Spring)에 연결되었습니다.<br>방장이 영상을 시작하면 일제히 로드됩니다.</p>
+    <!-- Overlay: Top Info Bar -->
+    <div class="absolute top-0 left-0 w-full z-10 p-8 bg-gradient-to-b from-black/80 to-transparent flex items-start justify-between">
+        <!-- Left: Title -->
+        <div class="flex items-start gap-4">
+            <div class="text-white">
+                <div class="flex items-center gap-3">
+                    <!-- Back Button -->
+                    <button class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all backdrop-blur-sm border border-white/20">
+                        <svg class="lucide w-6 h-6 text-white"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    </button>
+                    <h1 class="text-3xl font-bold drop-shadow-md">하울의 움직이는 성 예약방</h1>
+                </div>
+                <!-- Start time -->
+                <p class="text-red-500 text-xl font-bold mt-2 drop-shadow-md tracking-tight">
+                    10분 후 시작 예정
+                </p>
             </div>
-       </div>
-   </div>
+        </div>
 
-   <!-- Right: Chat & Users Sidebar -->
-   <aside class="w-80 bg-[#0a0a0c] flex flex-col shrink-0">
-       <div class="h-16 flex border-b border-white/10">
-           <button class="flex-1 border-b-2 border-red-500 font-bold bg-white/5">채팅 (23)</button>
-           <button class="flex-1 text-neutral-500 font-medium hover:bg-white/5">참여자 (8)</button>
-       </div>
-       <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4 text-sm">
-           <div class="bg-red-900/10 text-red-400 p-3 rounded-xl border border-red-500/10 font-medium">안내: 비속어 및 스포일러 발언 시 <strong>AI 모듈(gRPC)</strong>에 의해 0.3초 내에 임시 블라인드 처리됩니다.</div>
-           <div><span class="font-bold text-red-500 mr-2">방장_영욱</span>기다리다 지치네요! 얼른 틀어주세요</div>
-           <div><span class="font-bold text-blue-400 mr-2">하울바라기</span>와이파이가 좀 느린데 타임라인 못 따라가면 어떡하죠?</div>
-           <div><span class="font-bold text-red-500 mr-2">방장_영욱</span>Kafka 동기화로 버퍼 걱정 없습니다. 바로 시작합니다~</div>
-           <div class="opacity-50 line-through"><span>[AI 블라인드 처리된 메시지입니다.]</span></div>
-       </div>
-       <!-- Chat Input -->
-       <div class="p-4 border-t border-white/10">
-           <div class="bg-[#1f1f1f] rounded-xl flex items-center p-2 border border-white/5 focus-within:border-red-500 transition-colors">
-               <input type="text" placeholder="메시지를 입력하세요..." class="bg-transparent flex-1 text-sm outline-none px-2">
-               <button class="p-2 text-red-500 rounded-lg hover:bg-red-500/10"><svg class="lucide w-4 h-4"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
-           </div>
-       </div>
-   </aside>
+        <!-- Right: Status Badges -->
+        <div class="flex items-center gap-3">
+            <!-- Delete Party Button -->
+            <button class="flex items-center justify-center w-[34px] h-[34px] rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-sm transition-colors cursor-pointer">
+                <svg class="lucide w-4 h-4"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </button>
+
+            <!-- Live/Waiting Badge -->
+            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">
+                WAITING
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- =======================
