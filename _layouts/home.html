@@ -43,9 +43,90 @@ layout: default
                     </div>
                 </div>
             </div>
+
+            <div class="scroll-prompt fade-up" style="animation-delay: 0.4s; margin-top: 3.5rem; text-align: center;">
+                <p style="color: var(--text-3); font-size: 0.75rem; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Scroll to Explore</p>
+                <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-3) 0%, transparent 100%); margin: 0 auto;"></div>
+            </div>
         </div>
     </div>
 </div>
+
+<section class="home-portfolio-section">
+    <div class="hero-content">
+        <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s;">
+            <span class="section-title section-title--sm" style="text-align: center; margin-bottom: 2rem;">Portfolio</span>
+            <div class="portfolio-shortcuts">
+                <a href="{{ '/WITHY/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-withy">
+                    <div class="portfolio-shortcut-card__accent withy-accent"></div>
+                    <div class="portfolio-shortcut-card__cover">
+                        <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview">
+                    </div>
+                    <div class="portfolio-shortcut-card__body">
+                        <div class="portfolio-shortcut-card__header">
+                            <div class="portfolio-shortcut-card__icon">🎬</div>
+                            <div>
+                                <h3 class="portfolio-shortcut-card__title">Withy</h3>
+                                <p class="portfolio-shortcut-card__desc">실시간 영상 동기화 & AI 클린 채팅 플랫폼</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-shortcut-card__content">
+                            <p class="portfolio-shortcut-card__summary">
+                                타임라인 동기화를 통한 지연 없는 OTT 영상 같이보기 서비스입니다. 
+                                gRPC 기반 분석 모듈과 Kafka, Redis를 조합하여 채팅 입력 즉시 욕설 및 스포일러를 차단하는 지능형 통신 아키텍처를 구현했습니다.
+                            </p>
+                            <div class="portfolio-shortcut-card__tech-wrapper">
+                                <span class="tech-label">Tech Stack</span>
+                                <div class="portfolio-shortcut-card__tags">
+                                    <span class="project-tag">React</span>
+                                    <span class="project-tag">Spring Boot</span>
+                                    <span class="project-tag">WebSocket</span>
+                                    <span class="project-tag">gRPC</span>
+                                    <span class="project-tag">Kafka</span>
+                                    <span class="project-tag">Redis</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-shortcut-card__arrow">Explore Project →</div>
+                    </div>
+                </a>
+                
+                <a href="{{ '/Petfelio/petfolio-fe/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-petfelio">
+                    <div class="portfolio-shortcut-card__accent petfelio-accent"></div>
+                    <div class="portfolio-shortcut-card__cover">
+                        <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview">
+                    </div>
+                    <div class="portfolio-shortcut-card__body">
+                        <div class="portfolio-shortcut-card__header">
+                            <div class="portfolio-shortcut-card__icon">🐾</div>
+                            <div>
+                                <h3 class="portfolio-shortcut-card__title">petFelio</h3>
+                                <p class="portfolio-shortcut-card__desc">반려동물 가계부 & AI 건강관리 서비스</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-shortcut-card__content">
+                            <p class="portfolio-shortcut-card__summary">
+                                반려동물 양육비를 세밀하게 기록·분석할 수 있는 전용 가계부 기능과, 
+                                사용자의 입력 데이터를 기반으로 맞춤형 리포트 및 AI 건강 가이드를 제공하여 체계적인 펫케어를 돕는 서비스입니다.
+                            </p>
+                            <div class="portfolio-shortcut-card__tech-wrapper">
+                                <span class="tech-label">Tech Stack</span>
+                                <div class="portfolio-shortcut-card__tags">
+                                    <span class="project-tag">Next.js 16</span>
+                                    <span class="project-tag">TypeScript</span>
+                                    <span class="project-tag">TailwindCSS</span>
+                                    <span class="project-tag">React Query</span>
+                                    <span class="project-tag">Effect</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-shortcut-card__arrow">Explore Project →</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <script>
     (function () {

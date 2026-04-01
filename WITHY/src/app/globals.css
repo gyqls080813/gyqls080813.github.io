@@ -1,0 +1,454 @@
+@import "tailwindcss";
+
+/* Custom Font - MemomentKkukkukk */
+@font-face {
+  font-family: 'MemomentKkukkukk';
+  src: url('../assets/fonts/MemomentKkukkukk.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* --- 기본 색상 (Base Colors) - Dark Theme Default --- */
+  --background: #0f0f0f;
+  --foreground: #ffffff;
+
+  /* --- 브랜드 / 주요 색상 (Brand / Primary) --- */
+  --primary: #dc2626;
+  /* red-600 */
+  --primary-foreground: #ffffff;
+
+  /* Brand Specific Colors */
+  --brand-netflix: #E50914;
+  --brand-youtube: #FF0000;
+  --brand-twitch: #9146FF;
+
+  /* --- 보조 / 강조 색상 (Secondary / Accent) --- */
+  --secondary: #27272a;
+  /* zinc-800 */
+  --secondary-foreground: #ffffff;
+
+  /* --- UI 요소 (UI Elements) --- */
+  --card: #18181b;
+  /* zinc-900 */
+  --card-foreground: #ffffff;
+
+  --popover: #18181b;
+  /* zinc-900 */
+  --popover-foreground: #ffffff;
+
+  --muted: #27272a;
+  /* zinc-800 */
+  --muted-foreground: #a1a1aa;
+  /* zinc-400 */
+
+  --border: #27272a;
+  /* zinc-800 */
+  --input: #27272a;
+  /* zinc-800 */
+  --ring: #dc2626;
+  /* red-600 */
+
+  /* --- 의미론적 색상 (Semantic Colors) --- */
+  --sidebar-bg: #000000;
+  --sidebar-fg: #d4d4d4;
+  --sidebar-border: #27272a;
+  --sidebar-hover: #27272a;
+  --sidebar-active: #27272a;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-brand-netflix: var(--brand-netflix);
+  --color-brand-youtube: var(--brand-youtube);
+  --color-brand-twitch: var(--brand-twitch);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar-bg);
+  --color-sidebar-foreground: var(--sidebar-fg);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* globals.css */
+@layer utilities {
+  
+  .scrollbar-hide {
+    /* IE and Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    /* Chrome, Safari and Opera */
+    display: none;
+  }
+
+  /* Ensure password input bullets are visible */
+  input[type="password"] {
+    opacity: 1 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    line-height: 1.5 !important;
+    -webkit-text-security: disc !important;
+    letter-spacing: 0.1em !important;
+  }
+
+  input[type="password"]::-webkit-input-placeholder {
+    color: #a1a1aa !important;
+    -webkit-text-fill-color: #a1a1aa !important;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "MemomentKkukkukk", "Pretendard", var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* SplashScreen Animations */
+@keyframes red-neon-flicker {
+
+  0%,
+  15%,
+  25%,
+  35%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.7));
+  }
+
+  10%,
+  20%,
+  30% {
+    opacity: 0.1;
+    filter: none;
+  }
+}
+
+@keyframes chr-light-subtle {
+
+  0%,
+  15%,
+  25%,
+  35%,
+  100% {
+    filter: brightness(1.05) drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
+  }
+
+  10%,
+  20%,
+  30% {
+    filter: brightness(0.8);
+  }
+}
+
+.animate-red-neon {
+  animation: red-neon-flicker 1.5s ease-in-out forwards;
+}
+
+.animate-red-neon-infinite {
+  animation: red-neon-flicker 2s ease-in-out infinite;
+}
+
+.animate-chr-sync {
+  animation: chr-light-subtle 1.5s ease-in-out forwards;
+}
+
+.white-neon-glow {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+/* Static Neon Styles for Login Page */
+.static-red-neon {
+  filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.7));
+}
+
+/* White Neon Animation for Google Button */
+@keyframes white-neon-flicker {
+
+  0%,
+  15%,
+  25%,
+  35%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+    background-color: white;
+    color: black;
+  }
+
+  10%,
+  20%,
+  30% {
+    opacity: 0.1;
+    filter: none;
+    background-color: transparent;
+    color: white;
+  }
+}
+
+.animate-white-neon-infinite {
+  animation: white-neon-flicker 2s ease-in-out infinite;
+}
+
+.btn-friend-request {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-friend-request:hover {
+  background-color: #b91c1c;
+}
+
+
+
+/* 1. 22프레임 스프라이트 애니메이션 (제자리 달리기) */
+@keyframes meerkat-sprite-run-22 {
+
+  /* --- 1번째 줄 (6프레임) --- */
+  0.00% {
+    background-position: 0 0;
+  }
+
+  4.54% {
+    background-position: -100px 0;
+  }
+
+  9.09% {
+    background-position: -200px 0;
+  }
+
+  13.63% {
+    background-position: -300px 0;
+  }
+
+  18.18% {
+    background-position: -400px 0;
+  }
+
+  22.72% {
+    background-position: -500px 0;
+  }
+
+  /* --- 2번째 줄 (6프레임) --- */
+  27.27% {
+    background-position: 0 -100px;
+  }
+
+  31.81% {
+    background-position: -100px -100px;
+  }
+
+  36.36% {
+    background-position: -200px -100px;
+  }
+
+  40.90% {
+    background-position: -300px -100px;
+  }
+
+  45.45% {
+    background-position: -400px -100px;
+  }
+
+  50.00% {
+    background-position: -500px -100px;
+  }
+
+  /* --- 3번째 줄 (6프레임) --- */
+  54.54% {
+    background-position: 0 -200px;
+  }
+
+  59.09% {
+    background-position: -100px -200px;
+  }
+
+  63.63% {
+    background-position: -200px -200px;
+  }
+
+  68.18% {
+    background-position: -300px -200px;
+  }
+
+  72.72% {
+    background-position: -400px -200px;
+  }
+
+  77.27% {
+    background-position: -500px -200px;
+  }
+
+  /* --- 4번째 줄 (4프레임) --- */
+  81.81% {
+    background-position: 0 -300px;
+  }
+
+  86.36% {
+    background-position: -100px -300px;
+  }
+
+  90.90% {
+    background-position: -200px -300px;
+  }
+
+  95.45% {
+    background-position: -300px -300px;
+  }
+
+  100% {
+    background-position: -300px -300px;
+  }
+
+  /* 마지막 프레임 유지 */
+}
+
+/* 2. 화면 이동 애니메이션 (왼쪽 -> 오른쪽) */
+@keyframes meerkat-move-x-wide {
+  0% {
+    left: -120px;
+  }
+
+  /* 버튼 왼쪽 밖에서 시작 */
+  100% {
+    left: 100%;
+  }
+
+  /* 버튼 오른쪽 밖으로 퇴장 */
+}
+
+/* 3. 미어캣 액터 스타일 */
+.meerkat-actor {
+  position: absolute;
+  width: 100px;
+  /* 1프레임 너비 */
+  height: 100px;
+  /* 1프레임 높이 */
+
+  /* 새 이미지 경로 적용 */
+  background-image: url('/header/meerkat-sheet.png');
+
+  /* 전체 이미지 크기 설정 (가로 6칸 x 세로 4칸 기준) */
+  background-size: 600px 400px;
+
+  bottom: -25px;
+  /* 버튼 하단에 위치 맞춤 */
+  left: 0;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 10;
+
+  /* 두 애니메이션 동시 적용 */
+  /* - meerkat-move-x-wide: 4초 동안 이동 (linear) */
+  /* - meerkat-sprite-run-22: 2초 동안 22프레임 재생 (step-end로 딱딱 끊어줌) */
+  animation: meerkat-move-x-wide 4s linear infinite, meerkat-sprite-run-22 2s step-end infinite;
+}
+
+/* 4. 왼쪽 이미지 애니메이션 (왼쪽에서 오른쪽으로 살짝 이동) */
+@keyframes float-left-to-right {
+
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+
+  50% {
+    transform: translateX(50px);
+  }
+}
+
+/* 5. 오른쪽 로고 애니메이션 (오른쪽에서 왼쪽으로 살짝 이동) */
+@keyframes float-right-to-left {
+
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+
+  50% {
+    transform: translateX(-50px);
+  }
+}
+
+/* 왼쪽 이미지 애니메이션 클래스 */
+.animate-float-left {
+  animation: float-left-to-right 3s ease-in-out infinite;
+}
+
+/* 오른쪽 로고 애니메이션 클래스 */
+.animate-float-right {
+  animation: float-right-to-left 3s ease-in-out infinite;
+}
+
+/* ========================================
+   Custom Scrollbar Styles
+   ======================================== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #dc2626 #18181b;
+}
+
+/* Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #dc2626;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #b91c1c;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: #991b1b;
+}
+
+/* Scrollbar corner (when both scrollbars are visible) */
+*::-webkit-scrollbar-corner {
+  background: #18181b;
+}

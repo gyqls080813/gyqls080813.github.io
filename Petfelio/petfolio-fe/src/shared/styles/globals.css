@@ -1,0 +1,543 @@
+@import "tailwindcss";
+
+@theme {
+  /* ===== Petfolio 디자인 시스템 (기본: Warm 테마) ===== */
+
+  /* 텍스트 */
+  --color-pet-text: #5c4d3c;
+  --color-pet-text-sub: #8a7b6b;
+  --color-pet-text-muted: #9a8e80;
+  --color-pet-text-subtle: #a9a29a;
+  --color-pet-text-label: #6b5e50;
+
+  /* 공통 UI 텍스트 */
+  --color-pet-text-dark: #1a1a2e;
+  --color-pet-text-primary: #3a2e22;
+  --color-pet-text-secondary: #8e8e93;
+  --color-pet-text-dim: #c7c7cc;
+  --color-pet-text-warm: #a08c78;
+
+  /* 액센트 */
+  --color-pet-accent: #C4956A;
+  --color-pet-red: #c0564e;
+  --color-pet-red-light: #fce4e4;
+  --color-pet-green: #4CAF50;
+  --color-pet-green-dark: #2E7D32;
+  --color-pet-green-light: #E8F5E9;
+
+  /* 브라운/골드 톤 */
+  --color-pet-brown: #8c7a62;
+  --color-pet-brown-dark: #9c8568;
+  --color-pet-brown-warm: #b89a78;
+  --color-pet-brown-soft: #b5a28e;
+  --color-pet-brown-badge: #c4a882;
+  --color-pet-brown-line: #9a7e5e;
+  --color-pet-brown-master: #6b5942;
+  --color-pet-paw: #c4ae94;
+
+  /* 배경/서피스 */
+  --color-pet-bg: #fcfbf9;
+  --color-pet-surface: #faf9f7;
+  --color-pet-grid: #e8e4dc;
+  --color-pet-data: #efe8da;
+  --color-pet-border: #f0ece6;
+  --color-pet-badge-bg: #f5f0e8;
+
+  /* 공통 UI 배경 */
+  --color-pet-page-bg: #f3f4f6;
+  --color-pet-auth-bg: #fdf6ee;
+  --color-pet-card-bg: #ffffff;
+  --color-pet-input-bg: #f7f7f9;
+  --color-pet-bg-light: #f5f5f7;
+  --color-pet-border-light: #e5e5ea;
+  --color-pet-divider: #f0f0f2;
+
+  /* 포디움 */
+  --color-pet-podium-1: #9c8568;
+  --color-pet-podium-2: #d6ccbe;
+  --color-pet-podium-3: #e4dace;
+  --color-pet-podium-border-2: #e8ddd0;
+  --color-pet-podium-border-3: #f0e8dc;
+
+  /* 그라데이션 */
+  --color-pet-grad-start: #f0dcc8;
+  --color-pet-grad-end: #f5e8da;
+  --color-pet-grad-right-start: #e8d5c0;
+  --color-pet-grad-right-end: #f0e4d6;
+
+  /* 헤더/사이드바 */
+  --color-pet-header-bg: #FFF8F0;
+  --color-pet-header-border: #F0E0CC;
+  --color-pet-header-text: #5C3D2E;
+  --color-pet-sidebar-icon: #8B7355;
+  --color-pet-layout-bg: #FFFAF5;
+
+  /* 하단 내비게이션 */
+  --color-pet-nav-bg: #ffffff;
+  --color-pet-nav-border: #f0f0f2;
+  --color-pet-nav-text: #8e8e93;
+  --color-pet-nav-active: #1a1a2e;
+
+  /* 카테고리 색상 */
+  --color-cat-food: #8B7355;
+  --color-cat-snack: #6B8E6B;
+  --color-cat-hospital: #c0564e;
+  --color-cat-grooming: #B8860B;
+  --color-cat-toy: #5B7DB1;
+  --color-cat-supply: #7B68A0;
+  --color-cat-sitter: #D4845A;
+  --color-cat-etc: #888888;
+
+  /* 상태 색상 (소모품/공통) */
+  --color-status-success: #66BB6A;
+  --color-status-success-bg: #E8F5E9;
+  --color-status-warning: #FFA726;
+  --color-status-warning-bg: #FFF3E0;
+  --color-status-danger: #E57373;
+  --color-status-danger-bg: #FFEBEE;
+
+  /* 트랜잭션 분류 */
+  --color-tx-include: #4CD964;
+  --color-tx-exclude: #FF3B30;
+  --color-tx-confirmed-bg: #f5f5f5;
+  --color-tx-ai-bg: #E8F5E9;
+  --color-tx-ai-text: #2E7D32;
+
+  /* 건강/라이프사이클 */
+  --color-health-primary: #8FBC8F;
+  --color-health-primary-dark: #3cb371;
+  --color-health-guide-bg: #ecfdf5;
+  --color-health-guide-text: #10b981;
+
+  /* 소모품 타임라인 */
+  --color-supply-today: #E57373;
+  --color-supply-sunday: #FF8A8A;
+  --color-supply-saturday: #7BA7E6;
+  --color-supply-border: #EAEAEA;
+  --color-supply-row-bg: #FAFAFA;
+  --color-supply-divider: #F0F0F0;
+
+  /* 일반 UI 보조 색상 */
+  --color-ui-blue: #007AFF;
+  --color-ui-blue-primary: #3182f6;
+  --color-ui-muted: #999;
+  --color-ui-dim: #BBB;
+  --color-ui-faint: #AAA;
+  --color-ui-surface: #f9f9f9;
+  --color-ui-light-border: #e0e0e0;
+  --color-ui-error: #dc2626;
+
+  /* 스플래시 애니메이션 */
+  --animate-fadeIn: fadeIn 0.8s ease-out forwards;
+  --animate-scaleUp: scaleUp 0.6s ease-out forwards;
+  --animate-fadeInUp: fadeInUp 0.7s ease-out forwards;
+  --animate-dotPulse: dotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes dogRunIn {
+  0% { opacity: 0; transform: scale(0.2) translateY(30px); }
+  40% { opacity: 1; transform: scale(0.6) translateY(-15px); }
+  60% { transform: scale(0.85) translateY(5px); }
+  75% { transform: scale(1.05) translateY(-8px); }
+  90% { transform: scale(0.98) translateY(2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes dogBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes bowlDrop {
+  0% { transform: translateY(-200px) rotate(-15deg); opacity: 0; }
+  50% { transform: translateY(10px) rotate(5deg); opacity: 1; }
+  70% { transform: translateY(-8px) rotate(-3deg); }
+  85% { transform: translateY(3px) rotate(1deg); }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+
+@keyframes bowlRock {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+@keyframes kibblePop {
+  0% { transform: translate(0, 0) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: translate(calc(var(--kx) * 0.3), calc(var(--ky) * 0.3)) scale(1.2); }
+  60% { opacity: 1; transform: translate(var(--kx), var(--ky)) scale(1); }
+  80% { opacity: 0.5; transform: translate(calc(var(--kx) * 1.1), calc(var(--ky) * 0.5)) scale(0.8); }
+  100% { opacity: 0; transform: translate(calc(var(--kx) * 1.2), 20px) scale(0.5); }
+}
+
+/* ====== 모던 전환 애니메이션 ====== */
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+
+
+html, body {
+  margin: 0;
+  background-color: var(--color-pet-layout-bg);
+  overflow-x: hidden;
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 전역 스크롤바 숨김 (스크롤 기능은 유지) */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}
+
+/* ============================
+   🌊 Ocean 테마 (블루 톤)
+   ============================ */
+[data-theme="ocean"] {
+  --color-pet-text: #2c3e50;
+  --color-pet-text-sub: #5d7186;
+  --color-pet-text-muted: #7b8fa0;
+  --color-pet-text-subtle: #95a5b6;
+  --color-pet-text-label: #34495e;
+  --color-pet-text-dark: #1a2a3e;
+  --color-pet-text-primary: #2c3e50;
+  --color-pet-text-secondary: #7b8fa0;
+  --color-pet-text-dim: #b0c4d8;
+  --color-pet-text-warm: #5d7186;
+
+  --color-pet-accent: #3498db;
+  --color-pet-red: #e74c3c;
+  --color-pet-red-light: #fdeaea;
+  --color-pet-green: #2ecc71;
+  --color-pet-green-dark: #1e8449;
+  --color-pet-green-light: #d5f5e3;
+
+  --color-pet-brown: #2980b9;
+  --color-pet-brown-dark: #1a6fa0;
+  --color-pet-brown-warm: #5dade2;
+  --color-pet-brown-soft: #85c1e9;
+  --color-pet-brown-badge: #3498db;
+  --color-pet-brown-line: #2471a3;
+  --color-pet-brown-master: #1b4f72;
+  --color-pet-paw: #7fb3d8;
+
+  --color-pet-bg: #f0f6fa;
+  --color-pet-surface: #eaf2f8;
+  --color-pet-grid: #d4e6f1;
+  --color-pet-data: #d6eaf8;
+  --color-pet-border: #d5e8f3;
+  --color-pet-badge-bg: #e8f4fd;
+  --color-pet-page-bg: #e8f0f8;
+  --color-pet-auth-bg: #eaf2f8;
+  --color-pet-card-bg: #ffffff;
+  --color-pet-input-bg: #edf4fa;
+  --color-pet-bg-light: #e0ecf5;
+  --color-pet-border-light: #c5d9e8;
+  --color-pet-divider: #d5e4f0;
+
+  --color-pet-podium-1: #2980b9;
+  --color-pet-podium-2: #aed6f1;
+  --color-pet-podium-3: #d4e6f1;
+  --color-pet-podium-border-2: #bfdfef;
+  --color-pet-podium-border-3: #ddeaf4;
+
+  --color-pet-grad-start: #b8d8f0;
+  --color-pet-grad-end: #d6eaf8;
+  --color-pet-grad-right-start: #a9cce3;
+  --color-pet-grad-right-end: #d0e4f2;
+
+  --color-pet-header-bg: #eaf2f8;
+  --color-pet-header-border: #c5d9e8;
+  --color-pet-header-text: #1a3c54;
+  --color-pet-sidebar-icon: #4a7fa5;
+  --color-pet-layout-bg: #f0f6fa;
+  --color-pet-nav-bg: #ffffff;
+  --color-pet-nav-border: #d5e4f0;
+  --color-pet-nav-text: #7b8fa0;
+  --color-pet-nav-active: #1a2a3e;
+
+  /* 카테고리 색상 */
+  --color-cat-food: #4a7fa5;
+  --color-cat-snack: #2e8b7a;
+  --color-cat-hospital: #e74c3c;
+  --color-cat-grooming: #2980b9;
+  --color-cat-toy: #5b6abf;
+  --color-cat-supply: #6c7bb5;
+  --color-cat-sitter: #3498db;
+  --color-cat-etc: #7b8fa0;
+}
+
+/* ============================
+   🌿 Forest 테마 (그린 톤)
+   ============================ */
+[data-theme="forest"] {
+  --color-pet-text: #2d4a3e;
+  --color-pet-text-sub: #5e7d6e;
+  --color-pet-text-muted: #7a9688;
+  --color-pet-text-subtle: #96b0a2;
+  --color-pet-text-label: #3a5a4c;
+  --color-pet-text-dark: #1a3a2e;
+  --color-pet-text-primary: #2d4a3e;
+  --color-pet-text-secondary: #7a9688;
+  --color-pet-text-dim: #a8c4b4;
+  --color-pet-text-warm: #5e7d6e;
+
+  --color-pet-accent: #27ae60;
+  --color-pet-red: #c0392b;
+  --color-pet-red-light: #fae5e2;
+  --color-pet-green: #27ae60;
+  --color-pet-green-dark: #1e8449;
+  --color-pet-green-light: #d5f5e3;
+
+  --color-pet-brown: #27ae60;
+  --color-pet-brown-dark: #1e8449;
+  --color-pet-brown-warm: #52be80;
+  --color-pet-brown-soft: #7dcea0;
+  --color-pet-brown-badge: #2ecc71;
+  --color-pet-brown-line: #239b56;
+  --color-pet-brown-master: #186a3b;
+  --color-pet-paw: #73c6a0;
+
+  --color-pet-bg: #f0f8f1;
+  --color-pet-surface: #e8f5e9;
+  --color-pet-grid: #c8e6c9;
+  --color-pet-data: #d5f0d5;
+  --color-pet-border: #d0eacd;
+  --color-pet-badge-bg: #e8f5ea;
+  --color-pet-page-bg: #e5f2e6;
+  --color-pet-auth-bg: #e8f5e9;
+  --color-pet-card-bg: #ffffff;
+  --color-pet-input-bg: #ecf5ec;
+  --color-pet-bg-light: #dceede;
+  --color-pet-border-light: #b8d8be;
+  --color-pet-divider: #d0e8d2;
+
+  --color-pet-podium-1: #27ae60;
+  --color-pet-podium-2: #a9dfbf;
+  --color-pet-podium-3: #d5f5e3;
+  --color-pet-podium-border-2: #b8e6cc;
+  --color-pet-podium-border-3: #ddf3e4;
+
+  --color-pet-grad-start: #a9dfbf;
+  --color-pet-grad-end: #d5f5e3;
+  --color-pet-grad-right-start: #98d4b0;
+  --color-pet-grad-right-end: #c8ecd8;
+
+  --color-pet-header-bg: #e8f5e9;
+  --color-pet-header-border: #b8d8be;
+  --color-pet-header-text: #1b3a28;
+  --color-pet-sidebar-icon: #4a8c60;
+  --color-pet-layout-bg: #f0f8f1;
+  --color-pet-nav-bg: #ffffff;
+  --color-pet-nav-border: #d0e8d2;
+  --color-pet-nav-text: #7a9688;
+  --color-pet-nav-active: #1a3a2e;
+
+  /* 카테고리 색상 */
+  --color-cat-food: #6b8e5a;
+  --color-cat-snack: #4caf50;
+  --color-cat-hospital: #c0392b;
+  --color-cat-grooming: #8bc34a;
+  --color-cat-toy: #66bb6a;
+  --color-cat-supply: #558b6e;
+  --color-cat-sitter: #27ae60;
+  --color-cat-etc: #7a9688;
+}
+
+/* ============================
+   🌸 Lavender 테마 (퍼플 톤)
+   ============================ */
+[data-theme="lavender"] {
+  --color-pet-text: #3e2f5c;
+  --color-pet-text-sub: #6b5d87;
+  --color-pet-text-muted: #8a7ea0;
+  --color-pet-text-subtle: #a89fb8;
+  --color-pet-text-label: #4a3a6b;
+  --color-pet-text-dark: #2e1f4e;
+  --color-pet-text-primary: #3e2f5c;
+  --color-pet-text-secondary: #8a7ea0;
+  --color-pet-text-dim: #c4b8d8;
+  --color-pet-text-warm: #6b5d87;
+
+  --color-pet-accent: #8e44ad;
+  --color-pet-red: #c0392b;
+  --color-pet-red-light: #f5e6f0;
+  --color-pet-green: #9b59b6;
+  --color-pet-green-dark: #7d3c98;
+  --color-pet-green-light: #f0e8f7;
+
+  --color-pet-brown: #8e44ad;
+  --color-pet-brown-dark: #7d3c98;
+  --color-pet-brown-warm: #af7ac5;
+  --color-pet-brown-soft: #c39bd3;
+  --color-pet-brown-badge: #9b59b6;
+  --color-pet-brown-line: #7d3f99;
+  --color-pet-brown-master: #5b2c6f;
+  --color-pet-paw: #b794d6;
+
+  --color-pet-bg: #f8f4fc;
+  --color-pet-surface: #f3ecf9;
+  --color-pet-grid: #ddd0ee;
+  --color-pet-data: #e8ddf3;
+  --color-pet-border: #e4d8f0;
+  --color-pet-badge-bg: #f0e8f7;
+  --color-pet-page-bg: #f0eaf6;
+  --color-pet-auth-bg: #f3ecf9;
+  --color-pet-card-bg: #ffffff;
+  --color-pet-input-bg: #f0eaf6;
+  --color-pet-bg-light: #e8dff2;
+  --color-pet-border-light: #d5c4e4;
+  --color-pet-divider: #e4d8f0;
+
+  --color-pet-podium-1: #8e44ad;
+  --color-pet-podium-2: #d2b4de;
+  --color-pet-podium-3: #e8daef;
+  --color-pet-podium-border-2: #dac4e8;
+  --color-pet-podium-border-3: #ede2f4;
+
+  --color-pet-grad-start: #d2b4de;
+  --color-pet-grad-end: #e8ddf3;
+  --color-pet-grad-right-start: #c9a7d8;
+  --color-pet-grad-right-end: #e0d2ec;
+
+  --color-pet-header-bg: #f3ecf9;
+  --color-pet-header-border: #d5c4e4;
+  --color-pet-header-text: #2e1f47;
+  --color-pet-sidebar-icon: #7a5a9e;
+  --color-pet-layout-bg: #f8f4fc;
+  --color-pet-nav-bg: #ffffff;
+  --color-pet-nav-border: #e4d8f0;
+  --color-pet-nav-text: #8a7ea0;
+  --color-pet-nav-active: #2e1f4e;
+
+  /* 카테고리 색상 */
+  --color-cat-food: #8e6aad;
+  --color-cat-snack: #7e57c2;
+  --color-cat-hospital: #c0392b;
+  --color-cat-grooming: #ab47bc;
+  --color-cat-toy: #7986cb;
+  --color-cat-supply: #9575cd;
+  --color-cat-sitter: #8e44ad;
+  --color-cat-etc: #8a7ea0;
+}
+
+/* ============================
+   컴포넌트 공통 키프레임 (인라인에서 추출)
+   ============================ */
+
+/* ListRow 컴포넌트 */
+@keyframes listRowBlink {
+  0%, 100% { background-color: transparent; }
+  50% { background-color: rgba(0, 100, 255, 0.1); }
+}
+
+@keyframes listRowShine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.list-row-touchable:active {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.list-row-blink {
+  animation: listRowBlink 1.5s ease-in-out;
+}
+
+.list-row-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: listRowShine 1s ease-in-out;
+}
+
+/* ListRow.Skeleton 컴포넌트 */
+@keyframes listRowPulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ConfirmModal 컴포넌트 (fadeIn, scaleIn 은 상단에 이미 정의됨) */
+
+/* BottomSheet 컴포넌트 */
+@keyframes bottomSheetSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: bottomSheetSlideUp 0.25s ease-out;
+}
+
+/* TransactionHistoryList 컴포넌트 */
+@keyframes txFadeSlide {
+  from { opacity: 0; transform: translateY(0.75em); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CardSwiper 컴포넌트 */
+@keyframes cardShake {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-1.5deg); }
+  30% { transform: rotate(1.5deg); }
+  50% { transform: rotate(-1deg); }
+  70% { transform: rotate(1deg); }
+  90% { transform: rotate(-0.5deg); }
+}
+
+/* Skeleton 컴포넌트 */
+@keyframes skeletonPulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

@@ -1,0 +1,106 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "front-app"
+        CONTAINER_NAME = "petfolio-fe"
+        HOST_PORT = "3000"
+        
+        // ✅ Next.js 빌드 시 주입될 환경 변수 리스트
+        NEXT_PUBLIC_API_URL = "https://j14a608.p.ssafy.io"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '📦 Checking out code...'
+                checkout scm
+            }
+        }
+
+        stage('Prepare Build') {
+            steps {
+                script {
+                    dir('petfolio-fe') {
+                        echo '🧹 Cleaning up old build artifacts...'
+                        sh 'rm -rf .next'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('petfolio-fe') {
+                        echo "🔨 Building Docker image (No-Cache) for branch: ${env.BRANCH_NAME}"
+                        sh """
+                            docker build --no-cache \
+                            --build-arg NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
+                            -t ${DOCKER_IMAGE}:${BUILD_NUMBER} .
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Stop Old Container') {
+            when { branch 'develop-fe' }
+            steps {
+                script {
+                    echo '🛑 Stopping old container...'
+                    sh "docker stop ${CONTAINER_NAME} || true"
+                    sh "docker rm ${CONTAINER_NAME} || true"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when { branch 'develop-fe' }
+            steps {
+                script {
+                    echo "🚀 Deploying version ${BUILD_NUMBER}..."
+                    sh """
+                        docker run -d \
+                        --name ${CONTAINER_NAME} \
+                        -p ${HOST_PORT}:3000 \
+                        --restart unless-stopped \
+                        ${DOCKER_IMAGE}:${BUILD_NUMBER}
+                    """
+                }
+            }
+        }
+
+
+        stage('Health Check') {
+            when { branch 'develop-fe' }
+            steps {
+                script {
+                    echo '🏥 Checking container health...'
+                    retry(5) {
+                        sleep(time: 10, unit: 'SECONDS')
+                        sh "docker exec ${CONTAINER_NAME} wget -q --spider http://localhost:3000"
+                    }
+                }
+            }
+        }
+
+        stage('Cleanup Old Images') {
+            when { branch 'develop-fe' }
+            steps {
+                script {
+                    sh 'docker image prune -f'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment Successful! (Build: ${env.BUILD_NUMBER})"
+        }
+        failure {
+            echo "❌ Deployment Failed!"
+        }
+    }
+}
