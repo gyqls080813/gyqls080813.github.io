@@ -1,6 +1,19 @@
 ---
 layout: default
 ---
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          background: '#121212',
+          primary: '#dc2626'
+        }
+      }
+    }
+  }
+</script>
 
 <style>
 /* ============================================
@@ -276,34 +289,10 @@ body { overflow: hidden; }
 <div class="app-shell">
     <a href="{{ '/' | relative_url }}" class="tour-home-btn">← 홈페이지</a>
 
-    <!-- MOCK HEADER -->
-    <div class="app-header">
-        <div class="header-logo">
-            {% if page.app_logo %}
-            <img src="{{ page.app_logo | relative_url }}" alt="Logo">
-            {% else %}
-            <h2 style="color:red; font-weight:900; margin:0;">{{ page.title }}</h2>
-            {% endif %}
-        </div>
-        
-        <div class="header-nav" id="mock-nav">
-            <!-- Driven by JS / Markdown data -->
-            <div class="nav-item active">홈</div>
-            <div class="nav-item">탐색</div>
-            <div class="nav-item">내 파티</div>
-        </div>
-
-        <div class="header-actions">
-            <!-- Mypage button can be a hotspot target too! -->
-            <div class="action-icon mypage-btn" id="nav-mypage">
-                <img src="/WITHY/docs/assets/images/프로필사진_강영욱.jpg" alt="Profile" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';">
-            </div>
-            <!-- Dynamic hotspot on the header itself, controlled by absolute positioning -->
-        </div>
-    </div>
-
+    <!-- MOCK HEADER (To be driven by withy.md or injected content, we remove the hardcoded header because withy.md will provide the layout using real components) -->
+    
     <!-- MAIN VIEWPORT -->
-    <div class="app-viewport">
+    <div class="app-viewport flex flex-col h-full bg-background" style="flex:1;">
         <!-- Rendered screens driven by Markdown data JSON -->
         <div id="screens-container">
             {{ content }} <!-- Markdown content will provide hidden JSON/HTML data -->
@@ -407,13 +396,46 @@ document.addEventListener("DOMContentLoaded", function() {
                     currentStepIdx++;
                     renderStep(currentStepIdx);
                 };
+            } else if (step.targetId) {
+                // Attach hotspot to dynamic DOM element
+                var targetEl = document.getElementById(step.targetId);
+                if(targetEl) {
+                    var rect = targetEl.getBoundingClientRect();
+                    hotspot.style.display = 'block';
+                    hotspot.style.top = rect.top + 'px';
+                    hotspot.style.left = rect.left + 'px';
+                    hotspot.style.width = rect.width + 'px';
+                    hotspot.style.height = rect.height + 'px';
+                    
+                    // Hook window resize to re-calc
+                    window.onresize = function() {
+                        if(hotspot.classList.contains('active')) {
+                            var r = targetEl.getBoundingClientRect();
+                            hotspot.style.top = r.top + 'px';
+                            hotspot.style.left = r.left + 'px';
+                            hotspot.style.width = r.width + 'px';
+                            hotspot.style.height = r.height + 'px';
+                        }
+                    };
+                    
+                    setTimeout(function() { hotspot.classList.add('active'); }, 300);
+                    
+                    targetEl.onclick = function() {
+                        hotspot.classList.remove('active');
+                        targetEl.onclick = null;
+                        currentStepIdx++;
+                        renderStep(currentStepIdx);
+                    };
+                    hotspot.onclick = function() {
+                        hotspot.classList.remove('active');
+                        hotspot.onclick = null;
+                        currentStepIdx++;
+                        renderStep(currentStepIdx);
+                    };
+                }
             } else if (step.hotspotBox) {
                 // A box drawn over the screen image
                 hotspot.style.display = 'block';
-                hotspot.style.top = step.hotspotBox.top;
-                hotspot.style.left = step.hotspotBox.left;
-                hotspot.style.width = step.hotspotBox.width;
-                hotspot.style.height = step.hotspotBox.height;
                 // Defer adding active class for animation pop
                 setTimeout(function() { hotspot.classList.add('active'); }, 300);
                 
