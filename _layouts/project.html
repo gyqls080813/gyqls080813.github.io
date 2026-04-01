@@ -53,14 +53,13 @@ layout: default
 }
 
 .pres-wrapper.active {
-    display: flex;
+    display: block;
 }
 
 /* Single Slide */
 .pres-slide {
     position: absolute;
     inset: 0;
-    display: flex;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -71,38 +70,37 @@ layout: default
     pointer-events: auto;
 }
 
-/* Left: App Screen */
+/* Base App Screen Background */
 .pres-screen {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0f0f0f;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
+    position: absolute;
+    inset: 0;
+    background: #000;
+    z-index: 1;
 }
 
 .pres-screen img {
-    max-width: 90%;
-    max-height: 85vh;
-    object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-    border: 1px solid rgba(255,255,255,0.05);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
 }
 
-/* Right: Description */
+/* Right: Glassmorphic Overlay Panel */
 .pres-info {
-    width: 420px;
-    min-width: 350px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 450px;
+    z-index: 2;
+    background: rgba(17, 17, 22, 0.85);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255,255,255,0.08);
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 3rem;
-    background: #111116;
-    border-left: 1px solid rgba(255,255,255,0.06);
-    position: relative;
+    box-shadow: -10px 0 50px rgba(0,0,0,0.5);
 }
 
 .pres-step-label {
@@ -223,14 +221,20 @@ layout: default
     color: #fff;
 }
 
-/* Mobile: Stack vertically */
+/* Mobile: Adapt */
 @media (max-width: 900px) {
-    .pres-slide { flex-direction: column; }
-    .pres-screen { height: 50vh; flex: none; }
     .pres-info { 
-        width: 100%; min-width: 0; flex: 1;
+        width: 100%;
+        height: 50vh;
+        top: auto;
+        bottom: 0;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.08);
         padding: 2rem;
         overflow-y: auto;
+    }
+    .pres-screen {
+        bottom: 50vh;
     }
     .pres-nav { bottom: 1.5rem; left: 2rem; right: 2rem; }
 }
