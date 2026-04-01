@@ -2,154 +2,230 @@
 layout: default
 ---
 
-<!-- 1. Intro Section -->
-<div class="split-hero">
-    <div class="split-hero__left">
-        <!-- 왼쪽 절반 (사진 영역) -->
-        <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="이민엽 프론트엔드 개발자" class="profile-img">
-    </div>
-    <div class="split-hero__right">
-        <div class="hero-content">
-            <h1 class="hero-greeting fade-up">안녕하세요, 이민엽입니다.</h1>
-            <p class="hero-philosophy fade-up" style="animation-delay: 0.1s;">
-                저는 직관적인 사용자 인터페이스와<br />누구나 읽기 좋은 코드를 지향하는 프론트엔드 개발자입니다.
-            </p>
+<style>
+/* CSS for Smooth Crossfade Sticky Layout */
+.single-sticky-left {
+    position: sticky !important;
+    top: 0;
+    height: 100vh;
+    background: var(--bg-card);
+}
 
-            <div class="hero-tech-wrapper fade-up" style="animation-delay: 0.2s;">
-                <span class="section-title section-title--sm">Tech Stack</span>
-                <div class="tech-bento">
-                    <div class="tech-bento-cell full frontend-cell">
-                        <p class="bento-label">Frontend</p>
-                        <div class="skills">
-                            <span class="skill-badge html">HTML</span>
-                            <span class="skill-badge css">CSS</span>
-                            <span class="skill-badge js">JavaScript</span>
-                            <span class="skill-badge ts">TypeScript</span>
+.sticky-fade-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+}
+
+.sticky-fade-img.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* On mobile, disable the sticky fade effect and show individual card covers instead */
+@media (max-width: 900px) {
+    .single-sticky-left {
+        height: 40vh !important;
+        position: relative !important;
+        top: auto !important;
+    }
+    .sticky-fade-img { display: none; }
+    .sticky-fade-img#img-0 { display: block; opacity: 1 !important; }
+    .portfolio-shortcut-card__cover { display: block !important; }
+}
+
+@media (min-width: 901px) {
+    .portfolio-shortcut-card__cover { display: none !important; }
+}
+</style>
+
+<div class="split-hero">
+    <!-- Single Sticky Left Pane -->
+    <div class="split-hero__left single-sticky-left">
+        <!-- 0: Profile -->
+        <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="이민엽 프론트엔드 개발자" class="sticky-fade-img active" id="img-0" style="object-fit: cover;">
+        <!-- 1: Withy -->
+        <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview" class="sticky-fade-img" id="img-1" style="object-fit: contain; padding: 15%;">
+        <!-- 2: petFelio -->
+        <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview" class="sticky-fade-img" id="img-2" style="object-fit: contain; padding: 15%;">
+        
+        <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, var(--bg-primary) 100%); pointer-events: none; z-index: 5;"></div>
+    </div>
+
+    <!-- Scrolling Right Pane with All Sections -->
+    <div class="split-hero__right" style="padding: 0; display: block; background: var(--bg-primary);">
+        
+        <!-- Section 0: Intro -->
+        <div class="scroll-section" data-img="0" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center;">
+            <div class="hero-content">
+                <h1 class="hero-greeting fade-up">안녕하세요, 이민엽입니다.</h1>
+                <p class="hero-philosophy fade-up" style="animation-delay: 0.1s;">
+                    저는 직관적인 사용자 인터페이스와<br />누구나 읽기 좋은 코드를 지향하는 프론트엔드 개발자입니다.
+                </p>
+
+                <div class="hero-tech-wrapper fade-up" style="animation-delay: 0.2s;">
+                    <span class="section-title section-title--sm">Tech Stack</span>
+                    <div class="tech-bento">
+                        <div class="tech-bento-cell full frontend-cell">
+                            <p class="bento-label">Frontend</p>
+                            <div class="skills">
+                                <span class="skill-badge html">HTML</span>
+                                <span class="skill-badge css">CSS</span>
+                                <span class="skill-badge js">JavaScript</span>
+                                <span class="skill-badge ts">TypeScript</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tech-bento-cell framework-cell">
-                        <p class="bento-label">Framework</p>
-                        <div class="skills">
-                            <span class="skill-badge react">React</span>
-                            <span class="skill-badge next">Next.js</span>
+                        <div class="tech-bento-cell framework-cell">
+                            <p class="bento-label">Framework</p>
+                            <div class="skills">
+                                <span class="skill-badge react">React</span>
+                                <span class="skill-badge next">Next.js</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tech-bento-cell other-cell">
-                        <p class="bento-label">Language & Tools</p>
-                        <div class="skills">
-                            <span class="skill-badge python">Python</span>
-                            <span class="skill-badge git">Git</span>
-                            <span class="skill-badge">GitHub</span>
+                        <div class="tech-bento-cell other-cell">
+                            <p class="bento-label">Language & Tools</p>
+                            <div class="skills">
+                                <span class="skill-badge python">Python</span>
+                                <span class="skill-badge git">Git</span>
+                                <span class="skill-badge">GitHub</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="scroll-prompt fade-up" style="animation-delay: 0.4s; margin-top: 3.5rem; text-align: center;">
-                <p style="color: var(--text-3); font-size: 0.75rem; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Scroll to Explore</p>
-                <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-3) 0%, transparent 100%); margin: 0 auto;"></div>
+                <div class="scroll-prompt fade-up" style="animation-delay: 0.4s; margin-top: 3.5rem; text-align: center;">
+                    <p style="color: var(--text-3); font-size: 0.75rem; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Scroll to Explore</p>
+                    <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-3) 0%, transparent 100%); margin: 0 auto;"></div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- 2. Project 1: Withy -->
-<div class="split-hero">
-    <div class="split-hero__left">
-        <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview" class="profile-img" style="object-fit: contain; padding: 15%; opacity: 0.95;">
-    </div>
-    <div class="split-hero__right">
-        <div class="hero-content">
-            <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s;">
-                <span class="section-title section-title--sm" style="display: block; margin-bottom: 2rem;">Projects</span>
-                <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
-                    <a href="{{ '/WITHY/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-withy">
-                        <div class="portfolio-shortcut-card__accent withy-accent"></div>
-                        <div class="portfolio-shortcut-card__body">
-                            <div class="portfolio-shortcut-card__header">
-                                <div class="portfolio-shortcut-card__icon">🎬</div>
-                                <div>
-                                    <h3 class="portfolio-shortcut-card__title">01. Withy</h3>
-                                    <p class="portfolio-shortcut-card__desc">실시간 영상 동기화 & AI 클린 채팅 플랫폼</p>
-                                </div>
+        <!-- Section 1: Withy -->
+        <div class="scroll-section" data-img="1" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center; position: relative;">
+            <div class="hero-content">
+                <div class="hero-portfolio-wrapper fade-up">
+                    <span class="section-title section-title--sm" style="display: block; margin-bottom: 2rem; color: var(--text-2);">Portfolio Projects</span>
+                    <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
+                        <a href="{{ '/WITHY/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-withy" style="transform: none; box-shadow: none; cursor: default; border-color: transparent; background: transparent;">
+                            <div class="portfolio-shortcut-card__accent withy-accent" style="opacity: 0.3;"></div>
+                            <!-- Mobile fallback cover image -->
+                            <div class="portfolio-shortcut-card__cover">
+                                <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview">
                             </div>
-                            <div class="portfolio-shortcut-card__content">
-                                <p class="portfolio-shortcut-card__summary">
-                                    타임라인 동기화를 통한 지연 없는 OTT 영상 같이보기 서비스입니다. 
-                                    gRPC 기반 분석 모듈과 Kafka, Redis를 조합하여 채팅 입력 즉시 욕설 및 스포일러를 차단하는 지능형 통신 아키텍처를 구현했습니다.
-                                </p>
-                                <div class="portfolio-shortcut-card__tech-wrapper">
-                                    <span class="tech-label">Tech Stack</span>
-                                    <div class="portfolio-shortcut-card__tags">
-                                        <span class="project-tag">React</span>
-                                        <span class="project-tag">Spring Boot</span>
-                                        <span class="project-tag">WebSocket</span>
-                                        <span class="project-tag">gRPC</span>
-                                        <span class="project-tag">Kafka</span>
-                                        <span class="project-tag">Redis</span>
+                            <div class="portfolio-shortcut-card__body">
+                                <div class="portfolio-shortcut-card__header">
+                                    <div class="portfolio-shortcut-card__icon">🎬</div>
+                                    <div>
+                                        <h3 class="portfolio-shortcut-card__title">01. Withy</h3>
+                                        <p class="portfolio-shortcut-card__desc">실시간 영상 동기화 & AI 클린 채팅 플랫폼</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="portfolio-shortcut-card__arrow">Explore Project →</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 3. Project 2: petFelio -->
-<div class="split-hero">
-    <div class="split-hero__left">
-        <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview" class="profile-img" style="object-fit: contain; padding: 15%;">
-    </div>
-    <div class="split-hero__right">
-        <div class="hero-content">
-            <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s;">
-                <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
-                    <a href="{{ '/Petfelio/petfolio-fe/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-petfelio">
-                        <div class="portfolio-shortcut-card__accent petfelio-accent"></div>
-                        <div class="portfolio-shortcut-card__body">
-                            <div class="portfolio-shortcut-card__header">
-                                <div class="portfolio-shortcut-card__icon">🐾</div>
-                                <div>
-                                    <h3 class="portfolio-shortcut-card__title">02. petFelio</h3>
-                                    <p class="portfolio-shortcut-card__desc">반려동물 가계부 & AI 건강관리 서비스</p>
-                                </div>
-                            </div>
-                            <div class="portfolio-shortcut-card__content">
-                                <p class="portfolio-shortcut-card__summary">
-                                    반려동물 양육비를 세밀하게 기록·분석할 수 있는 전용 가계부 기능과, 
-                                    사용자의 입력 데이터를 기반으로 맞춤형 리포트 및 AI 건강 가이드를 제공하여 체계적인 펫케어를 돕는 서비스입니다.
-                                </p>
-                                <div class="portfolio-shortcut-card__tech-wrapper">
-                                    <span class="tech-label">Tech Stack</span>
-                                    <div class="portfolio-shortcut-card__tags">
-                                        <span class="project-tag">Next.js 16</span>
-                                        <span class="project-tag">TypeScript</span>
-                                        <span class="project-tag">TailwindCSS</span>
-                                        <span class="project-tag">React Query</span>
-                                        <span class="project-tag">Effect</span>
+                                <div class="portfolio-shortcut-card__content">
+                                    <p class="portfolio-shortcut-card__summary">
+                                        타임라인 동기화를 통한 지연 없는 OTT 영상 같이보기 서비스입니다. 
+                                        gRPC 기반 분석 모듈과 Kafka, Redis를 조합하여 채팅 입력 즉시 욕설 및 스포일러를 차단하는 지능형 통신 아키텍처를 구현했습니다.
+                                    </p>
+                                    <div class="portfolio-shortcut-card__tech-wrapper">
+                                        <span class="tech-label">Tech Stack</span>
+                                        <div class="portfolio-shortcut-card__tags">
+                                            <span class="project-tag">React</span>
+                                            <span class="project-tag">Spring Boot</span>
+                                            <span class="project-tag">WebSocket</span>
+                                            <span class="project-tag">gRPC</span>
+                                            <span class="project-tag">Kafka</span>
+                                            <span class="project-tag">Redis</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="portfolio-shortcut-card__arrow" style="pointer-events: auto; padding-top:1rem;"><span style="cursor: pointer; text-decoration: underline;">Explore Project →</span></div>
                             </div>
-                            <div class="portfolio-shortcut-card__arrow">Explore Project →</div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Section 2: petFelio -->
+        <div class="scroll-section" data-img="2" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center;">
+            <div class="hero-content">
+                <div class="hero-portfolio-wrapper fade-up">
+                    <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
+                        <a href="{{ '/Petfelio/petfolio-fe/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-petfelio" style="transform: none; box-shadow: none; cursor: default; border-color: transparent; background: transparent;">
+                            <div class="portfolio-shortcut-card__accent petfelio-accent" style="opacity: 0.3;"></div>
+                            <!-- Mobile fallback cover image -->
+                            <div class="portfolio-shortcut-card__cover">
+                                <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview">
+                            </div>
+                            <div class="portfolio-shortcut-card__body">
+                                <div class="portfolio-shortcut-card__header">
+                                    <div class="portfolio-shortcut-card__icon">🐾</div>
+                                    <div>
+                                        <h3 class="portfolio-shortcut-card__title">02. petFelio</h3>
+                                        <p class="portfolio-shortcut-card__desc">반려동물 가계부 & AI 건강관리 서비스</p>
+                                    </div>
+                                </div>
+                                <div class="portfolio-shortcut-card__content">
+                                    <p class="portfolio-shortcut-card__summary">
+                                        반려동물 양육비를 세밀하게 기록·분석할 수 있는 전용 가계부 기능과, 
+                                        사용자의 입력 데이터를 기반으로 맞춤형 리포트 및 AI 건강 가이드를 제공하여 체계적인 펫케어를 돕는 서비스입니다.
+                                    </p>
+                                    <div class="portfolio-shortcut-card__tech-wrapper">
+                                        <span class="tech-label">Tech Stack</span>
+                                        <div class="portfolio-shortcut-card__tags">
+                                            <span class="project-tag">Next.js 16</span>
+                                            <span class="project-tag">TypeScript</span>
+                                            <span class="project-tag">TailwindCSS</span>
+                                            <span class="project-tag">React Query</span>
+                                            <span class="project-tag">Effect</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portfolio-shortcut-card__arrow" style="pointer-events: auto; padding-top:1rem;"><span style="cursor: pointer; text-decoration: underline;">Explore Project →</span></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
 <script>
     (function () {
+        // Fade-up animations for text
         var obs = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {
                 if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
             });
         }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
         document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
+
+        // Scroll listener for sticky left panel crossfade
+        var sections = document.querySelectorAll('.scroll-section');
+        var images = document.querySelectorAll('.sticky-fade-img');
+        
+        var scrollObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    var targetImgIdx = entry.target.getAttribute('data-img');
+                    images.forEach(function(img) {
+                        img.classList.remove('active');
+                    });
+                    var activeImg = document.getElementById('img-' + targetImgIdx);
+                    if (activeImg) {
+                        activeImg.classList.add('active');
+                    }
+                }
+            });
+        }, { threshold: 0.5 }); // Fire when element is 50% in view
+
+        sections.forEach(function(sec) {
+            scrollObs.observe(sec);
+        });
     })();
 </script>
