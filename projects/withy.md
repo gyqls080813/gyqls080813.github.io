@@ -94,11 +94,11 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
             <div class="flex items-center gap-3">
                 <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
-                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
-                    <svg class="lucide"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="document.getElementById('friends-panel').classList.toggle('translate-x-full'); document.getElementById('chat-panel').classList.add('translate-x-full');">
+                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
-                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
-                    <svg class="lucide"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="document.getElementById('chat-panel').classList.toggle('translate-x-full'); document.getElementById('friends-panel').classList.add('translate-x-full');">
+                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 </button>
                 <!-- Target MyPage Button -->
                 <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
@@ -206,6 +206,123 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </div>
             </section>
         </main>
+
+        <!-- =======================
+             SLIDING PANELS 
+        ======================== -->
+        <!-- Chat Panel -->
+        <div id="chat-panel" class="absolute top-[80px] right-6 w-80 bg-[#161616] border border-white/10 rounded-2xl shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 z-50 h-[600px] overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-black/50">
+                <h3 class="font-bold text-white flex items-center gap-2">
+                    <svg class="lucide w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    채팅창
+                </h3>
+                <button onclick="document.getElementById('chat-panel').classList.add('translate-x-full')" class="text-neutral-500 hover:text-white cursor-pointer"><svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+            </div>
+            <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-4 text-sm">
+                <!-- Chat Messages -->
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-500 shrink-0 flex items-center justify-center font-bold text-xs border border-white/10 text-white">JW</div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1"><span class="font-bold text-white text-xs">Jiwon</span> <span class="text-[10px] text-neutral-500">14:23</span></div>
+                        <div class="bg-[#242424] text-neutral-200 px-3 py-2 rounded-r-xl rounded-bl-xl border border-white/5 shadow-sm inline-block">파티초대 보냈어요! 확인부탁드려요~</div>
+                    </div>
+                </div>
+                <div class="flex gap-3 flex-row-reverse">
+                    <div>
+                        <div class="flex justify-end mb-1"><span class="text-[10px] text-neutral-500">14:24</span></div>
+                        <div class="bg-red-600/90 text-white px-3 py-2 rounded-l-xl rounded-br-xl shadow-sm inline-block">네 지금 바로 들어갈게요!</div>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <div class="w-8 h-8 rounded-full bg-purple-500 shrink-0 flex items-center justify-center font-bold text-xs border border-white/10 text-white">MK</div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1"><span class="font-bold text-white text-xs">MinKyu</span> <span class="text-[10px] text-neutral-500">14:30</span></div>
+                        <div class="bg-[#242424] text-neutral-200 px-3 py-2 rounded-r-xl rounded-bl-xl border border-white/5 shadow-sm inline-block">오늘 아케인 정주행 같이하실 분 있나요? 😎</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-t border-white/10 bg-black/30">
+                <input type="text" placeholder="메시지를 입력하세요..." class="w-full bg-[#111116] border border-white/5 rounded-full px-4 py-2 text-sm text-white focus:outline-none focus:border-red-500/50">
+            </div>
+        </div>
+
+        <!-- Friends Panel -->
+        <div id="friends-panel" class="absolute top-[80px] right-6 w-80 bg-[#161616] border border-white/10 rounded-2xl shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 z-50 h-[600px] overflow-hidden">
+            <div class="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-black/50">
+                <h3 class="font-bold text-white flex items-center gap-2">
+                    <svg class="lucide w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    친구 목록
+                </h3>
+                <button onclick="document.getElementById('friends-panel').classList.add('translate-x-full')" class="text-neutral-500 hover:text-white cursor-pointer"><svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+            </div>
+            <div class="flex-1 p-3 overflow-y-auto">
+                <div class="mb-4 px-2 pt-2">
+                    <div class="text-[11px] font-bold text-neutral-500 uppercase tracking-wider mb-2">온라인 (3)</div>
+                    <div class="flex flex-col gap-1">
+                        <div class="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://ui-avatars.com/api/?name=Jiwon&background=3b82f6&color=fff&bold=true" class="w-9 h-9 rounded-full">
+                                    <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border border-[#161616]"></div>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm text-white">Jiwon</div>
+                                    <div class="text-[10px] text-green-400">Netflix 시청 중</div>
+                                </div>
+                            </div>
+                            <button class="w-6 h-6 rounded bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10"><svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+                        </div>
+                        <div class="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://ui-avatars.com/api/?name=AK&background=ec4899&color=fff&bold=true" class="w-9 h-9 rounded-full">
+                                    <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border border-[#161616]"></div>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm text-white">Ahyeon</div>
+                                    <div class="text-[10px] text-green-400">파티 대기실</div>
+                                </div>
+                            </div>
+                            <button class="w-6 h-6 rounded bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10"><svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+                        </div>
+                        <div class="flex items-center justify-between p-2 rounded-xl hover:bg-white/5 cursor-pointer transition">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://ui-avatars.com/api/?name=MinKyu&background=8b5cf6&color=fff&bold=true" class="w-9 h-9 rounded-full">
+                                    <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border border-[#161616]"></div>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-sm text-white">MinKyu</div>
+                                    <div class="text-[10px] text-neutral-400">온라인</div>
+                                </div>
+                            </div>
+                            <button class="w-6 h-6 rounded bg-white/5 flex items-center justify-center text-neutral-400 hover:text-white hover:bg-white/10"><svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-2 pt-2">
+                    <div class="text-[11px] font-bold text-neutral-600 uppercase tracking-wider mb-2">오프라인 (1)</div>
+                    <div class="flex items-center justify-between p-2 rounded-xl opacity-60">
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <img src="https://ui-avatars.com/api/?name=JH&background=64748b&color=fff&bold=true" class="w-9 h-9 rounded-full grayscale">
+                                <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-neutral-500 rounded-full border border-[#161616]"></div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-sm text-neutral-300">JongHyun</div>
+                                <div class="text-[10px] text-neutral-500">2일 전 접속</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-t border-white/10 bg-black/30">
+                <button class="w-full bg-white/5 hover:bg-white/10 text-neutral-300 font-bold text-sm py-2 rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer text-xs"><svg class="lucide w-3 h-3 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" x2="12" y1="5" y2="19"></line><line x1="5" x2="19" y1="12" y2="12"></line></svg> 친구 추가</button>
+            </div>
+        </div>
+
     </div>
 </div>
 
