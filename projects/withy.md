@@ -95,11 +95,11 @@ app_logo: /WITHY/public/withy/Withy_logo.png
             <div class="flex items-center gap-3">
                 <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
                 <!-- Friends Button -->
-                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('translate-x-full'); document.getElementById('chat-panel').classList.add('translate-x-full');">
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
                     <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
                 <!-- DM Chat Button -->
-                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('translate-x-full'); document.getElementById('friends-panel').classList.add('translate-x-full');">
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('hidden'); document.getElementById('friends-panel').classList.add('hidden');">
                     <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 </button>
                 <!-- Target MyPage Button -->
@@ -213,7 +213,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
              SLIDING PANELS 
         ======================== -->
         <!-- Chat Panel -->
-        <div id="chat-panel" class="absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 z-50 overflow-hidden ring-1 ring-black/5">
+        <div id="chat-panel" class="hidden absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden ring-1 ring-black/5">
             <style>
                 .red-scrollbar::-webkit-scrollbar { width: 6px; }
                 .red-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -226,7 +226,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </div>
                 <div class="flex items-center gap-1">
                     <button class="p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"></line></svg></button>
-                    <button onclick="document.getElementById('chat-panel').classList.add('translate-x-full')" class="p-1.5 hover:bg-red-500/20 rounded-lg text-zinc-400 hover:text-red-400 transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+                    <button onclick="document.getElementById('chat-panel').classList.add('hidden')" class="p-1.5 hover:bg-red-500/20 rounded-lg text-zinc-400 hover:text-red-400 transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
                 </div>
             </div>
             <div class="flex-1 bg-zinc-900 overflow-y-auto rounded-b-xl red-scrollbar">
@@ -268,10 +268,10 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         </div>
 
         <!-- Friends Panel -->
-        <div id="friends-panel" class="absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 z-50 overflow-hidden ring-1 ring-black/5">
+        <div id="friends-panel" class="hidden absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden ring-1 ring-black/5">
             <div class="flex-shrink-0 p-4 border-b border-zinc-700 bg-zinc-800">
                 <div class="mb-4 p-4 bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-xl shadow-sm relative">
-                    <button onclick="document.getElementById('friends-panel').classList.add('translate-x-full')" class="absolute top-3 right-3 p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+                    <button onclick="document.getElementById('friends-panel').classList.add('hidden')" class="absolute top-3 right-3 p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
                     <div class="flex items-center gap-3 mb-3">
                         <div class="relative">
                             <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" class="w-14 h-14 rounded-full object-cover border-2 border-zinc-600" alt="me">
