@@ -263,110 +263,177 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 </div>
 
 <!-- =======================
-     SCREEN 3: MY PAGE MOCKUP
+     SCREEN 3: MY PAGE MOCKUP (Real Zinc-900 Dark Theme Components)
 ======================== -->
-<div class="screen-view t-screen w-full h-full bg-[#111116] overflow-y-auto" id="screen-mypage">
-    <div class="max-w-5xl mx-auto text-white font-sans p-10 pb-20">
-        
-        <div class="flex items-center gap-4 mb-8 pb-5 border-b border-white/10">
-            <!-- Back Button to Home -->
-            <button class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all cursor-pointer" onclick="window.switchScreen('screen-home')">
-                <svg class="lucide w-6 h-6 text-white"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </button>
-            <h1 class="text-3xl font-black">마이페이지</h1>
+<div class="screen-view t-screen w-full h-full bg-black overflow-y-auto" id="screen-mypage">
+    
+    <!-- Header Component -->
+    <header class="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b border-zinc-800">
+      <div class="max-w-[1440px] mx-auto px-10 py-3 flex items-center gap-6">
+        <!-- 뒤로가기 버튼 -->
+        <button class="p-2 hover:bg-zinc-800 rounded-full transition-colors text-zinc-400 hover:text-white cursor-pointer" onclick="window.switchScreen('screen-home')" aria-label="뒤로 가기">
+          <svg class="lucide w-6 h-6"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+
+        <!-- 타이틀 영역 -->
+        <div>
+          <h1 class="text-2xl font-bold text-white tracking-tight">내 활동 & 프로필</h1>
+          <p class="text-sm text-zinc-500 mt-0.5">시청 기록 및 프로필 관리</p>
         </div>
+      </div>
+    </header>
+
+    <main class="max-w-[1440px] mx-auto px-10 py-12 text-white font-sans">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Profile Section -->
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center">
-                    <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&size=200&bold=true" class="w-32 h-32 rounded-full object-cover mb-5 border-4 border-red-600 shadow-xl" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';">
-                    <h2 class="text-2xl font-bold mb-2">GUEST 님</h2>
-                    <p class="text-neutral-400 mb-6 italic">"함께 볼 때 더 즐거운 OTT 라이프"</p>
-                    
-                    <div class="flex justify-center gap-4 w-full mb-6">
-                        <div class="bg-black/40 p-4 rounded-xl flex-1 border border-white/5">
-                            <div class="text-xs text-neutral-400 mb-1">팔로워</div>
-                            <div class="text-xl font-bold">1,240</div>
-                        </div>
-                        <div class="bg-black/40 p-4 rounded-xl flex-1 border border-white/5">
-                            <div class="text-xs text-neutral-400 mb-1">함께 본 파티</div>
-                            <div class="text-xl font-bold">38 회</div>
+        <!-- ProfileSection Component -->
+        <section class="w-full bg-zinc-900 border border-zinc-800 rounded-[30px] p-6 lg:p-8 shadow-sm mb-12">
+            <div class="flex flex-wrap items-end justify-center xl:justify-between gap-y-8 gap-x-6">
+                <!-- User Info -->
+                <div class="flex flex-col md:flex-row items-center gap-6 lg:gap-10 shrink-0">
+                    <div class="relative shrink-0">
+                        <div class="w-20 h-20 rounded-full overflow-hidden border border-zinc-700 bg-zinc-800">
+                            <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" alt="Profile" class="w-full h-full object-cover">
                         </div>
                     </div>
-                    
-                    <button class="w-full py-3 bg-red-600 hover:bg-red-700 rounded-xl font-bold transition">프로필 수정</button>
+
+                    <div class="flex flex-col md:flex-row gap-4 md:gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-zinc-400 ml-1">닉네임</label>
+                            <div class="flex items-center gap-3 px-4 py-3 bg-black border border-zinc-800 rounded-xl w-[240px] text-white">
+                                <span class="text-sm truncate font-medium">GUEST 님</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-bold text-zinc-400 ml-1">이메일</label>
+                            <div class="flex items-center gap-3 px-4 py-3 bg-black border border-zinc-800 rounded-xl w-[240px] text-white">
+                                <svg class="lucide w-4 h-4 text-zinc-500"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <span class="text-sm truncate font-medium">guest@withy.com</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Stats Section -->
-                <div class="col-span-2 flex flex-col gap-8">
-                    <!-- Platform Stats -->
-                    <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2">📊 최근 시청 플랫폼 통계</h3>
-                        <div class="flex items-end gap-6 h-48 pb-4 border-b border-white/10">
-                            
-                            <!-- Graph Bars -->
-                            <div class="flex-1 flex flex-col justify-end items-center gap-3">
-                                <div class="w-16 h-40 bg-red-600 rounded-t-lg relative group">
-                                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-xs py-1 px-2 rounded hidden group-hover:block">120h</div>
-                                </div>
-                                <span class="text-sm font-bold text-neutral-400">Netflix</span>
-                            </div>
-                            <div class="flex-1 flex flex-col justify-end items-center gap-3">
-                                <div class="w-16 h-24 bg-red-500 rounded-t-lg relative group">
-                                     <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-xs py-1 px-2 rounded hidden group-hover:block">64h</div>
-                                </div>
-                                <span class="text-sm font-bold text-neutral-400">YouTube</span>
-                            </div>
-                            <div class="flex-1 flex flex-col justify-end items-center gap-3">
-                                <div class="w-16 h-16 bg-blue-600 rounded-t-lg relative group">
-                                     <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-xs py-1 px-2 rounded hidden group-hover:block">48h</div>
-                                </div>
-                                <span class="text-sm font-bold text-neutral-400">Watcha</span>
-                            </div>
-                            <div class="flex-1 flex flex-col justify-end items-center gap-3">
-                                <div class="w-16 h-10 bg-purple-500 rounded-t-lg relative group">
-                                     <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-xs py-1 px-2 rounded hidden group-hover:block">12h</div>
-                                </div>
-                                <span class="text-sm font-bold text-neutral-400">Twitch</span>
-                            </div>
-
-                        </div>
-                    </div>
-                    
-                    <!-- History -->
-                    <div class="bg-white/5 p-8 rounded-2xl border border-white/10 flex-1">
-                        <h3 class="text-xl font-bold mb-6 flex items-center gap-2">🕒 최근 파티 참여 히스토리</h3>
-                        <div class="flex flex-col gap-3">
-                            <div class="p-4 bg-black/40 rounded-xl border border-white/5 flex justify-between items-center hover:bg-white/5 transition cursor-pointer">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center shrink-0 border border-white/10">
-                                        <svg class="lucide w-5 h-5 text-red-500"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-bold mb-1">하울의 움직이는 성 같이보기</div>
-                                        <div class="text-xs text-neutral-500">어제 · 플랫폼: Netflix · 15명 참여</div>
-                                    </div>
-                                </div>
-                                <div class="text-teal-400 font-bold text-sm bg-teal-400/10 px-3 py-1 rounded-full">시청 완료</div>
-                            </div>
-                            <div class="p-4 bg-black/40 rounded-xl border border-white/5 flex justify-between items-center hover:bg-white/5 transition cursor-pointer">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center shrink-0 border border-white/10">
-                                        <svg class="lucide w-5 h-5 text-red-500"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                    </div>
-                                    <div>
-                                        <div class="font-bold mb-1">아케인 정주행 파티 (1-3화)</div>
-                                        <div class="text-xs text-neutral-500">3일 전 · 플랫폼: Netflix · 42명 참여</div>
-                                    </div>
-                                </div>
-                                <div class="text-teal-400 font-bold text-sm bg-teal-400/10 px-3 py-1 rounded-full">시청 완료</div>
-                            </div>
-                        </div>
-                    </div>
-                    
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-2 w-full xl:w-auto pb-1">
+                    <button class="flex items-center justify-center gap-2 px-4 py-[11px] bg-zinc-800 hover:bg-zinc-700 rounded-xl text-sm font-bold text-white transition-colors border border-zinc-700 whitespace-nowrap cursor-pointer">
+                        <svg class="lucide w-4 h-4"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        정보 수정
+                    </button>
+                    <button class="flex items-center justify-center gap-2 px-4 py-[11px] bg-zinc-800 hover:bg-zinc-700 rounded-xl text-sm font-bold text-white transition-colors border border-zinc-700 whitespace-nowrap cursor-pointer">
+                        <svg class="lucide w-4 h-4"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        내 카테고리
+                    </button>
+                    <button class="flex items-center justify-center gap-2 px-4 py-[11px] bg-red-900/40 hover:bg-red-900/60 rounded-xl text-sm font-bold text-red-200 transition-colors border border-red-900/30 whitespace-nowrap cursor-pointer">
+                        로그아웃
+                    </button>
                 </div>
             </div>
+        </section>
+
+        <div class="space-y-12">
+            <!-- HostedPartySection Component -->
+            <section class="border border-zinc-800 p-10 rounded-3xl shadow-sm bg-zinc-900 relative overflow-hidden">
+                <div class="flex flex-wrap items-center justify-between mb-8 gap-4">
+                    <div class="flex items-center gap-4">
+                        <h2 class="text-xl font-bold text-white">내가 만든 파티</h2>
+                        <div class="text-gray-400 text-sm font-bold bg-zinc-800 px-3 py-1 rounded-full">2개</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)]">Netflix</button>
+                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700">YouTube</button>
+                    </div>
+                </div>
+
+                <div class="flex gap-2 mb-6">
+                    <button class="flex items-center gap-2 px-4 py-2 bg-zinc-800/50 text-gray-400 hover:bg-zinc-800 hover:text-white rounded-xl transition-all font-bold text-sm border border-zinc-800 cursor-pointer">
+                        <svg class="lucide w-4 h-4"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <span>파티 관리</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="relative group aspect-[2/3] bg-zinc-800 rounded-xl overflow-hidden cursor-pointer hover:border hover:border-red-500">
+                        <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+                            <span class="px-2 py-0.5 bg-red-600 rounded text-[10px] font-bold">OTT</span>
+                            <div class="text-sm font-bold mt-1 shadow-sm">하울의 움직이는 성</div>
+                            <div class="absolute top-2 right-2 flex items-center gap-1.5 px-2 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-bold text-white/70">
+                                <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> 진행중
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group aspect-[2/3] bg-zinc-800 rounded-xl overflow-hidden cursor-pointer hover:border hover:border-red-500">
+                        <img src="https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+                            <span class="px-2 py-0.5 bg-red-600 rounded text-[10px] font-bold">OTT</span>
+                            <div class="text-sm font-bold mt-1 shadow-sm">아케인 시즌 2</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HistorySection Component -->
+            <section class="border border-zinc-800 p-10 rounded-3xl shadow-sm bg-zinc-900 mb-20">
+                <div class="flex items-center justify-between mb-10">
+                    <h2 class="text-xl font-bold text-white">시청 기록</h2>
+                    <div class="flex gap-2">
+                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)]">Netflix</button>
+                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700">YouTube</button>
+                    </div>
+                </div>
+
+                <div class="space-y-12">
+                    <!-- Date Group -->
+                    <div>
+                        <div class="flex items-center justify-between border-b border-zinc-800 pb-2 mb-8">
+                            <h3 class="text-lg font-bold text-white">2026-04-01</h3>
+                            <span class="text-zinc-500 text-sm font-bold">3개</span>
+                        </div>
+                        <div class="grid gap-x-6 gap-y-12 grid-cols-2 md:grid-cols-5">
+                            <div class="flex flex-col gap-3 group relative cursor-pointer">
+                                <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
+                                    <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
+                                    <!-- Progress Bar -->
+                                    <div class="absolute bottom-0 left-0 w-full h-1 bg-zinc-700">
+                                        <div class="h-full bg-red-600" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="px-1">
+                                    <h3 class="font-bold text-base text-white/90 truncate group-hover:text-white mb-1">하울의 움직이는 성</h3>
+                                    <p class="text-xs font-semibold text-zinc-500">시청 완료 (100%)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-3 group relative cursor-pointer">
+                                <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
+                                    <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4v6EDvWtWQ.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
+                                    <div class="absolute bottom-0 left-0 w-full h-1 bg-zinc-700">
+                                        <div class="h-full bg-red-600" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="px-1">
+                                    <h3 class="font-bold text-base text-white/90 truncate group-hover:text-white mb-1">데드풀과 울버린</h3>
+                                    <p class="text-xs font-semibold text-zinc-500">시청 완료 (100%)</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col gap-3 group relative cursor-pointer">
+                                <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
+                                    <img src="https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
+                                    <div class="absolute bottom-0 left-0 w-full h-1 bg-zinc-700">
+                                        <div class="h-full bg-red-600" style="width: 45%;"></div>
+                                    </div>
+                                </div>
+                                <div class="px-1">
+                                    <h3 class="font-bold text-base text-white/90 truncate group-hover:text-white mb-1">아케인 시즌 2</h3>
+                                    <p class="text-xs font-semibold text-zinc-500">진행 중 (45%)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </div>
+    </main>
 </div>
