@@ -94,10 +94,12 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
             <div class="flex items-center gap-3">
                 <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
-                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="document.getElementById('friends-panel').classList.toggle('translate-x-full'); document.getElementById('chat-panel').classList.add('translate-x-full');">
+                <!-- Friends Button -->
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('translate-x-full'); document.getElementById('chat-panel').classList.add('translate-x-full');">
                     <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
-                <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300 cursor-pointer hover:border-red-500 transition-colors" onclick="document.getElementById('chat-panel').classList.toggle('translate-x-full'); document.getElementById('friends-panel').classList.add('translate-x-full');">
+                <!-- DM Chat Button -->
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('translate-x-full'); document.getElementById('friends-panel').classList.add('translate-x-full');">
                     <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 </button>
                 <!-- Target MyPage Button -->
