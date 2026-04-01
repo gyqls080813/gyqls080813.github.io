@@ -268,86 +268,134 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         </div>
 
         <!-- Friends Panel -->
-        <div id="friends-panel" class="hidden absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden ring-1 ring-black/5">
-            <div class="flex-shrink-0 p-4 border-b border-zinc-700 bg-zinc-800">
-                <div class="mb-4 p-4 bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-xl shadow-sm relative">
-                    <button onclick="document.getElementById('friends-panel').classList.add('hidden')" class="absolute top-3 right-3 p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="relative">
-                            <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" class="w-14 h-14 rounded-full object-cover border-2 border-zinc-600" alt="me">
+        <div id="friends-panel" class="hidden absolute top-[80px] right-6 w-[380px] h-[580px] bg-[#141416] border border-white/5 rounded-xl shadow-2xl flex flex-col z-[100] overflow-hidden">
+            <!-- Header section (Profile) -->
+            <div class="p-4 pb-2 shrink-0">
+                <div class="bg-[#202022] border border-white/5 p-4 rounded-xl relative">
+                    <button onclick="document.getElementById('friends-panel').classList.add('hidden')" class="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors cursor-pointer">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+                    </button>
+                    
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-14 h-14 rounded-full bg-[#dc2626] flex items-center justify-center text-white font-bold text-xl border-2 border-transparent">
+                            GU
                         </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="font-bold text-white truncate">GUEST</p>
-                            <p class="text-[11px] text-zinc-400 truncate">guest@withy.com</p>
+                        <div class="flex-1 min-w-0 pr-6">
+                            <p class="font-bold text-white text-base truncate">GUEST</p>
+                            <p class="text-xs text-zinc-400 truncate mt-0.5">guest@withy.com</p>
                         </div>
                     </div>
-                    <div class="flex gap-2">
-                        <button onclick="window.switchScreen('screen-mypage')" class="flex-1 px-3 py-2 rounded-lg bg-zinc-700 text-zinc-200 text-xs font-semibold hover:bg-zinc-600 cursor-pointer transition-all flex items-center justify-center gap-1.5 shadow-sm border border-zinc-600">
-                            <svg class="lucide w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 프로필
+                    
+                    <div class="flex gap-2 w-full">
+                        <button onclick="window.switchScreen('screen-mypage')" class="flex-1 py-2 rounded-lg bg-[#27272a] hover:bg-[#3f3f46] text-zinc-200 text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer border border-white/5">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 프로필
                         </button>
-                        <button class="flex-1 px-3 py-2 rounded-lg bg-red-600 text-white text-xs font-semibold hover:bg-red-700 cursor-pointer transition-all flex items-center justify-center gap-1.5 shadow-sm border border-red-700">
-                            <svg class="lucide w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg> 로그아웃
+                        <button class="flex-1 py-2 rounded-lg bg-[#dc2626] hover:bg-[#b91c1c] text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer border border-[#b91c1c]">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg> 로그아웃
                         </button>
                     </div>
                 </div>
-                <div class="flex gap-2">
+
+                <!-- Search -->
+                <div class="flex gap-2 mt-4">
                     <div class="relative flex-1">
-                        <svg class="lucide absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
-                        <input type="text" placeholder="친구 검색..." class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-200 text-sm outline-none transition-all focus:ring-1 focus:ring-red-600 placeholder:text-zinc-500">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+                        <input type="text" placeholder="친구 검색..." class="w-full pl-9 pr-3 py-2.5 rounded-lg bg-[#202022] border border-white/5 text-zinc-200 text-sm outline-none focus:border-zinc-500 transition-colors">
                     </div>
-                    <button class="px-3 py-2.5 rounded-lg text-white cursor-pointer transition-all flex items-center shadow-sm bg-red-600 hover:bg-red-700">
-                        <svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+                    <button class="w-[42px] rounded-lg bg-[#dc2626] hover:bg-[#b91c1c] flex items-center justify-center text-white cursor-pointer transition-colors shadow-sm">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
                     </button>
                 </div>
             </div>
-            
-            <div class="flex-1 overflow-y-auto bg-zinc-900 scrollbar-hide">
-                <div class="p-6 pt-4 space-y-4">
-                    <div class="sticky top-0 bg-zinc-900 z-10 flex border-b border-zinc-700 mb-2">
-                        <button class="flex-1 py-3 text-sm font-bold cursor-pointer relative transition-all text-white border-b-2 border-white">친구 (2)</button>
-                        <button class="flex-1 py-3 text-sm font-bold cursor-pointer relative transition-all text-zinc-500 hover:text-zinc-300">신청 (0)</button>
-                        <button class="flex-1 py-3 text-sm font-bold cursor-pointer relative transition-all text-zinc-500 hover:text-zinc-300">차단 (0)</button>
-                    </div>
-                    <div class="flex gap-2 mb-2">
-                        <button class="flex-1 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer bg-red-900/30 text-red-400 border-2 border-red-700/50">온라인 (2)</button>
-                        <button class="flex-1 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer bg-zinc-800 text-zinc-500 border-2 border-transparent">오프라인 (0)</button>
-                    </div>
 
-                    <!-- List -->
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800/50 group cursor-pointer transition-all">
-                            <div class="relative flex-shrink-0">
-                                <img src="https://ui-avatars.com/api/?name=Jiwon&background=3b82f6&color=fff&bold=true" class="w-10 h-10 rounded-full object-cover bg-zinc-700">
-                                <div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-zinc-900"></div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-bold text-sm text-zinc-200 truncate">Jiwon</p>
-                                <p class="text-[11px] text-zinc-500 truncate">Netflix 시청 중</p>
-                            </div>
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button class="p-1.5 hover:bg-red-500/10 rounded-lg cursor-pointer transition-colors" title="메시지 보내기"><svg class="lucide w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
-                                <button class="p-1.5 hover:bg-zinc-800 rounded-lg cursor-pointer transition-colors" title="친구 삭제"><svg class="lucide w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                            </div>
+            <!-- Scrollable Area -->
+            <div class="flex-1 overflow-y-auto w-full px-4 scrollbar-hide pb-4">
+                <style>
+                    .scrollbar-hide::-webkit-scrollbar { display: none; }
+                    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+                </style>
+                
+                <!-- Main Tabs -->
+                <div class="flex border-b border-zinc-700/50 mb-4 sticky top-0 bg-[#141416] z-10 pt-2">
+                    <button class="flex-1 pb-3 text-sm font-bold border-b-2 border-white text-white">친구 (2)</button>
+                    <button class="flex-1 pb-3 text-sm font-bold text-zinc-500 hover:text-zinc-300 transition-colors">신청 (0)</button>
+                    <button class="flex-1 pb-3 text-sm font-bold text-zinc-500 hover:text-zinc-300 transition-colors">차단 (0)</button>
+                </div>
+
+                <!-- Sub Tabs (온라인/오프라인) -->
+                <div class="flex gap-2 mb-4">
+                    <button class="flex-1 py-1.5 rounded-md text-xs font-bold border border-[#7f1d1d] bg-[#450a0a]/40 text-[#fca5a5]">온라인 (2)</button>
+                    <button class="flex-1 py-1.5 rounded-md text-xs font-bold bg-[#27272a] text-zinc-500 hover:text-zinc-400 transition-colors">오프라인 (0)</button>
+                </div>
+
+                <!-- List Items -->
+                <div class="space-y-2">
+                    <!-- Jiwon -->
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-[#202022] hover:bg-[#27272a] group cursor-pointer transition-colors border border-transparent hover:border-white/5">
+                        <div class="relative w-12 h-12 shrink-0">
+                            <div class="w-full h-full rounded-full bg-[#3b82f6] flex items-center justify-center text-white font-bold text-lg">JI</div>
+                            <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#ef4444] rounded-full border-2 border-[#202022] group-hover:border-[#27272a]"></div>
                         </div>
+                        <div class="flex-1 min-w-0 pr-2">
+                            <p class="font-bold text-[15px] text-white truncate mb-0.5">Jiwon</p>
+                            <p class="text-[12px] text-zinc-500 truncate">Netflix 시청 중</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="p-1.5 rounded-md hover:bg-white/10 text-zinc-300 hover:text-white transition-colors" title="메시지" onclick="document.getElementById('friends-panel').classList.add('hidden'); document.getElementById('chat-panel').classList.remove('hidden');">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </button>
+                            <button class="p-1.5 rounded-md hover:bg-white/10 text-zinc-500 hover:text-white transition-colors" title="삭제">
+                                <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
 
-                        <div class="flex items-center gap-3 p-3 rounded-lg hover:bg-zinc-800/50 group cursor-pointer transition-all">
-                            <div class="relative flex-shrink-0">
-                                <img src="https://ui-avatars.com/api/?name=MinKyu&background=8b5cf6&color=fff&bold=true" class="w-10 h-10 rounded-full object-cover bg-zinc-700">
-                                <div class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-zinc-900"></div>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="font-bold text-sm text-zinc-200 truncate">MinKyu</p>
-                                <p class="text-[11px] text-zinc-500 truncate">접속 중</p>
-                            </div>
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button class="p-1.5 hover:bg-red-500/10 rounded-lg cursor-pointer transition-colors" title="메시지 보내기"><svg class="lucide w-4 h-4 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
-                                <button class="p-1.5 hover:bg-zinc-800 rounded-lg cursor-pointer transition-colors" title="친구 삭제"><svg class="lucide w-4 h-4 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                            </div>
+                    <!-- MinKyu -->
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-[#202022] hover:bg-[#27272a] group cursor-pointer transition-colors border border-transparent hover:border-white/5">
+                        <div class="relative w-12 h-12 shrink-0">
+                            <div class="w-full h-full rounded-full bg-[#8b5cf6] flex items-center justify-center text-white font-bold text-lg">MI</div>
+                            <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-[#ef4444] rounded-full border-2 border-[#202022] group-hover:border-[#27272a]"></div>
+                        </div>
+                        <div class="flex-1 min-w-0 pr-2">
+                            <p class="font-bold text-[15px] text-white truncate mb-0.5">MinKyu</p>
+                            <p class="text-[12px] text-zinc-500 truncate">접속 중</p>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="p-1.5 rounded-md hover:bg-white/10 text-zinc-300 hover:text-white transition-colors" title="메시지" onclick="document.getElementById('friends-panel').classList.add('hidden'); document.getElementById('chat-panel').classList.remove('hidden');">
+                                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </button>
+                            <button class="p-1.5 rounded-md hover:bg-white/10 text-zinc-500 hover:text-white transition-colors" title="삭제">
+                                <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            // Outside click closer for the side panels
+            document.addEventListener('click', function(event) {
+                const friendsPanel = document.getElementById('friends-panel');
+                const chatPanel = document.getElementById('chat-panel');
+                
+                // If the user clicks outside both panels AND outside the toggle buttons, hide them.
+                // We identify the toggle buttons by making sure the click doesn't bubble from them.
+                const isClickInsideFriends = friendsPanel && friendsPanel.contains(event.target);
+                const isClickInsideChat = chatPanel && chatPanel.contains(event.target);
+                // Hardcoding standard selector heuristic for the header buttons
+                const isClickInsideButtons = event.target.closest('header button');
+
+                if (!isClickInsideFriends && !isClickInsideChat && !isClickInsideButtons) {
+                    if (friendsPanel && !friendsPanel.classList.contains('hidden')) {
+                        friendsPanel.classList.add('hidden');
+                    }
+                    if (chatPanel && !chatPanel.classList.contains('hidden')) {
+                        chatPanel.classList.add('hidden');
+                    }
+                }
+            });
+        </script>
 
     </div>
 </div>
