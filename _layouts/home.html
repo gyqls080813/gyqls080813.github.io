@@ -3,12 +3,34 @@ layout: default
 ---
 
 <style>
-/* CSS for Smooth Crossfade Sticky Layout */
+/* 
+ * CSS for Deep Scroll-Jacking (Fixed Crossfade)
+ * Both Left Image and Right Text will stay pinned and fade smoothly based on scroll.
+ */
+.split-hero {
+    /* Base height for desktop to enable scrolling over the invisible track */
+    min-height: 300vh; 
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+}
+
 .single-sticky-left {
     position: sticky !important;
     top: 0;
     height: 100vh;
     background: var(--bg-card);
+    flex: 1;
+    overflow: hidden;
+}
+
+.single-sticky-right {
+    position: sticky !important;
+    top: 0;
+    height: 100vh;
+    background: var(--bg-primary);
+    flex: 1;
+    overflow: hidden;
 }
 
 .sticky-fade-img {
@@ -26,16 +48,80 @@ layout: default
     z-index: 2;
 }
 
-/* On mobile, disable the sticky fade effect and show individual card covers instead */
+.content-fade-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+    pointer-events: none; /* Ignore clicks when hidden */
+    transform: translateY(20px);
+}
+
+.content-fade-layer.active {
+    opacity: 1;
+    z-index: 2;
+    pointer-events: auto; /* Enable clicks when visible */
+    transform: translateY(0);
+}
+
+/* Invisible Scroll Track */
+.scroll-track-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-trigger {
+    height: 100vh; 
+    width: 1px;
+}
+
+/* Mobile Fallback: Native Scrolling */
 @media (max-width: 900px) {
+    .split-hero { 
+        display: block; 
+        min-height: auto;
+    } 
+    
     .single-sticky-left {
-        height: 40vh !important;
+        height: 60vh !important;
         position: relative !important;
         top: auto !important;
     }
     .sticky-fade-img { display: none; }
-    .sticky-fade-img#img-0 { display: block; opacity: 1 !important; }
+    .sticky-fade-img#img-0 { display: block; opacity: 1 !important; position: static !important; }
+    
+    .single-sticky-right {
+        height: auto !important;
+        position: relative !important;
+        overflow: visible !important;
+    }
+    
+    .content-fade-layer {
+        position: relative !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        height: auto !important;
+        padding: 2rem !important;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
     .portfolio-shortcut-card__cover { display: block !important; }
+    .scroll-track-container { display: none; }
 }
 
 @media (min-width: 901px) {
@@ -44,23 +130,27 @@ layout: default
 </style>
 
 <div class="split-hero">
-    <!-- Single Sticky Left Pane -->
-    <div class="split-hero__left single-sticky-left">
-        <!-- 0: Profile -->
+    
+    <!-- Invisible Scroll Track for Desktop Fade Timing -->
+    <div class="scroll-track-container">
+        <div class="scroll-trigger" data-index="0"></div>
+        <div class="scroll-trigger" data-index="1"></div>
+        <div class="scroll-trigger" data-index="2"></div>
+    </div>
+
+    <!-- Sticky Left Pane (Images) -->
+    <div class="single-sticky-left split-hero__left">
         <img src="{{ '/assets/img/profile.jpg' | relative_url }}" alt="이민엽 프론트엔드 개발자" class="sticky-fade-img active" id="img-0" style="object-fit: cover;">
-        <!-- 1: Withy -->
         <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview" class="sticky-fade-img" id="img-1" style="object-fit: contain; padding: 15%;">
-        <!-- 2: petFelio -->
         <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview" class="sticky-fade-img" id="img-2" style="object-fit: contain; padding: 15%;">
-        
         <div style="position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, var(--bg-primary) 100%); pointer-events: none; z-index: 5;"></div>
     </div>
 
-    <!-- Scrolling Right Pane with All Sections -->
-    <div class="split-hero__right" style="padding: 0; display: block; background: var(--bg-primary);">
+    <!-- Sticky Right Pane (Texts) -->
+    <div class="single-sticky-right split-hero__right">
         
-        <!-- Section 0: Intro -->
-        <div class="scroll-section" data-img="0" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center; margin-bottom: 35vh;">
+        <!-- Text 0: Intro -->
+        <div class="content-fade-layer active" id="text-0">
             <div class="hero-content">
                 <h1 class="hero-greeting fade-up">안녕하세요, 이민엽입니다.</h1>
                 <p class="hero-philosophy fade-up" style="animation-delay: 0.1s;">
@@ -97,22 +187,22 @@ layout: default
                     </div>
                 </div>
 
-                <div class="scroll-prompt fade-up" style="animation-delay: 0.4s; margin-top: 3.5rem; text-align: center;">
+                <div class="fade-up" style="animation-delay: 0.4s; margin-top: 3.5rem; text-align: center;">
                     <p style="color: var(--text-3); font-size: 0.75rem; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Scroll to Explore</p>
                     <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-3) 0%, transparent 100%); margin: 0 auto;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 1: Withy -->
-        <div class="scroll-section" data-img="1" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; margin: 35vh 0;">
+        <!-- Text 1: Withy -->
+        <div class="content-fade-layer" id="text-1">
             <div class="hero-content">
                 <div class="hero-portfolio-wrapper fade-up">
                     <span class="section-title section-title--sm" style="display: block; margin-bottom: 2rem; color: var(--text-2);">Portfolio Projects</span>
                     <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
                         <a href="{{ '/WITHY/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-withy" style="transform: none; box-shadow: none; cursor: default; border-color: transparent; background: transparent;">
                             <div class="portfolio-shortcut-card__accent withy-accent" style="opacity: 0.3;"></div>
-                            <!-- Mobile fallback cover image -->
+                            
                             <div class="portfolio-shortcut-card__cover">
                                 <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview">
                             </div>
@@ -149,14 +239,14 @@ layout: default
             </div>
         </div>
 
-        <!-- Section 2: petFelio -->
-        <div class="scroll-section" data-img="2" style="min-height: 100vh; padding: 4rem; display: flex; flex-direction: column; justify-content: center; margin: 35vh 0 20vh 0;">
+        <!-- Text 2: petFelio -->
+        <div class="content-fade-layer" id="text-2">
             <div class="hero-content">
                 <div class="hero-portfolio-wrapper fade-up">
                     <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
                         <a href="{{ '/Petfelio/petfolio-fe/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-petfelio" style="transform: none; box-shadow: none; cursor: default; border-color: transparent; background: transparent;">
                             <div class="portfolio-shortcut-card__accent petfelio-accent" style="opacity: 0.3;"></div>
-                            <!-- Mobile fallback cover image -->
+                            
                             <div class="portfolio-shortcut-card__cover">
                                 <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview">
                             </div>
@@ -197,7 +287,7 @@ layout: default
 
 <script>
     (function () {
-        // Fade-up animations for text
+        // Observer for internal text fade-up animations on load
         var obs = new IntersectionObserver(function (entries) {
             entries.forEach(function (e) {
                 if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
@@ -205,27 +295,32 @@ layout: default
         }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
         document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
 
-        // Scroll listener for sticky left panel crossfade
-        var sections = document.querySelectorAll('.scroll-section');
-        var images = document.querySelectorAll('.sticky-fade-img');
-        
-        var scrollObs = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    var targetImgIdx = entry.target.getAttribute('data-img');
-                    images.forEach(function(img) {
-                        img.classList.remove('active');
-                    });
-                    var activeImg = document.getElementById('img-' + targetImgIdx);
-                    if (activeImg) {
-                        activeImg.classList.add('active');
+        // Scroll triggering for Desktop
+        if (window.innerWidth > 900) {
+            var triggers = document.querySelectorAll('.scroll-trigger');
+            var images = document.querySelectorAll('.sticky-fade-img');
+            var texts = document.querySelectorAll('.content-fade-layer');
+            
+            // We use threshold 0.5 so that when a block is halfway down the screen, we switch to it.
+            var scrollObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var idx = entry.target.getAttribute('data-index');
+                        
+                        // Hide all images and texts
+                        images.forEach(el => el.classList.remove('active'));
+                        texts.forEach(el => el.classList.remove('active'));
+                        
+                        // Show active ones
+                        var activeImg = document.getElementById('img-' + idx);
+                        var activeText = document.getElementById('text-' + idx);
+                        if(activeImg) activeImg.classList.add('active');
+                        if(activeText) activeText.classList.add('active');
                     }
-                }
-            });
-        }, { threshold: 0.5 }); // Fire when element is 50% in view
+                });
+            }, { threshold: 0.5 }); 
 
-        sections.forEach(function(sec) {
-            scrollObs.observe(sec);
-        });
+            triggers.forEach(function(t) { scrollObs.observe(t); });
+        }
     })();
 </script>
