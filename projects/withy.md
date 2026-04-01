@@ -89,27 +89,26 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
             <div class="p-4 space-y-4 pt-6 flex flex-col">
                 <!-- Home Icon -->
-                <button class="w-full h-12 flex items-center justify-center rounded-xl transition-colors bg-neutral-800 text-white cursor-pointer px-0">
-                    <div class="w-6 h-6 flex items-center justify-center shrink-0">
-                        <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <button class="w-full h-12 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer px-0 border border-white/10">
+                    <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                        <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     </div>
-                    <span class="nav-label hidden font-bold text-[15px] ml-4 whitespace-nowrap grow text-left">홈</span>
+                    <span class="nav-label hidden font-bold text-[15px] ml-1 whitespace-nowrap grow text-left">홈</span>
                 </button>
 
                 <!-- Platform Logs -->
                 <div class="flex flex-col gap-4">
-                    <button class="w-full h-12 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all">
-                        <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0 relative">
-                            <span class="text-[10px] absolute font-black w-full h-full flex items-center justify-center text-white z-10">N</span>
-                            <div class="absolute inset-0 bg-[#E50914]"></div>
+                    <button class="w-full h-12 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
+                        <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-8 h-8 object-contain">
                         </div>
-                        <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left">Netflix</span>
+                        <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">Netflix</span>
                     </button>
-                    <button class="w-full h-12 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all">
-                        <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0">
-                            <span class="text-xl font-bold text-red-600">Y</span>
+                    <button class="w-full h-12 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
+                        <div class="w-12 h-12 flex items-center justify-center shrink-0">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-[36px] mt-1 object-contain">
                         </div>
-                        <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left">YouTube</span>
+                        <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">YouTube</span>
                     </button>
                 </div>
             </div>
@@ -122,18 +121,29 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         <main class="flex-1 overflow-y-auto p-8 px-10 pt-6 pb-12 bg-[#0a0a0c]">
             <!-- 카테고리 셀렉터 -->
             <div id="category-filters" class="mb-8 flex gap-3 pb-4 border-b border-white/10">
-                <button class="category-btn px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm cursor-pointer shadow-sm border border-red-600 transition-colors" onclick="setActiveFilter(this)">전체 파티</button>
-                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this)">진행중 LIVE</button>
-                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this)">대기중</button>
+                <button class="category-btn px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm cursor-pointer shadow-sm border border-red-600 transition-colors" onclick="setActiveFilter(this, 'all')">전체 파티</button>
+                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this, 'live')">진행중 LIVE</button>
+                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this, 'waiting')">대기중</button>
             </div>
             
             <script>
-                function setActiveFilter(btn) {
+                function setActiveFilter(btn, status) {
                     const filters = document.querySelectorAll('.category-btn');
                     filters.forEach(f => {
                         f.className = 'category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors';
                     });
                     btn.className = 'category-btn px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm cursor-pointer shadow-sm border border-red-600 transition-colors';
+                    
+                    const cards = document.querySelectorAll('.party-card');
+                    cards.forEach(card => {
+                        if (status === 'all') {
+                            card.classList.remove('hidden');
+                        } else if (card.dataset.status === status) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
                 }
             </script>
 
@@ -143,7 +153,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     
                     <!-- PartyCard 1 (Music) -->
-                    <div class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5">
+                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="live" onclick="window.switchScreen('screen-room')">
                         <div class="relative w-full aspect-video bg-neutral-900 border-b border-white/5">
                             <img src="/WITHY/docs/assets/images/jpop.jpg" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
@@ -166,8 +176,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         </div>
                     </div>
 
-                    <!-- PartyCard 2 (Howl's Moving Castle) - Interactive Prototype Click Target -->
-                    <div id="target-party-card" class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" onclick="window.switchScreen('screen-room')">
+                    <!-- PartyCard 2 (Howl's Moving Castle) -->
+                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="window.switchScreen('screen-room')">
                         <!-- We style this to be aspect-[2/3] logic visually equivalent -->
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
@@ -195,7 +205,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     </div>
 
                     <!-- PartyCard 3 (Arcane) -->
-                    <div class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5">
+                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
@@ -208,8 +218,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                                     <span>2 / 8</span>
                                 </div>
                             </div>
-                            <div class="absolute bottom-2.5 right-2.5 bg-black/60 backdrop-blur p-1.5 rounded-full border border-white/10">
-                                <svg class="lucide w-3 h-3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <div class="absolute bottom-2.5 right-2.5 bg-black/60 backdrop-blur p-2 rounded-full border border-white/10 flex items-center justify-center">
+                                <svg class="lucide w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </div>
                         </div>
                         <div class="flex flex-col p-4 gap-2 flex-1">
@@ -227,6 +237,45 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </div>
             </section>
         </main>
+
+        <!-- Password Modal Component (Hidden by default) -->
+        <div id="password-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <div class="bg-[#1f1f22] w-full max-w-sm rounded-[32px] shadow-2xl border border-white/10 overflow-hidden transform scale-95 transition-transform duration-300">
+                <!-- Header -->
+                <div class="px-6 py-4 bg-[#1f1f22] flex justify-between items-center border-b border-white/10">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-10 h-10 rounded-full bg-red-600/10 flex items-center justify-center">
+                            <svg class="lucide w-5 h-5 text-red-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                        <h2 class="text-lg font-bold text-white tracking-tight">아케인 정주행</h2>
+                    </div>
+                    <button onclick="document.getElementById('password-modal').classList.add('hidden')" class="p-2 bg-neutral-800 rounded-full text-neutral-400 hover:text-white hover:bg-neutral-700 transition-colors cursor-pointer">
+                        <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+                    </button>
+                </div>
+
+                <!-- Body -->
+                <div class="p-6 space-y-6">
+                    <div class="space-y-2 relative">
+                        <label class="text-[11px] font-bold text-neutral-400 uppercase tracking-wider ml-1">
+                            Enter Passcode
+                        </label>
+                        <div class="flex items-center bg-black/40 rounded-[20px] px-4 py-3 border-2 border-white/10 focus-within:border-red-600/50 focus-within:bg-black/60 focus-within:shadow-[0_0_0_4px_rgba(220,38,38,0.1)] transition-all">
+                            <svg class="lucide w-5 h-5 text-neutral-500 mr-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="9" y2="9"></line><line x1="4" x2="20" y1="15" y2="15"></line><line x1="10" x2="8" y1="3" y2="21"></line><line x1="16" x2="14" y1="3" y2="21"></line></svg>
+                            <input type="password" placeholder="비밀번호 입력" class="bg-transparent border-none focus:ring-0 w-full font-bold text-lg text-white placeholder-neutral-500 py-2 outline-none">
+                        </div>
+                        <p class="text-[11px] text-neutral-500 px-1 pt-1">
+                            호스트가 설정한 비밀번호를 입력해주세요.
+                        </p>
+                    </div>
+
+                    <button onclick="window.switchScreen('screen-room')" class="cursor-pointer w-full py-4 bg-white text-black rounded-[20px] text-sm font-black flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg hover:bg-gray-100">
+                        <span class="mt-0.5">입장하기</span>
+                        <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- =======================
              SLIDING PANELS 
