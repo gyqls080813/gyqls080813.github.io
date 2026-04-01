@@ -2586,7 +2586,10 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
 }
 
 .split-hero__left::after {
@@ -2668,6 +2671,9 @@ body.layout-home {
   .split-hero__left {
     height: 40vh;
     flex: none;
+    position: relative;
+    top: auto;
+    z-index: 1;
   }
 
   .split-hero__left::after {
