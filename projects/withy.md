@@ -51,68 +51,74 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <div class="screen-view active-screen flex flex-col h-full w-full relative overflow-hidden bg-[#0a0a0c] text-white" id="screen-home">
     
     <!-- Authentic Header -->
-    <header class="w-full h-[72px] shrink-0 px-6 bg-[#0a0a0c] z-50 border-b border-white/5 flex items-center justify-between shadow-sm relative">
-        <div class="flex items-center gap-5">
-            <!-- Hamburger Menu Button -->
-            <button class="cursor-pointer p-2 rounded-xl bg-transparent hover:bg-white/5 text-neutral-400 hover:text-white transition-colors flex items-center justify-center border border-transparent focus:border-white/10 outline-none" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
-                <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
-            </button>
-            <div class="h-8 flex items-center">
-                <span class="text-2xl font-black text-red-600 tracking-tighter" style="font-family: 'Rubik', sans-serif;">WITHY</span>
-            </div>
-        </div>
+    <header class="pl-0 pr-8 py-4 bg-[#0a0a0c] z-50 sticky top-0 border-b border-white/5 w-full flex-shrink-0">
+        <div class="flex items-center gap-4 justify-between">
+            {/* Left: Navigation Toggle & Logo */}
+            <div class="flex items-center flex-shrink-0">
+                {/* Hamburger aligns with Navbar (w-20) */}
+                <div class="w-20 flex justify-center items-center">
+                    <button class="cursor-pointer p-1 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-all" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
+                        <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+                    </button>
+                </div>
 
-        <div class="flex-1 max-w-2xl px-10">
-            <div class="relative w-full">
-                <svg class="lucide absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
-                <input type="text" placeholder="파티 검색..." class="w-full pl-12 pr-6 py-2.5 rounded-xl bg-[#1f1f1f] border border-white/5 text-sm text-white focus:ring-2 focus:ring-red-600 outline-none">
+                <button class="w-48 h-14 relative overflow-hidden flex items-center justify-center rounded-lg transition-all hover:bg-white/5 cursor-pointer">
+                    <span class="text-[32px] pt-1 font-black text-red-600 tracking-tighter" style="font-family: 'Rubik', sans-serif;">WITHY</span>
+                </button>
             </div>
-        </div>
 
-        <div class="flex items-center gap-3">
-            <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
-            <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
-                <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </button>
-            <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('hidden'); document.getElementById('friends-panel').classList.add('hidden');">
-                <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            </button>
-            <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
-                <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
-            </button>
+            <div class="flex-1">
+                <div class="relative w-full max-w-2xl">
+                    <svg class="lucide absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+                    <input type="text" placeholder="파티 검색..." class="w-full pl-12 pr-6 py-3 rounded-xl bg-[#1f1f1f] border border-white/5 text-sm text-white focus:ring-2 focus:ring-red-600 outline-none transition-all placeholder-neutral-600">
+                </div>
+            </div>
+
+            {/* Right: Actions */}
+            <div class="flex items-center gap-3 flex-shrink-0 relative">
+                <button class="cursor-pointer px-6 py-3 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm transition-all shadow-sm" onclick="window.switchScreen('screen-room')">+ 만들기</button>
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
+                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </button>
+                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('hidden'); document.getElementById('friends-panel').classList.add('hidden');">
+                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </button>
+                <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors ml-2" onclick="window.switchScreen('screen-mypage')">
+                    <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
+                </button>
+            </div>
         </div>
     </header>
 
-    <div class="flex flex-1 overflow-hidden relative" style="height: calc(100% - 72px);">
+    <div class="flex flex-1 overflow-hidden">
         <!-- Navbar (Sidebar) Component -->
-        <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full z-40 flex-shrink-0 border-r border-white/5 flex flex-col">
-            <div class="p-4 space-y-4 pt-6 flex flex-col w-full">
+        <aside id="sidebar-nav" class="transition-all duration-300 w-20 bg-[#0a0a0c] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5 border-t-0">
+            <div class="p-4 space-y-2">
                 <!-- Home Icon -->
-                <button class="w-full h-12 shrink-0 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer group border border-white/10">
-                    <div class="w-12 h-12 flex items-center justify-center shrink-0 text-white group-hover:text-red-400 transition-colors">
-                        <svg class="lucide w-[22px] h-[22px]" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
-                    </div>
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-neutral-800 text-white cursor-pointer group">
+                    <svg class="lucide w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
                     <span class="nav-label hidden font-bold text-[15px] ml-1 whitespace-nowrap grow text-left text-white">홈</span>
                 </button>
 
+                <div class="my-4"></div>
+
                 <!-- Platform Logs -->
-                <div class="flex flex-col gap-4">
-                    <button class="w-full h-12 shrink-0 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 hover:opacity-100 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
-                        <div class="w-12 h-12 flex items-center justify-center shrink-0">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-7 h-7 object-contain drop-shadow-md">
-                        </div>
-                        <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">Netflix</span>
-                    </button>
-                    <button class="w-full h-12 shrink-0 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 hover:opacity-100 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
-                        <div class="w-12 h-12 flex items-center justify-center shrink-0">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-[32px] object-contain drop-shadow-md">
-                        </div>
-                        <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">YouTube</span>
-                    </button>
-                </div>
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-neutral-400 hover:text-white cursor-pointer opacity-60 grayscale hover:opacity-100 hover:grayscale-0">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-full h-full object-contain bg-black">
+                    </div>
+                    <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">Netflix</span>
+                </button>
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-neutral-400 hover:text-white cursor-pointer opacity-60 grayscale hover:opacity-100 hover:grayscale-0 mt-2">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-full h-full object-contain p-1">
+                    </div>
+                    <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">YouTube</span>
+                </button>
             </div>
             <style>
-                #sidebar-nav.w-64 button { justify-content: flex-start; padding-left: 1rem; padding-right: 1rem; }
+                #sidebar-nav.w-64 button { justify-content: flex-start; width: 100%; height: 40px; border-radius: 12px; padding-left: 0.5rem; padding-right: 0.5rem; background-color: transparent; }
+                #sidebar-nav.w-64 button div { width: 40px; height: 40px; margin-right: 0.75rem;}
             </style>
         </aside>
 
