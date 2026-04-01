@@ -175,114 +175,7 @@ layout: default
 
 .screen-view.active .mockup-container {
     display: block;
-}
-
-/* --- Interactive Elements: Hotspots & Tooltips --- */
-#tour-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 100;
-    pointer-events: none; /* let clicks pass through unless on specific elements */
-}
-
-.hotspot {
-    position: absolute;
-    pointer-events: auto;
-    cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
-    animation: pulse-hotspot 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
-    background: rgba(220, 38, 38, 0.1);
-    border: 2px solid rgba(220, 38, 38, 0.8);
-    transition: all 0.2s;
-    opacity: 0;
-    visibility: hidden;
-}
-
-.hotspot.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.hotspot:hover {
-    background: rgba(220, 38, 38, 0.3);
-}
-
-@keyframes pulse-hotspot {
-    to { box-shadow: 0 0 0 25px rgba(220, 38, 38, 0); }
-}
-
-/* Tooltip Guide Dialog */
-.tour-tooltip {
-    position: absolute;
-    background: #fff;
-    color: #111;
-    padding: 1.5rem;
-    border-radius: 12px;
-    width: 380px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,0,0,0.1);
-    pointer-events: auto;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 110;
-}
-
-.tour-tooltip.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.tooltip-header {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #dc2626;
-    margin-bottom: 0.5rem;
-}
-
-.tooltip-title {
-    font-size: 1.3rem;
-    font-weight: 800;
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-}
-
-.tooltip-desc {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #444;
-    margin-bottom: 1.5rem;
-}
-
-.tooltip-action {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-primary {
-    padding: 0.6rem 1.2rem;
-    background: #000;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-.btn-primary:hover { background: #333; }
-
-/* Connect tooltips with arrows (optional via pseudo elements) */
-.tour-tooltip.arrow-top::before { content:''; position:absolute; top:-8px; left:50%; margin-left:-8px; width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-bottom:8px solid #fff; }
-.tour-tooltip.arrow-bottom::before { content:''; position:absolute; bottom:-8px; left:50%; margin-left:-8px; width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-top:8px solid #fff; }
-.tour-tooltip.arrow-left::before { content:''; position:absolute; left:-8px; top:50%; margin-top:-8px; width:0; height:0; border-top:8px solid transparent; border-bottom:8px solid transparent; border-right:8px solid #fff; }
-.tour-tooltip.arrow-right::before { content:''; position:absolute; right:-8px; top:50%; margin-top:-8px; width:0; height:0; border-top:8px solid transparent; border-bottom:8px solid transparent; border-left:8px solid #fff; }
-
-/* Disable global scroll when in tour mode */
+/* Disable global scroll when in prototype mode */
 body { overflow: hidden; }
 </style>
 
@@ -293,179 +186,40 @@ body { overflow: hidden; }
     
     <!-- MAIN VIEWPORT -->
     <div class="app-viewport flex flex-col h-full bg-background" style="flex:1;">
-        <!-- Rendered screens driven by Markdown data JSON -->
-        <div id="screens-container">
-            {{ content }} <!-- Markdown content will provide hidden JSON/HTML data -->
-        </div>
-        
-        <!-- Interactive Overlay Layer -->
-        <div id="tour-overlay">
-            <div id="active-hotspot" class="hotspot"></div>
-            <div id="active-tooltip" class="tour-tooltip">
-                <div class="tooltip-header" id="tt-step">STEP 1</div>
-                <div class="tooltip-title" id="tt-title">Title</div>
-                <div class="tooltip-desc" id="tt-desc">Description text...</div>
-                <div class="tooltip-action" id="tt-action-container">
-                    <button class="btn-primary" id="tt-next-btn">다음 →</button>
-                    <div id="tt-click-hint" style="color:#dc2626; font-weight:700; font-size:0.85rem; display:none; align-self:center;">👆 깜빡이는 곳을 클릭하세요</div>
-                </div>
-            </div>
+        <!-- Rendered screens driven by Markdown data JSON/HTML -->
+        <div id="screens-container" class="w-full h-full">
+            {{ content }} <!-- Markdown content will provide hidden HTML data -->
         </div>
     </div>
 </div>
 
-<!-- Tour Engine Engine -->
+<!-- Prototype Router Engine -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Look for the tour data injected by markdown
-    var dataEl = document.getElementById('tour-script-data');
-    if(!dataEl) return;
-    
-    var tourData;
-    try { tourData = JSON.parse(dataEl.textContent); } 
-    catch(e) { console.error("Invalid Tour JSON Data", e); return; }
-
-    var currentStepIdx = 0;
+window.switchScreen = function(screenId) {
     var screens = document.querySelectorAll('.t-screen');
-    
-    // UI Elements
-    var tooltip = document.getElementById('active-tooltip');
-    var hotspot = document.getElementById('active-hotspot');
-    var btnNext = document.getElementById('tt-next-btn');
-    var hintClick = document.getElementById('tt-click-hint');
-    var ttStep = document.getElementById('tt-step');
-    var ttTitle = document.getElementById('tt-title');
-    var ttDesc = document.getElementById('tt-desc');
-    var mypageBtn = document.getElementById('nav-mypage');
-
-    function renderStep(idx) {
-        if(idx >= tourData.steps.length) {
-            // End of tour
-            ttTitle.innerText = "안내 완료 🎉";
-            ttDesc.innerText = "튜토리얼이 완료되었습니다. 이제 화면을 자유롭게 클릭하며 탐색해 보세요!";
-            btnNext.innerText = "닫기";
-            btnNext.style.display = 'block';
-            hintClick.style.display = 'none';
-            hotspot.classList.remove('active');
-            btnNext.onclick = function() { 
-                document.getElementById('tour-overlay').style.display = 'none'; 
-            };
-            return;
-        }
-
-        var step = tourData.steps[idx];
-
-        // Ensure Screen active class
-        screens.forEach(function(s) { s.classList.remove('active'); });
-        var activeScreen = document.getElementById(step.screenId);
-        if(activeScreen) activeScreen.classList.add('active');
-
-        // Populate Tooltip
-        ttStep.innerText = "STEP " + (idx + 1) + " / " + tourData.steps.length;
-        ttTitle.innerText = step.title;
-        ttDesc.innerHTML = step.desc;
-
-        // Tooltip Position
-        tooltip.className = 'tour-tooltip active'; // Reset classes
-        if(step.tooltipPos) {
-            tooltip.style.top = step.tooltipPos.top || 'auto';
-            tooltip.style.bottom = step.tooltipPos.bottom || 'auto';
-            tooltip.style.left = step.tooltipPos.left || 'auto';
-            tooltip.style.right = step.tooltipPos.right || 'auto';
-            if(step.tooltipArrow) tooltip.classList.add('arrow-' + step.tooltipArrow);
-        } else {
-            // Default center
-            tooltip.style.top = '50%';
-            tooltip.style.left = '50%';
-            tooltip.style.transform = 'translate(-50%, -50%)';
-        }
-
-        // Action Logic (Click Hotspot vs Click Next)
-        // Reset hotspot & click handlers
-        hotspot.classList.remove('active');
-        hotspot.style.display = 'none';
-        hotspot.onclick = null;
-        mypageBtn.onclick = null; // reset global mock nav listener
-        
-        if (step.requiresClick) {
-            // Show hotspot box, but STILL allow user to just click Next
-            btnNext.style.display = 'block';
-            hintClick.style.display = 'block';
-            
-            // Allow skipping the hotspot click
-            btnNext.onclick = function() {
-                hotspot.classList.remove('active');
-                currentStepIdx++;
-                renderStep(currentStepIdx);
-            };
-            
-            if (step.requiresClick === 'mypage-nav') {
-                // The nav icon in header acts as hotspot
-                mypageBtn.onclick = function() {
-                    currentStepIdx++;
-                    renderStep(currentStepIdx);
-                };
-            } else if (step.targetId) {
-                // Attach hotspot to dynamic DOM element
-                var targetEl = document.getElementById(step.targetId);
-                if(targetEl) {
-                    var rect = targetEl.getBoundingClientRect();
-                    hotspot.style.display = 'block';
-                    hotspot.style.top = rect.top + 'px';
-                    hotspot.style.left = rect.left + 'px';
-                    hotspot.style.width = rect.width + 'px';
-                    hotspot.style.height = rect.height + 'px';
-                    
-                    // Hook window resize to re-calc
-                    window.onresize = function() {
-                        if(hotspot.classList.contains('active')) {
-                            var r = targetEl.getBoundingClientRect();
-                            hotspot.style.top = r.top + 'px';
-                            hotspot.style.left = r.left + 'px';
-                            hotspot.style.width = r.width + 'px';
-                            hotspot.style.height = r.height + 'px';
-                        }
-                    };
-                    
-                    setTimeout(function() { hotspot.classList.add('active'); }, 300);
-                    
-                    targetEl.onclick = function() {
-                        hotspot.classList.remove('active');
-                        targetEl.onclick = null;
-                        currentStepIdx++;
-                        renderStep(currentStepIdx);
-                    };
-                    hotspot.onclick = function() {
-                        hotspot.classList.remove('active');
-                        hotspot.onclick = null;
-                        currentStepIdx++;
-                        renderStep(currentStepIdx);
-                    };
-                }
-            } else if (step.hotspotBox) {
-                // A box drawn over the screen image
-                hotspot.style.display = 'block';
-                // Defer adding active class for animation pop
-                setTimeout(function() { hotspot.classList.add('active'); }, 300);
-                
-                hotspot.onclick = function() {
-                    hotspot.classList.remove('active');
-                    currentStepIdx++;
-                    renderStep(currentStepIdx);
-                };
-            }
-        } else {
-            // User clicks "Next" button on tooltip
-            btnNext.style.display = 'block';
-            hintClick.style.display = 'none';
-            btnNext.onclick = function() {
-                currentStepIdx++;
-                renderStep(currentStepIdx);
-            };
-        }
+    screens.forEach(function(s) {
+        s.classList.remove('active'); // hides screen
+    });
+    var target = document.getElementById(screenId);
+    if(target) {
+        target.classList.add('active'); // shows target screen
     }
+};
 
-    // Start
-    renderStep(0);
+document.addEventListener("DOMContentLoaded", function() {
+    // Initial start: Splash if exists, or Home
+    var startScreen = document.getElementById('screen-splash') ? 'screen-splash' : 'screen-home';
+    window.switchScreen(startScreen);
+
+    // If Splash screen exists, auto-navigate to Home after 3.5s
+    if (startScreen === 'screen-splash') {
+        setTimeout(function() {
+            var splashEl = document.getElementById('screen-splash');
+            // Check if splash is still active (user didn't manually skip it)
+            if (splashEl && splashEl.classList.contains('active')) {
+                window.switchScreen('screen-home');
+            }
+        }, 3500);
+    }
 });
 </script>

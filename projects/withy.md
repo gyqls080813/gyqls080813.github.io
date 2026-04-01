@@ -4,56 +4,7 @@ title: WITHY
 app_logo: /WITHY/public/withy/Withy_logo.png
 ---
 
-<!-- JSON CONFIGURATION FOR THE TOUR ENGINE -->
-<script type="application/json" id="tour-script-data">
-{
-  "steps": [
-    {
-      "screenId": "screen-splash",
-      "title": "스플래시 스크린",
-      "desc": "서비스에 처음 진입할 때 렌더링되는 <strong>스플래시 화면</strong>입니다.<br>Framer Motion과 Tailwind를 결합해 구현된 실제 애니메이션 컴포넌트입니다.",
-      "tooltipPos": { "bottom": "15%", "left": "50%", "transform": "translateX(-50%)" },
-      "requiresClick": false
-    },
-    {
-      "screenId": "screen-home",
-      "title": "Welcome to WITHY",
-      "desc": "넷플릭스, 유튜브 화면 공유의 끊김과 저화질을 해결하기 위해 탄생했습니다.<br><br>독자적인 <strong>타임라인 직접 동기화 기술</strong>로 완벽한 몰입감과 <strong>AI 클린 채팅</strong>을 선사하는 실시간 스트리밍 같이보기 서비스입니다.",
-      "tooltipPos": { "top": "20%", "left": "50%", "transform": "translateX(-50%)" },
-      "requiresClick": false
-    },
-    {
-      "screenId": "screen-home",
-      "title": "같이보기 파티 입장",
-      "desc": "홈 화면에서는 현재 많은 사람들이 모여 시청 중인 <strong>인기 파티</strong> 목록을 장르별로 확인할 수 있습니다.<br><br>실제 개발된 컴포넌트입니다! 반짝이는 <strong>[하울의 움직이는 성]</strong> 방을 직접 클릭해서 파티에 진입해보세요!",
-      "tooltipPos": { "top": "40%", "left": "60%" },
-      "requiresClick": true,
-      "targetId": "target-party-card"
-    },
-    {
-      "screenId": "screen-room",
-      "title": "실시간 파티방 동기화",
-      "desc": "파티 대기실에 입장했습니다! 방장이 영상을 컨트롤하면 <strong>WebSocket</strong> 통신을 통해 밀리세컨드 단위로 모든 참여자의 시점이 제어됩니다.<br><br><span style='font-size:0.85rem;color:#cecece;'>(* 우측 가짜 채팅방을 폐기하고, 위디의 진짜 풀스크린 대기실 컴포넌트를 그대로 포팅했습니다.)</span>",
-      "tooltipPos": { "top": "50%", "left": "50%", "transform": "translate(-50%, -50%)" },
-      "requiresClick": false
-    },
-    {
-      "screenId": "screen-room",
-      "title": "내 기록 확인하기",
-      "desc": "같이보기 파티가 끝났다면, 내가 시청한 <strong>통계 및 기록</strong>을 확인해 볼까요?<br><br>제일 우측 상단의 <strong>사용자 메뉴 아이콘</strong>을 클릭해보세요!",
-      "tooltipPos": { "top": "80px", "right": "80px" },
-      "requiresClick": "mypage-nav"
-    },
-    {
-      "screenId": "screen-mypage",
-      "title": "마이페이지 대시보드",
-      "desc": "나의 <strong>플랫폼별 시청 시간 통계</strong>와 참여했던 파티 <strong>히스토리</strong>가 다채로운 그래프와 함께 정리되어 보여집니다.<br><br>이 데이터를 기반으로 AI가 다음번에 참여할 만한 파티를 또 다시 추천해줍니다!",
-      "tooltipPos": { "bottom": "15%", "left": "50%", "transform": "translateX(-50%)" },
-      "requiresClick": false
-    }
-  ]
-}
-</script>
+<!-- JSON Configuration Removed (Now using Clickable Prototype Router) -->
 
 <!-- CSS specifically for lucide icons and scrolling -->
 <style>
@@ -73,7 +24,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 0: SPLASH SCREEN
 ======================== -->
-<div class="screen-view t-screen flex flex-col items-center justify-center bg-black w-full h-full" id="screen-splash">
+<div class="screen-view t-screen flex flex-col items-center justify-center bg-black w-full h-full cursor-pointer" id="screen-splash" onclick="window.switchScreen('screen-home')">
     <div class="relative flex flex-col items-center transform transition-transform duration-1000 ease-in-out hover:-translate-y-24 hover:scale-75">
         <!-- 1. Character & Logo Group -->
         <div class="relative w-[400px] h-[400px]">
@@ -149,8 +100,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <button class="p-2.5 rounded-xl border border-white/5 bg-[#1f1f1f] text-neutral-300">
                     <svg class="lucide"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                 </button>
-                <!-- Target MyPage Hotspot will anchor here via Javascript -->
-                <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a]">
+                <!-- Target MyPage Button -->
+                <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
                     <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
                 </button>
             </div>
@@ -194,8 +145,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         </div>
                     </div>
 
-                    <!-- PartyCard 2 (Howl's Moving Castle) - THIS IS THE TARGET -->
-                    <div id="target-party-card" class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5">
+                    <!-- PartyCard 2 (Howl's Moving Castle) - Interactive Prototype Click Target -->
+                    <div id="target-party-card" class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" onclick="window.switchScreen('screen-room')">
                         <!-- We style this to be aspect-[2/3] logic visually equivalent -->
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
@@ -284,7 +235,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
             <div class="text-white">
                 <div class="flex items-center gap-3">
                     <!-- Back Button -->
-                    <button class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all backdrop-blur-sm border border-white/20">
+                    <button class="p-2 rounded-lg bg-white/10 hover:bg-red-600 transition-all backdrop-blur-sm border border-white/20 cursor-pointer" onclick="window.switchScreen('screen-home')">
                         <svg class="lucide w-6 h-6 text-white"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </button>
                     <h1 class="text-3xl font-bold drop-shadow-md">하울의 움직이는 성 예약방</h1>
@@ -314,14 +265,18 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 3: MY PAGE MOCKUP
 ======================== -->
-<div class="screen-view t-screen" id="screen-mypage">
-    <div class="mockup-container">
-        <!-- Dashboard UI Mockup using Tailwind -->
-        <div class="max-w-5xl mx-auto text-white font-sans">
-            
-            <h1 class="text-3xl font-black border-b-2 border-white/10 pb-5 mb-8">마이페이지</h1>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="screen-view t-screen w-full h-full bg-[#111116] overflow-y-auto" id="screen-mypage">
+    <div class="max-w-5xl mx-auto text-white font-sans p-10 pb-20">
+        
+        <div class="flex items-center gap-4 mb-8 pb-5 border-b border-white/10">
+            <!-- Back Button to Home -->
+            <button class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all cursor-pointer" onclick="window.switchScreen('screen-home')">
+                <svg class="lucide w-6 h-6 text-white"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <h1 class="text-3xl font-black">마이페이지</h1>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
                 <!-- Profile Section -->
                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center">
