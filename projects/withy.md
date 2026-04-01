@@ -48,17 +48,16 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 1: REAL HOME COMPONENT
 ======================== -->
-<div class="screen-view active-screen flex flex-col h-full text-white w-full relative overflow-hidden" id="screen-home" style="background:#0a0a0c;">
+<div class="screen-view active-screen flex flex-col h-full w-full relative overflow-hidden bg-[#0a0a0c] text-white" id="screen-home">
     
     <!-- Authentic Header -->
-    <header class="w-full shrink-0 pl-4 pr-8 py-3 bg-[#0a0a0c] z-50 border-b border-white/5 flex items-center justify-between">
-        <div class="flex items-center gap-4">
+    <header class="w-full h-[72px] shrink-0 px-6 bg-[#0a0a0c] z-50 border-b border-white/5 flex items-center justify-between shadow-sm relative">
+        <div class="flex items-center gap-5">
             <!-- Hamburger Menu Button -->
-            <button class="cursor-pointer p-1 rounded-lg text-neutral-400 hover:text-white transition-colors" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
-                <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+            <button class="cursor-pointer p-2 rounded-xl bg-transparent hover:bg-white/5 text-neutral-400 hover:text-white transition-colors flex items-center justify-center border border-transparent focus:border-white/10 outline-none" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
+                <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
             </button>
-            <div class="h-8 relative flex items-center">
-                <!-- RED WITHY LOGO matching Screenshot -->
+            <div class="h-8 flex items-center">
                 <span class="text-2xl font-black text-red-600 tracking-tighter" style="font-family: 'Rubik', sans-serif;">WITHY</span>
             </div>
         </div>
@@ -84,16 +83,16 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         </div>
     </header>
 
-    <div class="flex flex-1 overflow-hidden relative">
+    <div class="flex flex-1 overflow-hidden relative" style="height: calc(100% - 72px);">
         <!-- Navbar (Sidebar) Component -->
-        <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
-            <div class="p-4 space-y-4 pt-6 flex flex-col">
+        <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full z-40 flex-shrink-0 border-r border-white/5 flex flex-col">
+            <div class="p-4 space-y-4 pt-6 flex flex-col w-full">
                 <!-- Home Icon -->
-                <button class="w-full h-12 shrink-0 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer px-0 border border-white/10">
-                    <div class="w-12 h-12 flex items-center justify-center shrink-0">
-                        <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <button class="w-full h-12 shrink-0 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer group border border-white/10">
+                    <div class="w-12 h-12 flex items-center justify-center shrink-0 text-white group-hover:text-red-400 transition-colors">
+                        <svg class="lucide w-[22px] h-[22px]" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
                     </div>
-                    <span class="nav-label hidden font-bold text-[15px] ml-1 whitespace-nowrap grow text-left">홈</span>
+                    <span class="nav-label hidden font-bold text-[15px] ml-1 whitespace-nowrap grow text-left text-white">홈</span>
                 </button>
 
                 <!-- Platform Logs -->
