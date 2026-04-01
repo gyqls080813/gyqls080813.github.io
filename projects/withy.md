@@ -53,9 +53,9 @@ app_logo: /WITHY/public/withy/Withy_logo.png
     <!-- Authentic Header -->
     <header class="pl-0 pr-8 py-4 bg-[#0a0a0c] z-50 sticky top-0 border-b border-white/5 w-full flex-shrink-0">
         <div class="flex items-center gap-4 justify-between">
-            {/* Left: Navigation Toggle & Logo */}
+            <!-- Left: Navigation Toggle & Logo -->
             <div class="flex items-center flex-shrink-0">
-                {/* Hamburger aligns with Navbar (w-20) */}
+                <!-- Hamburger aligns with Navbar (w-20) -->
                 <div class="w-20 flex justify-center items-center">
                     <button class="cursor-pointer p-1 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-all" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
                         <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
@@ -74,7 +74,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </div>
             </div>
 
-            {/* Right: Actions */}
+            <!-- Right: Actions -->
             <div class="flex items-center gap-3 flex-shrink-0 relative">
                 <button class="cursor-pointer px-6 py-3 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm transition-all shadow-sm" onclick="window.switchScreen('screen-room')">+ 만들기</button>
                 <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
