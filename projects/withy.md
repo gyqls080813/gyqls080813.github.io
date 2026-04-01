@@ -2,8 +2,9 @@
 layout: project
 title: Withy
 subtitle: "물리적 거리가 멀어져도, 함께 즐기는 경험은 그대로"
-splash_bg: "#1a1a2e"
-splash_logo: /WITHY/public/logo.png
+splash_chr: /WITHY/public/withy/Withy_chr.png
+splash_logo: /WITHY/public/withy/Withy_logo.png
+splash_tagline: "Watch with WITHY"
 app_icon: /WITHY/public/logo.png
 hero_bg: /WITHY/public/logo-bg.jpg
 ---

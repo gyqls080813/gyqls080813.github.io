@@ -4,21 +4,22 @@ layout: default
 
 <style>
 /* ============================================
-   PROJECT DETAIL PAGE - APP SPLASH EXPERIENCE
+   PROJECT DETAIL PAGE - REAL APP SPLASH
    ============================================ */
 
-/* Splash Overlay: Simulates an actual app launch */
+/* ---- Splash: Exact replica of original app ---- */
 .app-splash-overlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
+    background: #0f0f0f;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: {{ page.splash_bg | default: '#0a0a0c' }};
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: auto;
+    overflow: hidden;
 }
 
 .app-splash-overlay.dismissed {
@@ -26,52 +27,87 @@ layout: default
     pointer-events: none;
 }
 
-.app-splash-logo {
-    max-width: 180px;
-    animation: splashPulse 2s ease-in-out infinite;
+/* Splash center container */
+.splash-center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.app-splash-text {
-    margin-top: 1.5rem;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
+.splash-logo-box {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+@media (min-width: 600px) {
+    .splash-logo-box {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+.splash-logo-box img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Red neon flicker - exact copy from WITHY globals.css */
+@keyframes red-neon-flicker {
+    0%, 15%, 25%, 35%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(255, 0, 0, 0.7));
+    }
+    10%, 20%, 30% {
+        opacity: 0.1;
+        filter: none;
+    }
+}
+
+@keyframes chr-light-subtle {
+    0%, 15%, 25%, 35%, 100% {
+        filter: brightness(1.05) drop-shadow(0 0 10px rgba(255, 0, 0, 0.4));
+    }
+    10%, 20%, 30% {
+        filter: brightness(0.8);
+    }
+}
+
+.splash-chr {
+    z-index: 10;
+    animation: chr-light-subtle 1.5s ease-in-out forwards;
+}
+
+.splash-logo-text {
+    z-index: 20;
+    animation: red-neon-flicker 1.5s ease-in-out forwards;
+}
+
+.splash-tagline {
+    margin-top: -10px;
+    z-index: 30;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+.splash-tagline p {
     color: #fff;
-    opacity: 0;
-    animation: splashFadeIn 0.8s 0.5s forwards;
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-style: italic;
+    margin: 0;
 }
 
-.app-splash-loading {
-    margin-top: 3rem;
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(255,255,255,0.1);
-    border-top-color: rgba(255,255,255,0.7);
-    border-radius: 50%;
-    animation: splashSpin 0.8s linear infinite;
-    opacity: 0;
-    animation: splashSpin 0.8s linear infinite, splashFadeIn 0.5s 1s forwards;
+@media (min-width: 600px) {
+    .splash-tagline p { font-size: 1.6rem; }
 }
 
-@keyframes splashPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-@keyframes splashFadeIn {
-    to { opacity: 1; }
-}
-
-@keyframes splashSpin {
-    to { transform: rotate(360deg); }
-}
-
-/* Main Content (hidden behind splash initially) */
-.project-page-body {
-    background: var(--bg-primary);
-}
-
-/* Hero Section: beneath the splash, a cinematic opening */
+/* ---- Hero Section ---- */
 .project-hero {
     position: relative;
     width: 100%;
@@ -87,8 +123,8 @@ layout: default
     inset: 0;
     background-size: cover;
     background-position: center;
-    filter: blur(20px) brightness(0.3);
-    transform: scale(1.1);
+    filter: blur(30px) brightness(0.25);
+    transform: scale(1.15);
     z-index: 0;
 }
 
@@ -100,11 +136,12 @@ layout: default
     padding: 2rem;
 }
 
-.project-hero-content img {
+.project-hero-content .hero-icon {
     max-width: 120px;
-    margin-bottom: 1.5rem;
-    border-radius: 24px;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 28px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    display: block;
 }
 
 .project-hero-content h1 {
@@ -116,8 +153,8 @@ layout: default
 }
 
 .project-hero-content p {
-    font-size: 1.2rem;
-    color: rgba(255,255,255,0.7);
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.65);
     line-height: 1.6;
     margin: 0;
 }
@@ -135,14 +172,14 @@ layout: default
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.35);
     font-family: 'Fira Code', monospace;
     margin-bottom: 0.8rem;
 }
 
-.project-hero-scroll-cue .line {
+.scroll-line-anim {
     width: 2px; height: 50px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
     margin: 0 auto;
     animation: scrollDrop 2s ease-in-out infinite;
     transform-origin: top;
@@ -156,7 +193,7 @@ layout: default
     100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
 }
 
-/* Article Body */
+/* ---- Article Body ---- */
 .project-article {
     background: var(--bg-primary);
     padding: 6rem 1.5rem;
@@ -188,9 +225,7 @@ layout: default
     margin: 3rem 0 1rem 0;
 }
 
-.project-container p {
-    margin-bottom: 1.5rem;
-}
+.project-container p { margin-bottom: 1.5rem; }
 
 .project-container img {
     max-width: 100%;
@@ -207,13 +242,11 @@ layout: default
     padding-left: 1.5rem;
 }
 
-.project-container li {
-    margin-bottom: 0.6rem;
-}
+.project-container li { margin-bottom: 0.6rem; }
 
 .project-container blockquote {
-    border-left: 4px solid var(--accent, #6366f1);
-    background: var(--bg-card, #1a1a2e);
+    border-left: 4px solid #dc2626;
+    background: rgba(220,38,38,0.06);
     padding: 1.2rem 1.5rem;
     margin: 2rem 0;
     border-radius: 0 12px 12px 0;
@@ -228,7 +261,7 @@ layout: default
     margin: 4rem 0;
 }
 
-/* Feature Showcase Row */
+/* Feature Showcase Grid */
 .feature-showcase {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -243,12 +276,10 @@ layout: default
 }
 
 @media (max-width: 700px) {
-    .feature-showcase {
-        grid-template-columns: 1fr;
-    }
+    .feature-showcase { grid-template-columns: 1fr; }
 }
 
-/* Back to Home Button */
+/* Back Button */
 .back-home-btn {
     display: inline-flex;
     align-items: center;
@@ -270,7 +301,7 @@ layout: default
     transform: translateX(-4px);
 }
 
-/* Reveal animation for article sections */
+/* Scroll Reveal */
 .reveal {
     opacity: 0;
     transform: translateY(40px);
@@ -282,39 +313,50 @@ layout: default
 }
 </style>
 
-<!-- ===== APP SPLASH SCREEN ===== -->
+<!-- ===== APP SPLASH SCREEN (Exact Replica) ===== -->
 <div class="app-splash-overlay" id="appSplash">
-    {% if page.splash_logo %}
-    <img src="{{ page.splash_logo | relative_url }}" alt="{{ page.title }} Logo" class="app-splash-logo">
-    {% endif %}
-    <span class="app-splash-text">{{ page.title }}</span>
-    <div class="app-splash-loading"></div>
+    <div class="splash-center">
+        <div class="splash-logo-box">
+            {% if page.splash_chr %}
+            <img src="{{ page.splash_chr | relative_url }}" alt="Character" class="splash-chr">
+            {% endif %}
+            {% if page.splash_logo %}
+            <img src="{{ page.splash_logo | relative_url }}" alt="Logo" class="splash-logo-text">
+            {% endif %}
+        </div>
+        {% if page.splash_tagline %}
+        <div class="splash-tagline">
+            <p>{{ page.splash_tagline }}</p>
+        </div>
+        {% endif %}
+    </div>
 </div>
 
-<!-- ===== MAIN PAGE CONTENT ===== -->
+<!-- ===== PAGE CONTENT ===== -->
 <div class="project-page-body">
     
-    <!-- Hero: cinematic opening after splash -->
+    <!-- Hero -->
     <div class="project-hero">
+        {% if page.hero_bg %}
         <div class="project-hero-bg" style="background-image: url('{{ page.hero_bg | relative_url }}');"></div>
+        {% endif %}
         <div class="project-hero-content">
             {% if page.app_icon %}
-            <img src="{{ page.app_icon | relative_url }}" alt="{{ page.title }}">
+            <img src="{{ page.app_icon | relative_url }}" alt="{{ page.title }}" class="hero-icon">
             {% endif %}
             <h1>{{ page.title }}</h1>
             <p>{{ page.subtitle }}</p>
         </div>
         <div class="project-hero-scroll-cue">
             <p>Scroll to explore</p>
-            <div class="line"></div>
+            <div class="scroll-line-anim"></div>
         </div>
     </div>
     
-    <!-- Article content from markdown -->
+    <!-- Article -->
     <article class="project-article">
         <div class="project-container">
             {{ content }}
-            
             <a href="{{ '/' | relative_url }}" class="back-home-btn">← 홈으로 돌아가기</a>
         </div>
     </article>
@@ -322,19 +364,16 @@ layout: default
 
 <script>
 (function() {
-    // 1. Splash screen auto-dismiss after simulated loading
+    // Splash auto dismiss
     var splash = document.getElementById('appSplash');
     if (splash) {
         setTimeout(function() {
             splash.classList.add('dismissed');
-            // Remove from DOM after transition
-            setTimeout(function() {
-                splash.remove();
-            }, 900);
-        }, 2200); // 2.2 second splash duration
+            setTimeout(function() { splash.remove(); }, 1100);
+        }, 3000);
     }
 
-    // 2. Scroll reveal for article sections
+    // Scroll reveal
     var revealObs = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
@@ -344,17 +383,16 @@ layout: default
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-    // Wrap h2, h3, p, img, blockquote, ul, ol in reveal class
     document.querySelectorAll('.project-container h2, .project-container h3, .project-container p, .project-container img, .project-container blockquote, .project-container ul, .project-container ol, .project-container hr, .feature-showcase').forEach(function(el) {
         el.classList.add('reveal');
         revealObs.observe(el);
     });
 
-    // 3. Parallax for hero background
+    // Parallax hero
     var heroBg = document.querySelector('.project-hero-bg');
     window.addEventListener('scroll', function() {
         if (heroBg && window.scrollY < window.innerHeight) {
-            heroBg.style.transform = 'scale(1.1) translateY(' + (window.scrollY * 0.3) + 'px)';
+            heroBg.style.transform = 'scale(1.15) translateY(' + (window.scrollY * 0.3) + 'px)';
         }
     });
 })();

@@ -2,8 +2,8 @@
 layout: project
 title: petFelio
 subtitle: "반려동물과의 일상을 더 특별하게, 스마트한 펫케어 파트너"
-splash_bg: "linear-gradient(135deg, #f8c390 0%, #f5a0b0 100%)"
-splash_logo: /Petfelio/petfolio-fe/public/images/onboarding-pet.png
+splash_chr: /Petfelio/petfolio-fe/public/images/onboarding-pet.png
+splash_tagline: "petFelio"
 app_icon: /Petfelio/petfolio-fe/public/images/onboarding-pet.png
 hero_bg: /Petfelio/petfolio-fe/public/images/onboarding-pet.png
 ---
