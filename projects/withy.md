@@ -111,7 +111,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </button>
                 <!-- Target MyPage Hotspot will anchor here via Javascript -->
                 <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a]">
-                    <img src="/WITHY/docs/assets/images/프로필사진_강영욱.jpg" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
+                    <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
                 </button>
             </div>
         </header>
@@ -158,7 +158,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     <div id="target-party-card" class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5">
                         <!-- We style this to be aspect-[2/3] logic visually equivalent -->
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
-                            <img src="/WITHY/docs/assets/images/프로필사진_강영욱.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
+                            <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
                                 <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-neutral-600 text-white">
@@ -185,7 +185,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     <!-- PartyCard 3 (Arcane) -->
                     <div class="group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5">
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
-                            <img src="/WITHY/docs/assets/images/프로필사진_김건희.png" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
+                            <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
                                 <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-neutral-600 text-white">
@@ -291,8 +291,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 
                 <!-- Profile Section -->
                 <div class="bg-white/5 p-8 rounded-2xl border border-white/10 flex flex-col items-center text-center">
-                    <img src="/WITHY/docs/assets/images/프로필사진_강영욱.jpg" class="w-32 h-32 rounded-full object-cover mb-5 border-4 border-red-600 shadow-xl" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';">
-                    <h2 class="text-2xl font-bold mb-2">강영욱 님</h2>
+                    <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&size=200&bold=true" class="w-32 h-32 rounded-full object-cover mb-5 border-4 border-red-600 shadow-xl" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';">
+                    <h2 class="text-2xl font-bold mb-2">GUEST 님</h2>
                     <p class="text-neutral-400 mb-6 italic">"함께 볼 때 더 즐거운 OTT 라이프"</p>
                     
                     <div class="flex justify-center gap-4 w-full mb-6">
@@ -351,7 +351,9 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         <div class="flex flex-col gap-3">
                             <div class="p-4 bg-black/40 rounded-xl border border-white/5 flex justify-between items-center hover:bg-white/5 transition cursor-pointer">
                                 <div class="flex items-center gap-4">
-                                    <img src="/WITHY/docs/assets/images/프로필사진_강영욱.jpg" class="w-10 h-10 rounded-md object-cover">
+                                    <div class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center shrink-0 border border-white/10">
+                                        <svg class="lucide w-5 h-5 text-red-500"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    </div>
                                     <div>
                                         <div class="font-bold mb-1">하울의 움직이는 성 같이보기</div>
                                         <div class="text-xs text-neutral-500">어제 · 플랫폼: Netflix · 15명 참여</div>
@@ -361,7 +363,9 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                             </div>
                             <div class="p-4 bg-black/40 rounded-xl border border-white/5 flex justify-between items-center hover:bg-white/5 transition cursor-pointer">
                                 <div class="flex items-center gap-4">
-                                    <img src="/WITHY/docs/assets/images/프로필사진_김건희.png" class="w-10 h-10 rounded-md object-cover bg-neutral-900">
+                                    <div class="w-10 h-10 rounded-md bg-neutral-800 flex items-center justify-center shrink-0 border border-white/10">
+                                        <svg class="lucide w-5 h-5 text-red-500"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                    </div>
                                     <div>
                                         <div class="font-bold mb-1">아케인 정주행 파티 (1-3화)</div>
                                         <div class="text-xs text-neutral-500">3일 전 · 플랫폼: Netflix · 42명 참여</div>

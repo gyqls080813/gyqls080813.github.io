@@ -287,9 +287,9 @@ body { overflow: hidden; }
 </style>
 
 <div class="app-shell">
-    <a href="{{ '/' | relative_url }}" class="tour-home-btn">← 홈페이지</a>
+    <!-- Removed tour-home-btn as requested -->
 
-    <!-- MOCK HEADER (To be driven by withy.md or injected content, we remove the hardcoded header because withy.md will provide the layout using real components) -->
+    <!-- MOCK HEADER (To be driven by withy.md or injected content) -->
     
     <!-- MAIN VIEWPORT -->
     <div class="app-viewport flex flex-col h-full bg-background" style="flex:1;">
@@ -342,12 +342,14 @@ document.addEventListener("DOMContentLoaded", function() {
         if(idx >= tourData.steps.length) {
             // End of tour
             ttTitle.innerText = "안내 완료 🎉";
-            ttDesc.innerText = "홈페이지로 돌아가거나 체험을 자유롭게 계속할 수 있습니다.";
-            btnNext.innerText = "홈으로 돌아가기";
+            ttDesc.innerText = "튜토리얼이 완료되었습니다. 이제 화면을 자유롭게 클릭하며 탐색해 보세요!";
+            btnNext.innerText = "닫기";
             btnNext.style.display = 'block';
             hintClick.style.display = 'none';
             hotspot.classList.remove('active');
-            btnNext.onclick = function() { window.location.href = "{{ '/' | relative_url }}"; };
+            btnNext.onclick = function() { 
+                document.getElementById('tour-overlay').style.display = 'none'; 
+            };
             return;
         }
 
