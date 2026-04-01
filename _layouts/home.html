@@ -2,6 +2,7 @@
 layout: default
 ---
 
+<!-- 1. Intro Section -->
 <div class="split-hero">
     <div class="split-hero__left">
         <!-- 왼쪽 절반 (사진 영역) -->
@@ -48,15 +49,22 @@ layout: default
                 <p style="color: var(--text-3); font-size: 0.75rem; font-family: 'Fira Code', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;">Scroll to Explore</p>
                 <div style="width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-3) 0%, transparent 100%); margin: 0 auto;"></div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s; margin-top: 8rem; margin-bottom: 4rem;">
-                <span class="section-title section-title--sm" style="text-align: center; margin-bottom: 2rem;">Portfolio</span>
-                <div class="portfolio-shortcuts">
+<!-- 2. Project 1: Withy -->
+<div class="split-hero" style="border-top: 1px solid var(--border);">
+    <div class="split-hero__left" style="background: var(--bg-card);">
+        <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview" class="profile-img" style="object-fit: contain; padding: 15%; opacity: 0.95;">
+    </div>
+    <div class="split-hero__right">
+        <div class="hero-content">
+            <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s;">
+                <span class="section-title section-title--sm" style="display: block; margin-bottom: 2rem;">Projects</span>
+                <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
                     <a href="{{ '/WITHY/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-withy">
                         <div class="portfolio-shortcut-card__accent withy-accent"></div>
-                        <div class="portfolio-shortcut-card__cover">
-                            <img src="{{ '/WITHY/docs/assets/images/WITHY.png' | relative_url }}" alt="Withy Preview">
-                        </div>
                         <div class="portfolio-shortcut-card__body">
                             <div class="portfolio-shortcut-card__header">
                                 <div class="portfolio-shortcut-card__icon">🎬</div>
@@ -85,12 +93,23 @@ layout: default
                             <div class="portfolio-shortcut-card__arrow">Explore Project →</div>
                         </div>
                     </a>
-                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Project 2: petFelio -->
+<div class="split-hero" style="border-top: 1px solid var(--border);">
+    <div class="split-hero__left" style="background: var(--bg-card);">
+        <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview" class="profile-img" style="object-fit: contain; padding: 15%;">
+    </div>
+    <div class="split-hero__right">
+        <div class="hero-content">
+            <div class="hero-portfolio-wrapper fade-up" style="animation-delay: 0.1s;">
+                <div class="portfolio-shortcuts" style="margin-top: 0; gap: 0;">
                     <a href="{{ '/Petfelio/petfolio-fe/' | relative_url }}" class="portfolio-shortcut-card" id="shortcut-petfelio">
                         <div class="portfolio-shortcut-card__accent petfelio-accent"></div>
-                        <div class="portfolio-shortcut-card__cover">
-                            <img src="{{ '/Petfelio/petfolio-fe/public/images/onboarding-pet.png' | relative_url }}" alt="petFelio Preview">
-                        </div>
                         <div class="portfolio-shortcut-card__body">
                             <div class="portfolio-shortcut-card__header">
                                 <div class="portfolio-shortcut-card__icon">🐾</div>
