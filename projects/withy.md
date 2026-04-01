@@ -48,75 +48,94 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 1: REAL HOME COMPONENT
 ======================== -->
-<div class="screen-view t-screen flex h-full text-white w-full" id="screen-home" style="background:#0a0a0a;">
+<div class="screen-view active-screen flex flex-col h-full text-white w-full relative overflow-hidden" id="screen-home" style="background:#0a0a0c;">
     
-    <!-- Navbar (Sidebar) Component -->
-    <aside class="w-20 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
-        <div class="p-4 space-y-4 pt-10 flex flex-col items-center">
-            
-            <!-- Home Icon -->
-            <button class="w-12 h-12 flex flex-col items-center justify-center rounded-xl transition-colors bg-neutral-800 text-white mb-6">
-                <svg class="lucide w-6 h-6 mb-1" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <!-- Authentic Header -->
+    <header class="w-full shrink-0 pl-4 pr-8 py-3 bg-[#0a0a0c] z-50 border-b border-white/5 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <!-- Hamburger Menu Button -->
+            <button class="cursor-pointer p-1 rounded-lg text-neutral-400 hover:text-white transition-colors" onclick="document.getElementById('sidebar-nav').classList.toggle('w-64'); document.getElementById('sidebar-nav').classList.toggle('w-20'); Array.from(document.querySelectorAll('.nav-label')).forEach(el => el.classList.toggle('hidden'));">
+                <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
             </button>
-
-            <!-- Platform Logs (Mocked) -->
-            <div class="flex flex-col gap-4">
-                <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer">
-                    <img src="/WITHY/public/logo-1.png" alt="NETFLIX" class="w-full h-full object-cover" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><rect width=\'100%\' height=\'100%\' fill=\'%23E50914\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'20\' font-family=\'Arial\' font-weight=\'bold\' text-anchor=\'middle\' dy=\'.3em\'>N</text></svg>'">
-                </div>
-                <div class="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer">
-                    <span class="text-xl font-bold text-red-600">Y</span>
-                </div>
+            <div class="h-8 relative flex items-center">
+                <!-- RED WITHY LOGO matching Screenshot -->
+                <span class="text-2xl font-black text-red-600 tracking-tighter" style="font-family: 'Rubik', sans-serif;">WITHY</span>
             </div>
         </div>
-    </aside>
 
-    <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col h-full overflow-hidden">
-        
-        <!-- Header Component -->
-        <header class="pl-4 pr-8 py-3 bg-[#121212] z-50 sticky top-0 border-b border-white/5 flex flex-shrink-0 items-center justify-between">
-            <div class="flex items-center gap-4">
-                <button class="cursor-pointer p-1 rounded-lg text-neutral-400 hover:text-white">
-                    <svg class="lucide"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+        <div class="flex-1 max-w-2xl px-10">
+            <div class="relative w-full">
+                <svg class="lucide absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500 w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+                <input type="text" placeholder="파티 검색..." class="w-full pl-12 pr-6 py-2.5 rounded-xl bg-[#1f1f1f] border border-white/5 text-sm text-white focus:ring-2 focus:ring-red-600 outline-none">
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
+            <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
+                <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            </button>
+            <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('hidden'); document.getElementById('friends-panel').classList.add('hidden');">
+                <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </button>
+            <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
+                <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
+            </button>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden relative">
+        <!-- Navbar (Sidebar) Component -->
+        <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
+            <div class="p-4 space-y-4 pt-6 flex flex-col">
+                <!-- Home Icon -->
+                <button class="w-full h-12 flex items-center justify-center rounded-xl transition-colors bg-neutral-800 text-white cursor-pointer px-0">
+                    <div class="w-6 h-6 flex items-center justify-center shrink-0">
+                        <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    </div>
+                    <span class="nav-label hidden font-bold text-[15px] ml-4 whitespace-nowrap grow text-left">홈</span>
                 </button>
-                <div class="w-32 h-10 relative flex items-center">
-                    <img src="/WITHY/public/withy/Withy_logo.png" alt="WITHY" class="h-full object-contain">
+
+                <!-- Platform Logs -->
+                <div class="flex flex-col gap-4">
+                    <button class="w-full h-12 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all">
+                        <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0 relative">
+                            <span class="text-[10px] absolute font-black w-full h-full flex items-center justify-center text-white z-10">N</span>
+                            <div class="absolute inset-0 bg-[#E50914]"></div>
+                        </div>
+                        <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left">Netflix</span>
+                    </button>
+                    <button class="w-full h-12 rounded-xl overflow-hidden flex items-center justify-center bg-black opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all">
+                        <div class="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center shrink-0">
+                            <span class="text-xl font-bold text-red-600">Y</span>
+                        </div>
+                        <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left">YouTube</span>
+                    </button>
                 </div>
             </div>
+            <style>
+                #sidebar-nav.w-64 button { justify-content: flex-start; padding-left: 1rem; padding-right: 1rem; }
+            </style>
+        </aside>
 
-            <div class="flex-1 max-w-2xl px-10">
-                <div class="relative w-full">
-                    <svg class="lucide absolute left-4 top-1/2 -translate-y-1/2 text-neutral-500"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
-                    <input type="text" placeholder="파티 검색..." class="w-full pl-12 pr-6 py-2.5 rounded-xl bg-[#1f1f1f] border border-white/5 text-sm text-white focus:ring-2 focus:ring-red-600 outline-none">
-                </div>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <button class="px-5 py-2.5 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm cursor-pointer" onclick="window.switchScreen('screen-room')">+ 만들기</button>
-                <!-- Friends Button -->
-                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
-                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                </button>
-                <!-- DM Chat Button -->
-                <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('chat-panel').classList.toggle('hidden'); document.getElementById('friends-panel').classList.add('hidden');">
-                    <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                </button>
-                <!-- Target MyPage Button -->
-                <button id="nav-mypage" class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#27272a] cursor-pointer hover:border-red-500 transition-colors" onclick="window.switchScreen('screen-mypage')">
-                    <img src="https://ui-avatars.com/api/?name=GUEST&background=dc2626&color=fff&bold=true" onerror="this.src='https://ui-avatars.com/api/?name=User&background=random';" class="w-full h-full object-cover">
-                </button>
-            </div>
-        </header>
-
-        <!-- Card Container Main View -->
-        <main class="flex-1 overflow-y-auto p-8 bg-[#0a0a0c]">
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-8 px-10 pt-6 pb-12 bg-[#0a0a0c]">
             <!-- 카테고리 셀렉터 -->
-            <div class="mb-8 flex gap-3 pb-4 border-b border-white/10">
-                <button class="px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm">전체 파티</button>
-                <button class="px-5 py-2 font-bold rounded-full bg-neutral-900 border border-white/10 text-neutral-400 text-sm">진행중 LIVE</button>
-                <button class="px-5 py-2 font-bold rounded-full bg-neutral-900 border border-white/10 text-neutral-400 text-sm">대기중</button>
+            <div id="category-filters" class="mb-8 flex gap-3 pb-4 border-b border-white/10">
+                <button class="category-btn px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm cursor-pointer shadow-sm border border-red-600 transition-colors" onclick="setActiveFilter(this)">전체 파티</button>
+                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this)">진행중 LIVE</button>
+                <button class="category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors" onclick="setActiveFilter(this)">대기중</button>
             </div>
+            
+            <script>
+                function setActiveFilter(btn) {
+                    const filters = document.querySelectorAll('.category-btn');
+                    filters.forEach(f => {
+                        f.className = 'category-btn px-5 py-2 font-bold rounded-full bg-[#18181b] border border-white/5 text-neutral-400 text-sm cursor-pointer hover:bg-[#27272a] hover:text-white transition-colors';
+                    });
+                    btn.className = 'category-btn px-5 py-2 font-black rounded-full bg-red-600 text-white text-sm cursor-pointer shadow-sm border border-red-600 transition-colors';
+                }
+            </script>
 
             <section class="mb-10">
                 <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2">🔥 실시간 인기 파티</h2>
