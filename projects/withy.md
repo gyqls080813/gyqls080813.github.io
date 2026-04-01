@@ -89,7 +89,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         <aside id="sidebar-nav" class="w-20 transition-all duration-300 bg-[#121212] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5">
             <div class="p-4 space-y-4 pt-6 flex flex-col">
                 <!-- Home Icon -->
-                <button class="w-full h-12 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer px-0 border border-white/10">
+                <button class="w-full h-12 shrink-0 flex items-center justify-center rounded-[18px] transition-colors bg-[#27272a] hover:bg-[#3f3f46] text-white cursor-pointer px-0 border border-white/10">
                     <div class="w-12 h-12 flex items-center justify-center shrink-0">
                         <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                     </div>
@@ -98,15 +98,15 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
                 <!-- Platform Logs -->
                 <div class="flex flex-col gap-4">
-                    <button class="w-full h-12 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
+                    <button class="w-full h-12 shrink-0 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 hover:opacity-100 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
                         <div class="w-12 h-12 flex items-center justify-center shrink-0">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-8 h-8 object-contain">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-7 h-7 object-contain drop-shadow-md">
                         </div>
                         <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">Netflix</span>
                     </button>
-                    <button class="w-full h-12 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 grayscale hover:opacity-100 hover:grayscale-0 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
+                    <button class="w-full h-12 shrink-0 rounded-[18px] overflow-hidden flex items-center justify-center bg-transparent opacity-60 hover:opacity-100 cursor-pointer text-white px-0 transition-all border border-transparent hover:border-white/10">
                         <div class="w-12 h-12 flex items-center justify-center shrink-0">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-[36px] mt-1 object-contain">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-[32px] object-contain drop-shadow-md">
                         </div>
                         <span class="nav-label hidden font-bold text-[14px] ml-1 whitespace-nowrap grow text-left">YouTube</span>
                     </button>
@@ -153,7 +153,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     
                     <!-- PartyCard 1 (Music) -->
-                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="live" onclick="window.switchScreen('screen-room')">
+                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="live" onclick="window.switchScreen('screen-room')">
                         <div class="relative w-full aspect-video bg-neutral-900 border-b border-white/5">
                             <img src="/WITHY/docs/assets/images/jpop.jpg" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
@@ -177,7 +177,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     </div>
 
                     <!-- PartyCard 2 (Howl's Moving Castle) -->
-                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="window.switchScreen('screen-room')">
+                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="window.switchScreen('screen-room')">
                         <!-- We style this to be aspect-[2/3] logic visually equivalent -->
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
@@ -205,7 +205,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     </div>
 
                     <!-- PartyCard 3 (Arcane) -->
-                    <div class="party-card group flex flex-col w-full h-[280px] bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
+                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
                         <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
