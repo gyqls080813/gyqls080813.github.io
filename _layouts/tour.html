@@ -386,9 +386,16 @@ document.addEventListener("DOMContentLoaded", function() {
         mypageBtn.onclick = null; // reset global mock nav listener
         
         if (step.requiresClick) {
-            // User MUST click a simulated hotspot to proceed
-            btnNext.style.display = 'none';
+            // Show hotspot box, but STILL allow user to just click Next
+            btnNext.style.display = 'block';
             hintClick.style.display = 'block';
+            
+            // Allow skipping the hotspot click
+            btnNext.onclick = function() {
+                hotspot.classList.remove('active');
+                currentStepIdx++;
+                renderStep(currentStepIdx);
+            };
             
             if (step.requiresClick === 'mypage-nav') {
                 // The nav icon in header acts as hotspot
