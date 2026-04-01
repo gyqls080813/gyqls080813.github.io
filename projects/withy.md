@@ -471,55 +471,108 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 2: ROOM ENTRY (Actual Withy Waiting Room Structure)
 ======================== -->
-<div class="screen-view t-screen w-full h-full bg-black relative overflow-hidden" id="screen-room">
-    
-    <!-- Background Video Layer (Fake Iframe placeholder) -->
-    <div class="absolute inset-0 w-full h-full z-0 flex flex-col items-center justify-center text-white bg-[#0a0a0c]">
-        <!-- Fullscreen GIF representing background video/ad mode -->
-        <img src="/WITHY/docs/assets/gif/party_enter.gif" alt="Waiting Room Background" class="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm pointer-events-none">
+<div class="screen-view t-screen w-full h-full bg-black relative overflow-hidden hidden" id="screen-room">
+    <!-- Background Video Layer -->
+    <div class="absolute inset-0 w-full h-full z-0">
+        <!-- 대기 상태 - 전체 화면 YouTube -->
+        <div class="w-full h-full flex flex-col items-center justify-center text-white">
+            <div class="absolute inset-0 w-full h-full pointer-events-none">
+                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8QE3y-ws7ew?autoplay=1&mute=1&loop=1&playlist=8QE3y-ws7ew&controls=0&showinfo=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="object-cover w-full h-full"></iframe>
+                <div class="absolute inset-0 bg-black/30"></div>
+            </div>
+            
+            <!-- Overlay for activation button -->
+            <div id="room-activate-btn-container" class="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-6 z-50">
+                <button onclick="activatePartyUI()" class="flex items-center gap-3 px-12 py-6 bg-red-600 hover:bg-red-700 rounded-2xl font-bold text-2xl transition-all shadow-2xl cursor-pointer">
+                    <svg class="lucide w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+                    파티 시작하기
+                </button>
+            </div>
+        </div>
         
-        <!-- Overlay Activate Button (from page.tsx) -->
-        <div class="absolute bottom-20 left-0 right-0 flex flex-col items-center gap-6 z-50">
-            <button class="flex items-center gap-3 px-12 py-6 bg-red-600 hover:bg-red-700 rounded-2xl font-bold text-2xl transition-all shadow-2xl cursor-pointer">
-                <svg class="lucide w-7 h-7"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
-                파티 시작하기
-            </button>
+        <!-- 파티 활성화 상태 UI 모달 (숨김) -->
+        <div id="room-active-modal" class="hidden absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-black/60 backdrop-blur-md text-white p-6 z-20 animate-in fade-in duration-700">
+            <div class="w-full max-w-2xl bg-neutral-900/80 border border-white/10 rounded-[3rem] p-10 md:p-14 shadow-2xl flex flex-col items-center text-center animate-in zoom-in-95 duration-500">
+                <!-- Icon & Title -->
+                <div class="flex flex-col items-center gap-6 mb-10">
+                    <div class="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center mb-2">
+                        <svg class="lucide w-10 h-10 text-red-500 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-white drop-shadow-lg tracking-tight">잠시만요!</h2>
+                </div>
+
+                <!-- Divider with glow -->
+                <div class="w-24 h-1.5 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full opacity-50 mb-10"></div>
+
+                <!-- Content -->
+                <div class="space-y-8 text-xl md:text-2xl font-bold text-gray-200 leading-relaxed">
+                    <p>현재 페이지를 <span class="text-red-500 underline underline-offset-8 decoration-4 decoration-red-500/50">나가야</span><br>파티에서 완전히 퇴장됩니다.</p>
+                    <div class="bg-white/5 rounded-2xl p-6 border border-white/5 mx-4">
+                        <p class="text-base md:text-lg text-gray-400 font-medium mb-3">파티 유지 중 다른 앱 실행 시</p>
+                        <div class="flex items-center justify-center gap-3 flex-wrap">
+                            <span class="px-4 py-2 bg-[#FF0000]/20 text-[#FF0000] rounded-lg border border-[#FF0000]/20 flex items-center gap-2">
+                                <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"></path></svg>
+                                YouTube
+                            </span>
+                            <span class="px-4 py-2 bg-[#E50914]/20 text-[#E50914] rounded-lg border border-[#E50914]/20 flex items-center gap-2">
+                                <span class="font-black text-lg leading-none">N</span>
+                                Netflix
+                            </span>
+                        </div>
+                        <p class="mt-4 text-red-400 font-bold">원격 조작이 될 수 있으니 주의해주세요.</p>
+                    </div>
+                </div>
+
+                <div class="mt-12 flex justify-center">
+                    <button onclick="window.switchScreen('screen-home')" class="flex items-center gap-3 px-10 py-5 bg-red-600 hover:bg-red-700 rounded-2xl font-bold text-xl transition-all shadow-2xl cursor-pointer">
+                        <svg class="lucide w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+                        파티 다시 참여하기
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Overlay: Top Info Bar -->
     <div class="absolute top-0 left-0 w-full z-10 p-8 bg-gradient-to-b from-black/80 to-transparent flex items-start justify-between">
-        <!-- Left: Title -->
         <div class="flex items-start gap-4">
             <div class="text-white">
                 <div class="flex items-center gap-3">
-                    <!-- Back Button -->
-                    <button class="p-2 rounded-lg bg-white/10 hover:bg-red-600 transition-all backdrop-blur-sm border border-white/20 cursor-pointer" onclick="window.switchScreen('screen-home')">
-                        <svg class="lucide w-6 h-6 text-white"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    <button class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all backdrop-blur-sm border border-white/20 cursor-pointer" onclick="window.switchScreen('screen-home')">
+                        <svg class="lucide w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     </button>
-                    <h1 class="text-3xl font-bold drop-shadow-md">하울의 움직이는 성 예약방</h1>
+                    <h1 class="text-3xl font-bold drop-shadow-md">하울의 움직이는 성 방</h1>
                 </div>
-                <!-- Start time -->
-                <p class="text-red-500 text-xl font-bold mt-2 drop-shadow-md tracking-tight">
+                <p id="room-time-left" class="text-red-500 text-xl font-bold mt-2 ml-11 drop-shadow-md">
                     10분 후 시작 예정
                 </p>
             </div>
         </div>
 
-        <!-- Right: Status Badges -->
         <div class="flex items-center gap-3">
-            <!-- Delete Party Button -->
-            <button class="flex items-center justify-center w-[34px] h-[34px] rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-sm transition-colors cursor-pointer">
-                <svg class="lucide w-4 h-4"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            <button class="flex items-center justify-center w-[34px] h-[34px] rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-sm transition-colors cursor-pointer" title="파티 삭제" onclick="window.switchScreen('screen-home')">
+                <svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
             </button>
-
-            <!-- Live/Waiting Badge -->
-            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">
+            <div id="room-status-badge" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">
                 WAITING
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function activatePartyUI() {
+        document.getElementById('room-activate-btn-container').classList.add('hidden');
+        document.getElementById('room-time-left').classList.add('hidden');
+        
+        const badge = document.getElementById('room-status-badge');
+        badge.className = 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold tracking-wider uppercase shadow-sm bg-red-600 text-white';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span> LIVE';
+
+        const modal = document.getElementById('room-active-modal');
+        modal.classList.remove('hidden');
+    }
+</script>
 
 <!-- =======================
      SCREEN 3: MY PAGE MOCKUP (Real Zinc-900 Dark Theme Components)
@@ -583,12 +636,44 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         <svg class="lucide w-4 h-4"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                         내 카테고리
                     </button>
-                    <button class="flex items-center justify-center gap-2 px-4 py-[11px] bg-red-900/40 hover:bg-red-900/60 rounded-xl text-sm font-bold text-red-200 transition-colors border border-red-900/30 whitespace-nowrap cursor-pointer">
+                    <button onclick="document.getElementById('logout-modal').classList.remove('hidden')" class="flex items-center justify-center gap-2 px-4 py-[11px] bg-red-900/40 hover:bg-red-900/60 rounded-xl text-sm font-bold text-red-200 transition-colors border border-red-900/30 whitespace-nowrap cursor-pointer">
                         로그아웃
                     </button>
                 </div>
             </div>
         </section>
+
+        <!-- Logout Modal -->
+        <div id="logout-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+            <div class="bg-zinc-900 w-full max-w-sm rounded-[32px] shadow-2xl overflow-hidden border border-zinc-800 animate-in zoom-in-95 duration-300">
+                <div class="px-6 py-4 bg-zinc-800/50 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="w-1.5 h-4 bg-red-600 rounded-full"></div>
+                        <h2 class="text-lg font-black text-white tracking-tight">알림</h2>
+                    </div>
+                    <button onclick="document.getElementById('logout-modal').classList.add('hidden')" class="p-2 bg-zinc-700/50 rounded-xl text-zinc-400 hover:text-white transition-all cursor-pointer">
+                        <svg class="lucide w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 6 6 18"></polyline><polyline points="6 6 18 18"></polyline></svg>
+                    </button>
+                </div>
+                <div class="p-8 flex flex-col items-center text-center gap-4">
+                    <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-2">
+                        <svg class="lucide w-8 h-8 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </div>
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-bold text-white">로그아웃</h3>
+                        <p class="text-zinc-400">정말 로그아웃 하시겠습니까?</p>
+                    </div>
+                </div>
+                <div class="p-4 bg-black/20 flex gap-3">
+                    <button onclick="document.getElementById('logout-modal').classList.add('hidden')" class="flex-1 py-4 bg-zinc-800 text-zinc-400 hover:bg-zinc-700 rounded-[20px] font-bold transition-all cursor-pointer">
+                        취소
+                    </button>
+                    <button onclick="window.location.reload()" class="flex-1 py-4 bg-red-600 text-white hover:bg-red-700 rounded-[20px] font-bold shadow-lg transition-all cursor-pointer">
+                        로그아웃
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <div class="space-y-12">
             <!-- HostedPartySection Component -->
@@ -599,8 +684,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         <div class="text-gray-400 text-sm font-bold bg-zinc-800 px-3 py-1 rounded-full">2개</div>
                     </div>
                     <div class="flex gap-2">
-                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)]">Netflix</button>
-                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700">YouTube</button>
+                        <button id="hosted-btn-netflix" onclick="toggleHosted('netflix')" class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer">Netflix</button>
+                        <button id="hosted-btn-youtube" onclick="toggleHosted('youtube')" class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer">YouTube</button>
                     </div>
                 </div>
 
@@ -611,7 +696,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div id="hosted-cards-netflix" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div class="relative group aspect-[2/3] bg-zinc-800 rounded-xl overflow-hidden cursor-pointer hover:border hover:border-red-500">
                         <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" class="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
                         <div class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
@@ -630,6 +715,10 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                         </div>
                     </div>
                 </div>
+                
+                <div id="hosted-cards-youtube" class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="py-20 col-span-full text-center text-zinc-500 font-medium">YouTube 파티가 없습니다.</div>
+                </div>
             </section>
 
             <!-- HistorySection Component -->
@@ -637,14 +726,14 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <div class="flex items-center justify-between mb-10">
                     <h2 class="text-xl font-bold text-white">시청 기록</h2>
                     <div class="flex gap-2">
-                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)]">Netflix</button>
-                        <button class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700">YouTube</button>
+                        <button id="history-btn-netflix" onclick="toggleHistory('netflix')" class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer">Netflix</button>
+                        <button id="history-btn-youtube" onclick="toggleHistory('youtube')" class="px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer">YouTube</button>
                     </div>
                 </div>
 
                 <div class="space-y-12">
-                    <!-- Date Group -->
-                    <div>
+                    <!-- Netflix Group -->
+                    <div id="history-content-netflix">
                         <div class="flex items-center justify-between border-b border-zinc-800 pb-2 mb-8">
                             <h3 class="text-lg font-bold text-white">2026-04-01</h3>
                             <span class="text-zinc-500 text-sm font-bold">3개</span>
@@ -653,7 +742,6 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                             <div class="flex flex-col gap-3 group relative cursor-pointer">
                                 <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
                                     <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
-                                    <!-- Progress Bar -->
                                     <div class="absolute bottom-0 left-0 w-full h-1 bg-zinc-700">
                                         <div class="h-full bg-red-600" style="width: 100%;"></div>
                                     </div>
@@ -663,7 +751,6 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                                     <p class="text-xs font-semibold text-zinc-500">시청 완료 (100%)</p>
                                 </div>
                             </div>
-
                             <div class="flex flex-col gap-3 group relative cursor-pointer">
                                 <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
                                     <img src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4v6EDvWtWQ.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
@@ -676,7 +763,6 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                                     <p class="text-xs font-semibold text-zinc-500">시청 완료 (100%)</p>
                                 </div>
                             </div>
-                            
                             <div class="flex flex-col gap-3 group relative cursor-pointer">
                                 <div class="w-full aspect-[2/3] rounded-2xl overflow-hidden bg-zinc-800 relative shadow-xl">
                                     <img src="https://image.tmdb.org/t/p/w500/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 opacity-70">
@@ -691,8 +777,60 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- YouTube Group (Hidden initially) -->
+                    <div id="history-content-youtube" class="hidden">
+                        <div class="py-20 text-center text-zinc-500 font-medium">
+                            YouTube 시청 기록이 없습니다.
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
+</div>
+
+<script>
+    function toggleHosted(platform) {
+        const btnN = document.getElementById('hosted-btn-netflix');
+        const btnY = document.getElementById('hosted-btn-youtube');
+        const cardsN = document.getElementById('hosted-cards-netflix');
+        const cardsY = document.getElementById('hosted-cards-youtube');
+        
+        if (platform === 'netflix') {
+            btnN.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer';
+            btnY.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer';
+            cardsN.classList.remove('hidden');
+            cardsN.classList.add('grid');
+            cardsY.classList.add('hidden');
+            cardsY.classList.remove('grid');
+        } else {
+            btnY.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer';
+            btnN.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer';
+            cardsY.classList.remove('hidden');
+            cardsY.classList.add('grid');
+            cardsN.classList.add('hidden');
+            cardsN.classList.remove('grid');
+        }
+    }
+    
+    function toggleHistory(platform) {
+        const btnN = document.getElementById('history-btn-netflix');
+        const btnY = document.getElementById('history-btn-youtube');
+        const contentN = document.getElementById('history-content-netflix');
+        const contentY = document.getElementById('history-content-youtube');
+        
+        if (platform === 'netflix') {
+            btnN.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer';
+            btnY.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer';
+            contentN.classList.remove('hidden');
+            contentY.classList.add('hidden');
+        } else {
+            btnY.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.4)] cursor-pointer';
+            btnN.className = 'px-6 py-2 rounded-full font-bold text-sm transition-all bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer';
+            contentY.classList.remove('hidden');
+            contentN.classList.add('hidden');
+        }
+    }
+</script>
 </div>
