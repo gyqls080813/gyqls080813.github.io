@@ -9,6 +9,18 @@ layout: default
 .split-hero {
     display: block;
     position: relative;
+    height: 100vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    /* Hide scrollbar for seamless presentation look */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+
+.split-hero::-webkit-scrollbar {
+    display: none;
 }
 
 .sticky-viewport {
@@ -301,7 +313,6 @@ layout: default
             
             var scrollObs = new IntersectionObserver(function(entries) {
                 entries.forEach(function(entry) {
-                    // With CSS Snapping, section will perfectly align so intersectionRatio will hit 1.0 reliably.
                     if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
                         var idx = entry.target.getAttribute('data-index');
                         
@@ -314,7 +325,10 @@ layout: default
                         if(activeText) activeText.classList.add('active');
                     }
                 });
-            }, { threshold: 0.5 }); 
+            }, { 
+                root: document.querySelector('.split-hero'),
+                threshold: 0.5 
+            }); 
 
             triggers.forEach(function(t) { scrollObs.observe(t); });
         }
