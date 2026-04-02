@@ -91,29 +91,75 @@ app_logo: /WITHY/public/withy/Withy_logo.png
     </header>
 
     <div class="flex flex-1 overflow-hidden">
-        <!-- Navbar (Sidebar) Component -->
+        <!-- Navbar (Sidebar) Component — mirrors Navbar.tsx exactly -->
         <aside id="sidebar-nav" class="transition-all duration-300 w-20 bg-[#0a0a0c] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5 border-t-0">
             <div class="p-4 space-y-2">
-                <!-- Home Icon -->
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-neutral-800 text-white cursor-pointer group">
+                <!-- 1. 홈 버튼 -->
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-neutral-800 text-white cursor-pointer">
                     <svg class="lucide w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
-                    <span class="nav-label hidden font-bold text-[15px] ml-1 whitespace-nowrap grow text-left text-white">홈</span>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">홈</span>
                 </button>
 
                 <div class="my-4"></div>
 
-                <!-- Platform Logos -->
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer">
+                <!-- 2. 활성 플랫폼: Netflix (OTT) -->
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer" title="NETFLIX">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
-                        <img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="w-full h-full object-cover bg-black rounded-xl">
+                        <img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="w-full h-full object-cover">
                     </div>
-                    <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">Netflix</span>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">NETFLIX</span>
                 </button>
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer mt-2">
+
+                <!-- 2. 활성 플랫폼: YouTube -->
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1" title="YouTube">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
-                        <img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="w-full h-full object-cover bg-black rounded-xl border border-white/5">
+                        <img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="w-full h-full object-cover">
                     </div>
-                    <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">YouTube</span>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">YouTube</span>
+                </button>
+
+                <!-- 3. 준비 중인 서비스 (opacity-60 grayscale) — matches Navbar.tsx -->
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Tving">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/Tving.png" alt="Tving" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Tving</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="쿠팡플레이">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/coupangplay.png" alt="쿠팡플레이" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">쿠팡플레이</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Wavve">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/Wavve.png" alt="Wavve" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Wavve</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="왓챠">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/watcha.png" alt="왓챠" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">왓챠</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Laftel">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/Laftel.jpg" alt="Laftel" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Laftel</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="디즈니 플러스">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/disneyplus.jpg" alt="디즈니 플러스" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">디즈니 플러스</span>
+                </button>
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="애플 TV+">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
+                        <img src="/WITHY/public/logo/appletvplus.png" alt="애플 TV+" class="w-full h-full object-cover">
+                    </div>
+                    <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">애플 TV+</span>
                 </button>
             </div>
             <style>
@@ -157,84 +203,86 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <!-- Card Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     
-                    <!-- PartyCard 1 (Music) -->
-                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="live" onclick="window.switchScreen('screen-room')">
+                    <!-- PartyCard 1 (Music / YouTube LIVE) — mirrors PartyCard.tsx -->
+                    <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="live" onclick="window.switchScreen('screen-room')">
                         <div class="relative w-full aspect-video bg-neutral-900 border-b border-white/5">
                             <img src="/WITHY/docs/assets/images/jpop.jpg" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
-                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-red-600 text-white">
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase shadow-sm bg-red-600 text-white">
                                     <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>LIVE
                                 </div>
                                 <div class="flex items-center gap-1 px-1.5 py-1 rounded bg-black/70 backdrop-blur-md text-white/90 text-[11px] font-medium border border-white/10">
-                                    <svg class="lucide w-3 h-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                     <span>2 / 4</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col p-4 gap-2 flex-1">
-                            <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate">J-POP 신곡 같이 들어요</h3>
-                            <div class="flex items-center gap-1 text-[11px] font-medium mt-auto">
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 text-red-600">YouTube</span>
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5">음악</span>
+                        <div class="flex flex-col p-4 gap-2">
+                            <div class="flex justify-between items-start gap-2 mb-1">
+                                <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate flex-1">J-POP 신곡 같이 들어요</h3>
+                            </div>
+                            <div class="flex items-center gap-1 text-[11px] font-medium text-neutral-400">
+                                <span class="w-8 h-6 flex items-center justify-center"><img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="h-4 w-auto object-contain select-none"></span>
+                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 h-6 flex items-center">음악</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- PartyCard 2 (Howl's Moving Castle) -->
-                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="window.switchScreen('screen-room')">
-                        <!-- We style this to be aspect-[2/3] logic visually equivalent -->
-                        <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
+                    <!-- PartyCard 2 (Howl's Moving Castle / Netflix WAITING) — mirrors PartyCard.tsx -->
+                    <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting" onclick="window.switchScreen('screen-room')">
+                        <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
-                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-neutral-600 text-white">
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">
                                     WAITING
                                 </div>
                                 <div class="flex items-center gap-1 px-1.5 py-1 rounded bg-black/70 backdrop-blur-md text-white/90 text-[11px] font-medium border border-white/10">
-                                    <svg class="lucide w-3 h-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                     <span>1 / 4</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-col p-4 gap-2 flex-1">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate">하울의 움직이는 성</h3>
-                                <span class="text-[12px] text-red-500 font-medium">10분 후 시작</span>
+                        <div class="flex flex-col p-4 gap-2">
+                            <div class="flex justify-between items-start gap-2 mb-1">
+                                <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate flex-1">하울의 움직이는 성</h3>
+                                <span class="text-[12px] text-red-500 font-medium whitespace-nowrap mt-0.5">10분 후 시작</span>
                             </div>
-                            <div class="flex items-center gap-1 text-[11px] font-medium mt-auto">
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 text-red-500">Netflix</span>
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5">애니메이션</span>
+                            <div class="flex items-center gap-1 text-[11px] font-medium text-neutral-400">
+                                <span class="w-8 h-6 flex items-center justify-center"><img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="h-4 w-auto object-contain select-none"></span>
+                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 h-6 flex items-center">애니메이션</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- PartyCard 3 (Arcane) -->
-                    <div class="party-card group flex flex-col w-full min-h-[290px] h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer hover:border-red-500 transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)]" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
-                        <div class="relative w-full h-[180px] bg-neutral-900 border-b border-white/5">
+                    <!-- PartyCard 3 (Arcane / Netflix Private WAITING) — mirrors PartyCard.tsx -->
+                    <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
+                        <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
-                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold uppercase bg-neutral-600 text-white">
+                                <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">
                                     WAITING
                                 </div>
                                 <div class="flex items-center gap-1 px-1.5 py-1 rounded bg-black/70 backdrop-blur-md text-white/90 text-[11px] font-medium border border-white/10">
-                                    <svg class="lucide w-3 h-3"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <svg class="lucide w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                     <span>2 / 8</span>
                                 </div>
                             </div>
-                            <div class="absolute bottom-2.5 right-2.5 bg-black/60 backdrop-blur p-2 rounded-full border border-white/10 flex items-center justify-center">
-                                <svg class="lucide w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <!-- isPrivate Lock Icon (bottom-right) -->
+                            <div class="absolute bottom-2.5 right-2.5 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/10 z-10">
+                                <svg class="lucide w-3.5 h-3.5 text-white/90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                             </div>
                         </div>
-                        <div class="flex flex-col p-4 gap-2 flex-1">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate">아케인 정주행</h3>
-                                <span class="text-[12px] text-red-500 font-medium">1일 후 시작</span>
+                        <div class="flex flex-col p-4 gap-2">
+                            <div class="flex justify-between items-start gap-2 mb-1">
+                                <h3 class="text-[16px] font-bold text-neutral-100 leading-snug truncate flex-1">아케인 정주행</h3>
+                                <span class="text-[12px] text-red-500 font-medium whitespace-nowrap mt-0.5">1일 후 시작</span>
                             </div>
-                            <div class="flex items-center gap-1 text-[11px] font-medium mt-auto">
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 text-red-500">Netflix</span>
-                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5">애니메이션</span>
+                            <div class="flex items-center gap-1 text-[11px] font-medium text-neutral-400">
+                                <span class="w-8 h-6 flex items-center justify-center"><img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="h-4 w-auto object-contain select-none"></span>
+                                <span class="bg-neutral-800 px-2 py-0.5 rounded-md border border-white/5 h-6 flex items-center">애니메이션</span>
                             </div>
                         </div>
                     </div>
