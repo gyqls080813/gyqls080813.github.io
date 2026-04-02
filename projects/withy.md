@@ -95,7 +95,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         <aside id="sidebar-nav" class="transition-all duration-300 w-20 bg-[#0a0a0c] h-full overflow-y-auto scrollbar-hide z-40 relative flex-shrink-0 border-r border-white/5 border-t-0">
             <div class="p-4 space-y-2">
                 <!-- 1. 홈 버튼 -->
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-neutral-800 text-white cursor-pointer">
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-neutral-800 text-white cursor-pointer" onclick="window.filterPlatform('all')">
                     <svg class="lucide w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">홈</span>
                 </button>
@@ -103,15 +103,15 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <div class="my-4"></div>
 
                 <!-- 2. 활성 플랫폼: Netflix (OTT) -->
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer" title="NETFLIX">
-                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
-                        <img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="w-7 h-7 object-contain">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer" title="NETFLIX" onclick="window.filterPlatform('netflix')">
+                    <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black" style="padding:6px;">
+                        <img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" style="width:22px;height:22px;object-fit:contain;">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">NETFLIX</span>
                 </button>
 
                 <!-- 2. 활성 플랫폼: YouTube -->
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1" title="YouTube">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1" title="YouTube" onclick="window.filterPlatform('youtube')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="w-full h-full object-cover">
                     </div>
@@ -119,43 +119,43 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </button>
 
                 <!-- 3. 준비 중인 서비스 (opacity-60 grayscale) — matches Navbar.tsx -->
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Tving">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Tving" onclick="window.showComingSoon('Tving')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/Tving.png" alt="Tving" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Tving</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="쿠팡플레이">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="쿠팡플레이" onclick="window.showComingSoon('쿠팡플레이')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/coupangplay.png" alt="쿠팡플레이" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">쿠팡플레이</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Wavve">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Wavve" onclick="window.showComingSoon('Wavve')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/Wavve.png" alt="Wavve" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Wavve</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="왓챠">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="왓챠" onclick="window.showComingSoon('왓챠')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/watcha.png" alt="왓챠" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">왓챠</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Laftel">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="Laftel" onclick="window.showComingSoon('Laftel')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/Laftel.jpg" alt="Laftel" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">Laftel</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="디즈니 플러스">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="디즈니 플러스" onclick="window.showComingSoon('디즈니 플러스')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/disneyplus.jpg" alt="디즈니 플러스" class="w-full h-full object-cover">
                     </div>
                     <span class="nav-label hidden font-semibold text-sm ml-3 whitespace-nowrap grow text-left text-white">디즈니 플러스</span>
                 </button>
-                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="애플 TV+">
+                <button class="nav-platform-btn transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto bg-transparent cursor-pointer mt-1 opacity-60 grayscale hover:opacity-100 hover:grayscale-0" title="애플 TV+" onclick="window.showComingSoon('애플 TV+')">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="/WITHY/public/logo/appletvplus.png" alt="애플 TV+" class="w-full h-full object-cover">
                     </div>
@@ -198,7 +198,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 }
             </script>
 
-            <section class="mb-10">
+            <section id="section-youtube" class="mb-10">
                 <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/Youtube.png" alt="YouTube" style="height:20px;width:auto;"> YouTube 인기 파티</h2>
                 <!-- YouTube Card Grid (aspect-video, 3-col like real app) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -284,7 +284,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
             </section>
 
             <!-- ========== Netflix Section (aspect-[2/3], 5-col) ========== -->
-            <section class="mb-10">
+            <section id="section-netflix" class="mb-10">
                 <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" style="height:18px;width:auto;"> Netflix 인기 파티</h2>
                 <!-- Netflix Card Grid (aspect-[2/3] portrait, 5-col like real app) -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
@@ -316,7 +316,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     <!-- PartyCard (Arcane / Netflix Private WAITING) -->
                     <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
                         <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
-                            <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
+                            <img src="https://image.tmdb.org/t/p/w500/fAAmMZMbIGMFhmOZkCaLRjSHbml.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
                                 <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">WAITING</div>
@@ -367,7 +367,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     <!-- PartyCard (이상한 변호사 우영우 / Netflix WAITING) -->
                     <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting">
                         <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
-                            <img src="https://image.tmdb.org/t/p/w500/3PFumfrXeXpzJkGJi7e5isQzMdO.jpg" class="object-cover w-full h-full">
+                            <img src="https://image.tmdb.org/t/p/w500/sGMKTOi6CZZCffjOmMQRFjWBcGt.jpg" onerror="this.src='https://image.tmdb.org/t/p/w500/wWhkCmqWEEA81GAlqGbCMUN44CN.jpg';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
                                 <div class="flex items-center gap-1.5 px-2 py-1 rounded text-[10px] font-bold tracking-wider uppercase shadow-sm bg-neutral-600 text-white">WAITING</div>
@@ -412,6 +412,43 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 </div>
             </section>
         </main>
+
+        <!-- Coming Soon Modal -->
+        <div id="coming-soon-modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="if(event.target===this)this.classList.add('hidden')">
+            <div class="bg-[#1f1f22] w-full max-w-md rounded-[28px] shadow-2xl border border-white/10 overflow-hidden text-center p-10">
+                <div style="font-size:64px;margin-bottom:16px;">🚧</div>
+                <h3 class="text-2xl font-bold text-white mb-3"><span id="coming-soon-name"></span></h3>
+                <p class="text-neutral-400 text-base mb-2">서비스 준비 중입니다</p>
+                <p class="text-neutral-500 text-sm mb-8">빠른 시일 내에 만나볼 수 있도록 준비하겠습니다!</p>
+                <button class="px-8 py-3 rounded-xl bg-[#500000] hover:bg-[#700000] text-white font-bold text-sm transition-colors cursor-pointer" onclick="document.getElementById('coming-soon-modal').classList.add('hidden')">확인</button>
+            </div>
+        </div>
+
+        <script>
+            // Platform filtering: show only the clicked platform section
+            window.filterPlatform = function(platform) {
+                var yt = document.getElementById('section-youtube');
+                var nf = document.getElementById('section-netflix');
+                if (!yt || !nf) return;
+                if (platform === 'youtube') {
+                    yt.style.display = '';
+                    nf.style.display = 'none';
+                } else if (platform === 'netflix') {
+                    yt.style.display = 'none';
+                    nf.style.display = '';
+                } else {
+                    yt.style.display = '';
+                    nf.style.display = '';
+                }
+            };
+            // Coming soon modal for inactive platforms
+            window.showComingSoon = function(name) {
+                var modal = document.getElementById('coming-soon-modal');
+                var nameEl = document.getElementById('coming-soon-name');
+                if (nameEl) nameEl.textContent = name;
+                if (modal) modal.classList.remove('hidden');
+            };
+        </script>
 
         <!-- Password Modal Component (Hidden by default) -->
         <div id="password-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200">
