@@ -62,8 +62,8 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     </button>
                 </div>
 
-                <button class="w-48 h-14 relative overflow-hidden flex items-center justify-center rounded-lg transition-all hover:bg-white/5 cursor-pointer">
-                    <span class="text-[32px] pt-1 font-black text-red-600 tracking-tighter" style="font-family: 'Rubik', sans-serif;">WITHY</span>
+                <button class="w-48 h-14 relative overflow-hidden flex items-center justify-center rounded-lg transition-all hover:bg-white/5 cursor-pointer" onclick="window.switchScreen('screen-home')">
+                    <img src="/WITHY/public/withy/Withy_logo.png" alt="Withy Logo" class="h-10 w-auto object-contain">
                 </button>
             </div>
 
@@ -102,14 +102,14 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
                 <div class="my-4"></div>
 
-                <!-- Platform Logs -->
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-neutral-400 hover:text-white cursor-pointer opacity-60 grayscale hover:opacity-100 hover:grayscale-0">
+                <!-- Platform Logos -->
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-full h-full object-contain bg-black">
                     </div>
                     <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">Netflix</span>
                 </button>
-                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-neutral-400 hover:text-white cursor-pointer opacity-60 grayscale hover:opacity-100 hover:grayscale-0 mt-2">
+                <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer mt-2">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-full h-full object-contain p-1">
                     </div>
