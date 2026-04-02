@@ -199,7 +199,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
             </script>
 
             <section class="mb-10">
-                <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="h-5 w-auto object-contain"> YouTube 인기 파티</h2>
+                <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/Youtube.png" alt="YouTube" style="height:20px;width:auto;"> YouTube 인기 파티</h2>
                 <!-- YouTube Card Grid (aspect-video, 3-col like real app) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     
@@ -285,7 +285,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
             <!-- ========== Netflix Section (aspect-[2/3], 5-col) ========== -->
             <section class="mb-10">
-                <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="h-4 w-auto object-contain"> Netflix 인기 파티</h2>
+                <h2 class="text-xl font-bold mb-5 tracking-tight flex items-center gap-2"><img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" style="height:18px;width:auto;"> Netflix 인기 파티</h2>
                 <!-- Netflix Card Grid (aspect-[2/3] portrait, 5-col like real app) -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
 
