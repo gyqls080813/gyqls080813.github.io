@@ -48,7 +48,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 <!-- =======================
      SCREEN 1: REAL HOME COMPONENT
 ======================== -->
-<div class="screen-view active-screen flex flex-col h-full w-full relative overflow-hidden bg-[#0a0a0c] text-white" id="screen-home">
+<div class="screen-view t-screen flex flex-col h-full w-full relative overflow-hidden bg-[#0a0a0c] text-white" id="screen-home">
     
     <!-- Authentic Header -->
     <header class="pl-0 pr-8 py-4 bg-[#0a0a0c] z-50 sticky top-0 border-b border-white/5 w-full flex-shrink-0">

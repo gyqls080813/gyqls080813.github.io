@@ -146,21 +146,12 @@ layout: default
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .screen-view.active {
     opacity: 1;
     pointer-events: auto;
     z-index: 10;
-}
-
-.screen-view img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Don't crop vital UI */
 }
 
 /* Custom CSS generated screens (e.g. MyPage Mockup) */
@@ -175,6 +166,8 @@ layout: default
 
 .screen-view.active .mockup-container {
     display: block;
+}
+
 /* Disable global scroll when in prototype mode */
 body { overflow: hidden; }
 </style>
