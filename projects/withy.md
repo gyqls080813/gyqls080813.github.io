@@ -105,13 +105,13 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 <!-- Platform Logos -->
                 <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" class="w-full h-full object-contain bg-black">
+                        <img src="/WITHY/public/logo/NETFLIX.png" alt="Netflix" class="w-full h-full object-cover bg-black rounded-xl">
                     </div>
                     <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">Netflix</span>
                 </button>
                 <button class="transition-all duration-300 w-10 h-10 flex items-center justify-center rounded-xl mx-auto transition-colors bg-transparent text-white cursor-pointer mt-2">
                     <div class="w-full h-full rounded-xl overflow-hidden flex items-center justify-center bg-black">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" class="w-full h-full object-contain p-1">
+                        <img src="/WITHY/public/logo/Youtube.png" alt="YouTube" class="w-full h-full object-cover bg-black rounded-xl border border-white/5">
                     </div>
                     <span class="nav-label hidden font-bold text-[14px] ml-3 whitespace-nowrap grow text-left text-white">YouTube</span>
                 </button>
