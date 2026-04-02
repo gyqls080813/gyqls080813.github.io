@@ -995,7 +995,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
         <!-- 대기 상태 - 전체 화면 YouTube -->
         <div class="w-full h-full flex flex-col items-center justify-center text-white">
             <div class="absolute inset-0 w-full h-full pointer-events-none">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8QE3y-ws7ew?autoplay=1&mute=1&loop=1&playlist=8QE3y-ws7ew&controls=0&showinfo=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="object-cover w-full h-full"></iframe>
+                <iframe id="room-iframe" width="100%" height="100%" data-src="https://www.youtube.com/embed/8QE3y-ws7ew?autoplay=1&mute=1&loop=1&playlist=8QE3y-ws7ew&controls=0&showinfo=0&modestbranding=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="object-cover w-full h-full"></iframe>
                 <div class="absolute inset-0 bg-black/30"></div>
             </div>
             

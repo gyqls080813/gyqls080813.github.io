@@ -204,6 +204,17 @@ window.switchScreen = function(screenId) {
     if(target) {
         target.classList.add('active'); // shows target screen
     }
+    // Lazy-load YouTube iframe only when entering screen-room
+    var iframe = document.getElementById('room-iframe');
+    if (iframe) {
+        if (screenId === 'screen-room') {
+            if (!iframe.src || iframe.src === 'about:blank' || iframe.src === '') {
+                iframe.src = iframe.getAttribute('data-src') || '';
+            }
+        } else {
+            iframe.src = 'about:blank'; // stop video when leaving room
+        }
+    }
 };
 
 document.addEventListener("DOMContentLoaded", function() {
