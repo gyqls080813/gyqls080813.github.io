@@ -231,7 +231,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
                     <!-- PartyCard 2 (Howl's Moving Castle / Netflix WAITING) — mirrors PartyCard.tsx -->
                     <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting" onclick="window.switchScreen('screen-room')">
-                        <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
+                        <div class="relative w-full aspect-video bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/TkTPELv4kC3u1lkloush8skOjE.jpg" onerror="this.src='https://images.unsplash.com/photo-1541562232579-512a21360020?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" alt="Howl" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
@@ -258,7 +258,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
                     <!-- PartyCard 3 (Arcane / Netflix Private WAITING) — mirrors PartyCard.tsx -->
                     <div class="party-card group flex flex-col w-full h-full bg-[#1f1f1f] rounded-xl overflow-hidden border border-white/5 cursor-pointer transition-none" data-status="waiting" onclick="document.getElementById('password-modal').classList.remove('hidden')">
-                        <div class="relative w-full aspect-[2/3] bg-neutral-900 border-b border-white/5">
+                        <div class="relative w-full aspect-video bg-neutral-900 border-b border-white/5">
                             <img src="https://image.tmdb.org/t/p/w500/xQ6GijEziUjzYogI2Hj5N6n0qI5.jpg" onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60';" class="object-cover w-full h-full">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50"></div>
                             <div class="absolute top-2.5 left-2.5 flex items-center gap-2">
