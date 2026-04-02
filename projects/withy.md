@@ -76,7 +76,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
 
             <!-- Right: Actions -->
             <div class="flex items-center gap-3 flex-shrink-0 relative">
-                <button class="cursor-pointer px-6 py-3 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm transition-all shadow-sm" onclick="window.switchScreen('screen-room')">+ 만들기</button>
+                <button class="cursor-pointer px-6 py-3 rounded-xl font-bold bg-[#500000] text-neutral-200 hover:bg-[#700000] text-sm transition-all shadow-sm" onclick="document.getElementById('create-party-modal').classList.remove('hidden')">+ 만들기</button>
                 <button class="cursor-pointer p-3 rounded-xl font-semibold transition-all shadow-sm border border-white/5 bg-[#1f1f1f] text-neutral-300 hover:bg-neutral-800 hover:text-white" onclick="document.getElementById('friends-panel').classList.toggle('hidden'); document.getElementById('chat-panel').classList.add('hidden');">
                     <svg class="lucide w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
@@ -413,19 +413,160 @@ app_logo: /WITHY/public/withy/Withy_logo.png
             </section>
         </main>
 
-        <!-- Coming Soon Modal -->
-        <div id="coming-soon-modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="if(event.target===this)this.classList.add('hidden')">
-            <div class="bg-[#1f1f22] w-full max-w-md rounded-[28px] shadow-2xl border border-white/10 overflow-hidden text-center p-10">
-                <div style="font-size:64px;margin-bottom:16px;">🚧</div>
-                <h3 class="text-2xl font-bold text-white mb-3"><span id="coming-soon-name"></span></h3>
-                <p class="text-neutral-400 text-base mb-2">서비스 준비 중입니다</p>
-                <p class="text-neutral-500 text-sm mb-8">빠른 시일 내에 만나볼 수 있도록 준비하겠습니다!</p>
-                <button class="px-8 py-3 rounded-xl bg-[#500000] hover:bg-[#700000] text-white font-bold text-sm transition-colors cursor-pointer" onclick="document.getElementById('coming-soon-modal').classList.add('hidden')">확인</button>
+        <!-- ===== ServicePrepare Coming-Soon Screen (matches ServicePrepare.tsx) ===== -->
+        <div id="coming-soon-modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/90 backdrop-blur-sm" onclick="if(event.target===this)this.classList.add('hidden')">
+            <div class="flex flex-col items-center max-w-md text-center space-y-8">
+                <!-- Visual Icon (Wrench / Construction) -->
+                <div style="width:96px;height:96px;border-radius:50%;background:#18181b;border:2px solid #27272a;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 0 30px rgba(255,255,255,0.05);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:40px;height:40px;color:#a1a1aa;">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                    </svg>
+                </div>
+                <div class="space-y-4">
+                    <h1 style="font-size:1.875rem;font-weight:800;background:linear-gradient(to right,#ffffff,#71717a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                        <span id="coming-soon-name"></span>
+                    </h1>
+                    <p style="color:#71717a;line-height:1.75;">더 나은 서비스를 위해 준비하고 있습니다.<br>조금만 기다려주세요!</p>
+                </div>
+                <button class="px-8 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm transition-colors cursor-pointer border border-zinc-700" onclick="document.getElementById('coming-soon-modal').classList.add('hidden')">확인</button>
+            </div>
+        </div>
+
+        <!-- ===== CreatePartyModal (matches CreatePartyModal.tsx) ===== -->
+        <div id="create-party-modal" class="hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" style="line-height:1.2;color:#d4d4d8;">
+            <style>
+                #create-party-modal input::-webkit-outer-spin-button,
+                #create-party-modal input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+                #create-party-modal input[type=number] { -moz-appearance: textfield; }
+                .cpm-no-scrollbar::-webkit-scrollbar { display: none; }
+                .cpm-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            </style>
+            <div class="w-[95%] md:w-[90%] lg:max-w-4xl rounded-[40px] shadow-2xl overflow-hidden flex flex-col max-h-[95vh]" style="background:#18181b;">
+                <!-- Header -->
+                <div style="padding:20px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <div style="width:6px;height:20px;background:#dc2626;border-radius:9999px;"></div>
+                        <h2 style="font-size:18px;font-weight:900;letter-spacing:-0.025em;color:white;">새 파티 만들기</h2>
+                    </div>
+                    <button onclick="document.getElementById('create-party-modal').classList.add('hidden')" style="padding:8px;background:#27272a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;color:#a1a1aa;cursor:pointer;" class="hover:text-red-400 transition-colors">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+                    </button>
+                </div>
+                <!-- Body: 2 columns -->
+                <div style="display:grid;grid-template-columns:5fr 7fr;overflow:hidden;height:100%;">
+                    <!-- LEFT -->
+                    <div style="padding:24px;border-right:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;justify-content:space-between;overflow-y:auto;">
+                        <div style="display:flex;flex-direction:column;gap:20px;">
+                            <div>
+                                <span style="font-size:17px;font-weight:700;color:#dc2626;letter-spacing:0.1em;margin-left:4px;">01. 파티 세부 내용</span>
+                                <div style="position:relative;margin-top:12px;">
+                                    <input type="text" placeholder="제목을 입력해주세요" style="width:100%;font-size:1.5rem;font-weight:900;background:transparent;border:none;border-bottom:2px solid #27272a;padding-bottom:12px;color:white;outline:none;" onfocus="this.style.borderColor='#dc2626'" onblur="this.style.borderColor='#27272a'">
+                                </div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:16px;">
+                                <label style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em;color:#71717a;margin-left:4px;">Video Source</label>
+                                <div style="display:flex;align-items:center;background:rgba(24,24,27,0.5);border-radius:20px;padding:12px 20px;border:1px solid transparent;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" style="margin-right:12px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                    <input type="text" placeholder="영상 주소를 복사하여 입력해주세요" style="background:transparent;border:none;outline:none;width:100%;font-weight:700;font-size:14px;color:white;">
+                                </div>
+                                <!-- Preview Area -->
+                                <div style="position:relative;height:205px;border-radius:32px;background:rgba(24,24,27,0.5);border:2px dashed rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+                                    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg>
+                                        <p style="font-size:11px;font-weight:700;color:#71717a;">주소를 넣으면 미리보기가 나타납니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Participants -->
+                        <div style="margin-top:16px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:rgba(24,24,27,0.5);border-radius:28px;border:2px solid transparent;">
+                                <div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:white;">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <span>참여 인원 (2~100명)</span>
+                                </div>
+                                <div style="background:#18181b;padding:10px 16px;border-radius:18px;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:8px;">
+                                    <input type="text" value="4" style="width:48px;text-align:center;border:none;outline:none;font-size:1.25rem;font-weight:900;background:transparent;color:white;">
+                                    <span style="font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:-0.05em;color:#71717a;">명</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RIGHT -->
+                    <div style="padding:20px;background:rgba(0,0,0,0.2);display:flex;flex-direction:column;gap:20px;overflow-y:auto;">
+                        <!-- Date -->
+                        <div>
+                            <span style="font-size:17px;font-weight:700;color:#dc2626;letter-spacing:0.1em;margin-left:4px;">02. 파티 날짜</span>
+                            <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:12px;">
+                                <button style="padding:8px;background:#27272a;border-radius:50%;border:1px solid rgba(255,255,255,0.08);color:#a1a1aa;cursor:pointer;" class="hover:text-white transition-colors">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <div id="cpm-date-scroll" class="cpm-no-scrollbar" style="display:flex;gap:10px;overflow-x:hidden;padding:24px 18px;max-width:380px;scroll-behavior:smooth;"></div>
+                                <button style="padding:8px;background:#27272a;border-radius:50%;border:1px solid rgba(255,255,255,0.08);color:#a1a1aa;cursor:pointer;" class="hover:text-white transition-colors">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Time -->
+                        <div>
+                            <span style="font-size:17px;font-weight:700;color:#dc2626;letter-spacing:0.1em;margin-left:4px;">03. 시작 시간</span>
+                            <div style="background:rgba(24,24,27,0.5);margin-top:20px;padding:24px 32px;border-radius:36px;border:2px solid rgba(255,255,255,0.2);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                                <div style="display:flex;align-items:center;gap:56px;">
+                                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                                        <button style="color:#a1a1aa;background:none;border:none;cursor:pointer;" class="hover:text-red-500">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        </button>
+                                        <input type="text" value="21" id="cpm-hour" style="width:96px;text-align:center;font-size:3.75rem;font-weight:900;color:white;background:transparent;border:none;outline:none;height:64px;">
+                                        <button style="color:#a1a1aa;background:none;border:none;cursor:pointer;" class="hover:text-red-500">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </button>
+                                    </div>
+                                    <div style="font-size:1.875rem;font-weight:900;color:white;margin-top:8px;">:</div>
+                                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                                        <button style="color:#a1a1aa;background:none;border:none;cursor:pointer;" class="hover:text-red-500">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                                        </button>
+                                        <input type="text" value="00" id="cpm-min" style="width:96px;text-align:center;font-size:3.75rem;font-weight:900;color:white;background:transparent;border:none;outline:none;height:64px;">
+                                        <button style="color:#a1a1aa;background:none;border:none;cursor:pointer;" class="hover:text-red-500">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:8px;color:#22c55e;font-weight:700;height:16px;margin-top:4px;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                    <span style="font-size:12px;">파티 시간이 설정되었습니다</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Privacy toggle -->
+                        <div style="display:flex;gap:12px;margin-top:auto;padding-top:16px;">
+                            <div style="display:flex;padding:4px;background:rgba(24,24,27,0.5);border-radius:22px;border:1px solid rgba(255,255,255,0.08);width:128px;height:56px;flex-shrink:0;">
+                                <button id="cpm-public-btn" style="flex:1;border-radius:16px;display:flex;align-items:center;justify-content:center;background:#27272a;color:white;border:none;cursor:pointer;box-shadow:0 4px 6px rgba(0,0,0,0.3);">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>
+                                </button>
+                                <button id="cpm-private-btn" style="flex:1;border-radius:16px;display:flex;align-items:center;justify-content:center;background:transparent;color:#71717a;border:none;cursor:pointer;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                </button>
+                            </div>
+                            <div style="flex:1;display:flex;align-items:center;height:56px;border-radius:22px;padding:0 20px;background:rgba(39,39,42,0.5);border:2px solid transparent;opacity:0.4;pointer-events:none;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#71717a" stroke-width="2" style="margin-right:8px;"><line x1="4" x2="20" y1="9" y2="9"></line><line x1="4" x2="20" y1="15" y2="15"></line><line x1="10" x2="8" y1="3" y2="21"></line><line x1="16" x2="14" y1="3" y2="21"></line></svg>
+                                <input type="text" placeholder="Open Room" style="background:transparent;border:none;outline:none;width:100%;font-weight:900;font-size:14px;color:#71717a;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div style="grid-column:span 12;padding:20px 32px;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;background:#18181b;">
+                    <button onclick="document.getElementById('create-party-modal').classList.add('hidden'); window.switchScreen('screen-room');" style="width:100%;padding:16px;background:#ef4444;border-radius:28px;font-size:18px;font-weight:900;color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 10px 25px rgba(0,0,0,0.3);" class="hover:bg-red-400 transition-all active:scale-[0.98]">
+                        파티 방 개설하기
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
         <script>
-            // Platform filtering: show only the clicked platform section
+            // Platform filtering
             window.filterPlatform = function(platform) {
                 var yt = document.getElementById('section-youtube');
                 var nf = document.getElementById('section-netflix');
@@ -441,13 +582,27 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                     nf.style.display = '';
                 }
             };
-            // Coming soon modal for inactive platforms
+            // Coming soon (ServicePrepare style)
             window.showComingSoon = function(name) {
                 var modal = document.getElementById('coming-soon-modal');
                 var nameEl = document.getElementById('coming-soon-name');
-                if (nameEl) nameEl.textContent = name;
+                if (nameEl) nameEl.textContent = name + ' — 서비스 준비 중입니다';
                 if (modal) modal.classList.remove('hidden');
             };
+            // Create party modal date cards
+            (function() {
+                var container = document.getElementById('cpm-date-scroll');
+                if (!container) return;
+                var weekDays = ['일','월','화','수','목','금','토'];
+                var now = new Date();
+                for (var i = 0; i < 14; i++) {
+                    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+                    var btn = document.createElement('button');
+                    btn.style.cssText = 'flex-shrink:0;width:64px;height:80px;border-radius:24px;border:2px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:all 0.3s;' + (i === 0 ? 'background:#dc2626;border-color:#dc2626;color:white;transform:scale(1.1);z-index:10;box-shadow:0 10px 25px rgba(0,0,0,0.3);' : 'background:#18181b;color:#a1a1aa;');
+                    btn.innerHTML = '<span style="font-size:8px;font-weight:900;text-transform:uppercase;'+(i===0?'color:rgba(255,255,255,0.7)':'color:#71717a')+'">' + weekDays[d.getDay()] + '</span><span style="font-size:1.25rem;font-weight:900;line-height:1;">' + d.getDate() + '</span>';
+                    container.appendChild(btn);
+                }
+            })();
         </script>
 
         <!-- Password Modal Component (Hidden by default) -->
@@ -493,6 +648,7 @@ app_logo: /WITHY/public/withy/Withy_logo.png
              SLIDING PANELS 
         ======================== -->
         <!-- Chat Panel -->
+        <!-- ===== Chat Panel (matches ChatWindow.tsx list + detail view) ===== -->
         <div id="chat-panel" class="hidden absolute top-[80px] right-6 w-[420px] h-[600px] bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden ring-1 ring-black/5">
             <style>
                 .red-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -500,52 +656,202 @@ app_logo: /WITHY/public/withy/Withy_logo.png
                 .red-scrollbar::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 10px; }
                 .red-scrollbar::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
             </style>
-            <div class="bg-zinc-800 px-4 py-3 flex items-center justify-between shrink-0 border-b border-zinc-700 rounded-t-xl">
-                <div class="flex items-center gap-3">
-                    <p class="text-white text-base font-bold">메시지</p>
+
+            <!-- == Chat List View == -->
+            <div id="chat-list-view">
+                <div class="bg-zinc-800 px-4 py-3 flex items-center justify-between shrink-0 border-b border-zinc-700 rounded-t-xl">
+                    <div class="flex items-center gap-3">
+                        <p class="text-white text-base font-bold">메시지</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button class="p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"></line></svg></button>
+                        <button onclick="document.getElementById('chat-panel').classList.add('hidden')" class="p-1.5 hover:bg-red-500/20 rounded-lg text-zinc-400 hover:text-red-400 transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+                    </div>
                 </div>
-                <div class="flex items-center gap-1">
-                    <button class="p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"></line></svg></button>
-                    <button onclick="document.getElementById('chat-panel').classList.add('hidden')" class="p-1.5 hover:bg-red-500/20 rounded-lg text-zinc-400 hover:text-red-400 transition-colors cursor-pointer"><svg class="lucide w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+                <div class="flex-1 bg-zinc-900 overflow-y-auto rounded-b-xl red-scrollbar" style="max-height:552px;">
+                    <div class="divide-y divide-zinc-800">
+                        <!-- Chat item: 김민수 -->
+                        <div class="flex items-center gap-3 p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer" onclick="window.openChatDetail('김민수','https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop')">
+                            <div class="relative flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="김민수" class="w-12 h-12 rounded-full object-cover bg-zinc-700">
+                            </div>
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex flex-col min-w-0 mr-2">
+                                        <p class="font-semibold text-zinc-200 text-sm mb-0.5">김민수</p>
+                                        <p class="text-sm truncate text-zinc-400">오늘 워치파티 어땠어?</p>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-1 shrink-0">
+                                        <span class="text-xs text-zinc-500 whitespace-nowrap">방금 전</span>
+                                        <div style="width:18px;height:18px;border-radius:50%;background:#dc2626;display:flex;align-items:center;justify-content:center;"><span style="font-size:10px;color:white;font-weight:700;">2</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chat item: 이지은 -->
+                        <div class="flex items-center gap-3 p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer" onclick="window.openChatDetail('이지은','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop')">
+                            <div class="relative flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="이지은" class="w-12 h-12 rounded-full object-cover bg-zinc-700">
+                            </div>
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex flex-col min-w-0 mr-2">
+                                        <p class="font-semibold text-zinc-200 text-sm mb-0.5">이지은</p>
+                                        <p class="text-sm truncate text-zinc-400">다음에 또 봐요!</p>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-1 shrink-0">
+                                        <span class="text-xs text-zinc-500 whitespace-nowrap">10분 전</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chat item: 박서준 -->
+                        <div class="flex items-center gap-3 p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer" onclick="window.openChatDetail('박서준','https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop')">
+                            <div class="relative flex-shrink-0">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="박서준" class="w-12 h-12 rounded-full object-cover bg-zinc-700">
+                            </div>
+                            <div class="flex-1 min-w-0 pr-2">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex flex-col min-w-0 mr-2">
+                                        <p class="font-semibold text-zinc-200 text-sm mb-0.5">박서준</p>
+                                        <p class="text-sm truncate text-zinc-400">사진을 보냈습니다.</p>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-1 shrink-0">
+                                        <span class="text-xs text-zinc-500 whitespace-nowrap">1시간 전</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="flex-1 bg-zinc-900 overflow-y-auto rounded-b-xl red-scrollbar">
-                <div class="divide-y divide-zinc-800">
-                    <div class="flex items-center gap-3 p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer">
-                        <div class="relative flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="김민수" class="w-12 h-12 rounded-full object-cover bg-zinc-700">
-                        </div>
-                        <div class="flex-1 min-w-0 pr-2">
-                            <div class="flex justify-between items-start">
-                                <div class="flex flex-col min-w-0 mr-2">
-                                    <p class="font-semibold text-zinc-200 text-sm mb-0.5">김민수</p>
-                                    <p class="text-sm truncate text-zinc-400">오늘 워치파티 어땠어?</p>
-                                </div>
-                                <div class="flex flex-col items-end gap-1 shrink-0">
-                                    <span class="text-xs text-zinc-500 whitespace-nowrap">방금 전</span>
-                                </div>
-                            </div>
+
+            <!-- == Chat Detail View (hidden by default) == -->
+            <div id="chat-detail-view" class="hidden" style="display:none;flex-direction:column;height:100%;">
+                <!-- Detail Header -->
+                <div class="bg-zinc-800 px-4 py-3 flex items-center justify-between shrink-0 border-b border-zinc-700 rounded-t-xl">
+                    <div class="flex items-center gap-3">
+                        <button onclick="window.backToChatList()" class="text-zinc-400 hover:text-white transition-colors cursor-pointer">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <div class="flex items-center gap-2">
+                            <img id="chat-detail-avatar" src="" alt="" class="w-8 h-8 rounded-full object-cover border border-zinc-600">
+                            <p id="chat-detail-name" class="text-white text-sm font-semibold"></p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 p-4 hover:bg-zinc-800/50 transition-colors cursor-pointer">
-                        <div class="relative flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="이지은" class="w-12 h-12 rounded-full object-cover bg-zinc-700">
+                    <div class="flex items-center gap-1">
+                        <button class="p-1.5 text-zinc-400 hover:text-red-500 hover:bg-zinc-700/50 rounded-lg transition-colors cursor-pointer" title="채팅방 나가기">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
+                        </button>
+                        <button class="p-1.5 hover:bg-zinc-700 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" x2="19" y1="12" y2="12"></line></svg>
+                        </button>
+                        <button onclick="document.getElementById('chat-panel').classList.add('hidden'); window.backToChatList();" class="p-1.5 hover:bg-red-500/20 rounded-lg text-zinc-400 hover:text-red-400 transition-colors cursor-pointer">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Messages Area -->
+                <div id="chat-messages-area" class="flex-1 bg-zinc-950 p-4 overflow-y-auto red-scrollbar" style="display:flex;flex-direction:column;gap:16px;">
+                    <!-- Sample messages -->
+                    <div style="display:flex;justify-content:flex-start;">
+                        <div style="max-width:75%;">
+                            <div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#27272a;color:#e4e4e7;border-top-left-radius:0;">안녕! 오늘 워치파티 어땠어?</div>
+                            <span style="font-size:10px;color:#71717a;padding:0 4px;">오후 9:30</span>
                         </div>
-                        <div class="flex-1 min-w-0 pr-2">
-                            <div class="flex justify-between items-start">
-                                <div class="flex flex-col min-w-0 mr-2">
-                                    <p class="font-semibold text-zinc-200 text-sm mb-0.5">이지은</p>
-                                    <p class="text-sm truncate text-zinc-400">다음에 또 봐요!</p>
-                                </div>
-                                <div class="flex flex-col items-end gap-1 shrink-0">
-                                    <span class="text-xs text-zinc-500 whitespace-nowrap">10분 전</span>
-                                </div>
-                            </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <div style="max-width:75%;display:flex;flex-direction:column;align-items:flex-end;">
+                            <div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#7f1d1d;color:white;border-top-right-radius:0;">완전 재밌었어! 다음에도 같이 하자 😄</div>
+                            <span style="font-size:10px;color:#71717a;padding:0 4px;">오후 9:31</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-start;">
+                        <div style="max-width:75%;">
+                            <div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#27272a;color:#e4e4e7;border-top-left-radius:0;">좋아! 내일 넷플릭스 기생충 파티 열까?</div>
+                            <span style="font-size:10px;color:#71717a;padding:0 4px;">오후 9:32</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <div style="max-width:75%;display:flex;flex-direction:column;align-items:flex-end;">
+                            <div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#7f1d1d;color:white;border-top-right-radius:0;">오 좋아! 몇 시에 할 건데?</div>
+                            <span style="font-size:10px;color:#71717a;padding:0 4px;">오후 9:33</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-start;">
+                        <div style="max-width:75%;">
+                            <div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#27272a;color:#e4e4e7;border-top-left-radius:0;">밤 9시 어때? 파티 만들어놓을게!</div>
+                            <span style="font-size:10px;color:#71717a;padding:0 4px;">오후 9:33</span>
                         </div>
                     </div>
                 </div>
+                <!-- Input Area -->
+                <form onsubmit="event.preventDefault(); window.sendChatMessage();" style="padding:12px;background:#18181b;border-top:1px solid #27272a;flex-shrink:0;border-bottom-left-radius:12px;border-bottom-right-radius:12px;">
+                    <div style="display:flex;align-items:center;gap:8px;background:rgba(39,39,42,0.5);padding:8px 12px;border-radius:12px;border:1px solid #3f3f46;">
+                        <input id="chat-msg-input" type="text" placeholder="메시지 입력..." style="flex:1;background:transparent;border:none;outline:none;font-size:14px;color:white;">
+                        <button type="button" style="padding:4px;color:#71717a;background:none;border:none;cursor:pointer;" class="hover:text-white transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" x2="9.01" y1="9" y2="9"></line><line x1="15" x2="15.01" y1="9" y2="9"></line></svg>
+                        </button>
+                        <button type="submit" id="chat-send-btn" style="padding:6px;border-radius:8px;background:#3f3f46;color:#71717a;border:none;cursor:pointer;">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
+
+        <script>
+            // Chat detail view helpers
+            window.openChatDetail = function(name, avatarUrl) {
+                document.getElementById('chat-list-view').style.display = 'none';
+                var detail = document.getElementById('chat-detail-view');
+                detail.classList.remove('hidden');
+                detail.style.display = 'flex';
+                document.getElementById('chat-detail-name').textContent = name;
+                document.getElementById('chat-detail-avatar').src = avatarUrl;
+                document.getElementById('chat-detail-avatar').alt = name;
+                // scroll to bottom
+                var area = document.getElementById('chat-messages-area');
+                if (area) area.scrollTop = area.scrollHeight;
+            };
+            window.backToChatList = function() {
+                document.getElementById('chat-list-view').style.display = '';
+                var detail = document.getElementById('chat-detail-view');
+                detail.style.display = 'none';
+                detail.classList.add('hidden');
+            };
+            window.sendChatMessage = function() {
+                var input = document.getElementById('chat-msg-input');
+                var text = input.value.trim();
+                if (!text) return;
+                var area = document.getElementById('chat-messages-area');
+                var now = new Date();
+                var timeStr = (now.getHours() >= 12 ? '오후' : '오전') + ' ' + (now.getHours() % 12 || 12) + ':' + now.getMinutes().toString().padStart(2, '0');
+                var msgDiv = document.createElement('div');
+                msgDiv.style.cssText = 'display:flex;justify-content:flex-end;';
+                msgDiv.innerHTML = '<div style="max-width:75%;display:flex;flex-direction:column;align-items:flex-end;"><div style="padding:8px 16px;border-radius:16px;font-size:14px;background:#7f1d1d;color:white;border-top-right-radius:0;">' + text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div><span style="font-size:10px;color:#71717a;padding:0 4px;">' + timeStr + '</span></div>';
+                area.appendChild(msgDiv);
+                input.value = '';
+                area.scrollTop = area.scrollHeight;
+                // Update send button color
+                var btn = document.getElementById('chat-send-btn');
+                btn.style.background = '#3f3f46';
+                btn.style.color = '#71717a';
+            };
+            // Dynamic send button color
+            document.addEventListener('input', function(e) {
+                if (e.target && e.target.id === 'chat-msg-input') {
+                    var btn = document.getElementById('chat-send-btn');
+                    if (e.target.value.trim()) {
+                        btn.style.background = '#dc2626';
+                        btn.style.color = 'white';
+                    } else {
+                        btn.style.background = '#3f3f46';
+                        btn.style.color = '#71717a';
+                    }
+                }
+            });
+        </script>
 
         <!-- Friends Panel -->
         <div id="friends-panel" class="hidden absolute top-[80px] right-6 w-[380px] h-[580px] bg-[#141416] border border-white/5 rounded-xl shadow-2xl flex flex-col z-[100] overflow-hidden">
