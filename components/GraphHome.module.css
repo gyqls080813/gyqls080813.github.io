@@ -1,0 +1,79 @@
+.screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.graphArea {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* ── 노드가 열리는 전환: 클릭한 카드가 제자리에서 시트 크기로 커진다 ── */
+.expandScrim {
+  position: fixed;
+  /* 상단 바(64px)는 덮지 않는다 — 글 페이지의 스크림 범위와 일치 */
+  inset: 64px 0 0 0;
+  z-index: 70;
+  background: rgba(11, 14, 20, 0.72);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.expandCard {
+  position: fixed;
+  z-index: 71;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-node);
+  border: 1px solid var(--border-node-strong);
+  border-radius: 8px;
+  box-shadow: var(--shadow-node);
+  transition:
+    top 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    left 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    width 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    height 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    border-radius 0.46s ease,
+    background 0.46s ease;
+}
+
+.expandOpen .expandScrim {
+  opacity: 1;
+}
+
+.expandOpen .expandCard {
+  border-radius: 14px;
+  background: var(--bg-elevated);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+/* 진짜 시트 전체를 한 강체로 — 카드 크기로 축소돼 있다가 카드와 함께 커진다.
+   제목·트리·본문이 전부 이 안에서 같은 궤적으로 움직인다. */
+.expandContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  transform-origin: top left;
+  opacity: 0;
+  transition:
+    transform 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    opacity 0.26s ease;
+}
+
+.expandOpen .expandContent {
+  opacity: 1;
+}
+
+/* 확장 중에도 카드 가장자리에 달려 함께 이동하는 포트 */
+.overlayPort {
+  position: fixed;
+  z-index: 72;
+  transition:
+    top 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
+    left 0.46s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+

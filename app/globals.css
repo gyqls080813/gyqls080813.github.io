@@ -1,0 +1,104 @@
+:root {
+  /* surfaces */
+  --bg: #0b0e14;
+  --bg-elevated: #0d1119;
+  --panel: #131826;
+  --panel-deep: #10151f;
+  --border: #1b2230;
+  --border-strong: #212a3a;
+  --divider: #1e2530;
+
+  /* text */
+  --text: #e7eaf0;
+  --text-strong: #f2f4f8;
+  --text-soft: #c6cdd9;
+  --muted: #8b93a3;
+  --faint: #565e6d;
+
+  /* node semantics: theory / project / troubleshooting */
+  --theory: #5fc4d6;
+  --theory-bright: #8ad8e6;
+  --theory-text: #7dd3e2;
+  --project: #e3ab5c;
+  --project-bright: #f2d5a5;
+  --project-text: #efc689;
+  --trouble: #e88b7d;
+  --trouble-bright: #eda99d;
+  /* 사람(그래프의 시작점) — asset-pipeline의 source 보라 */
+  --me: #9575cd;
+  --me-bright: #b39ddb;
+
+  /* graph */
+  --edge: #232c3b;
+  --edge-active: #58657d;
+  --edge-cross: #2c3648;
+
+  /* 노드 카드 — asset-pipeline의 노드 표면 값을 그대로 (tokens.css 참조) */
+  --surface-node: #23272f;
+  --surface-node-hover: #2a2f38;
+  --surface-inset: #171a20;
+  --border-subtle: #2e343e;
+  --border-node-strong: #3d4551;
+  --shadow-node: 0 2px 8px rgb(0 0 0 / 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-space-grotesk), var(--font-plex-kr), system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--theory);
+}
+
+a:hover {
+  color: var(--theory-bright);
+}
+
+/**
+ * 앱 공통 스크롤바 — asset-pipeline scrollbar.css를 그대로.
+ * 브라우저 기본 스크롤바는 이 어두운 화면에서 혼자 밝고 두껍다.
+ * 얇은 것 하나로 통일하고, 색은 토큰에서 오므로 화면과 함께 어두워진다.
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-node-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border-node-strong);
+  /* 투명 테두리로 홈을 만들어 실제 막대는 더 가늘어 보인다 */
+  border: 3px solid transparent;
+  border-radius: 8px;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
