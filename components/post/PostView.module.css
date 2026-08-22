@@ -1,0 +1,300 @@
+.screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  /* 배경 그래프가 stage보다 크게 깔리므로 상단 바를 침범하지 않게 자른다 */
+  overflow: hidden;
+}
+
+/* 홈 그래프와 같은 뷰포트 — 확장 전환의 앞뒤 화면이 이어진다 */
+.backGraph {
+  position: absolute;
+  inset: 0;
+}
+
+/* 그래프를 가라앉히고, 빈 곳을 누르면 그래프로 돌아간다.
+   페이드는 홈의 확장 전환이 이미 끝냈으므로 여기선 즉시 이 농도다. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: rgba(11, 14, 20, 0.72);
+}
+
+/* 글 시트 — 화면의 90%. 연결 노드는 가장자리 포트가 맡는다 */
+.sheet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 93%;
+  display: flex;
+  overflow: hidden;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-node-strong);
+  border-radius: 14px;
+  /* 노드→시트 확장(홈의 한 동작)이 이미 이 모습으로 끝났다 — 여기선 그대로 이어받는다 */
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+/* ── 시트 가장자리의 연결 포트 — 확대된 노드도 포트를 유지한다 ── */
+.portsLeft {
+  position: absolute;
+  left: calc(5% - 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+}
+
+.portsRight {
+  position: absolute;
+  right: calc(5% - 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  z-index: 6;
+}
+
+.port {
+  position: relative;
+  display: block;
+}
+
+.portDot {
+  display: block;
+  width: 15px;
+  height: 15px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border: 2.5px solid;
+  transition: background 0.15s ease;
+}
+
+.portDotProject {
+  border-color: var(--project);
+}
+
+.portDotTheory {
+  border-color: var(--theory);
+}
+
+.port:hover .portDot {
+  background: var(--surface-node-hover);
+}
+
+/* 호버하면 작은 카드가 펼쳐진다 */
+.portPopover {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+  padding: 8px 13px;
+  background: var(--surface-node);
+  border: 1px solid var(--border-node-strong);
+  border-radius: 8px;
+  box-shadow: var(--shadow-node);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.portsLeft .portPopover {
+  left: calc(100% + 10px);
+}
+
+.portsRight .portPopover {
+  right: calc(100% + 10px);
+}
+
+.port:hover .portPopover {
+  opacity: 1;
+}
+
+.popRole {
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.popName {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.treePanel {
+  width: 288px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  background: var(--bg-elevated);
+  min-height: 0;
+}
+
+.article {
+  flex: 1;
+  overflow-y: auto;
+  /* 내용 길이에 따라 스크롤바가 생겨도 본문이 밀리지 않게 자리를 미리 잡는다 */
+  scrollbar-gutter: stable;
+  padding: 44px 56px;
+  background: var(--bg-elevated);
+}
+
+.articleInner {
+  max-width: 660px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 12.5px;
+}
+
+.chipProject {
+  padding: 4px 11px;
+  border-radius: 6px;
+  background: rgba(227, 171, 92, 0.1);
+  color: var(--project-text);
+  font-weight: 500;
+}
+
+.chipTheory {
+  padding: 4px 11px;
+  border-radius: 6px;
+  background: rgba(95, 196, 214, 0.1);
+  color: var(--theory-text);
+  font-weight: 500;
+}
+
+.metaDate {
+  color: var(--faint);
+  margin-left: 6px;
+}
+
+.title {
+  margin: 0 0 18px;
+  font-size: 30px;
+  line-height: 1.32;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-strong);
+}
+.lead {
+  margin: 0 0 26px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #a9b1c0;
+}
+
+.sectionHeading {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.bulletTrouble {
+  background: var(--trouble);
+}
+
+.bulletTheory {
+  background: var(--theory);
+}
+
+.sectionBody {
+  margin: 0 0 24px;
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: #a9b1c0;
+}
+
+.code {
+  background: var(--panel-deep);
+  border: 1px solid var(--divider);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin: 0 0 26px;
+  font-family: var(--font-space-grotesk), monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* 브레드크럼 (TopBar에 주입) */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  min-width: 0;
+}
+
+.crumbProject {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(227, 171, 92, 0.1);
+  border: 1px solid rgba(227, 171, 92, 0.35);
+  color: var(--project-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.crumbTrouble {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(232, 139, 125, 0.12);
+  border: 1px solid rgba(232, 139, 125, 0.45);
+  color: var(--trouble-bright);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.crumbDotProject {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  border: 1.5px solid var(--project);
+  flex-shrink: 0;
+}
+
+.crumbDotTrouble {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  background: var(--trouble);
+  flex-shrink: 0;
+}

@@ -1,0 +1,94 @@
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 44px 56px;
+}
+
+.inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0 0 6px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+}
+
+.sub {
+  margin: 0 0 28px;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: block;
+  padding: 18px 20px;
+  background: var(--panel);
+  border: 1px solid var(--divider);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: rgba(232, 139, 125, 0.4);
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.cardDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--trouble);
+  flex-shrink: 0;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  font-size: 12px;
+}
+
+.chipProject {
+  padding: 3px 9px;
+  border-radius: 5px;
+  background: rgba(227, 171, 92, 0.1);
+  color: var(--project-text);
+}
+
+.chipTheory {
+  padding: 3px 9px;
+  border-radius: 5px;
+  background: rgba(95, 196, 214, 0.1);
+  color: var(--theory-text);
+}
+
+.date {
+  color: var(--faint);
+  margin-left: 4px;
+}
