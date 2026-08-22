@@ -1,0 +1,86 @@
+/* asset-pipeline PipelineNode의 카드 해부학: 슬레이트 카드 + 헤더 색 띠 + 말줄임 제목 */
+.card {
+  position: relative;
+  background: var(--surface-node);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  box-shadow: var(--shadow-node);
+  font-size: 12px;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    opacity 0.18s ease;
+}
+
+.card:hover {
+  background: var(--surface-node-hover);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border-color: var(--border-node-strong);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 트러블 카드 제목은 글 제목이라 길다 — 말줄임 대신 두 줄까지 */
+.titleWrap {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.35;
+}
+
+.badge {
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  color: var(--trouble-bright);
+}
+
+.summary {
+  padding: 0 12px 8px;
+  margin-top: -2px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.hub .title {
+  font-size: 14px;
+}
+
+/* 포트 — 카드 옆면에 박힌 접점. React Flow 기본 핸들 스타일을 덮는다 */
+.port {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border-width: 2px;
+  border-style: solid;
+  pointer-events: none;
+}

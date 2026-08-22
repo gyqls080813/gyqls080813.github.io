@@ -1,0 +1,28 @@
+import type { GraphNodeData } from "@/components/graph/types";
+import { fullGraphNodes } from "./graphData";
+import { getPost, posts } from "./posts";
+
+/**
+ * 글 데이터를 집계해 노드에 붙인 그래프.
+ * 홈과 글 페이지 배경이 같은 데이터를 써야 노드 크기까지 픽셀이 일치해
+ * 확장 전환이 끊기지 않는다.
+ */
+export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) => {
+  if (node.kind === "me") {
+    return { ...node, clickable: true, meta: "이 그래프의 시작점" };
+  }
+  if (node.kind === "trouble") {
+    const post = getPost(node.id);
+    return post
+      ? { ...node, clickable: true, meta: `${post.date} · ${post.readMinutes}분` }
+      : node;
+  }
+  if (node.kind === "project") {
+    const count = posts.filter((post) => post.project === node.id).length;
+    return { ...node, meta: `트러블 ${count}` };
+  }
+  const references = posts.filter((post) =>
+    post.theories.some((theory) => theory.id === node.id),
+  ).length;
+  return references > 0 ? { ...node, badge: references } : node;
+});
