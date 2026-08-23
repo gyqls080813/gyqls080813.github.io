@@ -29,6 +29,13 @@
   height: 28px;
   padding: 0 10px;
   border-bottom: 1px solid var(--border-subtle);
+  /* 몸통은 클릭을 통과시키지만 타이틀 바는 잡을 수 있다 */
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.title:active {
+  cursor: grabbing;
 }
 
 .label {

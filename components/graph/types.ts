@@ -15,9 +15,9 @@ export type GraphNodeData = {
   /** 허브 노드: 색 그라디언트 채움 + 점선 궤도 링 */
   hub?: boolean;
   labelPlacement?: LabelPlacement;
-  /** 이 노드를 참조하는 글 수 — 우상단 코럴 뱃지로 표시 */
-  badge?: number;
-  /** 허브 내부 집계 라인 ("트러블 4" / "개념 3") */
+  /** 카드 상단 날짜 줄 — 글은 작성 날짜, 프로젝트는 진행 기간 */
+  dateLabel?: string;
+  /** 카드 하단 집계 줄 ("트러블 4" / "5분 · 섹션 2" / "글 1") */
   meta?: string;
   /** 클릭 시 이동하는 노드 (포인터 커서 + 호버 확대) */
   clickable?: boolean;
@@ -32,6 +32,11 @@ export type GraphBackdropData = {
   tint: NodeKind;
   /** 이 백드랍이 감싸는 노드 id들 — 프레임 크기는 멤버 위치에서 계산 */
   members: string[];
+  /**
+   * 정렬 시 함께 묶여 움직일 내부 소그룹 (렌더링과 무관, 레이아웃 전용).
+   * 원작 규칙 "한 노드는 최대 한 틀에만" 위에서, 틀 안의 덩어리를 표현한다.
+   */
+  clusters?: readonly { id: string; members: readonly string[] }[];
 };
 
 export type GraphEdgeData = {

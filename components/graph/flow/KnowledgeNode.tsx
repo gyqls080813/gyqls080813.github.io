@@ -36,8 +36,9 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
       ].join(" ")}
       style={{ width: cardWidth(data), opacity: dimmed ? 0.18 : 1 }}
     >
-      {/* 포트: 왼쪽 = 입력, 오른쪽 = 출력. 나·프로젝트는 출력만, 이론은 입력만 */}
-      {data.kind !== "project" && data.kind !== "me" && (
+      {/* 포트: 왼쪽 = 입력, 오른쪽 = 출력. 나는 출력만, 트러블은 입력만 —
+          흐름은 나 → (프로젝트 · 기술) → 트러블 */}
+      {data.kind !== "me" && (
         <Handle
           type="target"
           position={Position.Left}
@@ -46,7 +47,7 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
           isConnectable={false}
         />
       )}
-      {data.kind !== "theory" && (
+      {data.kind !== "trouble" && (
         <Handle
           type="source"
           position={Position.Right}
@@ -56,6 +57,10 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
         />
       )}
 
+      {/* 1단: 날짜 — 글은 작성일, 프로젝트는 진행 기간 */}
+      {data.dateLabel && <div className={styles.dateLine}>{data.dateLabel}</div>}
+
+      {/* 2단: 제목 */}
       <div className={styles.header}>
         <KindIcon kind={data.kind} />
         <span
@@ -63,13 +68,9 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
         >
           {title}
         </span>
-        {data.badge != null && data.badge > 0 && (
-          <span className={styles.badge} title={`이 개념을 참조하는 글 ${data.badge}편`}>
-            {data.badge}
-          </span>
-        )}
       </div>
 
+      {/* 3단: 집계 — 트러블 수, 내부 내용 수 등 */}
       {data.meta && <div className={styles.summary}>{data.meta}</div>}
     </div>
   );
