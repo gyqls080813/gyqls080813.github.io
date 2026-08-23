@@ -34,15 +34,12 @@ interface TopBarProps {
   onFilterChange?: (filter: GraphFilter) => void;
   /** 필터 대신 표시할 내용 (연결 뷰의 경로 브레드크럼) */
   breadcrumb?: React.ReactNode;
-  /** 홈에서는 제자리에서 소개를 연다. 없으면 홈으로 이동하며 소개를 요청 */
-  onIntroClick?: () => void;
 }
 
 export default function TopBar({
   activeFilter,
   onFilterChange,
   breadcrumb,
-  onIntroClick,
 }: TopBarProps) {
   return (
     <header className={styles.bar}>
@@ -70,26 +67,6 @@ export default function TopBar({
       )}
 
       <div className={styles.spacer} />
-
-      {onIntroClick ? (
-        <button type="button" className={styles.introLink} onClick={onIntroClick}>
-          소개
-        </button>
-      ) : (
-        <Link
-          href="/"
-          className={styles.introLink}
-          onClick={() => {
-            try {
-              sessionStorage.setItem("introRequest", "1");
-            } catch {
-              /* 무시 */
-            }
-          }}
-        >
-          소개
-        </Link>
-      )}
 
       <button type="button" className={styles.search} aria-label="노드·글 검색">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>

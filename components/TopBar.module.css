@@ -76,22 +76,6 @@
   flex: 1;
 }
 
-.introLink {
-  background: none;
-  border: none;
-  padding: 7px 10px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.introLink:hover {
-  color: var(--text);
-}
-
 .search {
   display: flex;
   align-items: center;

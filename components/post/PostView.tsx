@@ -47,6 +47,7 @@ export default function PostView({ post }: { post: Post }) {
             edges={fullGraphEdges}
             backdrops={fullGraphBackdrops}
             focusNodeId={post.id}
+            showControls={false}
           />
         </div>
         <Link href="/" className={styles.scrim} aria-label="그래프로 돌아가기" />

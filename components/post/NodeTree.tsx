@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
-import { fullGraphBackdrops, fullGraphNodes } from "@/lib/graphData";
+import { fullGraphNodes, theoryClusters } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
 import styles from "./NodeTree.module.css";
 
@@ -42,9 +42,12 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
   };
 
   const projects = fullGraphNodes.filter((node) => node.kind === "project");
-  const theoryGroups = fullGraphBackdrops.filter(
-    (backdrop) => backdrop.tint === "theory",
-  );
+  /* 기술 트리는 개념(허브) → 챕터 계층에서 그대로 나온다 */
+  const theoryGroups = theoryClusters.map((cluster) => ({
+    id: cluster.hub,
+    label: nodeLabel(cluster.hub),
+    members: cluster.chapters,
+  }));
 
   return (
     <nav className={styles.tree} aria-label="노드 탐색기">

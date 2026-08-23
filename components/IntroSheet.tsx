@@ -11,21 +11,22 @@ const PROJECTS = [
     name: "withy",
     desc: "넷플릭스 콘텐츠를 친구와 같이 보는 파티 시청 서비스 — React · TypeScript · WebSocket",
   },
-  {
-    id: "blog",
-    name: "트러블로그",
-    desc: "지금 보고 계신 이 블로그 — Next.js · React Flow로 만든 지식 그래프",
-  },
 ];
 
 interface IntroSheetProps {
   onClose: () => void;
   /** 소개 속 프로젝트 클릭 → 그래프의 그 노드로 */
   onProjectClick: (nodeId: string) => void;
+  /** "기술 블로그로 가기" → 그래프의 기술(이론) 영역으로 */
+  onTheoryClick: () => void;
 }
 
 /** 첫 화면: "민엽" 노드가 열려 있는 상태 — 뒤에 그래프가 비친다 */
-export default function IntroSheet({ onClose, onProjectClick }: IntroSheetProps) {
+export default function IntroSheet({
+  onClose,
+  onProjectClick,
+  onTheoryClick,
+}: IntroSheetProps) {
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -96,6 +97,26 @@ export default function IntroSheet({ onClose, onProjectClick }: IntroSheetProps)
                 </button>
               ))}
             </div>
+
+            <h2 className={styles.sectionTitle}>
+              <KindIcon kind="theory" size={15} />
+              기술 블로그
+            </h2>
+            <button
+              type="button"
+              className={`${styles.projectRow} ${styles.theoryRow}`}
+              onClick={onTheoryClick}
+            >
+              <KindIcon kind="theory" size={16} />
+              <span className={styles.projectText}>
+                <span className={styles.projectName}>기술 블로그로 가기</span>
+                <span className={styles.projectDesc}>
+                  프로젝트에서 부딪히며 배운 개념들 — React · 브라우저 · CSS ·
+                  네트워크
+                </span>
+              </span>
+              <span className={styles.projectGo}>그래프에서 보기 →</span>
+            </button>
 
             <p className={styles.hint}>
               바깥을 클릭하면 지식 그래프 전체가 보입니다. 붉은 트러블 노드를

@@ -111,48 +111,6 @@ export const posts: Post[] = [
       },
     ],
   },
-  {
-    id: "t-jank",
-    title: "노드 22개에 벌써 버벅이면 어떡하지",
-    date: "2026.08.20",
-    readMinutes: 6,
-    project: "blog",
-    theories: [{ id: "repaint", role: "원인 개념" }],
-    lead: "이 블로그의 그래프에 호버 하이라이트를 붙이자 커서를 움직일 때마다 전체가 다시 그려졌다. 무엇이 리페인트를 부르는지부터 갈라야 했다.",
-    sections: [
-      {
-        heading: "증상",
-        tone: "trouble",
-        body: "노드 위에서 마우스를 움직이면 프레임이 뚝뚝 끊겼다. DevTools Performance 탭에 보라색(스타일 재계산)과 초록색(페인트)이 가득.",
-      },
-      {
-        heading: "원인 — 리페인트와 리플로우는 다른 비용이다",
-        tone: "theory",
-        body: "opacity·transform은 컴포지터에서 처리되어 싸고, width나 filter 변경은 페인트/레이아웃을 다시 태운다. 하이라이트를 opacity 전환으로 바꿔 해결.",
-      },
-    ],
-  },
-  {
-    id: "t-404",
-    title: "GitHub Pages에서 새로고침하면 404가 뜨는 이유",
-    date: "2026.08.18",
-    readMinutes: 5,
-    project: "blog",
-    theories: [{ id: "routing", role: "원인 개념" }],
-    lead: "그래프에서 글 페이지로 잘 이동하는데, 그 페이지에서 새로고침을 누르면 404. 클라이언트 라우팅과 정적 호스팅의 오래된 어긋남이다.",
-    sections: [
-      {
-        heading: "증상",
-        tone: "trouble",
-        body: "/posts/abc 경로로 직접 접근하거나 새로고침하면 GitHub Pages의 404 페이지가 나왔다. 링크 클릭으로는 잘만 갔다.",
-      },
-      {
-        heading: "해결 — 경로마다 진짜 HTML을 만든다",
-        tone: "theory",
-        body: "Next.js 정적 내보내기의 generateStaticParams로 글마다 실제 HTML 파일을 생성하면, 서버 트릭 없이도 모든 경로가 직접 접근 가능해진다.",
-      },
-    ],
-  },
 ];
 
 export function getPost(id: string): Post | undefined {

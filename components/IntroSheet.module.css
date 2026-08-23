@@ -134,6 +134,14 @@
   color: var(--project-text);
 }
 
+.theoryRow:hover {
+  border-color: rgba(95, 196, 214, 0.45);
+}
+
+.theoryRow:hover .projectGo {
+  color: var(--theory-text);
+}
+
 .hint {
   margin-top: 30px;
   font-size: 12.5px;

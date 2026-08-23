@@ -7,7 +7,6 @@ import type { ReactFlowInstance } from "@xyflow/react";
 import IntroSheet from "./IntroSheet";
 import KnowledgeGraph from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
-import { SPREAD } from "./graph/flow/toFlow";
 import PostArticle from "./post/PostArticle";
 import type { NodeKind } from "./graph/types";
 import postStyles from "./post/PostView.module.css";
@@ -80,15 +79,25 @@ export default function GraphHome() {
     }
   };
 
+  /* 소개의 "기술 블로그로 가기" → 시트를 닫고 이론 영역 전체를 화면에 */
+  const focusTheory = () => {
+    closeIntro();
+    const theoryIds = annotatedGraphNodes
+      .filter((node) => node.kind === "theory")
+      .map((node) => ({ id: node.id }));
+    flowRef.current?.fitView({ nodes: theoryIds, padding: 0.18, duration: 650 });
+  };
+
   /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 줌인 */
   const focusProject = (nodeId: string) => {
     closeIntro();
-    const node = annotatedGraphNodes.find((candidate) => candidate.id === nodeId);
+    const node = flowRef.current?.getNode(nodeId);
     if (node) {
-      flowRef.current?.setCenter(node.x * SPREAD.x, node.y * SPREAD.y, {
-        zoom: 1.35,
-        duration: 650,
-      });
+      flowRef.current?.setCenter(
+        node.position.x + (node.measured?.width ?? 176) / 2,
+        node.position.y + (node.measured?.height ?? 56) / 2,
+        { zoom: 1.35, duration: 650 },
+      );
     }
   };
 
@@ -96,11 +105,11 @@ export default function GraphHome() {
     const kinds = new Set(VISIBLE_KINDS[filter]);
     const nodes = annotatedGraphNodes.filter((node) => kinds.has(node.kind));
     const visibleIds = new Set(nodes.map((node) => node.id));
-    const edges = fullGraphEdges.filter(
-      (edge) => visibleIds.has(edge.from) && visibleIds.has(edge.to),
-    );
     const backdrops = fullGraphBackdrops.filter((backdrop) =>
       backdrop.members.some((member) => visibleIds.has(member)),
+    );
+    const edges = fullGraphEdges.filter(
+      (edge) => visibleIds.has(edge.from) && visibleIds.has(edge.to),
     );
     return { nodes, edges, backdrops };
   }, [filter]);
@@ -175,11 +184,7 @@ export default function GraphHome() {
 
   return (
     <div className={`${styles.screen} ${opened ? styles.expandOpen : ""}`}>
-      <TopBar
-        activeFilter={filter}
-        onFilterChange={setFilter}
-        onIntroClick={() => setIntroOpen(true)}
-      />
+      <TopBar activeFilter={filter} onFilterChange={setFilter} />
       <main ref={stageRef} className={styles.graphArea}>
         <KnowledgeGraph
           nodes={nodes}
@@ -193,7 +198,11 @@ export default function GraphHome() {
         />
 
         {introOpen && !expanding && (
-          <IntroSheet onClose={closeIntro} onProjectClick={focusProject} />
+          <IntroSheet
+            onClose={closeIntro}
+            onProjectClick={focusProject}
+            onTheoryClick={focusTheory}
+          />
         )}
       </main>
 
