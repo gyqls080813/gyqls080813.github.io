@@ -37,9 +37,6 @@
   ],
   "exclude": [
     "node_modules",
-    "WITHY",
-    "Petfelio",
-    "projects",
-    "planner-portfolio"
+    "public"
   ]
 }
