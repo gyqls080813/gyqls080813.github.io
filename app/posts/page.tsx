@@ -2,6 +2,7 @@ import Link from "next/link";
 import TopBar from "@/components/TopBar";
 import { fullGraphNodes } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
+import { nodeHref } from "@/lib/nodeTarget";
 import styles from "./page.module.css";
 
 export const metadata = { title: "전체 글 — 민엽의 트러블로그" };
@@ -24,7 +25,7 @@ export default function PostListPage() {
           </p>
           <div className={styles.list}>
             {sorted.map((post) => (
-              <Link key={post.id} href={`/posts/${post.id}`} className={styles.card}>
+              <Link key={post.id} href={nodeHref(post.id)} className={styles.card}>
                 <p className={styles.cardTitle}>
                   <span className={styles.cardDot} />
                   {post.title}

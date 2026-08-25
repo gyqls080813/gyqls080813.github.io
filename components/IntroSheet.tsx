@@ -1,8 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import KindIcon from "./graph/KindIcon";
 import postStyles from "./post/PostView.module.css";
+import {
+  Chip,
+  EntryRow,
+  Figure,
+  Kicker,
+  NodeCard,
+  SectionHeading,
+  TextBlock,
+} from "./content";
 import styles from "./IntroSheet.module.css";
 
 type Project = {
@@ -136,19 +144,17 @@ export default function IntroSheet({
     <article className={styles.article}>
       <div className={styles.inner}>
         <aside className={styles.photoCol}>
-          <img
-            className={styles.photo}
+          <Figure
             src="/minyeop.jpg"
             alt="이민엽"
             width={640}
             height={823}
+            maxWidth={340}
           />
         </aside>
 
         <div className={styles.body}>
-          <div className={styles.kicker}>
-            <KindIcon kind="me" size={15} />자기소개
-          </div>
+          <Kicker kind="me">자기소개</Kicker>
           <h1 className={styles.title}>
             &lsquo;비추는&rsquo; 소통을 지향하는
             <br />
@@ -162,10 +168,9 @@ export default function IntroSheet({
 
           <div className={styles.stances}>
             {STANCES.map((stance) => (
-              <div key={stance.label} className={styles.stance}>
-                <div className={styles.stanceLabel}>{stance.label}</div>
-                <p className={styles.stanceBody}>{stance.body}</p>
-              </div>
+              <TextBlock key={stance.label} label={stance.label} accent="me">
+                {stance.body}
+              </TextBlock>
             ))}
           </div>
 
@@ -179,11 +184,9 @@ export default function IntroSheet({
             <div className={styles.factsLabel}>이력</div>
             <div className={styles.factsList}>
               {HISTORY.map((item) => (
-                <div key={item.text} className={styles.factRow}>
-                  <span className={styles.factBullet} />
-                  <span className={styles.factText}>{item.text}</span>
-                  <span className={styles.factDate}>{item.date}</span>
-                </div>
+                <EntryRow key={item.text} date={item.date}>
+                  {item.text}
+                </EntryRow>
               ))}
             </div>
           </div>
@@ -192,11 +195,9 @@ export default function IntroSheet({
             <div className={styles.factsLabel}>수상</div>
             <div className={styles.factsList}>
               {AWARDS.map((item) => (
-                <div key={item.text} className={styles.factRow}>
-                  <span className={styles.factBullet} />
-                  <span className={styles.factText}>{item.text}</span>
-                  <span className={styles.factDate}>{item.date}</span>
-                </div>
+                <EntryRow key={item.text} date={item.date}>
+                  {item.text}
+                </EntryRow>
               ))}
             </div>
           </div>
@@ -205,65 +206,39 @@ export default function IntroSheet({
             <div className={styles.factsLabel}>사용 기술</div>
             <div className={styles.stack}>
               {STACK.map((skill) => (
-                <span key={skill} className={styles.stackChip}>
+                <Chip key={skill} variant="outline">
                   {skill}
-                </span>
+                </Chip>
               ))}
             </div>
           </div>
 
-          <h2 className={styles.sectionTitle}>
-            <KindIcon kind="project" size={15} />
+          <SectionHeading icon="project" spaced>
             Projects
-          </h2>
+          </SectionHeading>
           <div className={styles.projects}>
             {PROJECTS.map((project) => (
-              <button
+              <NodeCard
                 key={project.id}
-                type="button"
-                className={styles.projectRow}
+                kind="project"
+                title={project.name}
+                role={project.role}
+                description={project.desc}
+                tags={project.tech}
                 onClick={() => onProjectClick(project.id)}
-              >
-                <KindIcon kind="project" size={16} />
-                <span className={styles.projectText}>
-                  <span className={styles.projectHead}>
-                    <span className={styles.projectName}>{project.name}</span>
-                    {project.role && (
-                      <span className={styles.roleTag}>{project.role}</span>
-                    )}
-                  </span>
-                  <span className={styles.projectDesc}>{project.desc}</span>
-                  <span className={styles.projectTech}>
-                    {project.tech.map((item) => (
-                      <span key={item} className={styles.techBadge}>
-                        {item}
-                      </span>
-                    ))}
-                  </span>
-                </span>
-                <span className={styles.port} aria-hidden />
-              </button>
+              />
             ))}
           </div>
 
-          <h2 className={styles.sectionTitle}>
-            <KindIcon kind="theory" size={15} />
+          <SectionHeading icon="theory" spaced>
             기술 블로그
-          </h2>
-          <button
-            type="button"
-            className={`${styles.projectRow} ${styles.theoryRow}`}
+          </SectionHeading>
+          <NodeCard
+            kind="theory"
+            title="기술 블로그로 가기"
+            description="프로젝트에서 부딪히며 배운 개념들"
             onClick={onTheoryClick}
-          >
-            <KindIcon kind="theory" size={16} />
-            <span className={styles.projectText}>
-              <span className={styles.projectName}>기술 블로그로 가기</span>
-              <span className={styles.projectDesc}>
-                프로젝트에서 부딪히며 배운 개념들
-              </span>
-            </span>
-            <span className={styles.port} aria-hidden />
-          </button>
+          />
 
           <p className={styles.hint}>
             바깥을 클릭하면 지식 그래프 전체가 보입니다. 붉은 트러블 노드를

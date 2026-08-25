@@ -1,0 +1,49 @@
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-size: 12.5px;
+}
+
+.kicker[data-kind="theory"] {
+  color: var(--theory-text);
+}
+.kicker[data-kind="project"] {
+  color: var(--project-text);
+}
+.kicker[data-kind="trouble"] {
+  color: var(--trouble-bright);
+}
+.kicker[data-kind="me"] {
+  color: var(--me-bright);
+}
+
+.heading {
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--fs-sheet-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* 위 섹션과 크게 벌릴 때 */
+.spaced {
+  margin-top: 36px;
+}
+
+.bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.bullet[data-tone="trouble"] {
+  background: var(--trouble);
+}
+.bullet[data-tone="theory"] {
+  background: var(--theory);
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import { fullGraphNodes, theoryClusters } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
+import { nodeHref } from "@/lib/nodeTarget";
 import styles from "./NodeTree.module.css";
 
 function nodeLabel(id: string): string {
@@ -92,7 +93,7 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
                   {projectPosts.map((post) => (
                     <Link
                       key={post.id}
-                      href={`/posts/${post.id}`}
+                      href={nodeHref(post.id)}
                       className={`${styles.row} ${
                         post.id === activePostId ? styles.active : ""
                       }`}

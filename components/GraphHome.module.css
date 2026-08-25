@@ -1,5 +1,6 @@
 .screen {
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -51,11 +52,16 @@
 }
 
 /* 진짜 시트 전체를 한 강체로 — 카드 크기로 축소돼 있다가 카드와 함께 커진다.
-   제목·트리·본문이 전부 이 안에서 같은 궤적으로 움직인다. */
+   제목·트리·본문이 전부 이 안에서 같은 궤적으로 움직인다.
+   container-type: 안쪽 내용이 이 시트 폭(= 상세 페이지 .sheet와 같은 값)에
+   반응하도록 — 두 곳이 같은 @container 규칙을 공유한다.
+   폭은 transform 스케일과 무관한 레이아웃 값(expanding.to.width)이라
+   전환 중에도 글자 크기가 흔들리지 않는다. */
 .expandContent {
   position: absolute;
   top: 0;
   left: 0;
+  container-type: inline-size;
   display: flex;
   transform-origin: top left;
   opacity: 0;

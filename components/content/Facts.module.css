@@ -1,0 +1,74 @@
+/* ── 라벨-값 (기간·팀·역할) ── */
+.factRow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 7px 2px;
+}
+
+.factRow[data-accent="theory"] {
+  --c-text: var(--theory-text);
+}
+.factRow[data-accent="project"] {
+  --c-text: var(--project-text);
+}
+.factRow[data-accent="trouble"] {
+  --c-text: var(--trouble-bright);
+}
+.factRow[data-accent="me"] {
+  --c-text: var(--me-bright);
+}
+
+.label {
+  flex-shrink: 0;
+  width: 42px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--c-text);
+}
+
+.value {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #a9b1c0;
+}
+
+/* ── 불릿 + 내용 + 날짜 (이력·수상) ── */
+.entryRow {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  transition: background 100ms ease;
+}
+
+.entryRow:hover {
+  background: var(--surface-node);
+}
+
+.entryBullet {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--faint);
+  transform: translateY(-3px);
+}
+
+.entryText {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #a9b1c0;
+}
+
+.entryDate {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

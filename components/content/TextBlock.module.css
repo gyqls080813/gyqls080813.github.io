@@ -1,0 +1,31 @@
+.block {
+  padding-left: 15px;
+  border-left: 2px solid var(--border-subtle);
+}
+
+.block[data-accent="theory"] {
+  --c-text: var(--theory-text);
+}
+.block[data-accent="project"] {
+  --c-text: var(--project-text);
+}
+.block[data-accent="trouble"] {
+  --c-text: var(--trouble-bright);
+}
+.block[data-accent="me"] {
+  --c-text: var(--me-bright);
+}
+
+.label {
+  margin: 0 0 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.body {
+  margin: 0;
+  font-size: var(--fs-sheet-body);
+  line-height: 1.85;
+  color: #a9b1c0;
+}

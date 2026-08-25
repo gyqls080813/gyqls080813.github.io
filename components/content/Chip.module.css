@@ -1,0 +1,63 @@
+/* 색은 kind에서 — 노드·포트와 같은 체계. --c: 선, --c-text: 글자 */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.chip[data-kind="theory"] {
+  --c: var(--theory);
+  --c-text: var(--theory-text);
+}
+.chip[data-kind="project"] {
+  --c: var(--project);
+  --c-text: var(--project-text);
+}
+.chip[data-kind="trouble"] {
+  --c: var(--trouble);
+  --c-text: var(--trouble-bright);
+}
+.chip[data-kind="me"] {
+  --c: var(--me);
+  --c-text: var(--me-bright);
+}
+
+/* 채운 칩 — 글 메타·브레드크럼 (배경 10% 틴트 + 종류 색 글자) */
+.soft {
+  padding: 4px 11px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  color: var(--c-text);
+  font-weight: 500;
+}
+
+/* 테두리 칩 — 사용 기술 스택 */
+.outline {
+  padding: 4px 11px;
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--text-soft);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-node);
+}
+
+/* 작은 배지 — 노드 카드 안의 기술 목록 */
+.badge {
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+  border: 1px solid var(--border-subtle);
+}
+
+/* 역할 태그 — FE Leader 등, 종류 색 테두리 */
+.role {
+  padding: 1px 8px;
+  border-radius: 99px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--c-text);
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+}

@@ -1,0 +1,39 @@
+/* 그래프 노드의 포트와 같은 점. 색은 kind에서. */
+.dot {
+  display: block;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border-style: solid;
+  border-color: var(--c);
+  transition:
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.dot[data-kind="theory"] {
+  --c: var(--theory);
+}
+.dot[data-kind="project"] {
+  --c: var(--project);
+}
+.dot[data-kind="trouble"] {
+  --c: var(--trouble);
+}
+.dot[data-kind="me"] {
+  --c: var(--me);
+}
+
+/* 카드·행 안의 작은 점 */
+.sm {
+  width: 9px;
+  height: 9px;
+  border-width: 2px;
+}
+
+/* 시트 가장자리의 큰 포트 */
+.md {
+  width: 15px;
+  height: 15px;
+  border-width: 2.5px;
+}

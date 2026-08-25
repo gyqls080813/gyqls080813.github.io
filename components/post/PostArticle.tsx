@@ -1,5 +1,6 @@
 import { fullGraphNodes } from "@/lib/graphData";
 import type { Post } from "@/lib/posts";
+import { Chip, CodeBlock, SectionHeading } from "../content";
 import styles from "./PostView.module.css";
 
 function nodeLabel(id: string): string {
@@ -11,11 +12,13 @@ export default function PostArticle({ post }: { post: Post }) {
   return (
     <div className={styles.articleInner}>
       <div className={styles.meta}>
-        <span className={styles.chipProject}>{nodeLabel(post.project)}</span>
+        <Chip kind="project" variant="soft">
+          {nodeLabel(post.project)}
+        </Chip>
         {post.theories.map((theory) => (
-          <span key={theory.id} className={styles.chipTheory}>
+          <Chip key={theory.id} kind="theory" variant="soft">
             {nodeLabel(theory.id)}
-          </span>
+          </Chip>
         ))}
         <span className={styles.metaDate}>
           {post.date} · {post.readMinutes}분
@@ -27,18 +30,9 @@ export default function PostArticle({ post }: { post: Post }) {
 
       {post.sections.map((section) => (
         <section key={section.heading}>
-          <h2 className={styles.sectionHeading}>
-            <span
-              className={`${styles.bullet} ${
-                section.tone === "trouble"
-                  ? styles.bulletTrouble
-                  : styles.bulletTheory
-              }`}
-            />
-            {section.heading}
-          </h2>
+          <SectionHeading tone={section.tone}>{section.heading}</SectionHeading>
           <p className={styles.sectionBody}>{section.body}</p>
-          {section.code && <pre className={styles.code}>{section.code}</pre>}
+          {section.code && <CodeBlock>{section.code}</CodeBlock>}
         </section>
       ))}
     </div>

@@ -1,12 +1,13 @@
 .screen {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
 
 .main {
   flex: 1;
-  padding: 44px 56px;
+  padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 56px);
 }
 
 .inner {

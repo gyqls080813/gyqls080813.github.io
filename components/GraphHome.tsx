@@ -44,10 +44,13 @@ interface Expanding {
 const FOCUS_ZOOM = 1.35;
 const FOCUS_MS = 520;
 
-/** 글 페이지 시트와 같은 위치·크기 (PostView.module.css의 .sheet와 맞출 것) */
+/** 글 페이지 시트와 같은 위치·크기 (PostView.module.css의 .sheet와 반드시 맞출 것).
+    90%(상한 1500×940), 좁은 화면(≤720px)에서는 거의 전체 — 값이 어긋나면
+    카드→시트 전환이 마지막에 튄다. */
 function sheetRect(stage: DOMRect): Rect {
-  const width = stage.width * 0.9;
-  const height = stage.height * 0.93;
+  const narrow = stage.width <= 720;
+  const width = narrow ? stage.width : Math.min(stage.width * 0.9, 1500);
+  const height = narrow ? stage.height : Math.min(stage.height * 0.93, 940);
   return {
     top: stage.top + (stage.height - height) / 2,
     left: stage.left + (stage.width - width) / 2,
@@ -119,7 +122,7 @@ export default function GraphHome() {
   /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 이동한 뒤 열린다 */
   const focusProject = (nodeId: string) => {
     closeIntro();
-    openNode(nodeId, { move: true });
+    openNode(nodeId);
   };
 
   const { nodes, edges, backdrops } = useMemo(() => {
@@ -186,15 +189,16 @@ export default function GraphHome() {
     setTimeout(finish, 500);
   };
 
-  /* 어디서 눌렀든 같은 순서다 — (이동 →) 확대 → 열림.
-     그래프에서 직접 누른 노드는 이미 보고 있으므로 이동을 건너뛴다.
+  /* 노드로 가는 유일한 동작 — 어디서 왔든 같은 순서다: 이동(확대) → 열림.
+     포트·트리·노드 내부·노드 직접 클릭, 그리고 다른 페이지에서 넘어온 ?node=
+     까지 모두 이 함수 하나를 거쳐 같은 동작이 된다.
      열 것이 없는 노드(이론)는 이동·확대까지만 하고 멈춘다 */
-  function openNode(nodeId: string, options?: { move?: boolean }) {
+  function openNode(nodeId: string) {
     if (expanding) return;
 
     const kind = nodeOpenKind(nodeId);
-    /* 소개는 그래프의 시작점이라 직접 눌러도 그 자리로 데려간 뒤에 연다 */
-    const wait = options?.move || kind === "intro" ? moveToNode(nodeId) : 0;
+    /* 직접 누른 노드라도 언제나 그 자리로 데려간 뒤에 연다 — 동작을 하나로 */
+    const wait = moveToNode(nodeId);
 
     /* 열 것이 없는 노드(이론)는 이동·확대까지만 */
     if (!kind) return;
@@ -262,7 +266,7 @@ export default function GraphHome() {
             if (!target) return;
             pendingNodeRef.current = null;
             /* 노드가 한 번 그려진 뒤라야 좌표가 맞다 */
-            requestAnimationFrame(() => openNode(target, { move: true }));
+            requestAnimationFrame(() => openNode(target));
           }}
         />
 

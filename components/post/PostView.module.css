@@ -1,5 +1,6 @@
 .screen {
   height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -27,7 +28,11 @@
   background: rgba(11, 14, 20, 0.72);
 }
 
-/* 글 시트 — 화면의 90%. 연결 노드는 가장자리 포트가 맡는다 */
+/* 글 시트 — 화면의 90%, 단 상한을 둬 큰 모니터에서 텅 비지 않게 한다.
+   연결 노드는 가장자리 포트가 맡는다.
+   container-type: 안쪽 내용(트리·본문·소개)이 뷰포트가 아니라 "이 시트의 폭"에
+   반응한다 — 홈 오버레이(.expandContent)와 폭만 같으면 똑같이 보인다.
+   상한 값은 GraphHome.tsx의 sheetRect()와 반드시 함께 맞춘다. */
 .sheet {
   position: absolute;
   left: 50%;
@@ -35,6 +40,9 @@
   transform: translate(-50%, -50%);
   width: 90%;
   height: 93%;
+  max-width: 1500px;
+  max-height: 940px;
+  container-type: inline-size;
   display: flex;
   overflow: hidden;
   background: var(--bg-elevated);
@@ -44,10 +52,24 @@
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
 }
 
-/* ── 시트 가장자리의 연결 포트 — 확대된 노드도 포트를 유지한다 ── */
+/* 바깥 상자(시트)는 뷰포트에 반응한다 — 좁은 화면에서는 거의 전체를 쓴다.
+   (안쪽 내용은 아래 @container가 맡는다: 바깥은 미디어, 안쪽은 컨테이너) */
+@media (max-width: 720px) {
+  .sheet {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+}
+
+/* ── 시트 가장자리의 연결 포트 — 확대된 노드도 포트를 유지한다.
+   시트가 상한(1500px)에 걸리면 가장자리가 5%보다 안쪽으로 들어오므로,
+   max()로 실제 시트 모서리를 따라간다 (.sheet의 max-width와 함께 맞출 것). ── */
 .portsLeft {
   position: absolute;
-  left: calc(5% - 8px);
+  left: calc(max(5%, (100% - 1500px) / 2) - 8px);
   top: 50%;
   transform: translateY(-50%);
   z-index: 6;
@@ -55,13 +77,22 @@
 
 .portsRight {
   position: absolute;
-  right: calc(5% - 8px);
+  right: calc(max(5%, (100% - 1500px) / 2) - 8px);
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   gap: 30px;
   z-index: 6;
+}
+
+/* 좁은 화면에서는 포트가 본문을 침범한다 — 숨기고 트리·브레드크럼이 대신한다.
+   (포트는 시트 바깥이라 컨테이너가 아니라 뷰포트로 판단) */
+@media (max-width: 860px) {
+  .portsLeft,
+  .portsRight {
+    display: none;
+  }
 }
 
 .port {
@@ -139,7 +170,7 @@
 }
 
 .treePanel {
-  width: 288px;
+  width: var(--tree-width);
   flex-shrink: 0;
   border-right: 1px solid var(--border);
   background: var(--bg-elevated);
@@ -148,18 +179,28 @@
 
 .article {
   flex: 1;
+  min-width: 0;
   overflow-y: auto;
   /* 내용 길이에 따라 스크롤바가 생겨도 본문이 밀리지 않게 자리를 미리 잡는다 */
   scrollbar-gutter: stable;
-  padding: 44px 56px;
+  padding: var(--pad-sheet-block) var(--pad-sheet-inline);
   background: var(--bg-elevated);
+}
+
+/* 시트 폭이 좁으면(뷰포트가 아니라 시트 폭 기준) 트리를 접어 본문에 폭을 준다.
+   홈 오버레이든 상세 페이지든 시트 폭만 같으면 같은 시점에 접힌다. */
+@container (max-width: 640px) {
+  .treePanel {
+    display: none;
+  }
 }
 
 /* 열린 노드 안쪽의 공통 레이어 — 글·프로젝트가 같은 폭을 쓴다.
    (소개는 사진 2단이라 자기 레이아웃을 따로 가진다)
-   바깥 .article이 패딩을 맡으므로 여기서는 폭만 정한다 */
+   바깥 .article이 패딩을 맡으므로 여기서는 폭만 정한다.
+   읽기 좋은 줄길이로 상한을 두되, 좁을 땐 100%까지 준다 */
 .articleInner {
-  max-width: 900px;
+  max-width: min(900px, 100%);
   margin: 0 auto;
 }
 
@@ -172,22 +213,7 @@
   font-size: 12.5px;
 }
 
-.chipProject {
-  padding: 4px 11px;
-  border-radius: 6px;
-  background: rgba(227, 171, 92, 0.1);
-  color: var(--project-text);
-  font-weight: 500;
-}
-
-.chipTheory {
-  padding: 4px 11px;
-  border-radius: 6px;
-  background: rgba(95, 196, 214, 0.1);
-  color: var(--theory-text);
-  font-weight: 500;
-}
-
+/* 메타 칩(프로젝트·이론)은 <Chip variant="soft"> 로 옮겨졌다 */
 .metaDate {
   color: var(--faint);
   margin-left: 6px;
@@ -195,7 +221,7 @@
 
 .title {
   margin: 0 0 18px;
-  font-size: 30px;
+  font-size: var(--fs-sheet-title);
   line-height: 1.32;
   font-weight: 700;
   letter-spacing: -0.015em;
@@ -203,56 +229,20 @@
 }
 .lead {
   margin: 0 0 26px;
-  font-size: 15px;
+  font-size: var(--fs-sheet-lead);
   line-height: 1.75;
   color: #a9b1c0;
 }
 
-.sectionHeading {
-  margin: 0 0 10px;
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-
-.bullet {
-  width: 8px;
-  height: 8px;
-  border-radius: 99px;
-  flex-shrink: 0;
-}
-
-.bulletTrouble {
-  background: var(--trouble);
-}
-
-.bulletTheory {
-  background: var(--theory);
-}
-
+/* 섹션 제목은 <SectionHeading> 로 옮겨졌다 */
 .sectionBody {
   margin: 0 0 24px;
-  font-size: 14.5px;
+  font-size: var(--fs-sheet-body);
   line-height: 1.75;
   color: #a9b1c0;
 }
 
-.code {
-  background: var(--panel-deep);
-  border: 1px solid var(--divider);
-  border-radius: 10px;
-  padding: 16px 18px;
-  margin: 0 0 26px;
-  font-family: var(--font-space-grotesk), monospace;
-  font-size: 13px;
-  line-height: 1.7;
-  color: var(--text-soft);
-  white-space: pre-wrap;
-  overflow-x: auto;
-}
+/* 코드 블록은 <CodeBlock> 로 옮겨졌다 */
 
 /* 브레드크럼 (TopBar에 주입) */
 .breadcrumb {
