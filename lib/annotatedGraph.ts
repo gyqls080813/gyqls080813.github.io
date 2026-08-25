@@ -10,7 +10,7 @@ import { getPost, posts } from "./posts";
  */
 export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) => {
   if (node.kind === "me") {
-    return { ...node, clickable: true, meta: "이 그래프의 시작점" };
+    return { ...node, clickable: true, meta: "자기소개" };
   }
   if (node.kind === "trouble") {
     const post = getPost(node.id);
