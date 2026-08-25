@@ -5,16 +5,69 @@
   cursor: pointer;
 }
 
+/* 스크롤은 본문 열만 진다 — 사진을 스크롤 밖에 두면 끝까지 내려도 움직이지 않는다 */
 .article {
   flex: 1;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
+  min-height: 0;
+  overflow: hidden;
   padding: 56px 64px;
 }
 
+/* 좌: 사진(따라 내려옴) · 우: 본문 */
 .inner {
-  max-width: 680px;
+  height: 100%;
+  max-width: 1600px;
   margin: 0 auto;
+  display: grid;
+  /* 본문은 읽기 좋은 폭으로 고정, 남는 자리는 전부 사진 쪽에 준다 */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 688px);
+  gap: 40px;
+  align-items: center;
+}
+
+/* 사진은 남는 공간의 한가운데 */
+.photoCol {
+  display: flex;
+  justify-content: center;
+}
+
+.photo {
+  display: block;
+  width: 340px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+}
+
+.body {
+  min-width: 0;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+/* 좁아지면 한 줄로 세우고, 스크롤도 다시 전체가 진다 */
+@media (max-width: 940px) {
+  .article {
+    overflow-y: auto;
+  }
+
+  .inner {
+    height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .body {
+    height: auto;
+    overflow: visible;
+  }
+
+  .photo {
+    width: 156px;
+  }
 }
 
 .close {
@@ -64,6 +117,107 @@
   color: #a9b1c0;
 }
 
+/* 지향 셋 — '비추다'의 세 뜻. 노션 블록처럼 위아래로 쌓인다 */
+.stances {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 20px 0 18px;
+}
+
+.stance {
+  padding-left: 15px;
+  border-left: 2px solid var(--border-subtle);
+}
+
+.stanceLabel {
+  margin-bottom: 6px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--me-bright);
+}
+
+.stanceBody {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #a9b1c0;
+}
+
+/* 이력·수상 — 노션 블록처럼 한 줄이 한 블록, 섹션은 위아래로 */
+.factsSection {
+  margin-top: 26px;
+}
+
+.factsLabel {
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--me-bright);
+}
+
+.factsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.factRow {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  transition: background 100ms ease;
+}
+
+.factRow:hover {
+  background: var(--surface-node);
+}
+
+.factBullet {
+  flex-shrink: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--faint);
+  transform: translateY(-3px);
+}
+
+.factText {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #a9b1c0;
+}
+
+.factDate {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 기술 스택 칩 — 상단 바 필터 칩과 같은 문법 */
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.stackChip {
+  padding: 4px 11px;
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--text-soft);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-node);
+}
+
 .sectionTitle {
   margin: 34px 0 14px;
   font-size: 17px;
@@ -83,7 +237,8 @@
 /* 프로젝트 행 = 노드 카드의 확장판. 클릭하면 그래프의 그 노드로 */
 .projectRow {
   display: flex;
-  align-items: center;
+  /* 카드가 여러 줄이라 아이콘은 설명이 아니라 제목 옆에 붙어야 한다 */
+  align-items: flex-start;
   gap: 12px;
   width: 100%;
   padding: 14px 16px;
@@ -108,38 +263,89 @@
   min-width: 0;
 }
 
+.projectHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .projectName {
-  display: block;
   font-size: 15px;
   font-weight: 600;
   color: var(--text);
 }
 
+/* 프론트엔드 리더를 맡은 프로젝트 표시 — 기술 배지와 구분되게 프로젝트 색으로 */
+.roleTag {
+  padding: 1px 8px;
+  border-radius: 99px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--project-text);
+  border: 1px solid rgba(227, 171, 92, 0.35);
+}
+
 .projectDesc {
   display: block;
-  margin-top: 3px;
+  margin-top: 4px;
   font-size: 12.5px;
   color: var(--muted);
   line-height: 1.5;
 }
 
-.projectGo {
-  flex-shrink: 0;
-  font-size: 12px;
-  color: var(--faint);
-  white-space: nowrap;
+/* 그 프로젝트 안에서 쓴 것들 — 상단 사용 기술 칩보다 한 단 작게 */
+.projectTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 9px;
 }
 
-.projectRow:hover .projectGo {
-  color: var(--project-text);
+.techBadge {
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.projectRow:hover .techBadge {
+  color: var(--text-soft);
+  border-color: var(--border-node-strong);
+}
+
+/* 그래프 노드의 출력 포트와 같은 모양 — 이 줄이 그 노드로 이어진다는 표시 */
+.port {
+  flex-shrink: 0;
+  align-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border: 2px solid var(--project);
+  transition:
+    background 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.projectRow:hover .port {
+  background: var(--project);
+  box-shadow: 0 0 0 4px rgba(227, 171, 92, 0.16);
 }
 
 .theoryRow:hover {
   border-color: rgba(95, 196, 214, 0.45);
 }
 
-.theoryRow:hover .projectGo {
-  color: var(--theory-text);
+.theoryRow .port {
+  border-color: var(--theory);
+}
+
+.theoryRow:hover .port {
+  background: var(--theory);
+  box-shadow: 0 0 0 4px rgba(95, 196, 214, 0.16);
 }
 
 .hint {
