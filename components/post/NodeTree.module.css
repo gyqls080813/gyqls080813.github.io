@@ -46,7 +46,8 @@
   min-height: 27px;
   padding: 3px 8px;
   border-radius: 6px;
-  color: var(--text-soft);
+  /* 기본을 한 단 낮춰 둬야 활성 행을 밝기만으로 띄울 여지가 생긴다 */
+  color: var(--muted);
   text-decoration: none;
   cursor: pointer;
   background: none;
@@ -62,14 +63,10 @@
   color: var(--text);
 }
 
+/* 배경도 테두리도 두지 않는다 — 밝기만으로 지금 보고 있는 줄을 표시한다.
+   종류(프로젝트·이론·트러블)와 무관하게 같은 모습이라 목록이 흔들리지 않는다 */
 .active {
-  background: rgba(232, 139, 125, 0.1);
-  box-shadow: inset 2px 0 0 var(--trouble);
-  color: var(--text);
-}
-
-.active:hover {
-  background: rgba(232, 139, 125, 0.14);
+  color: var(--text-strong);
 }
 
 .chevron {
