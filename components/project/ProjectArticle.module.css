@@ -1,0 +1,175 @@
+/* 폭·여백은 PostView.module.css의 .articleInner가 맡는다 — 여기는 내용만 */
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--project-text);
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 34px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-strong);
+}
+
+.tagline {
+  margin: 0 0 26px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: #a9b1c0;
+}
+
+/* 기간·팀·역할 — 한 줄이 한 블록 */
+.factsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.factRow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 7px 2px;
+}
+
+.factLabel {
+  flex-shrink: 0;
+  width: 42px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--project-text);
+}
+
+.factValue {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #a9b1c0;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.stackChip {
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 11.5px;
+  color: var(--text-soft);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-node);
+}
+
+/* 본문 — 라벨 하나에 문단 하나, 위아래로 쌓인다 */
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 34px;
+}
+
+.block {
+  padding-left: 15px;
+  border-left: 2px solid var(--border-subtle);
+}
+
+.blockLabel {
+  margin: 0 0 7px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--project-text);
+}
+
+.blockBody {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.85;
+  color: #a9b1c0;
+}
+
+.sectionTitle {
+  margin: 40px 0 14px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.troubles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 트러블 노드 카드의 확장판 — 누르면 그 글로 */
+.troubleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface-node);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  text-decoration: none;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.troubleRow:hover {
+  background: var(--surface-node-hover);
+  border-color: rgba(232, 139, 125, 0.45);
+}
+
+.troubleText {
+  flex: 1;
+  min-width: 0;
+}
+
+.troubleTitle {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.troubleMeta {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 그래프 노드의 포트와 같은 모양 */
+.port {
+  flex-shrink: 0;
+  align-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border: 2px solid var(--trouble);
+  transition:
+    background 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.troubleRow:hover .port {
+  background: var(--trouble);
+  box-shadow: 0 0 0 4px rgba(232, 139, 125, 0.16);
+}

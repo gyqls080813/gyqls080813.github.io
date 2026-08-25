@@ -88,6 +88,10 @@
   border-color: var(--theory);
 }
 
+.portDotTrouble {
+  border-color: var(--trouble);
+}
+
 .port:hover .portDot {
   background: var(--surface-node-hover);
 }
@@ -151,8 +155,12 @@
   background: var(--bg-elevated);
 }
 
+/* 열린 노드 안쪽의 공통 레이어 — 글·프로젝트가 같은 폭을 쓴다.
+   (소개는 사진 2단이라 자기 레이아웃을 따로 가진다)
+   바깥 .article이 패딩을 맡으므로 여기서는 폭만 정한다 */
 .articleInner {
-  max-width: 660px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .meta {

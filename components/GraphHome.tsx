@@ -8,11 +8,14 @@ import IntroSheet from "./IntroSheet";
 import KnowledgeGraph from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
 import PostArticle from "./post/PostArticle";
+import ProjectArticle from "./project/ProjectArticle";
 import type { NodeKind } from "./graph/types";
 import postStyles from "./post/PostView.module.css";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
 import { getPost } from "@/lib/posts";
+import { getProject } from "@/lib/projects";
+import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./GraphHome.module.css";
 
 const VISIBLE_KINDS: Record<GraphFilter, NodeKind[]> = {
@@ -30,10 +33,16 @@ interface Rect {
 }
 
 interface Expanding {
-  postId: string;
+  /** 글 노드는 글 페이지로, 프로젝트 노드는 프로젝트 페이지로, 민엽 노드는 소개 시트로 */
+  kind: "post" | "project" | "intro";
+  nodeId: string;
   from: Rect;
   to: Rect;
 }
+
+/** 그래프 밖에서 들어왔을 때 노드로 옮겨 가는 동작 */
+const FOCUS_ZOOM = 1.35;
+const FOCUS_MS = 520;
 
 /** 글 페이지 시트와 같은 위치·크기 (PostView.module.css의 .sheet와 맞출 것) */
 function sheetRect(stage: DOMRect): Rect {
@@ -56,8 +65,27 @@ export default function GraphHome() {
   const stageRef = useRef<HTMLElement>(null);
   const flowRef = useRef<ReactFlowInstance | null>(null);
 
+  /* 다른 페이지의 포트에서 넘어올 때 열어야 할 노드 (`/?node=me`).
+     그래프 인스턴스가 준비된 뒤에야 좌표를 알 수 있어 여기 담아 두고 onReady에서 연다 */
+  const pendingNodeRef = useRef<string | null>(null);
+
+  /* 이 이펙트는 주소(?node)를 읽고 지운다. StrictMode에서 두 번 돌면
+     두 번째에는 이미 지워진 주소를 보고 "타깃 없음"으로 오판해 소개를 띄운다 */
+  const bootedRef = useRef(false);
+
   /* 첫 방문(세션 기준)이거나 상단 바 "소개"로 요청됐으면 소개를 연다 */
   useEffect(() => {
+    if (bootedRef.current) return;
+    bootedRef.current = true;
+
+    const target = new URLSearchParams(window.location.search).get("node");
+    if (target) {
+      pendingNodeRef.current = target;
+      /* 주소는 되돌려 둔다 — 새로고침이나 뒤로가기에서 다시 열리면 성가시다 */
+      window.history.replaceState(null, "", window.location.pathname);
+      return;
+    }
+
     let requested = false;
     let seen = false;
     try {
@@ -88,17 +116,10 @@ export default function GraphHome() {
     flowRef.current?.fitView({ nodes: theoryIds, padding: 0.18, duration: 650 });
   };
 
-  /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 줌인 */
+  /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 이동한 뒤 열린다 */
   const focusProject = (nodeId: string) => {
     closeIntro();
-    const node = flowRef.current?.getNode(nodeId);
-    if (node) {
-      flowRef.current?.setCenter(
-        node.position.x + (node.measured?.width ?? 176) / 2,
-        node.position.y + (node.measured?.height ?? 56) / 2,
-        { zoom: 1.35, duration: 650 },
-      );
-    }
+    openNode(nodeId, { move: true });
   };
 
   const { nodes, edges, backdrops } = useMemo(() => {
@@ -114,27 +135,46 @@ export default function GraphHome() {
     return { nodes, edges, backdrops };
   }, [filter]);
 
-  /* 클릭한 노드 카드가 제자리에서 시트 크기로 열린 뒤 글 페이지로 넘어간다 */
-  const handleNodeClick = (nodeId: string) => {
-    if (nodeId === "me") {
+  /* 노드를 화면 가운데로 옮기고 확대한다 — 이동이 끝나는 데 걸리는 ms를 돌려준다 */
+  const moveToNode = (nodeId: string): number => {
+    const instance = flowRef.current;
+    const node = instance?.getNode(nodeId);
+    if (!instance || !node) return 0;
+    instance.setCenter(
+      node.position.x + (node.measured?.width ?? 176) / 2,
+      node.position.y + (node.measured?.height ?? 56) / 2,
+      { zoom: FOCUS_ZOOM, duration: FOCUS_MS },
+    );
+    return FOCUS_MS;
+  };
+
+  /* 노드 카드가 제자리에서 시트 크기로 열린다 */
+  const expandNode = (nodeId: string, kind: Expanding["kind"]) => {
+    const finish = () => {
+      const destination = nodeDestination(nodeId);
+      if (destination) {
+        router.push(destination);
+        return;
+      }
+      /* 소개는 확장이 끝난 자리에 시트를 놓는다 — 크기·위치가 같아 이어져 보인다 */
       setIntroOpen(true);
-      return;
-    }
-    const post = getPost(nodeId);
-    if (!post || expanding) return;
+      setExpanding(null);
+      setOpened(false);
+    };
 
     const nodeElement = document.querySelector(
       `.react-flow__node[data-id="${nodeId}"]`,
     );
     const stage = stageRef.current?.getBoundingClientRect();
     if (!nodeElement || !stage) {
-      router.push(`/posts/${nodeId}`);
+      finish();
       return;
     }
 
     const from = nodeElement.getBoundingClientRect();
     setExpanding({
-      postId: nodeId,
+      kind,
+      nodeId,
       from: {
         top: from.top,
         left: from.left,
@@ -143,8 +183,30 @@ export default function GraphHome() {
       },
       to: sheetRect(stage),
     });
-    setTimeout(() => router.push(`/posts/${nodeId}`), 500);
+    setTimeout(finish, 500);
   };
+
+  /* 어디서 눌렀든 같은 순서다 — (이동 →) 확대 → 열림.
+     그래프에서 직접 누른 노드는 이미 보고 있으므로 이동을 건너뛴다.
+     열 것이 없는 노드(이론)는 이동·확대까지만 하고 멈춘다 */
+  function openNode(nodeId: string, options?: { move?: boolean }) {
+    if (expanding) return;
+
+    const kind = nodeOpenKind(nodeId);
+    /* 소개는 그래프의 시작점이라 직접 눌러도 그 자리로 데려간 뒤에 연다 */
+    const wait = options?.move || kind === "intro" ? moveToNode(nodeId) : 0;
+
+    /* 열 것이 없는 노드(이론)는 이동·확대까지만 */
+    if (!kind) return;
+    if (wait === 0) {
+      expandNode(nodeId, kind);
+      return;
+    }
+    /* 이동이 끝나 카드가 제자리에 선 뒤에 재야 시작 위치가 어긋나지 않는다 */
+    window.setTimeout(() => expandNode(nodeId, kind), wait + 40);
+  }
+
+  const handleNodeClick = (nodeId: string) => openNode(nodeId);
 
   /* 오버레이가 시작 상태로 한 번 그려진 뒤에 열어야 전이가 걸린다 */
   useLayoutEffect(() => {
@@ -161,10 +223,12 @@ export default function GraphHome() {
      (PostView.module.css의 .portsLeft/.portsRight와 맞출 것: 점 15px, 세로 간격 30px) */
   const PORT = 15;
   const PORT_GAP = 30;
-  const expandingPost = expanding ? getPost(expanding.postId) : null;
-  const leftPortPos = rect
-    ? { top: rect.top + rect.height / 2 - PORT / 2, left: rect.left - 8 }
-    : null;
+  const expandingPost =
+    expanding?.kind === "post" ? getPost(expanding.nodeId) : null;
+  const leftPortPos =
+    rect && expandingPost
+      ? { top: rect.top + rect.height / 2 - PORT / 2, left: rect.left - 8 }
+      : null;
   const rightPortPos = (index: number, count: number) => {
     if (!expanding) return {};
     if (!opened) {
@@ -194,6 +258,11 @@ export default function GraphHome() {
           onNodeClick={handleNodeClick}
           onReady={(instance) => {
             flowRef.current = instance;
+            const target = pendingNodeRef.current;
+            if (!target) return;
+            pendingNodeRef.current = null;
+            /* 노드가 한 번 그려진 뒤라야 좌표가 맞다 */
+            requestAnimationFrame(() => openNode(target, { move: true }));
           }}
         />
 
@@ -229,12 +298,27 @@ export default function GraphHome() {
                   : `scale(${expanding.from.width / expanding.to.width})`,
               }}
             >
-              <aside className={postStyles.treePanel}>
-                <NodeTree activePostId={expanding.postId} />
-              </aside>
-              <article className={postStyles.article}>
-                <PostArticle post={getPost(expanding.postId)!} />
-              </article>
+              {expanding.kind === "intro" ? (
+                <IntroSheet
+                  bare
+                  onClose={closeIntro}
+                  onProjectClick={focusProject}
+                  onTheoryClick={focusTheory}
+                />
+              ) : (
+                <>
+                  <aside className={postStyles.treePanel}>
+                    <NodeTree activePostId={expanding.nodeId} />
+                  </aside>
+                  <article className={postStyles.article}>
+                    {expanding.kind === "project" ? (
+                      <ProjectArticle project={getProject(expanding.nodeId)!} />
+                    ) : (
+                      <PostArticle post={getPost(expanding.nodeId)!} />
+                    )}
+                  </article>
+                </>
+              )}
             </div>
 
           </div>
