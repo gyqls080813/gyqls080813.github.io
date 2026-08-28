@@ -12,7 +12,7 @@ import styles from "./NodeCard.module.css";
  * 노드 하나를 나타내는 카드(=노드 박스). 아이콘 · 제목(+역할) · 설명 · 메타 · 기술 배지 ·
  * 오른쪽 포트 점으로 이뤄진다. 색은 kind에서 나오고, 호버하면 그 색으로 살아난다.
  * href면 Link, onClick이면 button, 둘 다 없으면 정적 div로 렌더된다.
- * 소개의 프로젝트/이론 행, 프로젝트 시트의 "여기서 나온 글" 행을 하나로 통합.
+ * 소개의 프로젝트/이론 행, 프로젝트 시트의 "트러블 슈팅" 행을 하나로 통합.
  */
 export default function NodeCard({
   kind,

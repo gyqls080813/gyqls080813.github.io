@@ -4,6 +4,7 @@ import { nodeHref } from "@/lib/nodeTarget";
 import {
   Chip,
   FactRow,
+  Figure,
   Kicker,
   NodeCard,
   SectionHeading,
@@ -29,6 +30,7 @@ export default function ProjectArticle({ project }: { project: Project }) {
         <FactRow label="기간">{project.period}</FactRow>
         <FactRow label="팀">{project.team}</FactRow>
         <FactRow label="역할">{project.role}</FactRow>
+        {project.award && <FactRow label="성과">{project.award}</FactRow>}
       </div>
 
       <div className={styles.stack}>
@@ -38,6 +40,32 @@ export default function ProjectArticle({ project }: { project: Project }) {
           </Chip>
         ))}
       </div>
+
+      <div className={styles.blocks}>
+        <TextBlock label="소개" accent="project">
+          {project.intro}
+        </TextBlock>
+      </div>
+
+      {project.views && project.views.length > 0 && (
+        <>
+          <SectionHeading icon="project" spaced>
+            프로젝트 뷰
+          </SectionHeading>
+          <div className={styles.views}>
+            {project.views.map((view) => (
+              <Figure
+                key={view.src}
+                src={view.src}
+                alt={view.alt}
+                caption={view.caption}
+                maxWidth={900}
+                variant="wide"
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <div className={styles.blocks}>
         {project.blocks.map((block) => (
@@ -50,7 +78,7 @@ export default function ProjectArticle({ project }: { project: Project }) {
       {troubles.length > 0 && (
         <>
           <SectionHeading icon="trouble" spaced>
-            여기서 나온 글
+            트러블 슈팅
           </SectionHeading>
           <div className={styles.troubles}>
             {troubles.map((post) => (

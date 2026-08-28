@@ -42,7 +42,14 @@
   margin-top: 34px;
 }
 
-/* 여기서 나온 글 <NodeCard> 묶음 */
+/* 프로젝트 뷰 <Figure variant="wide"> 묶음 — 화면 한 장에 캡션 한 줄 */
+.views {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* 트러블 슈팅 <NodeCard> 묶음 */
 .troubles {
   display: flex;
   flex-direction: column;

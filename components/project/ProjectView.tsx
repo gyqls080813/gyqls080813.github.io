@@ -41,7 +41,7 @@ export default function ProjectView({ project }: { project: Project }) {
         </div>
         <Link href="/" className={styles.scrim} aria-label="그래프로 돌아가기" />
 
-        {/* 왼쪽은 이 프로젝트를 만든 사람, 오른쪽은 여기서 나온 글들 —
+        {/* 왼쪽은 이 프로젝트를 만든 사람, 오른쪽은 여기서 나온 트러블 슈팅 —
             그래프에서 이 노드에 들어오고 나가는 선과 같은 자리다 */}
         <div className={styles.portsLeft}>
           <Link
@@ -62,7 +62,7 @@ export default function ProjectView({ project }: { project: Project }) {
               key={post.id}
               href={nodeHref(post.id)}
               className={styles.port}
-              aria-label={`여기서 나온 글: ${post.title}`}
+              aria-label={`트러블 슈팅: ${post.title}`}
             >
               <span className={`${styles.portDot} ${styles.portDotTrouble}`} />
               <span className={styles.portPopover}>
