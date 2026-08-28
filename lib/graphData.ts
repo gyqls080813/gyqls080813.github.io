@@ -48,41 +48,422 @@ export const fullGraphNodes: GraphNodeData[] = [
   // 2열 하단: 기술 — 개념(허브) 노드와 그 하위 챕터 노드.
   // 계층은 백드랍이 아니라 허브 → 챕터 간선이 표현한다
   { id: "react", label: "React", kind: "theory", x: 330, y: 300, r: 20, hub: true },
-  { id: "render", label: "렌더링", kind: "theory", x: 330, y: 390, r: 17 },
-  { id: "state", label: "상태 관리", kind: "theory", x: 330, y: 475, r: 16 },
-  { id: "hooks", label: "훅", kind: "theory", x: 330, y: 560, r: 14 },
 
-  { id: "browser", label: "브라우저", kind: "theory", x: 545, y: 300, r: 20, hub: true },
-  { id: "eventloop", label: "이벤트 루프", kind: "theory", x: 545, y: 390, r: 16 },
-  { id: "repaint", label: "리페인트·리플로우", kind: "theory", x: 545, y: 475, r: 16 },
-  { id: "propagation", label: "이벤트 전파", kind: "theory", x: 545, y: 560, r: 15 },
-  { id: "isolation", label: "실행 컨텍스트 격리", kind: "theory", x: 545, y: 645, r: 16 },
+  /* react.dev 목차를 그대로 옮긴 것 — llms.txt의 ## / ### / #### 세 층과 1:1.
+     라벨은 ko.react.dev를 따르되, 갈래가 달라도 이름이 같아지는 것(훅·컴포넌트·API·
+     지시어·설정)만 어느 쪽인지 앞에 붙였다. 내용은 하나씩 채운다. */
+  { id: "rl", label: "Learn React", kind: "theory", x: 330, y: 730, r: 18, hub: true },
+  { id: "rl-start", label: "시작하기", kind: "theory", x: 330, y: 790, r: 15, hub: true },
+  { id: "rl-start-quick", label: "빠른 시작", kind: "theory", x: 330, y: 835, r: 12 },
+  { id: "rl-start-install", label: "설치", kind: "theory", x: 330, y: 875, r: 12 },
+  { id: "rl-start-setup", label: "설정", kind: "theory", x: 330, y: 915, r: 12 },
+  { id: "rl-start-compiler", label: "React 컴파일러", kind: "theory", x: 330, y: 955, r: 12 },
+  { id: "rl-learn", label: "React 배우기", kind: "theory", x: 330, y: 1005, r: 16, hub: true },
+  { id: "rl-ui", label: "UI 표현하기", kind: "theory", x: 330, y: 1050, r: 14 },
+  { id: "rl-interact", label: "상호작용 더하기", kind: "theory", x: 330, y: 1090, r: 14 },
+  { id: "rl-state", label: "State 관리하기", kind: "theory", x: 330, y: 1130, r: 14 },
+  { id: "rl-escape", label: "탈출구", kind: "theory", x: 330, y: 1170, r: 15 },
 
+  { id: "ra", label: "API 참고서", kind: "theory", x: 330, y: 1240, r: 18, hub: true },
+  { id: "ra-react", label: "React", kind: "theory", x: 330, y: 1300, r: 15, hub: true },
+  { id: "ra-react-hooks", label: "내장 훅", kind: "theory", x: 330, y: 1345, r: 13 },
+  { id: "ra-react-components", label: "내장 컴포넌트", kind: "theory", x: 330, y: 1385, r: 12 },
+  { id: "ra-react-apis", label: "React API", kind: "theory", x: 330, y: 1425, r: 12 },
+  { id: "ra-dom", label: "React DOM", kind: "theory", x: 330, y: 1475, r: 15, hub: true },
+  { id: "ra-dom-hooks", label: "DOM 훅", kind: "theory", x: 330, y: 1520, r: 12 },
+  { id: "ra-dom-components", label: "DOM 컴포넌트", kind: "theory", x: 330, y: 1560, r: 12 },
+  { id: "ra-dom-apis", label: "DOM API", kind: "theory", x: 330, y: 1600, r: 12 },
+  { id: "ra-dom-client", label: "클라이언트 API", kind: "theory", x: 330, y: 1640, r: 12 },
+  { id: "ra-dom-server", label: "서버 API", kind: "theory", x: 330, y: 1680, r: 12 },
+  { id: "ra-dom-static", label: "정적 API", kind: "theory", x: 330, y: 1720, r: 12 },
+  { id: "ra-compiler", label: "React 컴파일러 참고서", kind: "theory", x: 330, y: 1770, r: 14, hub: true },
+  { id: "ra-compiler-config", label: "컴파일러 설정", kind: "theory", x: 330, y: 1815, r: 12 },
+  { id: "ra-compiler-directives", label: "컴파일러 지시어", kind: "theory", x: 330, y: 1855, r: 12 },
+  { id: "ra-devtools", label: "React 개발자 도구", kind: "theory", x: 330, y: 1900, r: 13 },
+  { id: "ra-eslint", label: "ESLint 플러그인", kind: "theory", x: 330, y: 1945, r: 14, hub: true },
+  { id: "ra-eslint-lints", label: "린트 규칙", kind: "theory", x: 330, y: 1990, r: 12 },
+  { id: "ra-rules", label: "React 규칙", kind: "theory", x: 330, y: 2035, r: 14, hub: true },
+  { id: "ra-rules-overview", label: "규칙 개요", kind: "theory", x: 330, y: 2080, r: 12 },
+  { id: "ra-rsc", label: "서버 컴포넌트", kind: "theory", x: 330, y: 2125, r: 14, hub: true },
+  { id: "ra-rsc-directives", label: "서버 지시어", kind: "theory", x: 330, y: 2170, r: 12 },
+  { id: "ra-legacy", label: "레거시 API", kind: "theory", x: 330, y: 2215, r: 13, hub: true },
+  { id: "ra-legacy-apis", label: "레거시 React API", kind: "theory", x: 330, y: 2260, r: 12 },
+
+  /* javascript.info 목차 — 파트 3개와 그 아래 챕터 그룹. 개별 글까지는 내려가지 않는다.
+     (원래 있던 '브라우저' 허브가 하던 일은 파트 2가 그대로 받는다) */
+  { id: "js", label: "JavaScript", kind: "theory", x: 545, y: 300, r: 20, hub: true },
+  { id: "js-core", label: "코어 자바스크립트", kind: "theory", x: 545, y: 360, r: 17, hub: true },
+  { id: "js-intro", label: "소개", kind: "theory", x: 545, y: 405, r: 12 },
+  { id: "js-first-steps", label: "자바스크립트 기본", kind: "theory", x: 545, y: 445, r: 13 },
+  { id: "js-quality", label: "코드 품질", kind: "theory", x: 545, y: 485, r: 12 },
+  { id: "js-object-basics", label: "객체: 기본", kind: "theory", x: 545, y: 525, r: 13 },
+  { id: "js-data-types", label: "자료구조와 자료형", kind: "theory", x: 545, y: 565, r: 13 },
+  { id: "js-adv-functions", label: "함수 심화학습", kind: "theory", x: 545, y: 605, r: 14 },
+  { id: "js-object-props", label: "객체 프로퍼티 설정", kind: "theory", x: 545, y: 645, r: 12 },
+  { id: "js-prototypes", label: "프로토타입과 상속", kind: "theory", x: 545, y: 685, r: 13 },
+  { id: "js-classes", label: "클래스", kind: "theory", x: 545, y: 725, r: 13 },
+  { id: "js-error", label: "에러 핸들링", kind: "theory", x: 545, y: 765, r: 13 },
+  { id: "js-async", label: "프라미스와 async·await", kind: "theory", x: 545, y: 805, r: 15 },
+  { id: "js-generators", label: "제너레이터와 비동기 이터레이션", kind: "theory", x: 545, y: 845, r: 12 },
+  { id: "js-modules", label: "모듈", kind: "theory", x: 545, y: 885, r: 12 },
+  { id: "js-core-misc", label: "코어 기타", kind: "theory", x: 545, y: 925, r: 12 },
+
+  { id: "js-browser", label: "브라우저: 문서·이벤트·인터페이스", kind: "theory", x: 545, y: 985, r: 17, hub: true },
+  { id: "js-document", label: "문서", kind: "theory", x: 545, y: 1030, r: 13 },
+  { id: "js-events", label: "이벤트 기초", kind: "theory", x: 545, y: 1070, r: 15 },
+  { id: "js-ui-events", label: "UI 이벤트", kind: "theory", x: 545, y: 1110, r: 14 },
+  { id: "js-forms", label: "폼과 폼 조작", kind: "theory", x: 545, y: 1150, r: 13 },
+  { id: "js-loading", label: "문서와 리소스 로딩", kind: "theory", x: 545, y: 1190, r: 12 },
+  { id: "js-ui-misc", label: "브라우저 기타", kind: "theory", x: 545, y: 1230, r: 15 },
+
+  { id: "js-extra", label: "추가 주제", kind: "theory", x: 545, y: 1290, r: 17, hub: true },
+  { id: "js-frames", label: "프레임과 윈도우", kind: "theory", x: 545, y: 1335, r: 15 },
+  { id: "js-binary", label: "이진 데이터와 파일", kind: "theory", x: 545, y: 1375, r: 12 },
+  { id: "js-network", label: "네트워크 요청", kind: "theory", x: 545, y: 1415, r: 16 },
+  { id: "js-storage", label: "브라우저에 데이터 저장하기", kind: "theory", x: 545, y: 1455, r: 12 },
+  { id: "js-animation", label: "애니메이션", kind: "theory", x: 545, y: 1495, r: 12 },
+  { id: "js-webcomponents", label: "웹 컴포넌트", kind: "theory", x: 545, y: 1535, r: 14 },
+  { id: "js-regexp", label: "정규 표현식", kind: "theory", x: 545, y: 1575, r: 12 },
+
+  /* typescriptlang.org 문서 목차 — 사이드바의 섹션과 그 아래 페이지까지 그대로.
+     릴리스 노트만 버전 목록이라 한 노드로 둔다 */
   { id: "ts", label: "TypeScript", kind: "theory", x: 760, y: 300, r: 20, hub: true },
-  { id: "types", label: "타입 시스템", kind: "theory", x: 760, y: 390, r: 16 },
-  { id: "runtime", label: "런타임 검증", kind: "theory", x: 760, y: 475, r: 15 },
+  { id: "ts-start", label: "시작하기", kind: "theory", x: 760, y: 360, r: 15, hub: true },
+  { id: "ts-start-new", label: "처음 배우는 사람을 위한 TS", kind: "theory", x: 760, y: 362, r: 12 },
+  { id: "ts-start-js", label: "JS 개발자를 위한 TS", kind: "theory", x: 760, y: 364, r: 13 },
+  { id: "ts-start-oop", label: "Java·C# 개발자를 위한 TS", kind: "theory", x: 760, y: 366, r: 12 },
+  { id: "ts-start-fp", label: "함수형 개발자를 위한 TS", kind: "theory", x: 760, y: 368, r: 12 },
+  { id: "ts-start-tooling", label: "5분 만에 보는 TS 도구", kind: "theory", x: 760, y: 370, r: 12 },
+  { id: "ts-handbook", label: "핸드북", kind: "theory", x: 760, y: 400, r: 17, hub: true },
+  { id: "ts-hb-basics", label: "기초", kind: "theory", x: 760, y: 445, r: 13 },
+  { id: "ts-hb-everyday", label: "일상적인 타입", kind: "theory", x: 760, y: 485, r: 14 },
+  { id: "ts-hb-narrowing", label: "좁히기", kind: "theory", x: 760, y: 525, r: 14 },
+  { id: "ts-hb-functions", label: "함수 더 알아보기", kind: "theory", x: 760, y: 565, r: 13 },
+  { id: "ts-hb-objects", label: "객체 타입", kind: "theory", x: 760, y: 605, r: 13 },
+  { id: "ts-hb-manipulation", label: "타입 조작", kind: "theory", x: 760, y: 645, r: 15, hub: true },
+  { id: "ts-tm-creating", label: "타입에서 타입 만들기", kind: "theory", x: 760, y: 690, r: 12 },
+  { id: "ts-tm-generics", label: "제네릭", kind: "theory", x: 760, y: 730, r: 13 },
+  { id: "ts-tm-keyof", label: "keyof 연산자", kind: "theory", x: 760, y: 770, r: 12 },
+  { id: "ts-tm-typeof", label: "typeof 연산자", kind: "theory", x: 760, y: 810, r: 12 },
+  { id: "ts-tm-indexed", label: "인덱스 접근 타입", kind: "theory", x: 760, y: 850, r: 12 },
+  { id: "ts-tm-conditional", label: "조건부 타입", kind: "theory", x: 760, y: 890, r: 12 },
+  { id: "ts-tm-mapped", label: "매핑된 타입", kind: "theory", x: 760, y: 930, r: 12 },
+  { id: "ts-tm-template", label: "템플릿 리터럴 타입", kind: "theory", x: 760, y: 970, r: 12 },
+  { id: "ts-hb-classes", label: "클래스", kind: "theory", x: 760, y: 1010, r: 13 },
+  { id: "ts-hb-modules", label: "모듈", kind: "theory", x: 760, y: 1050, r: 12 },
+  { id: "ts-reference", label: "참고서", kind: "theory", x: 760, y: 1100, r: 15, hub: true },
+  { id: "ts-ref-utility", label: "유틸리티 타입", kind: "theory", x: 760, y: 1102, r: 14 },
+  { id: "ts-ref-cheat", label: "치트 시트", kind: "theory", x: 760, y: 1104, r: 12 },
+  { id: "ts-ref-decorators", label: "데코레이터", kind: "theory", x: 760, y: 1106, r: 12 },
+  { id: "ts-ref-merging", label: "선언 병합", kind: "theory", x: 760, y: 1108, r: 12 },
+  { id: "ts-ref-enums", label: "이넘", kind: "theory", x: 760, y: 1110, r: 12 },
+  { id: "ts-ref-iterators", label: "이터레이터와 제너레이터", kind: "theory", x: 760, y: 1112, r: 12 },
+  { id: "ts-ref-jsx", label: "JSX", kind: "theory", x: 760, y: 1114, r: 13 },
+  { id: "ts-ref-mixins", label: "믹스인", kind: "theory", x: 760, y: 1116, r: 12 },
+  { id: "ts-ref-namespaces", label: "네임스페이스", kind: "theory", x: 760, y: 1118, r: 12 },
+  { id: "ts-ref-ns-modules", label: "네임스페이스와 모듈", kind: "theory", x: 760, y: 1120, r: 12 },
+  { id: "ts-ref-symbols", label: "심볼", kind: "theory", x: 760, y: 1122, r: 12 },
+  { id: "ts-ref-triple", label: "트리플 슬래시 지시어", kind: "theory", x: 760, y: 1124, r: 12 },
+  { id: "ts-ref-compat", label: "타입 호환성", kind: "theory", x: 760, y: 1126, r: 13 },
+  { id: "ts-ref-inference", label: "타입 추론", kind: "theory", x: 760, y: 1128, r: 14 },
+  { id: "ts-ref-vardecl", label: "변수 선언", kind: "theory", x: 760, y: 1130, r: 12 },
 
-  { id: "network", label: "네트워크", kind: "theory", x: 975, y: 300, r: 20, hub: true },
-  { id: "realtime", label: "실시간 통신", kind: "theory", x: 975, y: 390, r: 16 },
-  { id: "caching", label: "HTTP 캐싱", kind: "theory", x: 975, y: 475, r: 15 },
-  { id: "cors", label: "CORS", kind: "theory", x: 975, y: 560, r: 13 },
+  { id: "ts-modules-ref", label: "모듈 참고서", kind: "theory", x: 760, y: 1140, r: 14, hub: true },
+  { id: "ts-mr-intro", label: "모듈 소개", kind: "theory", x: 760, y: 1142, r: 12 },
+  { id: "ts-mr-theory", label: "모듈 이론", kind: "theory", x: 760, y: 1144, r: 13 },
+  { id: "ts-mr-guides", label: "모듈 가이드", kind: "theory", x: 760, y: 1146, r: 12, hub: true },
+  { id: "ts-mr-options", label: "컴파일러 옵션 고르기", kind: "theory", x: 760, y: 1148, r: 12 },
+  { id: "ts-mr-reference", label: "모듈 레퍼런스", kind: "theory", x: 760, y: 1150, r: 12 },
+  { id: "ts-mr-appendices", label: "모듈 부록", kind: "theory", x: 760, y: 1152, r: 12, hub: true },
+  { id: "ts-mr-esm-cjs", label: "ESM·CJS 상호운용", kind: "theory", x: 760, y: 1154, r: 13 },
+
+  { id: "ts-tutorials", label: "튜토리얼", kind: "theory", x: 760, y: 1180, r: 14, hub: true },
+  { id: "ts-tut-aspnet", label: "ASP.NET Core", kind: "theory", x: 760, y: 1182, r: 12 },
+  { id: "ts-tut-gulp", label: "Gulp", kind: "theory", x: 760, y: 1184, r: 12 },
+  { id: "ts-tut-dom", label: "DOM 조작", kind: "theory", x: 760, y: 1186, r: 13 },
+  { id: "ts-tut-migrate", label: "JavaScript에서 옮겨오기", kind: "theory", x: 760, y: 1188, r: 13 },
+  { id: "ts-tut-babel", label: "Babel과 함께 쓰기", kind: "theory", x: 760, y: 1190, r: 12 },
+
+  { id: "ts-whatsnew", label: "릴리스 노트", kind: "theory", x: 760, y: 1220, r: 12 },
+
+  { id: "ts-declaration", label: "선언 파일", kind: "theory", x: 760, y: 1260, r: 15, hub: true },
+  { id: "ts-dcl-intro", label: "선언 파일 소개", kind: "theory", x: 760, y: 1262, r: 12 },
+  { id: "ts-dcl-reference", label: "선언 레퍼런스", kind: "theory", x: 760, y: 1264, r: 12 },
+  { id: "ts-dcl-structures", label: "라이브러리 구조", kind: "theory", x: 760, y: 1266, r: 12 },
+  { id: "ts-dcl-templates", label: "d.ts 템플릿", kind: "theory", x: 760, y: 1268, r: 13, hub: true },
+  { id: "ts-dcl-t-modules", label: "모듈 d.ts", kind: "theory", x: 760, y: 1270, r: 12 },
+  { id: "ts-dcl-t-plugin", label: "모듈: 플러그인", kind: "theory", x: 760, y: 1272, r: 12 },
+  { id: "ts-dcl-t-class", label: "모듈: 클래스", kind: "theory", x: 760, y: 1274, r: 12 },
+  { id: "ts-dcl-t-function", label: "모듈: 함수", kind: "theory", x: 760, y: 1276, r: 12 },
+  { id: "ts-dcl-t-global", label: "전역 d.ts", kind: "theory", x: 760, y: 1278, r: 12 },
+  { id: "ts-dcl-t-globalmod", label: "전역: 모듈 수정", kind: "theory", x: 760, y: 1280, r: 12 },
+  { id: "ts-dcl-dos", label: "해야 할 것과 하지 말 것", kind: "theory", x: 760, y: 1282, r: 12 },
+  { id: "ts-dcl-deep", label: "깊이 알아보기", kind: "theory", x: 760, y: 1284, r: 12 },
+  { id: "ts-dcl-publish", label: "배포하기", kind: "theory", x: 760, y: 1286, r: 12 },
+  { id: "ts-dcl-consume", label: "가져다 쓰기", kind: "theory", x: 760, y: 1288, r: 12 },
+
+  { id: "ts-js", label: "JavaScript 지원", kind: "theory", x: 760, y: 1300, r: 14, hub: true },
+  { id: "ts-js-projects", label: "TS를 쓰는 JS 프로젝트", kind: "theory", x: 760, y: 1302, r: 12 },
+  { id: "ts-js-checking", label: "JS 파일 타입 검사", kind: "theory", x: 760, y: 1304, r: 13 },
+  { id: "ts-js-jsdoc", label: "JSDoc 레퍼런스", kind: "theory", x: 760, y: 1306, r: 13 },
+  { id: "ts-js-dts", label: "JS에서 d.ts 만들기", kind: "theory", x: 760, y: 1308, r: 12 },
+
+  { id: "ts-config", label: "프로젝트 설정", kind: "theory", x: 760, y: 1340, r: 14, hub: true },
+  { id: "ts-cfg-tsconfig", label: "tsconfig.json이란", kind: "theory", x: 760, y: 1342, r: 13 },
+  { id: "ts-cfg-msbuild", label: "MSBuild 컴파일러 옵션", kind: "theory", x: 760, y: 1344, r: 12 },
+  { id: "ts-cfg-tsconfig-ref", label: "TSConfig 레퍼런스", kind: "theory", x: 760, y: 1346, r: 13 },
+  { id: "ts-cfg-cli", label: "tsc CLI 옵션", kind: "theory", x: 760, y: 1348, r: 12 },
+  { id: "ts-cfg-references", label: "프로젝트 참조", kind: "theory", x: 760, y: 1350, r: 12 },
+  { id: "ts-cfg-buildtools", label: "빌드 도구 연동", kind: "theory", x: 760, y: 1352, r: 12 },
+  { id: "ts-cfg-watch", label: "watch 설정", kind: "theory", x: 760, y: 1354, r: 12 },
+  { id: "ts-cfg-nightly", label: "나이틀리 빌드", kind: "theory", x: 760, y: 1356, r: 12 },
 
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
-  { id: "t-sync", label: "영상 동기화 불감대", kind: "trouble", x: 1240, y: 205, r: 13 },
-  { id: "t-schema", label: "런타임 스키마 검증", kind: "trouble", x: 1240, y: 310, r: 13 },
-  { id: "t-tagged", label: "타입 안전 예외 처리", kind: "trouble", x: 1240, y: 415, r: 13 },
-  { id: "t-canvas", label: "Canvas 좌석 렌더링", kind: "trouble", x: 1240, y: 520, r: 13 },
-  { id: "t-webdriver", label: "WebDriver 봇 필터링", kind: "trouble", x: 1240, y: 625, r: 13 },
-  { id: "t-buffer", label: "비동기 이벤트 버퍼링", kind: "trouble", x: 1240, y: 730, r: 14 },
+  { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
+  { id: "t-sync", label: "영상 동기화 불감대", kind: "trouble", x: 1240, y: 310, r: 13 },
+  { id: "t-schema", label: "런타임 스키마 검증", kind: "trouble", x: 1240, y: 415, r: 13 },
+  { id: "t-tagged", label: "타입 안전 예외 처리", kind: "trouble", x: 1240, y: 520, r: 13 },
+  { id: "t-canvas", label: "Canvas 좌석 렌더링", kind: "trouble", x: 1240, y: 625, r: 13 },
+  { id: "t-webdriver", label: "WebDriver 봇 필터링", kind: "trouble", x: 1240, y: 730, r: 13 },
+  { id: "t-buffer", label: "비동기 이벤트 버퍼링", kind: "trouble", x: 1240, y: 835, r: 14 },
 ];
 
-/** 기술 계층 — 개념(허브)과 그 하위 챕터. 간선과 트리가 여기서 유도된다 */
+/**
+ * 프로젝트별 트러블 — 프로젝트 → 트러블 간선과 트러블 틀이 이 하나에서 나온다.
+ * 글을 추가할 때 여기 한 줄만 고치면 간선과 틀이 함께 따라온다.
+ */
+export const projectTroubles = [
+  { project: "withy", troubles: ["t-isolated", "t-focus", "t-sync"] },
+  { project: "petfolio", troubles: ["t-schema", "t-tagged"] },
+  { project: "tickle", troubles: ["t-canvas", "t-webdriver", "t-buffer"] },
+] as const;
+
+/** 틀 이름에 쓸 노드 라벨 — 프로젝트 카드와 같은 이름을 쓴다 */
+function nodeLabel(id: string): string {
+  return fullGraphNodes.find((node) => node.id === id)?.label ?? id;
+}
+
+/**
+ * 기술 계층 — 개념(허브)과 그 하위 챕터. 간선과 트리가 여기서 유도된다.
+ * 한 클러스터의 허브가 다른 클러스터의 챕터일 수 있다(React → Learn → 시작하기처럼 3단).
+ */
 export const theoryClusters = [
-  { hub: "react", chapters: ["render", "state", "hooks"] },
-  { hub: "browser", chapters: ["eventloop", "repaint", "propagation", "isolation"] },
-  { hub: "ts", chapters: ["types", "runtime"] },
-  { hub: "network", chapters: ["realtime", "caching", "cors"] },
+  /* React — 문서가 갈라놓은 두 갈래를 그대로 */
+  { hub: "react", chapters: ["rl", "ra"] },
+
+  /* ## Learn React */
+  { hub: "rl", chapters: ["rl-start", "rl-learn"] },
+  {
+    hub: "rl-start",
+    chapters: ["rl-start-quick", "rl-start-install", "rl-start-setup", "rl-start-compiler"],
+  },
+  { hub: "rl-learn", chapters: ["rl-ui", "rl-interact", "rl-state", "rl-escape"] },
+
+  /* ## API Reference */
+  {
+    hub: "ra",
+    chapters: [
+      "ra-react",
+      "ra-dom",
+      "ra-compiler",
+      "ra-devtools",
+      "ra-eslint",
+      "ra-rules",
+      "ra-rsc",
+      "ra-legacy",
+    ],
+  },
+  { hub: "ra-react", chapters: ["ra-react-hooks", "ra-react-components", "ra-react-apis"] },
+  {
+    hub: "ra-dom",
+    chapters: [
+      "ra-dom-hooks",
+      "ra-dom-components",
+      "ra-dom-apis",
+      "ra-dom-client",
+      "ra-dom-server",
+      "ra-dom-static",
+    ],
+  },
+  { hub: "ra-compiler", chapters: ["ra-compiler-config", "ra-compiler-directives"] },
+  { hub: "ra-eslint", chapters: ["ra-eslint-lints"] },
+  { hub: "ra-rules", chapters: ["ra-rules-overview"] },
+  { hub: "ra-rsc", chapters: ["ra-rsc-directives"] },
+  { hub: "ra-legacy", chapters: ["ra-legacy-apis"] },
+  /* javascript.info — 파트 3개 */
+  { hub: "js", chapters: ["js-core", "js-browser", "js-extra"] },
+  {
+    hub: "js-core",
+    chapters: [
+      "js-intro",
+      "js-first-steps",
+      "js-quality",
+      "js-object-basics",
+      "js-data-types",
+      "js-adv-functions",
+      "js-object-props",
+      "js-prototypes",
+      "js-classes",
+      "js-error",
+      "js-async",
+      "js-generators",
+      "js-modules",
+      "js-core-misc",
+    ],
+  },
+  {
+    hub: "js-browser",
+    chapters: [
+      "js-document",
+      "js-events",
+      "js-ui-events",
+      "js-forms",
+      "js-loading",
+      "js-ui-misc",
+    ],
+  },
+  {
+    hub: "js-extra",
+    chapters: [
+      "js-frames",
+      "js-binary",
+      "js-network",
+      "js-storage",
+      "js-animation",
+      "js-webcomponents",
+      "js-regexp",
+    ],
+  },
+
+  /* TypeScript — 핸드북만 페이지까지, 나머지는 섹션 이름만 */
+  {
+    hub: "ts",
+    chapters: [
+      "ts-start",
+      "ts-handbook",
+      "ts-reference",
+      "ts-modules-ref",
+      "ts-tutorials",
+      "ts-whatsnew",
+      "ts-declaration",
+      "ts-js",
+      "ts-config",
+    ],
+  },
+  {
+    hub: "ts-handbook",
+    chapters: [
+      "ts-hb-basics",
+      "ts-hb-everyday",
+      "ts-hb-narrowing",
+      "ts-hb-functions",
+      "ts-hb-objects",
+      "ts-hb-manipulation",
+      "ts-hb-classes",
+      "ts-hb-modules",
+    ],
+  },
+  {
+    hub: "ts-hb-manipulation",
+    chapters: [
+      "ts-tm-creating",
+      "ts-tm-generics",
+      "ts-tm-keyof",
+      "ts-tm-typeof",
+      "ts-tm-indexed",
+      "ts-tm-conditional",
+      "ts-tm-mapped",
+      "ts-tm-template",
+    ],
+  },
+  {
+    hub: "ts-start",
+    chapters: [
+      "ts-start-new",
+      "ts-start-js",
+      "ts-start-oop",
+      "ts-start-fp",
+      "ts-start-tooling",
+    ],
+  },
+  {
+    hub: "ts-reference",
+    chapters: [
+      "ts-ref-utility",
+      "ts-ref-cheat",
+      "ts-ref-decorators",
+      "ts-ref-merging",
+      "ts-ref-enums",
+      "ts-ref-iterators",
+      "ts-ref-jsx",
+      "ts-ref-mixins",
+      "ts-ref-namespaces",
+      "ts-ref-ns-modules",
+      "ts-ref-symbols",
+      "ts-ref-triple",
+      "ts-ref-compat",
+      "ts-ref-inference",
+      "ts-ref-vardecl",
+    ],
+  },
+  {
+    hub: "ts-modules-ref",
+    chapters: [
+      "ts-mr-intro",
+      "ts-mr-theory",
+      "ts-mr-guides",
+      "ts-mr-reference",
+      "ts-mr-appendices",
+    ],
+  },
+  { hub: "ts-mr-guides", chapters: ["ts-mr-options"] },
+  { hub: "ts-mr-appendices", chapters: ["ts-mr-esm-cjs"] },
+  {
+    hub: "ts-tutorials",
+    chapters: ["ts-tut-aspnet", "ts-tut-gulp", "ts-tut-dom", "ts-tut-migrate", "ts-tut-babel"],
+  },
+  {
+    hub: "ts-declaration",
+    chapters: [
+      "ts-dcl-intro",
+      "ts-dcl-reference",
+      "ts-dcl-structures",
+      "ts-dcl-templates",
+      "ts-dcl-dos",
+      "ts-dcl-deep",
+      "ts-dcl-publish",
+      "ts-dcl-consume",
+    ],
+  },
+  {
+    hub: "ts-dcl-templates",
+    chapters: [
+      "ts-dcl-t-modules",
+      "ts-dcl-t-plugin",
+      "ts-dcl-t-class",
+      "ts-dcl-t-function",
+      "ts-dcl-t-global",
+      "ts-dcl-t-globalmod",
+    ],
+  },
+  {
+    hub: "ts-js",
+    chapters: ["ts-js-projects", "ts-js-checking", "ts-js-jsdoc", "ts-js-dts"],
+  },
+  {
+    hub: "ts-config",
+    chapters: [
+      "ts-cfg-tsconfig",
+      "ts-cfg-msbuild",
+      "ts-cfg-tsconfig-ref",
+      "ts-cfg-cli",
+      "ts-cfg-references",
+      "ts-cfg-buildtools",
+      "ts-cfg-watch",
+      "ts-cfg-nightly",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -93,37 +474,55 @@ export const fullGraphEdges: GraphEdgeData[] = [
 
   // 나 ⇢ 기술 개념 노드 (점선: 이 기술들을 공부함)
   { from: "me", to: "react", kind: "cross" },
-  { from: "me", to: "browser", kind: "cross" },
+  { from: "me", to: "js", kind: "cross" },
   { from: "me", to: "ts", kind: "cross" },
-  { from: "me", to: "network", kind: "cross" },
 
   // 개념 → 챕터 (계층: 하위 내용)
   ...theoryClusters.flatMap((cluster) =>
     cluster.chapters.map((chapter) => ({ from: cluster.hub, to: chapter })),
   ),
 
-  // 프로젝트 → 트러블
-  { from: "withy", to: "t-isolated" },
-  { from: "withy", to: "t-sync" },
-  { from: "petfolio", to: "t-schema" },
-  { from: "petfolio", to: "t-tagged" },
-  { from: "tickle", to: "t-canvas" },
-  { from: "tickle", to: "t-webdriver" },
-  { from: "tickle", to: "t-buffer" },
+  // 프로젝트 → 트러블 (틀과 같은 목록에서 나온다)
+  ...projectTroubles.flatMap(({ project, troubles }) =>
+    troubles.map((trouble) => ({ from: project, to: trouble })),
+  ),
 
-  // 기술 → 트러블 (다리): 프로젝트와 기술이 만나 트러블이 된다
-  { from: "isolation", to: "t-isolated", kind: "bridge" },
-  { from: "propagation", to: "t-isolated", kind: "bridge" },
-  { from: "realtime", to: "t-sync", kind: "bridge" },
-  { from: "runtime", to: "t-schema", kind: "bridge" },
-  { from: "types", to: "t-schema", kind: "bridge" },
-  { from: "types", to: "t-tagged", kind: "bridge" },
-  { from: "repaint", to: "t-canvas", kind: "bridge" },
-  { from: "browser", to: "t-webdriver", kind: "bridge" },
-  { from: "eventloop", to: "t-buffer", kind: "bridge" },
-  { from: "render", to: "t-buffer", kind: "bridge" },
-  { from: "hooks", to: "t-buffer", kind: "bridge" },
+  /* 기술 → 트러블 (다리): 프로젝트와 기술이 만나 트러블이 된다.
+     기술 쪽 끝은 전부 공식 문서 목차의 자리를 가리킨다 —
+     그 개념을 어디서 읽었는지가 그대로 드러나도록. */
+  { from: "js-frames", to: "t-isolated", kind: "bridge" },
+  { from: "js-events", to: "t-focus", kind: "bridge" },
+  { from: "js-ui-events", to: "t-focus", kind: "bridge" },
+  { from: "js-network", to: "t-sync", kind: "bridge" },
+  { from: "rl-escape", to: "t-sync", kind: "bridge" },
+  { from: "ts-hb-narrowing", to: "t-schema", kind: "bridge" },
+  { from: "ts-hb-everyday", to: "t-schema", kind: "bridge" },
+  { from: "ts-hb-narrowing", to: "t-tagged", kind: "bridge" },
+  { from: "ts-tm-creating", to: "t-tagged", kind: "bridge" },
+  { from: "js-document", to: "t-canvas", kind: "bridge" },
+  { from: "js-document", to: "t-webdriver", kind: "bridge" },
+  { from: "js-ui-misc", to: "t-buffer", kind: "bridge" },
+  { from: "rl-interact", to: "t-buffer", kind: "bridge" },
+  { from: "rl-escape", to: "t-buffer", kind: "bridge" },
 ];
+
+/**
+ * 레이아웃용 덩어리 — 클러스터를 훑으며 아직 어느 덩어리에도 안 들어간 노드만 담는다.
+ * 3단 구조에서 중간 허브(Learn 등)가 두 덩어리에 겹쳐 들어가는 것을 막는다.
+ */
+function dedupeClusters() {
+  const taken = new Set<string>();
+  return theoryClusters
+    .map((cluster) => {
+      const members = [cluster.hub, ...cluster.chapters].filter((id) => {
+        if (taken.has(id)) return false;
+        taken.add(id);
+        return true;
+      });
+      return { id: `grp-${cluster.hub}`, members };
+    })
+    .filter((group) => group.members.length > 0);
+}
 
 /** 클러스터 백드랍 — 멤버 카드들의 위치에서 프레임이 계산된다 */
 export const fullGraphBackdrops: GraphBackdropData[] = [
@@ -133,29 +532,26 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     tint: "project",
     members: ["withy", "petfolio", "tickle"],
   },
-  {
-    id: "bd-troubles",
-    label: "트러블슈팅",
-    tint: "trouble",
-    members: [
-      "t-isolated",
-      "t-sync",
-      "t-schema",
-      "t-tagged",
-      "t-canvas",
-      "t-webdriver",
-      "t-buffer",
-    ],
-  },
+  /* 트러블은 프로젝트별로 틀을 나눈다 — 어느 프로젝트에서 나온 글인지가
+     간선뿐 아니라 틀로도 보이게. 한 노드는 최대 한 틀에만 들어간다. */
+  ...projectTroubles.map(
+    ({ project, troubles }): GraphBackdropData => ({
+      id: `bd-troubles-${project}`,
+      label: `${nodeLabel(project)} 트러블슈팅`,
+      tint: "trouble",
+      members: [...troubles],
+    }),
+  ),
   {
     id: "bd-tech",
     label: "기술",
     tint: "theory",
-    /* 정렬 시 개념+챕터가 한 덩어리로 움직인다 */
-    clusters: theoryClusters.map((cluster) => ({
-      id: `grp-${cluster.hub}`,
-      members: [cluster.hub, ...cluster.chapters],
-    })),
-    members: theoryClusters.flatMap((cluster) => [cluster.hub, ...cluster.chapters]),
+    /* 정렬 시 개념+챕터가 한 덩어리로 움직인다.
+       허브가 다른 클러스터의 챕터이기도 하므로(3단 구조) 한 번 나온 id는 건너뛴다 —
+       한 노드는 최대 한 덩어리·한 틀에만 들어간다. */
+    clusters: dedupeClusters(),
+    members: [
+      ...new Set(theoryClusters.flatMap((cluster) => [cluster.hub, ...cluster.chapters])),
+    ],
   },
 ];
