@@ -1,17 +1,19 @@
 import { getPost } from "./posts";
 import { getProject } from "./projects";
+import { getTheory } from "./theories";
 
 /** 노드 하나가 열리면 무엇이 되는가 */
-export type NodeOpenKind = "intro" | "project" | "post";
+export type NodeOpenKind = "intro" | "project" | "post" | "theory";
 
 /**
  * 그래프에서 눌렀든 시트의 포트에서 눌렀든 이 판단 하나를 쓴다.
- * null이면 열 것이 없는 노드(이론)라 이동·확대까지만 하고 멈춘다.
+ * null이면 아직 내용이 없는 노드라 이동·확대까지만 하고 멈춘다.
  */
 export function nodeOpenKind(nodeId: string): NodeOpenKind | null {
   if (nodeId === "me") return "intro";
   if (getProject(nodeId)) return "project";
   if (getPost(nodeId)) return "post";
+  if (getTheory(nodeId)) return "theory";
   return null;
 }
 
@@ -22,6 +24,8 @@ export function nodeDestination(nodeId: string): string | null {
       return `/projects/${nodeId}`;
     case "post":
       return `/posts/${nodeId}`;
+    case "theory":
+      return `/theories/${nodeId}`;
     /* 소개는 그래프 위에서 시트로 열리므로 옮겨 갈 주소가 없다 */
     default:
       return null;

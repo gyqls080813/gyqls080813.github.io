@@ -9,12 +9,14 @@ import KnowledgeGraph from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
 import PostArticle from "./post/PostArticle";
 import ProjectArticle from "./project/ProjectArticle";
+import TheoryArticle from "./theory/TheoryArticle";
 import type { NodeKind } from "./graph/types";
 import postStyles from "./post/PostView.module.css";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
 import { getPost } from "@/lib/posts";
 import { getProject } from "@/lib/projects";
+import { getTheory } from "@/lib/theories";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./GraphHome.module.css";
 
@@ -34,7 +36,7 @@ interface Rect {
 
 interface Expanding {
   /** 글 노드는 글 페이지로, 프로젝트 노드는 프로젝트 페이지로, 민엽 노드는 소개 시트로 */
-  kind: "post" | "project" | "intro";
+  kind: "post" | "project" | "intro" | "theory";
   nodeId: string;
   from: Rect;
   to: Rect;
@@ -317,6 +319,8 @@ export default function GraphHome() {
                   <article className={postStyles.article}>
                     {expanding.kind === "project" ? (
                       <ProjectArticle project={getProject(expanding.nodeId)!} />
+                    ) : expanding.kind === "theory" ? (
+                      <TheoryArticle theory={getTheory(expanding.nodeId)!} />
                     ) : (
                       <PostArticle post={getPost(expanding.nodeId)!} />
                     )}

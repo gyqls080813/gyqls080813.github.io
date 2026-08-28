@@ -1,0 +1,74 @@
+/* 폭·여백은 PostView.module.css의 .articleInner가 맡는다 — 여기는 레이아웃 컨테이너만.
+   텍스트 박스·코드·노드 카드는 components/content 로 옮겨져 있다. */
+.title {
+  margin: 0 0 10px;
+  font-size: var(--fs-sheet-title);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-strong);
+}
+
+.tagline {
+  margin: 0 0 26px;
+  font-size: var(--fs-sheet-lead);
+  line-height: 1.75;
+  color: #a9b1c0;
+}
+
+/* 본문 <TextBlock> 묶음 — 코드가 붙는 블록은 아래 .withCode가 간격을 맡는다 */
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 30px;
+}
+
+/* 텍스트 박스와 그 아래 코드 한 조각을 한 덩어리로 묶는다 */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 이 개념이 나온 글 <NodeCard> 묶음 */
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 참고한 곳 — 외부 문서 링크 */
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.source {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.source:hover {
+  color: var(--theory-text);
+  border-color: var(--theory);
+}
+
+.sourceArrow {
+  font-size: 10px;
+  opacity: 0.7;
+}
