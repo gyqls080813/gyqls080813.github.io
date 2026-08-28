@@ -6,6 +6,7 @@ import KindIcon from "../graph/KindIcon";
 import { fullGraphNodes, theoryClusters } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
 import { nodeHref } from "@/lib/nodeTarget";
+import { getTheory } from "@/lib/theories";
 import styles from "./NodeTree.module.css";
 
 function nodeLabel(id: string): string {
@@ -135,14 +136,34 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
                     const references = posts.filter((post) =>
                       post.theories.some((theory) => theory.id === memberId),
                     ).length;
-                    return (
-                      <div key={memberId} className={styles.row}>
+                    const inner = (
+                      <>
                         <span className={`${styles.dot} ${styles.dotTheory}`} />
                         <span className={styles.rowLabel}>{nodeLabel(memberId)}</span>
                         {references > 0 && (
                           <span className={styles.count}>글 {references}</span>
                         )}
-                      </div>
+                      </>
+                    );
+                    /* 내용이 있는 개념만 링크가 된다 — 나머지는 아직 이름뿐이다 */
+                    if (!getTheory(memberId)) {
+                      return (
+                        <div key={memberId} className={styles.row}>
+                          {inner}
+                        </div>
+                      );
+                    }
+                    return (
+                      <Link
+                        key={memberId}
+                        href={nodeHref(memberId)}
+                        className={`${styles.row} ${
+                          memberId === activePostId ? styles.active : ""
+                        }`}
+                        aria-current={memberId === activePostId ? "page" : undefined}
+                      >
+                        {inner}
+                      </Link>
                     );
                   })}
                 </div>

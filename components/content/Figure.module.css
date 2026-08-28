@@ -18,6 +18,14 @@
   }
 }
 
+/* 가로로 넓은 화면 캡처 — 잘라내지 않고 전부 보여준다.
+   .img보다 선택자가 하나 더 붙으므로 위 컨테이너 규칙도 이긴다 */
+.img.wide {
+  max-height: none;
+  object-fit: contain;
+  width: 100%;
+}
+
 .figure {
   margin: 0;
   display: flex;

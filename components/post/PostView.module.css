@@ -281,6 +281,27 @@
   text-overflow: ellipsis;
 }
 
+.crumbTheory {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(95, 196, 214, 0.1);
+  border: 1px solid rgba(95, 196, 214, 0.35);
+  color: var(--theory-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.crumbDotTheory {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  border: 1.5px solid var(--theory);
+  flex-shrink: 0;
+}
+
 .crumbDotProject {
   width: 7px;
   height: 7px;

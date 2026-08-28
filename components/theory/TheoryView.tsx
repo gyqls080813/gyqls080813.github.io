@@ -3,30 +3,32 @@ import TopBar from "../TopBar";
 import { nodeHref } from "@/lib/nodeTarget";
 import KnowledgeGraph from "../graph/flow/KnowledgeGraph";
 import NodeTree from "../post/NodeTree";
-import ProjectArticle from "./ProjectArticle";
+import TheoryArticle from "./TheoryArticle";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import type { Project } from "@/lib/projects";
+import type { Theory } from "@/lib/theories";
 import { posts } from "@/lib/posts";
 import styles from "../post/PostView.module.css";
 
-function Breadcrumb({ project }: { project: Project }) {
+function Breadcrumb({ theory }: { theory: Theory }) {
   return (
     <div className={styles.breadcrumb}>
-      <span className={styles.crumbProject}>
-        <span className={styles.crumbDotProject} />
-        {project.name}
+      <span className={styles.crumbTheory}>
+        <span className={styles.crumbDotTheory} />
+        {theory.name}
       </span>
     </div>
   );
 }
 
-export default function ProjectView({ project }: { project: Project }) {
-  const troubles = posts.filter((post) => post.project === project.id);
+export default function TheoryView({ theory }: { theory: Theory }) {
+  const related = posts.filter((post) =>
+    post.theories.some((item) => item.id === theory.id),
+  );
 
   return (
     <div className={styles.screen}>
-      <TopBar breadcrumb={<Breadcrumb project={project} />} />
+      <TopBar breadcrumb={<Breadcrumb theory={theory} />} />
 
       <div className={styles.stage}>
         {/* 뒤에 남는 전체 그래프 — 시트 양옆으로 노드와 선이 비친다 */}
@@ -35,34 +37,20 @@ export default function ProjectView({ project }: { project: Project }) {
             nodes={annotatedGraphNodes}
             edges={fullGraphEdges}
             backdrops={fullGraphBackdrops}
-            focusNodeId={project.id}
+            focusNodeId={theory.id}
             showControls={false}
           />
         </div>
         <Link href="/" className={styles.scrim} aria-label="그래프로 돌아가기" />
 
-        {/* 왼쪽은 이 프로젝트를 만든 사람, 오른쪽은 여기서 나온 트러블 슈팅 —
-            그래프에서 이 노드에 들어오고 나가는 선과 같은 자리다 */}
-        <div className={styles.portsLeft}>
-          <Link
-            href={nodeHref("me")}
-            className={styles.port}
-            aria-label="만든 사람: 민엽"
-          >
-            <span className={`${styles.portDot} ${styles.portDotProject}`} />
-            <span className={styles.portPopover}>
-              <span className={styles.popRole}>만든 사람</span>
-              <span className={styles.popName}>민엽</span>
-            </span>
-          </Link>
-        </div>
+        {/* 오른쪽은 이 개념이 쓰인 글들 — 그래프에서 이 노드를 떠나는 다리와 같은 자리 */}
         <div className={styles.portsRight}>
-          {troubles.map((post) => (
+          {related.map((post) => (
             <Link
               key={post.id}
               href={nodeHref(post.id)}
               className={styles.port}
-              aria-label={`트러블 슈팅: ${post.title}`}
+              aria-label={`이 개념이 나온 글: ${post.title}`}
             >
               <span className={`${styles.portDot} ${styles.portDotTrouble}`} />
               <span className={styles.portPopover}>
@@ -75,11 +63,11 @@ export default function ProjectView({ project }: { project: Project }) {
 
         <div className={styles.sheet}>
           <aside className={styles.treePanel}>
-            <NodeTree activePostId={project.id} />
+            <NodeTree activePostId={theory.id} />
           </aside>
 
           <article className={styles.article}>
-            <ProjectArticle project={project} />
+            <TheoryArticle theory={theory} />
           </article>
         </div>
       </div>
