@@ -38,7 +38,7 @@ export default function PostListPage() {
                     </span>
                   ))}
                   <span className={styles.date}>
-                    {post.date} · {post.readMinutes}분
+                    {post.date}, {post.readMinutes}분
                   </span>
                 </span>
               </Link>

@@ -131,6 +131,10 @@
   border-color: var(--trouble);
 }
 
+.portDotIdea {
+  border-color: var(--idea);
+}
+
 .port:hover .portDot {
   background: var(--surface-node-hover);
 }
@@ -332,6 +336,32 @@
   color: var(--theory-text);
   font-weight: 500;
   white-space: nowrap;
+}
+
+.crumbIdea {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(var(--idea-rgb), 0.1);
+  border: 1px solid rgba(var(--idea-rgb), 0.35);
+  color: var(--idea-text);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 길의 마지막 칸 = 지금 보고 있는 것. 트러블 머리말의 끝 칸과 같은 굵기다 */
+.crumbHere {
+  font-weight: 600;
+}
+
+.crumbDotIdea {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  border: 1.5px solid var(--idea);
+  flex-shrink: 0;
 }
 
 .crumbMe {

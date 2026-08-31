@@ -60,7 +60,7 @@ export default function PostView({ post }: { post: Post }) {
           ports={[
             {
               id: post.project,
-              role: "프로젝트 · 발생한 곳",
+              role: "프로젝트 / 발생한 곳",
               name: nodeLabel(post.project),
               kind: "project",
             },
@@ -71,7 +71,7 @@ export default function PostView({ post }: { post: Post }) {
           ports={post.theories.map(
             (theory): Port => ({
               id: theory.id,
-              role: `이론 · ${theory.role}`,
+              role: `이론 / ${theory.role}`,
               name: nodeLabel(theory.id),
               kind: "theory",
             }),

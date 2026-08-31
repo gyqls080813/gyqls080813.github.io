@@ -23,7 +23,7 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
           ...node,
           clickable: true,
           dateLabel: post.date,
-          meta: `${post.readMinutes}분 · 섹션 ${post.sections.length}`,
+          meta: `${post.readMinutes}분, 섹션 ${post.sections.length}`,
         }
       : node;
   }

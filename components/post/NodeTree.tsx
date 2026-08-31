@@ -4,8 +4,10 @@ import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
-import { fullGraphNodes, ideaClusters, theoryClusters } from "@/lib/graphData";
+import { fullGraphNodes } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
+/* 계층은 머리말과 같은 지도를 쓴다 — 둘이 각자 계산하면 다른 깊이를 말하게 된다 */
+import { chaptersOf, parentOf } from "@/lib/nodePath";
 import { nodeDestination, nodeHref } from "@/lib/nodeTarget";
 import { getTheory } from "@/lib/theories";
 import styles from "./NodeTree.module.css";
@@ -40,17 +42,6 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/* 개념 계층 — 그래프의 허브 → 챕터 관계가 그대로 트리가 된다.
-   이론과 생각이 같은 문법을 쓰므로 한 벌의 지도로 본다 */
-const allClusters = [...theoryClusters, ...ideaClusters];
-const chaptersOf = new Map<string, readonly string[]>(
-  allClusters.map((cluster) => [cluster.hub, cluster.chapters]),
-);
-const parentOf = new Map<string, string>(
-  allClusters.flatMap((cluster) =>
-    cluster.chapters.map((chapter) => [chapter, cluster.hub] as const),
-  ),
-);
 /** 누구의 챕터도 아닌 노드 — 그 갈래의 뿌리만 최상위에 선다.
     아래가 없는 뿌리(철학)도 있으므로 클러스터가 아니라 노드에서 찾는다 */
 const rootsOf = (kind: NodeKind) =>
@@ -242,16 +233,18 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
         })}
       </div>
 
+      {/* 프로젝트 → 이론 → 생각. 만든 것에서 출발해 그 근거가 된 것으로,
+          마지막이 그 위에서 내가 정한 것 — 그래프의 갈래 순서와 같다 */}
       <div className={styles.section}>
-        <div className={styles.sectionLabel}>생각</div>
-        {ideaRoots.map((root) => (
+        <div className={styles.sectionLabel}>이론</div>
+        {theoryRoots.map((root) => (
           <TheoryRow key={root} id={root} />
         ))}
       </div>
 
       <div className={styles.section}>
-        <div className={styles.sectionLabel}>이론</div>
-        {theoryRoots.map((root) => (
+        <div className={styles.sectionLabel}>생각</div>
+        {ideaRoots.map((root) => (
           <TheoryRow key={root} id={root} />
         ))}
       </div>

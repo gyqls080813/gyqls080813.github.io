@@ -99,7 +99,7 @@ export default function TheoryArticle({ theory }: { theory: Theory }) {
                 key={post.id}
                 kind="trouble"
                 title={post.title}
-                meta={`${post.date} · ${post.readMinutes}분`}
+                meta={`${post.date}, ${post.readMinutes}분`}
                 href={nodeHref(post.id)}
               />
             ))}

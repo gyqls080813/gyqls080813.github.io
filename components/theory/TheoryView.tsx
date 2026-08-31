@@ -1,5 +1,7 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import TopBar from "../TopBar";
+import { nodePath } from "@/lib/nodePath";
 import { nodeHref } from "@/lib/nodeTarget";
 import { SheetNav, SheetShell } from "../content";
 import { SheetPorts, type Port } from "../content";
@@ -39,13 +41,43 @@ function portsOf(theoryId: string, side: "in" | "out"): Port[] {
   });
 }
 
+/**
+ * 뿌리부터 지금까지의 길 — 트러블 글이 "프로젝트 › 글"을 띄우는 것과 같다.
+ *
+ * 이름 하나만 띄우면 그래프의 어느 가지에서 왔는지가 사라진다. 트리를 닫아
+ * 두고 들어온 사람에게는 이 줄이 위치를 아는 유일한 단서다.
+ */
 function Breadcrumb({ theory }: { theory: Theory }) {
+  const path = nodePath(theory.id);
+
   return (
     <div className={styles.breadcrumb}>
-      <span className={styles.crumbTheory}>
-        <span className={styles.crumbDotTheory} />
-        {theory.name}
-      </span>
+      {path.map((node, index) => {
+        const idea = node.kind === "idea";
+        const here = index === path.length - 1;
+        return (
+          <Fragment key={node.id}>
+            {index > 0 && (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path
+                  d="M9 6 L15 12 L9 18"
+                  stroke="var(--border-node-strong)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            )}
+            <span
+              className={`${idea ? styles.crumbIdea : styles.crumbTheory} ${
+                here ? styles.crumbHere : ""
+              }`}
+            >
+              <span className={idea ? styles.crumbDotIdea : styles.crumbDotTheory} />
+              {node.label}
+            </span>
+          </Fragment>
+        );
+      })}
     </div>
   );
 }
