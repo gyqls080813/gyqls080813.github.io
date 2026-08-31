@@ -5,7 +5,9 @@ import { useRouter } from "next/navigation";
 import TopBar, { type GraphFilter } from "./TopBar";
 import type { ReactFlowInstance } from "@xyflow/react";
 import IntroSheet from "./IntroSheet";
-import KnowledgeGraph from "./graph/flow/KnowledgeGraph";
+import KnowledgeGraph, {
+  type GraphHandle,
+} from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
 import PostArticle from "./post/PostArticle";
 import ProjectArticle from "./project/ProjectArticle";
@@ -18,6 +20,7 @@ import { getPost } from "@/lib/posts";
 import { getProject } from "@/lib/projects";
 import { getTheory } from "@/lib/theories";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
+import { frameDescendants } from "./graph/flow/toFlow";
 import styles from "./GraphHome.module.css";
 
 const VISIBLE_KINDS: Record<GraphFilter, NodeKind[]> = {
@@ -69,6 +72,7 @@ export default function GraphHome() {
   const [introOpen, setIntroOpen] = useState(false);
   const stageRef = useRef<HTMLElement>(null);
   const flowRef = useRef<ReactFlowInstance | null>(null);
+  const graphRef = useRef<GraphHandle | null>(null);
 
   /* 다른 페이지의 포트에서 넘어올 때 열어야 할 노드 (`/?node=me`).
      그래프 인스턴스가 준비된 뒤에야 좌표를 알 수 있어 여기 담아 두고 onReady에서 연다 */
@@ -112,13 +116,17 @@ export default function GraphHome() {
     }
   };
 
-  /* 소개의 "기술 블로그로 가기" → 시트를 닫고 이론 영역 전체를 화면에 */
-  const focusTheory = () => {
+  /* 소개의 기술 행 → 프로젝트 행과 똑같이 그 노드로 가서 열린다.
+     다른 점은 하나뿐이다 — 갈래가 접힌 채로 시작하므로 먼저 펴야 그 노드가
+     화면에 있다. 접힘은 그래프가 쥐고 있으니 펴는 일만 그래프에 맡긴다. */
+  const focusTheory = (rootId: string) => {
     closeIntro();
-    const theoryIds = annotatedGraphNodes
-      .filter((node) => node.kind === "theory")
-      .map((node) => ({ id: node.id }));
-    flowRef.current?.fitView({ nodes: theoryIds, padding: 0.18, duration: 650 });
+    const settling = graphRef.current?.reveal(rootId) ?? 0;
+    if (settling === 0) {
+      openNode(rootId);
+      return;
+    }
+    window.setTimeout(() => openNode(rootId), settling);
   };
 
   /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 이동한 뒤 열린다 */
@@ -131,8 +139,13 @@ export default function GraphHome() {
     const kinds = new Set(VISIBLE_KINDS[filter]);
     const nodes = annotatedGraphNodes.filter((node) => kinds.has(node.kind));
     const visibleIds = new Set(nodes.map((node) => node.id));
+    /* 틀 안에 틀이 있으면(이론 → React·JS·TS) 멤버가 노드 id가 아니라
+       틀 id다 — 안쪽까지 펼쳐 보고 하나라도 보이면 그 틀도 남긴다 */
+    const byFrame = new Map(fullGraphBackdrops.map((frame) => [frame.id, frame]));
     const backdrops = fullGraphBackdrops.filter((backdrop) =>
-      backdrop.members.some((member) => visibleIds.has(member)),
+      frameDescendants(backdrop, byFrame).some((member) =>
+        visibleIds.has(member),
+      ),
     );
     const edges = fullGraphEdges.filter(
       (edge) => visibleIds.has(edge.from) && visibleIds.has(edge.to),
@@ -262,8 +275,9 @@ export default function GraphHome() {
           backdrops={backdrops}
           hoverHighlight
           onNodeClick={handleNodeClick}
-          onReady={(instance) => {
+          onReady={(instance, graph) => {
             flowRef.current = instance;
+            graphRef.current = graph;
             const target = pendingNodeRef.current;
             if (!target) return;
             pendingNodeRef.current = null;
