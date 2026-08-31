@@ -1,35 +1,87 @@
-/* asset-pipeline BackdropNode: 노드 뒤에 깔리는 반투명 틀 + 타이틀 바.
-   몸통은 클릭을 통과시켜 팬·선택을 막지 않는다. */
+/* 노드 뒤에 깔리는 틀. 몸통은 클릭을 통과시켜 팬·선택을 막지 않는다.
+   노드는 "물건", 틀은 "자리" — 그렇게 보이도록 둘의 문법을 다르게 뒀다.
+   물건은 채워진 카드에 실선, 자리는 옅은 바탕에 점선. */
 .backdrop {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-node-strong);
-  border-radius: 8px;
+  background: rgba(var(--tint), 0.04);
+  border: 1px dashed rgba(var(--tint), 0.32);
+  border-radius: 12px;
   pointer-events: none;
 }
 
+/* 갈래 색을 한 곳에서 정한다 — 아래 규칙은 전부 이 값을 쓴다 */
 .theory {
-  background: rgba(95, 196, 214, 0.055);
+  --tint: 95, 196, 214;
 }
 
 .project {
-  background: rgba(227, 171, 92, 0.055);
+  --tint: 227, 171, 92;
 }
 
 .trouble {
-  background: rgba(232, 139, 125, 0.045);
+  --tint: 232, 139, 125;
 }
 
+/* --me: #9575cd */
+.me {
+  --tint: 149, 117, 205;
+}
+
+/**
+ * 접힌 틀 — 닫힌 묶음.
+ *
+ * 노드 카드와 같은 모양이면 "이 안에 여럿이 들어 있다"가 안 읽힌다.
+ * 아래로 두 겹이 비쭉 나오게 해서 종이 묶음처럼 보이게 했다.
+ * 그림자로 그리므로 요소를 더 두지 않는다 — 틀은 pointer-events가 없어
+ * 자식을 늘리면 쌓임 순서만 복잡해진다.
+ */
+.collapsed {
+  /* 노드는 중립 회색, 틀은 갈래 색이 옅게 배어 있다 */
+  background:
+    linear-gradient(rgba(var(--tint), 0.11), rgba(var(--tint), 0.05)),
+    var(--surface-node);
+  border-style: solid;
+  border-color: rgba(var(--tint), 0.45);
+  box-shadow:
+    0 4px 0 -1px var(--bg),
+    0 4px 0 0 rgba(var(--tint), 0.3),
+    0 8px 0 -2px var(--bg),
+    0 8px 0 -1px rgba(var(--tint), 0.18),
+    0 10px 22px rgba(0, 0, 0, 0.45);
+}
+
+.collapsed .title {
+  border-bottom: none;
+  background: none;
+}
+
+/* 접힌 틀의 포트 — 안쪽 노드가 숨은 동안 선을 대신 받는다.
+   노드 카드의 포트와 같은 모양이라야 같은 것으로 읽힌다 */
+.port {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface-inset);
+  border-width: 2px;
+  border-style: solid;
+  pointer-events: none;
+}
+
+/* 제목 줄 — 틀을 잡는 손잡이. 옅은 띠를 둬 몸통과 구분한다 */
 .title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   height: 28px;
-  padding: 0 10px;
-  border-bottom: 1px solid var(--border-subtle);
-  /* 몸통은 클릭을 통과시키지만 타이틀 바는 잡을 수 있다 */
+  padding: 0 8px;
+  background: rgba(var(--tint), 0.07);
+  border-bottom: 1px solid rgba(var(--tint), 0.16);
+  border-radius: 11px 11px 0 0;
+  /* 몸통은 클릭을 통과시키지만 제목 줄은 잡을 수 있다 */
   pointer-events: auto;
   cursor: grab;
 }
@@ -38,20 +90,60 @@
   cursor: grabbing;
 }
 
+/* 접기 화살표 — 펼쳐지면 아래를 가리킨다 */
+.toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: -2px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: rgba(var(--tint), 0.85);
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.toggle svg {
+  transition: transform 0.18s ease;
+}
+
+.toggle[aria-expanded="true"] svg {
+  transform: rotate(90deg);
+}
+
+.toggle:hover {
+  color: var(--text-strong);
+  background: rgba(var(--tint), 0.18);
+}
+
 .label {
   flex: 1;
   min-width: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* 개수 — 알약으로 감싸 제목과 다른 층위임을 보인다 */
 .count {
   flex-shrink: 0;
-  color: var(--muted);
-  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: rgba(var(--tint), 0.12);
+  color: rgba(var(--tint), 0.95);
+  font-size: 9.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }

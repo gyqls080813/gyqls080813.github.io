@@ -472,10 +472,10 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "petfolio" },
   { from: "me", to: "tickle" },
 
-  // 나 ⇢ 기술 개념 노드 (점선: 이 기술들을 공부함)
-  { from: "me", to: "react", kind: "cross" },
-  { from: "me", to: "js", kind: "cross" },
-  { from: "me", to: "ts", kind: "cross" },
+  // 나 → 기술 갈래의 뿌리
+  { from: "me", to: "react" },
+  { from: "me", to: "js" },
+  { from: "me", to: "ts" },
 
   // 개념 → 챕터 (계층: 하위 내용)
   ...theoryClusters.flatMap((cluster) =>
@@ -490,37 +490,68 @@ export const fullGraphEdges: GraphEdgeData[] = [
   /* 기술 → 트러블 (다리): 프로젝트와 기술이 만나 트러블이 된다.
      기술 쪽 끝은 전부 공식 문서 목차의 자리를 가리킨다 —
      그 개념을 어디서 읽었는지가 그대로 드러나도록. */
-  { from: "js-frames", to: "t-isolated", kind: "bridge" },
-  { from: "js-events", to: "t-focus", kind: "bridge" },
-  { from: "js-ui-events", to: "t-focus", kind: "bridge" },
-  { from: "js-network", to: "t-sync", kind: "bridge" },
-  { from: "rl-escape", to: "t-sync", kind: "bridge" },
-  { from: "ts-hb-narrowing", to: "t-schema", kind: "bridge" },
-  { from: "ts-hb-everyday", to: "t-schema", kind: "bridge" },
-  { from: "ts-hb-narrowing", to: "t-tagged", kind: "bridge" },
-  { from: "ts-tm-creating", to: "t-tagged", kind: "bridge" },
-  { from: "js-document", to: "t-canvas", kind: "bridge" },
-  { from: "js-document", to: "t-webdriver", kind: "bridge" },
-  { from: "js-ui-misc", to: "t-buffer", kind: "bridge" },
-  { from: "rl-interact", to: "t-buffer", kind: "bridge" },
-  { from: "rl-escape", to: "t-buffer", kind: "bridge" },
+  { from: "js-frames", to: "t-isolated" },
+  { from: "js-events", to: "t-focus" },
+  { from: "js-ui-events", to: "t-focus" },
+  { from: "js-network", to: "t-sync" },
+  { from: "rl-escape", to: "t-sync" },
+  { from: "ts-hb-narrowing", to: "t-schema" },
+  { from: "ts-hb-everyday", to: "t-schema" },
+  { from: "ts-hb-narrowing", to: "t-tagged" },
+  { from: "ts-tm-creating", to: "t-tagged" },
+  { from: "js-document", to: "t-canvas" },
+  { from: "js-document", to: "t-webdriver" },
+  { from: "js-ui-misc", to: "t-buffer" },
+  { from: "rl-interact", to: "t-buffer" },
+  { from: "rl-escape", to: "t-buffer" },
 ];
 
 /**
- * 레이아웃용 덩어리 — 클러스터를 훑으며 아직 어느 덩어리에도 안 들어간 노드만 담는다.
- * 3단 구조에서 중간 허브(Learn 등)가 두 덩어리에 겹쳐 들어가는 것을 막는다.
+ * 기술 갈래의 뿌리 — 틀 하나가 여기서 나온다.
+ *
+ * 셋 다 접은 채로 연다. 목차가 통째로 들어와 이론 노드만 150개가 넘는데,
+ * 처음 화면이 그 목록이면 정작 보여야 할 흐름(민엽 → 프로젝트 → 트러블)이 묻힌다.
+ * 필요한 사람이 펴서 보는 편이 낫다.
  */
-function dedupeClusters() {
+const techRoots = [
+  { root: "react", label: "React", collapsed: true },
+  { root: "js", label: "JavaScript", collapsed: true },
+  { root: "ts", label: "TypeScript", collapsed: true },
+] as const;
+
+const chaptersOf = new Map<string, readonly string[]>(
+  theoryClusters.map((cluster) => [cluster.hub, cluster.chapters]),
+);
+
+/** 이 뿌리에 매달린 노드 전부 (자기 포함). 고리가 있어도 한 번씩만 본다 */
+function techMembers(root: string): string[] {
+  const seen = new Set<string>();
+  const walk = (id: string) => {
+    if (seen.has(id)) return;
+    seen.add(id);
+    for (const child of chaptersOf.get(id) ?? []) walk(child);
+  };
+  walk(root);
+  return [...seen];
+}
+
+/**
+ * 이 뿌리 안의 레이아웃 덩어리 — 허브 하나와 그 직속 챕터가 한 덩어리다.
+ * 중간 허브가 두 덩어리에 겹쳐 들어가지 않도록 한 번 나온 id는 건너뛴다.
+ */
+function subClusters(root: string) {
+  const inside = new Set(techMembers(root));
   const taken = new Set<string>();
   return theoryClusters
-    .map((cluster) => {
-      const members = [cluster.hub, ...cluster.chapters].filter((id) => {
+    .filter((cluster) => inside.has(cluster.hub))
+    .map((cluster) => ({
+      id: `grp-${cluster.hub}`,
+      members: [cluster.hub, ...cluster.chapters].filter((id) => {
         if (taken.has(id)) return false;
         taken.add(id);
         return true;
-      });
-      return { id: `grp-${cluster.hub}`, members };
-    })
+      }),
+    }))
     .filter((group) => group.members.length > 0);
 }
 
@@ -542,16 +573,25 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
       members: [...troubles],
     }),
   ),
+  /* 갈래 셋을 한 번 더 묶는다 — 프로젝트가 한 틀에 담기듯 이론도 한 자리에.
+     틀 안에 틀이 들어가는 유일한 곳이다. */
   {
-    id: "bd-tech",
-    label: "기술",
+    id: "bd-theory",
+    label: "이론",
     tint: "theory",
-    /* 정렬 시 개념+챕터가 한 덩어리로 움직인다.
-       허브가 다른 클러스터의 챕터이기도 하므로(3단 구조) 한 번 나온 id는 건너뛴다 —
-       한 노드는 최대 한 덩어리·한 틀에만 들어간다. */
-    clusters: dedupeClusters(),
-    members: [
-      ...new Set(theoryClusters.flatMap((cluster) => [cluster.hub, ...cluster.chapters])),
-    ],
+    members: techRoots.map(({ root }) => `bd-${root}`),
   },
+  /* 기술은 갈래마다 틀을 따로 둔다 — 문서 목차가 통째로 들어가 하나로는 너무
+     커졌고, 접었다 펴는 단위도 갈래여야 한다. */
+  ...techRoots.map(
+    ({ root, label, collapsed }): GraphBackdropData => ({
+      id: `bd-${root}`,
+      label,
+      tint: "theory",
+      collapsed,
+      /* 정렬 시 개념+챕터가 한 덩어리로 움직인다 */
+      clusters: subClusters(root),
+      members: techMembers(root),
+    }),
+  ),
 ];

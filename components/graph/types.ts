@@ -23,13 +23,19 @@ export type GraphNodeData = {
   clickable?: boolean;
 };
 
-export type EdgeKind = "link" | "bridge" | "cross";
-
 /** 클러스터를 묶는 백드랍 — asset-pipeline의 "단계를 백드랍으로 나눈다" 문법 */
 export type GraphBackdropData = {
   id: string;
   label: string;
   tint: NodeKind;
+  /**
+   * 처음에 접혀 있는가.
+   *
+   * 접힘은 데이터가 아니라 뷰다 — 접어도 노드와 간선은 그대로 있고,
+   * 무엇을 가리고 선을 어디에 그릴지만 달라진다. 그래서 여기 적는 것은
+   * "지금 상태"가 아니라 "처음 보여줄 때의 상태"다.
+   */
+  collapsed?: boolean;
   /** 이 백드랍이 감싸는 노드 id들 — 프레임 크기는 멤버 위치에서 계산 */
   members: string[];
   /**
@@ -42,8 +48,6 @@ export type GraphBackdropData = {
 export type GraphEdgeData = {
   from: string;
   to: string;
-  /** link: 클러스터 내부 / bridge: 트러블-이론 다리 / cross: 점선 크로스 연결 */
-  kind?: EdgeKind;
   /** 수직 방향 굽힘(px). 양수 = 진행 방향 기준 오른쪽으로 휨 */
   bend?: number;
   /** 관계 이름 (연결 뷰: "발생한 곳" / "원인 개념" / "해결 기법") */

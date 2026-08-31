@@ -71,6 +71,34 @@ const PROJECTS: Project[] = [
   },
 ];
 
+/**
+ * 기술 갈래 — id는 그래프의 뿌리 노드와 같다.
+ *
+ * 프로젝트 행이 프로젝트 노드로 가듯 이 행도 그 갈래의 뿌리로 간다.
+ * 배지는 목차의 장 이름이 아니라 그 갈래에서 실제로 붙잡은 주제다 —
+ * 프로젝트 행의 기술 배지와 같은 층위로 읽히게.
+ */
+const TECHS = [
+  {
+    id: "react",
+    name: "React",
+    desc: "공식 문서 목차를 그대로 옮겨 두고, 프로젝트에서 부딪힌 자리부터 채웁니다",
+    topics: ["렌더링과 커밋", "상태", "훅", "Effect", "Context", "탈출구"],
+  },
+  {
+    id: "js",
+    name: "JavaScript",
+    desc: "javascript.info를 따라 언어와 브라우저를 같은 지도 위에 둡니다",
+    topics: ["프로토타입", "클로저", "이벤트 루프", "DOM", "이벤트", "비동기"],
+  },
+  {
+    id: "ts",
+    name: "TypeScript",
+    desc: "핸드북과 레퍼런스 — 타입으로 규칙을 화면에 드러내려고 붙잡은 것들",
+    topics: ["좁히기", "제네릭", "타입 조작", "유틸리티 타입", "선언 파일", "tsconfig"],
+  },
+];
+
 const STACK = [
   "React",
   "Next.js",
@@ -100,6 +128,8 @@ const STANCES = [
 ];
 
 const HISTORY = [
+  /* 아직 시작 전이라 끝을 비워 둔다 — 이어지는 중이라는 뜻 */
+  { text: "메이크스타 FrontEnd Engineer", date: "2026.09 –" },
   { text: "삼성청년 SW·AI 아카데미 14기", date: "2025.07 – 2026.07" },
   { text: "연세대학교 환경에너지공학부 석사", date: "2023.03 – 2025.02" },
   { text: "연세대학교 미래캠퍼스 친환경에너지공학부 학사", date: "2018.03 – 2023.02" },
@@ -118,8 +148,8 @@ interface IntroSheetProps {
   onClose: () => void;
   /** 소개 속 프로젝트 클릭 → 그래프의 그 노드로 */
   onProjectClick: (nodeId: string) => void;
-  /** "기술 블로그로 가기" → 그래프의 기술(이론) 영역으로 */
-  onTheoryClick: () => void;
+  /** 기술 행 클릭 → 그래프의 그 갈래(react·js·ts)로 */
+  onTheoryClick: (rootId: string) => void;
   /** 노드가 열리는 중 — 시트 껍데기 없이 안쪽만 그린다 */
   bare?: boolean;
 }
@@ -233,12 +263,18 @@ export default function IntroSheet({
           <SectionHeading icon="theory" spaced>
             기술 블로그
           </SectionHeading>
-          <NodeCard
-            kind="theory"
-            title="기술 블로그로 가기"
-            description="프로젝트에서 부딪히며 배운 개념들"
-            onClick={onTheoryClick}
-          />
+          <div className={styles.projects}>
+            {TECHS.map((tech) => (
+              <NodeCard
+                key={tech.id}
+                kind="theory"
+                title={tech.name}
+                description={tech.desc}
+                tags={tech.topics}
+                onClick={() => onTheoryClick(tech.id)}
+              />
+            ))}
+          </div>
 
           <p className={styles.hint}>
             바깥을 클릭하면 지식 그래프 전체가 보입니다. 붉은 트러블 노드를

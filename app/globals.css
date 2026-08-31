@@ -31,7 +31,6 @@
   /* graph */
   --edge: #232c3b;
   --edge-active: #58657d;
-  --edge-cross: #2c3648;
 
   /* 노드 카드 — asset-pipeline의 노드 표면 값을 그대로 (tokens.css 참조) */
   --surface-node: #23272f;
