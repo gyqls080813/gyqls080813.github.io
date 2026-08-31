@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import ProjectView from "@/components/project/ProjectView";
+import ProjectArticle from "@/components/project/ProjectArticle";
 import { getProject, projects } from "@/lib/projects";
 
 export function generateStaticParams() {
@@ -25,5 +25,6 @@ export default async function ProjectPage({
   const { id } = await params;
   const project = getProject(id);
   if (!project) notFound();
-  return <ProjectView project={project} />;
+  /* 껍데기(그래프·트리·포트·목차)는 레이아웃이 맡는다 — 페이지는 본문만 */
+  return <ProjectArticle project={project} />;
 }

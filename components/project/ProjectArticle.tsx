@@ -1,5 +1,4 @@
 import type { Project } from "@/lib/projects";
-import { posts } from "@/lib/posts";
 import { nodeHref } from "@/lib/nodeTarget";
 import {
   Chip,
@@ -9,34 +8,15 @@ import {
   NodeCard,
   SectionHeading,
   TextBlock,
-  type NavItem,
 } from "../content";
 import { slugify } from "@/lib/slug";
+/* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
+import { PROJECT_HEADINGS, troublesOf } from "@/lib/sheet";
 /* 시트 안쪽 폭은 글 페이지와 같은 것을 쓴다 */
-import sheetStyles from "../post/PostView.module.css";
+import sheetStyles from "../content/Sheet.module.css";
 import styles from "./ProjectArticle.module.css";
 
-const INTRO = "소개";
-const VIEWS = "프로젝트 뷰";
-const TROUBLES = "트러블 슈팅";
-
-/** 이 프로젝트에서 나온 글 — 목차와 본문이 같은 목록을 봐야 한다 */
-const troublesOf = (projectId: string) =>
-  posts.filter((post) => post.project === projectId);
-
-/**
- * 오른쪽 목차에 세울 것 — 제목을 가진 쪽이 목록도 만든다.
- * 본문과 목차를 다른 파일에서 각자 만들면 언젠가 어긋난다.
- */
-export function projectNavItems(project: Project): NavItem[] {
-  const labels = [
-    INTRO,
-    ...(project.views?.length ? [VIEWS] : []),
-    ...project.blocks.map((block) => block.label),
-    ...(troublesOf(project.id).length > 0 ? [TROUBLES] : []),
-  ];
-  return labels.map((label) => ({ id: slugify(label), label }));
-}
+const { intro: INTRO, views: VIEWS, troubles: TROUBLES } = PROJECT_HEADINGS;
 
 /** 프로젝트 시트 안쪽 — 노드가 열리는 중에도 같은 내용이 그대로 보여야 해서 따로 뒀다 */
 export default function ProjectArticle({ project }: { project: Project }) {

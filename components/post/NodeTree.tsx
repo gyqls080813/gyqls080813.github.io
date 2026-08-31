@@ -52,7 +52,7 @@ const theoryRoots = rootsOf("theory");
 const ideaRoots = rootsOf("idea");
 
 /** 글 페이지 좌측의 노드 탐색기 — VS Code 탐색기 문법 */
-export default function NodeTree({ activePostId }: { activePostId: string }) {
+export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
   /* 처음에는 전부 펴 둔다 — 탐색기는 무엇이 어디 있는지 한눈에 보이는 것이
      먼저고, 길면 접는 것은 보는 사람이 정한다. */
   const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(
@@ -95,7 +95,7 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
     children?: ReactNode;
   }) => {
     const open = !collapsed.has(id);
-    const active = id === activePostId;
+    const active = id === activeNodeId;
     const group = children !== undefined;
 
     const inner = (

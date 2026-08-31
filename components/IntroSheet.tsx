@@ -1,6 +1,8 @@
 "use client";
 
 import { slugify } from "@/lib/slug";
+/* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
+import { INTRO_HEADINGS as HEADINGS } from "@/lib/sheet";
 import {
   Chip,
   EntryRow,
@@ -9,7 +11,6 @@ import {
   NodeCard,
   SectionHeading,
   TextBlock,
-  type NavItem,
 } from "./content";
 import styles from "./IntroSheet.module.css";
 
@@ -145,23 +146,6 @@ const AWARDS = [
 ];
 
 /* 절 이름은 한 곳에서 — 본문과 목차가 갈라져 어긋나지 않게 */
-const HEADINGS = {
-  intro: "자기소개",
-  history: "이력",
-  awards: "수상",
-  stack: "사용 기술",
-  projects: "Projects",
-  blog: "기술 블로그",
-} as const;
-
-/** 오른쪽 목차에 세울 것 — 소개는 내용이 고정이라 목록도 고정이다 */
-export function introNavItems(): NavItem[] {
-  return Object.values(HEADINGS).map((label) => ({
-    id: slugify(label),
-    label,
-  }));
-}
-
 interface IntroSheetProps {
   /** 소개 속 프로젝트 클릭 → 그래프의 그 노드로 */
   onProjectClick: (nodeId: string) => void;

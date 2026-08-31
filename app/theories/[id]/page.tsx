@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import TheoryView from "@/components/theory/TheoryView";
+import TheoryArticle from "@/components/theory/TheoryArticle";
 import { getTheory, theories } from "@/lib/theories";
 
 export function generateStaticParams() {
@@ -23,5 +23,6 @@ export default async function TheoryPage({
   const { id } = await params;
   const theory = getTheory(id);
   if (!theory) notFound();
-  return <TheoryView theory={theory} />;
+  /* 껍데기(그래프·트리·포트·목차)는 레이아웃이 맡는다 — 페이지는 본문만 */
+  return <TheoryArticle theory={theory} />;
 }

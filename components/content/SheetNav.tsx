@@ -2,8 +2,11 @@
 
 import { useActiveHeading } from "./useActiveHeading";
 import styles from "./SheetNav.module.css";
+/* 목차를 만드는 쪽이 lib/sheet.ts로 내려가서 타입도 거기 산다 —
+   서버·클라이언트 어느 쪽에서도 쓰이므로 컴포넌트에 두면 방향이 거꾸로다 */
+import type { NavItem } from "@/lib/sheet";
 
-export type NavItem = { id: string; label: string; children?: NavItem[] };
+export type { NavItem };
 
 /** 지금 읽는 줄을 찾으려면 층을 눌러 한 줄로 봐야 한다 */
 function flatIds(items: NavItem[]): string[] {
