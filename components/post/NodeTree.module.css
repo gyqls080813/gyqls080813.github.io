@@ -113,6 +113,46 @@
   color: var(--faint);
 }
 
+/* 화살표와 이름이 각각 다른 일을 한다 — 화살표는 펴고, 이름은 연다.
+   합쳐 두면 내용이 있는 허브(React·핸드북…)를 트리에서 열 방법이 없다.
+   .toggle 22px + .rowGrow 왼쪽 여백 7px = 화살표를 품었던 예전 줄과 같은 자리 */
+.rowSplit {
+  display: flex;
+  align-items: center;
+}
+
+.toggle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 22px;
+  min-height: 27px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--faint);
+  cursor: pointer;
+}
+
+.toggle:hover {
+  color: var(--text);
+  background: var(--panel);
+}
+
+.togglePad {
+  flex-shrink: 0;
+  width: 22px;
+}
+
+.rowGrow {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+  padding-left: 7px;
+}
+
 /* VS Code처럼 들여쓰기 가이드 라인 */
 .children {
   margin-left: 15px;
