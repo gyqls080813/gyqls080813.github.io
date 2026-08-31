@@ -61,6 +61,13 @@ export const fullGraphNodes: GraphNodeData[] = [
     hub: true,
   },
   { id: "fe-philosophy", label: "철학", kind: "idea", x: 330, y: 2454, r: 17, hub: true },
+  /* 하루하루의 기록 — 작성법·철학과 성격이 다르다. 저 둘은 정리해서 쌓는 곳이고
+     이쪽은 그날 있었던 일을 그날 적는 곳이다. 그래서 항목은 미리 만들어 두지
+     않는다. 날짜가 이름이 되고, 쌓이는 순서가 곧 목차다.
+
+     항목이 붙을 때는 y를 til보다 크게, 새것일수록 작게 준다 — 열 안의 순서는
+     y가 정하므로 그래야 최근 것이 맨 위에 선다. */
+  { id: "til", label: "TIL", kind: "idea", x: 330, y: 2456, r: 17, hub: true },
 
   /* 화면 하나를 만들 때 정하는 것들 — 데이터가 들어와서 나가기까지의 순서 그대로
      일곱 단계로 놓았다. 순서대로 훑으면 빠진 단계가 없다는 게 구조로 보장된다. */
@@ -567,6 +574,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   // 나 → 생각 (이론이 React·JS·TS로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
   { from: "me", to: "fe-philosophy" },
+  { from: "me", to: "til" },
 
   // 개념 → 챕터 (계층: 하위 내용) — 이론과 생각이 같은 문법을 쓴다
   ...[...theoryClusters, ...ideaClusters].flatMap((cluster) =>
@@ -705,7 +713,7 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     id: "bd-idea",
     label: "생각",
     tint: "idea",
-    members: ["bd-craft", "fe-philosophy"],
+    members: ["bd-craft", "fe-philosophy", "til"],
   },
   {
     id: "bd-craft",

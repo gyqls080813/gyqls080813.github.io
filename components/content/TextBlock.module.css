@@ -1,8 +1,10 @@
-.block {
-  padding-left: 15px;
-  border-left: 2px solid var(--border-subtle);
-}
+/* 선은 본문에만 붙는다 — 제목 옆까지 올라오면 제목도 인용된 내용처럼 읽힌다.
+   제목은 이 덩어리의 내용이 아니라 이름이라, 선이 제목 아래에서 시작해야
+   무엇이 무엇에 딸린 것인지가 자리로 보인다.
 
+   제목은 선이 시작하는 자리에 맞춘다. 본문 글자에 맞추면 제목이 한 단
+   들어가 이 덩어리가 어디서 시작하는지가 흐려진다 — 선의 왼쪽 끝이 곧
+   블록의 왼쪽 끝이고, 제목이 그 자리에서 시작해야 한 덩어리로 읽힌다. */
 .block[data-accent="theory"] {
   --c-text: var(--theory-text);
 }
@@ -20,7 +22,7 @@
 }
 
 .label {
-  margin: 0 0 7px;
+  margin: 0 0 8px;
   font-size: 14px;
   font-weight: 700;
   color: var(--c-text);
@@ -28,6 +30,8 @@
 
 .body {
   margin: 0;
+  padding-left: 15px;
+  border-left: 2px solid var(--border-subtle);
   font-size: var(--fs-sheet-body);
   line-height: 1.85;
   color: var(--text-body);
