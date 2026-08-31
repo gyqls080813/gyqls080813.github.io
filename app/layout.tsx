@@ -3,6 +3,7 @@ import { Space_Grotesk, IBM_Plex_Sans_KR } from "next/font/google";
 import "@xyflow/react/dist/style.css";
 import "./globals.css";
 import { SheetViewProvider } from "@/components/content/SheetView";
+import SheetChrome from "@/components/content/SheetChrome";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -45,8 +46,16 @@ export default function RootLayout({
       </head>
       <body className={`${spaceGrotesk.variable} ${plexKr.variable}`}>
         {/* 시트 보기 설정(전체 화면·양옆 패널)은 페이지가 바뀌어도 남아야 해서
-            루트에 둔다 — 레이아웃은 클라이언트 이동에서 다시 만들어지지 않는다 */}
-        <SheetViewProvider>{children}</SheetViewProvider>
+            루트에 둔다 — 레이아웃은 클라이언트 이동에서 다시 만들어지지 않는다.
+
+            시트의 껍데기(그래프·트리·포트·목차)도 같은 이유로 여기 있다.
+            페이지 안에 두면 주소가 바뀔 때마다 트리가 다시 마운트돼 스크롤이
+            맨 위로 튀고 접어 둔 갈래가 펴진다. 껍데기는 주소에서 노드 id만
+            읽어 스스로 바뀌고, 페이지는 본문만 넘긴다.
+            시트가 아닌 곳(그래프 홈, 글 목록)에서는 그냥 지나 보낸다. */}
+        <SheetViewProvider>
+          <SheetChrome>{children}</SheetChrome>
+        </SheetViewProvider>
       </body>
     </html>
   );

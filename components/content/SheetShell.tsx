@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useSheetView } from "./SheetView";
 import { SHEET_SCROLL_ATTR } from "./sheetScroll";
 import styles from "./SheetShell.module.css";
-import sheetStyles from "../post/PostView.module.css";
+import sheetStyles from "./Sheet.module.css";
 
 /**
  * 시트의 틀 — 세 열(트리 · 본문 · 목차)과 보기 조작을 함께 쥔다.
@@ -18,16 +18,28 @@ import sheetStyles from "../post/PostView.module.css";
  * 받는다 — 서버 컴포넌트를 클라이언트 컴포넌트에 넘기는 그 방식이다.
  */
 export default function SheetShell({
+  nodeId,
   tree,
   nav,
   children,
 }: {
+  /** 지금 열린 노드 — 바뀌면 본문을 맨 위로 되돌린다 */
+  nodeId?: string;
   tree: ReactNode;
   nav: ReactNode;
   children: ReactNode;
 }) {
   const router = useRouter();
   const { full, tree: treeOpen, nav: navOpen, toggle } = useSheetView();
+  const articleRef = useRef<HTMLElement>(null);
+
+  /* 이 틀은 레이아웃에 있어 주소가 바뀌어도 살아 있다 — 트리 스크롤을
+     지키려고 그렇게 만든 것인데, 그 덕에 본문 스크롤까지 남는다.
+     다른 글로 갔는데 중간부터 보이면 안 되므로 여기서 되돌린다.
+     그리기 전에(useLayoutEffect) 옮겨야 이전 위치가 한 프레임 비치지 않는다. */
+  useLayoutEffect(() => {
+    articleRef.current?.scrollTo({ top: 0 });
+  }, [nodeId]);
 
   /* Esc로 전체 화면을 푼다. 시트 자체를 닫는 것과 헷갈리지 않게, 펼쳐져 있을
      때만 가로챈다 — 아니면 평소의 "그래프로 돌아가기"를 막아 버린다 */
@@ -48,7 +60,11 @@ export default function SheetShell({
       {treeOpen && <aside className={sheetStyles.treePanel}>{tree}</aside>}
 
       {/* 목차가 스크롤을 들으려면 어느 요소가 스크롤하는지 표식이 있어야 한다 */}
-      <article className={sheetStyles.article} {...{ [SHEET_SCROLL_ATTR]: true }}>
+      <article
+        ref={articleRef}
+        className={sheetStyles.article}
+        {...{ [SHEET_SCROLL_ATTR]: true }}
+      >
         {/* 조작은 본문 안에 붙어 다닌다 — 양옆 패널이 닫히면 그 자리가 없어진다 */}
         <div className={styles.toolbar}>
           <button

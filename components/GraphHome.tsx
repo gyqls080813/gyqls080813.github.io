@@ -1,27 +1,26 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import TopBar from "./TopBar";
 import type { ReactFlowInstance } from "@xyflow/react";
-import IntroSheet, { introNavItems } from "./IntroSheet";
+import IntroSheet from "./IntroSheet";
 import KnowledgeGraph, {
   type GraphHandle,
 } from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
-import PostArticle, { postNavItems } from "./post/PostArticle";
-import ProjectArticle, { projectNavItems } from "./project/ProjectArticle";
-import TheoryArticle, { theoryNavItems } from "./theory/TheoryArticle";
+import PostArticle from "./post/PostArticle";
+import ProjectArticle from "./project/ProjectArticle";
+import TheoryArticle from "./theory/TheoryArticle";
 import { SheetNav, useSheetView } from "./content";
-import type { NodeKind } from "./graph/types";
-import postStyles from "./post/PostView.module.css";
+import { sheetNavItems } from "@/lib/sheet";
+import postStyles from "./content/Sheet.module.css";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
 import { getPost } from "@/lib/posts";
 import { getProject } from "@/lib/projects";
 import { getTheory } from "@/lib/theories";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
-import { frameDescendants } from "./graph/flow/toFlow";
 import styles from "./GraphHome.module.css";
 
 interface Rect {
@@ -43,7 +42,7 @@ interface Expanding {
 const FOCUS_ZOOM = 1.35;
 const FOCUS_MS = 520;
 
-/** 글 페이지 시트와 같은 위치·크기 (PostView.module.css의 .sheet와 반드시 맞출 것).
+/** 열린 시트와 같은 위치·크기 (content/Sheet.module.css의 .sheet와 반드시 맞출 것).
     90%(상한 1500×940), 좁은 화면(≤720px)에서는 거의 전체 — 값이 어긋나면
     카드→시트 전환이 마지막에 튄다. */
 function sheetRect(stage: DOMRect, full: boolean): Rect {
@@ -58,18 +57,6 @@ function sheetRect(stage: DOMRect, full: boolean): Rect {
     width,
     height,
   };
-}
-
-/** 겹침 화면의 목차 — 목적지 시트와 같은 목록을 쓴다 */
-function overlayNav(expanding: Expanding) {
-  if (expanding.kind === "project") {
-    return projectNavItems(getProject(expanding.nodeId)!);
-  }
-  if (expanding.kind === "theory") {
-    return theoryNavItems(getTheory(expanding.nodeId)!);
-  }
-  if (expanding.kind === "post") return postNavItems(getPost(expanding.nodeId)!);
-  return introNavItems();
 }
 
 export default function GraphHome() {
@@ -266,7 +253,7 @@ export default function GraphHome() {
               <>
                 {sheetView.tree && (
                   <aside className={postStyles.treePanel}>
-                    <NodeTree activePostId={expanding.nodeId} />
+                    <NodeTree activeNodeId={expanding.nodeId} />
                   </aside>
                 )}
                 <article className={postStyles.article}>
@@ -285,7 +272,8 @@ export default function GraphHome() {
                 </article>
                 {sheetView.nav && (
                   <aside className={postStyles.navPanel}>
-                    <SheetNav items={overlayNav(expanding)} />
+                    {/* 겹침 화면의 목차 — 목적지 시트와 같은 목록을 쓴다 */}
+                    <SheetNav items={sheetNavItems(expanding.nodeId)} />
                   </aside>
                 )}
               </>

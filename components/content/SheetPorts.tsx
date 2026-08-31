@@ -4,9 +4,11 @@ import Link from "next/link";
 import { nodeHref } from "@/lib/nodeTarget";
 import { useSheetView } from "./SheetView";
 import type { NodeKind } from "../graph/types";
-import styles from "../post/PostView.module.css";
+/* 포트 목록을 만드는 쪽이 lib/sheet.ts라 타입도 거기 산다 */
+import type { Port } from "@/lib/sheet";
+import styles from "./Sheet.module.css";
 
-export type Port = { id: string; role: string; name: string; kind: NodeKind };
+export type { Port };
 
 /**
  * 종류마다 테두리 색 — Partial이 아니라 전부 채운 Record다.

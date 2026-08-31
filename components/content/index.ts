@@ -13,10 +13,11 @@ export { default as CodeBlock } from "./CodeBlock";
 export { default as TermNote } from "./TermNote";
 export { default as SheetNav } from "./SheetNav";
 export { default as SheetShell } from "./SheetShell";
+export { default as SheetChrome } from "./SheetChrome";
 export { default as SheetPorts } from "./SheetPorts";
-export type { Port } from "./SheetPorts";
 export { useSheetView } from "./SheetView";
-export type { NavItem } from "./SheetNav";
+/* 시트가 노드 하나로부터 알아내는 것들은 lib/sheet.ts에 산다 */
+export type { NavItem, Port } from "@/lib/sheet";
 export { SHEET_SCROLL_ATTR } from "./sheetScroll";
 export { Kicker, SectionHeading } from "./Prose";
 export { FactRow, EntryRow } from "./Facts";

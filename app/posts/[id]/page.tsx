@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import PostView from "@/components/post/PostView";
+import PostArticle from "@/components/post/PostArticle";
 import { getPost, posts } from "@/lib/posts";
 
 export function generateStaticParams() {
@@ -23,5 +23,6 @@ export default async function PostPage({
   const { id } = await params;
   const post = getPost(id);
   if (!post) notFound();
-  return <PostView post={post} />;
+  /* 껍데기(그래프·트리·포트·목차)는 레이아웃이 맡는다 — 페이지는 본문만 */
+  return <PostArticle post={post} />;
 }

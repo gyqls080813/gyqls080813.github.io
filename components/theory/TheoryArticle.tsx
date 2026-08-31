@@ -9,28 +9,10 @@ import {
   SectionHeading,
   TermNote,
   TextBlock,
-  type NavItem,
 } from "../content";
 /* 시트 안쪽 폭은 글·프로젝트와 같은 것을 쓴다 */
-import sheetStyles from "../post/PostView.module.css";
+import sheetStyles from "../content/Sheet.module.css";
 import styles from "./TheoryArticle.module.css";
-
-/**
- * 오른쪽 목차에 세울 것 — 제목을 가진 쪽이 목록도 만든다.
- *
- * 절이 있으면 절 제목을, 없으면(길잡이 시트) 블록 라벨을 세운다.
- * 절이 있을 때는 그 아래 블록까지 두 층으로 넘긴다 — 펴는 판단은 목차가 한다.
- */
-export function theoryNavItems(theory: Theory): NavItem[] {
-  const item = (label: string): NavItem => ({ id: slugify(label), label });
-  if (theory.sections) {
-    return theory.sections.map((section) => ({
-      ...item(section.heading),
-      children: section.blocks.map((block) => item(block.label)),
-    }));
-  }
-  return (theory.blocks ?? []).map((block) => item(block.label));
-}
 
 /** 한 블록 — 문단, 낱말 풀이, 코드 순서. 절이 있든 없든 모양이 같아야 한다 */
 function Block({ block }: { block: TheoryBlock }) {
