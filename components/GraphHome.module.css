@@ -17,7 +17,7 @@
   /* 상단 바(64px)는 덮지 않는다 — 글 페이지의 스크림 범위와 일치 */
   inset: 64px 0 0 0;
   z-index: 70;
-  background: rgba(11, 14, 20, 0.72);
+  background: var(--scrim);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -48,7 +48,7 @@
 .expandOpen .expandCard {
   border-radius: 14px;
   background: var(--bg-elevated);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-sheet);
 }
 
 /* 진짜 시트 전체를 한 강체로 — 카드 크기로 축소돼 있다가 카드와 함께 커진다.

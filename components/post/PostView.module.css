@@ -25,7 +25,7 @@
   position: absolute;
   inset: 0;
   display: block;
-  background: rgba(11, 14, 20, 0.72);
+  background: var(--scrim);
 }
 
 /* 글 시트 — 화면의 90%, 단 상한을 둬 큰 모니터에서 텅 비지 않게 한다.
@@ -49,7 +49,7 @@
   border: 1px solid var(--border-node-strong);
   border-radius: 14px;
   /* 노드→시트 확장(홈의 한 동작)이 이미 이 모습으로 끝났다 — 여기선 그대로 이어받는다 */
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-sheet);
 }
 
 /* 바깥 상자(시트)는 뷰포트에 반응한다 — 좁은 화면에서는 거의 전체를 쓴다.
@@ -195,6 +195,38 @@
   background: var(--bg-elevated);
 }
 
+/* 전체 화면 — 무대를 꽉 채운다. 상단 바는 남겨 둔다.
+   시트를 아예 없애지 않는 이유는, 뒤의 그래프로 돌아가는 길까지 사라지면
+   "어디서 왔는지"를 잃기 때문이다. 크기만 키우고 문법은 그대로 둔다.
+   .sheet와 같은 파일의 뒤쪽에 있어야 한다 — 명시도가 같아 순서가 승패를 가른다.
+   다른 파일에 두면 어느 스타일시트가 나중에 실리느냐에 따라 먹었다 안 먹었다 한다. */
+.sheetFull {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+
+/* 오른쪽 목차 — 이 노드 "안"에서 옮겨 다니는 길. 왼쪽 트리(노드 "사이")와
+   반대편에 세워 층위가 다르다는 걸 자리로 알린다 */
+.navPanel {
+  width: clamp(168px, 19cqi, 228px);
+  flex-shrink: 0;
+  border-left: 1px solid var(--border);
+  background: var(--bg-elevated);
+  min-height: 0;
+}
+
+/* 좁아지면 트리보다 먼저 접는다 — 노드 사이를 옮기는 길이 먼저다 */
+@container (max-width: 1000px) {
+  .navPanel {
+    display: none;
+  }
+}
+
 /* 시트 폭이 좁으면(뷰포트가 아니라 시트 폭 기준) 트리를 접어 본문에 폭을 준다.
    홈 오버레이든 상세 페이지든 시트 폭만 같으면 같은 시점에 접힌다. */
 @container (max-width: 640px) {
@@ -239,7 +271,7 @@
   margin: 0 0 26px;
   font-size: var(--fs-sheet-lead);
   line-height: 1.75;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 /* 섹션 제목은 <SectionHeading> 로 옮겨졌다 */
@@ -247,7 +279,7 @@
   margin: 0 0 24px;
   font-size: var(--fs-sheet-body);
   line-height: 1.75;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 /* 코드 블록은 <CodeBlock> 로 옮겨졌다 */
@@ -267,8 +299,8 @@
   gap: 6px;
   padding: 5px 12px;
   border-radius: 99px;
-  background: rgba(227, 171, 92, 0.1);
-  border: 1px solid rgba(227, 171, 92, 0.35);
+  background: rgba(var(--project-rgb), 0.1);
+  border: 1px solid rgba(var(--project-rgb), 0.35);
   color: var(--project-text);
   font-weight: 500;
   white-space: nowrap;
@@ -280,8 +312,8 @@
   gap: 6px;
   padding: 5px 12px;
   border-radius: 99px;
-  background: rgba(232, 139, 125, 0.12);
-  border: 1px solid rgba(232, 139, 125, 0.45);
+  background: rgba(var(--trouble-rgb), 0.12);
+  border: 1px solid rgba(var(--trouble-rgb), 0.45);
   color: var(--trouble-bright);
   font-weight: 600;
   white-space: nowrap;
@@ -295,11 +327,32 @@
   gap: 6px;
   padding: 5px 12px;
   border-radius: 99px;
-  background: rgba(95, 196, 214, 0.1);
-  border: 1px solid rgba(95, 196, 214, 0.35);
+  background: rgba(var(--theory-rgb), 0.1);
+  border: 1px solid rgba(var(--theory-rgb), 0.35);
   color: var(--theory-text);
   font-weight: 500;
   white-space: nowrap;
+}
+
+.crumbMe {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 99px;
+  background: rgba(var(--me-rgb), 0.1);
+  border: 1px solid rgba(var(--me-rgb), 0.35);
+  color: var(--me-bright);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.crumbDotMe {
+  width: 7px;
+  height: 7px;
+  border-radius: 99px;
+  border: 1.5px solid var(--me);
+  flex-shrink: 0;
 }
 
 .crumbDotTheory {

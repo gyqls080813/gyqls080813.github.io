@@ -20,6 +20,7 @@ const PORT_COLOR: Record<NodeKind, string> = {
   project: "var(--project)",
   trouble: "var(--trouble)",
   me: "var(--me)",
+  idea: "var(--idea)",
 };
 
 export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>) {

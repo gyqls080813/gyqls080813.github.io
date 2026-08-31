@@ -1,4 +1,10 @@
-export type NodeKind = "theory" | "project" | "trouble" | "me";
+/**
+ * 노드의 종류 — 색과 표식이 여기서 나온다.
+ *
+ * idea(생각)는 만든 것(project)·배운 것(theory)과 나란한 세 번째 갈래다.
+ * 넣을 때의 기준은 하나 — **사실이면 theory, 내 결정이면 idea**.
+ */
+export type NodeKind = "theory" | "project" | "trouble" | "me" | "idea";
 
 export type LabelPlacement = "top" | "bottom" | "left" | "right" | "inside";
 

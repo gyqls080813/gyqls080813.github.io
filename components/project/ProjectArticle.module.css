@@ -13,7 +13,7 @@
   margin: 0 0 26px;
   font-size: var(--fs-sheet-lead);
   line-height: 1.75;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 /* 기간·팀·역할을 감싸는 테두리 상자 — 줄은 <FactRow>가 그린다 */

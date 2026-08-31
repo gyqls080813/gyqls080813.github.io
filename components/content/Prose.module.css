@@ -18,6 +18,9 @@
 .kicker[data-kind="me"] {
   color: var(--me-bright);
 }
+.kicker[data-kind="idea"] {
+  color: var(--idea-text);
+}
 
 .heading {
   margin: 0 0 12px;

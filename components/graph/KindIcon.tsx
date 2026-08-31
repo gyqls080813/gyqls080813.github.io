@@ -5,6 +5,7 @@ const KIND_COLOR: Record<NodeKind, string> = {
   project: "var(--project)",
   trouble: "var(--trouble)",
   me: "var(--me)",
+  idea: "var(--idea)",
 };
 
 const KIND_PATH: Record<NodeKind, React.ReactNode> = {
@@ -19,6 +20,13 @@ const KIND_PATH: Record<NodeKind, React.ReactNode> = {
     <>
       <path d="M12 3.5a5.8 5.8 0 0 0-3.9 10.1c.8.75 1.4 1.6 1.4 2.4h5c0-.8.6-1.65 1.4-2.4A5.8 5.8 0 0 0 12 3.5z" />
       <path d="M9.5 18.5h5M10.5 21h3" />
+    </>
+  ),
+  /* 나침반 — 무엇을 물을지, 어느 쪽으로 갈지 정하는 것 */
+  idea: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M15.4 8.6 L10.9 10.9 L8.6 15.4 L13.1 13.1 Z" />
     </>
   ),
   /* 사람 — 이 그래프의 시작점 */

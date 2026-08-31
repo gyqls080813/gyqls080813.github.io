@@ -565,7 +565,13 @@ export default function KnowledgeGraph({
         if (!write) return candidate;
         const tint = (candidate.data as { tint?: string }).tint;
         const unit =
-          tint === "project" ? "프로젝트" : tint === "trouble" ? "글" : "개념";
+          tint === "project"
+            ? "프로젝트"
+            : tint === "trouble"
+              ? "글"
+              : tint === "idea"
+                ? "항목"
+                : "개념";
         const alive = write.members.filter((id) => knowledgeIds.has(id)).length;
         return {
           ...candidate,
@@ -659,7 +665,7 @@ export default function KnowledgeGraph({
       return active
         ? {
             ...edge,
-            style: { ...edge.style, stroke: "#7d8ba3", strokeWidth: 2 },
+            style: { ...edge.style, stroke: "var(--edge-active)", strokeWidth: 2 },
           }
         : { ...edge, style: { ...edge.style, opacity: 0.12 } };
     });

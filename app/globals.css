@@ -1,4 +1,15 @@
+/**
+ * 색은 전부 여기 있다.
+ *
+ * :root가 어두운 판, [data-theme="light"]가 밝은 판이다. 컴포넌트는 토큰만
+ * 쓰므로 이 두 덩어리 바깥에 색을 적으면 한쪽 모드에서 반드시 어긋난다.
+ *
+ * 갈래 색마다 -rgb 짝을 둔 이유는 rgba(var(--x-rgb), 0.1) 같은 옅은 칠 때문이다.
+ * 색 하나를 여러 농도로 쓰는 자리가 많아 색상값만으로는 모자란다.
+ */
 :root {
+  color-scheme: dark;
+
   /* surfaces */
   --bg: #0b0e14;
   --bg-elevated: #0d1119;
@@ -12,25 +23,35 @@
   --text: #e7eaf0;
   --text-strong: #f2f4f8;
   --text-soft: #c6cdd9;
+  --text-body: #a9b1c0;
   --muted: #8b93a3;
   --faint: #565e6d;
 
-  /* node semantics: theory / project / troubleshooting */
+  /* node semantics: theory / project / troubleshooting / me / idea */
   --theory: #5fc4d6;
   --theory-bright: #8ad8e6;
   --theory-text: #7dd3e2;
+  --theory-rgb: 95, 196, 214;
   --project: #e3ab5c;
   --project-bright: #f2d5a5;
   --project-text: #efc689;
+  --project-rgb: 227, 171, 92;
   --trouble: #e88b7d;
   --trouble-bright: #eda99d;
+  --trouble-rgb: 232, 139, 125;
   /* 사람(그래프의 시작점) — asset-pipeline의 source 보라 */
   --me: #9575cd;
   --me-bright: #b39ddb;
+  --me-rgb: 149, 117, 205;
+  --idea: #7cc98f;
+  --idea-bright: #a5dcb2;
+  --idea-text: #96d5a5;
+  --idea-rgb: 124, 201, 143;
 
   /* graph */
   --edge: #232c3b;
   --edge-active: #58657d;
+  --guide: #64b5f6;
 
   /* 노드 카드 — asset-pipeline의 노드 표면 값을 그대로 (tokens.css 참조) */
   --surface-node: #23272f;
@@ -39,7 +60,72 @@
   --border-subtle: #2e343e;
   --border-node-strong: #3d4551;
   --shadow-node: 0 2px 8px rgb(0 0 0 / 0.35);
+  --shadow-sheet: 0 24px 80px rgba(0, 0, 0, 0.55);
+  --shadow-frame: 0 10px 22px rgba(0, 0, 0, 0.45);
+  /* 그래프를 가라앉히는 막 — 배경색과 같은 색이라야 시트만 떠 보인다 */
+  --scrim: rgba(11, 14, 20, 0.72);
+}
 
+/**
+ * 밝은 판.
+ *
+ * 어두운 판을 그대로 뒤집지 않았다. 갈래 색은 어두운 바탕에서 밝게 빛나도록
+ * 고른 값이라 흰 종이 위에서는 글자로 못 읽는다 — 같은 색상(hue)을 유지한 채
+ * 명도만 낮춰 대비를 되찾았다. 뜻(청록=이론, 주황=프로젝트…)은 그대로다.
+ */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f6f7f9;
+  --bg-elevated: #ffffff;
+  --panel: #eff1f5;
+  --panel-deep: #f4f6f9;
+  --border: #e2e6ec;
+  --border-strong: #d2d8e1;
+  --divider: #e8ebf0;
+
+  --text: #1d232d;
+  --text-strong: #0c1017;
+  --text-soft: #3b4550;
+  --text-body: #4d5768;
+  --muted: #6d7686;
+  --faint: #99a1ae;
+
+  --theory: #1a8296;
+  --theory-bright: #0f6b7c;
+  --theory-text: #167284;
+  --theory-rgb: 26, 130, 150;
+  --project: #a8721a;
+  --project-bright: #8a5c10;
+  --project-text: #96660f;
+  --project-rgb: 168, 114, 26;
+  --trouble: #c24a36;
+  --trouble-bright: #a33a29;
+  --trouble-rgb: 194, 74, 54;
+  --me: #6544a8;
+  --me-bright: #533690;
+  --me-rgb: 101, 68, 168;
+  --idea: #2a8a4e;
+  --idea-bright: #1d7340;
+  --idea-text: #237a45;
+  --idea-rgb: 42, 138, 78;
+
+  --edge: #c9cfd9;
+  --edge-active: #7d8798;
+  --guide: #1976d2;
+
+  --surface-node: #ffffff;
+  --surface-node-hover: #f1f3f7;
+  --surface-inset: #f4f6f9;
+  --border-subtle: #dfe3ea;
+  --border-node-strong: #c3cad5;
+  --shadow-node: 0 2px 8px rgb(15 20 30 / 0.1);
+  --shadow-sheet: 0 24px 80px rgba(15, 20, 30, 0.18);
+  --shadow-frame: 0 10px 22px rgba(15, 20, 30, 0.12);
+  --scrim: rgba(246, 247, 249, 0.72);
+}
+
+:root {
   /* ── 유동 스케일 ──
      값은 "담긴 시트의 폭"(cqi)에 반응한다 — .sheet / .expandContent가 컨테이너.
      컨테이너 밖(평면 페이지)에서 cqi는 뷰포트로 자연 폴백된다.

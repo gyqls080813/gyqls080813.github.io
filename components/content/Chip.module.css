@@ -21,6 +21,10 @@
   --c: var(--me);
   --c-text: var(--me-bright);
 }
+.chip[data-kind="idea"] {
+  --c: var(--idea);
+  --c-text: var(--idea-text);
+}
 
 /* 채운 칩 — 글 메타·브레드크럼 (배경 10% 틴트 + 종류 색 글자) */
 .soft {

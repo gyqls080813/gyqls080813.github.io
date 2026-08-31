@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, IBM_Plex_Sans_KR } from "next/font/google";
 import "@xyflow/react/dist/style.css";
 import "./globals.css";
+import { SheetViewProvider } from "@/components/content/SheetView";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -24,9 +25,28 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" data-theme="dark" suppressHydrationWarning>
+      <head>
+        {/*
+          리액트가 붙기 전에 판을 정한다. 이걸 컴포넌트에서 하면 첫 칠이 한 번
+          어두운 판으로 나갔다가 밝은 판으로 바뀌며 번쩍인다.
+
+          운영체제 설정은 따르지 않는다. 이 사이트는 어두운 판을 기본으로 두고
+          만든 것이라, 밝은 판은 고른 사람에게만 간다.
+          키("theme")는 ThemeToggle의 THEME_KEY와 반드시 같아야 한다.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('theme');" +
+              "if(t)document.documentElement.dataset.theme=t}catch(e){}",
+          }}
+        />
+      </head>
       <body className={`${spaceGrotesk.variable} ${plexKr.variable}`}>
-        {children}
+        {/* 시트 보기 설정(전체 화면·양옆 패널)은 페이지가 바뀌어도 남아야 해서
+            루트에 둔다 — 레이아웃은 클라이언트 이동에서 다시 만들어지지 않는다 */}
+        <SheetViewProvider>{children}</SheetViewProvider>
       </body>
     </html>
   );

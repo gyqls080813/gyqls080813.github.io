@@ -15,6 +15,9 @@
 .block[data-accent="me"] {
   --c-text: var(--me-bright);
 }
+.block[data-accent="idea"] {
+  --c-text: var(--idea-text);
+}
 
 .label {
   margin: 0 0 7px;
@@ -27,5 +30,5 @@
   margin: 0;
   font-size: var(--fs-sheet-body);
   line-height: 1.85;
-  color: #a9b1c0;
+  color: var(--text-body);
 }

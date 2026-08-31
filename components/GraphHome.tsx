@@ -2,16 +2,17 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import TopBar, { type GraphFilter } from "./TopBar";
+import TopBar from "./TopBar";
 import type { ReactFlowInstance } from "@xyflow/react";
-import IntroSheet from "./IntroSheet";
+import IntroSheet, { introNavItems } from "./IntroSheet";
 import KnowledgeGraph, {
   type GraphHandle,
 } from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
-import PostArticle from "./post/PostArticle";
-import ProjectArticle from "./project/ProjectArticle";
-import TheoryArticle from "./theory/TheoryArticle";
+import PostArticle, { postNavItems } from "./post/PostArticle";
+import ProjectArticle, { projectNavItems } from "./project/ProjectArticle";
+import TheoryArticle, { theoryNavItems } from "./theory/TheoryArticle";
+import { SheetNav, useSheetView } from "./content";
 import type { NodeKind } from "./graph/types";
 import postStyles from "./post/PostView.module.css";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
@@ -22,13 +23,6 @@ import { getTheory } from "@/lib/theories";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
 import { frameDescendants } from "./graph/flow/toFlow";
 import styles from "./GraphHome.module.css";
-
-const VISIBLE_KINDS: Record<GraphFilter, NodeKind[]> = {
-  all: ["me", "theory", "project", "trouble"],
-  theory: ["theory"],
-  project: ["me", "project", "trouble"],
-  trouble: ["trouble"],
-};
 
 interface Rect {
   top: number;
@@ -52,8 +46,10 @@ const FOCUS_MS = 520;
 /** 글 페이지 시트와 같은 위치·크기 (PostView.module.css의 .sheet와 반드시 맞출 것).
     90%(상한 1500×940), 좁은 화면(≤720px)에서는 거의 전체 — 값이 어긋나면
     카드→시트 전환이 마지막에 튄다. */
-function sheetRect(stage: DOMRect): Rect {
-  const narrow = stage.width <= 720;
+function sheetRect(stage: DOMRect, full: boolean): Rect {
+  /* 전체 화면으로 켜 두고 들어가면 목적지도 전체 화면이다 — 끝나는 크기를
+     맞춰 두지 않으면 시트가 열린 직후 한 번 더 커지며 튄다 */
+  const narrow = stage.width <= 720 || full;
   const width = narrow ? stage.width : Math.min(stage.width * 0.9, 1500);
   const height = narrow ? stage.height : Math.min(stage.height * 0.93, 940);
   return {
@@ -64,13 +60,25 @@ function sheetRect(stage: DOMRect): Rect {
   };
 }
 
+/** 겹침 화면의 목차 — 목적지 시트와 같은 목록을 쓴다 */
+function overlayNav(expanding: Expanding) {
+  if (expanding.kind === "project") {
+    return projectNavItems(getProject(expanding.nodeId)!);
+  }
+  if (expanding.kind === "theory") {
+    return theoryNavItems(getTheory(expanding.nodeId)!);
+  }
+  if (expanding.kind === "post") return postNavItems(getPost(expanding.nodeId)!);
+  return introNavItems();
+}
+
 export default function GraphHome() {
   const router = useRouter();
-  const [filter, setFilter] = useState<GraphFilter>("all");
   const [expanding, setExpanding] = useState<Expanding | null>(null);
   const [opened, setOpened] = useState(false);
-  const [introOpen, setIntroOpen] = useState(false);
   const stageRef = useRef<HTMLElement>(null);
+  /* 시트 보기 설정은 전역이다 — 겹침 화면도 목적지와 같은 모습이라야 이어진다 */
+  const sheetView = useSheetView();
   const flowRef = useRef<ReactFlowInstance | null>(null);
   const graphRef = useRef<GraphHandle | null>(null);
 
@@ -79,79 +87,24 @@ export default function GraphHome() {
   const pendingNodeRef = useRef<string | null>(null);
 
   /* 이 이펙트는 주소(?node)를 읽고 지운다. StrictMode에서 두 번 돌면
-     두 번째에는 이미 지워진 주소를 보고 "타깃 없음"으로 오판해 소개를 띄운다 */
+     두 번째에는 이미 지워진 주소를 보고 엉뚱한 노드를 연다 */
   const bootedRef = useRef(false);
 
-  /* 첫 방문(세션 기준)이거나 상단 바 "소개"로 요청됐으면 소개를 연다 */
   useEffect(() => {
     if (bootedRef.current) return;
     bootedRef.current = true;
-
     const target = new URLSearchParams(window.location.search).get("node");
-    if (target) {
-      pendingNodeRef.current = target;
-      /* 주소는 되돌려 둔다 — 새로고침이나 뒤로가기에서 다시 열리면 성가시다 */
-      window.history.replaceState(null, "", window.location.pathname);
-      return;
-    }
-
-    let requested = false;
-    let seen = false;
-    try {
-      requested = sessionStorage.getItem("introRequest") === "1";
-      if (requested) sessionStorage.removeItem("introRequest");
-      seen = sessionStorage.getItem("introSeen") === "1";
-    } catch {
-      /* 저장소가 막힌 브라우저에서는 매번 소개부터 */
-    }
-    if (requested || !seen) setIntroOpen(true);
+    if (!target) return;
+    pendingNodeRef.current = target;
+    /* 주소는 되돌려 둔다 — 새로고침이나 뒤로가기에서 다시 열리면 성가시다 */
+    window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
-  const closeIntro = () => {
-    setIntroOpen(false);
-    try {
-      sessionStorage.setItem("introSeen", "1");
-    } catch {
-      /* 무시 */
-    }
-  };
-
-  /* 소개의 기술 행 → 프로젝트 행과 똑같이 그 노드로 가서 열린다.
-     다른 점은 하나뿐이다 — 갈래가 접힌 채로 시작하므로 먼저 펴야 그 노드가
-     화면에 있다. 접힘은 그래프가 쥐고 있으니 펴는 일만 그래프에 맡긴다. */
-  const focusTheory = (rootId: string) => {
-    closeIntro();
-    const settling = graphRef.current?.reveal(rootId) ?? 0;
-    if (settling === 0) {
-      openNode(rootId);
-      return;
-    }
-    window.setTimeout(() => openNode(rootId), settling);
-  };
-
-  /* 소개 속 프로젝트 클릭 → 시트를 닫고 그 노드로 이동한 뒤 열린다 */
-  const focusProject = (nodeId: string) => {
-    closeIntro();
-    openNode(nodeId);
-  };
-
-  const { nodes, edges, backdrops } = useMemo(() => {
-    const kinds = new Set(VISIBLE_KINDS[filter]);
-    const nodes = annotatedGraphNodes.filter((node) => kinds.has(node.kind));
-    const visibleIds = new Set(nodes.map((node) => node.id));
-    /* 틀 안에 틀이 있으면(이론 → React·JS·TS) 멤버가 노드 id가 아니라
-       틀 id다 — 안쪽까지 펼쳐 보고 하나라도 보이면 그 틀도 남긴다 */
-    const byFrame = new Map(fullGraphBackdrops.map((frame) => [frame.id, frame]));
-    const backdrops = fullGraphBackdrops.filter((backdrop) =>
-      frameDescendants(backdrop, byFrame).some((member) =>
-        visibleIds.has(member),
-      ),
-    );
-    const edges = fullGraphEdges.filter(
-      (edge) => visibleIds.has(edge.from) && visibleIds.has(edge.to),
-    );
-    return { nodes, edges, backdrops };
-  }, [filter]);
+  /* 그래프는 늘 전부 보여준다 — 무엇을 감출지는 백드랍 접기가 맡는다.
+     상단 필터로 갈래를 가리던 방식은 접기와 하는 일이 겹쳐 걷어냈다. */
+  const nodes = annotatedGraphNodes;
+  const edges = fullGraphEdges;
+  const backdrops = fullGraphBackdrops;
 
   /* 노드를 화면 가운데로 옮기고 확대한다 — 이동이 끝나는 데 걸리는 ms를 돌려준다 */
   const moveToNode = (nodeId: string): number => {
@@ -168,16 +121,10 @@ export default function GraphHome() {
 
   /* 노드 카드가 제자리에서 시트 크기로 열린다 */
   const expandNode = (nodeId: string, kind: Expanding["kind"]) => {
+    /* 확장이 끝나면 그 노드의 주소로 넘어간다 — 소개도 이제 주소가 있다 */
     const finish = () => {
       const destination = nodeDestination(nodeId);
-      if (destination) {
-        router.push(destination);
-        return;
-      }
-      /* 소개는 확장이 끝난 자리에 시트를 놓는다 — 크기·위치가 같아 이어져 보인다 */
-      setIntroOpen(true);
-      setExpanding(null);
-      setOpened(false);
+      if (destination) router.push(destination);
     };
 
     const nodeElement = document.querySelector(
@@ -199,7 +146,7 @@ export default function GraphHome() {
         width: from.width,
         height: from.height,
       },
-      to: sheetRect(stage),
+      to: sheetRect(stage, sheetView.full),
     });
     setTimeout(finish, 500);
   };
@@ -267,7 +214,7 @@ export default function GraphHome() {
 
   return (
     <div className={`${styles.screen} ${opened ? styles.expandOpen : ""}`}>
-      <TopBar activeFilter={filter} onFilterChange={setFilter} />
+      <TopBar />
       <main ref={stageRef} className={styles.graphArea}>
         <KnowledgeGraph
           nodes={nodes}
@@ -281,18 +228,16 @@ export default function GraphHome() {
             const target = pendingNodeRef.current;
             if (!target) return;
             pendingNodeRef.current = null;
-            /* 노드가 한 번 그려진 뒤라야 좌표가 맞다 */
-            requestAnimationFrame(() => openNode(target));
+            /* 접힌 갈래 안이면 먼저 편다 — 안 그러면 숨은 노드로 날아간다.
+               노드가 한 번 그려진 뒤라야 좌표도 맞다 */
+            const settling = graph.reveal(target);
+            window.setTimeout(
+              () => requestAnimationFrame(() => openNode(target)),
+              settling,
+            );
           }}
         />
 
-        {introOpen && !expanding && (
-          <IntroSheet
-            onClose={closeIntro}
-            onProjectClick={focusProject}
-            onTheoryClick={focusTheory}
-          />
-        )}
       </main>
 
       {expanding && rect && (
@@ -318,29 +263,32 @@ export default function GraphHome() {
                   : `scale(${expanding.from.width / expanding.to.width})`,
               }}
             >
-              {expanding.kind === "intro" ? (
-                <IntroSheet
-                  bare
-                  onClose={closeIntro}
-                  onProjectClick={focusProject}
-                  onTheoryClick={focusTheory}
-                />
-              ) : (
-                <>
+              <>
+                {sheetView.tree && (
                   <aside className={postStyles.treePanel}>
                     <NodeTree activePostId={expanding.nodeId} />
                   </aside>
-                  <article className={postStyles.article}>
-                    {expanding.kind === "project" ? (
-                      <ProjectArticle project={getProject(expanding.nodeId)!} />
-                    ) : expanding.kind === "theory" ? (
-                      <TheoryArticle theory={getTheory(expanding.nodeId)!} />
-                    ) : (
-                      <PostArticle post={getPost(expanding.nodeId)!} />
-                    )}
-                  </article>
-                </>
-              )}
+                )}
+                <article className={postStyles.article}>
+                  {expanding.kind === "project" ? (
+                    <ProjectArticle project={getProject(expanding.nodeId)!} />
+                  ) : expanding.kind === "theory" ? (
+                    <TheoryArticle theory={getTheory(expanding.nodeId)!} />
+                  ) : expanding.kind === "post" ? (
+                    <PostArticle post={getPost(expanding.nodeId)!} />
+                  ) : (
+                    <IntroSheet
+                      onProjectClick={openNode}
+                      onTheoryClick={openNode}
+                    />
+                  )}
+                </article>
+                {sheetView.nav && (
+                  <aside className={postStyles.navPanel}>
+                    <SheetNav items={overlayNav(expanding)} />
+                  </aside>
+                )}
+              </>
             </div>
 
           </div>

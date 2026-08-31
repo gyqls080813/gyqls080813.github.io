@@ -1,13 +1,33 @@
+/* 코드 블록 — 등폭 글꼴, 줄바꿈 유지, 가로 넘침은 스크롤.
+   색은 shiki가 인라인 style로 넣어 두므로 여기서는 판만 만든다.
+   테마(dark-plus)의 배경은 쓰지 않고 우리 판 색을 그대로 쓴다 — 시트 안의
+   다른 블록들과 같은 표면이라야 한 페이지로 읽힌다. */
 .code {
   background: var(--panel-deep);
   border: 1px solid var(--divider);
   border-radius: 10px;
   padding: 16px 18px;
   margin: 0 0 26px;
-  font-family: var(--font-space-grotesk), monospace;
-  font-size: 13px;
-  line-height: 1.7;
+  /* 코드는 등폭이라야 세로줄이 맞는다 — 본문 글꼴(Space Grotesk)은 등폭이 아니다 */
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas,
+    "D2Coding", monospace;
+  font-size: 12.5px;
+  line-height: 1.75;
   color: var(--text-soft);
-  white-space: pre-wrap;
+  white-space: pre;
   overflow-x: auto;
+  tab-size: 2;
+}
+
+.code code {
+  font: inherit;
+}
+
+/* shiki가 두 벌의 색을 변수로 심어 뒀다 — 판에 맞는 쪽을 여기서 고른다 */
+.code span {
+  color: var(--shiki-dark);
+}
+
+:global(html[data-theme="light"]) .code span {
+  color: var(--shiki-light);
 }
