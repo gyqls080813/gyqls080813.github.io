@@ -33,7 +33,7 @@ export default function PostArticle({ post }: { post: Post }) {
           </Chip>
         ))}
         <span className={styles.metaDate}>
-          {post.date} · {post.readMinutes}분
+          {post.date}, {post.readMinutes}분
         </span>
       </div>
 

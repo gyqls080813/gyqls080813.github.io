@@ -71,37 +71,37 @@ export const fullGraphNodes: GraphNodeData[] = [
 
   /* 화면 하나를 만들 때 정하는 것들 — 데이터가 들어와서 나가기까지의 순서 그대로
      일곱 단계로 놓았다. 순서대로 훑으면 빠진 단계가 없다는 게 구조로 보장된다. */
-  { id: "craft-entry", label: "진입 · 라우팅", kind: "idea", x: 330, y: 2404, r: 15, hub: true },
+  { id: "craft-entry", label: "진입 / 라우팅", kind: "idea", x: 330, y: 2404, r: 15, hub: true },
   { id: "craft-url", label: "URL 설계", kind: "idea", x: 330, y: 2406, r: 12 },
 
   { id: "craft-fetch", label: "데이터 수급", kind: "idea", x: 330, y: 2408, r: 15, hub: true },
   { id: "craft-request", label: "요청 방식", kind: "idea", x: 330, y: 2410, r: 12 },
   { id: "craft-4state", label: "네 가지 상태", kind: "idea", x: 330, y: 2412, r: 12 },
-  { id: "craft-cache", label: "캐싱 · 재검증", kind: "idea", x: 330, y: 2414, r: 12 },
+  { id: "craft-cache", label: "캐싱 / 재검증", kind: "idea", x: 330, y: 2414, r: 12 },
 
   { id: "craft-state", label: "상태 관리", kind: "idea", x: 330, y: 2416, r: 15, hub: true },
   { id: "craft-colocation", label: "상태 위치", kind: "idea", x: 330, y: 2418, r: 12 },
   { id: "craft-flow", label: "데이터 흐름", kind: "idea", x: 330, y: 2420, r: 12 },
 
   { id: "craft-component", label: "컴포넌트 설계", kind: "idea", x: 330, y: 2422, r: 15, hub: true },
-  { id: "craft-composition", label: "합성 · 범용성", kind: "idea", x: 330, y: 2424, r: 12 },
+  { id: "craft-composition", label: "합성 / 범용성", kind: "idea", x: 330, y: 2424, r: 12 },
   { id: "craft-contract", label: "타입 계약", kind: "idea", x: 330, y: 2426, r: 12 },
   { id: "craft-hooks", label: "훅 설계", kind: "idea", x: 330, y: 2428, r: 12 },
 
-  { id: "craft-render", label: "렌더링 · 실행", kind: "idea", x: 330, y: 2430, r: 15, hub: true },
+  { id: "craft-render", label: "렌더링 / 실행", kind: "idea", x: 330, y: 2430, r: 15, hub: true },
   { id: "craft-strategy", label: "렌더 전략", kind: "idea", x: 330, y: 2432, r: 12 },
-  { id: "craft-rerender", label: "리렌더 · 메모이제이션", kind: "idea", x: 330, y: 2434, r: 12 },
+  { id: "craft-rerender", label: "리렌더 / 메모이제이션", kind: "idea", x: 330, y: 2434, r: 12 },
   { id: "craft-timing", label: "실행 타이밍", kind: "idea", x: 330, y: 2436, r: 12 },
 
   { id: "craft-robust", label: "견고성", kind: "idea", x: 330, y: 2438, r: 15, hub: true },
   { id: "craft-concurrency", label: "동시성", kind: "idea", x: 330, y: 2440, r: 12 },
-  { id: "craft-error", label: "에러 · 엣지 케이스", kind: "idea", x: 330, y: 2442, r: 12 },
+  { id: "craft-error", label: "에러 / 엣지 케이스", kind: "idea", x: 330, y: 2442, r: 12 },
   { id: "craft-trust", label: "신뢰 경계", kind: "idea", x: 330, y: 2444, r: 12 },
 
-  { id: "craft-quality", label: "품질 · 사용자", kind: "idea", x: 330, y: 2446, r: 15, hub: true },
-  { id: "craft-perf", label: "성능 · 번들", kind: "idea", x: 330, y: 2448, r: 12 },
+  { id: "craft-quality", label: "품질 / 사용자", kind: "idea", x: 330, y: 2446, r: 15, hub: true },
+  { id: "craft-perf", label: "성능 / 번들", kind: "idea", x: 330, y: 2448, r: 12 },
   { id: "craft-a11y", label: "접근성", kind: "idea", x: 330, y: 2450, r: 12 },
-  { id: "craft-observe", label: "관측성 · 테스트", kind: "idea", x: 330, y: 2452, r: 12 },
+  { id: "craft-observe", label: "관측성 / 테스트", kind: "idea", x: 330, y: 2452, r: 12 },
 
   // 2열 하단: 기술 — 개념(허브) 노드와 그 하위 챕터 노드.
   // 계층은 백드랍이 아니라 허브 → 챕터 간선이 표현한다

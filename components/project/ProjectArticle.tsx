@@ -112,7 +112,7 @@ export default function ProjectArticle({ project }: { project: Project }) {
                 key={post.id}
                 kind="trouble"
                 title={post.title}
-                meta={`${post.date} · ${post.readMinutes}분`}
+                meta={`${post.date}, ${post.readMinutes}분`}
                 href={nodeHref(post.id)}
               />
             ))}

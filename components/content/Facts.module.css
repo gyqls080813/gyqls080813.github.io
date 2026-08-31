@@ -19,10 +19,14 @@
   --c-text: var(--me-bright);
 }
 
+/* 12px이 아니라 13.5px인 이유는 트리(NodeTree.module.css의 .tree)와 같다 —
+   본문 폰트는 힌팅 없는 웹폰트라 작은 크기의 굵은 한글에서 획 사이가 메워진다.
+   여기는 굵기 700이라 12px에서 특히 심했다. 값과 같은 크기로 맞추고, 라벨과
+   값의 구분은 색(--c-text)과 자리(고정 폭)가 대신 맡는다. */
 .label {
   flex-shrink: 0;
-  width: 42px;
-  font-size: 12px;
+  width: 48px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--c-text);

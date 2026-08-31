@@ -8,11 +8,19 @@ import styles from "../post/PostView.module.css";
 
 export type Port = { id: string; role: string; name: string; kind: NodeKind };
 
-const DOT_CLASS: Partial<Record<NodeKind, string>> = {
+/**
+ * 종류마다 테두리 색 — Partial이 아니라 전부 채운 Record다.
+ *
+ * 빠뜨리면 클래스가 안 붙고, .portDot의 `border: 2.5px solid`가 색을 못 받아
+ * currentColor로 떨어진다. 링크의 기본색이 이론 색이라 엉뚱한 갈래가 이론처럼
+ * 보이면서도 아무 데서도 터지지 않는다. 빠짐이 타입 오류가 되도록 못 박는다.
+ */
+const DOT_CLASS: Record<NodeKind, string> = {
   me: styles.portDotProject,
   project: styles.portDotProject,
   theory: styles.portDotTheory,
   trouble: styles.portDotTrouble,
+  idea: styles.portDotIdea,
 };
 
 /**
@@ -45,7 +53,7 @@ export default function SheetPorts({
           className={styles.port}
           aria-label={`${port.role}: ${port.name}`}
         >
-          <span className={`${styles.portDot} ${DOT_CLASS[port.kind] ?? ""}`} />
+          <span className={`${styles.portDot} ${DOT_CLASS[port.kind]}`} />
           <span className={styles.portPopover}>
             <span className={styles.popRole}>{port.role}</span>
             <span className={styles.popName}>{port.name}</span>
