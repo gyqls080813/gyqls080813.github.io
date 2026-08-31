@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import postStyles from "./post/PostView.module.css";
+import { slugify } from "@/lib/slug";
 import {
   Chip,
   EntryRow,
@@ -10,6 +9,7 @@ import {
   NodeCard,
   SectionHeading,
   TextBlock,
+  type NavItem,
 } from "./content";
 import styles from "./IntroSheet.module.css";
 
@@ -144,64 +144,73 @@ const AWARDS = [
   { text: "연세대학교 환경공학부 성적우수상", date: "2022.02" },
 ];
 
+/* 절 이름은 한 곳에서 — 본문과 목차가 갈라져 어긋나지 않게 */
+const HEADINGS = {
+  intro: "자기소개",
+  history: "이력",
+  awards: "수상",
+  stack: "사용 기술",
+  projects: "Projects",
+  blog: "기술 블로그",
+} as const;
+
+/** 오른쪽 목차에 세울 것 — 소개는 내용이 고정이라 목록도 고정이다 */
+export function introNavItems(): NavItem[] {
+  return Object.values(HEADINGS).map((label) => ({
+    id: slugify(label),
+    label,
+  }));
+}
+
 interface IntroSheetProps {
-  onClose: () => void;
   /** 소개 속 프로젝트 클릭 → 그래프의 그 노드로 */
   onProjectClick: (nodeId: string) => void;
   /** 기술 행 클릭 → 그래프의 그 갈래(react·js·ts)로 */
   onTheoryClick: (rootId: string) => void;
-  /** 노드가 열리는 중 — 시트 껍데기 없이 안쪽만 그린다 */
-  bare?: boolean;
 }
 
-/** 첫 화면: "민엽" 노드가 열려 있는 상태 — 뒤에 그래프가 비친다 */
+/**
+ * 소개 시트의 안쪽.
+ *
+ * 껍데기(트리·목차·조작)는 갖지 않는다 — 주소가 있는 페이지(IntroView)와
+ * 노드가 열리는 중의 겹침 화면이 각자 같은 틀로 감싼다.
+ */
 export default function IntroSheet({
-  onClose,
   onProjectClick,
   onTheoryClick,
-  bare,
 }: IntroSheetProps) {
-  useEffect(() => {
-    if (bare) return;
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose, bare]);
-
-  const content = (
+  return (
     <article className={styles.article}>
       <div className={styles.inner}>
-        <aside className={styles.photoCol}>
-          <Figure
-            src="/minyeop.jpg"
-            alt="이민엽"
-            width={640}
-            height={823}
-            maxWidth={340}
-          />
-        </aside>
-
-        <div className={styles.body}>
-          <Kicker kind="me">자기소개</Kicker>
+        <div className={styles.body} id={slugify(HEADINGS.intro)}>
+          <Kicker kind="me">{HEADINGS.intro}</Kicker>
           <h1 className={styles.title}>
             &lsquo;비추는&rsquo; 소통을 지향하는
             <br />
             프론트엔드 개발자 이민엽입니다
           </h1>
+
           <p className={styles.lead}>
             비추다에는 세 가지 뜻이 있습니다. 어두운 데를 밝히는 것, 거울처럼
             그대로 보여주는 것, 서로 견주어 보는 것. 제가 화면으로 하고 싶은
             일이 이 셋입니다.
           </p>
 
-          <div className={styles.stances}>
-            {STANCES.map((stance) => (
-              <TextBlock key={stance.label} label={stance.label} accent="me">
-                {stance.body}
-              </TextBlock>
-            ))}
+          {/* 세 뜻을 풀어놓는 대목만 사진과 나란히 선다 — 위의 문단이 셋을
+              예고했으니, 그 셋이 사진 옆에 모여 있는 편이 한 덩어리로 읽힌다.
+              띄우기(float)가 아니라 한 줄로 묶은 것은 세로 가운데 때문이다.
+              띄운 것은 늘 줄 맨 위에 붙어 사진만 위로 쏠린다. */}
+          <div className={styles.opening}>
+            <div className={styles.photo}>
+              <Figure src="/minyeop.jpg" alt="이민엽" width={640} height={823} />
+            </div>
+            <div className={styles.stances}>
+              {STANCES.map((stance) => (
+                <TextBlock key={stance.label} label={stance.label} accent="me">
+                  {stance.body}
+                </TextBlock>
+              ))}
+            </div>
           </div>
 
           <p className={styles.lead}>
@@ -210,8 +219,8 @@ export default function IntroSheet({
             왜 되는지 알 때까지 묻는 편입니다.
           </p>
 
-          <div className={styles.factsSection}>
-            <div className={styles.factsLabel}>이력</div>
+          <div className={styles.factsSection} id={slugify(HEADINGS.history)}>
+            <div className={styles.factsLabel}>{HEADINGS.history}</div>
             <div className={styles.factsList}>
               {HISTORY.map((item) => (
                 <EntryRow key={item.text} date={item.date}>
@@ -221,8 +230,8 @@ export default function IntroSheet({
             </div>
           </div>
 
-          <div className={styles.factsSection}>
-            <div className={styles.factsLabel}>수상</div>
+          <div className={styles.factsSection} id={slugify(HEADINGS.awards)}>
+            <div className={styles.factsLabel}>{HEADINGS.awards}</div>
             <div className={styles.factsList}>
               {AWARDS.map((item) => (
                 <EntryRow key={item.text} date={item.date}>
@@ -232,8 +241,8 @@ export default function IntroSheet({
             </div>
           </div>
 
-          <div className={styles.factsSection}>
-            <div className={styles.factsLabel}>사용 기술</div>
+          <div className={styles.factsSection} id={slugify(HEADINGS.stack)}>
+            <div className={styles.factsLabel}>{HEADINGS.stack}</div>
             <div className={styles.stack}>
               {STACK.map((skill) => (
                 <Chip key={skill} variant="outline">
@@ -244,7 +253,7 @@ export default function IntroSheet({
           </div>
 
           <SectionHeading icon="project" spaced>
-            Projects
+            <span id={slugify(HEADINGS.projects)}>{HEADINGS.projects}</span>
           </SectionHeading>
           <div className={styles.projects}>
             {PROJECTS.map((project) => (
@@ -261,7 +270,7 @@ export default function IntroSheet({
           </div>
 
           <SectionHeading icon="theory" spaced>
-            기술 블로그
+            <span id={slugify(HEADINGS.blog)}>{HEADINGS.blog}</span>
           </SectionHeading>
           <div className={styles.projects}>
             {TECHS.map((tech) => (
@@ -283,36 +292,5 @@ export default function IntroSheet({
         </div>
       </div>
     </article>
-  );
-
-  if (bare) return content;
-
-  return (
-    <>
-      <button
-        type="button"
-        className={`${postStyles.scrim} ${styles.scrimReset}`}
-        onClick={onClose}
-        aria-label="지식 그래프 보기"
-      />
-      <div className={postStyles.sheet} role="dialog" aria-label="소개">
-        <button
-          type="button"
-          className={styles.close}
-          onClick={onClose}
-          aria-label="닫기"
-        >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path
-              d="M6 6 L18 18 M18 6 L6 18"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
-        {content}
-      </div>
-    </>
   );
 }

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import TopBar from "../TopBar";
-import { nodeHref } from "@/lib/nodeTarget";
 import KnowledgeGraph from "../graph/flow/KnowledgeGraph";
 import NodeTree from "./NodeTree";
-import PostArticle from "./PostArticle";
+import PostArticle, { postNavItems } from "./PostArticle";
+import { SheetNav, SheetPorts, SheetShell, type Port } from "../content";
 import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import {
   fullGraphBackdrops,
@@ -25,7 +25,7 @@ function Breadcrumb({ post }: { post: Post }) {
         {nodeLabel(post.project)}
       </span>
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M9 6 L15 12 L9 18" stroke="#3a4456" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M9 6 L15 12 L9 18" stroke="var(--border-node-strong)" strokeWidth="2.5" strokeLinecap="round" />
       </svg>
       <span className={styles.crumbTrouble}>
         <span className={styles.crumbDotTrouble} />
@@ -55,45 +55,35 @@ export default function PostView({ post }: { post: Post }) {
 
         {/* 이 글이 잇는 노드 — 확대된 노드(시트)의 가장자리 포트로.
             호버하면 무엇과 이어져 있는지 작은 카드가 펼쳐진다 */}
-        <div className={styles.portsLeft}>
-          <Link
-            href={nodeHref(post.project)}
-            className={styles.port}
-            aria-label={`발생한 프로젝트: ${nodeLabel(post.project)}`}
-          >
-            <span className={`${styles.portDot} ${styles.portDotProject}`} />
-            <span className={styles.portPopover}>
-              <span className={styles.popRole}>프로젝트 · 발생한 곳</span>
-              <span className={styles.popName}>{nodeLabel(post.project)}</span>
-            </span>
-          </Link>
-        </div>
-        <div className={styles.portsRight}>
-          {post.theories.map((theory) => (
-            <Link
-              key={theory.id}
-              href={nodeHref(theory.id)}
-              className={styles.port}
-              aria-label={`연결된 이론: ${nodeLabel(theory.id)}`}
-            >
-              <span className={`${styles.portDot} ${styles.portDotTheory}`} />
-              <span className={styles.portPopover}>
-                <span className={styles.popRole}>이론 · {theory.role}</span>
-                <span className={styles.popName}>{nodeLabel(theory.id)}</span>
-              </span>
-            </Link>
-          ))}
-        </div>
+        <SheetPorts
+          side="left"
+          ports={[
+            {
+              id: post.project,
+              role: "프로젝트 · 발생한 곳",
+              name: nodeLabel(post.project),
+              kind: "project",
+            },
+          ]}
+        />
+        <SheetPorts
+          side="right"
+          ports={post.theories.map(
+            (theory): Port => ({
+              id: theory.id,
+              role: `이론 · ${theory.role}`,
+              name: nodeLabel(theory.id),
+              kind: "theory",
+            }),
+          )}
+        />
 
-        <div className={styles.sheet}>
-          <aside className={styles.treePanel}>
-            <NodeTree activePostId={post.id} />
-          </aside>
-
-          <article className={styles.article}>
-            <PostArticle post={post} />
-          </article>
-        </div>
+        <SheetShell
+          tree={<NodeTree activePostId={post.id} />}
+          nav={<SheetNav items={postNavItems(post)} />}
+        >
+          <PostArticle post={post} />
+        </SheetShell>
       </div>
     </div>
   );

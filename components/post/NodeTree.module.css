@@ -94,6 +94,10 @@
   border: 1.5px solid var(--theory);
 }
 
+.dotIdea {
+  border: 1.5px solid var(--idea);
+}
+
 .rowLabel {
   flex: 1;
   min-width: 0;

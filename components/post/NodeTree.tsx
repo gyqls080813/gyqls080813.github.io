@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
-import { fullGraphNodes, theoryClusters } from "@/lib/graphData";
+import type { NodeKind } from "../graph/types";
+import { fullGraphNodes, ideaClusters, theoryClusters } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
-import { nodeHref } from "@/lib/nodeTarget";
+import { nodeDestination, nodeHref } from "@/lib/nodeTarget";
 import { getTheory } from "@/lib/theories";
 import styles from "./NodeTree.module.css";
+
+/**
+ * 트리에서 누르면 글로 곧장 간다.
+ *
+ * 포트는 `/?node=` 로 그래프를 거친다 — 어느 노드로 가는지 이동·확대가 보여야
+ * 연결이 읽히기 때문이다. 트리는 다르다. 이미 목록에서 무엇을 고르는지 보고
+ * 누르는 것이라, 그래프를 한 번 들렀다 오는 것이 기다림밖에 안 된다.
+ */
+const treeHref = (id: string) => nodeDestination(id) ?? nodeHref(id);
 
 function nodeLabel(id: string): string {
   const node = fullGraphNodes.find((candidate) => candidate.id === id);
@@ -30,39 +40,33 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/* 개념 계층 — 그래프의 허브 → 챕터 관계가 그대로 트리가 된다 */
+/* 개념 계층 — 그래프의 허브 → 챕터 관계가 그대로 트리가 된다.
+   이론과 생각이 같은 문법을 쓰므로 한 벌의 지도로 본다 */
+const allClusters = [...theoryClusters, ...ideaClusters];
 const chaptersOf = new Map<string, readonly string[]>(
-  theoryClusters.map((cluster) => [cluster.hub, cluster.chapters]),
+  allClusters.map((cluster) => [cluster.hub, cluster.chapters]),
 );
 const parentOf = new Map<string, string>(
-  theoryClusters.flatMap((cluster) =>
+  allClusters.flatMap((cluster) =>
     cluster.chapters.map((chapter) => [chapter, cluster.hub] as const),
   ),
 );
-/** 아무의 챕터도 아닌 허브 — React·JavaScript·TypeScript */
-const theoryRoots = theoryClusters
-  .map((cluster) => cluster.hub)
-  .filter((hub) => !parentOf.has(hub));
-
-/** 이 노드에서 뿌리까지의 길 (자기 포함) — 이 줄들만 펴 둔다 */
-function pathToRoot(id: string): Set<string> {
-  const path = new Set<string>([id]);
-  let current = parentOf.get(id);
-  while (current && !path.has(current)) {
-    path.add(current);
-    current = parentOf.get(current);
-  }
-  return path;
-}
+/** 누구의 챕터도 아닌 노드 — 그 갈래의 뿌리만 최상위에 선다.
+    아래가 없는 뿌리(철학)도 있으므로 클러스터가 아니라 노드에서 찾는다 */
+const rootsOf = (kind: NodeKind) =>
+  fullGraphNodes
+    .filter((node) => node.kind === kind && !parentOf.has(node.id))
+    .map((node) => node.id);
+const theoryRoots = rootsOf("theory");
+const ideaRoots = rootsOf("idea");
 
 /** 글 페이지 좌측의 노드 탐색기 — VS Code 탐색기 문법 */
 export default function NodeTree({ activePostId }: { activePostId: string }) {
-  /* 개념은 150개가 넘는다 — 전부 편 채로 두면 목록이 아니라 벽이 된다.
-     지금 보고 있는 줄까지의 길만 펴 두고 나머지는 접는다. */
-  const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(() => {
-    const open = pathToRoot(activePostId);
-    return new Set([...chaptersOf.keys()].filter((hub) => !open.has(hub)));
-  });
+  /* 처음에는 전부 펴 둔다 — 탐색기는 무엇이 어디 있는지 한눈에 보이는 것이
+     먼저고, 길면 접는 것은 보는 사람이 정한다. */
+  const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(
+    () => new Set(),
+  );
 
   const toggle = (id: string) => {
     setCollapsed((prev) => {
@@ -75,79 +79,110 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
 
   const projects = fullGraphNodes.filter((node) => node.kind === "project");
 
-  /** 개념 한 줄. 아래가 있으면 화살표로 펴고, 내용이 있으면 이름으로 연다 */
-  const TheoryRow = ({ id }: { id: string }) => {
-    const children = chaptersOf.get(id);
-    const open = children ? !collapsed.has(id) : false;
-    const references = posts.filter((post) =>
-      post.theories.some((theory) => theory.id === id),
-    ).length;
+  /**
+   * 트리의 한 줄 — 갈래가 달라도 이 모양은 같다.
+   *
+   * 화살표는 펴고, 이름은 연다. 둘을 한 버튼으로 합치면 아래가 있는 줄(프로젝트,
+   * Learn React…)은 이름을 눌러도 펴지기만 하고 그 노드로는 갈 수 없다.
+   * 아래가 없는 줄도 화살표 자리를 비워 둬야 같은 층의 이름이 한 줄로 선다.
+   */
+  const TreeRow = ({
+    id,
+    label,
+    icon,
+    count,
+    href,
+    children,
+  }: {
+    id: string;
+    label: string;
+    icon: ReactNode;
+    count?: ReactNode;
+    /** 열 것이 없으면 생략 — 이름이 링크가 되지 않는다 */
+    href?: string;
+    /** 아래에 그릴 것. 없으면 화살표 대신 빈 자리를 둔다 */
+    children?: ReactNode;
+  }) => {
+    const open = !collapsed.has(id);
     const active = id === activePostId;
+    const group = children !== undefined;
 
     const inner = (
       <>
-        {children ? (
-          <KindIcon kind="theory" size={13} />
-        ) : (
-          <span className={`${styles.dot} ${styles.dotTheory}`} />
-        )}
-        <span
-          className={`${styles.rowLabel} ${children ? styles.groupLabel : ""}`}
-        >
-          {nodeLabel(id)}
+        {icon}
+        <span className={`${styles.rowLabel} ${group ? styles.groupLabel : ""}`}>
+          {label}
         </span>
-        {children ? (
-          <span className={styles.count}>{children.length}</span>
-        ) : (
-          references > 0 && <span className={styles.count}>글 {references}</span>
-        )}
+        {count}
       </>
     );
 
-    /* 내용이 있는 개념만 링크가 된다 — 나머지는 아직 이름뿐이다 */
-    const name = getTheory(id) ? (
-      <Link
-        href={nodeHref(id)}
-        className={`${styles.row} ${styles.rowGrow} ${active ? styles.active : ""}`}
-        aria-current={active ? "page" : undefined}
-      >
-        {inner}
-      </Link>
-    ) : (
-      <div className={`${styles.row} ${styles.rowGrow}`}>{inner}</div>
-    );
-
-    /* 아래가 없는 줄도 화살표 자리를 비워 둔다 — 같은 층의 이름이 한 줄로 선다 */
-    if (!children) {
-      return (
-        <div className={styles.rowSplit}>
-          <span className={styles.togglePad} />
-          {name}
-        </div>
-      );
-    }
     return (
       <div>
         <div className={styles.rowSplit}>
-          <button
-            type="button"
-            className={styles.toggle}
-            onClick={() => toggle(id)}
-            aria-expanded={open}
-            aria-label={`${nodeLabel(id)} ${open ? "접기" : "펼치기"}`}
-          >
-            <Chevron open={open} />
-          </button>
-          {name}
+          {group ? (
+            <button
+              type="button"
+              className={styles.toggle}
+              onClick={() => toggle(id)}
+              aria-expanded={open}
+              aria-label={`${label} ${open ? "접기" : "펼치기"}`}
+            >
+              <Chevron open={open} />
+            </button>
+          ) : (
+            <span className={styles.togglePad} />
+          )}
+          {href ? (
+            <Link
+              href={href}
+              className={`${styles.row} ${styles.rowGrow} ${active ? styles.active : ""}`}
+              aria-current={active ? "page" : undefined}
+            >
+              {inner}
+            </Link>
+          ) : (
+            <div className={`${styles.row} ${styles.rowGrow}`}>{inner}</div>
+          )}
         </div>
-        {open && (
-          <div className={styles.children}>
-            {children.map((child) => (
-              <TheoryRow key={child} id={child} />
-            ))}
-          </div>
-        )}
+        {group && open && <div className={styles.children}>{children}</div>}
       </div>
+    );
+  };
+
+  /** 개념 한 줄 — 아래로 내려가는 것만 여기서 따진다 */
+  const TheoryRow = ({ id }: { id: string }) => {
+    const chapters = chaptersOf.get(id);
+    const references = posts.filter((post) =>
+      post.theories.some((theory) => theory.id === id),
+    ).length;
+    const kind = fullGraphNodes.find((node) => node.id === id)?.kind ?? "theory";
+
+    return (
+      <TreeRow
+        id={id}
+        label={nodeLabel(id)}
+        icon={
+          chapters ? (
+            <KindIcon kind={kind} size={13} />
+          ) : (
+            <span
+              className={`${styles.dot} ${styles[kind === "idea" ? "dotIdea" : "dotTheory"]}`}
+            />
+          )
+        }
+        count={
+          chapters ? (
+            <span className={styles.count}>{chapters.length}</span>
+          ) : references > 0 ? (
+            <span className={styles.count}>글 {references}</span>
+          ) : undefined
+        }
+        /* 내용이 있는 개념만 링크가 된다 — 나머지는 아직 이름뿐이다 */
+        href={getTheory(id) ? treeHref(id) : undefined}
+      >
+        {chapters?.map((child) => <TheoryRow key={child} id={child} />)}
+      </TreeRow>
     );
   };
 
@@ -167,48 +202,51 @@ export default function NodeTree({ activePostId }: { activePostId: string }) {
         전체 그래프로 돌아가기
       </Link>
 
+      {/* 그래프의 시작점 — 갈래 셋보다 위에, 이름표 없이 혼자 선다 */}
+      <div className={styles.section}>
+        <TreeRow
+          id="me"
+          label="민엽"
+          icon={<KindIcon kind="me" size={13} />}
+          count={<span className={styles.count}>자기소개</span>}
+          href={treeHref("me")}
+        />
+      </div>
+
       <div className={styles.section}>
         <div className={styles.sectionLabel}>프로젝트</div>
         {projects.map((project) => {
           const projectPosts = posts
             .filter((post) => post.project === project.id)
             .sort((a, b) => b.date.localeCompare(a.date));
-          const open = !collapsed.has(project.id);
           return (
-            <div key={project.id}>
-              <button
-                type="button"
-                className={styles.row}
-                onClick={() => toggle(project.id)}
-                aria-expanded={open}
-              >
-                <Chevron open={open} />
-                <KindIcon kind="project" size={13} />
-                <span className={`${styles.rowLabel} ${styles.groupLabel}`}>
-                  {nodeLabel(project.id)}
-                </span>
-                <span className={styles.count}>{projectPosts.length}</span>
-              </button>
-              {open && (
-                <div className={styles.children}>
-                  {projectPosts.map((post) => (
-                    <Link
-                      key={post.id}
-                      href={nodeHref(post.id)}
-                      className={`${styles.row} ${
-                        post.id === activePostId ? styles.active : ""
-                      }`}
-                      aria-current={post.id === activePostId ? "page" : undefined}
-                    >
-                      <KindIcon kind="trouble" size={12} />
-                      <span className={styles.rowLabel}>{post.title}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            <TreeRow
+              key={project.id}
+              id={project.id}
+              label={nodeLabel(project.id)}
+              icon={<KindIcon kind="project" size={13} />}
+              count={<span className={styles.count}>{projectPosts.length}</span>}
+              href={treeHref(project.id)}
+            >
+              {projectPosts.map((post) => (
+                <TreeRow
+                  key={post.id}
+                  id={post.id}
+                  label={post.title}
+                  icon={<KindIcon kind="trouble" size={12} />}
+                  href={treeHref(post.id)}
+                />
+              ))}
+            </TreeRow>
           );
         })}
+      </div>
+
+      <div className={styles.section}>
+        <div className={styles.sectionLabel}>생각</div>
+        {ideaRoots.map((root) => (
+          <TheoryRow key={root} id={root} />
+        ))}
       </div>
 
       <div className={styles.section}>

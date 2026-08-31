@@ -1,0 +1,36 @@
+/* 두 칸짜리 스위치 — 지금 어느 판인지가 눌린 칸으로 보인다.
+   토글 하나로 두면 "지금이 어두운 건지 어두워지는 건지"를 매번 헷갈린다 */
+.group {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-strong);
+  border-radius: 9px;
+  background: var(--panel);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--faint);
+  cursor: pointer;
+  transition:
+    color 0.14s ease,
+    background 0.14s ease;
+}
+
+.option:hover {
+  color: var(--text-soft);
+}
+
+.option[data-active="true"] {
+  color: var(--text-strong);
+  background: var(--surface-node-hover);
+}

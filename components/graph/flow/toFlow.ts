@@ -241,7 +241,9 @@ export function buildFlowGraph(
         ? "프로젝트"
         : backdrop.tint === "trouble"
           ? "글"
-          : "개념";
+          : backdrop.tint === "idea"
+            ? "항목"
+            : "개념";
     backdropNodes.push({
       id: backdrop.id,
       type: "backdrop",

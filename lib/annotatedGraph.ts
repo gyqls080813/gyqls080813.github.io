@@ -1,5 +1,8 @@
 import type { GraphNodeData } from "@/components/graph/types";
-import { fullGraphNodes, theoryClusters } from "./graphData";
+import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
+
+/* 이론과 생각이 같은 문법(허브 → 챕터)을 쓰므로 집계도 한 목록에서 본다 */
+const clusters = [...theoryClusters, ...ideaClusters];
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
 
@@ -11,7 +14,7 @@ import { getTheory } from "./theories";
  */
 export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) => {
   if (node.kind === "me") {
-    return { ...node, clickable: true, meta: "자기소개" };
+    return { ...node, clickable: true, meta: "프론트엔드 이민엽" };
   }
   if (node.kind === "trouble") {
     const post = getPost(node.id);
@@ -30,7 +33,7 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
   }
   /* 내용이 있는 개념만 열린다 — 나머지는 이동·확대까지만 */
   const openable = getTheory(node.id) ? { clickable: true } : null;
-  const cluster = theoryClusters.find((candidate) => candidate.hub === node.id);
+  const cluster = clusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
     return { ...node, ...openable, meta: `챕터 ${cluster.chapters.length}` };
   }

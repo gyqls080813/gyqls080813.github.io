@@ -2,15 +2,17 @@
   "name": "knowledge-graph-blog",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node scripts/highlight-code.mjs && next dev",
+    "build": "node scripts/highlight-code.mjs && next build",
+    "highlight": "node scripts/highlight-code.mjs",
     "lint": "next lint"
   },
   "dependencies": {
     "@xyflow/react": "^12.11.3",
     "next": "^16.3.2",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "shiki": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

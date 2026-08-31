@@ -11,7 +11,7 @@ import type {
  */
 export const fullGraphNodes: GraphNodeData[] = [
   // 1열: 그래프의 시작점 — 나
-  { id: "me", label: "민엽", kind: "me", x: 95, y: 300, r: 30, hub: true },
+  { id: "me", label: "Who am I", kind: "me", x: 95, y: 300, r: 30, hub: true },
 
   // 2열 상단: 프로젝트 (가로 배치, 진행 순서대로)
   {
@@ -44,6 +44,57 @@ export const fullGraphNodes: GraphNodeData[] = [
     hub: true,
     dateLabel: "2026.04 – 2026.05",
   },
+
+  /* 2열 맨 아래: 생각 — 만든 것(프로젝트)·배운 것(이론)과 나란한 세 번째 갈래.
+     넣을 때의 기준은 하나다 — 사실이면 이론, 내 결정이면 이쪽.
+     이론은 공부하는 만큼 끝없이 늘어나는 쪽이고, 이쪽은 그 서가의 색인이 된다.
+
+     y가 2400부터인 것은 열 안의 순서 때문이다 — 이 열은 프로젝트·이론·생각
+     순으로 서고, 순서는 y가 정한다. 이론의 맨 아래(2260)보다 커야 한다. */
+  {
+    id: "fe-craft",
+    label: "코드 작성법",
+    kind: "idea",
+    x: 330,
+    y: 2402,
+    r: 17,
+    hub: true,
+  },
+  { id: "fe-philosophy", label: "철학", kind: "idea", x: 330, y: 2454, r: 17, hub: true },
+
+  /* 화면 하나를 만들 때 정하는 것들 — 데이터가 들어와서 나가기까지의 순서 그대로
+     일곱 단계로 놓았다. 순서대로 훑으면 빠진 단계가 없다는 게 구조로 보장된다. */
+  { id: "craft-entry", label: "진입 · 라우팅", kind: "idea", x: 330, y: 2404, r: 15, hub: true },
+  { id: "craft-url", label: "URL 설계", kind: "idea", x: 330, y: 2406, r: 12 },
+
+  { id: "craft-fetch", label: "데이터 수급", kind: "idea", x: 330, y: 2408, r: 15, hub: true },
+  { id: "craft-request", label: "요청 방식", kind: "idea", x: 330, y: 2410, r: 12 },
+  { id: "craft-4state", label: "네 가지 상태", kind: "idea", x: 330, y: 2412, r: 12 },
+  { id: "craft-cache", label: "캐싱 · 재검증", kind: "idea", x: 330, y: 2414, r: 12 },
+
+  { id: "craft-state", label: "상태 관리", kind: "idea", x: 330, y: 2416, r: 15, hub: true },
+  { id: "craft-colocation", label: "상태 위치", kind: "idea", x: 330, y: 2418, r: 12 },
+  { id: "craft-flow", label: "데이터 흐름", kind: "idea", x: 330, y: 2420, r: 12 },
+
+  { id: "craft-component", label: "컴포넌트 설계", kind: "idea", x: 330, y: 2422, r: 15, hub: true },
+  { id: "craft-composition", label: "합성 · 범용성", kind: "idea", x: 330, y: 2424, r: 12 },
+  { id: "craft-contract", label: "타입 계약", kind: "idea", x: 330, y: 2426, r: 12 },
+  { id: "craft-hooks", label: "훅 설계", kind: "idea", x: 330, y: 2428, r: 12 },
+
+  { id: "craft-render", label: "렌더링 · 실행", kind: "idea", x: 330, y: 2430, r: 15, hub: true },
+  { id: "craft-strategy", label: "렌더 전략", kind: "idea", x: 330, y: 2432, r: 12 },
+  { id: "craft-rerender", label: "리렌더 · 메모이제이션", kind: "idea", x: 330, y: 2434, r: 12 },
+  { id: "craft-timing", label: "실행 타이밍", kind: "idea", x: 330, y: 2436, r: 12 },
+
+  { id: "craft-robust", label: "견고성", kind: "idea", x: 330, y: 2438, r: 15, hub: true },
+  { id: "craft-concurrency", label: "동시성", kind: "idea", x: 330, y: 2440, r: 12 },
+  { id: "craft-error", label: "에러 · 엣지 케이스", kind: "idea", x: 330, y: 2442, r: 12 },
+  { id: "craft-trust", label: "신뢰 경계", kind: "idea", x: 330, y: 2444, r: 12 },
+
+  { id: "craft-quality", label: "품질 · 사용자", kind: "idea", x: 330, y: 2446, r: 15, hub: true },
+  { id: "craft-perf", label: "성능 · 번들", kind: "idea", x: 330, y: 2448, r: 12 },
+  { id: "craft-a11y", label: "접근성", kind: "idea", x: 330, y: 2450, r: 12 },
+  { id: "craft-observe", label: "관측성 · 테스트", kind: "idea", x: 330, y: 2452, r: 12 },
 
   // 2열 하단: 기술 — 개념(허브) 노드와 그 하위 챕터 노드.
   // 계층은 백드랍이 아니라 허브 → 챕터 간선이 표현한다
@@ -248,6 +299,42 @@ function nodeLabel(id: string): string {
  * 기술 계층 — 개념(허브)과 그 하위 챕터. 간선과 트리가 여기서 유도된다.
  * 한 클러스터의 허브가 다른 클러스터의 챕터일 수 있다(React → Learn → 시작하기처럼 3단).
  */
+/**
+ * 생각의 계층 — 이론과 같은 문법(허브 → 챕터)이지만 성격이 반대다.
+ * 이론은 공부하는 만큼 늘어나는 열린 집합이고, 작성법 일곱 단계 열여덟 항목은
+ * 데이터 생애주기를 덮으려고 만든 것이라 늘어나지 않는다. 늘어나는 건 철학 쪽이다.
+ */
+export const ideaClusters = [
+  {
+    hub: "fe-craft",
+    chapters: [
+      "craft-entry",
+      "craft-fetch",
+      "craft-state",
+      "craft-component",
+      "craft-render",
+      "craft-robust",
+      "craft-quality",
+    ],
+  },
+  { hub: "craft-entry", chapters: ["craft-url"] },
+  { hub: "craft-fetch", chapters: ["craft-request", "craft-4state", "craft-cache"] },
+  { hub: "craft-state", chapters: ["craft-colocation", "craft-flow"] },
+  {
+    hub: "craft-component",
+    chapters: ["craft-composition", "craft-contract", "craft-hooks"],
+  },
+  {
+    hub: "craft-render",
+    chapters: ["craft-strategy", "craft-rerender", "craft-timing"],
+  },
+  {
+    hub: "craft-robust",
+    chapters: ["craft-concurrency", "craft-error", "craft-trust"],
+  },
+  { hub: "craft-quality", chapters: ["craft-perf", "craft-a11y", "craft-observe"] },
+] as const;
+
 export const theoryClusters = [
   /* React — 문서가 갈라놓은 두 갈래를 그대로 */
   { hub: "react", chapters: ["rl", "ra"] },
@@ -477,8 +564,12 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "js" },
   { from: "me", to: "ts" },
 
-  // 개념 → 챕터 (계층: 하위 내용)
-  ...theoryClusters.flatMap((cluster) =>
+  // 나 → 생각 (이론이 React·JS·TS로 바로 가듯, 여기도 갈래로 바로 간다)
+  { from: "me", to: "fe-craft" },
+  { from: "me", to: "fe-philosophy" },
+
+  // 개념 → 챕터 (계층: 하위 내용) — 이론과 생각이 같은 문법을 쓴다
+  ...[...theoryClusters, ...ideaClusters].flatMap((cluster) =>
     cluster.chapters.map((chapter) => ({ from: cluster.hub, to: chapter })),
   ),
 
@@ -555,6 +646,41 @@ function subClusters(root: string) {
     .filter((group) => group.members.length > 0);
 }
 
+/** 작성법에 매달린 전부 (자기 포함) — 한 틀에 담기는 단위다 */
+const craftMembers = (() => {
+  const under = new Map<string, readonly string[]>(
+    ideaClusters.map((cluster) => [cluster.hub, cluster.chapters]),
+  );
+  const seen = new Set<string>();
+  const walk = (id: string) => {
+    if (seen.has(id)) return;
+    seen.add(id);
+    for (const child of under.get(id) ?? []) walk(child);
+  };
+  walk("fe-craft");
+  return [...seen];
+})();
+
+/**
+ * 정렬 시 단계와 그 항목이 한 덩어리로 움직인다 — 이론의 subClusters와 같은 규칙.
+ *
+ * 허브 자신도 덩어리에 들어가야 한다. 클러스터가 있는 틀은 배치가 클러스터만
+ * 보므로, 어느 덩어리에도 안 든 노드는 자리를 못 받고 데이터 좌표에 그대로
+ * 그려진다 — 깊이와 상관없이 엉뚱한 열에 선다.
+ * 중간 허브가 두 덩어리에 겹쳐 들어가지 않도록 한 번 나온 id는 건너뛴다.
+ */
+const craftGroups = [
+  /* 뿌리는 혼자 한 덩어리. 일곱 단계와 함께 묶으면 그 일곱이 서로 붙어 버려
+     자기 항목들과 높이가 어긋난다 — 단계는 자기 항목 옆에 서야 읽힌다 */
+  { id: "grp-fe-craft", members: ["fe-craft"] },
+  ...ideaClusters
+    .filter((cluster) => cluster.hub.startsWith("craft-"))
+    .map((cluster) => ({
+      id: `grp-${cluster.hub}`,
+      members: [cluster.hub, ...cluster.chapters],
+    })),
+];
+
 /** 클러스터 백드랍 — 멤버 카드들의 위치에서 프레임이 계산된다 */
 export const fullGraphBackdrops: GraphBackdropData[] = [
   {
@@ -573,6 +699,22 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
       members: [...troubles],
     }),
   ),
+  /* 생각 — 이론과 같은 모양으로 담는다. 안쪽의 작성법만 접어 두는 것도 같다.
+     열여덟 항목이 첫 화면에 쏟아지면 정작 "생각이라는 갈래가 있다"가 안 읽힌다. */
+  {
+    id: "bd-idea",
+    label: "생각",
+    tint: "idea",
+    members: ["bd-craft", "fe-philosophy"],
+  },
+  {
+    id: "bd-craft",
+    label: "코드 작성법",
+    tint: "idea",
+    collapsed: true,
+    clusters: craftGroups,
+    members: craftMembers,
+  },
   /* 갈래 셋을 한 번 더 묶는다 — 프로젝트가 한 틀에 담기듯 이론도 한 자리에.
      틀 안에 틀이 들어가는 유일한 곳이다. */
   {

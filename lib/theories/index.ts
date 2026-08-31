@@ -1,8 +1,31 @@
-/** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각 */
+/**
+ * 본문에 나온 낱말 하나를 따로 풀어 두는 자리.
+ *
+ * 문단 안에서 풀면 읽던 흐름이 끊긴다. 아는 사람은 건너뛰고 모르는 사람만
+ * 들르도록 한 단 들여 둔다.
+ */
+export type TheoryTerm = {
+  term: string;
+  body: string;
+};
+
+/** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이 */
 export type TheoryBlock = {
   label: string;
   body: string;
   code?: string;
+  terms?: TheoryTerm[];
+};
+
+/**
+ * 공식 문서의 절 하나 — 제목은 문서의 번호와 이름을 그대로 쓴다.
+ *
+ * 문서를 따라 읽는 시트(빠른 시작 등)만 절을 갖는다. 갈래를 소개하는 길잡이
+ * 시트는 원래 문서에 절이 없으므로 블록만 늘어놓는다.
+ */
+export type TheorySection = {
+  heading: string;
+  blocks: TheoryBlock[];
 };
 
 /** 참고한 곳 — 문서를 읽고 쓴 것이니 출처를 남긴다 */
@@ -18,7 +41,10 @@ export type Theory = {
   tagline: string;
   /** 이 개념이 답하는 질문 — 화면을 보여주기 전에 */
   intro: string;
-  blocks: TheoryBlock[];
+  /** 절이 없는 시트 — 길잡이·총론 */
+  blocks?: TheoryBlock[];
+  /** 문서를 절 단위로 따라가는 시트 */
+  sections?: TheorySection[];
   sources?: TheorySource[];
 };
 

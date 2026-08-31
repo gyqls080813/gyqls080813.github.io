@@ -33,7 +33,7 @@
 /* Shift+드래그 스냅 가이드 — asset-pipeline의 --border-selected 색 */
 .guide {
   position: absolute;
-  background: #64b5f6;
+  background: var(--guide);
   pointer-events: none;
   z-index: 10;
 }

@@ -13,7 +13,7 @@
   margin: 0 0 26px;
   font-size: var(--fs-sheet-lead);
   line-height: 1.75;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 /* 본문 <TextBlock> 묶음 — 코드가 붙는 블록은 아래 .withCode가 간격을 맡는다 */
@@ -29,6 +29,13 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+/* 절 아래의 블록들 — 한 단 들여쓴다.
+   번호가 붙은 제목이 위에 섰으니, 그 아래 것들이 그 절에 속한다는 걸
+   자리가 말해 줘야 한다. 절이 없는 시트(길잡이)는 들여쓸 상위가 없어 그대로 둔다. */
+.sectionBlocks {
+  padding-left: 22px;
 }
 
 /* 이 개념이 나온 글 <NodeCard> 묶음 */

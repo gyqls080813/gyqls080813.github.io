@@ -26,7 +26,8 @@ export function nodeDestination(nodeId: string): string | null {
       return `/posts/${nodeId}`;
     case "theory":
       return `/theories/${nodeId}`;
-    /* 소개는 그래프 위에서 시트로 열리므로 옮겨 갈 주소가 없다 */
+    case "intro":
+      return "/about";
     default:
       return null;
   }

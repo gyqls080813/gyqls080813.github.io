@@ -30,6 +30,9 @@
 .card[data-kind="me"] {
   --c: var(--me);
 }
+.card[data-kind="idea"] {
+  --c: var(--idea);
+}
 
 .card:hover {
   background: var(--surface-node-hover);

@@ -15,20 +15,23 @@
 
 /* 갈래 색을 한 곳에서 정한다 — 아래 규칙은 전부 이 값을 쓴다 */
 .theory {
-  --tint: 95, 196, 214;
+  --tint: var(--theory-rgb);
 }
 
 .project {
-  --tint: 227, 171, 92;
+  --tint: var(--project-rgb);
 }
 
 .trouble {
-  --tint: 232, 139, 125;
+  --tint: var(--trouble-rgb);
 }
 
-/* --me: #9575cd */
 .me {
-  --tint: 149, 117, 205;
+  --tint: var(--me-rgb);
+}
+
+.idea {
+  --tint: var(--idea-rgb);
 }
 
 /**
@@ -51,7 +54,7 @@
     0 4px 0 0 rgba(var(--tint), 0.3),
     0 8px 0 -2px var(--bg),
     0 8px 0 -1px rgba(var(--tint), 0.18),
-    0 10px 22px rgba(0, 0, 0, 0.45);
+    var(--shadow-frame);
 }
 
 .collapsed .title {

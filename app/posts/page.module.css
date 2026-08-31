@@ -46,7 +46,7 @@
 }
 
 .card:hover {
-  border-color: rgba(232, 139, 125, 0.4);
+  border-color: rgba(var(--trouble-rgb), 0.4);
 }
 
 .cardTitle {
@@ -78,14 +78,14 @@
 .chipProject {
   padding: 3px 9px;
   border-radius: 5px;
-  background: rgba(227, 171, 92, 0.1);
+  background: rgba(var(--project-rgb), 0.1);
   color: var(--project-text);
 }
 
 .chipTheory {
   padding: 3px 9px;
   border-radius: 5px;
-  background: rgba(95, 196, 214, 0.1);
+  background: rgba(var(--theory-rgb), 0.1);
   color: var(--theory-text);
 }
 

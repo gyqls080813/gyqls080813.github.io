@@ -23,6 +23,9 @@
 .dot[data-kind="me"] {
   --c: var(--me);
 }
+.dot[data-kind="idea"] {
+  --c: var(--idea);
+}
 
 /* 카드·행 안의 작은 점 */
 .sm {

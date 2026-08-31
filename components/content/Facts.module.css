@@ -31,7 +31,7 @@
 .value {
   font-size: 13.5px;
   line-height: 1.5;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 /* ── 불릿 + 내용 + 날짜 (이력·수상) ── */
@@ -62,7 +62,7 @@
   min-width: 0;
   font-size: 13.5px;
   line-height: 1.5;
-  color: #a9b1c0;
+  color: var(--text-body);
 }
 
 .entryDate {
