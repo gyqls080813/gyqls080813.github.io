@@ -23,6 +23,7 @@ const DOT_CLASS: Record<NodeKind, string> = {
   theory: styles.portDotTheory,
   trouble: styles.portDotTrouble,
   idea: styles.portDotIdea,
+  til: styles.portDotIdea,
 };
 
 /**

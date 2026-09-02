@@ -5,6 +5,20 @@ import type {
 } from "@/components/graph/types";
 
 /**
+ * TIL에 쌓이는 하루치 기록 — 최근 것이 맨 위(내림차순)로 온다.
+ *
+ * 여기 한 줄을 더하면 노드·간선·틀 멤버가 전부 따라온다. 프로젝트가
+ * projectTroubles 하나에서 트러블 전부를 얻는 것과 같은 자리다.
+ *
+ * 이름은 그날의 주제다. 날짜를 이름으로 세우면 목록이 숫자만 남아 무엇을
+ * 적었는지가 안 보인다 — 날짜는 id와 글 안에서 밝힌다. id를 날짜로 짓는
+ * 것은 주제가 바뀌어도 그날은 안 바뀌기 때문이다.
+ */
+export const tilEntries = [
+  { id: "til-2026-09-02", title: "limbo 상태", date: "2026.09.02" },
+] as const;
+
+/**
  * 전체 그래프(랜딩) 데이터. 좌표는 카드 중심 기준 (toFlow에서 SPREAD 배율 적용).
  * 흐름: 민엽 → (프로젝트 · 기술) → 트러블슈팅.
  * 계층(개념 → 챕터)은 간선이, 시각적 묶음은 백드랍(디자인 전용)이 맡는다.
@@ -63,11 +77,21 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "fe-philosophy", label: "철학", kind: "idea", x: 330, y: 2454, r: 17, hub: true },
   /* 하루하루의 기록 — 작성법·철학과 성격이 다르다. 저 둘은 정리해서 쌓는 곳이고
      이쪽은 그날 있었던 일을 그날 적는 곳이다. 그래서 항목은 미리 만들어 두지
-     않는다. 날짜가 이름이 되고, 쌓이는 순서가 곧 목차다.
+     않는다. 이름은 그날의 주제고, 쌓이는 순서가 곧 목차다.
 
      항목이 붙을 때는 y를 til보다 크게, 새것일수록 작게 준다 — 열 안의 순서는
      y가 정하므로 그래야 최근 것이 맨 위에 선다. */
   { id: "til", label: "TIL", kind: "idea", x: 330, y: 2456, r: 17, hub: true },
+  ...tilEntries.map(
+    (entry, index): GraphNodeData => ({
+      id: entry.id,
+      label: entry.title,
+      kind: "til",
+      x: 330,
+      y: 2458 + index * 2,
+      r: 12,
+    }),
+  ),
 
   /* 화면 하나를 만들 때 정하는 것들 — 데이터가 들어와서 나가기까지의 순서 그대로
      일곱 단계로 놓았다. 순서대로 훑으면 빠진 단계가 없다는 게 구조로 보장된다. */
@@ -340,6 +364,9 @@ export const ideaClusters = [
     chapters: ["craft-concurrency", "craft-error", "craft-trust"],
   },
   { hub: "craft-quality", chapters: ["craft-perf", "craft-a11y", "craft-observe"] },
+  /* TIL도 같은 문법으로 매단다 — 간선·트리·머리말이 전부 이 지도에서 나오므로
+     여기 들어와야 기록이 그래프의 어느 가지에서 왔는지가 말이 된다 */
+  { hub: "til", chapters: tilEntries.map((entry) => entry.id) },
 ] as const;
 
 export const theoryClusters = [
@@ -713,7 +740,18 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     id: "bd-idea",
     label: "생각",
     tint: "idea",
-    members: ["bd-craft", "fe-philosophy", "til"],
+    members: ["bd-craft", "fe-philosophy", "bd-til"],
+  },
+  /* TIL — 갈래 안에서 자기 틀을 가지는 둘째. 작성법과 같은 모양으로, 접은 채 연다.
+     매일 한 줄씩 늘어나는 쪽이라 펴 두면 언젠가 첫 화면이 이 목록이 된다.
+     처음에 읽혀야 할 것은 목록이 아니라 「이런 갈래가 있다」다.
+     클러스터를 두지 않는다 — 안에 중간 허브가 없어 y 순서만으로 충분하다. */
+  {
+    id: "bd-til",
+    label: "TIL",
+    tint: "idea",
+    collapsed: true,
+    members: ["til", ...tilEntries.map((entry) => entry.id)],
   },
   {
     id: "bd-craft",

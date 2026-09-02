@@ -11,6 +11,7 @@ const PORT_COLOR: Record<NodeKind, string> = {
   theory: "var(--theory)",
   trouble: "var(--trouble)",
   idea: "var(--idea)",
+  til: "var(--idea)",
 };
 
 export type BackdropFlowNode = Node<

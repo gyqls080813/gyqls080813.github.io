@@ -1,0 +1,44 @@
+/* 폭·여백은 Sheet.module.css의 .articleInner가 맡는다 — 여기는 레이아웃 컨테이너만.
+   이론 시트와 같은 값을 쓴다: 같은 껍데기 안에 들어가는 같은 종류의 글이다. */
+.title {
+  margin: 0 0 10px;
+  font-size: var(--fs-sheet-title);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-strong);
+}
+
+/* 날짜 — 제목 위가 아니라 아래에 둔다. 이 갈래에서 먼저 읽혀야 하는 것은
+   언제가 아니라 무엇이고, 날짜는 그 뒤에 붙는 단서다 */
+.date {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--idea-text);
+}
+
+.tagline {
+  margin: 0 0 26px;
+  font-size: var(--fs-sheet-lead);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 30px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 절 아래의 블록들 — 한 단 들여쓴다 (이론 시트와 같은 규칙) */
+.sectionBlocks {
+  padding-left: 22px;
+}

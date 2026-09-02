@@ -5,6 +5,7 @@ import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
 const clusters = [...theoryClusters, ...ideaClusters];
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
+import { getTil } from "./tils";
 
 /**
  * 글 데이터를 집계해 노드에 붙인 그래프.
@@ -31,11 +32,14 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
     const count = posts.filter((post) => post.project === node.id).length;
     return { ...node, meta: `트러블 ${count}` };
   }
-  /* 내용이 있는 개념만 열린다 — 나머지는 이동·확대까지만 */
-  const openable = getTheory(node.id) ? { clickable: true } : null;
+  /* 내용이 있는 것만 열린다 — 나머지는 이동·확대까지만 */
+  const openable =
+    getTheory(node.id) || getTil(node.id) ? { clickable: true } : null;
   const cluster = clusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
-    return { ...node, ...openable, meta: `챕터 ${cluster.chapters.length}` };
+    /* TIL 아래는 챕터가 아니라 날짜다 — 세는 것이 다르면 이름도 달라야 한다 */
+    const unit = node.id === "til" ? "기록" : "챕터";
+    return { ...node, ...openable, meta: `${unit} ${cluster.chapters.length}` };
   }
   const references = posts.filter((post) =>
     post.theories.some((theory) => theory.id === node.id),

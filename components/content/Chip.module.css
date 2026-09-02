@@ -21,7 +21,8 @@
   --c: var(--me);
   --c-text: var(--me-bright);
 }
-.chip[data-kind="idea"] {
+.chip[data-kind="idea"],
+.chip[data-kind="til"] {
   --c: var(--idea);
   --c-text: var(--idea-text);
 }

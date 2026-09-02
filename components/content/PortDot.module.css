@@ -23,7 +23,8 @@
 .dot[data-kind="me"] {
   --c: var(--me);
 }
-.dot[data-kind="idea"] {
+.dot[data-kind="idea"],
+.dot[data-kind="til"] {
   --c: var(--idea);
 }
 

@@ -6,6 +6,9 @@ const KIND_COLOR: Record<NodeKind, string> = {
   trouble: "var(--trouble)",
   me: "var(--me)",
   idea: "var(--idea)",
+  /* 기록은 자기 색을 갖지 않는다 — 색은 갈래(생각)가 정하고,
+     종류는 표식으로 갈린다. 아래 KIND_PATH의 달력이 그 몫이다 */
+  til: "var(--idea)",
 };
 
 const KIND_PATH: Record<NodeKind, React.ReactNode> = {
@@ -27,6 +30,13 @@ const KIND_PATH: Record<NodeKind, React.ReactNode> = {
     <>
       <circle cx="12" cy="12" r="8.5" />
       <path d="M15.4 8.6 L10.9 10.9 L8.6 15.4 L13.1 13.1 Z" />
+    </>
+  ),
+  /* 달력 — 하루가 통째로 이름인 기록 */
+  til: (
+    <>
+      <path d="M4.5 7.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2v-11z" />
+      <path d="M4.5 10.5h15M9 3.5v4M15 3.5v4" />
     </>
   ),
   /* 사람 — 이 그래프의 시작점 */
