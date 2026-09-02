@@ -4,6 +4,7 @@ import { nodePath } from "./nodePath";
 import { getPost, posts } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
+import { getTil } from "./tils";
 import { nodeOpenKind } from "./nodeTarget";
 import { slugify } from "./slug";
 
@@ -29,7 +30,7 @@ import { slugify } from "./slug";
  */
 export function sheetNodeId(pathname: string): string | null {
   if (pathname === "/about") return "me";
-  const match = /^\/(?:posts|projects|theories)\/([^/]+)\/?$/.exec(pathname);
+  const match = /^\/(?:posts|projects|theories|tils)\/([^/]+)\/?$/.exec(pathname);
   return match ? decodeURIComponent(match[1]) : null;
 }
 
@@ -73,6 +74,10 @@ export function sheetNavItems(nodeId: string): NavItem[] {
     }
     return (theory.blocks ?? []).map((block) => item(block.label));
   }
+
+  /* 기록은 절만 세운다 — 블록 라벨까지 펴면 하루치 메모가 목차를 다 먹는다 */
+  const til = getTil(nodeId);
+  if (til) return til.sections.map((section) => item(section.heading));
 
   const project = getProject(nodeId);
   if (project) {
@@ -155,7 +160,9 @@ const labelOf = (id: string) => nodeById.get(id)?.label ?? id;
 /** 시트 양옆의 포트 = 그래프에서 이 노드에 들어오고 나가는 선 */
 export function sheetPorts(nodeId: string): { left: Port[]; right: Port[] } {
   switch (nodeOpenKind(nodeId)) {
+    /* 기록도 계층이 간선에 있으므로 개념과 같은 방식으로 뽑는다 */
     case "theory":
+    case "til":
       return { left: edgePorts(nodeId, "in"), right: edgePorts(nodeId, "out") };
 
     case "project": {

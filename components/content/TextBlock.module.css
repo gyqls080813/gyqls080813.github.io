@@ -17,7 +17,8 @@
 .block[data-accent="me"] {
   --c-text: var(--me-bright);
 }
-.block[data-accent="idea"] {
+.block[data-accent="idea"],
+.block[data-accent="til"] {
   --c-text: var(--idea-text);
 }
 

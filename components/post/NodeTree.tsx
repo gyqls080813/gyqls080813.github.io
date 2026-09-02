@@ -10,6 +10,7 @@ import { posts } from "@/lib/posts";
 import { chaptersOf, parentOf } from "@/lib/nodePath";
 import { nodeDestination, nodeHref } from "@/lib/nodeTarget";
 import { getTheory } from "@/lib/theories";
+import { getTil } from "@/lib/tils";
 import styles from "./NodeTree.module.css";
 
 /**
@@ -41,6 +42,12 @@ function Chevron({ open }: { open: boolean }) {
     </span>
   );
 }
+
+/** 아래가 없는 줄의 점 색 — 여기 없는 종류는 이론 색으로 떨어진다 */
+const DOT_CLASS: Partial<Record<NodeKind, string>> = {
+  idea: styles.dotIdea,
+  til: styles.dotIdea,
+};
 
 /** 누구의 챕터도 아닌 노드 — 그 갈래의 뿌리만 최상위에 선다.
     아래가 없는 뿌리(철학)도 있으므로 클러스터가 아니라 노드에서 찾는다 */
@@ -158,7 +165,7 @@ export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
             <KindIcon kind={kind} size={13} />
           ) : (
             <span
-              className={`${styles.dot} ${styles[kind === "idea" ? "dotIdea" : "dotTheory"]}`}
+              className={`${styles.dot} ${DOT_CLASS[kind] ?? styles.dotTheory}`}
             />
           )
         }
@@ -169,8 +176,8 @@ export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
             <span className={styles.count}>글 {references}</span>
           ) : undefined
         }
-        /* 내용이 있는 개념만 링크가 된다 — 나머지는 아직 이름뿐이다 */
-        href={getTheory(id) ? treeHref(id) : undefined}
+        /* 내용이 있는 것만 링크가 된다 — 나머지는 아직 이름뿐이다 */
+        href={getTheory(id) || getTil(id) ? treeHref(id) : undefined}
       >
         {chapters?.map((child) => <TheoryRow key={child} id={child} />)}
       </TreeRow>

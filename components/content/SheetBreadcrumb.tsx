@@ -13,6 +13,8 @@ const CRUMB: Record<NodeKind, { pill: string; dot: string }> = {
   trouble: { pill: styles.crumbTrouble, dot: styles.crumbDotTrouble },
   theory: { pill: styles.crumbTheory, dot: styles.crumbDotTheory },
   idea: { pill: styles.crumbIdea, dot: styles.crumbDotIdea },
+  /* 기록도 생각 갈래라 알약이 같다 — 머리말은 색으로 갈래를 말한다 */
+  til: { pill: styles.crumbIdea, dot: styles.crumbDotIdea },
 };
 
 function Chevron() {

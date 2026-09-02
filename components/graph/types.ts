@@ -3,8 +3,16 @@
  *
  * idea(생각)는 만든 것(project)·배운 것(theory)과 나란한 세 번째 갈래다.
  * 넣을 때의 기준은 하나 — **사실이면 theory, 내 결정이면 idea**.
+ *
+ * til(기록)은 그 셋과 나란한 갈래가 아니라 생각 안의 TIL이 담는 알맹이다.
+ * 프로젝트가 트러블을 담는 것과 같은 관계 — 담는 쪽과 담기는 쪽의 종류가
+ * 다르다. 저 셋이 정리해서 쌓는 것이라면 이쪽은 그날 있었던 일이다.
+ *
+ * 그래서 til만 자기 색이 없다. 색은 갈래가 정하고(생각 = 초록), 종류는
+ * 표식으로 갈린다 — 나침반이 개념이면 달력이 그날의 기록이다. 색을 하나
+ * 더 만들면 초록 틀 안에 다른 색 노드가 앉아 틀과 알맹이가 다른 말을 한다.
  */
-export type NodeKind = "theory" | "project" | "trouble" | "me" | "idea";
+export type NodeKind = "theory" | "project" | "trouble" | "me" | "idea" | "til";
 
 export type LabelPlacement = "top" | "bottom" | "left" | "right" | "inside";
 

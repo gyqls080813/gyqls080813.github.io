@@ -462,18 +462,21 @@ export default function KnowledgeGraph({
     isDraggingRef.current = true;
     if (node.type === "knowledge") setHoveredId(node.id);
     if (node.type !== "backdrop") return;
-    const members = new Set(memberIdsOf(node));
+    /* 함께 움직일 것 — 계층을 따라 끝까지 내려간다.
+       직속 멤버만 보면 안쪽 틀은 따라오고 그 안의 노드는 제자리에 남는다.
+       고리가 있어도 한 번 담은 것은 다시 담지 않으므로 멈춘다. */
+    const byId = new Map(rfNodes.map((other) => [other.id, other]));
     const followers = new Map<string, { x: number; y: number }>();
-    for (const other of rfNodes) {
-      if (other.id === node.id) continue;
-      const nested =
-        other.type === "backdrop" &&
-        memberIdsOf(other).length > 0 &&
-        memberIdsOf(other).every((id) => members.has(id));
-      if (members.has(other.id) || nested) {
-        followers.set(other.id, { ...other.position });
+    const walk = (frame: Node) => {
+      for (const id of memberIdsOf(frame)) {
+        if (id === node.id || followers.has(id)) continue;
+        const member = byId.get(id);
+        if (!member) continue;
+        followers.set(id, { ...member.position });
+        if (member.type === "backdrop") walk(member);
       }
-    }
+    };
+    walk(node);
     dragStartRef.current = { id: node.id, origin: { ...node.position }, followers };
   };
 
@@ -522,18 +525,49 @@ export default function KnowledgeGraph({
     }
   };
 
-  /* 틀 안에 떨어뜨리면 들어온다 — 가운데 기준, 다른 틀에서는 빠진다(단일 소속).
-     밖으로 끌어내는 것만으로는 빠지지 않는다 (원작 규칙). */
+  /**
+   * 틀 안에 떨어뜨리면 들어온다 — 가운데 기준, 다른 틀에서는 빠진다(단일 소속).
+   * 밖으로 끌어내는 것만으로는 빠지지 않는다 (원작 규칙).
+   *
+   * 겹친 틀에서 임자를 고르는 것은 위치가 아니라 계층이다. 틀은 틀을 담으므로
+   * (생각 › TIL) 한 점이 여러 틀 안에 동시에 있다 — 목록에서 먼저 나온 것을
+   * 고르면 언제나 가장 바깥이 걸리고, 안쪽 틀 안에서 노드를 움직이기만 해도
+   * 바깥 틀이 가져가 버린다. 안쪽이 임자다.
+   */
   const claimOnDrop = (node: Node) => {
     if (node.type !== "knowledge") return;
     setRfNodes((current) => {
       const frames = current.filter((frame) => frame.type === "backdrop");
+
+      /* 틀의 계층 — 소속이 목록인 것처럼 부모도 목록에서 읽는다 */
+      const isFrame = new Set(frames.map((frame) => frame.id));
+      const parentOf = new Map<string, string>();
+      for (const frame of frames) {
+        for (const member of memberIdsOf(frame)) {
+          if (isFrame.has(member)) parentOf.set(member, frame.id);
+        }
+      }
+      /* 이 틀을 감싸는 틀들, 안에서 밖으로. 고리가 있어도 멈춘다 */
+      const ancestorsOf = (id: string) => {
+        const chain: string[] = [];
+        const seen = new Set<string>([id]);
+        let cursor = parentOf.get(id);
+        while (cursor && !seen.has(cursor)) {
+          seen.add(cursor);
+          chain.push(cursor);
+          cursor = parentOf.get(cursor);
+        }
+        return chain;
+      };
+
       const size = measuredSize(node);
       const center = {
         x: node.position.x + size.width / 2,
         y: node.position.y + size.height / 2,
       };
-      const hit = frames.find((frame) => {
+      /* 접혀 숨은 틀은 그릴 자리가 없으니 받을 수도 없다 */
+      const inside = frames.filter((frame) => {
+        if (frame.hidden) return false;
         const width = Number(frame.style?.width ?? 0);
         const height = Number(frame.style?.height ?? 0);
         return (
@@ -543,10 +577,22 @@ export default function KnowledgeGraph({
           center.y <= frame.position.y + height
         );
       });
+      /* 깊은 것이 먼저. 계층이 갈리지 않는 겹침(형제끼리)은 좁은 쪽이 더
+         구체적인 뜻이므로 그쪽을 고른다 */
+      const hit = [...inside].sort(
+        (a, b) =>
+          ancestorsOf(b.id).length - ancestorsOf(a.id).length ||
+          Number(a.style?.width ?? 0) * Number(a.style?.height ?? 0) -
+            Number(b.style?.width ?? 0) * Number(b.style?.height ?? 0),
+      )[0];
       const owner = frames.find((frame) =>
         memberIdsOf(frame).includes(node.id),
       );
       if (!hit || hit.id === owner?.id) return current;
+      /* 자기 틀을 감싸는 바깥 틀로는 저절로 옮겨 가지 않는다. 안쪽 틀의 노드는
+         언제나 바깥 틀 안에도 있어서, 이걸 허락하면 「밖으로 나가도 남는다」가
+         무너진다 — 밖으로 내보내는 것은 빼라고 말해야 하는 일이다. */
+      if (owner && ancestorsOf(owner.id).includes(hit.id)) return current;
 
       const { writes } = planClaim(
         frames.map((frame) => ({ id: frame.id, members: memberIdsOf(frame) })),

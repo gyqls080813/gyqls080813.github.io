@@ -30,7 +30,8 @@
 .card[data-kind="me"] {
   --c: var(--me);
 }
-.card[data-kind="idea"] {
+.card[data-kind="idea"],
+.card[data-kind="til"] {
   --c: var(--idea);
 }
 

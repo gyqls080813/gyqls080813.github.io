@@ -21,6 +21,8 @@ const PORT_COLOR: Record<NodeKind, string> = {
   trouble: "var(--trouble)",
   me: "var(--me)",
   idea: "var(--idea)",
+  /* 기록은 생각 갈래의 색을 그대로 쓴다 (KindIcon 참조) */
+  til: "var(--idea)",
 };
 
 export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>) {

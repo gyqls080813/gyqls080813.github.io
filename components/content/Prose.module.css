@@ -18,7 +18,8 @@
 .kicker[data-kind="me"] {
   color: var(--me-bright);
 }
-.kicker[data-kind="idea"] {
+.kicker[data-kind="idea"],
+.kicker[data-kind="til"] {
   color: var(--idea-text);
 }
 

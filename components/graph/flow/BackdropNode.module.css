@@ -30,7 +30,9 @@
   --tint: var(--me-rgb);
 }
 
-.idea {
+/* 생각과 그 안의 기록(til)은 한 갈래라 틀 색도 하나다 */
+.idea,
+.til {
   --tint: var(--idea-rgb);
 }
 
