@@ -3,6 +3,7 @@ import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
 
 /* 이론과 생각이 같은 문법(허브 → 챕터)을 쓰므로 집계도 한 목록에서 본다 */
 const clusters = [...theoryClusters, ...ideaClusters];
+import { getIdea } from "./ideas";
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
@@ -34,7 +35,9 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
   }
   /* 내용이 있는 것만 열린다 — 나머지는 이동·확대까지만 */
   const openable =
-    getTheory(node.id) || getTil(node.id) ? { clickable: true } : null;
+    getTheory(node.id) || getIdea(node.id) || getTil(node.id)
+      ? { clickable: true }
+      : null;
   const cluster = clusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
     /* TIL 아래는 챕터가 아니라 날짜다 — 세는 것이 다르면 이름도 달라야 한다 */

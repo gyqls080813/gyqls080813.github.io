@@ -1,10 +1,11 @@
+import { getIdea } from "./ideas";
 import { getPost } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
 
 /** 노드 하나가 열리면 무엇이 되는가 */
-export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "til";
+export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "idea" | "til";
 
 /**
  * 그래프에서 눌렀든 시트의 포트에서 눌렀든 이 판단 하나를 쓴다.
@@ -15,6 +16,7 @@ export function nodeOpenKind(nodeId: string): NodeOpenKind | null {
   if (getProject(nodeId)) return "project";
   if (getPost(nodeId)) return "post";
   if (getTheory(nodeId)) return "theory";
+  if (getIdea(nodeId)) return "idea";
   if (getTil(nodeId)) return "til";
   return null;
 }
@@ -28,6 +30,8 @@ export function nodeDestination(nodeId: string): string | null {
       return `/posts/${nodeId}`;
     case "theory":
       return `/theories/${nodeId}`;
+    case "idea":
+      return `/ideas/${nodeId}`;
     case "til":
       return `/tils/${nodeId}`;
     case "intro":
