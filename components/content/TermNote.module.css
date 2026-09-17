@@ -29,4 +29,6 @@
   font-size: 13px;
   line-height: 1.75;
   color: var(--text-soft);
+  /* 본문에 적은 줄바꿈(\\n)을 그대로 보여 준다 */
+  white-space: pre-line;
 }

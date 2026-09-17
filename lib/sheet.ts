@@ -6,6 +6,7 @@ import { getPost, posts } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
+import { getDictionary } from "./dictionary";
 import { nodeOpenKind } from "./nodeTarget";
 import { slugify } from "./slug";
 
@@ -31,6 +32,7 @@ import { slugify } from "./slug";
  */
 export function sheetNodeId(pathname: string): string | null {
   if (pathname === "/about") return "me";
+  if (pathname === "/dictionary") return "dict";
   const match = /^\/(?:posts|projects|theories|ideas|tils)\/([^/]+)\/?$/.exec(pathname);
   return match ? decodeURIComponent(match[1]) : null;
 }
@@ -80,6 +82,15 @@ export function sheetNavItems(nodeId: string): NavItem[] {
   /* 기록은 절만 세운다 — 블록 라벨까지 펴면 하루치 메모가 목차를 다 먹는다 */
   const til = getTil(nodeId);
   if (til) return til.sections.map((section) => item(section.heading));
+
+  /* 사전은 절(나온 문서) 아래 낱말까지 두 층 — 찾는 것이 낱말이라 목차에 있어야 한다 */
+  const dict = getDictionary(nodeId);
+  if (dict) {
+    return dict.sections.map((section) => ({
+      ...item(section.heading),
+      children: section.entries.map((entry) => item(entry.term)),
+    }));
+  }
 
   const project = getProject(nodeId);
   if (project) {
@@ -150,9 +161,11 @@ function edgePorts(nodeId: string, side: "in" | "out"): Port[] {
           ? "공부한 사람"
           : node.kind === "trouble"
             ? "트러블슈팅"
-            : side === "in"
-              ? "상위 개념"
-              : "하위 개념";
+            : id === "dict"
+              ? "사전"
+              : side === "in"
+                ? "상위 개념"
+                : "하위 개념";
       return [{ id, role, name: node.label, kind: node.kind }];
     });
 }
@@ -167,6 +180,16 @@ export function sheetPorts(nodeId: string): { left: Port[]; right: Port[] } {
     case "idea":
     case "til":
       return { left: edgePorts(nodeId, "in"), right: edgePorts(nodeId, "out") };
+
+    /* 사전의 왼쪽은 낱말이 나온 문서들 — 문서 → 사전 간선이 그대로 답이다.
+       트러블 글의 왼쪽이 발생한 곳이듯, 여기도 들어온 쪽이 출처다 */
+    case "dict":
+      return {
+        left: edgePorts(nodeId, "in").map((port) =>
+          port.kind === "theory" ? { ...port, role: "낱말이 나온 곳" } : port,
+        ),
+        right: [],
+      };
 
     case "project": {
       /* 왼쪽은 만든 사람, 오른쪽은 여기서 나온 트러블 슈팅 */

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { NodeKind } from "../graph/types";
+import InlineText from "./InlineText";
 import styles from "./TextBlock.module.css";
 
 /**
@@ -18,7 +19,9 @@ export default function TextBlock({
   return (
     <section className={styles.block} data-accent={accent}>
       <h3 className={styles.label}>{label}</h3>
-      <p className={styles.body}>{children}</p>
+      <p className={styles.body}>
+        <InlineText>{children}</InlineText>
+      </p>
     </section>
   );
 }

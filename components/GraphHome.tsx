@@ -14,6 +14,7 @@ import ProjectArticle from "./project/ProjectArticle";
 import TheoryArticle from "./theory/TheoryArticle";
 import IdeaArticle from "./idea/IdeaArticle";
 import TilArticle from "./til/TilArticle";
+import DictArticle from "./dictionary/DictArticle";
 import { SheetNav, useSheetView } from "./content";
 import { sheetNavItems } from "@/lib/sheet";
 import postStyles from "./content/Sheet.module.css";
@@ -24,6 +25,7 @@ import { getProject } from "@/lib/projects";
 import { getTheory } from "@/lib/theories";
 import { getIdea } from "@/lib/ideas";
 import { getTil } from "@/lib/tils";
+import { getDictionary } from "@/lib/dictionary";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./GraphHome.module.css";
 
@@ -36,7 +38,7 @@ interface Rect {
 
 interface Expanding {
   /** 글 노드는 글 페이지로, 프로젝트 노드는 프로젝트 페이지로, 민엽 노드는 소개 시트로 */
-  kind: "post" | "project" | "intro" | "theory" | "idea" | "til";
+  kind: "post" | "project" | "intro" | "theory" | "idea" | "til" | "dict";
   nodeId: string;
   from: Rect;
   to: Rect;
@@ -271,6 +273,8 @@ export default function GraphHome() {
                     <PostArticle post={getPost(expanding.nodeId)!} />
                   ) : expanding.kind === "til" ? (
                     <TilArticle til={getTil(expanding.nodeId)!} />
+                  ) : expanding.kind === "dict" ? (
+                    <DictArticle dictionary={getDictionary(expanding.nodeId)!} />
                   ) : (
                     <IntroSheet
                       onProjectClick={openNode}
