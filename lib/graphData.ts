@@ -75,20 +75,28 @@ export const fullGraphNodes: GraphNodeData[] = [
     hub: true,
   },
   { id: "fe-philosophy", label: "철학", kind: "idea", x: 330, y: 2454, r: 17, hub: true },
+  /* 알고리즘 — 작성법과 같은 모양이지만 닫힌 집합이 아니다. 작성법은 데이터
+     생애주기를 덮으려고 만든 것이라 일곱 단계에서 멈추고, 이쪽은 기법을 하나씩
+     알아 가는 만큼 늘어난다. 늘어나는 쪽이므로 항목마다 y를 2씩 띄워 둔다. */
+  { id: "algo", label: "알고리즘", kind: "idea", x: 330, y: 2456, r: 17, hub: true },
+  /* 기법 아래에 그 기법으로 푼 문제가 붙는다 — 기법이 허브고 문제가 챕터다.
+     그래서 y는 기법·문제를 섞어 내려 쓴다. 다음 기법은 이 문제들 밑에 선다. */
+  { id: "algo-bruteforce", label: "완전탐색", kind: "idea", x: 330, y: 2458, r: 15, hub: true },
+  { id: "swea-5188", label: "[SWEA] 5188. 최소합", kind: "idea", x: 330, y: 2460, r: 12 },
   /* 하루하루의 기록 — 작성법·철학과 성격이 다르다. 저 둘은 정리해서 쌓는 곳이고
      이쪽은 그날 있었던 일을 그날 적는 곳이다. 그래서 항목은 미리 만들어 두지
      않는다. 이름은 그날의 주제고, 쌓이는 순서가 곧 목차다.
 
      항목이 붙을 때는 y를 til보다 크게, 새것일수록 작게 준다 — 열 안의 순서는
      y가 정하므로 그래야 최근 것이 맨 위에 선다. */
-  { id: "til", label: "TIL", kind: "idea", x: 330, y: 2456, r: 17, hub: true },
+  { id: "til", label: "TIL", kind: "idea", x: 330, y: 2500, r: 17, hub: true },
   ...tilEntries.map(
     (entry, index): GraphNodeData => ({
       id: entry.id,
       label: entry.title,
       kind: "til",
       x: 330,
-      y: 2458 + index * 2,
+      y: 2502 + index * 2,
       r: 12,
     }),
   ),
@@ -364,6 +372,10 @@ export const ideaClusters = [
     chapters: ["craft-concurrency", "craft-error", "craft-trust"],
   },
   { hub: "craft-quality", chapters: ["craft-perf", "craft-a11y", "craft-observe"] },
+  /* 알고리즘도 같은 문법으로 매단다 — 중간 단계 없이 갈래 바로 아래에 기법이
+     선다. 작성법처럼 일곱으로 묶을 축이 아직 없어서다. 축이 보이면 그때 넣는다. */
+  { hub: "algo", chapters: ["algo-bruteforce"] },
+  { hub: "algo-bruteforce", chapters: ["swea-5188"] },
   /* TIL도 같은 문법으로 매단다 — 간선·트리·머리말이 전부 이 지도에서 나오므로
      여기 들어와야 기록이 그래프의 어느 가지에서 왔는지가 말이 된다 */
   { hub: "til", chapters: tilEntries.map((entry) => entry.id) },
@@ -601,6 +613,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   // 나 → 생각 (이론이 React·JS·TS로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
   { from: "me", to: "fe-philosophy" },
+  { from: "me", to: "algo" },
   { from: "me", to: "til" },
 
   // 개념 → 챕터 (계층: 하위 내용) — 이론과 생각이 같은 문법을 쓴다
@@ -740,7 +753,17 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     id: "bd-idea",
     label: "생각",
     tint: "idea",
-    members: ["bd-craft", "fe-philosophy", "bd-til"],
+    members: ["bd-craft", "fe-philosophy", "bd-algo", "bd-til"],
+  },
+  /* 알고리즘 — 작성법·TIL과 같은 모양으로, 접은 채 연다. 지금은 한 항목뿐이라
+     펴 둬도 쏟아지지 않지만, 첫 화면에 읽혀야 할 것은 항목이 아니라 갈래 넷의
+     이름이다. 형제가 다 접혀 있는데 여기만 펴면 그 줄이 어긋난다. */
+  {
+    id: "bd-algo",
+    label: "알고리즘",
+    tint: "idea",
+    collapsed: true,
+    members: ["algo", "algo-bruteforce", "swea-5188"],
   },
   /* TIL — 갈래 안에서 자기 틀을 가지는 둘째. 작성법과 같은 모양으로, 접은 채 연다.
      매일 한 줄씩 늘어나는 쪽이라 펴 두면 언젠가 첫 화면이 이 목록이 된다.
