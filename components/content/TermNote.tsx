@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import InlineText from "./InlineText";
 import styles from "./TermNote.module.css";
 
 /**
@@ -9,16 +10,21 @@ import styles from "./TermNote.module.css";
  */
 export default function TermNote({
   term,
+  kicker = "낱말",
   children,
 }: {
   term: string;
+  /** 박스 머리글. 낱말 풀이가 아니라 곁가지 설명이면 "참고" */
+  kicker?: string;
   children: ReactNode;
 }) {
   return (
     <aside className={styles.note}>
-      <span className={styles.kicker}>낱말</span>
+      <span className={styles.kicker}>{kicker}</span>
       <p className={styles.term}>{term}</p>
-      <p className={styles.body}>{children}</p>
+      <p className={styles.body}>
+        <InlineText>{children}</InlineText>
+      </p>
     </aside>
   );
 }

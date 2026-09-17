@@ -98,6 +98,12 @@ const TECHS = [
     desc: "핸드북과 레퍼런스 — 타입으로 규칙을 화면에 드러내려고 붙잡은 것들",
     topics: ["좁히기", "제네릭", "타입 조작", "유틸리티 타입", "선언 파일", "tsconfig"],
   },
+  {
+    id: "vue",
+    name: "Vue",
+    desc: "가이드와 API 참고서 목차를 옮겨 두고, 반응성이 React와 갈리는 자리부터 봅니다",
+    topics: ["반응성", "템플릿 문법", "v-model", "슬롯", "컴포저블", "Provide / inject"],
+  },
 ];
 
 const STACK = [

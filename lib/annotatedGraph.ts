@@ -7,6 +7,7 @@ import { getIdea } from "./ideas";
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
+import { getDictionary } from "./dictionary";
 
 /**
  * 글 데이터를 집계해 노드에 붙인 그래프.
@@ -35,9 +36,15 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
   }
   /* 내용이 있는 것만 열린다 — 나머지는 이동·확대까지만 */
   const openable =
-    getTheory(node.id) || getIdea(node.id) || getTil(node.id)
+    getTheory(node.id) || getIdea(node.id) || getTil(node.id) || getDictionary(node.id)
       ? { clickable: true }
       : null;
+  /* 사전은 아래에 노드가 없다 — 세는 것은 시트 안의 낱말이다 */
+  const dict = getDictionary(node.id);
+  if (dict) {
+    const words = dict.sections.reduce((sum, section) => sum + section.entries.length, 0);
+    return { ...node, ...openable, meta: `낱말 ${words}` };
+  }
   const cluster = clusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
     /* TIL 아래는 챕터가 아니라 날짜다 — 세는 것이 다르면 이름도 달라야 한다 */

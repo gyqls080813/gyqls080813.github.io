@@ -36,4 +36,6 @@
   font-size: var(--fs-sheet-body);
   line-height: 1.85;
   color: var(--text-body);
+  /* 본문에 적은 줄바꿈(\n)을 그대로 보여 준다 */
+  white-space: pre-line;
 }

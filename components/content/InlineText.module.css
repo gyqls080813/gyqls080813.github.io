@@ -1,0 +1,20 @@
+/* 노션의 인라인 코드처럼 — 글자보다 조금 작은 고정폭, 옅은 바탕, 둥근 모서리 */
+.code {
+  padding: 0.12em 0.4em;
+  border-radius: 4px;
+  background: var(--surface-inset);
+  border: 1px solid var(--border-subtle);
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding",
+    monospace;
+  font-size: 0.86em;
+  color: #eb5757;
+  /* 코드 한 덩어리가 줄 끝에서 둘로 쪼개지지 않게 */
+  white-space: nowrap;
+}
+
+/* 강조 — 문단에 묻히면 안 되는 한 문장. 굵기와 이론 색, 형광펜처럼 아래쪽만 옅게 칠한다 */
+.strong {
+  font-weight: 700;
+  color: var(--theory-text);
+  background: linear-gradient(transparent 62%, rgba(var(--theory-rgb), 0.22) 62%);
+}

@@ -14,7 +14,7 @@ import {
 import sheetStyles from "../content/Sheet.module.css";
 import styles from "./TheoryArticle.module.css";
 
-/** 한 블록 — 문단, 낱말 풀이, 코드 순서. 절이 있든 없든 모양이 같아야 한다 */
+/** 한 블록 — 문단, 낱말 풀이, 참고, 코드 순서. 절이 있든 없든 모양이 같아야 한다 */
 function Block({ block }: { block: TheoryBlock }) {
   return (
     <div className={styles.block} id={slugify(block.label)}>
@@ -26,7 +26,23 @@ function Block({ block }: { block: TheoryBlock }) {
           {term.body}
         </TermNote>
       ))}
+      {/* 참고는 본문 설명에 이어 붙는 곁가지라, 예제 코드보다 먼저 읽힌다 */}
+      {block.notes
+        ?.filter((note) => !note.bottom)
+        .map((note) => (
+          <TermNote key={note.title} term={note.title} kicker="참고">
+            {note.body}
+          </TermNote>
+        ))}
       {block.code && <CodeBlock>{block.code}</CodeBlock>}
+      {/* 코드까지 다 본 뒤에 읽을 참고 — 블록을 마무리하는 곁가지 */}
+      {block.notes
+        ?.filter((note) => note.bottom)
+        .map((note) => (
+          <TermNote key={note.title} term={note.title} kicker="참고">
+            {note.body}
+          </TermNote>
+        ))}
     </div>
   );
 }
