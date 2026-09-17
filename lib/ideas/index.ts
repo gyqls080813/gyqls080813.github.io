@@ -25,11 +25,15 @@ import { componentIdeas } from "./component";
 import { renderIdeas } from "./render";
 import { robustIdeas } from "./robust";
 import { qualityIdeas } from "./quality";
+import { algorithmIdeas } from "./algorithm";
 
 /**
  * 파일은 그래프의 축과 같은 선으로 나눈다 — 데이터가 들어와(진입) 받아오고
  * (수급) 어디에 두고(보관) 짜서(조립) 그리고(표현) 버티고(견고) 마감한다
  * (품질). 18개를 한 파일에 모으면 어느 축을 고치는지가 흐려진다.
+ *
+ * 알고리즘은 그 일곱 축 밖이다 — 작성법이 화면 하나를 만드는 순서라면 이쪽은
+ * 문제를 푸는 기법이라, 같은 시트 문법을 쓰되 갈래를 따로 세운다.
  */
 export const ideas: Idea[] = [
   ...entryIdeas,
@@ -39,6 +43,7 @@ export const ideas: Idea[] = [
   ...renderIdeas,
   ...robustIdeas,
   ...qualityIdeas,
+  ...algorithmIdeas,
 ];
 
 export function getIdea(id: string): Idea | undefined {
