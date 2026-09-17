@@ -1,6 +1,7 @@
 import type { GraphNodeData, NodeKind } from "@/components/graph/types";
 import { fullGraphEdges, fullGraphNodes } from "./graphData";
 import { nodePath } from "./nodePath";
+import { getIdea } from "./ideas";
 import { getPost, posts } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
@@ -32,7 +33,7 @@ import { slugify } from "./slug";
 export function sheetNodeId(pathname: string): string | null {
   if (pathname === "/about") return "me";
   if (pathname === "/dictionary") return "dict";
-  const match = /^\/(?:posts|projects|theories|tils)\/([^/]+)\/?$/.exec(pathname);
+  const match = /^\/(?:posts|projects|theories|ideas|tils)\/([^/]+)\/?$/.exec(pathname);
   return match ? decodeURIComponent(match[1]) : null;
 }
 
@@ -64,7 +65,8 @@ export const troublesOf = (projectId: string) =>
 
 /** 오른쪽 목차 — 노드 종류마다 제목을 어디서 얻는지가 다르다 */
 export function sheetNavItems(nodeId: string): NavItem[] {
-  const theory = getTheory(nodeId);
+  /* 생각 시트는 이론 시트와 같은 모양이라 목차도 같은 규칙으로 세운다 */
+  const theory = getTheory(nodeId) ?? getIdea(nodeId);
   if (theory) {
     /* 절이 있으면 절 제목을, 없으면(길잡이 시트) 블록 라벨을 세운다.
        절이 있을 때는 그 아래 블록까지 두 층으로 넘긴다 — 펴는 판단은 목차가 한다 */
@@ -173,8 +175,9 @@ const labelOf = (id: string) => nodeById.get(id)?.label ?? id;
 /** 시트 양옆의 포트 = 그래프에서 이 노드에 들어오고 나가는 선 */
 export function sheetPorts(nodeId: string): { left: Port[]; right: Port[] } {
   switch (nodeOpenKind(nodeId)) {
-    /* 기록도 계층이 간선에 있으므로 개념과 같은 방식으로 뽑는다 */
+    /* 생각·기록도 계층이 간선에 있으므로 개념과 같은 방식으로 뽑는다 */
     case "theory":
+    case "idea":
     case "til":
       return { left: edgePorts(nodeId, "in"), right: edgePorts(nodeId, "out") };
 

@@ -8,10 +8,7 @@ import { fullGraphNodes } from "@/lib/graphData";
 import { posts } from "@/lib/posts";
 /* 계층은 머리말과 같은 지도를 쓴다 — 둘이 각자 계산하면 다른 깊이를 말하게 된다 */
 import { chaptersOf, parentOf } from "@/lib/nodePath";
-import { nodeDestination, nodeHref } from "@/lib/nodeTarget";
-import { getTheory } from "@/lib/theories";
-import { getTil } from "@/lib/tils";
-import { getDictionary } from "@/lib/dictionary";
+import { nodeDestination, nodeHref, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./NodeTree.module.css";
 
 /**
@@ -174,8 +171,10 @@ function TheoryRow({ id }: { id: string }) {
           <span className={styles.count}>글 {references}</span>
         ) : undefined
       }
-      /* 내용이 있는 것만 링크가 된다 — 나머지는 아직 이름뿐이다 */
-      href={getTheory(id) || getTil(id) || getDictionary(id) ? treeHref(id) : undefined}
+      /* 내용이 있는 것만 링크가 된다 — 나머지는 아직 이름뿐이다.
+         무엇이 열리는지는 그래프·포트와 같은 판단 하나(nodeOpenKind)를 쓴다.
+         갈래마다 getTheory·getTil처럼 손으로 적으면 갈래가 늘 때 여기만 빠진다 */
+      href={nodeOpenKind(id) ? treeHref(id) : undefined}
     >
       {chapters?.map((child) => <TheoryRow key={child} id={child} />)}
     </TreeRow>
