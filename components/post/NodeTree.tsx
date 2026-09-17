@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
@@ -11,6 +11,7 @@ import { chaptersOf, parentOf } from "@/lib/nodePath";
 import { nodeDestination, nodeHref } from "@/lib/nodeTarget";
 import { getTheory } from "@/lib/theories";
 import { getTil } from "@/lib/tils";
+import { getDictionary } from "@/lib/dictionary";
 import styles from "./NodeTree.module.css";
 
 /**
@@ -58,6 +59,129 @@ const rootsOf = (kind: NodeKind) =>
 const theoryRoots = rootsOf("theory");
 const ideaRoots = rootsOf("idea");
 
+/**
+ * 트리 전체가 함께 보는 상태 — 접힌 갈래, 접고 펴기, 지금 열린 노드.
+ *
+ * 줄 컴포넌트를 NodeTree 안에서 만들면 NodeTree가 다시 그려질 때마다(노드를 고를
+ * 때마다) React가 다른 컴포넌트로 보고 트리 줄 전체를 지웠다가 새로 만든다.
+ * 그러면 트리가 흔들린다. 줄은 바깥에 두고 상태는 여기서 읽어, 강조만 바뀌게 한다.
+ */
+const TreeState = createContext<{
+  collapsed: ReadonlySet<string>;
+  toggle: (id: string) => void;
+  activeNodeId: string;
+}>({ collapsed: new Set(), toggle: () => {}, activeNodeId: "" });
+
+/**
+ * 트리의 한 줄 — 갈래가 달라도 이 모양은 같다.
+ *
+ * 화살표는 펴고, 이름은 연다. 둘을 한 버튼으로 합치면 아래가 있는 줄(프로젝트,
+ * Learn React…)은 이름을 눌러도 펴지기만 하고 그 노드로는 갈 수 없다.
+ * 아래가 없는 줄도 화살표 자리를 비워 둬야 같은 층의 이름이 한 줄로 선다.
+ */
+function TreeRow({
+  id,
+  label,
+  icon,
+  count,
+  href,
+  children,
+}: {
+  id: string;
+  label: string;
+  icon: ReactNode;
+  count?: ReactNode;
+  /** 열 것이 없으면 생략 — 이름이 링크가 되지 않는다 */
+  href?: string;
+  /** 아래에 그릴 것. 없으면 화살표 대신 빈 자리를 둔다 */
+  children?: ReactNode;
+}) {
+  const { collapsed, toggle, activeNodeId } = useContext(TreeState);
+  const open = !collapsed.has(id);
+  const active = id === activeNodeId;
+  const group = children !== undefined;
+
+  const inner = (
+    <>
+      {icon}
+      <span className={`${styles.rowLabel} ${group ? styles.groupLabel : ""}`}>
+        {label}
+      </span>
+      {count}
+    </>
+  );
+
+  return (
+    <div>
+      <div className={styles.rowSplit}>
+        {group ? (
+          <button
+            type="button"
+            className={styles.toggle}
+            onClick={() => toggle(id)}
+            aria-expanded={open}
+            aria-label={`${label} ${open ? "접기" : "펼치기"}`}
+          >
+            <Chevron open={open} />
+          </button>
+        ) : (
+          <span className={styles.togglePad} />
+        )}
+        {href ? (
+          <Link
+            href={href}
+            /* 본문 맨 위로 되돌리기는 SheetShell이 한다 — Next가 화면을 옮기면 트리까지 움직인다 */
+            scroll={false}
+            className={`${styles.row} ${styles.rowGrow} ${active ? styles.active : ""}`}
+            aria-current={active ? "page" : undefined}
+          >
+            {inner}
+          </Link>
+        ) : (
+          <div className={`${styles.row} ${styles.rowGrow}`}>{inner}</div>
+        )}
+      </div>
+      {group && open && <div className={styles.children}>{children}</div>}
+    </div>
+  );
+}
+
+/** 개념 한 줄 — 아래로 내려가는 것만 여기서 따진다 */
+function TheoryRow({ id }: { id: string }) {
+  const chapters = chaptersOf.get(id);
+  const references = posts.filter((post) =>
+    post.theories.some((theory) => theory.id === id),
+  ).length;
+  const kind = fullGraphNodes.find((node) => node.id === id)?.kind ?? "theory";
+
+  return (
+    <TreeRow
+      id={id}
+      label={nodeLabel(id)}
+      icon={
+        chapters ? (
+          <KindIcon kind={kind} size={13} />
+        ) : (
+          <span
+            className={`${styles.dot} ${DOT_CLASS[kind] ?? styles.dotTheory}`}
+          />
+        )
+      }
+      count={
+        chapters ? (
+          <span className={styles.count}>{chapters.length}</span>
+        ) : references > 0 ? (
+          <span className={styles.count}>글 {references}</span>
+        ) : undefined
+      }
+      /* 내용이 있는 것만 링크가 된다 — 나머지는 아직 이름뿐이다 */
+      href={getTheory(id) || getTil(id) || getDictionary(id) ? treeHref(id) : undefined}
+    >
+      {chapters?.map((child) => <TheoryRow key={child} id={child} />)}
+    </TreeRow>
+  );
+}
+
 /** 글 페이지 좌측의 노드 탐색기 — VS Code 탐색기 문법 */
 export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
   /* 처음에는 전부 펴 둔다 — 탐색기는 무엇이 어디 있는지 한눈에 보이는 것이
@@ -76,115 +200,15 @@ export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
   };
 
   const projects = fullGraphNodes.filter((node) => node.kind === "project");
-
-  /**
-   * 트리의 한 줄 — 갈래가 달라도 이 모양은 같다.
-   *
-   * 화살표는 펴고, 이름은 연다. 둘을 한 버튼으로 합치면 아래가 있는 줄(프로젝트,
-   * Learn React…)은 이름을 눌러도 펴지기만 하고 그 노드로는 갈 수 없다.
-   * 아래가 없는 줄도 화살표 자리를 비워 둬야 같은 층의 이름이 한 줄로 선다.
-   */
-  const TreeRow = ({
-    id,
-    label,
-    icon,
-    count,
-    href,
-    children,
-  }: {
-    id: string;
-    label: string;
-    icon: ReactNode;
-    count?: ReactNode;
-    /** 열 것이 없으면 생략 — 이름이 링크가 되지 않는다 */
-    href?: string;
-    /** 아래에 그릴 것. 없으면 화살표 대신 빈 자리를 둔다 */
-    children?: ReactNode;
-  }) => {
-    const open = !collapsed.has(id);
-    const active = id === activeNodeId;
-    const group = children !== undefined;
-
-    const inner = (
-      <>
-        {icon}
-        <span className={`${styles.rowLabel} ${group ? styles.groupLabel : ""}`}>
-          {label}
-        </span>
-        {count}
-      </>
-    );
-
-    return (
-      <div>
-        <div className={styles.rowSplit}>
-          {group ? (
-            <button
-              type="button"
-              className={styles.toggle}
-              onClick={() => toggle(id)}
-              aria-expanded={open}
-              aria-label={`${label} ${open ? "접기" : "펼치기"}`}
-            >
-              <Chevron open={open} />
-            </button>
-          ) : (
-            <span className={styles.togglePad} />
-          )}
-          {href ? (
-            <Link
-              href={href}
-              className={`${styles.row} ${styles.rowGrow} ${active ? styles.active : ""}`}
-              aria-current={active ? "page" : undefined}
-            >
-              {inner}
-            </Link>
-          ) : (
-            <div className={`${styles.row} ${styles.rowGrow}`}>{inner}</div>
-          )}
-        </div>
-        {group && open && <div className={styles.children}>{children}</div>}
-      </div>
-    );
-  };
-
-  /** 개념 한 줄 — 아래로 내려가는 것만 여기서 따진다 */
-  const TheoryRow = ({ id }: { id: string }) => {
-    const chapters = chaptersOf.get(id);
-    const references = posts.filter((post) =>
-      post.theories.some((theory) => theory.id === id),
-    ).length;
-    const kind = fullGraphNodes.find((node) => node.id === id)?.kind ?? "theory";
-
-    return (
-      <TreeRow
-        id={id}
-        label={nodeLabel(id)}
-        icon={
-          chapters ? (
-            <KindIcon kind={kind} size={13} />
-          ) : (
-            <span
-              className={`${styles.dot} ${DOT_CLASS[kind] ?? styles.dotTheory}`}
-            />
-          )
-        }
-        count={
-          chapters ? (
-            <span className={styles.count}>{chapters.length}</span>
-          ) : references > 0 ? (
-            <span className={styles.count}>글 {references}</span>
-          ) : undefined
-        }
-        /* 내용이 있는 것만 링크가 된다 — 나머지는 아직 이름뿐이다 */
-        href={getTheory(id) || getTil(id) ? treeHref(id) : undefined}
-      >
-        {chapters?.map((child) => <TheoryRow key={child} id={child} />)}
-      </TreeRow>
-    );
-  };
+  const treeState = useMemo(
+    () => ({ collapsed, toggle, activeNodeId }),
+    // toggle 은 setCollapsed 만 부르므로 바뀌어도 같은 일을 한다
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [collapsed, activeNodeId],
+  );
 
   return (
+    <TreeState.Provider value={treeState}>
     <nav className={styles.tree} aria-label="노드 탐색기">
       <Link href="/" className={styles.graphLink}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -256,5 +280,6 @@ export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
         ))}
       </div>
     </nav>
+    </TreeState.Provider>
   );
 }

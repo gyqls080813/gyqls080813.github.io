@@ -9,12 +9,24 @@ export type TheoryTerm = {
   body: string;
 };
 
-/** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이 */
+/**
+ * 본문과 곁가지로 이어지는 설명 — 낱말 풀이는 아니지만 읽다 보면 궁금해지는 것.
+ * 문서에 없는 보충이라 본문에 섞지 않고 "참고"로 따로 세운다.
+ */
+export type TheoryNote = {
+  title: string;
+  body: string;
+  /** 코드 아래, 블록 맨 끝에 둔다. 기본은 코드 위 */
+  bottom?: boolean;
+};
+
+/** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이, 참고 */
 export type TheoryBlock = {
   label: string;
   body: string;
   code?: string;
   terms?: TheoryTerm[];
+  notes?: TheoryNote[];
 };
 
 /**
@@ -51,15 +63,17 @@ export type Theory = {
 import { reactTheories } from "./react";
 import { javascriptTheories } from "./javascript";
 import { typescriptTheories } from "./typescript";
+import { vueTheories } from "./vue";
 
 /**
- * 갈래마다 파일을 나눈다 — 그래프가 React·JS·TS로 갈라져 있는 것과 같은 선이다.
+ * 갈래마다 파일을 나눈다 — 그래프가 React·JS·TS·Vue로 갈라져 있는 것과 같은 선이다.
  * 목차를 통째로 옮겨 둔 터라 한 파일에 모으면 어느 갈래를 고치는지가 흐려진다.
  */
 export const theories: Theory[] = [
   ...reactTheories,
   ...javascriptTheories,
   ...typescriptTheories,
+  ...vueTheories,
 ];
 
 export function getTheory(id: string): Theory | undefined {

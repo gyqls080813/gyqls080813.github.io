@@ -2,9 +2,10 @@ import { getPost } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
+import { getDictionary } from "./dictionary";
 
 /** 노드 하나가 열리면 무엇이 되는가 */
-export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "til";
+export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "til" | "dict";
 
 /**
  * 그래프에서 눌렀든 시트의 포트에서 눌렀든 이 판단 하나를 쓴다.
@@ -16,6 +17,7 @@ export function nodeOpenKind(nodeId: string): NodeOpenKind | null {
   if (getPost(nodeId)) return "post";
   if (getTheory(nodeId)) return "theory";
   if (getTil(nodeId)) return "til";
+  if (getDictionary(nodeId)) return "dict";
   return null;
 }
 
@@ -30,6 +32,9 @@ export function nodeDestination(nodeId: string): string | null {
       return `/theories/${nodeId}`;
     case "til":
       return `/tils/${nodeId}`;
+    /* 사전은 하나뿐이라 id 없이 고정 주소다 */
+    case "dict":
+      return "/dictionary";
     case "intro":
       return "/about";
     default:
