@@ -92,7 +92,7 @@ export const typescriptTheories: Theory[] = [
     name: "일상적인 타입",
     tagline: "자바스크립트에서 매일 만나는 값을 타입스크립트로 적는 법",
     intro:
-      "자바스크립트 코드에서 흔히 쓰는 값들을 타입스크립트에서는 어떤 타입으로 적는지 설명하는 장입니다. 모든 타입을 다루지는 않고, 뒤에 나올 복잡한 타입들의 재료가 되는 기본 타입부터 짚습니다. 문서의 대제목마다 시트 하나로 나눠 따라가며 정리합니다.",
+      "자바스크립트 코드에서 흔히 쓰는 값들을 타입스크립트에서는 어떤 타입으로 적는지 설명하는 장입니다. 모든 타입을 다루지는 않고, 뒤에 나올 복잡한 타입들의 재료가 되는 기본 타입부터 짚습니다. 타입은 타입 어노테이션 말고도 훨씬 많은 자리에 나오는데, 타입 자체를 배우면서 그 타입을 가리켜 새 구성을 만드는 자리들도 함께 배웁니다. 문서의 대제목마다 시트 하나로 나눠 따라가며 정리합니다.",
     blocks: [
       {
         label: "열네 개의 대제목",
@@ -125,7 +125,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "대문자 String, Number, Boolean은 래퍼 객체의 타입이다",
-        body: "대문자 `String`, `Number`, `Boolean`도 문법상 쓸 수 있지만, 원시 값이 아니라 `new String(\"a\")` 같은 래퍼 객체의 타입입니다. 래퍼 객체는 `typeof`가 `\"object\"`이고, 같은 글자여도 `===`로 같지 않으며, `new Boolean(false)`도 객체라서 참이 됩니다. 이런 이유로 소문자 `string`을 요구하는 자리에 넘길 수도 없습니다. 그래서 타입은 항상 소문자로 씁니다. 반면 `new` 없이 `String(123)`처럼 함수로 부르는 것은 원시 값으로 바꾸는 형 변환이라 흔하게 씁니다.",
+        body: "대문자 `String`, `Number`, `Boolean`도 문법상 쓸 수 있지만, 코드에 나올 일이 거의 없는 특별한 내장 타입을 가리킵니다. 원시 값이 아니라 `new String(\"a\")` 같은 래퍼 객체의 타입이에요. 래퍼 객체는 `typeof`가 `\"object\"`이고, 같은 글자여도 `===`로 같지 않으며, `new Boolean(false)`도 객체라서 참이 됩니다. 이런 이유로 소문자 `string`을 요구하는 자리에 넘길 수도 없습니다. 그래서 타입은 항상 소문자로 씁니다. 반면 `new` 없이 `String(123)`처럼 함수로 부르는 것은 원시 값으로 바꾸는 형 변환이라 흔하게 씁니다.",
         terms: [
           {
             term: "래퍼 객체 (wrapper object)",
@@ -184,11 +184,11 @@ export const typescriptTheories: Theory[] = [
       {
         label: "any는 그 값의 타입 검사를 끈다",
         body: "`any`는 특정 값 때문에 타입 검사 에러가 나지 않게 할 때 쓰는 타입입니다.\n값의 타입이 `any`이면\n1. 아무 속성에나 접근하고,\n2. 함수처럼 호출하고,\n3. 아무 타입과 서로 대입하는 등\n문법만 맞으면 거의 모든 것을 할 수 있습니다. 이때 꺼낸 속성도 다시 `any`가 되어, 검사가 꺼진 상태가 꺼내 쓰는 곳으로 계속 번집니다.\n단순한 코드 한 줄을 위해 긴 타입을 적어야 하는 상황이라면, `any` 타입은 상당히 유용합니다. 하지만 타입스크립트보다 내가 상황을 더 잘 알아 타입을 무시해도 돼! 라는 의미입니다. 만약 틀린 코드에 `any` 를 사용했다면, 컴파일은 통과하고 런타임 단계에서 문제가 발생합니다.",
-        code: "let obj: any = { x: 0 };\n// 아래 어느 줄도 컴파일 에러가 나지 않는다\nobj.foo();             // 없는 메서드 호출 → 실행하면 터진다\nobj();                 // 객체를 함수처럼 호출 → 실행하면 터진다\nobj.bar = 100;         // 없는 속성에 대입\nobj = \"hello\";         // 객체였는데 문자열 대입\nconst n: number = obj; // 문자열인데 number 변수에 대입",
+        code: "let obj: any = { x: 0 };\n// 아래 어느 줄도 컴파일 에러가 나지 않는다.\n// any 를 쓰면 그 뒤의 타입 검사가 모두 꺼지고,\n// 타입스크립트보다 내가 환경을 더 잘 안다고 가정한다.\nobj.foo();             // 없는 메서드 호출 → 실행하면 터진다\nobj();                 // 객체를 함수처럼 호출 → 실행하면 터진다\nobj.bar = 100;         // 없는 속성에 대입\nobj = \"hello\";         // 객체였는데 문자열 대입\nconst n: number = obj; // 문자열인데 number 변수에 대입",
       },
       {
         label: "noImplicitAny: 조용히 생긴 any를 에러로 잡는다",
-        body: "타입을 적지 않았고 문맥에서 추론할 수도 없으면, 컴파일러는 조용히 타입을 `any`로 둡니다. `any`는 컴파일 단계의 검사를 하지 않고, 위에서 명시한 문제가 발생할 수 있으니, 이런 경우는 피하는 게 좋습니다.\nTS 에는 `noImplicitAny` 옵션이 있는데, 해당 옵션을 켜면 이렇게 암묵적으로 생긴 `any`를 에러로 표시해 줍니다.",
+        body: "타입을 적지 않았고 문맥에서 추론할 수도 없으면, 컴파일러는 대개 조용히 타입을 `any`로 둡니다. `any`는 컴파일 단계의 검사를 하지 않고, 위에서 명시한 문제가 발생할 수 있으니, 이런 경우는 피하는 게 좋습니다.\nTS 에는 `noImplicitAny` 옵션이 있는데, 해당 옵션을 켜면 이렇게 암묵적으로 생긴 `any`를 에러로 표시해 줍니다.",
         code: "function greet(name) {\n  return name.toUpperCase();\n}\n// noImplicitAny 를 켜면:\n// 'name' 매개 변수에는 암시적으로 'any' 형식이 포함됩니다.",
       },
     ],
@@ -265,7 +265,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "익명 함수 (Anonymous Functions)",
-        body: "익명 함수는 함수 선언과 조금 다릅니다. 어떻게 호출될지 타입스크립트가 알 수 있는 자리에 함수가 놓이면, 그 함수의 매개변수에 자동으로 타입이 붙습니다.\n아래에서 `s`에 타입을 적지 않았는데도, `names`가 `string[]`으로 추론되고 `string[]`의 `forEach`는 원소(`string`)를 하나씩 받는 함수를 인자로 받으므로 `s`는 `string`이 됩니다.\n이 과정을 문맥적 타이핑이라고 합니다. 어떻게 일어나는지 외울 필요는 없지만, 이런 일이 일어난다는 것을 알면 타입 어노테이션이 필요 없는 자리를 알아보는 데 도움이 됩니다.",
+        body: "익명 함수는 함수 선언과 조금 다릅니다. 어떻게 호출될지 타입스크립트가 알 수 있는 자리에 함수가 놓이면, 그 함수의 매개변수에 자동으로 타입이 붙습니다.\n아래에서 `s`에 타입을 적지 않았는데도, `names`가 `string[]`으로 추론되고 `string[]`의 `forEach`는 원소(`string`)를 하나씩 받는 함수를 인자로 받으므로 `s`는 `string`이 됩니다.\n이 과정을 문맥적 타이핑이라고 합니다. 어떻게 일어나는지 외울 필요는 없지만, 이런 일이 일어난다는 것을 알면 타입 어노테이션이 필요 없는 자리를 알아보는 데 도움이 됩니다. 값이 놓인 문맥이 그 값의 타입에 영향을 주는 예는 뒤에서 더 나옵니다.",
         terms: [
           {
             term: "문맥적 타이핑 (contextual typing)",
@@ -330,7 +330,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "타입을 조합하기 시작한다",
-        body: "지금까지는 `string`, `number[]`, 함수, 객체처럼 타입 하나를 적는 법을 봤습니다. 문서는 이제 이 타입들을 조합해 새 타입을 만들기 시작하고, 그 첫 방법이 유니온 타입입니다.\n6절 선택적 속성을 읽을 때 `last?: string`이 `string | undefined`가 됐던 것처럼, 값이 여러 타입 중 하나일 수 있는 경우를 정식으로 다루는 것이 유니온 타입입니다.",
+        body: "지금까지는 `string`, `number[]`, 함수, 객체처럼 타입 하나를 적는 법을 봤습니다. 타입스크립트의 타입 시스템은 다양한 연산자로 기존 타입에서 새 타입을 만들 수 있게 해 주는데, 이제 이 타입들을 조합하기 시작합니다. 그 첫 방법이 유니온 타입입니다.\n6절 선택적 속성을 읽을 때 `last?: string`이 `string | undefined`가 됐던 것처럼, 값이 여러 타입 중 하나일 수 있는 경우를 정식으로 다루는 것이 유니온 타입입니다.",
         notes: [
           {
             title: "?와 string | undefined는 완전히 같지 않다",
@@ -346,7 +346,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "유니온 타입 다루기 (Working with Union Types)",
-        body: "유니온 타입에 맞는 값을 넘기기는 쉽습니다. 멤버 중 아무거나에 맞는 값을 넘기면 됩니다. 까다로운 건 유니온 타입의 값을 받아서 쓸 때입니다.\n타입스크립트는 유니온의 모든 멤버에서 가능한 동작만 허용합니다. `string | number`에서는 `string`에만 있는 `toUpperCase()`를 쓸 수 없는데, `id`가 `number`일 때 실행하면 터질 수 있기 때문입니다. 6절 선택적 속성에서 막혔던 것과 같은 원리입니다.\n해결책은 코드로 유니온을 좁히는 것입니다. `typeof id === \"string\"`처럼 확인하면 그 분기 안에서는 `string`만 남고, `else`에서는 따로 하지 않아도 남은 멤버인 `number`로 좁혀집니다. 배열은 `typeof`가 `\"object\"`라 구분할 수 없어서 `Array.isArray`로 확인합니다.",
+        body: "유니온 타입에 맞는 값을 넘기기는 쉽습니다. 멤버 중 아무거나에 맞는 값을 넘기면 됩니다. 까다로운 건 유니온 타입의 값을 받아서 쓸 때입니다.\n타입스크립트는 유니온의 모든 멤버에서 가능한 동작만 허용합니다. `string | number`에서는 `string`에만 있는 `toUpperCase()`를 쓸 수 없는데, `id`가 `number`일 때 실행하면 터질 수 있기 때문입니다. 6절 선택적 속성에서 막혔던 것과 같은 원리입니다.\n해결책은 타입 어노테이션이 없는 자바스크립트에서 하던 것과 똑같이, 코드로 유니온을 좁히는 것입니다. `typeof id === \"string\"`처럼 확인하면 그 분기 안에서는 `string`만 남고, `else`에서는 따로 하지 않아도 남은 멤버인 `number`로 좁혀집니다. 배열은 `typeof`가 `\"object\"`라 구분할 수 없어서 `Array.isArray`로 확인합니다. 이때도 `else`에서는 따로 할 것이 없습니다. `x`가 `string[]`이 아니었다면 `string`일 수밖에 없으니까요.",
         terms: [
           {
             term: "좁히기 (narrowing)",
@@ -404,7 +404,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "별칭은 별칭일 뿐, 새 타입이 아니다",
-        body: "별칭은 단순히 타입스크립트가 지원하는 범위 내에서 우리만의 타입을 커스텀 한것입니다. 별칭을 사용했다고 해서, 타입스크립트가 기존에 하지 않았던 것을 지원하지 않습니다.\n예를 들어 `type Won = number`와 `type Dollar = number`로 원화와 달러에 이름을 붙여도, 둘 다 결국 `number`의 별명이라 원화 금액을 달러 변수에 넣어도 에러가 나지 않습니다. 이름으로 구분하고 싶어도, 타입스크립트는 이름이 아니라 원래 타입(`number`)을 보기 때문입니다.\n공식 문서에서는 다음과 같은 예시를 들어 줍니다.\n아래 코드는 정리를 거친 문자열만 담고 싶어서 `UserInputSanitizedString`이라는 이름을 붙였어요. 그런데 이 이름도 결국 `string`의 별명일 뿐이라, 정리하지 않은 아무 문자열(`\"new input\"`)을 넣어도 에러가 나지 않습니다. 얼핏 보면 틀린 코드 같지만, 두 타입 모두 같은 `string`을 가리키는 이름이라 문제가 없는 거죠! 결국 이름을 붙여도, 타입스크립트는 이름이 아니라 모양을 봅니다.",
+        body: "별칭은 별칭일 뿐입니다. 타입 별칭으로 같은 타입의 서로 다른 \"버전\"을 만들 수는 없고, 별칭을 쓰는 것은 원래 타입을 그 자리에 그대로 적은 것과 똑같습니다.\n예를 들어 `type Won = number`와 `type Dollar = number`로 원화와 달러에 이름을 붙여도, 둘 다 결국 `number`의 별명이라 원화 금액을 달러 변수에 넣어도 에러가 나지 않습니다. 이름으로 구분하고 싶어도, 타입스크립트는 이름이 아니라 원래 타입(`number`)을 보기 때문입니다.\n공식 문서에서는 다음과 같은 예시를 들어 줍니다.\n아래 코드는 정리를 거친 문자열만 담고 싶어서 `UserInputSanitizedString`이라는 이름을 붙였어요. 그런데 이 이름도 결국 `string`의 별명일 뿐이라, 정리하지 않은 아무 문자열(`\"new input\"`)을 넣어도 에러가 나지 않습니다. 얼핏 보면 틀린 코드 같지만, 두 타입 모두 같은 `string`을 가리키는 이름이라 문제가 없는 거죠! 결국 이름을 붙여도, 타입스크립트는 이름이 아니라 모양을 봅니다.",
         code: "// 이름은 다르지만 둘 다 number 의 별명이다\ntype Won = number;\ntype Dollar = number;\n\nconst price: Won = 10000;\nconst usd: Dollar = price; // 원화를 달러 변수에 넣어도 에러가 나지 않는다\n\ntype UserInputSanitizedString = string;\n\nfunction sanitizeInput(str: string): UserInputSanitizedString {\n  return sanitize(str);\n}\n\n// 정리된 입력을 만든다\nlet userInput = sanitizeInput(getInput());\n\n// 그래도 그냥 string 을 다시 넣을 수 있다 — 에러 없음\nuserInput = \"new input\";",
       },
     ],
@@ -422,7 +422,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "인터페이스는 객체 타입에 이름을 붙이는 또 다른 방법이다",
-        body: "인터페이스 선언은 객체 타입에 이름을 붙이는 또 다른 방법입니다. `interface 이름 { ... }` 모양으로 적고, 타입 별칭과 달리 `=`를 쓰지 않습니다.\n아래 `printCoord(pt: Point)`는 앞의 타입 별칭 예제와 똑같이 동작합니다. 타입스크립트는 `printCoord`에 넘긴 값의 구조만 봅니다. 기대한 속성(`x`, `y`)을 가지고 있는지만 신경 쓰고, 그 값이 `Point`라는 이름으로 만들어졌는지는 보지 않아요.\n이렇게 이름이 아니라 구조와 할 수 있는 일만 보기 때문에, 타입스크립트를 구조적 타입 시스템이라고 부릅니다.",
+        body: "인터페이스 선언은 객체 타입에 이름을 붙이는 또 다른 방법입니다. `interface 이름 { ... }` 모양으로 적고, 타입 별칭과 달리 `=`를 쓰지 않습니다.\n아래 `printCoord(pt: Point)`는 앞의 타입 별칭 예제처럼, 이름 없는 객체 타입을 직접 적었을 때와 똑같이 동작합니다. 타입스크립트는 `printCoord`에 넘긴 값의 구조만 봅니다. 기대한 속성(`x`, `y`)을 가지고 있는지만 신경 쓰고, 그 값이 `Point`라는 이름으로 만들어졌는지는 보지 않아요.\n이렇게 이름이 아니라 구조와 할 수 있는 일만 보기 때문에, 타입스크립트를 구조적 타입 시스템이라고 부릅니다.",
         terms: [
           {
             term: "구조적 타입 시스템 (structural type system)",
@@ -433,18 +433,18 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "타입 별칭과 인터페이스의 차이 (Differences Between Type Aliases and Interfaces)",
-        body: "타입 별칭과 인터페이스는 아주 비슷해서, 대부분의 경우 둘 중 아무거나 골라 써도 됩니다. `interface`의 거의 모든 기능을 `type`으로도 할 수 있어요.\n**가장 큰 차이는 나중에 속성을 더할 수 있느냐입니다.** **인터페이스는 언제든 다시 열어 속성을 추가할 수 있지만, 타입 별칭은 한 번 만들면 다시 열 수 없습니다.**\n- 확장하기: 인터페이스는 `extends`로, 타입 별칭은 `&`(교차 타입)로 다른 타입의 속성을 이어받습니다.\n- 속성 추가하기: 같은 이름의 인터페이스를 한 번 더 선언하면 두 선언이 합쳐지고, 같은 이름의 타입 별칭을 한 번 더 선언하면 에러가 납니다.\n문서도 이 개념들은 뒤 장에서 더 자세히 다루니, 지금 전부 이해하지 못해도 괜찮다고 말합니다.",
+        body: "타입 별칭과 인터페이스는 아주 비슷해서, 대부분의 경우 둘 중 아무거나 골라 써도 됩니다. `interface`의 거의 모든 기능을 `type`으로도 할 수 있어요.\n**가장 큰 차이는 나중에 속성을 더할 수 있느냐입니다.** **인터페이스는 언제든 다시 열어 속성을 추가할 수 있지만, 타입 별칭은 한 번 만들면 다시 열 수 없습니다.**\n- 확장하기: 인터페이스는 `extends`로, 타입 별칭은 `&`(교차 타입)로 다른 타입의 속성을 이어받습니다.\n- 속성 추가하기: 같은 이름의 인터페이스를 한 번 더 선언하면 두 선언이 합쳐지고, 타입 별칭은 만든 뒤에 바꿀 수 없어서 같은 이름으로 한 번 더 선언하면 에러가 납니다. 문서 예제는 브라우저에 이미 있는 `Window` 인터페이스에 `ts` 속성을 더하는 모습입니다.\n문서도 이 개념들은 뒤 장에서 더 자세히 다루니, 지금 전부 이해하지 못해도 괜찮다고 말합니다.",
         terms: [
           {
             term: "교차 타입 (&)",
             body: "두 타입을 합쳐, 양쪽의 속성을 모두 가진 타입을 만듭니다. `Animal & { honey: boolean }`은 `name`과 `honey`를 모두 가져야 합니다. 유니온(`|`)이 둘 중 하나라면, 교차(`&`)는 둘 다입니다.",
           },
         ],
-        code: "// 확장하기 — interface 는 extends\ninterface Animal {\n  name: string;\n}\ninterface Bear extends Animal {\n  honey: boolean;\n}\n\n// 확장하기 — type 은 & (교차 타입)\ntype AnimalType = {\n  name: string;\n};\ntype BearType = AnimalType & {\n  honey: boolean;\n};\n\n// 속성 추가하기 — 같은 이름의 interface 는 합쳐진다\ninterface Settings {\n  title: string;\n}\ninterface Settings {\n  theme: string;\n}\nconst settings: Settings = { title: \"블로그\", theme: \"dark\" }; // 둘 다 있어야 한다\n\n// 같은 이름의 type 은 다시 만들 수 없다\ntype SettingsType = {\n  title: string;\n};\ntype SettingsType = {\n  theme: string;\n};\n// 'SettingsType' 식별자가 중복되었습니다.",
+        code: "// 확장하기 — interface 는 extends\ninterface Animal {\n  name: string;\n}\ninterface Bear extends Animal {\n  honey: boolean;\n}\nconst bear = getBear();\nbear.name;\nbear.honey;\n\n// 확장하기 — type 은 & (교차 타입)\ntype AnimalType = {\n  name: string;\n};\ntype BearType = AnimalType & {\n  honey: boolean;\n};\nconst bearType = getBearType();\nbearType.name;\nbearType.honey;\n\n// 속성 추가하기 — 같은 이름의 interface 는 합쳐진다\ninterface Window {\n  title: string;\n}\ninterface Window {\n  ts: TypeScriptAPI;\n}\nconst src = 'const a = \"Hello World\"';\nwindow.ts.transpileModule(src, {});\n\n// type 은 만든 뒤에 바꿀 수 없다\ntype WindowType = {\n  title: string;\n};\ntype WindowType = {\n  ts: TypeScriptAPI;\n};\n// 'WindowType' 식별자가 중복되었습니다.",
       },
       {
         label: "그 밖의 차이와 고르는 기준",
-        body: "문서는 그 밖의 차이도 짧게 짚어 줍니다.\n- 타입스크립트 4.2 이전에는 에러 메시지에 타입 별칭 이름 대신 원래 모양이 나오기도 했습니다. 인터페이스는 항상 이름으로 나옵니다.\n- 같은 이름끼리 합쳐지는 선언 병합은 인터페이스만 됩니다.\n- 인터페이스는 객체의 모양만 적을 수 있고, `string` 같은 원시 타입에 다른 이름을 붙일 수는 없습니다. 원시 타입이나 유니온에 이름을 붙이려면 타입 별칭을 씁니다.\n- 인터페이스 이름은 에러 메시지에 항상 원래 이름으로 나오지만, 그 이름으로 썼을 때만입니다.\n- `extends`로 확장한 인터페이스가 `&`로 합친 타입 별칭보다 컴파일러가 더 빠르게 처리하는 경우가 많습니다.\n대부분은 취향대로 골라도 되고, 다른 쪽이 필요하면 타입스크립트가 알려 줍니다. 기준이 필요하다면, 문서는 `type`의 기능이 필요해지기 전까지는 `interface`를 쓰라고 권합니다.",
+        body: "문서는 그 밖의 차이도 짧게 짚어 줍니다.\n- 타입스크립트 4.2 이전에는 에러 메시지에 타입 별칭 이름이 나올 수 있었고, 때로는 같은 뜻의 익명 타입 대신 별칭 이름이 나오기도 했습니다(원하는 결과일 수도, 아닐 수도 있습니다). 인터페이스는 에러 메시지에 항상 이름으로 나옵니다.\n- 같은 이름끼리 합쳐지는 선언 병합은 인터페이스만 됩니다.\n- 인터페이스는 객체의 모양만 적을 수 있고, `string` 같은 원시 타입에 다른 이름을 붙일 수는 없습니다. 원시 타입이나 유니온에 이름을 붙이려면 타입 별칭을 씁니다.\n- 인터페이스 이름은 에러 메시지에 항상 원래 이름으로 나오지만, 그 이름으로 썼을 때만입니다.\n- `extends`로 확장한 인터페이스가 `&`로 합친 타입 별칭보다 컴파일러가 더 빠르게 처리하는 경우가 많습니다.\n대부분은 취향대로 골라도 되고, 다른 쪽이 필요하면 타입스크립트가 알려 줍니다. 기준이 필요하다면, 문서는 `type`의 기능이 필요해지기 전까지는 `interface`를 쓰라고 권합니다.",
         code: "// 원시 타입이나 유니온에 이름을 붙이는 건 type 만 된다\ntype Name = string;\ntype ID = number | string;\n\n// interface 는 객체 모양만 적는다\ninterface User {\n  name: Name;\n  id: ID;\n}",
       },
     ],
@@ -491,17 +491,17 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "특정 값 하나도 타입이 될 수 있다",
-        body: "`string`, `number` 같은 일반 타입 말고도, 타입 자리에 특정 문자열이나 숫자 하나를 적을 수 있습니다. 이걸 리터럴 타입이라고 합니다.\n자바스크립트의 변수 선언을 떠올리면 이해가 쉬워요. `let`은 안에 든 값을 바꿀 수 있고 `const`는 바꿀 수 없죠. 타입스크립트는 이 차이를 그대로 타입에 반영합니다. `let`으로 만든 변수는 아무 문자열이나 담을 수 있으니 `string`이 되고, `const`로 만든 변수는 그 문자열 하나만 담을 수 있으니 `\"Hello World\"`라는 리터럴 타입이 됩니다.",
+        body: "`string`, `number` 같은 일반 타입 말고도, 타입 자리에 특정 문자열이나 숫자 하나를 적을 수 있습니다. 이걸 리터럴 타입이라고 합니다.\n자바스크립트의 변수 선언을 떠올리면 이해가 쉬워요. `var`와 `let`은 안에 든 값을 바꿀 수 있고 `const`는 바꿀 수 없죠. 타입스크립트는 이 차이를 그대로 타입에 반영합니다. `let`으로 만든 변수는 아무 문자열이나 담을 수 있으니 `string`이 되고, `const`로 만든 변수는 그 문자열 하나만 담을 수 있으니 `\"Hello World\"`라는 리터럴 타입이 됩니다.",
         code: "let changingString = \"Hello World\";\nchangingString = \"Olá Mundo\";\n// 어떤 문자열이든 담을 수 있으니 타입은 string\n\nconst constantString = \"Hello World\";\n// 이 문자열 하나만 담을 수 있으니 타입은 \"Hello World\"",
       },
       {
         label: "리터럴 타입은 유니온으로 묶을 때 쓸모가 생긴다",
         body: "리터럴 타입 하나만으로는 별로 쓸모가 없습니다. 값이 하나뿐인 변수는 쓸 일이 거의 없으니까요.\n하지만 리터럴 타입을 유니온으로 묶으면 훨씬 쓸모 있어집니다. 예를 들어 정해진 값들만 받는 함수를 만들 수 있어요. `\"left\" | \"right\" | \"center\"`로 적어 두면 오타(`\"centre\"`)도 컴파일에서 잡힙니다. 숫자 리터럴도 똑같이 쓸 수 있고, `Options | \"auto\"`처럼 리터럴이 아닌 타입과 섞을 수도 있습니다.\n불리언 리터럴 타입도 있습니다. `true`와 `false` 두 개뿐이고, 사실 `boolean` 타입은 `true | false` 유니온의 별칭입니다.",
-        code: "let x: \"hello\" = \"hello\";\nx = \"howdy\";\n// '\"howdy\"' 형식은 '\"hello\"' 형식에 할당할 수 없습니다.\n\n// 정해진 값만 받는다\nfunction printText(s: string, alignment: \"left\" | \"right\" | \"center\") {}\nprintText(\"Hello, world\", \"left\");\nprintText(\"G'day, mate\", \"centre\");\n// '\"centre\"' 형식의 인수는 '\"center\" | \"left\" | \"right\"' 형식의 매개 변수에 할당될 수 없습니다.\n\n// 숫자 리터럴\nfunction compare(a: string, b: string): -1 | 0 | 1 {\n  return a === b ? 0 : a > b ? 1 : -1;\n}\n\n// 리터럴이 아닌 타입과 섞기\ninterface Options {\n  width: number;\n}\nfunction configure(x: Options | \"auto\") {}\nconfigure({ width: 100 });\nconfigure(\"auto\");\nconfigure(\"automatic\");\n// '\"automatic\"' 형식의 인수는 '\"auto\" | Options' 형식의 매개 변수에 할당될 수 없습니다.",
+        code: "let x: \"hello\" = \"hello\";\n// OK\nx = \"hello\";\n// ...\nx = \"howdy\";\n// '\"howdy\"' 형식은 '\"hello\"' 형식에 할당할 수 없습니다.\n\n// 정해진 값만 받는다\nfunction printText(s: string, alignment: \"left\" | \"right\" | \"center\") {}\nprintText(\"Hello, world\", \"left\");\nprintText(\"G'day, mate\", \"centre\");\n// '\"centre\"' 형식의 인수는 '\"left\" | \"right\" | \"center\"' 형식의 매개 변수에 할당될 수 없습니다.\n\n// 숫자 리터럴\nfunction compare(a: string, b: string): -1 | 0 | 1 {\n  return a === b ? 0 : a > b ? 1 : -1;\n}\n\n// 리터럴이 아닌 타입과 섞기\ninterface Options {\n  width: number;\n}\nfunction configure(x: Options | \"auto\") {}\nconfigure({ width: 100 });\nconfigure(\"auto\");\nconfigure(\"automatic\");\n// '\"automatic\"' 형식의 인수는 'Options | \"auto\"' 형식의 매개 변수에 할당될 수 없습니다.",
       },
       {
         label: "리터럴 추론 (Literal Inference)",
-        body: "객체로 변수를 초기화하면, 타입스크립트는 그 객체의 속성 값이 나중에 바뀔 수 있다고 봅니다. 그래서 `{ counter: 0 }`의 `counter`는 `0`이 아니라 `number`가 됩니다. 타입은 읽을 때와 쓸 때 모두에 쓰이기 때문이에요.\n문자열도 마찬가지입니다. 아래 `req.method`는 `\"GET\"`이 아니라 `string`으로 추론됩니다. `req`를 만든 뒤 `handleRequest`를 부르기 전에 누군가 `req.method`에 `\"GUESS\"` 같은 문자열을 넣을 수도 있으니, `\"GET\" | \"POST\"`만 받는 함수에 넘기면 에러가 납니다.\n해결 방법은 두 가지입니다.\n1. 타입 단언으로 추론을 바꿉니다. 객체를 만들 때 `\"GET\" as \"GET\"`으로 적으면 \"이 속성은 늘 `\"GET\"`이다\"라는 뜻이고, 함수에 넘길 때 `req.method as \"GET\"`으로 적으면 \"다른 이유로 지금은 `\"GET\"`인 걸 안다\"라는 뜻입니다.\n2. `as const`로 객체 전체를 리터럴 타입으로 바꿉니다. `as const`는 타입 시스템을 위한 `const` 같은 것이라, 모든 속성이 `string`이나 `number` 같은 넓은 타입 대신 리터럴 타입이 됩니다.",
+        body: "객체로 변수를 초기화하면, 타입스크립트는 그 객체의 속성 값이 나중에 바뀔 수 있다고 봅니다. 그래서 `{ counter: 0 }`의 `counter`는 `0`이 아니라 `number`가 됩니다. 타입은 읽을 때와 쓸 때 모두에 쓰이기 때문이에요.\n문자열도 마찬가지입니다. 아래 `req.method`는 `\"GET\"`이 아니라 `string`으로 추론됩니다. `req`를 만든 뒤 `handleRequest`를 부르기 전에 누군가 `req.method`에 `\"GUESS\"` 같은 문자열을 넣을 수도 있으니, `\"GET\" | \"POST\"`만 받는 함수에 넘기면 에러가 납니다.\n해결 방법은 두 가지입니다.\n1. 둘 중 한 곳에 타입 단언을 붙여 추론을 바꿉니다. 객체를 만들 때 `\"GET\" as \"GET\"`으로 적으면 \"`req.method`는 언제나 `\"GET\"`이라는 리터럴 타입이어야 한다\"는 뜻이라, 그 뒤에 `\"GUESS\"`를 넣는 것도 막아 줍니다. 함수에 넘길 때 `req.method as \"GET\"`으로 적으면 \"다른 이유로 지금은 `\"GET\"`인 걸 안다\"라는 뜻입니다.\n2. `as const`로 객체 전체를 리터럴 타입으로 바꿉니다. `as const`는 타입 시스템을 위한 `const` 같은 것이라, 모든 속성이 `string`이나 `number` 같은 넓은 타입 대신 리터럴 타입이 됩니다.",
         notes: [
           {
             title: "실제로 부딪힌 곳: as const 를 붙였는데 효과가 없었다",
@@ -509,7 +509,7 @@ export const typescriptTheories: Theory[] = [
             bottom: true,
           },
         ],
-        code: "const obj = { counter: 0 };\nif (someCondition) {\n  obj.counter = 1; // 0 이었던 자리에 1 을 넣어도 에러가 아니다 — counter 는 number\n}\n\ndeclare function handleRequest(url: string, method: \"GET\" | \"POST\"): void;\n\nconst req = { url: \"https://example.com\", method: \"GET\" };\nhandleRequest(req.url, req.method);\n// 'string' 형식의 인수는 '\"GET\" | \"POST\"' 형식의 매개 변수에 할당될 수 없습니다.\n\n// 해결 1 — 타입 단언\nconst req1 = { url: \"https://example.com\", method: \"GET\" as \"GET\" };\nhandleRequest(req.url, req.method as \"GET\");\n\n// 해결 2 — as const\nconst req2 = { url: \"https://example.com\", method: \"GET\" } as const;\nhandleRequest(req2.url, req2.method);\n\n// 실제로 부딪힌 곳 — 타입을 적어서 as const 가 무시됐다\ntype Method = \"GET\" | \"POST\" | \"PUT\";\nconst METHODS_WRONG: readonly Method[] = [\"GET\", \"POST\"] as const; // PUT 이 빠져도 에러 없음\n\n// 배열을 기준으로 타입을 뽑는다\nconst METHODS = [\"GET\", \"POST\", \"PUT\"] as const;\ntype MethodFromList = (typeof METHODS)[number]; // \"GET\" | \"POST\" | \"PUT\"",
+        code: "const obj = { counter: 0 };\nif (someCondition) {\n  obj.counter = 1; // 0 이었던 자리에 1 을 넣어도 에러가 아니다 — counter 는 number\n}\n\ndeclare function handleRequest(url: string, method: \"GET\" | \"POST\"): void;\n\nconst req = { url: \"https://example.com\", method: \"GET\" };\nhandleRequest(req.url, req.method);\n// 'string' 형식의 인수는 '\"GET\" | \"POST\"' 형식의 매개 변수에 할당될 수 없습니다.\n\n// 해결 1 — 타입 단언을 둘 중 한 곳에 붙인다\n// 바꾸는 곳 1: 객체를 만들 때\nconst req1 = { url: \"https://example.com\", method: \"GET\" as \"GET\" };\nhandleRequest(req1.url, req1.method);\n// 바꾸는 곳 2: 함수에 넘길 때\nhandleRequest(req.url, req.method as \"GET\");\n\n// 해결 2 — as const\nconst req2 = { url: \"https://example.com\", method: \"GET\" } as const;\nhandleRequest(req2.url, req2.method);\n\n// 실제로 부딪힌 곳 — 타입을 적어서 as const 가 무시됐다\ntype Method = \"GET\" | \"POST\" | \"PUT\";\nconst METHODS_WRONG: readonly Method[] = [\"GET\", \"POST\"] as const; // PUT 이 빠져도 에러 없음\n\n// 배열을 기준으로 타입을 뽑는다\nconst METHODS = [\"GET\", \"POST\", \"PUT\"] as const;\ntype MethodFromList = (typeof METHODS)[number]; // \"GET\" | \"POST\" | \"PUT\"",
       },
     ],
     sources: [
@@ -536,7 +536,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "strictNullChecks 켜짐",
         body: "`strictNullChecks`를 켜면, 값이 `null`이나 `undefined`일 수 있을 때는 그 값의 메서드나 속성을 쓰기 전에 먼저 확인해야 합니다.\n선택적 속성을 쓰기 전에 `undefined`인지 확인했던 것처럼, 좁히기로 `null`인지 확인하면 됩니다. `if (x === null)`로 걸러 내면 `else` 안에서는 `string`만 남습니다.",
-        code: "function doSomething(x: string | null) {\n  console.log(x.toUpperCase());\n  // 'x'은(는) 'null'일 수 있습니다.\n\n  if (x === null) {\n    // 아무것도 하지 않는다\n  } else {\n    console.log(\"Hello, \" + x.toUpperCase()); // 여기서 x 는 string\n  }\n}",
+        code: "function doSomething(x: string | null) {\n  if (x === null) {\n    // 아무것도 하지 않는다\n  } else {\n    console.log(\"Hello, \" + x.toUpperCase()); // 여기서 x 는 string\n  }\n}\n\n// 확인하지 않고 바로 쓰면\nfunction withoutCheck(x: string | null) {\n  console.log(x.toUpperCase());\n  // 'x'은(는) 'null'일 수 있습니다.\n}",
       },
       {
         label: "null 아님 단언 연산자 (Postfix !)",
@@ -576,6 +576,7 @@ export const typescriptTheories: Theory[] = [
     ],
     sources: [
       { label: "Everyday Types — 열거형", href: `${DOCS}/handbook/2/everyday-types.html#enums` },
+      { label: "Enums", href: `${DOCS}/handbook/enums.html` },
     ],
   },
 
@@ -584,21 +585,23 @@ export const typescriptTheories: Theory[] = [
     name: "덜 쓰는 원시 타입",
     tagline: "일상적인 타입 14절",
     intro:
-      "자주 쓰지는 않지만 타입 시스템에 있는 나머지 원시 타입, bigint와 symbol을 정리합니다.",
+      "자주 쓰지는 않지만 타입 시스템에 있는 나머지 원시 타입, bigint와 symbol을 정리합니다. 문서도 있다는 것만 짚고 깊이 다루지는 않습니다.",
     blocks: [
       {
         label: "아주 큰 정수를 위한 bigint",
-        body: "ES2020부터 자바스크립트에는 아주 큰 정수를 위한 원시 값 `BigInt`가 있습니다. `number`는 안전하게 표현할 수 있는 정수에 한계가 있어서, 그보다 큰 정수를 정확하게 다룰 때 씁니다.\n`BigInt(100)`처럼 함수로 만들거나, 숫자 뒤에 `n`을 붙인 `100n` 리터럴로 만들 수 있고, 타입은 `bigint`입니다.",
+        body: "ES2020부터 자바스크립트에는 아주 큰 정수를 위한 원시 값 `BigInt`가 있습니다. `number`는 안전하게 표현할 수 있는 정수에 한계가 있어서, 그보다 큰 정수를 정확하게 다룰 때 씁니다.\n`BigInt(100)`처럼 함수로 만들거나, 숫자 뒤에 `n`을 붙인 `100n` 리터럴로 만들 수 있고, 타입은 `bigint`입니다.\n자세한 내용은 타입스크립트 3.2 릴리스 노트에 있습니다.",
         code: "// BigInt 함수로 만들기\nconst oneHundred: bigint = BigInt(100);\n\n// 리터럴 문법으로 만들기\nconst anotherHundred: bigint = 100n;",
       },
       {
         label: "절대 겹치지 않는 참조를 만드는 symbol",
-        body: "`Symbol()` 함수로 전역에서 유일한 참조를 만드는 원시 값도 있습니다. 설명 글자가 같아도(`\"name\"`) 만들 때마다 서로 다른 값이 됩니다.\n그래서 두 심볼을 `===`로 비교하면, 타입스크립트는 절대 같을 수 없는 비교라고 알려 줍니다.",
+        body: "`Symbol()` 함수로 전역에서 유일한 참조를 만드는 원시 값도 있습니다. 설명 글자가 같아도(`\"name\"`) 만들 때마다 서로 다른 값이 됩니다.\n그래서 두 심볼을 `===`로 비교하면, 타입스크립트는 절대 같을 수 없는 비교라고 알려 줍니다.\n자세한 내용은 참고서의 Symbols 페이지에 있습니다.",
         code: "const firstName = Symbol(\"name\");\nconst secondName = Symbol(\"name\");\n\nif (firstName === secondName) {\n  // 'typeof firstName'이(가) 'typeof secondName'과(와) 겹치지 않으므로 이 비교는 의도하지 않은 것 같습니다.\n  // 절대 일어날 수 없다\n}",
       },
     ],
     sources: [
       { label: "Everyday Types — 덜 쓰는 원시 타입", href: `${DOCS}/handbook/2/everyday-types.html#less-common-primitives` },
+      { label: "TypeScript 3.2 — BigInt", href: `${DOCS}/handbook/release-notes/typescript-3-2.html#bigint` },
+      { label: "Symbols", href: `${DOCS}/handbook/symbols.html` },
     ],
   },
 
