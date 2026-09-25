@@ -23,6 +23,8 @@ export type Project = {
   role: string;
   /** 받은 상이 있으면 */
   award?: string;
+  /** 코드가 있는 곳 — 소스는 이 블로그에 복사해 두지 않고 저장소로 보낸다 */
+  repo?: string;
   stack: string[];
   /** 소개 — 무엇을 왜 만들었는지, 화면을 보여주기 전에 */
   intro: string;
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     team: "6인, 프론트엔드 3인",
     role: "프론트엔드 — 익스텐션 전반",
     award: "SSAFY 공통 프로젝트 최우수상",
+    repo: "https://github.com/gyqls080813/WITHY",
     stack: [
       "WXT",
       "React",
@@ -103,6 +106,7 @@ export const projects: Project[] = [
     period: "2026.02.19 – 2026.03.30, 6주",
     team: "6인, 프론트엔드 2인",
     role: "프론트엔드 리더 — API 계층과 에러 처리",
+    repo: "https://github.com/gyqls080813/Petfolio",
     stack: [
       "Next.js",
       "React",
@@ -157,6 +161,7 @@ export const projects: Project[] = [
     team: "6인, 프론트엔드 2인",
     role: "프론트엔드 리더 — 예매 흐름과 봇 탐지",
     award: "SSAFY 자율 프로젝트 우수상",
+    repo: "https://github.com/gyqls080813/Tickle",
     stack: [
       "Next.js",
       "React",

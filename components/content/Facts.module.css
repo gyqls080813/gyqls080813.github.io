@@ -38,6 +38,18 @@
   color: var(--text-body);
 }
 
+/* 값이 바깥 링크일 때 (저장소) — 본문 글자색 그대로, 밑줄로만 링크임을 알린다 */
+.value a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--border-subtle);
+  text-underline-offset: 3px;
+}
+
+.value a:hover {
+  text-decoration-color: currentColor;
+}
+
 /* ── 불릿 + 내용 + 날짜 (이력·수상) ── */
 .entryRow {
   display: flex;
