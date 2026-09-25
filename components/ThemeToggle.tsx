@@ -46,6 +46,7 @@ export default function ThemeToggle() {
         onClick={() => change("dark")}
         aria-pressed={theme === "dark"}
         title="어두운 모드"
+        aria-label="어두운 모드"
       >
         <Moon />
       </button>
@@ -56,6 +57,7 @@ export default function ThemeToggle() {
         onClick={() => change("light")}
         aria-pressed={theme === "light"}
         title="밝은 모드"
+        aria-label="밝은 모드"
       >
         <Sun />
       </button>
