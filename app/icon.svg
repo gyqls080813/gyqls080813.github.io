@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none">
+  <!-- 상단 바의 로고(TopBar LogoGlyph)와 같은 그림 — 이론·프로젝트·트러블 세 노드와 그 사이 선.
+       탭 배경이 밝으면 밝은 판 토큰, 어두우면 어두운 판 토큰 색을 쓴다 -->
+  <style>
+    .theory { stroke: #1a8296; } .project { stroke: #a8721a; } .trouble { stroke: #c24a36; } .edge { stroke: #8a93a0; }
+    @media (prefers-color-scheme: dark) {
+      .theory { stroke: #5fc4d6; } .project { stroke: #e3ab5c; } .trouble { stroke: #e88b7d; } .edge { stroke: #6b7482; }
+    }
+  </style>
+  <circle class="theory" cx="6" cy="6" r="3" stroke-width="2" />
+  <circle class="project" cx="18" cy="9" r="3" stroke-width="2" />
+  <circle class="trouble" cx="10" cy="18" r="3" stroke-width="2" />
+  <path class="edge" d="M8.5 7.5 L15.2 8.4 M7.2 8.8 L9.2 15.2 M15.5 11 L12 15.8" stroke-width="1.6" />
+</svg>
