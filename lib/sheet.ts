@@ -7,8 +7,9 @@ import { getProject } from "./projects";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
 import { getDictionary } from "./dictionary";
-import { nodeOpenKind } from "./nodeTarget";
+import { nodeOpenKindFromContent as nodeOpenKind } from "./openKind";
 import { sectionBlockId, slugify } from "./slug";
+import { PROJECT_HEADINGS, INTRO_HEADINGS } from "./headings";
 
 /**
  * 껍데기가 "지금 열린 노드" 하나로부터 알아내야 하는 것 전부.
@@ -22,40 +23,11 @@ import { sectionBlockId, slugify } from "./slug";
  * 넘겨 줄 것이 없다.
  */
 
-// ── 지금 어느 노드인가 ───────────────────────────────────
-
-/**
- * 주소 → 열린 노드 id. 시트가 아닌 곳(그래프 홈, 글 목록)이면 null.
- *
- * 목록(/posts)과 글(/posts/x)을 가르는 건 두 번째 칸의 유무다 — 목록은
- * 껍데기를 쓰지 않으므로 여기서 걸러야 한다.
- */
-export function sheetNodeId(pathname: string): string | null {
-  if (pathname === "/about") return "me";
-  if (pathname === "/dictionary") return "dict";
-  const match = /^\/(?:posts|projects|theories|ideas|tils)\/([^/]+)\/?$/.exec(pathname);
-  return match ? decodeURIComponent(match[1]) : null;
-}
-
 // ── 목차 ────────────────────────────────────────────────
 
 export type NavItem = { id: string; label: string; children?: NavItem[] };
 
-/** 본문과 목차가 같은 제목을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
-export const PROJECT_HEADINGS = {
-  intro: "소개",
-  views: "프로젝트 뷰",
-  troubles: "트러블 슈팅",
-} as const;
-
-export const INTRO_HEADINGS = {
-  intro: "자기소개",
-  history: "이력",
-  awards: "수상",
-  stack: "사용 기술",
-  projects: "Projects",
-  blog: "기술 블로그",
-} as const;
+export { INTRO_HEADINGS, PROJECT_HEADINGS } from "./headings";
 
 const item = (label: string): NavItem => ({ id: slugify(label), label });
 

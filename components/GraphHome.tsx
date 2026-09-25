@@ -1,31 +1,18 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import TopBar from "./TopBar";
 import type { ReactFlowInstance } from "@xyflow/react";
-import IntroSheet from "./IntroSheet";
 import KnowledgeGraph, {
   type GraphHandle,
 } from "./graph/flow/KnowledgeGraph";
 import NodeTree from "./post/NodeTree";
-import PostArticle from "./post/PostArticle";
-import ProjectArticle from "./project/ProjectArticle";
-import TheoryArticle from "./theory/TheoryArticle";
-import IdeaArticle from "./idea/IdeaArticle";
-import TilArticle from "./til/TilArticle";
-import DictArticle from "./dictionary/DictArticle";
-import { SheetNav, useSheetView } from "./content";
-import { sheetNavItems } from "@/lib/sheet";
+import SheetNav from "./content/SheetNav";
+import { useSheetView } from "./content/SheetView";
 import postStyles from "./content/Sheet.module.css";
-import { annotatedGraphNodes } from "@/lib/annotatedGraph";
+import { annotatedGraphNodes, navOf, postOutlines } from "@/lib/outline";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import { getPost } from "@/lib/posts";
-import { getProject } from "@/lib/projects";
-import { getTheory } from "@/lib/theories";
-import { getIdea } from "@/lib/ideas";
-import { getTil } from "@/lib/tils";
-import { getDictionary } from "@/lib/dictionary";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./GraphHome.module.css";
 
@@ -43,6 +30,10 @@ interface Expanding {
   from: Rect;
   to: Rect;
 }
+
+/* 겹침 화면의 본문 — 본문 모듈·코드 색칠을 끌고 오므로 첫 번들에서 뺀다 (ExpandArticle 참고) */
+const loadExpandArticle = () => import("./ExpandArticle");
+const ExpandArticle = lazy(loadExpandArticle);
 
 /** 그래프 밖에서 들어왔을 때 노드로 옮겨 가는 동작 */
 const FOCUS_ZOOM = 1.35;
@@ -106,6 +97,19 @@ export default function GraphHome() {
     pendingNodeRef.current = target;
     /* 주소는 되돌려 둔다 — 새로고침이나 뒤로가기에서 다시 열리면 성가시다 */
     window.history.replaceState(null, "", window.location.pathname);
+  }, []);
+
+  /* 겹침 화면의 본문을 화면이 한가할 때 미리 받아 둔다 — 누른 뒤에 받기 시작하면
+     카메라 이동(0.5초) 안에 못 올 수 있다 */
+  useEffect(() => {
+    const warm = () => void loadExpandArticle();
+    /* Safari에는 requestIdleCallback이 없다 */
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(warm, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(warm, 1500);
+    return () => window.clearTimeout(id);
   }, []);
 
   /* 그래프는 늘 전부 보여준다 — 무엇을 감출지는 백드랍 접기가 맡는다.
@@ -198,7 +202,9 @@ export default function GraphHome() {
   const PORT = 15;
   const PORT_GAP = 30;
   const expandingPost =
-    expanding?.kind === "post" ? getPost(expanding.nodeId) : null;
+    expanding?.kind === "post"
+      ? postOutlines.find((post) => post.id === expanding.nodeId)
+      : null;
   const leftPortPos =
     rect && expandingPost
       ? { top: rect.top + rect.height / 2 - PORT / 2, left: rect.left - 8 }
@@ -285,29 +291,19 @@ export default function GraphHome() {
                   </aside>
                 )}
                 <article className={postStyles.article}>
-                  {expanding.kind === "project" ? (
-                    <ProjectArticle project={getProject(expanding.nodeId)!} />
-                  ) : expanding.kind === "theory" ? (
-                    <TheoryArticle theory={getTheory(expanding.nodeId)!} />
-                  ) : expanding.kind === "idea" ? (
-                    <IdeaArticle idea={getIdea(expanding.nodeId)!} />
-                  ) : expanding.kind === "post" ? (
-                    <PostArticle post={getPost(expanding.nodeId)!} />
-                  ) : expanding.kind === "til" ? (
-                    <TilArticle til={getTil(expanding.nodeId)!} />
-                  ) : expanding.kind === "dict" ? (
-                    <DictArticle dictionary={getDictionary(expanding.nodeId)!} />
-                  ) : (
-                    <IntroSheet
-                      onProjectClick={openNode}
-                      onTheoryClick={openNode}
+                  {/* 본문 조각이 아직 안 왔으면 빈 시트로 열리고, 오는 대로 채워진다 */}
+                  <Suspense fallback={null}>
+                    <ExpandArticle
+                      kind={expanding.kind}
+                      nodeId={expanding.nodeId}
+                      onOpenNode={openNode}
                     />
-                  )}
+                  </Suspense>
                 </article>
                 {sheetView.nav && (
                   <aside className={postStyles.navPanel}>
                     {/* 겹침 화면의 목차 — 목적지 시트와 같은 목록을 쓴다 */}
-                    <SheetNav items={sheetNavItems(expanding.nodeId)} />
+                    <SheetNav items={navOf(expanding.nodeId)} />
                   </aside>
                 )}
               </>
@@ -323,9 +319,9 @@ export default function GraphHome() {
               />
             </div>
           )}
-          {expandingPost?.theories.map((theory, index) => (
+          {expandingPost?.theories.map((theoryId, index) => (
             <div
-              key={theory.id}
+              key={theoryId}
               className={styles.overlayPort}
               style={portStyle(rightPortPos(index, expandingPost.theories.length))}
             >

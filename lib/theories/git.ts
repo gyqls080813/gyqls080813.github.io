@@ -31,6 +31,7 @@ export const gitTheories: Theory[] = [
         label: "연습은 버려도 되는 저장소에서",
         body: "실제 프로젝트에서 reset이나 브랜치 삭제를 시험하면 되돌리는 법을 모르는 채로 되돌려야 합니다. 빈 폴더에 저장소를 만들고, 원격 역할을 할 bare 저장소를 하나 더 만들어 붙이면 GitHub 없이도 push와 fetch를 연습할 수 있습니다. 동료 역할의 저장소를 하나 더 clone하면 충돌도 만들어 볼 수 있습니다.",
         code: "mkdir git-practice && cd git-practice\ngit init -b main\n\n# 원격(GitHub) 역할을 할 저장소\ngit init --bare ../git-practice-remote.git\ngit remote add origin ../git-practice-remote.git\n\n# 동료 역할\ngit clone ../git-practice-remote.git ../git-practice-mate",
+        codeLang: "bash",
       },
     ],
     sources: [
@@ -50,6 +51,7 @@ export const gitTheories: Theory[] = [
         label: "세 공간",
         body: "작업 폴더는 파일을 실제로 고치는 곳입니다. git add는 고친 것 중 이번 커밋에 넣을 것을 스테이징 영역에 담고, git commit은 담긴 것을 되돌릴 수 있는 기록으로 확정합니다. add만 한 상태는 아직 기록이 아닙니다. 다시 add하면 덮어써지고, 커밋되어야 비로소 이력에 남습니다.",
         code: "git status            # 세 공간의 차이를 보여준다\ngit add src/select.ts # 이번 커밋에 담기\ngit commit -m \"feat: 드롭다운을 교체한다\"",
+        codeLang: "bash",
         terms: [
           {
             term: "스테이징 영역 (index)",
@@ -93,11 +95,13 @@ export const gitTheories: Theory[] = [
         label: "커밋은 앞 커밋을 기억한다",
         body: "커밋마다 부모 커밋이 기록되어 있어서 커밋들은 사슬로 이어집니다. 일반 커밋의 부모는 하나이고, 병합 커밋의 부모는 둘입니다. 이 사슬이 곧 이력입니다.",
         code: "A ← B ← C ← D        ← main\n\n# 병합 커밋 M은 부모가 둘이다 (D와 Z)\nA ← B ← C ← D ← M\n         ↖     ↙\n           X ← Z",
+        codeLang: "text",
       },
       {
         label: "브랜치는 커밋 하나를 가리키는 이름표다",
         body: "브랜치 파일을 열어 보면 커밋 ID 한 줄만 들어 있습니다. 그래서 브랜치를 만드는 일은 아무것도 복사하지 않고, 지금 커밋에 이름표를 하나 더 붙이는 일입니다. 새 커밋을 만들면 현재 브랜치의 이름표가 새 커밋으로 한 칸 옮겨 갑니다. 브랜치에는 부모가 없습니다. 부모가 있는 것은 커밋이고, '어느 브랜치에서 따 왔는지'는 git 어디에도 저장되지 않습니다. 흔히 말하는 부모 브랜치는 사람끼리의 표현이고, GitHub에서는 PR을 만들 때 사람이 base 브랜치로 지정합니다.",
         code: "$ cat .git/refs/heads/feature\n89494c240934aab3f09765696d67d0a34d7611e9\n\n# 커밋 전:  A ← B ← C        ← feature\n# 커밋 후:  A ← B ← C ← D    ← feature (이름표만 이동)",
+        codeLang: "bash",
         terms: [
           {
             term: "HEAD",
@@ -109,11 +113,13 @@ export const gitTheories: Theory[] = [
         label: "log는 도달할 수 있는 커밋만 보여준다",
         body: "git log는 HEAD에서 출발해 부모를 따라 최초 커밋까지 거슬러 올라갑니다. 병합 커밋을 만나면 두 갈래를 모두 따라가므로 병합된 옆가지도 보입니다. 보이지 않는 것은 갈라져 나간 뒤 한 번도 합쳐지지 않은 가지입니다. 부모는 자식을 모르기 때문에 HEAD에서 그쪽으로 갈 길이 없습니다. log에 없다는 것은 존재하지 않는다는 뜻이 아니라 여기서 도달할 수 없다는 뜻입니다.",
         code: "git log --oneline --graph -15   # 갈래를 선으로 그려 본다\ngit log --all                   # 모든 브랜치에서 도달 가능한 커밋\ngit log main..feature           # feature에서는 닿고 main에서는 안 닿는 커밋\ngit log --first-parent          # 병합의 두 번째 갈래는 건너뛰고 본줄기만",
+        codeLang: "bash",
       },
       {
         label: "브랜치를 지워도 커밋은 남는다",
         body: "브랜치 삭제는 이름표를 떼는 일입니다. 다른 이름표에서 도달할 수 있는 커밋은 그대로 안전합니다. PR로 병합된 브랜치를 지워도 되는 이유가 이것입니다. 병합 커밋이 그 브랜치의 마지막 커밋을 부모로 기억하고 있어서 본줄기에서 여전히 닿습니다. git branch -d는 이 조건을 확인해 병합되지 않은 브랜치는 지우지 않고, -D는 확인 없이 지웁니다.",
         code: "git branch -d feature   # 병합되지 않았으면 거절한다\ngit branch -D feature   # 확인 없이 지운다",
+        codeLang: "bash",
       },
       {
         label: "확인 질문",
@@ -143,21 +149,25 @@ export const gitTheories: Theory[] = [
         label: "restore — 파일 단위로 되돌린다",
         body: "작업 폴더의 수정을 버리거나, 스테이징에 담은 것을 다시 꺼냅니다. 커밋 기록은 건드리지 않습니다.",
         code: "git restore src/select.ts           # 작업 폴더 수정을 버린다\ngit restore --staged src/select.ts  # 담은 것을 꺼낸다 (수정은 남는다)",
+        codeLang: "bash",
       },
       {
         label: "reset — 이름표를 옮긴다",
         body: "현재 브랜치의 이름표를 다른 커밋으로 옮깁니다. 옵션은 세 공간 중 어디까지 함께 되돌릴지를 정합니다. --soft는 이름표만 옮기고 스테이징과 작업 폴더를 그대로 둡니다. 기본값인 --mixed는 스테이징까지 되돌리고 작업 폴더는 둡니다. --hard는 작업 폴더까지 되돌려 커밋하지 않은 수정이 사라집니다.",
         code: "git reset --soft HEAD~1   # 마지막 커밋을 풀고 내용은 담긴 채로\ngit reset HEAD~1          # 마지막 커밋을 풀고 내용은 작업 폴더에\ngit reset --hard HEAD~1   # 마지막 커밋과 수정까지 버린다",
+        codeLang: "bash",
       },
       {
         label: "revert — 취소하는 커밋을 새로 만든다",
         body: "reset은 이력을 고쳐 쓰고, revert는 이력을 그대로 둔 채 반대 변경을 새 커밋으로 쌓습니다. 이미 push해서 다른 사람이 받았을 수 있는 커밋은 revert로 취소합니다. reset으로 이력을 바꾸면 남의 저장소에 있는 이력과 어긋납니다.",
         code: "git revert 1a2b3c4   # 1a2b3c4의 변경을 되돌리는 커밋이 생긴다",
+        codeLang: "bash",
       },
       {
         label: "reflog — 내 컴퓨터의 이동 기록",
         body: "reflog는 HEAD가 어느 커밋들을 거쳐 왔는지를 기록합니다. 브랜치를 잘못 지웠거나 reset --hard를 잘못 쳤어도, 그 전에 있던 커밋 ID가 여기 남아 있습니다. 찾은 커밋에 브랜치를 다시 붙이면 복구됩니다. 도달할 수 없는 커밋의 기록은 기본 30일 동안 남고 그 뒤 정리됩니다. reflog는 내 컴퓨터에만 있고 push되지 않으므로, push하지 않은 커밋은 이 기간이 지나면 정말로 사라집니다.",
         code: "git reflog\n# 37f7823 HEAD@{1}: commit: F\n# c67fe1d HEAD@{2}: commit: E\n\ngit branch feature-restored 37f7823   # 이름표를 다시 붙인다",
+        codeLang: "bash",
       },
       {
         label: "확인 질문",
@@ -200,16 +210,19 @@ export const gitTheories: Theory[] = [
         label: "fetch는 받아 오기만, pull은 합치기까지",
         body: "git fetch는 원격의 새 커밋을 받아 원격 추적 브랜치만 갱신하고, 내 브랜치와 작업 폴더는 건드리지 않습니다. git pull은 fetch한 뒤 원격 추적 브랜치를 내 브랜치에 합칩니다. pull = fetch + merge입니다. 합치기 전에 무엇이 들어오는지 보고 싶으면 fetch만 하고 살펴본 뒤 합치면 됩니다.",
         code: "git fetch\ngit log HEAD..origin/main   # 들어올 커밋만 본다\ngit merge origin/main       # 확인했으면 합친다 (= pull)",
+        codeLang: "bash",
       },
       {
         label: "push는 이름표를 기준으로 도달 가능한 커밋을 보낸다",
         body: "push할 때는 브랜치 이름을 지정하고, git은 그 브랜치에서 도달할 수 있으면서 원격에 없는 커밋을 보냅니다. 이름표를 지운 브랜치는 지정할 이름이 없으니 push할 수 없고, 어느 브랜치에서도 닿지 않는 커밋은 경고 없이 로컬에만 남습니다.",
         code: "git push -u origin feature   # 처음 올릴 때 추적 관계도 함께 설정\ngit push                     # 이후에는 이름 없이",
+        codeLang: "bash",
       },
       {
         label: "지우는 일도 따로따로다",
         body: "로컬 브랜치를 지워도 원격은 그대로이고, 원격 브랜치가 지워져도 로컬 브랜치와 원격 추적 브랜치는 남습니다. PR이 병합되며 GitHub에서 브랜치가 지워진 뒤 git pull을 하면 '가져올 레퍼런스가 없다'는 메시지가 나오는 것이 이 경우입니다. 원격에서 사라진 기록은 fetch --prune으로 정리하고, 다 쓴 로컬 브랜치는 -d로 지웁니다.",
         code: "git push origin --delete feature   # 원격 브랜치 삭제\ngit fetch --prune                  # 원격에서 사라진 origin/* 정리\ngit branch -d feature              # 로컬 브랜치 삭제",
+        codeLang: "bash",
       },
       {
         label: "확인 질문",
@@ -240,6 +253,7 @@ export const gitTheories: Theory[] = [
         label: "fast-forward — 이름표만 앞으로",
         body: "합치려는 쪽이 내 브랜치의 후손이면, 즉 내가 갈라진 뒤 따로 쌓은 커밋이 없으면 새 커밋을 만들 필요가 없습니다. 이름표를 상대 커밋까지 앞으로 옮기면 끝입니다.",
         code: "# 합치기 전: main은 C, feature는 E\nA ← B ← C ← D ← E\n        ↑       ↑\n      main   feature\n\ngit switch main && git merge feature   # main이 E로 이동",
+        codeLang: "bash",
       },
       {
         label: "병합 커밋 — 두 갈래를 잇는 새 커밋",
@@ -249,11 +263,13 @@ export const gitTheories: Theory[] = [
         label: "충돌이 나는 조건",
         body: "갈라진 지점에서 보았을 때 양쪽이 같은 줄 근처를 서로 다르게 고쳤거나, 한쪽은 파일을 고치고 다른 쪽은 지웠을 때입니다. git은 어느 쪽이 맞는지 판단하지 않고 표시를 남긴 채 멈춥니다. 표시를 정리하고 add한 뒤 커밋하면 합치기가 끝나고, 도중에 그만두려면 merge --abort를 칩니다.",
         code: "<<<<<<< HEAD\nconst gap = 4;\n=======\nconst gap = 8;\n>>>>>>> feature\n\n# 고른 뒤\ngit add src/select.ts\ngit commit            # 또는 그만두기: git merge --abort",
+        codeLang: "text",
       },
       {
         label: "rebase — 내 커밋을 상대 끝으로 옮겨 다시 쌓기",
         body: "rebase는 내 브랜치의 커밋들을 상대 브랜치의 끝에서 하나씩 다시 만듭니다. 병합 커밋 없이 이력이 한 줄이 되지만, 다시 만든 커밋은 내용이 같아도 ID가 새것입니다. 그래서 이미 push해서 남이 받았을 수 있는 커밋을 rebase하면 서로의 이력이 어긋납니다. 혼자 쓰는 브랜치에서만 쓰고, rebase 후 push에는 --force-with-lease를 씁니다.",
         code: "git switch feature\ngit rebase main\ngit push --force-with-lease   # 원격이 내가 본 그대로일 때만 덮어쓴다",
+        codeLang: "bash",
       },
       {
         label: "확인 질문",
@@ -296,6 +312,7 @@ export const gitTheories: Theory[] = [
         label: "병합 뒤 로컬에서 할 일",
         body: "GitHub에서 병합하고 브랜치를 지워도 내 컴퓨터는 모릅니다. base 브랜치로 옮겨 pull하고, 원격에서 사라진 기록을 정리하고, 다 쓴 로컬 브랜치를 지웁니다.",
         code: "git switch main\ngit pull\ngit fetch --prune\ngit branch -d feature",
+        codeLang: "bash",
       },
       {
         label: "확인 질문",
@@ -326,16 +343,19 @@ export const gitTheories: Theory[] = [
         label: "하던 작업을 잠시 치워 두기 — stash",
         body: "커밋하기엔 이른 수정이 있는데 다른 브랜치로 옮겨야 할 때, stash는 작업 폴더와 스테이징의 변경을 따로 보관하고 폴더를 깨끗하게 만듭니다. 돌아와서 pop으로 다시 꺼냅니다.",
         code: "git stash push -m \"드롭다운 작업 중\"\ngit switch hotfix\n# ...\ngit switch feature\ngit stash pop",
+        codeLang: "bash",
       },
       {
         label: "커밋 하나만 가져오기 — cherry-pick",
         body: "다른 브랜치의 특정 커밋만 필요할 때 그 변경을 내 브랜치에 새 커밋으로 다시 만듭니다. 내용은 같아도 ID는 새것입니다.",
         code: "git cherry-pick 1a2b3c4",
+        codeLang: "bash",
       },
       {
         label: "엉뚱한 브랜치에 커밋했을 때",
         body: "아직 push하지 않았다면, 지금 위치에 올바른 브랜치 이름표를 붙이고 원래 브랜치의 이름표만 뒤로 되돌리면 됩니다. 커밋은 새 이름표에서 닿으므로 잃지 않습니다.",
         code: "git branch feature        # 지금 커밋에 새 이름표\ngit reset --hard HEAD~1   # 원래 브랜치만 한 칸 뒤로\ngit switch feature",
+        codeLang: "bash",
       },
       {
         label: "이미 push한 커밋을 되돌려야 할 때",

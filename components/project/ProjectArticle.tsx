@@ -35,6 +35,13 @@ export default function ProjectArticle({ project }: { project: Project }) {
         <FactRow label="팀">{project.team}</FactRow>
         <FactRow label="역할">{project.role}</FactRow>
         {project.award && <FactRow label="성과">{project.award}</FactRow>}
+        {project.repo && (
+          <FactRow label="저장소">
+            <a href={project.repo} target="_blank" rel="noopener noreferrer">
+              {project.repo.replace(/^https:\/\//, "")}
+            </a>
+          </FactRow>
+        )}
       </div>
 
       <div className={styles.stack}>

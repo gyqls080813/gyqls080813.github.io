@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   applyNodeChanges,
   Background,
@@ -145,7 +145,13 @@ export default function KnowledgeGraph({
   const [collapsed, setCollapsed] = useState<Set<string>>(
     () => new Set(initialCollapsed),
   );
-  useEffect(() => setCollapsed(new Set(initialCollapsed)), [initialCollapsed]);
+  /* 백드랍(데이터)이 바뀌면 접힘도 그 처음 상태로 되돌린다 — 이펙트가 아니라
+     그리는 중에 맞춘다(바뀐 것을 보고 바로 고치는 리액트의 권장 방식) */
+  const [collapsedSource, setCollapsedSource] = useState(initialCollapsed);
+  if (collapsedSource !== initialCollapsed) {
+    setCollapsedSource(initialCollapsed);
+    setCollapsed(new Set(initialCollapsed));
+  }
 
   const toggleFrame = (id: string) =>
     setCollapsed((current) => {
@@ -188,7 +194,11 @@ export default function KnowledgeGraph({
     [nodes, edges, backdrops],
   );
   const [rfNodes, setRfNodes] = useState<Node[]>(baseNodes);
-  useEffect(() => setRfNodes(baseNodes), [baseNodes]);
+  const [nodesSource, setNodesSource] = useState(baseNodes);
+  if (nodesSource !== baseNodes) {
+    setNodesSource(baseNodes);
+    setRfNodes(baseNodes);
+  }
   const instanceRef = useRef<ReactFlowInstance | null>(null);
 
   /* 그리기 직전에 접힘을 입힌다. 가려진 노드는 hidden, 접힌 틀은 카드 한 장
@@ -375,7 +385,10 @@ export default function KnowledgeGraph({
     return REVEAL_SETTLE;
   };
   const revealRef = useRef(reveal);
-  revealRef.current = reveal;
+  /* 최신 함수는 그린 뒤에 옮겨 둔다 — 그리는 중에 ref를 쓰면 안 된다 */
+  useLayoutEffect(() => {
+    revealRef.current = reveal;
+  });
   const handle = useRef<GraphHandle>({
     reveal: (nodeId) => revealRef.current(nodeId),
   }).current;

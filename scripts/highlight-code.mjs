@@ -74,13 +74,29 @@ function codeLiterals(path) {
         raw += text[i];
       }
     }
-    found.push(unescape(raw));
+    /* 문법은 code 바로 뒤의 codeLang에서 읽는다 (lib/theories의 CodeLang). 없으면 tsx */
+    const lang = LANG_AFTER.exec(text.slice(i + 1))?.[1] ?? "tsx";
+    if (!LANGS.has(lang)) {
+      throw new Error(`${relative(ROOT, path)}: 모르는 codeLang "${lang}"`);
+    }
+    found.push({ code: unescape(raw), lang });
     marker.lastIndex = i + 1;
   }
   return found;
 }
 
-const snippets = [...new Set(sourceFiles(SOURCE_DIR).flatMap(codeLiterals))];
+/** code 리터럴이 닫힌 바로 뒤에 붙은 codeLang */
+const LANG_AFTER = /^\s*,\s*codeLang:\s*"(\w+)"/;
+const LANGS = new Set(["tsx", "bash", "text"]);
+
+/* 같은 코드가 여러 곳에 있으면 한 번만 칠한다 — 키가 코드 원문이다 */
+const snippets = [
+  ...new Map(
+    sourceFiles(SOURCE_DIR)
+      .flatMap(codeLiterals)
+      .map((snippet) => [snippet.code, snippet]),
+  ).values(),
+];
 
 /**
  * VSCode의 기본 두 테마 그대로. 배경은 쓰지 않고 우리 판 색을 쓴다.
@@ -92,10 +108,10 @@ const snippets = [...new Set(sourceFiles(SOURCE_DIR).flatMap(codeLiterals))];
 const THEMES = { light: "light-plus", dark: "dark-plus" };
 
 const entries = await Promise.all(
-  snippets.map(async (code) => [
+  snippets.map(async ({ code, lang }) => [
     code,
     await codeToHtml(code, {
-      lang: "tsx",
+      lang,
       themes: THEMES,
       defaultColor: false,
       structure: "inline",

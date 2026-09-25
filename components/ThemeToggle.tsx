@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import styles from "./ThemeToggle.module.css";
 
 export type Theme = "dark" | "light";
@@ -19,16 +19,27 @@ export const THEME_KEY = "theme";
  * 읽기만 하는 이유는, 리액트가 붙기 전에 칠이 끝나야 화면이 한 번 번쩍이지
  * 않기 때문이다.
  */
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
+/* 지금 판은 <html data-theme>이 쥐고 있다 — 리액트 상태로 옮겨 적지 않고 거기서 읽는다.
+   표식이 바뀌면(이 버튼이든 다른 탭이든) 관찰자가 알려 준다 */
+function subscribeTheme(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
 
-  useEffect(() => {
-    const current = document.documentElement.dataset.theme;
-    setTheme(current === "light" ? "light" : "dark");
-  }, []);
+const readTheme = (): Theme =>
+  document.documentElement.dataset.theme === "light" ? "light" : "dark";
+
+/* 서버에는 <html>이 없다 — 첫 칠 스크립트의 기본값과 같은 어두운 판으로 둔다 */
+const serverTheme = (): Theme => "dark";
+
+export default function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, serverTheme);
 
   const change = (next: Theme) => {
-    setTheme(next);
     document.documentElement.dataset.theme = next;
     try {
       window.localStorage.setItem(THEME_KEY, next);

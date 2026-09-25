@@ -10,9 +10,8 @@ import SheetBreadcrumb from "./SheetBreadcrumb";
 import SheetNav from "./SheetNav";
 import SheetPorts from "./SheetPorts";
 import SheetShell from "./SheetShell";
-import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import { sheetNavItems, sheetNodeId, sheetPorts } from "@/lib/sheet";
+import { annotatedGraphNodes, navOf, portsOf, sheetNodeId } from "@/lib/outline";
 import styles from "./Sheet.module.css";
 
 /**
@@ -47,17 +46,25 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
      막지 않는다 — 전환(transition)으로 넘겨 React가 쪼개 그리게 한다.
      껍데기는 시트 사이를 오가도 살아 있으므로, 시트에 들어올 때 한 번만이다. */
   const [graphReady, setGraphReady] = useState(false);
+  /* 시트를 떠나면 다음에 들어올 때 다시 늦출 수 있게 되돌린다 — 이펙트가 아니라
+     그리는 중에 맞춘다(바뀐 것을 보고 바로 고치는 리액트의 권장 방식) */
+  const [wasInSheet, setWasInSheet] = useState(inSheet);
+  if (wasInSheet !== inSheet) {
+    setWasInSheet(inSheet);
+    if (!inSheet) setGraphReady(false);
+  }
   useEffect(() => {
-    if (!inSheet) {
-      setGraphReady(false);
-      return;
-    }
-    startTransition(() => setGraphReady(true));
-  }, [inSheet]);
+    if (!inSheet || graphReady) return;
+    /* 시트가 한 번 칠해진 다음 프레임에 전환으로 넘긴다 */
+    const frame = requestAnimationFrame(() =>
+      startTransition(() => setGraphReady(true)),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [inSheet, graphReady]);
 
   if (!nodeId) return <>{children}</>;
 
-  const ports = sheetPorts(nodeId);
+  const ports = portsOf(nodeId);
 
   return (
     <div className={styles.screen}>
@@ -87,7 +94,7 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
         <SheetShell
           nodeId={nodeId}
           tree={<NodeTree activeNodeId={nodeId} />}
-          nav={<SheetNav items={sheetNavItems(nodeId)} />}
+          nav={<SheetNav items={navOf(nodeId)} />}
         >
           {children}
         </SheetShell>

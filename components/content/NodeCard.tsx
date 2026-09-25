@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
