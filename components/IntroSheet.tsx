@@ -104,6 +104,12 @@ const TECHS = [
     desc: "가이드와 API 참고서 목차를 옮겨 두고, 반응성이 React와 갈리는 자리부터 봅니다",
     topics: ["반응성", "템플릿 문법", "v-model", "슬롯", "컴포저블", "Provide / inject"],
   },
+  {
+    id: "git",
+    name: "Git",
+    desc: "명령어보다 모델 먼저 — 커밋과 이름표로 브랜치·원격·복구를 한 그림에 둡니다",
+    topics: ["스테이징", "브랜치", "HEAD", "reflog", "fetch / pull", "충돌"],
+  },
 ];
 
 const STACK = [

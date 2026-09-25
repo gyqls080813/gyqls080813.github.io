@@ -446,6 +446,16 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "vs-recommended", label: "C - 권장", kind: "theory", x: 975, y: 938, r: 12 },
   { id: "vs-caution", label: "D - 주의해서 사용", kind: "theory", x: 975, y: 940, r: 12 },
 
+  /* Git — 문서 목차가 아니라 개념이 쌓이는 순서로 세운 일곱 단계 */
+  { id: "git", label: "Git", kind: "theory", x: 1190, y: 300, r: 20, hub: true },
+  { id: "git-areas", label: "세 개의 공간과 커밋", kind: "theory", x: 1190, y: 360, r: 14 },
+  { id: "git-branch", label: "커밋 사슬 · 브랜치 · HEAD", kind: "theory", x: 1190, y: 400, r: 15 },
+  { id: "git-undo", label: "되돌리기와 복구", kind: "theory", x: 1190, y: 440, r: 14 },
+  { id: "git-remote", label: "로컬과 원격", kind: "theory", x: 1190, y: 480, r: 14 },
+  { id: "git-merge", label: "합치기와 충돌", kind: "theory", x: 1190, y: 520, r: 14 },
+  { id: "git-github", label: "GitHub 협업", kind: "theory", x: 1190, y: 560, r: 14 },
+  { id: "git-practice", label: "실전 상황 대처", kind: "theory", x: 1190, y: 600, r: 13 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -912,6 +922,20 @@ export const theoryClusters = [
   },
   { hub: "ve", chapters: ["ve-basic", "ve-practical", "ve-7guis"] },
   { hub: "vs", chapters: ["vs-essential", "vs-strong", "vs-recommended", "vs-caution"] },
+
+  /* Git — 모델(공간·브랜치) → 움직이는 법(되돌리기·원격·합치기) → 함께 쓰기(GitHub·실전) */
+  {
+    hub: "git",
+    chapters: [
+      "git-areas",
+      "git-branch",
+      "git-undo",
+      "git-remote",
+      "git-merge",
+      "git-github",
+      "git-practice",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -925,6 +949,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "js" },
   { from: "me", to: "ts" },
   { from: "me", to: "vue" },
+  { from: "me", to: "git" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -982,6 +1007,7 @@ const techRoots = [
   { root: "js", label: "JavaScript", collapsed: true },
   { root: "ts", label: "TypeScript", collapsed: true },
   { root: "vue", label: "Vue", collapsed: true },
+  { root: "git", label: "Git", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(
@@ -1110,7 +1136,7 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     clusters: craftGroups,
     members: craftMembers,
   },
-  /* 갈래 넷을 한 번 더 묶는다 — 프로젝트가 한 틀에 담기듯 이론도 한 자리에.
+  /* 갈래 다섯을 한 번 더 묶는다 — 프로젝트가 한 틀에 담기듯 이론도 한 자리에.
      틀 안에 틀이 들어가는 유일한 곳이다. */
   {
     id: "bd-theory",
