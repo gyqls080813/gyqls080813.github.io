@@ -66,4 +66,9 @@ export type GraphEdgeData = {
   bend?: number;
   /** 관계 이름 (연결 뷰: "발생한 곳" / "원인 개념" / "해결 기법") */
   label?: string;
+  /**
+   * 그리기만 하고 열(깊이)을 정하는 데는 쓰지 않는 선. 갈래 사이를 가로지르는
+   * 다리가 한쪽 갈래를 뒤 열로 밀어내지 않게 할 때 쓴다 (문서 → 사전).
+   */
+  skipLayout?: boolean;
 };

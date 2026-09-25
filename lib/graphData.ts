@@ -963,9 +963,10 @@ export const fullGraphEdges: GraphEdgeData[] = [
 
   /* 문서 → 사전 (다리): 낱말이 나온 문서에서 사전으로. 기술 → 트러블과 같은
      방향이다 — 읽은 것에서 내가 적은 것으로. 사전에 절이 늘면 선도 따라온다.
-     이 선 때문에 생각 틀이 트러블과 같은 열(이론의 뒤)에 선다. */
+     배치에는 쓰지 않는다 — 이 선이 깊이에 끼면 생각 틀이 이론 뒤(트러블 열)로
+     밀린다. 생각은 프로젝트·이론과 나란한 갈래라 같은 열에 서야 한다. */
   ...[...new Set(dictionary.sections.map((section) => section.from))].map(
-    (from): GraphEdgeData => ({ from, to: "dict" }),
+    (from): GraphEdgeData => ({ from, to: "dict", skipLayout: true }),
   ),
 ];
 
