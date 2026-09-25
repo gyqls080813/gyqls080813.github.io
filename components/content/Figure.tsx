@@ -28,6 +28,9 @@ export default function Figure({
 }) {
   const style = { "--fig-max": `${maxWidth}px` } as React.CSSProperties;
   const img = (
+    /* 정적 내보내기(output: "export")라 이미지 최적화 서버가 없다 — next/image를
+       써도 unoptimized로 같은 <img>가 나가므로 그대로 둔다 */
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className={`${styles.img} ${variant === "wide" ? styles.wide : ""}`}
       src={src}

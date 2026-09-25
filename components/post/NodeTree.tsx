@@ -202,7 +202,6 @@ export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
   const treeState = useMemo(
     () => ({ collapsed, toggle, activeNodeId }),
     // toggle 은 setCollapsed 만 부르므로 바뀌어도 같은 일을 한다
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [collapsed, activeNodeId],
   );
 
