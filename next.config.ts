@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
+  /* 페이지를 폴더/index.html로 낸다. GitHub Pages는 /about을 /about/로 옮겨 주므로
+     끝에 /가 있든 없든 열린다 — about.html로 내면 /about/은 404다 */
+  trailingSlash: true,
   images: { unoptimized: true },
   experimental: {
     /* 빌드의 타입 검사는 TypeScript JS API(6)로 한다. ESLint(typescript-eslint)가
