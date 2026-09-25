@@ -20,11 +20,20 @@ export type TheoryNote = {
   bottom?: boolean;
 };
 
+/**
+ * 코드 조각을 칠할 문법. 적지 않으면 tsx다.
+ * 셸 명령은 bash, 그림(←로 그린 커밋 사슬)이나 충돌 표시처럼 문법이 없는 것은 text —
+ * tsx로 칠하면 명령어의 낱말이 식별자·연산자 색으로 흩어진다.
+ */
+export type CodeLang = "tsx" | "bash" | "text";
+
 /** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이, 참고 */
 export type TheoryBlock = {
   label: string;
   body: string;
   code?: string;
+  /** code 바로 다음 줄에 적는다 — 빌드 스크립트(highlight-code.mjs)가 그 자리에서 읽는다 */
+  codeLang?: CodeLang;
   terms?: TheoryTerm[];
   notes?: TheoryNote[];
 };
