@@ -118,6 +118,8 @@ export function layoutEdges(
   const seen = new Set<string>();
   const result: { source: string; target: string }[] = [];
   for (const edge of edges) {
+    /* 가로지르는 다리 — 그려지되 깊이에는 끼지 않는다 (GraphEdgeData.skipLayout) */
+    if (edge.skipLayout) continue;
     const source = hiddenBy.get(edge.from) ?? edge.from;
     const target = hiddenBy.get(edge.to) ?? edge.to;
     /* 같은 상자 안끼리 — 깊이를 정하는 데 쓰면 자기 자신에게 걸려 순환이 된다 */

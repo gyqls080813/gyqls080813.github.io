@@ -65,6 +65,21 @@ function sheetRect(stage: DOMRect, full: boolean): Rect {
   };
 }
 
+/** 노드 카드 자리만 보이게 잘라 두는 창 — 시트 자리 기준의 안쪽 여백으로 적는다 */
+function clipFrom({ from, to }: { from: Rect; to: Rect }): string {
+  const top = from.top - to.top;
+  const left = from.left - to.left;
+  const right = to.left + to.width - (from.left + from.width);
+  const bottom = to.top + to.height - (from.top + from.height);
+  return `inset(${top}px ${right}px ${bottom}px ${left}px round 8px)`;
+}
+
+/** 포트 자리 — top/left 대신 transform으로 옮겨 레이아웃을 건드리지 않는다 */
+function portStyle(at: { top?: number; left?: number } | null) {
+  if (!at || at.top === undefined || at.left === undefined) return undefined;
+  return { transform: `translate(${at.left}px, ${at.top}px)` };
+}
+
 export default function GraphHome() {
   const router = useRouter();
   const [expanding, setExpanding] = useState<Expanding | null>(null);
@@ -236,16 +251,21 @@ export default function GraphHome() {
       {expanding && rect && (
         <>
           <div className={styles.expandScrim} />
+          {/* 카드는 처음부터 시트 자리·크기에 서 있고, 보이는 창(clip-path)만 노드
+              카드에서 시트로 넓어진다. 위치·크기를 직접 옮기면 매 프레임 레이아웃이
+              다시 돌아(시트 안쪽 전체) 느린 기기에서 끊긴다 — clip-path와 transform은
+              레이아웃을 건드리지 않는다. */}
           <div
             className={styles.expandCard}
             style={{
-              top: rect.top,
-              left: rect.left,
-              width: rect.width,
-              height: rect.height,
+              top: expanding.to.top,
+              left: expanding.to.left,
+              width: expanding.to.width,
+              height: expanding.to.height,
+              clipPath: opened ? "inset(0 round 14px)" : clipFrom(expanding),
             }}
           >
-            {/* 시트 전체가 한 강체 — 카드 폭에 맞게 축소돼 있다가 카드와 함께 커진다 */}
+            {/* 시트 전체가 한 강체 — 노드 카드 자리에서 카드 폭으로 축소돼 있다가 함께 커진다 */}
             <div
               className={styles.expandContent}
               style={{
@@ -253,7 +273,9 @@ export default function GraphHome() {
                 height: expanding.to.height,
                 transform: opened
                   ? "none"
-                  : `scale(${expanding.from.width / expanding.to.width})`,
+                  : `translate(${expanding.from.left - expanding.to.left}px, ${
+                      expanding.from.top - expanding.to.top
+                    }px) scale(${expanding.from.width / expanding.to.width})`,
               }}
             >
               <>
@@ -295,7 +317,7 @@ export default function GraphHome() {
 
           {/* 포트도 처음부터 달려서 카드와 함께 이동한다 */}
           {leftPortPos && (
-            <div className={styles.overlayPort} style={leftPortPos}>
+            <div className={styles.overlayPort} style={portStyle(leftPortPos)}>
               <span
                 className={`${postStyles.portDot} ${postStyles.portDotProject}`}
               />
@@ -305,7 +327,7 @@ export default function GraphHome() {
             <div
               key={theory.id}
               className={styles.overlayPort}
-              style={rightPortPos(index, expandingPost.theories.length)}
+              style={portStyle(rightPortPos(index, expandingPost.theories.length))}
             >
               <span
                 className={`${postStyles.portDot} ${postStyles.portDotTheory}`}

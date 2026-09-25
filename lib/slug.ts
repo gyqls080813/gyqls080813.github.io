@@ -12,3 +12,14 @@ export function slugify(text: string): string {
     .replace(/[^\p{L}\p{N}]+/gu, "-")
     .replace(/^-+|-+$/g, "");
 }
+
+/**
+ * 절 안 블록의 앵커 — 절 id를 앞에 붙인다.
+ *
+ * 한 시트 안에서 같은 라벨이 여러 절에 나온다(단계마다 "도구" 절 아래 "테스트"처럼).
+ * 라벨만으로 지으면 DOM id가 겹쳐 목차가 첫 번째 것으로만 간다. 절 제목도
+ * 순번이 아니라 제목에서 뽑으므로, 붙여도 앵커가 밀리지 않는 성질은 그대로다.
+ */
+export function sectionBlockId(sectionHeading: string, label: string): string {
+  return `${slugify(sectionHeading)}--${slugify(label)}`;
+}
