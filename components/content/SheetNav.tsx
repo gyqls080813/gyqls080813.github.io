@@ -13,6 +13,31 @@ function flatIds(items: NavItem[]): string[] {
   return items.flatMap((item) => [item.id, ...flatIds(item.children ?? [])]);
 }
 
+function goTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}
+
+/**
+ * 목차 한 줄. 파일 최상위에 둔다 — 목차 안에서 정의하면 그릴 때마다 새 컴포넌트가
+ * 되어 버튼이 통째로 다시 만들어지고, 읽는 위치가 바뀔 때마다 포커스가 날아간다.
+ */
+function Row({ item, active, sub }: { item: NavItem; active: string | null; sub?: boolean }) {
+  const current = item.id === active;
+  return (
+    <button
+      type="button"
+      className={`${styles.item} ${sub ? styles.sub : ""} ${current ? styles.active : ""}`}
+      onClick={() => goTo(item.id)}
+      aria-current={current ? "true" : undefined}
+    >
+      {item.label}
+    </button>
+  );
+}
+
 /**
  * 시트 오른쪽의 목차 — 지금 열린 노드 **안에서** 옮겨 다니는 길.
  *
@@ -33,26 +58,6 @@ export default function SheetNav({ items }: { items: NavItem[] }) {
 
   if (items.length === 0) return null;
 
-  const goTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
-  const Row = ({ item, sub }: { item: NavItem; sub?: boolean }) => {
-    const current = item.id === active;
-    return (
-      <button
-        type="button"
-        className={`${styles.item} ${sub ? styles.sub : ""} ${current ? styles.active : ""}`}
-        onClick={() => goTo(item.id)}
-        aria-current={current ? "true" : undefined}
-      >
-        {item.label}
-      </button>
-    );
-  };
 
   return (
     <nav className={styles.nav} aria-label="이 글 안에서">
@@ -64,12 +69,12 @@ export default function SheetNav({ items }: { items: NavItem[] }) {
             item.id === active || children.some((child) => child.id === active);
           return (
             <li key={item.id}>
-              <Row item={item} />
+              <Row item={item} active={active} />
               {inside && children.length > 0 && (
                 <ol className={styles.list}>
                   {children.map((child) => (
                     <li key={child.id}>
-                      <Row item={child} sub />
+                      <Row item={child} active={active} sub />
                     </li>
                   ))}
                 </ol>

@@ -1,7 +1,7 @@
 import type { Theory, TheoryBlock } from "@/lib/theories";
 import { posts } from "@/lib/posts";
 import { nodeHref } from "@/lib/nodeTarget";
-import { slugify } from "@/lib/slug";
+import { sectionBlockId, slugify } from "@/lib/slug";
 import {
   CodeBlock,
   Kicker,
@@ -15,9 +15,9 @@ import sheetStyles from "../content/Sheet.module.css";
 import styles from "./TheoryArticle.module.css";
 
 /** 한 블록 — 문단, 낱말 풀이, 참고, 코드 순서. 절이 있든 없든 모양이 같아야 한다 */
-function Block({ block }: { block: TheoryBlock }) {
+function Block({ block, id }: { block: TheoryBlock; id?: string }) {
   return (
-    <div className={styles.block} id={slugify(block.label)}>
+    <div className={styles.block} id={id ?? slugify(block.label)}>
       <TextBlock label={block.label} accent="theory">
         {block.body}
       </TextBlock>
@@ -80,7 +80,11 @@ export default function TheoryArticle({ theory }: { theory: Theory }) {
           </SectionHeading>
           <div className={`${styles.blocks} ${styles.sectionBlocks}`}>
             {section.blocks.map((block) => (
-              <Block key={block.label} block={block} />
+              <Block
+                key={block.label}
+                block={block}
+                id={sectionBlockId(section.heading, block.label)}
+              />
             ))}
           </div>
         </section>

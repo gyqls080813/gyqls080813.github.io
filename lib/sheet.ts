@@ -8,7 +8,7 @@ import { getTheory } from "./theories";
 import { getTil } from "./tils";
 import { getDictionary } from "./dictionary";
 import { nodeOpenKind } from "./nodeTarget";
-import { slugify } from "./slug";
+import { sectionBlockId, slugify } from "./slug";
 
 /**
  * 껍데기가 "지금 열린 노드" 하나로부터 알아내야 하는 것 전부.
@@ -73,7 +73,11 @@ export function sheetNavItems(nodeId: string): NavItem[] {
     if (theory.sections) {
       return theory.sections.map((section) => ({
         ...item(section.heading),
-        children: section.blocks.map((block) => item(block.label)),
+        /* 블록 앵커는 절 id를 앞에 붙인다 — 본문(TheoryArticle·IdeaArticle)과 같은 규칙 */
+        children: section.blocks.map((block) => ({
+          id: sectionBlockId(section.heading, block.label),
+          label: block.label,
+        })),
       }));
     }
     return (theory.blocks ?? []).map((block) => item(block.label));

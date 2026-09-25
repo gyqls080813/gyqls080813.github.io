@@ -1,14 +1,14 @@
 import type { Idea } from "@/lib/ideas";
 import type { TheoryBlock } from "@/lib/theories";
-import { slugify } from "@/lib/slug";
+import { sectionBlockId, slugify } from "@/lib/slug";
 import { CodeBlock, Kicker, SectionHeading, TermNote, TextBlock } from "../content";
 import sheetStyles from "../content/Sheet.module.css";
 /* 생각 시트는 이론 시트와 같은 뼈대를 쓴다 — 색만 갈래를 따라 초록이다 */
 import styles from "../theory/TheoryArticle.module.css";
 
-function Block({ block }: { block: TheoryBlock }) {
+function Block({ block, id }: { block: TheoryBlock; id?: string }) {
   return (
-    <div className={styles.block} id={slugify(block.label)}>
+    <div className={styles.block} id={id ?? slugify(block.label)}>
       <TextBlock label={block.label} accent="idea">
         {block.body}
       </TextBlock>
@@ -54,7 +54,11 @@ export default function IdeaArticle({ idea }: { idea: Idea }) {
           </SectionHeading>
           <div className={`${styles.blocks} ${styles.sectionBlocks}`}>
             {section.blocks.map((block) => (
-              <Block key={block.label} block={block} />
+              <Block
+                key={block.label}
+                block={block}
+                id={sectionBlockId(section.heading, block.label)}
+              />
             ))}
           </div>
         </section>
