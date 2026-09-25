@@ -43,6 +43,9 @@ const nodeTypes = { knowledge: KnowledgeNode, backdrop: BackdropNode };
 const MIN_ZOOM = 0.3;
 const MAX_ZOOM = 2.5;
 
+/** 이만큼(px) 안에서 움직인 누름은 끌기가 아니라 클릭이다 */
+const CLICK_SLOP = 5;
+
 /** 펴고 나서 자리가 잡히기까지 — 이동·열기는 이만큼 뒤에 시작해야 한다 */
 const REVEAL_SETTLE = 160;
 
@@ -56,6 +59,37 @@ export interface GraphHandle {
    * 돌려주는 값은 자리가 잡히기까지 기다려야 하는 ms — 0이면 이미 보이는 노드다.
    */
   reveal: (nodeId: string) => number;
+}
+
+/**
+ * 초기 배치는 입력이 같으면 결과도 같다 — 홈 그래프와 시트 뒤 그래프가 같은
+ * 데이터(모듈 상수)로 두 번 계산하지 않게 마지막 결과를 들고 있는다. 노드를
+ * 열어 시트로 넘어가는 순간 이 계산이 뒤 그래프 마운트와 겹치면 화면이 멈춘다.
+ * 결과 배열은 읽기만 한다 — 바꿀 때는 언제나 새 배열을 만든다(setRfNodes).
+ */
+let lastFlow: {
+  nodes: GraphNodeData[];
+  edges: GraphEdgeData[];
+  backdrops: GraphBackdropData[];
+  result: Node[];
+} | null = null;
+
+function cachedFlowGraph(
+  nodes: GraphNodeData[],
+  edges: GraphEdgeData[],
+  backdrops: GraphBackdropData[],
+): Node[] {
+  if (
+    lastFlow &&
+    lastFlow.nodes === nodes &&
+    lastFlow.edges === edges &&
+    lastFlow.backdrops === backdrops
+  ) {
+    return lastFlow.result;
+  }
+  const result = buildFlowGraph(nodes, edges, backdrops);
+  lastFlow = { nodes, edges, backdrops, result };
+  return result;
 }
 
 function rectOf(node: Node): SnapRect {
@@ -150,7 +184,7 @@ export default function KnowledgeGraph({
      데이터(필터 등)가 바뀌면 배치는 초기 좌표로 되돌아간다. */
   /* 초기 배치부터 layoutTree — "정렬" 버튼과 같은 규칙으로 시작한다 */
   const baseNodes = useMemo<Node[]>(
-    () => buildFlowGraph(nodes, edges, backdrops),
+    () => cachedFlowGraph(nodes, edges, backdrops),
     [nodes, edges, backdrops],
   );
   const [rfNodes, setRfNodes] = useState<Node[]>(baseNodes);
@@ -731,6 +765,11 @@ export default function KnowledgeGraph({
           maxZoom={MAX_ZOOM}
           nodesConnectable={false}
           nodesDraggable
+          /* 누르는 손은 떨린다 — 트랙패드 클릭은 1~2px 움직이는 게 보통이다.
+             기본값(클릭 0px · 끌기 1px)이면 그 떨림에 클릭이 사라지고 노드가 밀린다.
+             몇 px까지는 클릭으로 읽고, 그보다 크게 움직일 때만 끌기로 본다 */
+          nodeClickDistance={CLICK_SLOP}
+          nodeDragThreshold={CLICK_SLOP}
           elementsSelectable
           proOptions={{ hideAttribution: false }}
           onInit={(instance: ReactFlowInstance) => {

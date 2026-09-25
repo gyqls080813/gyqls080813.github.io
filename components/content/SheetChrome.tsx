@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { startTransition, useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import TopBar from "../TopBar";
@@ -39,6 +39,21 @@ import styles from "./Sheet.module.css";
 export default function SheetChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const nodeId = sheetNodeId(pathname ?? "");
+  const inSheet = nodeId !== null;
+
+  /* 뒤 그래프는 한 박자 늦게 그린다. 홈에서 노드를 열고 넘어오는 순간 시트·트리·
+     본문과 노드 300개짜리 그래프를 한 프레임에 같이 그리면, 열림 전환이 끝나는
+     자리에서 화면이 멈춘다. 그래프는 시트 뒤에 비치는 배경이라 늦게 떠도 읽기를
+     막지 않는다 — 전환(transition)으로 넘겨 React가 쪼개 그리게 한다.
+     껍데기는 시트 사이를 오가도 살아 있으므로, 시트에 들어올 때 한 번만이다. */
+  const [graphReady, setGraphReady] = useState(false);
+  useEffect(() => {
+    if (!inSheet) {
+      setGraphReady(false);
+      return;
+    }
+    startTransition(() => setGraphReady(true));
+  }, [inSheet]);
 
   if (!nodeId) return <>{children}</>;
 
@@ -53,13 +68,15 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
             focusNodeId는 카메라가 아니라 강조만 바꾼다. 그래서 이 그래프가
             살아남은 채 노드만 갈아타도 화면이 움직이지 않는다 */}
         <div className={styles.backGraph}>
-          <KnowledgeGraph
-            nodes={annotatedGraphNodes}
-            edges={fullGraphEdges}
-            backdrops={fullGraphBackdrops}
-            focusNodeId={nodeId}
-            showControls={false}
-          />
+          {graphReady && (
+            <KnowledgeGraph
+              nodes={annotatedGraphNodes}
+              edges={fullGraphEdges}
+              backdrops={fullGraphBackdrops}
+              focusNodeId={nodeId}
+              showControls={false}
+            />
+          )}
         </div>
         <Link href="/" className={styles.scrim} aria-label="그래프로 돌아가기" />
 
