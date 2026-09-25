@@ -2,16 +2,15 @@
 
 import { slugify } from "@/lib/slug";
 /* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
-import { INTRO_HEADINGS as HEADINGS } from "@/lib/sheet";
-import {
-  Chip,
-  EntryRow,
-  Figure,
-  Kicker,
-  NodeCard,
-  SectionHeading,
-  TextBlock,
-} from "./content";
+import { INTRO_HEADINGS as HEADINGS } from "@/lib/headings";
+/* 묶음(./content)으로 가져오면 CodeBlock까지 딸려 와 코드 색칠 결과(수백 KB)가
+   소개 페이지 번들에 실린다 — 쓰는 조각만 파일에서 바로 가져온다 */
+import Chip from "./content/Chip";
+import { EntryRow } from "./content/Facts";
+import Figure from "./content/Figure";
+import NodeCard from "./content/NodeCard";
+import { Kicker, SectionHeading } from "./content/Prose";
+import TextBlock from "./content/TextBlock";
 import styles from "./IntroSheet.module.css";
 
 type Project = {

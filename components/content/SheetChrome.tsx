@@ -10,9 +10,8 @@ import SheetBreadcrumb from "./SheetBreadcrumb";
 import SheetNav from "./SheetNav";
 import SheetPorts from "./SheetPorts";
 import SheetShell from "./SheetShell";
-import { annotatedGraphNodes } from "@/lib/annotatedGraph";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import { sheetNavItems, sheetNodeId, sheetPorts } from "@/lib/sheet";
+import { annotatedGraphNodes, navOf, portsOf, sheetNodeId } from "@/lib/outline";
 import styles from "./Sheet.module.css";
 
 /**
@@ -65,7 +64,7 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
 
   if (!nodeId) return <>{children}</>;
 
-  const ports = sheetPorts(nodeId);
+  const ports = portsOf(nodeId);
 
   return (
     <div className={styles.screen}>
@@ -95,7 +94,7 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
         <SheetShell
           nodeId={nodeId}
           tree={<NodeTree activeNodeId={nodeId} />}
-          nav={<SheetNav items={sheetNavItems(nodeId)} />}
+          nav={<SheetNav items={navOf(nodeId)} />}
         >
           {children}
         </SheetShell>

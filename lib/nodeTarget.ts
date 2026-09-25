@@ -1,9 +1,4 @@
-import { getIdea } from "./ideas";
-import { getPost } from "./posts";
-import { getProject } from "./projects";
-import { getTheory } from "./theories";
-import { getTil } from "./tils";
-import { getDictionary } from "./dictionary";
+import { sheetIndex } from "./generated/sheetIndex";
 
 /** 노드 하나가 열리면 무엇이 되는가 */
 export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "idea" | "til" | "dict";
@@ -11,16 +6,12 @@ export type NodeOpenKind = "intro" | "project" | "post" | "theory" | "idea" | "t
 /**
  * 그래프에서 눌렀든 시트의 포트에서 눌렀든 이 판단 하나를 쓴다.
  * null이면 아직 내용이 없는 노드라 이동·확대까지만 하고 멈춘다.
+ *
+ * 판단 자체는 본문을 봐야 하지만(lib/openKind), 본문 모듈을 브라우저로 보내지
+ * 않으려고 빌드 때 뽑아 둔 색인을 읽는다.
  */
 export function nodeOpenKind(nodeId: string): NodeOpenKind | null {
-  if (nodeId === "me") return "intro";
-  if (getProject(nodeId)) return "project";
-  if (getPost(nodeId)) return "post";
-  if (getTheory(nodeId)) return "theory";
-  if (getIdea(nodeId)) return "idea";
-  if (getTil(nodeId)) return "til";
-  if (getDictionary(nodeId)) return "dict";
-  return null;
+  return sheetIndex.openKind[nodeId] ?? null;
 }
 
 /** 열린 뒤 머무를 주소 — 확대가 끝나는 시점에 여기로 넘어간다 */

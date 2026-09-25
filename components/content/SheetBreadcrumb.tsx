@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { sheetCrumbs } from "@/lib/sheet";
+import { crumbsOf } from "@/lib/outline";
 import type { NodeKind } from "../graph/types";
 import styles from "./Sheet.module.css";
 
@@ -38,7 +38,7 @@ function Chevron() {
  * 위치를 아는 유일한 단서다.
  */
 export default function SheetBreadcrumb({ nodeId }: { nodeId: string }) {
-  const crumbs = sheetCrumbs(nodeId);
+  const crumbs = crumbsOf(nodeId);
 
   return (
     <div className={styles.breadcrumb}>

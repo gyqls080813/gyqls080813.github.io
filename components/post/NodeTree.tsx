@@ -5,7 +5,7 @@ import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
 import { fullGraphNodes } from "@/lib/graphData";
-import { posts } from "@/lib/posts";
+import { postOutlines as posts } from "@/lib/outline";
 /* 계층은 머리말과 같은 지도를 쓴다 — 둘이 각자 계산하면 다른 깊이를 말하게 된다 */
 import { chaptersOf, parentOf } from "@/lib/nodePath";
 import { nodeDestination, nodeHref, nodeOpenKind } from "@/lib/nodeTarget";
@@ -146,9 +146,7 @@ function TreeRow({
 /** 개념 한 줄 — 아래로 내려가는 것만 여기서 따진다 */
 function TheoryRow({ id }: { id: string }) {
   const chapters = chaptersOf.get(id);
-  const references = posts.filter((post) =>
-    post.theories.some((theory) => theory.id === id),
-  ).length;
+  const references = posts.filter((post) => post.theories.includes(id)).length;
   const kind = fullGraphNodes.find((node) => node.id === id)?.kind ?? "theory";
 
   return (
