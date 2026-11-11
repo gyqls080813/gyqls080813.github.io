@@ -426,6 +426,172 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "JavaScript — javascript.info 를 따라 읽은 스물일곱 챕터",
+      from: "js",
+      entries: [
+        {
+          term: "엔진 · 명세서 · 호스트",
+          body: "엔진은 코드를 실행하는 프로그램(V8, SpiderMonkey). 명세서는 언어의 정답(ECMA-262), MDN은 그것을 풀어 쓴 매뉴얼. 호스트는 엔진을 품고 자기 기능(브라우저의 DOM·fetch, Node의 fs)을 더해 주는 바깥 프로그램. 값이 이상하면 언어, 화면이 이상하면 호스트, 기기마다 다르면 지원 표를 본다.",
+        },
+        {
+          term: "엄격 모드 ('use strict')",
+          body: "ES5가 옛 동작을 끄기 위해 넣은 선언. 선언 없는 대입이 에러가 되고, 함수의 this가 window 대신 undefined가 되고, 읽기 전용 대입이 던진다. 클래스 본문과 모듈은 자동으로 켜진다. 조용한 실패를 소리 나게 한다.",
+        },
+        {
+          term: "형 변환 (type conversion)",
+          body: "값을 다른 자료형으로 바꾸는 일. 규칙은 셋(문자열로·숫자로·불린으로)뿐이지만 어느 연산자가 어느 규칙을 부르는지가 따로다. +는 문자열, 다른 산술과 <, ==는 숫자, if와 !는 불린. '0' == false가 true인 것은 숫자 규칙, if ('0')이 참인 것은 불린 규칙이다.",
+        },
+        {
+          term: "동등 (==)과 일치 (===)",
+          body: "==는 형이 다르면 숫자로 바꿔 견주고, ===는 형이 다르면 그냥 false. null과 undefined는 ==에서 서로만 같고 다른 값과는 다르며, >=는 null을 0으로 바꾼다. 그래서 null == 0은 false, null >= 0은 true. ===를 쓰고 x == null만 허용한다.",
+        },
+        {
+          term: "호이스팅 (hoisting)과 TDZ",
+          body: "선언이 스코프 맨 위로 끌어올려진 것처럼 동작하는 규칙. 함수 선언은 몸체까지 올라가 어디서든 부를 수 있고, var는 이름만 올라가 값이 undefined, let·const는 선언 줄 전에 읽으면 ReferenceError(TDZ, 일시적 사각지대)다.",
+        },
+        {
+          term: "참조 (reference)와 얕은·깊은 복사",
+          body: "변수에는 객체 자체가 아니라 주소(참조)가 들어 있어, 복사하면 두 이름이 한 객체를 가리킨다. 얕은 복사({...o}, Object.assign)는 첫 층만 새 객체, 안의 객체는 공유. 깊은 복사는 structuredClone. {} === {}는 false다.",
+        },
+        {
+          term: "this",
+          body: "함수가 불릴 때 정해지는 '점 앞의 것'. 정의한 곳이 아니라 부른 모양이 정한다. 떼어 내 부르면(콜백으로 넘기면) 엄격 모드에서 undefined. 화살표 함수만 자기 this가 없어 바깥 것을 쓴다. call·apply·bind로 직접 정할 수 있고, 화살표에는 그것도 안 통한다.",
+        },
+        {
+          term: "클로저 (closure)와 렉시컬 환경",
+          body: "함수가 만들어진 자리의 변수 장부(렉시컬 환경)를 기억해, 어디서 불리든 그 장부에서 변수를 찾는 것. 값을 복사하는 게 아니라 변수를 가리킨다. for (var i)로 만든 함수 셋이 전부 마지막 i를 보는 이유. let은 반복마다 새 장부를 만든다.",
+        },
+        {
+          term: "래퍼 객체 (wrapper object)",
+          body: "원시값의 메서드를 부르는 순간 엔진이 잠깐 만들어 쓰고 버리는 객체. 'abc'.length가 되는 이유. 원시값에 프로퍼티를 붙이면 그 임시 객체에 붙고 사라지며 엄격 모드에서는 TypeError다.",
+        },
+        {
+          term: "sort의 기본 비교",
+          body: "배열 sort()의 기본 비교 함수는 요소를 문자열로 바꿔 사전 순으로 견준다. [1, 2, 10, 21].sort()가 [1, 10, 2, 21]이 되는 이유. 숫자는 (a, b) => a - b를 넘겨야 한다. sort는 원본을 바꾸고 toSorted는 새 배열을 준다.",
+        },
+        {
+          term: "Map · Set · WeakMap",
+          body: "Map은 어떤 값도 열쇠로 받고(객체, NaN) 삽입 순서를 지킨다. 일반 객체는 객체 열쇠를 '[object Object]' 문자열로 뭉갠다. Set은 중복 없는 값 모음. WeakMap은 객체 열쇠만 받고 그 객체가 수거되면 항목도 사라지며 순회가 없다. 객체에 데이터를 붙이되 수명을 늘리지 않을 때.",
+        },
+        {
+          term: "프로퍼티 설명자 (property descriptor)와 접근자",
+          body: "프로퍼티 하나의 전부를 적은 객체. 데이터 프로퍼티는 { value, writable, enumerable, configurable }, 접근자 프로퍼티는 { get, set, enumerable, configurable }. 리터럴은 깃발이 전부 true, defineProperty는 적지 않은 깃발이 false. Object.keys에 안 보이는 것, 대입이 조용히 사라지는 것이 전부 깃발 때문이다.",
+        },
+        {
+          term: "[[Prototype]]과 F.prototype",
+          body: "[[Prototype]]은 모든 객체의 숨은 슬롯으로 '못 찾으면 여기서 다시 찾는' 다른 객체를 가리킨다. 읽기는 사슬을 올라가고 쓰기는 자기에게만. F.prototype은 함수의 보통 프로퍼티로 'new F()가 만든 객체의 [[Prototype]]'이 된다. 둘은 이름이 비슷하지만 다른 것이다.",
+        },
+        {
+          term: "클래스 (class)",
+          body: "생성자 함수 + prototype 메서드 + 사슬 잇기를 한 선언으로 적는 문법. new 필수, 메서드 non-enumerable, 본문은 엄격 모드, #private은 파싱 때 검사. extends는 사슬 두 겹(인스턴스·정적)을 잇고, 자식 생성자는 super()가 this를 만들어 줄 때까지 this가 없다. 필드는 자기 생성자 차례에 만들어진다.",
+        },
+        {
+          term: "try..catch와 비동기 에러",
+          body: "try는 블록 안이 동기로 도는 '시간'을 감싼다. 그 안에서 예약만 하고 나중에 도는 콜백(setTimeout, 이벤트, then)의 에러는 try가 끝난 뒤라 잡지 못한다. 프라미스의 .catch나 async/await로 나중을 try 안으로 끌어와야 한다. 파싱 에러도 try 전이라 못 잡는다.",
+        },
+        {
+          term: "커스텀 에러와 다시 던지기",
+          body: "class X extends Error { constructor(m) { super(m); this.name = this.constructor.name } }로 종류를 만들고 instanceof로 가린다. catch는 아는 에러만 처리하고 모르는 것은 throw e로 올린다. 전부 삼키면 진짜 버그가 사라진다. cause로 낮은 에러를 감싸 올린다.",
+        },
+        {
+          term: "프라미스 (Promise)",
+          body: "'한 번 끝나는 나중의 값'. pending → fulfilled/rejected로 한 번만 바뀐다. 실행자는 즉시 동기, then 핸들러는 늘 마이크로태스크. 체인 어디서 난 에러든 가장 가까운 catch로. all은 하나 실패면 전부 버리고, allSettled는 전부 모으고, race는 첫 것, any는 첫 성공.",
+        },
+        {
+          term: "마이크로태스크 큐 (microtask queue)",
+          body: "then·catch·finally·queueMicrotask·MutationObserver·await 뒤 코드가 들어가는 줄. 지금 코드가 끝나면 전부 비우고, 비우는 동안 들어온 것도 비운 뒤에야 setTimeout·이벤트·렌더링으로 간다. 그래서 then은 setTimeout(0)보다 먼저이고, 끝없이 자신을 넣으면 화면이 멈춘다.",
+        },
+        {
+          term: "async / await",
+          body: "async는 함수가 늘 프라미스를 돌려주게 하는 표시, await는 프라미스가 끝날 때까지 함수를 멈추고 값을 꺼낸다. 거부되면 그 줄에서 throw가 되어 try..catch가 받는다. await 하나가 마이크로태스크 하나다. forEach는 반환값을 기다리지 않으니 순서가 필요하면 for..of다.",
+        },
+        {
+          term: "제너레이터 (generator)와 이터레이터 프로토콜",
+          body: "function*은 yield에서 멈춰 값을 내보내고 next()로 이어 가는 함수. 돌려주는 객체는 next()가 { value, done }을 주는 이터레이터이자 iterable이라 for..of에 바로 쓴다. 소비자가 당길 때만 만들어 무한 수열도 된다. async function*과 for await는 '여러 번 이어지는 나중'이다.",
+        },
+        {
+          term: "모듈 (module)과 import/export",
+          body: "export·import가 있는 파일, 또는 type=module. 늘 엄격 모드, 파일 스코프(전역에 안 붙음), 한 번만 평가(같은 객체 공유), 최상위 this는 undefined, 브라우저에서는 늘 defer이고 외부 모듈은 CORS가 필요하다. 정적 import는 빌드 때 그래프를, 동적 import()는 실행 때 프라미스로 청크를.",
+        },
+        {
+          term: "Proxy와 Reflect",
+          body: "Proxy는 객체를 감싸 읽기·쓰기·삭제·열거·호출을 가로채는 객체(트랩). Reflect는 그 안에서 기본 동작을 하는 함수 묶음이고 receiver로 상속 getter의 this를 바로잡는다. 내장 객체의 내부 슬롯(Map, #private)은 프록시를 통하지 않아 bind가 필요하다. Vue 3의 reactive가 이것이다.",
+        },
+        {
+          term: "속성 (attribute)과 프로퍼티 (property)",
+          body: "속성은 HTML에 적은 문자열이고 getAttribute로 읽는다. 프로퍼티는 DOM 객체의 타입 있는 필드다. 표준 속성은 프로퍼티로 반영되지만 value·checked는 한 방향이다. 지금 값은 프로퍼티, 처음 값은 defaultValue, 비표준은 data-*와 dataset.",
+        },
+        {
+          term: "offsetWidth · clientWidth · scrollWidth",
+          body: "요소 크기의 세 가족. offset은 테두리까지 전부, client는 패딩까지(스크롤바 제외), scroll은 보이지 않는 부분까지 내용 전체. scrollTop만 쓸 수 있다. 읽으면 레이아웃을 강제한다(렌더링 7장). getBoundingClientRect는 창 기준이고 문서 기준은 scrollY를 더한다.",
+        },
+        {
+          term: "캡처 (capturing)와 버블 (bubbling)",
+          body: "이벤트가 지나가는 길의 두 방향. window → 타깃으로 내려가는 캡처(phase 1), 타깃(2), 타깃 → window로 올라오는 버블(3). 핸들러는 기본으로 버블에서 불리고 { capture: true }로 캡처에서. target은 내내 같고 currentTarget(this)은 단계마다 바뀐다. focus·blur·mouseenter·scroll은 버블하지 않는다.",
+        },
+        {
+          term: "이벤트 위임 (event delegation)",
+          body: "자식마다가 아니라 공통 부모 하나에 핸들러를 걸고 event.target.closest로 어느 자식인지 알아내는 패턴. 핸들러가 하나고 나중에 생긴 자식도 된다. 중간 요소의 stopPropagation이 길을 끊는 것이 유일한 약점이라, 끊지 않고 표시를 남기거나 캡처에 건다.",
+        },
+        {
+          term: "기본 동작 (default action)과 preventDefault",
+          body: "브라우저가 이벤트 뒤에 스스로 하는 일(링크 이동, 폼 전송, 체크박스 토글, 선택 시작). 핸들러가 동기로 도는 동안 event.preventDefault()를 부르면 막힌다. await 뒤에 부르면 늦다. passive: true는 '막지 않겠다'는 약속이라 스크롤이 기다리지 않는다. scroll 이벤트는 이미 스크롤된 뒤라 못 막는다.",
+        },
+        {
+          term: "input 이벤트와 change 이벤트",
+          body: "input은 값이 바뀔 때마다(키·붙여넣기·음성) 나고 이미 바뀐 뒤라 막을 수 없다. change는 확정될 때(텍스트는 blur, select·체크박스는 즉시). 프로그램으로 value를 바꾸면 둘 다 나지 않아 v-model이 모른다. 직접 dispatchEvent하거나 상태를 바꾼다.",
+        },
+        {
+          term: "form.submit() · requestSubmit() · submit 이벤트",
+          body: "submit 이벤트는 사용자가 전송할 때 나고 preventDefault로 막을 수 있다. form.submit()은 이벤트도 유효성도 건너뛰고 바로 보낸다. requestSubmit()은 사용자가 누른 것처럼 유효성 → 이벤트 → 전송을 밟는다. 자바스크립트로 보낼 때는 requestSubmit.",
+        },
+        {
+          term: "DOMContentLoaded · load · beforeunload",
+          body: "문서 시계의 눈금. DOMContentLoaded는 DOM 완성(스크립트는 기다림, 이미지는 아님), load는 이미지·iframe까지 전부, beforeunload는 떠나기 전(확인 창, 문장은 못 정함), unload는 떠남(sendBeacon). async 스크립트는 DOMContentLoaded와 무관해 지난 뒤 도착하면 리스너가 영영 안 불린다. readyState를 먼저 본다.",
+        },
+        {
+          term: "MutationObserver",
+          body: "DOM 노드의 변화(자식·속성·텍스트)를 지켜보다 콜백을 부르는 객체. 변화마다가 아니라 한 태스크의 변화를 모아 마이크로태스크에서 한 번 부른다. 내가 만들지 않은 변화(서드파티, 프레임워크)에 반응하는 유일한 길. 콜백에서 지켜보는 노드를 고치면 또 불린다.",
+        },
+        {
+          term: "동일 출처 정책 (Same Origin Policy)과 postMessage",
+          body: "스킴·도메인·포트가 같은 창끼리만 서로의 window·document를 만질 수 있다. 다른 출처의 창에는 location 쓰기·postMessage·length·closed 등 열몇 개만. postMessage는 받을 출처를 적고, 받는 쪽은 e.origin을 확인한다. 끼우기 거부는 서버 헤더(X-Frame-Options, frame-ancestors)다.",
+        },
+        {
+          term: "ArrayBuffer와 뷰 (view)",
+          body: "ArrayBuffer는 뜻이 없는 바이트 덩어리. 그 위에 Uint8Array·Uint32Array·DataView 같은 창을 얹어 읽는다. 같은 4바이트가 Uint8로는 넷, Uint32로는 하나, 리틀 엔디언 513, 빅 엔디언 258. 뷰는 복사가 아니라 같은 메모리를 본다. TextDecoder가 바이트를 글자로(한글 3바이트), Blob이 타입을 붙인 묶음.",
+        },
+        {
+          term: "fetch의 두 단계와 response.ok",
+          body: "fetch 프라미스는 헤더가 왔을 때 끝나고 본문은 json()·text()로 따로(한 번만). 404·500은 응답이라 성공으로 들어오고 ok가 false. 거부는 네트워크 끊김·CORS·abort만. if (!r.ok) throw를 늘 적는다.",
+        },
+        {
+          term: "CORS와 프리플라이트",
+          body: "다른 출처의 응답을 자바스크립트가 읽어도 되는지 서버가 Access-Control-Allow-Origin 헤더로 허락하는 규칙. 안전하지 않은 요청(PUT, application/json, Authorization)은 OPTIONS 프리플라이트가 먼저 가고 Allow-Methods·Headers로 허락받아야 본 요청이 간다. 쿠키는 credentials: 'include' + Allow-Credentials + 정확한 Origin. 막는 쪽은 브라우저, 푸는 쪽은 서버.",
+        },
+        {
+          term: "쿠키 · localStorage · IndexedDB",
+          body: "쿠키는 서버로 매 요청 함께 가는 4KB 글자(세션 ID, httpOnly). localStorage는 출처별 5MB 문자열, 탭 공유, 영구, 서버로 안 감. sessionStorage는 탭 하나. IndexedDB는 큰 객체·파일을 비동기 트랜잭션으로. 서버가 봐야 하나 → 쿠키, 탭을 넘나 → local, 크거나 객체 → IndexedDB.",
+        },
+        {
+          term: "requestAnimationFrame과 시간 기반 애니메이션",
+          body: "브라우저가 다음 프레임 직전에 콜백을 부르는 함수. 주사율에 맞고 숨은 탭에서 멈춘다. 진행률은 프레임 수가 아니라 (지금 - 시작) / 전체 시간으로 계산해야 120Hz에서도 같은 속도다. transform·opacity는 컴포지터만 움직여 싸고, 시작·끝으로 적을 수 있으면 CSS에 맡긴다.",
+        },
+        {
+          term: "커스텀 엘리먼트와 Shadow DOM",
+          body: "customElements.define('my-x', class extends HTMLElement)로 만드는 내 태그(하이픈 필수)와 그 안의 숨은 트리. 생명주기는 constructor → attributeChanged → connectedCallback(렌더링은 여기). Shadow 경계는 CSS를 양방향으로 막고(CSS 변수·::part만 넘음), 바깥 querySelector를 막고, 이벤트는 넘되 target이 호스트로 바뀌며 커스텀 이벤트는 composed: true여야 넘는다.",
+        },
+        {
+          term: "파국적 백트래킹 (catastrophic backtracking)",
+          body: "수량자가 중첩된 정규식((\\w+\\s?)*)이 맞지 않는 입력을 만나 글자를 나누는 모든 방식을 되돌아가며 시도해 지수 시간이 걸리는 현상. 문서의 예제 한 줄이 Node 24에서 54초였다. 사용자 입력에 돌리면 ReDoS. 같은 글자를 나누는 길이 하나만 되게 패턴을 고치고 입력 길이를 제한한다.",
+        },
+        {
+          term: "정규식과 한글: \\w · \\b · u 플래그",
+          body: "\\w는 라틴·숫자·_만이라 한글이 빠지고, \\b는 그 경계라 한글 단어 경계를 못 잡고, .은 u 없이 이모지를 두 글자로 본다. 한글은 [가-힣]이나 \\p{Script=Hangul}과 u 플래그, 경계는 (?<![가-힣])단어(?![가-힣])로 직접 적는다.",
+        },
+      ],
+    },
   ],
 };
 
