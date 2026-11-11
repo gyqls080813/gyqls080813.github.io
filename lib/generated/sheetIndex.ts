@@ -112,6 +112,19 @@ export const sheetIndex: {
     "i18n-s13": "theory",
     "i18n-s14": "theory",
     "i18n-commerce-web": "idea",
+    "render": "theory",
+    "render-s1": "theory",
+    "render-s2": "theory",
+    "render-s3": "theory",
+    "render-s4": "theory",
+    "render-s5": "theory",
+    "render-s6": "theory",
+    "render-s7": "theory",
+    "render-s8": "theory",
+    "render-s9": "theory",
+    "render-s10": "theory",
+    "render-s11": "theory",
+    "render-s12": "theory",
     "t-isolated": "post",
     "t-focus": "post",
     "t-sync": "post",
@@ -464,6 +477,164 @@ export const sheetIndex: {
           {
             "id": "검토-상태-review-state",
             "label": "검토 상태 (review state)"
+          }
+        ]
+      },
+      {
+        "id": "브라우저-렌더링-주소가-픽셀이-되기까지",
+        "label": "브라우저 렌더링 — 주소가 픽셀이 되기까지",
+        "children": [
+          {
+            "id": "렌더링-rendering",
+            "label": "렌더링 (rendering)"
+          },
+          {
+            "id": "브라우저-프로세스와-렌더러-프로세스",
+            "label": "브라우저 프로세스와 렌더러 프로세스"
+          },
+          {
+            "id": "메인-스레드-main-thread",
+            "label": "메인 스레드 (main thread)"
+          },
+          {
+            "id": "사이트-격리-site-isolation",
+            "label": "사이트 격리 (site isolation)"
+          },
+          {
+            "id": "브라우징-컨텍스트-browsing-context",
+            "label": "브라우징 컨텍스트 (browsing context)"
+          },
+          {
+            "id": "realm-렘",
+            "label": "realm (렘)"
+          },
+          {
+            "id": "windowproxy",
+            "label": "WindowProxy"
+          },
+          {
+            "id": "전역-객체와-전역-렉시컬-스코프",
+            "label": "전역 객체와 전역 렉시컬 스코프"
+          },
+          {
+            "id": "이름-접근-named-access-on-window",
+            "label": "이름 접근 (named access on Window)"
+          },
+          {
+            "id": "readystate와-네-시점",
+            "label": "readyState와 네 시점"
+          },
+          {
+            "id": "호환-모드-quirks-mode-standards-mode",
+            "label": "호환 모드 (quirks mode / standards mode)"
+          },
+          {
+            "id": "토크나이저와-트리-구성-tokenizer-tree-construction",
+            "label": "토크나이저와 트리 구성 (tokenizer, tree construction)"
+          },
+          {
+            "id": "포스터-페어런팅-foster-parenting",
+            "label": "포스터 페어런팅 (foster parenting)"
+          },
+          {
+            "id": "프리로드-스캐너-preload-scanner",
+            "label": "프리로드 스캐너 (preload scanner)"
+          },
+          {
+            "id": "파싱을-막는-스크립트-parser-blocking-script",
+            "label": "파싱을 막는 스크립트 (parser-blocking script)"
+          },
+          {
+            "id": "스크립트를-막는-스타일시트-script-blocking-style-sheet",
+            "label": "스크립트를 막는 스타일시트 (script-blocking style sheet)"
+          },
+          {
+            "id": "async-defer-module",
+            "label": "async / defer / module"
+          },
+          {
+            "id": "렌더링-차단-render-blocking",
+            "label": "렌더링 차단 (render-blocking)"
+          },
+          {
+            "id": "cssom-css-object-model",
+            "label": "CSSOM (CSS Object Model)"
+          },
+          {
+            "id": "캐스케이드와-특이도-cascade-specificity",
+            "label": "캐스케이드와 특이도 (cascade, specificity)"
+          },
+          {
+            "id": "계산된-스타일-computed-style",
+            "label": "계산된 스타일 (computed style)"
+          },
+          {
+            "id": "레이아웃-트리-layout-tree",
+            "label": "레이아웃 트리 (layout tree)"
+          },
+          {
+            "id": "폭은-내려오고-높이는-올라온다",
+            "label": "폭은 내려오고 높이는 올라온다"
+          },
+          {
+            "id": "강제-동기-레이아웃과-레이아웃-스래싱",
+            "label": "강제 동기 레이아웃과 레이아웃 스래싱"
+          },
+          {
+            "id": "레이아웃-시프트-layout-shift-cls",
+            "label": "레이아웃 시프트 (layout shift, CLS)"
+          },
+          {
+            "id": "글리프-glyph-와-셰이핑-shaping",
+            "label": "글리프 (glyph)와 셰이핑 (shaping)"
+          },
+          {
+            "id": "폰트-매칭과-폴백-font-matching-fallback",
+            "label": "폰트 매칭과 폴백 (font matching, fallback)"
+          },
+          {
+            "id": "word-break-keep-all과-overflow-wrap-anywhere",
+            "label": "word-break: keep-all과 overflow-wrap: anywhere"
+          },
+          {
+            "id": "font-display와-foit-fout",
+            "label": "font-display와 FOIT / FOUT"
+          },
+          {
+            "id": "페인트-레코드와-레이어-paint-record-compositing-layer",
+            "label": "페인트 레코드와 레이어 (paint record, compositing layer)"
+          },
+          {
+            "id": "래스터와-합성-rasterization-compositing",
+            "label": "래스터와 합성 (rasterization, compositing)"
+          },
+          {
+            "id": "태스크와-마이크로태스크-task-microtask",
+            "label": "태스크와 마이크로태스크 (task, microtask)"
+          },
+          {
+            "id": "렌더링-기회와-requestanimationframe",
+            "label": "렌더링 기회와 requestAnimationFrame"
+          },
+          {
+            "id": "긴-태스크-long-task",
+            "label": "긴 태스크 (long task)"
+          },
+          {
+            "id": "교차-출처-속성-cross-origin-properties",
+            "label": "교차 출처 속성 (cross-origin properties)"
+          },
+          {
+            "id": "postmessage",
+            "label": "postMessage"
+          },
+          {
+            "id": "가상-dom과-패치-virtual-dom-patch",
+            "label": "가상 DOM과 패치 (virtual DOM, patch)"
+          },
+          {
+            "id": "하이드레이션-hydration",
+            "label": "하이드레이션 (hydration)"
           }
         ]
       }
@@ -4884,6 +5055,424 @@ export const sheetIndex: {
         ]
       }
     ],
+    "render": [
+      {
+        "id": "렌더링이라는-낱말",
+        "label": "렌더링이라는 낱말"
+      },
+      {
+        "id": "두-객체가-먼저-생긴다-window-그다음-document",
+        "label": "두 객체가 먼저 생긴다: window, 그다음 document"
+      },
+      {
+        "id": "한눈에-보는-파이프라인",
+        "label": "한눈에 보는 파이프라인"
+      },
+      {
+        "id": "단계로-읽는-법",
+        "label": "단계로 읽는 법"
+      },
+      {
+        "id": "열두-장-한눈에",
+        "label": "열두 장 한눈에"
+      },
+      {
+        "id": "실제로-돌린-페이지",
+        "label": "실제로 돌린 페이지"
+      },
+      {
+        "id": "열두-장-밖에-있는-것들",
+        "label": "열두 장 밖에 있는 것들"
+      }
+    ],
+    "render-s1": [
+      {
+        "id": "무슨-일이-일어나나-주소-네트워크-렌더러-커밋",
+        "label": "무슨 일이 일어나나: 주소 → 네트워크 → 렌더러 → 커밋"
+      },
+      {
+        "id": "메인-스레드-하나가-거의-전부를-한다",
+        "label": "메인 스레드 하나가 거의 전부를 한다"
+      },
+      {
+        "id": "실제로-돌려-보면",
+        "label": "실제로 돌려 보면"
+      },
+      {
+        "id": "문제-긴-자바스크립트-하나가-탭-전체를-멈춘다",
+        "label": "문제: 긴 자바스크립트 하나가 탭 전체를 멈춘다"
+      },
+      {
+        "id": "문제가-나는-경우-한-줄에-선-것들과-경계를-넘는-것들",
+        "label": "문제가 나는 경우: 한 줄에 선 것들과 경계를 넘는 것들"
+      },
+      {
+        "id": "문제의-구조-상태가-한-스레드에-묶여-있고-경계는-메시지로만-넘는다",
+        "label": "문제의 구조: 상태가 한 스레드에 묶여 있고, 경계는 메시지로만 넘는다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s2": [
+      {
+        "id": "무슨-일이-일어나나-브라우징-컨텍스트-realm-window-document",
+        "label": "무슨 일이 일어나나: 브라우징 컨텍스트 → realm → Window → Document"
+      },
+      {
+        "id": "window-안에는-무엇이-있나",
+        "label": "window 안에는 무엇이 있나"
+      },
+      {
+        "id": "실제로-돌려-보면",
+        "label": "실제로 돌려 보면"
+      },
+      {
+        "id": "문제-iframe-참조에-붙여-둔-것이-사라진다",
+        "label": "문제: iframe 참조에 붙여 둔 것이 사라진다"
+      },
+      {
+        "id": "문제가-나는-경우-전역이-겹치는-자리",
+        "label": "문제가 나는 경우: 전역이 겹치는 자리"
+      },
+      {
+        "id": "문제의-구조-전역이라-부르는-것이-세-겹이다",
+        "label": "문제의 구조: 전역이라 부르는 것이 세 겹이다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s3": [
+      {
+        "id": "무슨-일이-일어나나-document-가-받는-것들",
+        "label": "무슨 일이 일어나나: Document 가 받는 것들"
+      },
+      {
+        "id": "네-시점-loading-interactive-domcontentloaded-complete",
+        "label": "네 시점: loading → interactive → DOMContentLoaded → complete"
+      },
+      {
+        "id": "문제-head-스크립트에서-document-body-가-null-이다",
+        "label": "문제: head 스크립트에서 document.body 가 null 이다"
+      },
+      {
+        "id": "문제가-나는-경우-시점을-잘못-짚는-자리",
+        "label": "문제가 나는 경우: 시점을 잘못 짚는 자리"
+      },
+      {
+        "id": "문제의-구조-문서는-그릇이고-코드는-자기가-어느-시점에-도는지-모른다",
+        "label": "문제의 구조: 문서는 그릇이고, 코드는 자기가 어느 시점에 도는지 모른다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s4": [
+      {
+        "id": "무슨-일이-일어나나-바이트-글자-토큰-노드",
+        "label": "무슨 일이 일어나나: 바이트 → 글자 → 토큰 → 노드"
+      },
+      {
+        "id": "파서가-고쳐-쓰는-규칙-셋",
+        "label": "파서가 고쳐 쓰는 규칙 셋"
+      },
+      {
+        "id": "프리로드-스캐너-파서가-멈춰도-다운로드는-간다",
+        "label": "프리로드 스캐너: 파서가 멈춰도 다운로드는 간다"
+      },
+      {
+        "id": "문제-p-안의-div-가-빈-p-둘로-갈라진다",
+        "label": "문제: <p> 안의 <div> 가 빈 p 둘로 갈라진다"
+      },
+      {
+        "id": "문제가-나는-경우-적은-것과-가진-것이-갈라지는-자리",
+        "label": "문제가 나는 경우: 적은 것과 가진 것이 갈라지는 자리"
+      },
+      {
+        "id": "문제의-구조-오류-복구가-표준이라-틀린-입력도-조용히-맞는-트리가-된다",
+        "label": "문제의 구조: 오류 복구가 표준이라, 틀린 입력도 조용히 '맞는' 트리가 된다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s5": [
+      {
+        "id": "무슨-일이-일어나나-네-종류의-스크립트와-두-종류의-대기",
+        "label": "무슨 일이 일어나나: 네 종류의 스크립트와 두 종류의 대기"
+      },
+      {
+        "id": "실제로-돌려-보면",
+        "label": "실제로 돌려 보면"
+      },
+      {
+        "id": "문제-css-가-늦으면-스크립트가-늦고-스크립트가-늦으면-화면이-늦다",
+        "label": "문제: CSS 가 늦으면 스크립트가 늦고, 스크립트가 늦으면 화면이 늦다"
+      },
+      {
+        "id": "문제가-나는-경우-시점을-잘못-고른-자리",
+        "label": "문제가 나는 경우: 시점을 잘못 고른 자리"
+      },
+      {
+        "id": "문제의-구조-스크립트가-일관된-상태를-봐야-해서-그-보장이-곧-멈춤이다",
+        "label": "문제의 구조: 스크립트가 일관된 상태를 봐야 해서, 그 보장이 곧 멈춤이다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s6": [
+      {
+        "id": "무슨-일이-일어나나-css-글자-cssom-요소마다-계산된-스타일",
+        "label": "무슨 일이 일어나나: CSS 글자 → CSSOM → 요소마다 계산된 스타일"
+      },
+      {
+        "id": "css는-파서를-막지-않지만-그리기를-막는다",
+        "label": "CSS는 파서를 막지 않지만 그리기를 막는다"
+      },
+      {
+        "id": "문제-특이도-싸움-끝에-important-가-쌓인다",
+        "label": "문제: 특이도 싸움 끝에 !important 가 쌓인다"
+      },
+      {
+        "id": "문제가-나는-경우-캐스케이드와-시점이-꼬이는-자리",
+        "label": "문제가 나는 경우: 캐스케이드와 시점이 꼬이는 자리"
+      },
+      {
+        "id": "문제의-구조-계산된-스타일은-dom-과-cssom-의-곱이다",
+        "label": "문제의 구조: 계산된 스타일은 DOM 과 CSSOM 의 곱이다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s7": [
+      {
+        "id": "무슨-일이-일어나나-레이아웃-트리-상자마다-x-y-폭-높이",
+        "label": "무슨 일이 일어나나: 레이아웃 트리 → 상자마다 (x, y, 폭, 높이)"
+      },
+      {
+        "id": "강제-동기-레이아웃-쓰고-읽으면-그-자리에서-계산한다",
+        "label": "강제 동기 레이아웃: 쓰고 읽으면 그 자리에서 계산한다"
+      },
+      {
+        "id": "문제-이미지가-오면-아래-글자가-밀려-내려간다",
+        "label": "문제: 이미지가 오면 아래 글자가 밀려 내려간다"
+      },
+      {
+        "id": "문제가-나는-경우-의존이-꼬이는-자리",
+        "label": "문제가 나는 경우: 의존이 꼬이는 자리"
+      },
+      {
+        "id": "문제의-구조-레이아웃은-의존-그래프를-푸는-일이다",
+        "label": "문제의 구조: 레이아웃은 의존 그래프를 푸는 일이다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s8": [
+      {
+        "id": "무슨-일이-일어나나-코드-포인트-런-폰트-글리프-줄-픽셀",
+        "label": "무슨 일이 일어나나: 코드 포인트 → 런 → 폰트 → 글리프 → 줄 → 픽셀"
+      },
+      {
+        "id": "폰트가-폭을-정한다-실제로-돌려-보면",
+        "label": "폰트가 폭을 정한다 — 실제로 돌려 보면"
+      },
+      {
+        "id": "줄바꿈-한국어는-어디서든-끊을-수-있다",
+        "label": "줄바꿈: 한국어는 어디서든 끊을 수 있다"
+      },
+      {
+        "id": "웹폰트-도착하기-전의-세-시기",
+        "label": "웹폰트: 도착하기 전의 세 시기"
+      },
+      {
+        "id": "문제-keep-all-을-켰더니-상자를-넘친다",
+        "label": "문제: keep-all 을 켰더니 상자를 넘친다"
+      },
+      {
+        "id": "문제가-나는-경우-글자의-폭이-환경에서-오기-때문에",
+        "label": "문제가 나는 경우: 글자의 폭이 환경에서 오기 때문에"
+      },
+      {
+        "id": "문제의-구조-글자의-폭은-문자열의-속성이-아니라-환경의-함수다",
+        "label": "문제의 구조: 글자의 폭은 문자열의 속성이 아니라 환경의 함수다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s9": [
+      {
+        "id": "무슨-일이-일어나나-페인트-레코드-레이어-타일-래스터-합성-gpu",
+        "label": "무슨 일이 일어나나: 페인트 레코드 → 레이어 → 타일 → 래스터 → 합성 → GPU"
+      },
+      {
+        "id": "비용의-사다리-어느-속성이-어디까지-되돌리나",
+        "label": "비용의 사다리: 어느 속성이 어디까지 되돌리나"
+      },
+      {
+        "id": "입력도-컴포지터를-거친다",
+        "label": "입력도 컴포지터를 거친다"
+      },
+      {
+        "id": "문제-top-left-로-움직이는-애니메이션이-매-프레임-레이아웃을-돌린다",
+        "label": "문제: top/left 로 움직이는 애니메이션이 매 프레임 레이아웃을 돌린다"
+      },
+      {
+        "id": "문제가-나는-경우-메인-스레드로-돌아가야-하는-변화들",
+        "label": "문제가 나는 경우: 메인 스레드로 돌아가야 하는 변화들"
+      },
+      {
+        "id": "문제의-구조-메인-스레드의-산출물과-컴포지터의-반복이-갈라져-있다",
+        "label": "문제의 구조: 메인 스레드의 산출물과 컴포지터의 반복이 갈라져 있다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s10": [
+      {
+        "id": "무슨-일이-일어나나-한-바퀴의-순서",
+        "label": "무슨 일이 일어나나: 한 바퀴의 순서"
+      },
+      {
+        "id": "실제로-돌려-보면",
+        "label": "실제로 돌려 보면"
+      },
+      {
+        "id": "vue-는-마이크로태스크-문으로-들어온다",
+        "label": "Vue 는 마이크로태스크 문으로 들어온다"
+      },
+      {
+        "id": "문제-상태를-바꾼-직후-dom-을-읽으니-옛-값이다",
+        "label": "문제: 상태를 바꾼 직후 DOM 을 읽으니 옛 값이다"
+      },
+      {
+        "id": "문제가-나는-경우-예산을-넘기거나-순서를-착각하는-자리",
+        "label": "문제가 나는 경우: 예산을 넘기거나 순서를 착각하는 자리"
+      },
+      {
+        "id": "문제의-구조-한-프레임은-공유-예산이고-마이크로태스크는-틈을-없애는-대신-그리기를-미룬다",
+        "label": "문제의 구조: 한 프레임은 공유 예산이고, 마이크로태스크는 틈을 없애는 대신 그리기를 미룬다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s11": [
+      {
+        "id": "무슨-일이-일어나나-프레임마다-2-9장이-한-번-더",
+        "label": "무슨 일이 일어나나: 프레임마다 2~9장이 한 번 더"
+      },
+      {
+        "id": "출처가-다르면-열세-개만-남는다",
+        "label": "출처가 다르면 열세 개만 남는다"
+      },
+      {
+        "id": "문제-결제-프레임의-높이를-읽으려다-securityerror",
+        "label": "문제: 결제 프레임의 높이를 읽으려다 SecurityError"
+      },
+      {
+        "id": "문제가-나는-경우-세-경계가-겹치는-자리",
+        "label": "문제가 나는 경우: 세 경계가 겹치는 자리"
+      },
+      {
+        "id": "문제의-구조-프레임-경계는-세-선의-겹침이다",
+        "label": "문제의 구조: 프레임 경계는 세 선의 겹침이다"
+      },
+      {
+        "id": "다음-장의-입구",
+        "label": "다음 장의 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "render-s12": [
+      {
+        "id": "무슨-일이-일어나나-마운트-갱신-ssr-이면-하이드레이션",
+        "label": "무슨 일이 일어나나: 마운트 → 갱신 → (SSR 이면) 하이드레이션"
+      },
+      {
+        "id": "실제로-돌려-보면",
+        "label": "실제로 돌려 보면"
+      },
+      {
+        "id": "문제-서버와-브라우저가-다른-글자를-만든다",
+        "label": "문제: 서버와 브라우저가 다른 글자를 만든다"
+      },
+      {
+        "id": "문제가-나는-경우-세-트리와-두-시점이-어긋나는-자리",
+        "label": "문제가 나는 경우: 세 트리와 두 시점이 어긋나는 자리"
+      },
+      {
+        "id": "문제의-구조-두-트리의-동기화가-좁은-문-둘로만-파이프라인과-만난다",
+        "label": "문제의 구조: 두 트리의 동기화가 좁은 문 둘로만 파이프라인과 만난다"
+      },
+      {
+        "id": "열두-장을-돌아보면",
+        "label": "열두 장을 돌아보면"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
     "t-isolated": [
       {
         "id": "증상-동작은-하는데-상태가-어긋난다",
@@ -5124,6 +5713,12 @@ export const sheetIndex: {
           "kind": "theory"
         },
         {
+          "id": "render",
+          "role": "이론",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        },
+        {
           "id": "fe-craft",
           "role": "생각",
           "name": "코드 작성법",
@@ -5257,6 +5852,12 @@ export const sheetIndex: {
           "id": "i18n",
           "role": "낱말이 나온 곳",
           "name": "i18n",
+          "kind": "theory"
+        },
+        {
+          "id": "render",
+          "role": "낱말이 나온 곳",
+          "name": "브라우저 렌더링",
           "kind": "theory"
         }
       ],
@@ -7195,6 +7796,228 @@ export const sheetIndex: {
       ],
       "right": []
     },
+    "render": {
+      "left": [
+        {
+          "id": "me",
+          "role": "공부한 사람",
+          "name": "Who am I",
+          "kind": "me"
+        }
+      ],
+      "right": [
+        {
+          "id": "render-s1",
+          "role": "하위 개념",
+          "name": "1장 · 프로세스와 네비게이션",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s2",
+          "role": "하위 개념",
+          "name": "2장 · window의 탄생",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s3",
+          "role": "하위 개념",
+          "name": "3장 · document의 탄생과 readyState",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s4",
+          "role": "하위 개념",
+          "name": "4장 · 바이트에서 DOM까지",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s5",
+          "role": "하위 개념",
+          "name": "5장 · 스크립트가 파서를 멈추는 자리",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s6",
+          "role": "하위 개념",
+          "name": "6장 · CSSOM과 스타일 계산",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s7",
+          "role": "하위 개념",
+          "name": "7장 · 레이아웃",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s8",
+          "role": "하위 개념",
+          "name": "8장 · 글자가 그려지는 길",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s9",
+          "role": "하위 개념",
+          "name": "9장 · 페인트와 합성",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s10",
+          "role": "하위 개념",
+          "name": "10장 · 이벤트 루프와 프레임",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s11",
+          "role": "하위 개념",
+          "name": "11장 · 프레임 안의 프레임",
+          "kind": "theory"
+        },
+        {
+          "id": "render-s12",
+          "role": "하위 개념",
+          "name": "12장 · 프레임워크가 끼어드는 자리",
+          "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
+        }
+      ]
+    },
+    "render-s1": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s2": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s3": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s4": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s5": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s6": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s7": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s8": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s9": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s10": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s11": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "render-s12": {
+      "left": [
+        {
+          "id": "render",
+          "role": "상위 개념",
+          "name": "브라우저 렌더링",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "t-isolated": {
       "left": [
         {
@@ -7764,6 +8587,57 @@ export const sheetIndex: {
       "i18n",
       "i18n-commerce-web"
     ],
+    "render": [
+      "render"
+    ],
+    "render-s1": [
+      "render",
+      "render-s1"
+    ],
+    "render-s2": [
+      "render",
+      "render-s2"
+    ],
+    "render-s3": [
+      "render",
+      "render-s3"
+    ],
+    "render-s4": [
+      "render",
+      "render-s4"
+    ],
+    "render-s5": [
+      "render",
+      "render-s5"
+    ],
+    "render-s6": [
+      "render",
+      "render-s6"
+    ],
+    "render-s7": [
+      "render",
+      "render-s7"
+    ],
+    "render-s8": [
+      "render",
+      "render-s8"
+    ],
+    "render-s9": [
+      "render",
+      "render-s9"
+    ],
+    "render-s10": [
+      "render",
+      "render-s10"
+    ],
+    "render-s11": [
+      "render",
+      "render-s11"
+    ],
+    "render-s12": [
+      "render",
+      "render-s12"
+    ],
     "t-isolated": [
       "withy",
       "t-isolated"
@@ -7816,7 +8690,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 53"
+      "meta": "낱말 91"
     },
     "algo": {
       "meta": "챕터 1"
@@ -8232,6 +9106,46 @@ export const sheetIndex: {
       "clickable": true
     },
     "i18n-commerce-web": {
+      "clickable": true
+    },
+    "render": {
+      "clickable": true,
+      "meta": "챕터 12"
+    },
+    "render-s1": {
+      "clickable": true
+    },
+    "render-s2": {
+      "clickable": true
+    },
+    "render-s3": {
+      "clickable": true
+    },
+    "render-s4": {
+      "clickable": true
+    },
+    "render-s5": {
+      "clickable": true
+    },
+    "render-s6": {
+      "clickable": true
+    },
+    "render-s7": {
+      "clickable": true
+    },
+    "render-s8": {
+      "clickable": true
+    },
+    "render-s9": {
+      "clickable": true
+    },
+    "render-s10": {
+      "clickable": true
+    },
+    "render-s11": {
+      "clickable": true
+    },
+    "render-s12": {
       "clickable": true
     },
     "t-isolated": {

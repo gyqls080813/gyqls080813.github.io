@@ -268,6 +268,164 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "브라우저 렌더링 — 주소가 픽셀이 되기까지",
+      from: "render",
+      entries: [
+        {
+          term: "렌더링 (rendering)",
+          body: "브라우저가 받은 글자(HTML·CSS·JS)를 화면의 픽셀로 바꾸는 일 전체. 좁게는 마지막의 색칠(페인트)만을 가리키기도 한다. 열두 장은 넓은 뜻으로 쓴다. 네비게이션에서 프레임까지다.",
+        },
+        {
+          term: "브라우저 프로세스와 렌더러 프로세스",
+          body: "브라우저 프로세스는 주소창·탭·네트워크·저장소를 맡고, 렌더러 프로세스는 탭 안에 보이는 것을 맡는다. 사이트마다 렌더러가 따로라 한 탭이 죽어도 다른 탭은 멀쩡하다. 둘은 메모리를 공유하지 않아 IPC 메시지로만 말한다.",
+        },
+        {
+          term: "메인 스레드 (main thread)",
+          body: "렌더러 프로세스 안에서 자바스크립트 실행, HTML 파싱, 스타일 계산, 레이아웃, 페인트 레코드 만들기를 전부 혼자 하는 스레드. DOM을 여러 스레드가 동시에 만지면 깨지기 때문이다. 긴 자바스크립트 하나가 탭 전체를 멈추는 이유가 이 한 줄이다.",
+        },
+        {
+          term: "사이트 격리 (site isolation)",
+          body: "다른 사이트의 내용은 다른 렌더러 프로세스에 두는 Chrome의 정책. 교차 사이트 iframe도 따로 프로세스를 받는다. 보안을 위해 메모리를 가르는 대신, 프레임 사이의 모든 통신이 비동기 메시지(postMessage)가 된다.",
+        },
+        {
+          term: "브라우징 컨텍스트 (browsing context)",
+          body: "문서가 사용자에게 보이는 자리 하나. 탭 하나, iframe 하나가 각각이다. 사양은 이것을 WindowProxy와 1:1로 짝지어 둔다. 자리가 생기는 순간 realm·Window·about:blank 문서가 함께 만들어진다.",
+        },
+        {
+          term: "realm (렘)",
+          body: "자바스크립트 코드가 사는 세계 하나. Object·Array·Promise 같은 내장 객체 한 벌과 전역 객체가 들어 있다. 탭마다, iframe마다 따로다. 그래서 iframe에서 받은 배열을 부모의 Array로 instanceof 하면 false다. Array.isArray는 realm을 넘어 본다.",
+        },
+        {
+          term: "WindowProxy",
+          body: "코드가 window라고 부를 때 실제로 받는 손잡이 객체. 안에 진짜 Window를 담고 모든 접근을 넘긴다. 네비게이션으로 Window가 바뀌어도 WindowProxy는 같은 객체라, iframe.contentWindow 참조는 그대로인데 거기 붙여 둔 속성은 사라진다.",
+        },
+        {
+          term: "전역 객체와 전역 렉시컬 스코프",
+          body: "전역에는 층이 둘 있다. 전역 객체(Window)에는 var·function 선언과 웹 API가 속성으로 붙는다. 전역 렉시컬 스코프에는 let·const·class가 들어간다. 뒤의 것은 어디서나 이름으로 부를 수 있지만 window.이름으로는 undefined다.",
+        },
+        {
+          term: "이름 접근 (named access on Window)",
+          body: "id나 name이 있는 요소를 window.그이름으로 꺼내는 옛 규칙. window의 자체 속성이 아니라 못 찾을 때 문서를 뒤지는 마지막 규칙이다. 같은 이름의 전역 변수가 있으면 변수가 이긴다. 코드에서는 쓰지 않는 것이 보통이다.",
+        },
+        {
+          term: "readyState와 네 시점",
+          body: "문서가 얼마나 채워졌는지 알려 주는 값. loading(채우는 중, body조차 없을 수 있다) → interactive(글자를 다 읽었다, defer 스크립트 실행) → DOMContentLoaded 이벤트 → complete(이미지·iframe까지 다 왔다, load 이벤트). 코드는 자기가 어느 시점에 도는지 알아야 한다.",
+        },
+        {
+          term: "호환 모드 (quirks mode / standards mode)",
+          body: "첫 줄의 doctype을 보고 파서가 정하는 렌더링 규칙. <!doctype html>이 있으면 표준 모드(compatMode 'CSS1Compat'), 없으면 쿼크 모드('BackCompat')로 옛 브라우저의 버그를 흉내 낸다. 표 안 글꼴 상속, 박스 크기, 이미지 밑 틈이 달라진다.",
+        },
+        {
+          term: "토크나이저와 트리 구성 (tokenizer, tree construction)",
+          body: "HTML 파서의 두 단계. 토크나이저는 글자를 읽어 시작 태그·끝 태그·글자 같은 토큰을 내는 상태 기계다. 트리 구성기는 토큰을 받아 삽입 모드와 열린 요소 스택을 보고 DOM 노드를 끼운다. 오류를 내지 않고 틀린 입력도 규칙대로 고쳐 트리를 만든다.",
+        },
+        {
+          term: "포스터 페어런팅 (foster parenting)",
+          body: "표 안에 있을 수 없는 글자나 요소를 표 바로 앞에 위탁해 끼우는 파서 규칙. 템플릿의 {{ }} 사이 공백이 표 위로 튀어나오는 것이 이것이다. 같은 계열의 규칙으로 <p> 안의 <div>는 p를 닫고 형제가 되며, <table><tr>에는 tbody가 끼어든다.",
+        },
+        {
+          term: "프리로드 스캐너 (preload scanner)",
+          body: "메인 파서가 스크립트에 막혀 멈춘 동안 토큰만 훑어 img·link·script의 주소를 찾아 미리 받아 두는 가벼운 두 번째 스캐너. DOM은 만들지 않는다. 그래서 '받는 것'은 일찍, '도는 것'은 파서가 그 태그에 닿은 뒤다. JS가 만든 script나 CSS @import는 못 본다.",
+        },
+        {
+          term: "파싱을 막는 스크립트 (parser-blocking script)",
+          body: "src가 있고 async·defer가 없는 고전 스크립트와 인라인 스크립트. 파서는 그것이 받아져 실행될 때까지 다음 토큰을 처리하지 않는다. 스크립트가 document.write나 DOM 읽기를 할 수 있어 '그 시점까지의 문서'를 멈춰 세운다.",
+        },
+        {
+          term: "스크립트를 막는 스타일시트 (script-blocking style sheet)",
+          body: "파서가 만든 <link rel=stylesheet>나 <style>이 아직 로딩 중이면 뒤의 스크립트 실행을 막는다. 스크립트가 getComputedStyle로 스타일을 읽을 수 있어서다. 그래서 CSS가 늦으면 스크립트가 늦고, 스크립트가 늦으면 파서가 늦는다. 실제로 696ms가 묶였다.",
+        },
+        {
+          term: "async / defer / module",
+          body: "셋 다 파서를 막지 않고 받는다. defer는 파싱이 끝난 뒤 적힌 순서대로, DOMContentLoaded 전에 돈다. module은 늘 defer다. async는 도착하는 즉시 돈다. 순서는 도착 순서다. 서로 의존하는 파일은 defer, 독립적인 것(분석·광고)은 async.",
+        },
+        {
+          term: "렌더링 차단 (render-blocking)",
+          body: "어떤 자원이 올 때까지 첫 화면을 그리지 않는 것. 파서가 만든 스타일시트가 기본으로 이것이다. 파서를 막는 것과 다르다. DOM은 만들어지는데 화면에만 안 올린다. 스타일 없는 글자가 먼저 보이는 깜빡임(FOUC)을 피하려는 설계다.",
+        },
+        {
+          term: "CSSOM (CSS Object Model)",
+          body: "CSS를 파싱해 만든 객체 트리. document.styleSheets 아래 시트, 규칙, 선언이 있다. DOM과는 별개의 트리라 둘을 합치는 단계(스타일 계산)가 따로 필요하다. 자바스크립트로 규칙을 넣고 빼는 것도 이 객체를 통한다.",
+        },
+        {
+          term: "캐스케이드와 특이도 (cascade, specificity)",
+          body: "한 속성에 여러 선언이 맞을 때 하나를 고르는 네 단계. 출처·중요도(!important) → 레이어(@layer) → 특이도(id, 클래스, 요소 수) → 적힌 순서. 특이도만 알고 싸우면 !important가 쌓인다. 위 단계인 @layer로 올라가면 끝난다.",
+        },
+        {
+          term: "계산된 스타일 (computed style)",
+          body: "캐스케이드와 상속을 거쳐 요소의 모든 속성에 값 하나씩이 정해진 결과. 적지 않은 속성도 값이 있다. getComputedStyle(el)이 돌려준다. el.style은 인라인 style 속성에 적힌 것만 보여 주어 다르다.",
+        },
+        {
+          term: "레이아웃 트리 (layout tree)",
+          body: "DOM 노드에 계산된 스타일을 입혀 만든 '그릴 상자'의 트리. DOM과 1:1이 아니다. display: none은 빠지고, ::before는 들어오고, 날 글자는 익명 상자로 싸인다. 옛 이름은 렌더 트리. 이 트리의 상자마다 자리와 크기를 정하는 것이 레이아웃이다.",
+        },
+        {
+          term: "폭은 내려오고 높이는 올라온다",
+          body: "블록의 폭은 포함 블록(부모)에서 내려오고, 높이는 안의 내용(줄 수)에서 올라온다. 글자 폭은 폰트에서 옆으로 온다. 그래서 상자들은 의존 그래프로 묶여 있고, 한 값이 바뀌면 연결된 것이 다시 풀린다. height: 100%가 부모 auto에서 안 먹는 이유다.",
+        },
+        {
+          term: "강제 동기 레이아웃과 레이아웃 스래싱",
+          body: "브라우저는 바뀐 스타일을 모아 다음 프레임에 한 번 레이아웃한다. 그런데 JS가 offsetWidth 같은 치수를 읽으면 그 자리에서 즉시 계산해야 한다. 쓰기와 읽기를 번갈아 반복해 매번 계산하게 하는 것이 스래싱. 실제로 같은 일이 75배 차이였다.",
+        },
+        {
+          term: "레이아웃 시프트 (layout shift, CLS)",
+          body: "늦게 도착한 값(이미지 크기, 웹폰트, 배너) 때문에 이미 그려진 것이 밀려 움직이는 것. 높이는 아래에서 올라오는데 올라올 값이 나중에 왔다. 처방은 자리를 미리 잡는 것이다. width·height 속성, aspect-ratio, 폰트 size-adjust.",
+        },
+        {
+          term: "글리프 (glyph)와 셰이핑 (shaping)",
+          body: "글리프는 폰트 파일 안의 글자 모양 하나이고 폭(전진 폭)이 붙어 있다. 문자와 1:1이 아니다. 셰이핑은 문자열을 폰트의 규칙(합자·결합·문맥형·커닝)대로 글리프 열과 위치로 바꾸는 일이고 HarfBuzz가 한다. 한글 자모를 음절 글리프로 모으는 것도 여기다.",
+        },
+        {
+          term: "폰트 매칭과 폴백 (font matching, fallback)",
+          body: "글자마다 font-family 목록을 순서대로 훑어 그 글자의 글리프를 가진 첫 폰트를 고르는 일. 없으면 시스템 폰트로 폴백한다. 그래서 한 줄에 폰트가 둘 섞일 수 있고, 등폭 폰트의 한글은 폴백 폰트의 전각 폭(실제로 영문의 1.44배)이 된다.",
+        },
+        {
+          term: "word-break: keep-all과 overflow-wrap: anywhere",
+          body: "한국어는 기본(normal)으로 글자 사이 어디서나 끊는다. keep-all은 공백에서만 끊어 어절을 지키지만 긴 어절은 상자를 넘친다. overflow-wrap: anywhere는 다른 데서 못 끊을 때만 글자 사이를 허용한다. 둘을 함께 쓰면 어절로 끊되 넘치지 않는다.",
+        },
+        {
+          term: "font-display와 FOIT / FOUT",
+          body: "웹폰트가 오기 전의 세 시기(차단·교체·실패)의 길이를 정하는 선언. block은 3초까지 빈 글자(FOIT), swap은 바로 폴백으로 보이다 교체(FOUT), fallback은 3초 안에만 교체, optional은 첫 방문엔 폴백. 교체 순간 폭이 바뀌면 레이아웃 시프트가 난다.",
+        },
+        {
+          term: "페인트 레코드와 레이어 (paint record, compositing layer)",
+          body: "페인트 레코드는 '배경 먼저, 글자, 테두리'처럼 그릴 명령을 순서대로 적은 목록이다. 메인 스레드는 여기까지만 만든다. 레이어는 따로 래스터해 두고 합칠 때만 자리를 바꾸는 그림 조각이다. transform·will-change·video가 레이어가 되고, 레이어마다 GPU 메모리를 먹는다.",
+        },
+        {
+          term: "래스터와 합성 (rasterization, compositing)",
+          body: "래스터는 그릴 명령을 픽셀로 바꾸는 일로, 레이어를 타일로 잘라 래스터 스레드들이 GPU 메모리에 비트맵을 만든다. 합성은 컴포지터 스레드가 타일들을 겹쳐 한 프레임을 만드는 일이다. 메인 스레드와 따로 돌아 스크롤·transform·opacity는 JS가 바빠도 매끈하다.",
+        },
+        {
+          term: "태스크와 마이크로태스크 (task, microtask)",
+          body: "태스크는 이벤트 루프가 하나씩 꺼내 돌리는 일(클릭 핸들러, setTimeout, 파서 한 조각)이다. 마이크로태스크는 태스크 직후 다음 태스크나 렌더링 전에 전부 비우는 작은 일(Promise.then, queueMicrotask, MutationObserver)이다. Vue가 DOM 갱신을 모아 두는 자리가 마이크로태스크다.",
+        },
+        {
+          term: "렌더링 기회와 requestAnimationFrame",
+          body: "렌더링 기회는 브라우저가 '지금 한 프레임 그릴 때다'라고 보는 순간으로, 주사율(60Hz면 약 16.7ms)을 따르고 보이지 않는 탭에는 거의 없다. 그때 rAF 콜백 → 스타일 → 레이아웃 → 페인트가 순서대로 돈다. rAF가 레이아웃 앞이라 거기서 쓴 스타일은 그 프레임에 그려진다.",
+        },
+        {
+          term: "긴 태스크 (long task)",
+          body: "메인 스레드를 50ms 넘게 붙잡는 일 하나. 그 프레임은 날아가고 입력도 밀린다. 사람이 '즉시'로 느끼는 100ms 안에 입력 처리까지 끝내려는 기준에서 나온 숫자다. 처방은 쪼개거나 워커로 보내는 것.",
+        },
+        {
+          term: "교차 출처 속성 (cross-origin properties)",
+          body: "출처가 다른 프레임의 Window에서 접근이 허용되는 열몇 개. window, self, location, close, closed, focus, blur, frames, length, top, opener, parent, postMessage와 인덱스, Location의 href 쓰기와 replace. 나머지는 전부 SecurityError다.",
+        },
+        {
+          term: "postMessage",
+          body: "출처가 다른 창·프레임 사이의 유일한 공식 통로. 받을 출처를 둘째 인자로 적고, 받는 쪽은 message 이벤트의 origin을 확인한다. 비동기이고 구조화 복제로 복사하므로 함수나 DOM 노드는 못 보낸다. 사이트 격리 아래서는 프로세스 사이 IPC다.",
+        },
+        {
+          term: "가상 DOM과 패치 (virtual DOM, patch)",
+          body: "프레임워크가 메모리에 든 가벼운 트리. 상태가 바뀌면 새 트리를 만들어 옛것과 비교하고 다른 부분만 진짜 DOM에 반영한다. 그 반영이 패치다. Vue에서는 상태 변경이 마이크로태스크에 모여 한 번 패치되고, 픽셀은 다음 렌더링 기회에 온다. 두 단계 늦춤이다.",
+        },
+        {
+          term: "하이드레이션 (hydration)",
+          body: "서버가 보낸 HTML로 이미 만들어진 DOM에 클라이언트 프레임워크가 가상 트리를 짝지어 이벤트와 상태를 붙이는 일. 서버 문자열, 파서가 고친 DOM, 클라이언트 vdom 셋이 같아야 하고 다르면 불일치 경고가 난다. Date·랜덤·로케일·window 값·파서가 고치는 중첩이 흔한 원인이다.",
+        },
+      ],
+    },
   ],
 };
 

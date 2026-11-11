@@ -476,6 +476,22 @@ export const fullGraphNodes: GraphNodeData[] = [
   /* 열네 단계 끝의 판단 — 사실이 아니라 내 결정이라 kind 는 idea 다. 틈을 조금 둔다 */
   { id: "i18n-commerce-web", label: "진단 · commerce-web은 어느 단계인가", kind: "idea", x: 1405, y: 940, r: 14 },
 
+  /* 브라우저 렌더링 — 역시 문서 목차가 없는 주제라, 브라우저 안에서 물건이 생기는 순서를 장으로 세운다.
+     주소 → 프로세스 → window → document → DOM → 스크립트 → CSSOM → 레이아웃 → 글자 → 페인트 → 프레임 → iframe → 프레임워크 */
+  { id: "render", label: "브라우저 렌더링", kind: "theory", x: 1620, y: 300, r: 20, hub: true },
+  { id: "render-s1", label: "1장 · 프로세스와 네비게이션", kind: "theory", x: 1620, y: 360, r: 14 },
+  { id: "render-s2", label: "2장 · window의 탄생", kind: "theory", x: 1620, y: 400, r: 14 },
+  { id: "render-s3", label: "3장 · document의 탄생과 readyState", kind: "theory", x: 1620, y: 440, r: 14 },
+  { id: "render-s4", label: "4장 · 바이트에서 DOM까지", kind: "theory", x: 1620, y: 480, r: 14 },
+  { id: "render-s5", label: "5장 · 스크립트가 파서를 멈추는 자리", kind: "theory", x: 1620, y: 520, r: 14 },
+  { id: "render-s6", label: "6장 · CSSOM과 스타일 계산", kind: "theory", x: 1620, y: 560, r: 14 },
+  { id: "render-s7", label: "7장 · 레이아웃", kind: "theory", x: 1620, y: 600, r: 14 },
+  { id: "render-s8", label: "8장 · 글자가 그려지는 길", kind: "theory", x: 1620, y: 640, r: 14 },
+  { id: "render-s9", label: "9장 · 페인트와 합성", kind: "theory", x: 1620, y: 680, r: 14 },
+  { id: "render-s10", label: "10장 · 이벤트 루프와 프레임", kind: "theory", x: 1620, y: 720, r: 14 },
+  { id: "render-s11", label: "11장 · 프레임 안의 프레임", kind: "theory", x: 1620, y: 760, r: 14 },
+  { id: "render-s12", label: "12장 · 프레임워크가 끼어드는 자리", kind: "theory", x: 1620, y: 800, r: 14 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -966,6 +982,15 @@ export const theoryClusters = [
       "i18n-commerce-web",
     ],
   },
+
+  /* 브라우저 렌더링 — 장 순서가 곧 챕터 순서 */
+  {
+    hub: "render",
+    chapters: [
+      "render-s1", "render-s2", "render-s3", "render-s4", "render-s5", "render-s6",
+      "render-s7", "render-s8", "render-s9", "render-s10", "render-s11", "render-s12",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -981,6 +1006,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "vue" },
   { from: "me", to: "git" },
   { from: "me", to: "i18n" },
+  { from: "me", to: "render" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -1040,6 +1066,7 @@ const techRoots = [
   { root: "vue", label: "Vue", collapsed: true },
   { root: "git", label: "Git", collapsed: true },
   { root: "i18n", label: "i18n", collapsed: true },
+  { root: "render", label: "브라우저 렌더링", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(
