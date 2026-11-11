@@ -456,6 +456,26 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "git-github", label: "GitHub 협업", kind: "theory", x: 1190, y: 560, r: 14 },
   { id: "git-practice", label: "실전 상황 대처", kind: "theory", x: 1190, y: 600, r: 13 },
 
+  /* i18n — 문서 목차가 없는 주제라, 방법이 바뀐 단계를 챕터로 세운다.
+     노드 하나가 한 단계고, 앞 단계의 문제가 다음 단계의 입구다. 읽는 만큼 늘어난다 */
+  { id: "i18n", label: "i18n", kind: "theory", x: 1405, y: 300, r: 20, hub: true },
+  { id: "i18n-s1", label: "1단계 · 언어별 별도 빌드", kind: "theory", x: 1405, y: 360, r: 14 },
+  { id: "i18n-s2", label: "2단계 · 리소스 파일과 번호표", kind: "theory", x: 1405, y: 400, r: 14 },
+  { id: "i18n-s3", label: "3단계 · 영어 원문을 열쇠로 (gettext)", kind: "theory", x: 1405, y: 440, r: 14 },
+  { id: "i18n-s4", label: "4단계 · 이름표를 열쇠로 (Vue I18n)", kind: "theory", x: 1405, y: 480, r: 14 },
+  { id: "i18n-s5", label: "5단계 · 값 자리의 문장 문법", kind: "theory", x: 1405, y: 520, r: 14 },
+  { id: "i18n-s6", label: "6단계 · 날짜와 숫자는 Intl에 맡긴다", kind: "theory", x: 1405, y: 560, r: 14 },
+  { id: "i18n-s7", label: "7단계 · 로케일 협상과 폴백", kind: "theory", x: 1405, y: 600, r: 14 },
+  { id: "i18n-s8", label: "8단계 · 반응형 전환과 스코프", kind: "theory", x: 1405, y: 640, r: 14 },
+  { id: "i18n-s9", label: "9단계 · 지연 로딩과 사전 컴파일", kind: "theory", x: 1405, y: 680, r: 14 },
+  { id: "i18n-s10", label: "10단계 · 타입·린트·CI로 열쇠를 보증한다", kind: "theory", x: 1405, y: 720, r: 14 },
+  { id: "i18n-s11", label: "11단계 · 번역 워크플로: 사전은 누가 채우나", kind: "theory", x: 1405, y: 760, r: 14 },
+  { id: "i18n-s12", label: "12단계 · SSR: 요청마다 인스턴스 하나", kind: "theory", x: 1405, y: 800, r: 14 },
+  { id: "i18n-s13", label: "13단계 · 기계 번역과 LLM이 표를 채운다", kind: "theory", x: 1405, y: 840, r: 14 },
+  { id: "i18n-s14", label: "14단계 · MessageFormat 2: 문장 문법의 표준", kind: "theory", x: 1405, y: 880, r: 14 },
+  /* 열네 단계 끝의 판단 — 사실이 아니라 내 결정이라 kind 는 idea 다. 틈을 조금 둔다 */
+  { id: "i18n-commerce-web", label: "진단 · commerce-web은 어느 단계인가", kind: "idea", x: 1405, y: 940, r: 14 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -936,6 +956,16 @@ export const theoryClusters = [
       "git-practice",
     ],
   },
+
+  /* i18n — 단계 순서가 곧 챕터 순서 */
+  {
+    hub: "i18n",
+    chapters: [
+      "i18n-s1", "i18n-s2", "i18n-s3", "i18n-s4", "i18n-s5", "i18n-s6", "i18n-s7",
+      "i18n-s8", "i18n-s9", "i18n-s10", "i18n-s11", "i18n-s12", "i18n-s13", "i18n-s14",
+      "i18n-commerce-web",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -950,6 +980,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "ts" },
   { from: "me", to: "vue" },
   { from: "me", to: "git" },
+  { from: "me", to: "i18n" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -1008,6 +1039,7 @@ const techRoots = [
   { root: "ts", label: "TypeScript", collapsed: true },
   { root: "vue", label: "Vue", collapsed: true },
   { root: "git", label: "Git", collapsed: true },
+  { root: "i18n", label: "i18n", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(

@@ -26,6 +26,7 @@ import { renderIdeas } from "./render";
 import { robustIdeas } from "./robust";
 import { qualityIdeas } from "./quality";
 import { algorithmIdeas } from "./algorithm";
+import { i18nIdeas } from "./i18n";
 
 /**
  * 파일은 그래프의 축과 같은 선으로 나눈다 — 데이터가 들어와(진입) 받아오고
@@ -44,6 +45,8 @@ export const ideas: Idea[] = [
   ...robustIdeas,
   ...qualityIdeas,
   ...algorithmIdeas,
+  /* i18n 진단 — 이론 갈래의 끝에 매달리는 판단. 파일은 갈래 이름을 따른다 */
+  ...i18nIdeas,
 ];
 
 export function getIdea(id: string): Idea | undefined {
