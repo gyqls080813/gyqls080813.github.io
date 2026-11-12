@@ -509,6 +509,21 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "css-s13", label: "13장 · 글꼴과 텍스트", kind: "theory", x: 1835, y: 840, r: 14 },
   { id: "css-s14", label: "14장 · 중첩 · 레이어 · 스코프", kind: "theory", x: 1835, y: 880, r: 14 },
 
+  // 번들링과 Vite — vite.dev 가이드 순서대로 열두 장
+  { id: "bundle", label: "번들링 · Vite", kind: "theory", x: 2050, y: 300, r: 20, hub: true },
+  { id: "bundle-s1", label: "1장 · 왜 묶는가 — 모듈과 요청", kind: "theory", x: 2050, y: 360, r: 14 },
+  { id: "bundle-s2", label: "2장 · 의존성 해석과 사전 번들링", kind: "theory", x: 2050, y: 400, r: 14 },
+  { id: "bundle-s3", label: "3장 · 개발 서버 — 요청 시 변환", kind: "theory", x: 2050, y: 440, r: 14 },
+  { id: "bundle-s4", label: "4장 · HMR", kind: "theory", x: 2050, y: 480, r: 14 },
+  { id: "bundle-s5", label: "5장 · CSS 와 정적 자산", kind: "theory", x: 2050, y: 520, r: 14 },
+  { id: "bundle-s6", label: "6장 · 프로덕션 빌드 — Rolldown · 청크 · 해시", kind: "theory", x: 2050, y: 560, r: 14 },
+  { id: "bundle-s7", label: "7장 · 트리 셰이킹과 코드 분할", kind: "theory", x: 2050, y: 600, r: 14 },
+  { id: "bundle-s8", label: "8장 · 환경 변수와 모드", kind: "theory", x: 2050, y: 640, r: 14 },
+  { id: "bundle-s9", label: "9장 · 플러그인 API", kind: "theory", x: 2050, y: 680, r: 14 },
+  { id: "bundle-s10", label: "10장 · SSR · 백엔드 통합 · 라이브러리", kind: "theory", x: 2050, y: 720, r: 14 },
+  { id: "bundle-s11", label: "11장 · 설정 레퍼런스 요약", kind: "theory", x: 2050, y: 760, r: 14 },
+  { id: "bundle-s12", label: "12장 · 성능과 트러블슈팅", kind: "theory", x: 2050, y: 800, r: 14 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -1017,6 +1032,15 @@ export const theoryClusters = [
       "css-s8", "css-s9", "css-s10", "css-s11", "css-s12", "css-s13", "css-s14",
     ],
   },
+
+  /* 번들링과 Vite */
+  {
+    hub: "bundle",
+    chapters: [
+      "bundle-s1", "bundle-s2", "bundle-s3", "bundle-s4", "bundle-s5", "bundle-s6",
+      "bundle-s7", "bundle-s8", "bundle-s9", "bundle-s10", "bundle-s11", "bundle-s12",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -1034,6 +1058,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "i18n" },
   { from: "me", to: "render" },
   { from: "me", to: "css" },
+  { from: "me", to: "bundle" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -1095,6 +1120,7 @@ const techRoots = [
   { root: "i18n", label: "i18n", collapsed: true },
   { root: "render", label: "브라우저 렌더링", collapsed: true },
   { root: "css", label: "CSS", collapsed: true },
+  { root: "bundle", label: "번들링 · Vite", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(

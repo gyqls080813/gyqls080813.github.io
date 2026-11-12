@@ -376,6 +376,19 @@ export const sheetIndex: {
     "css-s12": "theory",
     "css-s13": "theory",
     "css-s14": "theory",
+    "bundle": "theory",
+    "bundle-s1": "theory",
+    "bundle-s2": "theory",
+    "bundle-s3": "theory",
+    "bundle-s4": "theory",
+    "bundle-s5": "theory",
+    "bundle-s6": "theory",
+    "bundle-s7": "theory",
+    "bundle-s8": "theory",
+    "bundle-s9": "theory",
+    "bundle-s10": "theory",
+    "bundle-s11": "theory",
+    "bundle-s12": "theory",
     "t-isolated": "post",
     "t-focus": "post",
     "t-sync": "post",
@@ -1722,6 +1735,68 @@ export const sheetIndex: {
           {
             "id": "scope-와-근접성",
             "label": "@scope 와 근접성"
+          }
+        ]
+      },
+      {
+        "id": "번들링-vite-vite-dev-가이드로-세운-열두-장의-낱말",
+        "label": "번들링 · Vite — vite.dev 가이드로 세운 열두 장의 낱말",
+        "children": [
+          {
+            "id": "번들러의-다섯-일",
+            "label": "번들러의 다섯 일"
+          },
+          {
+            "id": "네이티브-esm-개발-서버",
+            "label": "네이티브 ESM 개발 서버"
+          },
+          {
+            "id": "사전-번들링-dependency-pre-bundling",
+            "label": "사전 번들링 (dependency pre-bundling)"
+          },
+          {
+            "id": "hmr-hot-module-replacement-과-경계",
+            "label": "HMR (Hot Module Replacement)과 경계"
+          },
+          {
+            "id": "css-모듈-css-modules-과-lightning-css",
+            "label": "CSS 모듈 (CSS Modules)과 Lightning CSS"
+          },
+          {
+            "id": "assetsinlinelimit-와-자산의-세-길",
+            "label": "assetsInlineLimit 와 자산의 세 길"
+          },
+          {
+            "id": "청크-chunk-와-내용-해시",
+            "label": "청크 (chunk)와 내용 해시"
+          },
+          {
+            "id": "매니페스트-vite-manifest-json",
+            "label": "매니페스트 (.vite/manifest.json)"
+          },
+          {
+            "id": "트리-셰이킹-tree-shaking-과-sideeffects",
+            "label": "트리 셰이킹 (tree shaking)과 sideEffects"
+          },
+          {
+            "id": "코드-분할-code-splitting-과-변수-import",
+            "label": "코드 분할 (code splitting)과 변수 import()"
+          },
+          {
+            "id": "import-meta-env-와-vite-접두어",
+            "label": "import.meta.env 와 VITE_ 접두어"
+          },
+          {
+            "id": "vite-플러그인과-가상-모듈",
+            "label": "Vite 플러그인과 가상 모듈"
+          },
+          {
+            "id": "rolldown-oxc-vite-8",
+            "label": "Rolldown · Oxc (Vite 8)"
+          },
+          {
+            "id": "개발과-배포가-다른-자리",
+            "label": "개발과 배포가 다른 자리"
           }
         ]
       }
@@ -13750,6 +13825,388 @@ export const sheetIndex: {
         "label": "확인 질문"
       }
     ],
+    "bundle": [
+      {
+        "id": "열두-장을-나눈-선",
+        "label": "열두 장을 나눈 선"
+      },
+      {
+        "id": "실제로-돌려-보면-같은-소스가-개발과-배포에서-다른-모양이-된다",
+        "label": "실제로 돌려 보면: 같은 소스가 개발과 배포에서 다른 모양이 된다"
+      },
+      {
+        "id": "문제의-구조-번들러의-다섯-일",
+        "label": "문제의 구조: 번들러의 다섯 일"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "bundle-s1": [
+      {
+        "id": "번들-기반-개발-서버-vs-네이티브-esm-개발-서버",
+        "label": "번들 기반 개발 서버 vs 네이티브 ESM 개발 서버"
+      },
+      {
+        "id": "실제로-돌려-보면-요청-하나가-모듈-하나다",
+        "label": "실제로 돌려 보면: 요청 하나가 모듈 하나다"
+      },
+      {
+        "id": "배포는-왜-아직-묶는가",
+        "label": "배포는 왜 아직 묶는가"
+      },
+      {
+        "id": "도구-사슬-esbuild-rollup-에서-rolldown-oxc-로",
+        "label": "도구 사슬: esbuild · Rollup 에서 Rolldown · Oxc 로"
+      },
+      {
+        "id": "문제의-구조-언제-묶나-가-두-모드를-가른다",
+        "label": "문제의 구조: '언제 묶나' 가 두 모드를 가른다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s2": [
+      {
+        "id": "실제로-돌려-보면-vite-optimize-와-vite-deps",
+        "label": "실제로 돌려 보면: vite optimize 와 .vite/deps"
+      },
+      {
+        "id": "해석-지정자-파일",
+        "label": "해석: 지정자 → 파일"
+      },
+      {
+        "id": "커스터마이징과-모노레포",
+        "label": "커스터마이징과 모노레포"
+      },
+      {
+        "id": "문제가-나는-경우-의존성이-안-맞을-때",
+        "label": "문제가 나는 경우: 의존성이 안 맞을 때"
+      },
+      {
+        "id": "문제의-구조-의존성은-바뀌지-않는-것-이라-미리-묶고-오래-캐시한다",
+        "label": "문제의 구조: 의존성은 '바뀌지 않는 것' 이라 미리 묶고 오래 캐시한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s3": [
+      {
+        "id": "실제로-돌려-보면-css-모듈이-js-로-온다",
+        "label": "실제로 돌려 보면: CSS 모듈이 JS 로 온다"
+      },
+      {
+        "id": "typescript-jsx-정적-치환",
+        "label": "TypeScript · JSX · 정적 치환"
+      },
+      {
+        "id": "서버-옵션-포트-프록시-미들웨어-모드",
+        "label": "서버 옵션: 포트 · 프록시 · 미들웨어 모드"
+      },
+      {
+        "id": "문제가-나는-경우-개발-서버에서",
+        "label": "문제가 나는 경우: 개발 서버에서"
+      },
+      {
+        "id": "문제의-구조-개발-서버는-게으른-변환기-다",
+        "label": "문제의 구조: 개발 서버는 '게으른 변환기' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s4": [
+      {
+        "id": "실제로-돌려-보면-css-를-고쳐도-window-가-살아-있다",
+        "label": "실제로 돌려 보면: CSS 를 고쳐도 window 가 살아 있다"
+      },
+      {
+        "id": "전파-규칙-경계를-만날-때까지-올라간다",
+        "label": "전파 규칙: 경계를 만날 때까지 올라간다"
+      },
+      {
+        "id": "api-accept-dispose-data-invalidate-이벤트",
+        "label": "API: accept · dispose · data · invalidate · 이벤트"
+      },
+      {
+        "id": "문제가-나는-경우-hmr-이-안-되거나-전체-새로-고침이-될-때",
+        "label": "문제가 나는 경우: HMR 이 안 되거나 전체 새로 고침이 될 때"
+      },
+      {
+        "id": "문제의-구조-hmr-은-모듈-그래프-위의-국소-재실행-이다",
+        "label": "문제의 구조: HMR 은 '모듈 그래프 위의 국소 재실행' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s5": [
+      {
+        "id": "실제로-돌려-보면-css-모듈-해시-svg-인라인-css-파일-하나",
+        "label": "실제로 돌려 보면: CSS 모듈 해시, SVG 인라인, CSS 파일 하나"
+      },
+      {
+        "id": "css-처리-사슬",
+        "label": "CSS 처리 사슬"
+      },
+      {
+        "id": "자산-import-vs-public-vs-new-url",
+        "label": "자산: import vs public/ vs new URL"
+      },
+      {
+        "id": "문제가-나는-경우-스타일과-자산이-안-보일-때",
+        "label": "문제가 나는 경우: 스타일과 자산이 안 보일 때"
+      },
+      {
+        "id": "문제의-구조-자산도-모듈-그래프의-노드-다",
+        "label": "문제의 구조: 자산도 '모듈 그래프의 노드' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s6": [
+      {
+        "id": "실제로-돌려-보면-두-번의-빌드가-보여-주는-것",
+        "label": "실제로 돌려 보면: 두 번의 빌드가 보여 주는 것"
+      },
+      {
+        "id": "청크-셋-진입-비동기-공유",
+        "label": "청크 셋: 진입 · 비동기 · 공유"
+      },
+      {
+        "id": "modulepreload-와-로딩-실패",
+        "label": "modulepreload 와 로딩 실패"
+      },
+      {
+        "id": "타깃-base-watch-mpa",
+        "label": "타깃 · base · watch · MPA"
+      },
+      {
+        "id": "문제가-나는-경우-빌드-결과에서",
+        "label": "문제가 나는 경우: 빌드 결과에서"
+      },
+      {
+        "id": "문제의-구조-빌드는-그래프-접기-이고-접는-선이-청크-경계다",
+        "label": "문제의 구조: 빌드는 '그래프 접기' 이고, 접는 선이 청크 경계다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s7": [
+      {
+        "id": "실제로-돌려-보면-unused-는-사라지고-heavy-는-따로-나온다",
+        "label": "실제로 돌려 보면: unused() 는 사라지고 heavy 는 따로 나온다"
+      },
+      {
+        "id": "트리-셰이킹의-전제-정적-esm-과-부수-효과-없음",
+        "label": "트리 셰이킹의 전제: 정적 ESM 과 부수 효과 없음"
+      },
+      {
+        "id": "코드-분할의-규칙-import-와-변수-경로",
+        "label": "코드 분할의 규칙: import() 와 변수 경로"
+      },
+      {
+        "id": "문제가-나는-경우-번들이-크거나-지연이-안-될-때",
+        "label": "문제가 나는 경우: 번들이 크거나 지연이 안 될 때"
+      },
+      {
+        "id": "문제의-구조-둘-다-정적-그래프-위에서만-가능하다",
+        "label": "문제의 구조: 둘 다 '정적 그래프' 위에서만 가능하다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s8": [
+      {
+        "id": "실제로-돌려-보면-secret-key-는-번들에-없다",
+        "label": "실제로 돌려 보면: SECRET_KEY 는 번들에 없다"
+      },
+      {
+        "id": "파일-순서-모드-node-env",
+        "label": "파일 순서 · 모드 · NODE_ENV"
+      },
+      {
+        "id": "타입-html-치환-보안",
+        "label": "타입 · HTML 치환 · 보안"
+      },
+      {
+        "id": "문제가-나는-경우-변수가-안-보일-때",
+        "label": "문제가 나는 경우: 변수가 안 보일 때"
+      },
+      {
+        "id": "문제의-구조-환경-변수는-빌드-시점-치환-이라-런타임에-바꿀-수-없다",
+        "label": "문제의 구조: 환경 변수는 '빌드 시점 치환' 이라 런타임에 바꿀 수 없다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s9": [
+      {
+        "id": "실제로-돌려-보면-가상-모듈-transform-플러그인-하나",
+        "label": "실제로 돌려 보면: 가상 모듈 + transform 플러그인 하나"
+      },
+      {
+        "id": "훅의-순서와-적용",
+        "label": "훅의 순서와 적용"
+      },
+      {
+        "id": "서버-끼우기와-클라이언트-통신",
+        "label": "서버 끼우기와 클라이언트 통신"
+      },
+      {
+        "id": "문제가-나는-경우-플러그인을-쓸-때",
+        "label": "문제가 나는 경우: 플러그인을 쓸 때"
+      },
+      {
+        "id": "문제의-구조-플러그인은-모듈-하나를-바꾸는-함수들-의-사슬이다",
+        "label": "문제의 구조: 플러그인은 '모듈 하나를 바꾸는 함수들' 의 사슬이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s10": [
+      {
+        "id": "ssr-의-흐름-개발과-배포",
+        "label": "SSR 의 흐름: 개발과 배포"
+      },
+      {
+        "id": "ssr-의-외부화와-타깃",
+        "label": "SSR 의 외부화와 타깃"
+      },
+      {
+        "id": "백엔드-통합-매니페스트가-다리다",
+        "label": "백엔드 통합: 매니페스트가 다리다"
+      },
+      {
+        "id": "라이브러리-모드",
+        "label": "라이브러리 모드"
+      },
+      {
+        "id": "문제의-구조-세-길의-공통점은-그래프는-하나-소비자가-다르다",
+        "label": "문제의 구조: 세 길의 공통점은 '그래프는 하나, 소비자가 다르다'"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s11": [
+      {
+        "id": "공유-옵션-두-모드에-다-적용",
+        "label": "공유 옵션 — 두 모드에 다 적용"
+      },
+      {
+        "id": "빌드-옵션-배포-모드",
+        "label": "빌드 옵션 — 배포 모드"
+      },
+      {
+        "id": "실제로-돌려-보면-설정-함수와-환경별-분기",
+        "label": "실제로 돌려 보면: 설정 함수와 환경별 분기"
+      },
+      {
+        "id": "문제가-나는-경우-설정에서",
+        "label": "문제가 나는 경우: 설정에서"
+      },
+      {
+        "id": "문제의-구조-옵션-이름의-접두어가-단계와-모드-를-말한다",
+        "label": "문제의 구조: 옵션 이름의 접두어가 '단계와 모드' 를 말한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "bundle-s12": [
+      {
+        "id": "성능-요청-수와-해석-비용",
+        "label": "성능: 요청 수와 해석 비용"
+      },
+      {
+        "id": "실제로-돌려-보면-숫자들",
+        "label": "실제로 돌려 보면: 숫자들"
+      },
+      {
+        "id": "트러블슈팅-증상별",
+        "label": "트러블슈팅: 증상별"
+      },
+      {
+        "id": "개발과-배포가-다른-자리-체크리스트",
+        "label": "개발과 배포가 다른 자리 — 체크리스트"
+      },
+      {
+        "id": "문제의-구조-성능-문제는-요청-변환-정합성-문제는-두-경로",
+        "label": "문제의 구조: 성능 문제는 '요청 × 변환', 정합성 문제는 '두 경로'"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
     "t-isolated": [
       {
         "id": "증상-동작은-하는데-상태가-어긋난다",
@@ -14002,6 +14459,12 @@ export const sheetIndex: {
           "kind": "theory"
         },
         {
+          "id": "bundle",
+          "role": "이론",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        },
+        {
           "id": "fe-craft",
           "role": "생각",
           "name": "코드 작성법",
@@ -14177,6 +14640,12 @@ export const sheetIndex: {
           "id": "css",
           "role": "낱말이 나온 곳",
           "name": "CSS",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle",
+          "role": "낱말이 나온 곳",
+          "name": "번들링 · Vite",
           "kind": "theory"
         }
       ],
@@ -20094,6 +20563,228 @@ export const sheetIndex: {
       ],
       "right": []
     },
+    "bundle": {
+      "left": [
+        {
+          "id": "me",
+          "role": "공부한 사람",
+          "name": "Who am I",
+          "kind": "me"
+        }
+      ],
+      "right": [
+        {
+          "id": "bundle-s1",
+          "role": "하위 개념",
+          "name": "1장 · 왜 묶는가 — 모듈과 요청",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s2",
+          "role": "하위 개념",
+          "name": "2장 · 의존성 해석과 사전 번들링",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s3",
+          "role": "하위 개념",
+          "name": "3장 · 개발 서버 — 요청 시 변환",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s4",
+          "role": "하위 개념",
+          "name": "4장 · HMR",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s5",
+          "role": "하위 개념",
+          "name": "5장 · CSS 와 정적 자산",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s6",
+          "role": "하위 개념",
+          "name": "6장 · 프로덕션 빌드 — Rolldown · 청크 · 해시",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s7",
+          "role": "하위 개념",
+          "name": "7장 · 트리 셰이킹과 코드 분할",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s8",
+          "role": "하위 개념",
+          "name": "8장 · 환경 변수와 모드",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s9",
+          "role": "하위 개념",
+          "name": "9장 · 플러그인 API",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s10",
+          "role": "하위 개념",
+          "name": "10장 · SSR · 백엔드 통합 · 라이브러리",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s11",
+          "role": "하위 개념",
+          "name": "11장 · 설정 레퍼런스 요약",
+          "kind": "theory"
+        },
+        {
+          "id": "bundle-s12",
+          "role": "하위 개념",
+          "name": "12장 · 성능과 트러블슈팅",
+          "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
+        }
+      ]
+    },
+    "bundle-s1": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s2": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s3": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s4": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s5": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s6": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s7": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s8": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s9": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s10": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s11": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "bundle-s12": {
+      "left": [
+        {
+          "id": "bundle",
+          "role": "상위 개념",
+          "name": "번들링 · Vite",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "t-isolated": {
       "left": [
         {
@@ -22067,6 +22758,57 @@ export const sheetIndex: {
       "css",
       "css-s14"
     ],
+    "bundle": [
+      "bundle"
+    ],
+    "bundle-s1": [
+      "bundle",
+      "bundle-s1"
+    ],
+    "bundle-s2": [
+      "bundle",
+      "bundle-s2"
+    ],
+    "bundle-s3": [
+      "bundle",
+      "bundle-s3"
+    ],
+    "bundle-s4": [
+      "bundle",
+      "bundle-s4"
+    ],
+    "bundle-s5": [
+      "bundle",
+      "bundle-s5"
+    ],
+    "bundle-s6": [
+      "bundle",
+      "bundle-s6"
+    ],
+    "bundle-s7": [
+      "bundle",
+      "bundle-s7"
+    ],
+    "bundle-s8": [
+      "bundle",
+      "bundle-s8"
+    ],
+    "bundle-s9": [
+      "bundle",
+      "bundle-s9"
+    ],
+    "bundle-s10": [
+      "bundle",
+      "bundle-s10"
+    ],
+    "bundle-s11": [
+      "bundle",
+      "bundle-s11"
+    ],
+    "bundle-s12": [
+      "bundle",
+      "bundle-s12"
+    ],
     "t-isolated": [
       "withy",
       "t-isolated"
@@ -22119,7 +22861,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 291"
+      "meta": "낱말 305"
     },
     "algo": {
       "meta": "챕터 1"
@@ -23249,6 +23991,46 @@ export const sheetIndex: {
       "clickable": true
     },
     "css-s14": {
+      "clickable": true
+    },
+    "bundle": {
+      "clickable": true,
+      "meta": "챕터 12"
+    },
+    "bundle-s1": {
+      "clickable": true
+    },
+    "bundle-s2": {
+      "clickable": true
+    },
+    "bundle-s3": {
+      "clickable": true
+    },
+    "bundle-s4": {
+      "clickable": true
+    },
+    "bundle-s5": {
+      "clickable": true
+    },
+    "bundle-s6": {
+      "clickable": true
+    },
+    "bundle-s7": {
+      "clickable": true
+    },
+    "bundle-s8": {
+      "clickable": true
+    },
+    "bundle-s9": {
+      "clickable": true
+    },
+    "bundle-s10": {
+      "clickable": true
+    },
+    "bundle-s11": {
+      "clickable": true
+    },
+    "bundle-s12": {
       "clickable": true
     },
     "t-isolated": {

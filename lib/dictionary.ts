@@ -1262,6 +1262,68 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "번들링 · Vite — vite.dev 가이드로 세운 열두 장의 낱말",
+      from: "bundle",
+      entries: [
+        {
+          term: "번들러의 다섯 일",
+          body: "해석(지정자 → 파일) · 변환(.ts/.vue/.css → JS·자원) · 묶기(그래프 → 파일 몇 개) · 분할(import() 경계·공유 모듈에서 청크) · 해시(내용 기반 이름). Vite 는 개발에서 해석·변환만 요청마다 하고 묶기·분할·해시는 생략(브라우저 ESM 이 그래프를 따라감), 배포에서 Rolldown 이 다섯을 전부 한다. 옵션의 접두어(resolve.* · css.* · build.*)가 어느 일인지를 말한다.",
+        },
+        {
+          term: "네이티브 ESM 개발 서버",
+          body: "시작 때 전부 묶지 않고 브라우저가 <script type=module> 의 import 를 따라 요청할 때 그 파일만 변환해 ESM 으로 응답하는 개발 서버. 실제로 'ready in 53 ms', /src/main.ts 를 curl 하면 TS 가 벗겨지고 상대 import 가 /src/util.ts 로, 베어 import 가 /node_modules/.vite/deps/… 로 바뀐 파일 하나가 온다. 안 보이는 모듈은 변환되지 않고, 전체를 봐야 하는 일(타입 검사)은 못 한다 — tsc --noEmit 따로.",
+        },
+        {
+          term: "사전 번들링 (dependency pre-bundling)",
+          body: "개발 모드에서만 node_modules 의 의존성을 Rolldown 으로 한 번 묶어 node_modules/.vite/deps 에 두는 것. 목적 둘: CJS/UMD → ESM, 수백 내부 모듈(lodash-es 600+) → 요청 하나. 캐시는 락파일·patches·설정·NODE_ENV 가 바뀌면 무효화, 브라우저 쪽은 ?v=browserHash + Cache-Control: max-age=31536000,immutable(실제로). 링크 패키지는 소스 취급 → 고치면 vite --force.",
+        },
+        {
+          term: "HMR (Hot Module Replacement)과 경계",
+          body: "파일이 바뀌면 페이지를 새로 고치지 않고 그 모듈만 교체하는 메커니즘. 서버가 웹소켓으로 알리고 클라이언트가 ?t= 로 재import 해 '받아 주겠다'고 선언한 경계(import.meta.hot.accept)까지 전파, 경계가 없으면 전체 새로 고침. 실제로 CSS 를 고쳐도 window.__marker 가 살아 있었다(CSS 는 JS 모듈이라 <style> 교체가 자명). Vue SFC·React Fast Refresh 가 컴포넌트마다 자기 수용 경계. dispose/data 로 인스턴스 사이 상태 전달.",
+        },
+        {
+          term: "CSS 모듈 (CSS Modules)과 Lightning CSS",
+          body: ".module.css 의 클래스 이름을 _title_1a2d1_1 처럼 해시로 바꿔 충돌을 없애고 JS 에서 styles.title 로 받는 것(실제로 개발·빌드 같은 이름 — 결정적 해시). 개발에서는 CSS 가 __vite__updateStyle 로 <style> 을 주입하는 JS 모듈로 오고, 빌드에서는 .css 로 추출된다. 압축은 Vite 8 부터 Lightning CSS(build.cssMinify). CSS 의 default import 는 Vite 5 에서 제거 → ?inline.",
+        },
+        {
+          term: "assetsInlineLimit 와 자산의 세 길",
+          body: "import 한 자산이 4096 바이트 미만이면 파일 대신 data URL 로 인라인(실제로 작은 SVG 가 dist/assets 에 없고 JS 안에 data:image/svg+xml), 크면 /assets/이름-[hash]. 세 길: import(처리·해시·존재 검사·셰이킹) · public/(처리 없이 복사, 이름 고정, 루트 절대 경로) · new URL(…, import.meta.url)(정적 문자열만 변환, SSR 불가). 접미사 ?url ?raw ?inline ?no-inline ?worker.",
+        },
+        {
+          term: "청크 (chunk)와 내용 해시",
+          body: "빌드가 그래프를 접은 파일 단위. 진입(index.html 마다) · 비동기(import() 경계 — 실제로 heavy-9Q5z2xLI.js) · 공유(둘 이상이 쓰는 모듈) · 벤더(advancedChunks 로 node_modules 분리 — 실제로 vendor-Dvd9G-NC.js). 이름의 해시는 내용 기반이라 바뀐 파일만 갈리고(--mode staging 에 index 만 바뀌고 heavy 는 그대로), 자산은 immutable 1년 · index.html 은 no-cache 가 짝. modulepreload 가 중첩 import 왕복을 상쇄, vite:preloadError 가 배포 뒤 404 처방.",
+        },
+        {
+          term: "매니페스트 (.vite/manifest.json)",
+          body: "build.manifest: true 로 나오는 '진입점 → 해시 파일·CSS·imports' 지도. 실제로 index.html → assets/index-BPeYG6r7.js, css [assets/index-D3pLvTLE.css], imports [_vendor-Dvd9G-NC.js]. 서버 템플릿(Rails·Laravel·Django)이 어떤 해시 파일을 <script>/<link> 에 넣어야 할지를 이것으로 안다 — 백엔드 통합의 다리. SSR 은 --ssrManifest 로 모듈 → 청크 지도를 따로.",
+        },
+        {
+          term: "트리 셰이킹 (tree shaking)과 sideEffects",
+          body: "ESM 의 정적 import/export 를 따라 어디서도 쓰이지 않는 export 를 결과에서 빼는 것(실제로 unused() 가 번들에 없음). 전제 둘: 정적 이름(ns[key]·CJS 는 불가), 부수 효과 없음(전역 등록·CSS import 가 있는 모듈은 남김). package.json \"sideEffects\": false 가 '부수 효과 없다' 선언, /* #__PURE__ */ 가 호출 단위. 배럴 index 는 분석과 요청 수 모두에 손해.",
+        },
+        {
+          term: "코드 분할 (code splitting)과 변수 import()",
+          body: "import() 를 만나면 그 뒤 그래프를 별도 청크로 떼어 필요할 때 받게 하는 것. 변수를 섞은 import(`./locales/${lang}.json`) 은 './ ../ # 로 시작, 확장자로 끝, 변수는 한 단계' 규칙 안에서 패턴 파일 전부를 청크로. import.meta.glob 은 빌드 타임에 파일 목록으로 바뀌어 () => import() 맵(또는 eager 정적 import)이 된다(실제로). 라우트 단위 분할은 프레임워크가.",
+        },
+        {
+          term: "import.meta.env 와 VITE_ 접두어",
+          body: "빌드 시점 상수 — MODE · BASE_URL · PROD · DEV · SSR + .env 의 VITE_ 변수만. 실제로 번들에 api.example.com 은 있고 SECRET_KEY/should-not-leak 은 없다(undefined 로 치환). 파일 순서 .env < .env.local < .env.[mode] < .env.[mode].local < 셸, 모드는 --mode(≠ NODE_ENV). 코드에 글자로 박히므로 '한 번 빌드 여러 환경' 불가 → 환경마다 빌드 또는 런타임 설정(Nuxt runtimeConfig). 클라이언트 번들은 전부 공개 — 비밀은 서버로.",
+        },
+        {
+          term: "Vite 플러그인과 가상 모듈",
+          body: "Rolldown(Rollup 호환) 훅(resolveId·load·transform·buildStart…) + Vite 전용 훅(config·configResolved·configureServer·transformIndexHtml·handleHotUpdate) 을 가진 객체. enforce pre/post 로 순서, apply build/serve 로 모드. 가상 모듈은 id 를 \\0 접두어 내부 id 로 바꿔 load 에서 코드 생성(실제로 virtual:build-info 가 개발에서 /@id/__x00__virtual:build-info 로 서빙). 모듈 단위 함수라 개발·빌드에서 같은 플러그인이 돈다.",
+        },
+        {
+          term: "Rolldown · Oxc (Vite 8)",
+          body: "Vite 8 의 도구 사슬. Rolldown(Rust)이 Rollup(배포 묶기)과 esbuild(사전 번들)를 대신하고, Oxc 가 TS/JSX 변환과 JS 압축을, Lightning CSS 가 CSS 압축을 맡는다('Vite 8 uses Rolldown and Oxc based tools instead of esbuild and Rollup'). build.rollupOptions → build.rolldownOptions(별칭), manualChunks 객체 형태 제거 → advancedChunks, 기본 타깃 Baseline Widely Available(Chrome 111 · Firefox 114 · Safari 16.4). 플러그인 API 는 호환.",
+        },
+        {
+          term: "개발과 배포가 다른 자리",
+          body: "Vite 의 두 코드 경로(사전 번들 + 요청 시 변환 vs Rolldown 전체 묶기)가 어긋나는 곳: CJS named import(개발 관대·빌드 'is not exported by'), 순환 import(초기화 순서), 부수 효과 모듈 셰이킹, import.meta.env(객체 vs 리터럴), 자산 URL(/src vs /assets-hash·data:), 변수 import() 규칙. 보험은 vite build && vite preview. Vite 가 Rolldown 으로 두 경로를 합치려는 '전체 번들 모드'가 근본 해법.",
+        },
+      ],
+    },
   ],
 };
 
