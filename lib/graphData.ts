@@ -492,6 +492,23 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "render-s11", label: "11장 · 프레임 안의 프레임", kind: "theory", x: 1620, y: 760, r: 14 },
   { id: "render-s12", label: "12장 · 프레임워크가 끼어드는 자리", kind: "theory", x: 1620, y: 800, r: 14 },
 
+  // CSS — MDN 학습 모듈 순서대로 열네 장
+  { id: "css", label: "CSS", kind: "theory", x: 1835, y: 300, r: 20, hub: true },
+  { id: "css-s1", label: "1장 · 문법과 선택자", kind: "theory", x: 1835, y: 360, r: 14 },
+  { id: "css-s2", label: "2장 · 캐스케이드와 상속", kind: "theory", x: 1835, y: 400, r: 14 },
+  { id: "css-s3", label: "3장 · 박스 모델", kind: "theory", x: 1835, y: 440, r: 14 },
+  { id: "css-s4", label: "4장 · 값과 단위", kind: "theory", x: 1835, y: 480, r: 14 },
+  { id: "css-s5", label: "5장 · 디스플레이와 흐름", kind: "theory", x: 1835, y: 520, r: 14 },
+  { id: "css-s6", label: "6장 · 플렉스박스", kind: "theory", x: 1835, y: 560, r: 14 },
+  { id: "css-s7", label: "7장 · 그리드", kind: "theory", x: 1835, y: 600, r: 14 },
+  { id: "css-s8", label: "8장 · 위치 지정과 쌓임 맥락", kind: "theory", x: 1835, y: 640, r: 14 },
+  { id: "css-s9", label: "9장 · 오버플로와 크기", kind: "theory", x: 1835, y: 680, r: 14 },
+  { id: "css-s10", label: "10장 · 반응형 — 미디어·컨테이너 쿼리", kind: "theory", x: 1835, y: 720, r: 14 },
+  { id: "css-s11", label: "11장 · 커스텀 속성과 함수", kind: "theory", x: 1835, y: 760, r: 14 },
+  { id: "css-s12", label: "12장 · 트랜지션 · 애니메이션 · 트랜스폼", kind: "theory", x: 1835, y: 800, r: 14 },
+  { id: "css-s13", label: "13장 · 글꼴과 텍스트", kind: "theory", x: 1835, y: 840, r: 14 },
+  { id: "css-s14", label: "14장 · 중첩 · 레이어 · 스코프", kind: "theory", x: 1835, y: 880, r: 14 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -991,6 +1008,15 @@ export const theoryClusters = [
       "render-s7", "render-s8", "render-s9", "render-s10", "render-s11", "render-s12",
     ],
   },
+
+  /* CSS — 장 순서가 곧 챕터 순서 */
+  {
+    hub: "css",
+    chapters: [
+      "css-s1", "css-s2", "css-s3", "css-s4", "css-s5", "css-s6", "css-s7",
+      "css-s8", "css-s9", "css-s10", "css-s11", "css-s12", "css-s13", "css-s14",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -1007,6 +1033,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "git" },
   { from: "me", to: "i18n" },
   { from: "me", to: "render" },
+  { from: "me", to: "css" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -1067,6 +1094,7 @@ const techRoots = [
   { root: "git", label: "Git", collapsed: true },
   { root: "i18n", label: "i18n", collapsed: true },
   { root: "render", label: "브라우저 렌더링", collapsed: true },
+  { root: "css", label: "CSS", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(

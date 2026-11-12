@@ -76,6 +76,7 @@ import { vueTheories } from "./vue";
 import { gitTheories } from "./git";
 import { i18nTheories } from "./i18n";
 import { renderTheories } from "./render";
+import { cssTheories } from "./css";
 
 /**
  * 갈래마다 파일을 나눈다 — 그래프가 React·JS·TS·Vue·Git으로 갈라져 있는 것과 같은 선이다.
@@ -89,6 +90,7 @@ export const theories: Theory[] = [
   ...gitTheories,
   ...i18nTheories,
   ...renderTheories,
+  ...cssTheories,
 ];
 
 export function getTheory(id: string): Theory | undefined {

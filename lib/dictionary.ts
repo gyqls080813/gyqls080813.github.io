@@ -1160,6 +1160,108 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "CSS — MDN 의 스타일링 기초와 레이아웃 모듈로 세운 열네 장의 낱말",
+      from: "css",
+      entries: [
+        {
+          term: "캐스케이드 (cascade)의 정렬 키",
+          body: "같은 요소·속성에 맞은 선언들 중 하나를 고르는 순서: 출처와 중요도 → 레이어 → 특이성 → 스코프 근접성 → 등장 순서. 앞 키가 다르면 뒤 키는 보지 않는다 — 레이어가 다르면 특이성 무관(실제로 뒤 레이어의 .lay 가 앞 레이어의 #id.lay 를 이김), !important 는 레이어 순서를 뒤집음(앞 레이어가 이김), 비레이어가 모든 레이어 위. 애니메이션은 normal 위, 트랜지션은 전부 위.",
+        },
+        {
+          term: "특이성 (specificity)",
+          body: "ID-클래스-종류 세 열의 무게. ID 1-0-0, 클래스·속성·가상 클래스 0-1-0, 종류·가상 요소 0-0-1, *·:where()·결합자 0, :is()/:not()/:has() 는 가장 특이한 인자. 왼쪽 열부터 비교해 #id(1-0-0) 가 .a .b .c .d .e [x](0-6-0) 를 이긴다(실제로). 인라인 style 은 모든 선택자 위, !important 만 그 위. 같은 출처·레이어·중요도 안에서만 비교.",
+        },
+        {
+          term: "상속 (inheritance)과 다섯 키워드",
+          body: "선언이 없는 속성은 상속 속성이면 부모의 계산값(color·font-size), 아니면 초깃값(border → none). inherit 은 부모값, initial 은 초깃값, unset 은 상속 속성엔 inherit·아니면 initial(실제로 color 는 상속, border 는 0), revert 는 작성자 출처를 없앤 것처럼(UA 값), revert-layer 는 이전 레이어 값. all 로 한 번에.",
+        },
+        {
+          term: "box-sizing",
+          body: "width·height 가 가리키는 영역. content-box(기본)는 콘텐츠만이라 width 200 + padding 10 + border 5 가 230 으로 렌더되고, border-box 는 테두리까지라 200(실제로). 둘 다 computed width 는 \"200px\". 마진은 어느 쪽에도 안 들어감. 리셋의 첫 줄 *, *::before, *::after { box-sizing: border-box }.",
+        },
+        {
+          term: "마진 병합 (margin collapsing)",
+          body: "인접한 세로 마진이 하나로 합쳐지는 규칙 — 형제 사이(30 과 20 이 만나면 30, 실제로), 부모와 첫·마지막 자식 사이(테두리·패딩·콘텐츠 없으면 자식 마진이 부모 밖으로), 빈 블록. 새 BFC(display: flow-root)·패딩 1px 이 막고, 플렉스·그리드 안·가로 마진·float·absolute 엔 없다. 음수는 큰 양수 + 작은 음수.",
+        },
+        {
+          term: "display 의 두 값과 BFC",
+          body: "display = <바깥> <안쪽>. 바깥(block·inline)은 부모 안에서 나의 종류, 안쪽(flow·flow-root·flex·grid)은 자식의 레이아웃 모드. inline-block = inline flow-root(계산값으로 되돌아옴, 실제로). flow-root 가 블록 서식 맥락(BFC)을 만들어 float 포함·외부 float 배제·마진 병합 차단 — overflow 로 만들면 스크롤바·그림자 잘림 부작용. display: none 은 자리·접근성 트리 제거, visibility: hidden 은 자리 유지(800×19)·자식 visible 로 되살림.",
+        },
+        {
+          term: "플렉스 아이템의 자동 최소 (min-width: auto)",
+          body: "플렉스·그리드 아이템의 min-width 초깃값 auto 가 min-content 로 풀려 '콘텐츠 아래로 줄지 않음'. 폭 300 에 flex: 1 둘, 한쪽에 끊기지 않는 긴 단어 → 8 / 698 로 넘침, min-width: 0 이면 150 / 150(실제로). overflow: hidden(스크롤 컨테이너는 자동 최소 0)도 같은 효과 — 말줄임이 플렉스에서 안 되는 이유. 그리드의 1fr = minmax(auto, 1fr) 도 같은 자리 → minmax(0, 1fr).",
+        },
+        {
+          term: "flex 단축과 알고리즘",
+          body: "flex: grow shrink basis. 기본 0 1 auto(안 자라고 줄어들고 콘텐츠에서 출발), flex: 1 = 1 1 0(basis 계산값 \"0%\", 실제로) → 콘텐츠 무관하게 같은 폭, auto = 1 1 auto, none = 0 0 auto. 알고리즘: 가설 크기(basis) → 남는 공간을 grow/shrink 비율로 분배 → min/max 로 고정하고 고정된 것을 빼고 다시. justify-content 는 주축, align-items 는 교차축.",
+        },
+        {
+          term: "fr · auto-fill · auto-fit",
+          body: "fr 은 고정 트랙과 gap 을 뺀 남는 공간의 비율 — 400 에 100px 1fr 2fr gap 10 → 100 / 93.33 / 186.67(실제로). repeat(auto-fill, minmax(100px, 1fr)) 은 들어가는 만큼 반복하되 빈 트랙을 남기고(350 에 아이템 2 → 116.66 ×3), auto-fit 은 빈 트랙을 0 으로 접는다(175 175 0). 암묵적 트랙은 grid-auto-rows 크기. subgrid 는 부모 트랙 선을 그대로.",
+        },
+        {
+          term: "포함 블록 (containing block)",
+          body: "위치(top/left)와 퍼센트의 기준 상자. static·relative·sticky 는 가장 가까운 블록 컨테이너의 콘텐츠 상자, absolute 는 가장 가까운 non-static 조상의 패딩 상자, fixed 는 뷰포트 — 단 transform·filter·backdrop-filter·perspective·translate/rotate/scale·contain: layout/paint·will-change 조상이 있으면 그 조상(실제로 transform 부모 안의 fixed 가 부모 기준). 세로 % 패딩은 포함 블록의 '폭' 기준.",
+        },
+        {
+          term: "쌓임 맥락 (stacking context)",
+          body: "z-index 가 독립적으로 비교되는 묶음. 묶음 전체가 부모 맥락에서 하나의 층 — 그래서 z-index: 1 안의 999 가 형제의 2 에 진다(실제로 elementFromPoint 가 형제). 만드는 것: z-index 있는 positioned, fixed/sticky, z-index 있는 flex/grid 아이템, opacity < 1(실제로 자식 z 10 이 형제 z 1 에 짐), transform·filter·clip-path·mask·perspective, isolation: isolate, will-change, contain, container-type: size, top layer. 모달이 뒤에 깔리면 조상의 맥락부터 — Portal 이 처방.",
+        },
+        {
+          term: "overflow 의 축 연동과 clip vs hidden",
+          body: "한 축만 visible·clip 이 아니면 다른 축의 visible 은 auto 로(실제로 overflow-y: scroll → overflow-x \"auto\"). hidden 은 스크롤 컨테이너(scrollTop = 5 가 먹음 → 프로그램 스크롤 됨, BFC 생성, sticky 기준, absolute 자손 잘림), clip 은 스크롤 컨테이너가 아님(scrollTop 0, 잘리기만, overflow-clip-margin 으로 여유). 잉크 오버플로(그림자)는 스크롤 영역을 늘리지 않음.",
+        },
+        {
+          term: "min-content · max-content · fit-content",
+          body: "min-content 는 모든 줄바꿈 기회에서 줄을 바꾼 폭(가장 긴 단어 — 'short words here' 41px, 실제로), max-content 는 전혀 안 바꾼 폭(115px), fit-content 는 공간 안에서 max-content 까지 모자라면 min-content 까지(max-width 150 에 걸려 150). 내재 크기(콘텐츠)와 외재 크기(지정)가 어긋나면 넘침.",
+        },
+        {
+          term: "컨테이너 쿼리 (@container)",
+          body: "조상 컨테이너의 크기로 규칙을 켜는 것 — 미디어 쿼리의 대안. container-type: inline-size(또는 size) 를 선언해야 하고 그 선언이 크기 격리를 가져와 컨테이너는 자기 콘텐츠로 그 축 크기를 못 정한다(무한 루프 방지). 실제로 같은 .card 가 500 컨테이너에선 파랑, 300 에선 빨강. cqi 는 컨테이너 폭의 1%(50cqi → 250px), 컨테이너 없으면 작은 뷰포트 단위. 스타일 쿼리 style(--x) 는 커스텀 속성만.",
+        },
+        {
+          term: "논리 속성 (logical properties)",
+          body: "좌우·상하 대신 인라인(글이 흐르는 축)·블록(블록이 쌓이는 축)의 start/end 로 적는 속성. inline-size·block-size·margin-inline-start·inset-block-start·text-align: start. writing-mode: vertical-rl 에서 inline-size 100 이 height 100 으로, margin-inline-start 가 margin-top 으로, padding-block-start 가 padding-right 로 매핑됨(실제로). RTL·세로쓰기 i18n 의 '한 번 쓰면 모든 방향' 길.",
+        },
+        {
+          term: "계산값 시점 무효 (invalid at computed-value time)",
+          body: "var() 치환 뒤 값이 속성에 맞지 않을 때 그 선언이 '무시'되지 않고 속성이 초깃값(비상속) 또는 상속값으로 떨어지는 규칙. color: green; color: 16px 는 파싱 때 버려져 green 이지만, color: green; color: var(--x)(--x: 16px) 는 var 가 파서를 통과해 green 을 덮고 계산 때 무효 → 검정(실제로). 대체값 var(--x, fallback) 은 '정의되지 않았거나 무효인 변수용'. @property 로 등록하면 타입 검사 → initial-value 로.",
+        },
+        {
+          term: "@property",
+          body: "커스텀 속성을 등록하는 at-rule — syntax(필수, \"<length>\" 등) · inherits(필수) · initial-value(syntax 가 \"*\" 아니면 필수, 계산 독립적 — 3em 불가). 하나라도 빠지면 규칙 전체 무효. 등록하면 잘못된 값이 initial-value 로(실제로 not-a-length → 7px), inherits: false 로 상속을 끊고(부모 99px 인데 자식 7px), 숫자·색·길이로 보간되어 트랜지션·애니메이션 가능(미등록은 이산). CSS.registerProperty() 와 동등.",
+        },
+        {
+          term: "보간 (interpolation)과 이산 (discrete), allow-discrete",
+          body: "길이·색·숫자·각도·transform·등록된 --var 는 두 값 사이가 계산되어 부드럽게(보간), display·visibility·미등록 --var 는 50% 에서 한 번에(이산). display 는 none 으로/에서 갈 때 0%/100% 에서 뒤집혀 내용이 전 구간 보임. 트랜지션에 이산 속성을 넣으려면 transition-behavior: allow-discrete, none 에서 나올 때의 출발값은 @starting-style(같은 특이성 — 원 규칙 뒤에). height: auto 는 보간 불가(실제로 즉시 60px) → interpolate-size: allow-keywords · calc-size().",
+        },
+        {
+          term: "transform 과 좌표 · 부작용",
+          body: "레이아웃을 건드리지 않고 좌표계를 바꾸는 속성. 함수는 오른쪽부터 적용(rotate(90deg) translateX(10px) → matrix(0, 1, -1, 0, 0, 10), 실제로 100×50 이 50×100). transform-origin 기본은 중심(\"50px 25px\"). 개별 속성 translate·rotate·scale 은 따로 트랜지션. 부작용 둘: fixed 자손의 포함 블록이 되고, 쌓임 맥락을 만든다(8장). opacity 와 함께 합성 단계만 건드려 애니메이션에 가장 싸다.",
+        },
+        {
+          term: "font-display 와 FOIT · FOUT",
+          body: "웹 폰트가 오기 전 글자를 어떻게 보일지. block(~3s 숨김 → FOIT, 아이콘 폰트용) · swap(바로 대체 글꼴 → 폰트 오면 교체, FOUT, 본문 기본) · fallback(~100ms 숨김 → 대체, ~3s 안에 안 오면 대체 고정) · optional(~100ms, 교체 없음). 실제로 없는 파일의 폰트는 document.fonts 에서 loading → error 로, swap 이라 그동안 sans-serif 로 보임. 교체 때의 흔들림(CLS)은 size-adjust·ascent-override 로 대체 글꼴 메트릭을 맞춰 줄인다.",
+        },
+        {
+          term: "unicode-range 와 가변 폰트",
+          body: "@font-face 에 글자 범위를 적으면 그 범위의 글자가 쓰일 때만 파일을 받는다 — 한글(U+AC00-D7A3) 처럼 큰 폰트를 서브셋으로 쪼개는 표준. 같은 font-family 이름의 여러 @font-face 가 범위별로 합쳐진다. font-weight: 100 900 범위를 적으면 가변 폰트 한 파일로 모든 굵기(없는 굵기를 합성하는 faux bold 방지). src 는 local() 우선 · url() format(\"woff2\") 후보 목록.",
+        },
+        {
+          term: "CSS 중첩 (nesting)",
+          body: "선택자를 부모 규칙 안에 적는 네이티브 문법(Chrome 156 selector(&) true). 결합자 없이 적으면 자손(.nest .child), 복합은 & 필수(&.mod), & 를 뒤에 두면 부모 문맥이 뒤로(.deep & → .deep .nest2, 실제로). 특이성은 :is() 식(목록 중 최고). 안 되는 것: &__elem 식 문자열 이어붙이기(Sass 와 다름). 중첩 규칙 뒤의 선언은 CSSNestedDeclarations 로 순서 유지 — 미지원 브라우저는 순서가 바뀔 수 있어 선언을 앞에.",
+        },
+        {
+          term: "@layer (cascade layers)",
+          body: "규칙 묶음 사이의 우선순위를 특이성과 무관하게 정하는 at-rule. @layer reset, base, components, utilities; 로 순서 확정(먼저 선언 = 낮음), 파일마다 @layer x { } 로 붙임, @import url() layer(vendor) 로 라이브러리를 낮은 레이어에. 비레이어 선언은 모든 레이어 위(탈출구로만), !important 는 순서 역전(reset 의 important 가 최강). revert-layer 로 한 레이어를 되돌림. Tailwind 가 실제로 쓰는 구조.",
+        },
+        {
+          term: "@scope 와 근접성",
+          body: "선택자가 미치는 DOM 범위를 뿌리와 한계로 가두는 at-rule — @scope (.card) to (.slot) { … } 도넛 스코핑(실제로 한계 안 p 는 기본색). 두 스코프 규칙이 겹치면 뿌리가 가까운 쪽이 이기는 '근접성'이 캐스케이드의 특이성 뒤·등장 순서 앞에 있다(실제로 near 가 far 를 이김). 선택자에 :where(:scope) 가 붙은 것처럼 특이성 0 추가, 상속은 가두지 않음. Vue scoped(속성 선택자 +0-1-0)·CSS Modules(해시 이름)·BEM 이 이것 없던 시절의 대안. Baseline 2026.",
+        },
+      ],
+    },
   ],
 };
 

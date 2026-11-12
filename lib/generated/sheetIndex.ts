@@ -361,6 +361,21 @@ export const sheetIndex: {
     "render-s10": "theory",
     "render-s11": "theory",
     "render-s12": "theory",
+    "css": "theory",
+    "css-s1": "theory",
+    "css-s2": "theory",
+    "css-s3": "theory",
+    "css-s4": "theory",
+    "css-s5": "theory",
+    "css-s6": "theory",
+    "css-s7": "theory",
+    "css-s8": "theory",
+    "css-s9": "theory",
+    "css-s10": "theory",
+    "css-s11": "theory",
+    "css-s12": "theory",
+    "css-s13": "theory",
+    "css-s14": "theory",
     "t-isolated": "post",
     "t-focus": "post",
     "t-sync": "post",
@@ -1605,6 +1620,108 @@ export const sheetIndex: {
           {
             "id": "pr-의-세-버튼과-로컬-명령",
             "label": "PR 의 세 버튼과 로컬 명령"
+          }
+        ]
+      },
+      {
+        "id": "css-mdn-의-스타일링-기초와-레이아웃-모듈로-세운-열네-장의-낱말",
+        "label": "CSS — MDN 의 스타일링 기초와 레이아웃 모듈로 세운 열네 장의 낱말",
+        "children": [
+          {
+            "id": "캐스케이드-cascade-의-정렬-키",
+            "label": "캐스케이드 (cascade)의 정렬 키"
+          },
+          {
+            "id": "특이성-specificity",
+            "label": "특이성 (specificity)"
+          },
+          {
+            "id": "상속-inheritance-과-다섯-키워드",
+            "label": "상속 (inheritance)과 다섯 키워드"
+          },
+          {
+            "id": "box-sizing",
+            "label": "box-sizing"
+          },
+          {
+            "id": "마진-병합-margin-collapsing",
+            "label": "마진 병합 (margin collapsing)"
+          },
+          {
+            "id": "display-의-두-값과-bfc",
+            "label": "display 의 두 값과 BFC"
+          },
+          {
+            "id": "플렉스-아이템의-자동-최소-min-width-auto",
+            "label": "플렉스 아이템의 자동 최소 (min-width: auto)"
+          },
+          {
+            "id": "flex-단축과-알고리즘",
+            "label": "flex 단축과 알고리즘"
+          },
+          {
+            "id": "fr-auto-fill-auto-fit",
+            "label": "fr · auto-fill · auto-fit"
+          },
+          {
+            "id": "포함-블록-containing-block",
+            "label": "포함 블록 (containing block)"
+          },
+          {
+            "id": "쌓임-맥락-stacking-context",
+            "label": "쌓임 맥락 (stacking context)"
+          },
+          {
+            "id": "overflow-의-축-연동과-clip-vs-hidden",
+            "label": "overflow 의 축 연동과 clip vs hidden"
+          },
+          {
+            "id": "min-content-max-content-fit-content",
+            "label": "min-content · max-content · fit-content"
+          },
+          {
+            "id": "컨테이너-쿼리-container",
+            "label": "컨테이너 쿼리 (@container)"
+          },
+          {
+            "id": "논리-속성-logical-properties",
+            "label": "논리 속성 (logical properties)"
+          },
+          {
+            "id": "계산값-시점-무효-invalid-at-computed-value-time",
+            "label": "계산값 시점 무효 (invalid at computed-value time)"
+          },
+          {
+            "id": "property",
+            "label": "@property"
+          },
+          {
+            "id": "보간-interpolation-과-이산-discrete-allow-discrete",
+            "label": "보간 (interpolation)과 이산 (discrete), allow-discrete"
+          },
+          {
+            "id": "transform-과-좌표-부작용",
+            "label": "transform 과 좌표 · 부작용"
+          },
+          {
+            "id": "font-display-와-foit-fout",
+            "label": "font-display 와 FOIT · FOUT"
+          },
+          {
+            "id": "unicode-range-와-가변-폰트",
+            "label": "unicode-range 와 가변 폰트"
+          },
+          {
+            "id": "css-중첩-nesting",
+            "label": "CSS 중첩 (nesting)"
+          },
+          {
+            "id": "layer-cascade-layers",
+            "label": "@layer (cascade layers)"
+          },
+          {
+            "id": "scope-와-근접성",
+            "label": "@scope 와 근접성"
           }
         ]
       }
@@ -13175,6 +13292,464 @@ export const sheetIndex: {
         "label": "확인 질문"
       }
     ],
+    "css": [
+      {
+        "id": "열네-장을-나눈-선",
+        "label": "열네 장을 나눈 선"
+      },
+      {
+        "id": "실제로-돌려-보면-이-허브가-재는-방법",
+        "label": "실제로 돌려 보면: 이 허브가 재는 방법"
+      },
+      {
+        "id": "문제의-구조-선언-캐스케이드-값-계산값-사용값-실제값",
+        "label": "문제의 구조: 선언 → 캐스케이드 값 → 계산값 → 사용값 → 실제값"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "css-s1": [
+      {
+        "id": "기본-선택자-다섯과-복합-선택자",
+        "label": "기본 선택자 다섯과 복합 선택자"
+      },
+      {
+        "id": "결합자-트리-위의-관계",
+        "label": "결합자: 트리 위의 관계"
+      },
+      {
+        "id": "실제로-돌려-보면-has-is-where-와-중첩",
+        "label": "실제로 돌려 보면: :has() · :is() · :where() 와 중첩"
+      },
+      {
+        "id": "문제가-나는-경우-선택자가-안-맞는-이유",
+        "label": "문제가 나는 경우: 선택자가 '안 맞는' 이유"
+      },
+      {
+        "id": "문제의-구조-선택자는-매칭-이고-한-요소에-여러-규칙이-맞는-것이-정상이다",
+        "label": "문제의 구조: 선택자는 '매칭' 이고 한 요소에 여러 규칙이 맞는 것이 정상이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s2": [
+      {
+        "id": "완전한-순서-출처와-중요도가-먼저다",
+        "label": "완전한 순서: 출처와 중요도가 먼저다"
+      },
+      {
+        "id": "실제로-돌려-보면-레이어가-특이성을-이긴다",
+        "label": "실제로 돌려 보면: 레이어가 특이성을 이긴다"
+      },
+      {
+        "id": "실제로-돌려-보면-상속되는-것과-안-되는-것-다섯-키워드",
+        "label": "실제로 돌려 보면: 상속되는 것과 안 되는 것, 다섯 키워드"
+      },
+      {
+        "id": "문제가-나는-경우-왜-안-먹지-의-진단-순서",
+        "label": "문제가 나는 경우: '왜 안 먹지' 의 진단 순서"
+      },
+      {
+        "id": "문제의-구조-캐스케이드는-싸움-이-아니라-정렬-이다",
+        "label": "문제의 구조: 캐스케이드는 '싸움' 이 아니라 '정렬' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s3": [
+      {
+        "id": "실제로-돌려-보면-content-box-230px-border-box-200px",
+        "label": "실제로 돌려 보면: content-box 230px, border-box 200px"
+      },
+      {
+        "id": "블록-상자와-인라인-상자",
+        "label": "블록 상자와 인라인 상자"
+      },
+      {
+        "id": "실제로-돌려-보면-마진-병합-30-과-20-이-만나면-30",
+        "label": "실제로 돌려 보면: 마진 병합 — 30 과 20 이 만나면 30"
+      },
+      {
+        "id": "문제가-나는-경우-폭이-안-맞고-간격이-다르다",
+        "label": "문제가 나는 경우: 폭이 안 맞고, 간격이 다르다"
+      },
+      {
+        "id": "문제의-구조-네-겹은-자기-상자-이고-마진은-이웃과의-거리-다",
+        "label": "문제의 구조: 네 겹은 '자기 상자' 이고 마진은 '이웃과의 거리' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s4": [
+      {
+        "id": "실제로-돌려-보면-같은-2-가-40px-32px-172-8px-가-된다",
+        "label": "실제로 돌려 보면: 같은 2 가 40px · 32px · 172.8px 가 된다"
+      },
+      {
+        "id": "단위표-무엇에-상대적인가",
+        "label": "단위표: 무엇에 상대적인가"
+      },
+      {
+        "id": "함수-calc-min-max-clamp",
+        "label": "함수: calc · min · max · clamp"
+      },
+      {
+        "id": "문제가-나는-경우-단위를-섞을-때",
+        "label": "문제가 나는 경우: 단위를 섞을 때"
+      },
+      {
+        "id": "문제의-구조-단위는-어디를-기준으로-셀-것인가-의-선언이다",
+        "label": "문제의 구조: 단위는 '어디를 기준으로 셀 것인가' 의 선언이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s5": [
+      {
+        "id": "실제로-돌려-보면-두-값-문법의-계산값",
+        "label": "실제로 돌려 보면: 두 값 문법의 계산값"
+      },
+      {
+        "id": "정상-흐름과-블록-서식-맥락-bfc",
+        "label": "정상 흐름과 블록 서식 맥락 (BFC)"
+      },
+      {
+        "id": "실제로-돌려-보면-none-contents-visibility-hidden",
+        "label": "실제로 돌려 보면: none · contents · visibility: hidden"
+      },
+      {
+        "id": "문제가-나는-경우-display-를-바꿨는데",
+        "label": "문제가 나는 경우: display 를 바꿨는데"
+      },
+      {
+        "id": "문제의-구조-display-는-이-상자의-종류-와-자식의-레이아웃-모드-두-결정이다",
+        "label": "문제의 구조: display 는 '이 상자의 종류' 와 '자식의 레이아웃 모드' 두 결정이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s6": [
+      {
+        "id": "실제로-돌려-보면-기본값과-flex-1",
+        "label": "실제로 돌려 보면: 기본값과 flex: 1"
+      },
+      {
+        "id": "실제로-돌려-보면-min-width-auto-긴-단어가-컨테이너를-터뜨린다",
+        "label": "실제로 돌려 보면: min-width: auto — 긴 단어가 컨테이너를 터뜨린다"
+      },
+      {
+        "id": "축과-정렬-justify-는-주축-align-은-교차축",
+        "label": "축과 정렬: justify 는 주축, align 은 교차축"
+      },
+      {
+        "id": "문제가-나는-경우-플렉스에서-자주-보는-것",
+        "label": "문제가 나는 경우: 플렉스에서 자주 보는 것"
+      },
+      {
+        "id": "문제의-구조-플렉스-알고리즘은-출발-크기-남는-공간-분배-최소-최대-고정-세-걸음이다",
+        "label": "문제의 구조: 플렉스 알고리즘은 '출발 크기 → 남는 공간 분배 → 최소/최대 고정' 세 걸음이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s7": [
+      {
+        "id": "실제로-돌려-보면-fr-은-간격을-뺀-뒤의-비율이다",
+        "label": "실제로 돌려 보면: fr 은 간격을 뺀 뒤의 비율이다"
+      },
+      {
+        "id": "실제로-돌려-보면-auto-fill-과-auto-fit-의-차이",
+        "label": "실제로 돌려 보면: auto-fill 과 auto-fit 의 차이"
+      },
+      {
+        "id": "선-영역-배치-자동-배치",
+        "label": "선 · 영역 · 배치 · 자동 배치"
+      },
+      {
+        "id": "subgrid-와-중첩",
+        "label": "subgrid 와 중첩"
+      },
+      {
+        "id": "문제가-나는-경우-그리드가-뜻대로-안-될-때",
+        "label": "문제가 나는 경우: 그리드가 뜻대로 안 될 때"
+      },
+      {
+        "id": "문제의-구조-그리드는-컨테이너가-결정-하고-플렉스는-아이템이-흐른다",
+        "label": "문제의 구조: 그리드는 '컨테이너가 결정' 하고 플렉스는 '아이템이 흐른다'"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s8": [
+      {
+        "id": "실제로-돌려-보면-포함-블록과-transform-의-함정",
+        "label": "실제로 돌려 보면: 포함 블록과 transform 의 함정"
+      },
+      {
+        "id": "실제로-돌려-보면-z-index-999-가-z-index-2-에-진다",
+        "label": "실제로 돌려 보면: z-index 999 가 z-index 2 에 진다"
+      },
+      {
+        "id": "실제로-돌려-보면-sticky-는-스크롤-조상-안에서-붙는다",
+        "label": "실제로 돌려 보면: sticky 는 '스크롤 조상' 안에서 붙는다"
+      },
+      {
+        "id": "문제가-나는-경우-위치와-층",
+        "label": "문제가 나는 경우: 위치와 층"
+      },
+      {
+        "id": "문제의-구조-두-트리가-있다-포함-블록-트리와-쌓임-맥락-트리",
+        "label": "문제의 구조: 두 트리가 있다 — 포함 블록 트리와 쌓임 맥락 트리"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s9": [
+      {
+        "id": "실제로-돌려-보면-한-축만-scroll-로-두면-다른-축은-auto-가-된다",
+        "label": "실제로 돌려 보면: 한 축만 scroll 로 두면 다른 축은 auto 가 된다"
+      },
+      {
+        "id": "실제로-돌려-보면-min-content-41-max-content-115-fit-content",
+        "label": "실제로 돌려 보면: min-content 41 · max-content 115 · fit-content"
+      },
+      {
+        "id": "넘침의-세-원인과-처방",
+        "label": "넘침의 세 원인과 처방"
+      },
+      {
+        "id": "문제가-나는-경우-overflow-를-켰다가-생기는-일",
+        "label": "문제가 나는 경우: overflow 를 켰다가 생기는 일"
+      },
+      {
+        "id": "문제의-구조-크기는-안에서-또는-밖에서-오고-둘이-다르면-넘친다",
+        "label": "문제의 구조: 크기는 '안에서' 또는 '밖에서' 오고, 둘이 다르면 넘친다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s10": [
+      {
+        "id": "실제로-돌려-보면-같은-컴포넌트가-500-컨테이너에선-파랑-300-에선-빨강",
+        "label": "실제로 돌려 보면: 같은 컴포넌트가 500 컨테이너에선 파랑, 300 에선 빨강"
+      },
+      {
+        "id": "미디어-쿼리-타입-특징-범위-논리",
+        "label": "미디어 쿼리: 타입 · 특징 · 범위 · 논리"
+      },
+      {
+        "id": "컨테이너-쿼리-더-이름-단위-스타일-쿼리",
+        "label": "컨테이너 쿼리 더: 이름 · 단위 · 스타일 쿼리"
+      },
+      {
+        "id": "논리-속성-좌우가-아니라-시작-끝",
+        "label": "논리 속성: 좌우가 아니라 시작·끝"
+      },
+      {
+        "id": "문제가-나는-경우-반응형에서",
+        "label": "문제가 나는 경우: 반응형에서"
+      },
+      {
+        "id": "문제의-구조-조건의-기준이-창-이면-미디어-자리-면-컨테이너-방향-이면-논리",
+        "label": "문제의 구조: 조건의 기준이 '창' 이면 미디어, '자리' 면 컨테이너, '방향' 이면 논리"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s11": [
+      {
+        "id": "실제로-돌려-보면-같은-잘못된-값-이-다르게-끝난다",
+        "label": "실제로 돌려 보면: 같은 '잘못된 값' 이 다르게 끝난다"
+      },
+      {
+        "id": "실제로-돌려-보면-property-가-타입-상속-초깃값을-정한다",
+        "label": "실제로 돌려 보면: @property 가 타입 · 상속 · 초깃값을 정한다"
+      },
+      {
+        "id": "함수들-색과-계산",
+        "label": "함수들: 색과 계산"
+      },
+      {
+        "id": "문제가-나는-경우-변수를-쓸-때",
+        "label": "문제가 나는 경우: 변수를 쓸 때"
+      },
+      {
+        "id": "문제의-구조-커스텀-속성은-토큰-이고-치환은-쓰는-자리-에서-일어난다",
+        "label": "문제의 구조: 커스텀 속성은 '토큰' 이고, 치환은 '쓰는 자리' 에서 일어난다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s12": [
+      {
+        "id": "실제로-돌려-보면-이벤트-순서와-auto-의-함정",
+        "label": "실제로 돌려 보면: 이벤트 순서와 auto 의 함정"
+      },
+      {
+        "id": "실제로-돌려-보면-display-를-트랜지션하기-allow-discrete-와-starting-style",
+        "label": "실제로 돌려 보면: display 를 트랜지션하기 — allow-discrete 와 @starting-style"
+      },
+      {
+        "id": "실제로-돌려-보면-keyframes-와-fill-mode-트랜스폼의-좌표",
+        "label": "실제로 돌려 보면: @keyframes 와 fill-mode, 트랜스폼의 좌표"
+      },
+      {
+        "id": "성능과-접근성-무엇을-움직일-것인가",
+        "label": "성능과 접근성: 무엇을 움직일 것인가"
+      },
+      {
+        "id": "문제가-나는-경우-안-움직이거나-뚝뚝-끊길-때",
+        "label": "문제가 나는 경우: 안 움직이거나 뚝뚝 끊길 때"
+      },
+      {
+        "id": "문제의-구조-시간-축의-세-층-무엇이-어떻게-어디서-바뀌나",
+        "label": "문제의 구조: 시간 축의 세 층 — 무엇이, 어떻게, 어디서 바뀌나"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s13": [
+      {
+        "id": "실제로-돌려-보면-없는-폰트는-loading-error-그동안-대체-글꼴",
+        "label": "실제로 돌려 보면: 없는 폰트는 loading → error, 그동안 대체 글꼴"
+      },
+      {
+        "id": "font-display-네-값과-foit-fout",
+        "label": "font-display 네 값과 FOIT · FOUT"
+      },
+      {
+        "id": "font-face-디스크립터와-가변-폰트-unicode-range",
+        "label": "@font-face 디스크립터와 가변 폰트, unicode-range"
+      },
+      {
+        "id": "텍스트-줄-높이-줄바꿈-균형",
+        "label": "텍스트: 줄 높이 · 줄바꿈 · 균형"
+      },
+      {
+        "id": "문제가-나는-경우-글꼴에서",
+        "label": "문제가 나는 경우: 글꼴에서"
+      },
+      {
+        "id": "문제의-구조-글꼴은-파일-이고-텍스트는-그-파일로-그린-상자-다",
+        "label": "문제의 구조: 글꼴은 '파일' 이고 텍스트는 '그 파일로 그린 상자' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "css-s14": [
+      {
+        "id": "실제로-돌려-보면-중첩-의-자리와-특이성",
+        "label": "실제로 돌려 보면: 중첩 — & 의 자리와 특이성"
+      },
+      {
+        "id": "실제로-돌려-보면-scope-뿌리-한계-근접성",
+        "label": "실제로 돌려 보면: @scope — 뿌리 · 한계 · 근접성"
+      },
+      {
+        "id": "레이어로-설계하기-리셋-베이스-컴포넌트-유틸리티",
+        "label": "레이어로 설계하기: 리셋 → 베이스 → 컴포넌트 → 유틸리티"
+      },
+      {
+        "id": "프레임워크의-스코프-vue-scoped-css-modules-tailwind",
+        "label": "프레임워크의 스코프: Vue scoped · CSS Modules · Tailwind"
+      },
+      {
+        "id": "문제가-나는-경우-범위-도구를-섞을-때",
+        "label": "문제가 나는 경우: 범위 도구를 섞을 때"
+      },
+      {
+        "id": "문제의-구조-세-도구는-캐스케이드의-다른-칸을-손댄다",
+        "label": "문제의 구조: 세 도구는 캐스케이드의 다른 칸을 손댄다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
     "t-isolated": [
       {
         "id": "증상-동작은-하는데-상태가-어긋난다",
@@ -13421,6 +13996,12 @@ export const sheetIndex: {
           "kind": "theory"
         },
         {
+          "id": "css",
+          "role": "이론",
+          "name": "CSS",
+          "kind": "theory"
+        },
+        {
           "id": "fe-craft",
           "role": "생각",
           "name": "코드 작성법",
@@ -13590,6 +14171,12 @@ export const sheetIndex: {
           "id": "git",
           "role": "낱말이 나온 곳",
           "name": "Git",
+          "kind": "theory"
+        },
+        {
+          "id": "css",
+          "role": "낱말이 나온 곳",
+          "name": "CSS",
           "kind": "theory"
         }
       ],
@@ -19251,6 +19838,262 @@ export const sheetIndex: {
       ],
       "right": []
     },
+    "css": {
+      "left": [
+        {
+          "id": "me",
+          "role": "공부한 사람",
+          "name": "Who am I",
+          "kind": "me"
+        }
+      ],
+      "right": [
+        {
+          "id": "css-s1",
+          "role": "하위 개념",
+          "name": "1장 · 문법과 선택자",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s2",
+          "role": "하위 개념",
+          "name": "2장 · 캐스케이드와 상속",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s3",
+          "role": "하위 개념",
+          "name": "3장 · 박스 모델",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s4",
+          "role": "하위 개념",
+          "name": "4장 · 값과 단위",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s5",
+          "role": "하위 개념",
+          "name": "5장 · 디스플레이와 흐름",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s6",
+          "role": "하위 개념",
+          "name": "6장 · 플렉스박스",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s7",
+          "role": "하위 개념",
+          "name": "7장 · 그리드",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s8",
+          "role": "하위 개념",
+          "name": "8장 · 위치 지정과 쌓임 맥락",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s9",
+          "role": "하위 개념",
+          "name": "9장 · 오버플로와 크기",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s10",
+          "role": "하위 개념",
+          "name": "10장 · 반응형 — 미디어·컨테이너 쿼리",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s11",
+          "role": "하위 개념",
+          "name": "11장 · 커스텀 속성과 함수",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s12",
+          "role": "하위 개념",
+          "name": "12장 · 트랜지션 · 애니메이션 · 트랜스폼",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s13",
+          "role": "하위 개념",
+          "name": "13장 · 글꼴과 텍스트",
+          "kind": "theory"
+        },
+        {
+          "id": "css-s14",
+          "role": "하위 개념",
+          "name": "14장 · 중첩 · 레이어 · 스코프",
+          "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
+        }
+      ]
+    },
+    "css-s1": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s2": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s3": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s4": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s5": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s6": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s7": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s8": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s9": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s10": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s11": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s12": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s13": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "css-s14": {
+      "left": [
+        {
+          "id": "css",
+          "role": "상위 개념",
+          "name": "CSS",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "t-isolated": {
       "left": [
         {
@@ -21165,6 +22008,65 @@ export const sheetIndex: {
       "render",
       "render-s12"
     ],
+    "css": [
+      "css"
+    ],
+    "css-s1": [
+      "css",
+      "css-s1"
+    ],
+    "css-s2": [
+      "css",
+      "css-s2"
+    ],
+    "css-s3": [
+      "css",
+      "css-s3"
+    ],
+    "css-s4": [
+      "css",
+      "css-s4"
+    ],
+    "css-s5": [
+      "css",
+      "css-s5"
+    ],
+    "css-s6": [
+      "css",
+      "css-s6"
+    ],
+    "css-s7": [
+      "css",
+      "css-s7"
+    ],
+    "css-s8": [
+      "css",
+      "css-s8"
+    ],
+    "css-s9": [
+      "css",
+      "css-s9"
+    ],
+    "css-s10": [
+      "css",
+      "css-s10"
+    ],
+    "css-s11": [
+      "css",
+      "css-s11"
+    ],
+    "css-s12": [
+      "css",
+      "css-s12"
+    ],
+    "css-s13": [
+      "css",
+      "css-s13"
+    ],
+    "css-s14": [
+      "css",
+      "css-s14"
+    ],
     "t-isolated": [
       "withy",
       "t-isolated"
@@ -21217,7 +22119,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 267"
+      "meta": "낱말 291"
     },
     "algo": {
       "meta": "챕터 1"
@@ -22301,6 +23203,52 @@ export const sheetIndex: {
       "clickable": true
     },
     "render-s12": {
+      "clickable": true
+    },
+    "css": {
+      "clickable": true,
+      "meta": "챕터 14"
+    },
+    "css-s1": {
+      "clickable": true
+    },
+    "css-s2": {
+      "clickable": true
+    },
+    "css-s3": {
+      "clickable": true
+    },
+    "css-s4": {
+      "clickable": true
+    },
+    "css-s5": {
+      "clickable": true
+    },
+    "css-s6": {
+      "clickable": true
+    },
+    "css-s7": {
+      "clickable": true
+    },
+    "css-s8": {
+      "clickable": true
+    },
+    "css-s9": {
+      "clickable": true
+    },
+    "css-s10": {
+      "clickable": true
+    },
+    "css-s11": {
+      "clickable": true
+    },
+    "css-s12": {
+      "clickable": true
+    },
+    "css-s13": {
+      "clickable": true
+    },
+    "css-s14": {
       "clickable": true
     },
     "t-isolated": {
