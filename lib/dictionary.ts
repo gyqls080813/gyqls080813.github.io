@@ -742,6 +742,184 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "Vue — vuejs.org 의 가이드와 참고서를 따라 읽은 백여섯 장",
+      from: "vue",
+      entries: [
+        {
+          term: "반응성 (reactivity)과 추적",
+          body: "상태를 읽은 자리를 기록해 두고 그 상태가 바뀌면 기록된 자리만 다시 실행하는 체계. Vue 3는 객체를 Proxy로 감싸 get에서 track, set에서 trigger하고 ref는 .value의 getter·setter가 그 역할. '읽는 순간'에만 기록되므로 구조 분해로 꺼낸 값, await 뒤 읽기, 서버 렌더 중은 기록되지 않는다. 실제로 구조 분해한 값은 바뀌어도 효과가 돌지 않았다.",
+        },
+        {
+          term: "ref 와 reactive",
+          body: "ref(v)는 어떤 값이든 { value }로 감싸 템플릿 최상위에서 풀리고, reactive(obj)는 객체만 깊은 Proxy로 감싼다. reactive의 제한 셋: 원시값 불가(경고), 통째 교체 불가(옛 프록시 끊김), 구조 분해 불가(복사). 그래서 문서는 ref를 주 API로 권한다. 같은 원본엔 같은 프록시(reactive(raw) === reactive(raw)).",
+        },
+        {
+          term: "ref 풀림 (unwrapping)",
+          body: "ref를 .value 없이 쓰게 Vue가 대신 꺼내 주는 규칙. 템플릿의 최상위 바인딩, 깊은 reactive 객체의 프로퍼티, ref 안의 ref에서만 일어나고 템플릿의 중첩 식·배열·Map·shallowReactive 안에서는 안 일어난다. 실제로 {{ obj.id + 1 }}은 '[object Object]1', reactive([ref(5)])[0]은 ref 그대로.",
+        },
+        {
+          term: "다음 틱 (next tick)과 nextTick()",
+          body: "같은 동기 코드의 상태 변경을 모아 한 번에 DOM에 반영하는 시점. 변경 직후 DOM은 옛 값(실제로 '0-0'), await nextTick() 뒤 새 값('2-1'). 같은 틱의 set 셋이 렌더 한 번으로 묶였다. 측정은 nextTick 뒤나 watch flush 'post'에서.",
+        },
+        {
+          term: "computed 의 지연 평가와 캐시",
+          body: "읽을 때 처음 계산하고(생성 직후 runs 0) 의존이 바뀌기 전엔 다시 읽어도 재계산하지 않으며(두 번 읽어도 1) 바뀌면 더럽다고 표시만 해 다음 읽기에 계산한다. 읽기 전용이라 쓰면 'Write operation failed: computed value is readonly'. getter에 부수 효과·원본 변이(sort) 금지.",
+        },
+        {
+          term: "computed 안정성 (3.4+)",
+          body: "computed가 재계산되어도 값이 전과 같으면(Object.is) 의존하는 효과를 깨우지 않는 규칙. 불리언 computed는 n이 네 번 바뀌어도 값이 바뀐 한 번만 효과(2회), 매번 새 객체를 돌려주는 computed는 매번(3회). 객체를 돌려줄 땐 이전 값(getter의 prev 인자)과 비교해 같으면 prev.",
+        },
+        {
+          term: "watch 와 watchEffect",
+          body: "watch는 소스(ref·getter·reactive·배열)를 명시하고 바뀔 때만 콜백(새·옛 값). reactive 소스는 암묵적 deep, getter·ref는 얕음(ref([])의 push 미감지). watchEffect는 즉시 1회 돌고 동기 실행 중 읽은 것을 자동 추적하며 첫 await 전까지만 기록한다(실제로 runs 2에서 멈춤). 옵션 immediate·once(3.4+)·deep(3.5+ 숫자).",
+        },
+        {
+          term: "flush (pre · post · sync)",
+          body: "감시자 콜백이 도는 시점. pre(기본)는 소유 컴포넌트 DOM 갱신 전(DOM 옛 값), post는 갱신 뒤(새 값), sync는 변경 즉시 묶음 없이. 실제로 순서는 sync → 동기 코드 끝 → pre → post. DOM 측정은 post, 배열처럼 여러 번 변이되는 소스에 sync는 피할 것.",
+        },
+        {
+          term: "effectScope 와 onScopeDispose",
+          body: "컴포넌트 밖(스토어·테스트)에서 효과(watch·computed)의 수명을 묶는 장치. scope.run(fn) 안의 효과는 scope.stop()에 전부 멈추고 onScopeDispose가 불린다(실제로 stop 뒤 변경 무시·disposed true). 컴포저블의 정리를 onUnmounted 대신 이것으로 적으면 컴포넌트·스토어 어디서든 동작.",
+        },
+        {
+          term: "shallowRef · markRaw · toRaw",
+          body: "추적 깊이를 조절하는 셋. shallowRef는 .value 교체만 추적(깊은 변경은 triggerRef로 수동), markRaw는 객체를 프록시로 감싸지 말라는 표시(루트만), toRaw는 프록시의 원본. 거대 불변 데이터·외부 라이브러리 인스턴스를 reactive에 넣을 때의 처방이고, toRaw 참조는 보관하지 않는다.",
+        },
+        {
+          term: "customRef",
+          body: "track·trigger를 손에 쥐고 '언제 반응하나'를 직접 정하는 ref 공장. customRef((track, trigger) => ({ get() { track(); … }, set(v) { … trigger() } })). 디바운스 ref가 전형이고 실제로 'a','ab' 연속 쓰기에 watch가 'ab' 한 번만 불렸다.",
+        },
+        {
+          term: "템플릿 식 허용 목록 (globals whitelist)",
+          body: "템플릿 식이 접근할 수 있는 전역은 Math·Date·JSON 등 허용 목록만. window·performance·localStorage는 undefined이고 개발 경고 'Property \"x\" was accessed during render but is not defined on instance.' 식은 _ctx.x로 컴파일되어 인스턴스에서 찾는다. 필요하면 setup에서 꺼내 반환하거나 app.config.globalProperties.",
+        },
+        {
+          term: "디렉티브 (directive)",
+          body: "v-이름:인자.수식어=\"식\" 꼴의 특수 속성. 내장(v-if·v-for·v-model·v-bind·v-on…)과 커스텀(v-focus). 커스텀은 요소 하나의 생명주기 훅 일곱(created → beforeMount → mounted → beforeUpdate → updated → beforeUnmount → unmounted)에 DOM 조작을 매단 것이고 binding에 value·oldValue·arg·modifiers가 온다. 다중 루트 컴포넌트에 걸면 'Runtime directive used on component with non-element root node' 경고.",
+        },
+        {
+          term: "v-on 수식어 순서",
+          body: "수식어는 적은 순서대로 핸들러를 감싸는 코드가 된다. .prevent.self는 먼저 막고 자신인지 검사해 자식 클릭도 막히고, .self.prevent는 자신인지 먼저 검사해 자식은 통과. 실제로 자식 링크 클릭이 전자는 preventDefault 됨·후자는 안 됨. .passive와 .prevent는 함께 쓰지 않는다.",
+        },
+        {
+          term: "v-model 과 요소별 짝",
+          body: "값 바인딩 + 입력 리스너를 한 줄로. text·textarea는 value/input, checkbox·radio는 checked/change, select는 value/change, 컴포넌트는 modelValue/update:modelValue. 초기 value·checked·selected 속성은 무시(진실은 JS 상태). 수식어 .lazy(change) .number(parseFloat, 실패 시 원문: '12abc'→12 'abc'→'abc') .trim.",
+        },
+        {
+          term: "key",
+          body: "v-for 노드와 조건 분기에 '이 노드는 이 항목이다'를 알리는 원시값. 리스트가 바뀌면 key로 옛 노드와 새 항목을 짝지어 재사용·이동·제거를 정한다. 없거나 index면 자리 기준이라 input 값·자식 상태가 옆으로 새고, 바꾸면 새 노드가 된다(실제로 key 변경에 input 값 리셋). v-if/v-else 분기에 같은 key는 컴파일 에러.",
+        },
+        {
+          term: "v-if 와 v-show",
+          body: "v-if는 가상 DOM에서 노드를 빼고 넣어 컴포넌트 수명·state가 함께 사라지고(unmounted 호출), v-show는 트리를 두고 display만 토글해 state가 남는다(실제로 제거됨 vs display:none). 자주 토글이면 v-show, 조건이 잘 안 바뀌면 v-if, DOM은 빼되 state는 두려면 KeepAlive. 같은 요소에 v-if와 v-for는 v-if가 먼저라 변수를 못 읽는다.",
+        },
+        {
+          term: "in-DOM 템플릿 (in-DOM template)",
+          body: "HTML 문서 안에 직접 쓴 템플릿(마운트 컨테이너의 innerHTML). 브라우저 파서를 먼저 거쳐 태그·속성이 소문자가 되고(<MyRow> → <myrow>), 자기 닫힘이 무시되어 <my-row/> 뒤 형제가 그 자식으로 삼켜지고, <table> 안 컴포넌트는 밖으로 끌려 나온다(실제로 전부 확인). kebab-case·닫는 태그·<tr is=\"vue:my-row\">가 처방. SFC·문자열 템플릿엔 해당 없음.",
+        },
+        {
+          term: "props 단방향과 검증",
+          body: "props는 부모 상태의 읽기 전용 투영. 자식이 쓰면 'Set operation on key \"x\" failed: target is readonly.' 경고, 객체 안쪽은 경고 없이 부모까지 바뀌니 피할 것. 선언(type·required·default·validator)은 개발 모드에서 검사되어 'type check failed … Expected Number with value 3, got String with value \"3\"' 같은 경고를 낸다. Boolean은 속성만 있으면 true·없으면 false, [String, Boolean]이면 ''.",
+        },
+        {
+          term: "반응형 props 구조 분해 (3.5+)",
+          body: "const { msg = 'hi' } = defineProps(…)를 컴파일러가 __props.msg로 치환해 반응성을 유지하는 기능(실제로 compileScript 출력에서 확인). 기본값은 구조 분해의 =로 적고 props 선언의 default가 된다. 구조 분해 변수를 watch·컴포저블에 값으로 넘기면 끊기므로 컴파일러가 에러를 낸다: '\"count\" is a destructured prop and should not be passed directly to watch(). Pass a getter () => count instead.'",
+        },
+        {
+          term: "emits 선언과 폴스루",
+          body: "컴포넌트에 건 @click은 emits에 click이 있으면 컴포넌트 이벤트 리스너(emit만 받음), 없으면 폴스루로 루트 요소의 네이티브 리스너가 된다(실제로 선언 시 네이티브 안 옴·미선언 시 네이티브 폴스루). 선언 없이 $emit('click')도 하면 두 번 울린다. 컴포넌트 이벤트는 버블링하지 않는다.",
+        },
+        {
+          term: "defineModel (3.4+)",
+          body: "v-model 계약(modelValue prop + update:modelValue 이벤트)을 한 줄로 선언하고 양방향 ref를 돌려주는 매크로. 실제로 compileScript가 props에 modelValue·modelModifiers, emits에 update:modelValue, const model = useModel(__props, 'modelValue')로 바꿨다. 인자 v-model:title → defineModel('title'), 수식어는 [model, modifiers]. default를 주고 부모가 undefined면 어긋남 경고.",
+        },
+        {
+          term: "폴스루 속성 (fallthrough attributes)",
+          body: "props·emits에 선언되지 않은 속성·리스너. 단일 루트 요소에 자동 적용되어 class·style은 병합(실제로 'base extra'), 리스너는 추가. 루트가 여럿이면 자리가 없어 'Extraneous non-props attributes (class) were passed to component but could not be automatically inherited because component renders fragment or text or teleport root nodes.' 경고. inheritAttrs: false + v-bind=\"$attrs\"로 손으로 둔다. $attrs는 비반응.",
+        },
+        {
+          term: "슬롯 (slot)과 범위 슬롯",
+          body: "부모가 자식 안에 내용을 넘기는 자리. 컴파일되면 { default: () => vnodes, item: (props) => vnodes } 함수 객체라 부모 범위의 클로저이고 자식이 부를 때 평가된다(안 부르면 폴백). 범위 슬롯은 자식이 그 함수에 인자(:user)를 넘겨 데이터가 자식→부모로 간다. 기본 범위 슬롯을 컴포넌트에 직접 두고 이름 슬롯 template을 섞으면 'Mixed v-slot usage…' 컴파일 에러.",
+        },
+        {
+          term: "provide / inject",
+          body: "조상이 provide(key, value)한 것을 자손이 inject(key)로 받는 통로. 기준은 논리 트리(Teleport·슬롯 안에서도 됨. 실제로 확인), setup 중 동기 호출. ref를 넘기면 자손이 반응형으로 갱신되고 보통 값은 스냅샷. 변경은 제공자가 하도록 readonly와 변경 함수를 함께 넘긴다(자손이 readonly에 쓰면 경고). 키는 Symbol(InjectionKey<T>)로 충돌 방지.",
+        },
+        {
+          term: "컴포저블 (composable)",
+          body: "Composition API로 상태 있는 로직을 재사용하는 use* 함수. 관례: 입력은 toValue()로 ref·getter·값을 모두 받고, 출력은 ref들을 담은 plain 객체(reactive를 돌려주면 구조 분해에 끊김), DOM은 onMounted, 정리는 onUnmounted/onScopeDispose, 호출은 setup 안에서 동기로. 믹스인(출처 불명·충돌)과 렌더리스 컴포넌트(인스턴스 비용)를 대체했다.",
+        },
+        {
+          term: "비동기 컴포넌트 (defineAsyncComponent)",
+          body: "컴포넌트를 렌더될 때 로더로 받는 래퍼. 상태 기계: 대기(delay 200ms) → loadingComponent → 도착 또는 실패(errorComponent, timeout). onError(err, retry, fail, attempts)로 재시도. 실제로 'loading…' → 'lazy 도착', 500 응답은 'Failed to fetch dynamically imported module', timeout 50은 'Async component timed out after 50ms.'. Suspense 안에서는 Suspense가 로딩을 맡고(suspensible), 3.5+ SSR은 hydrateOnVisible 등으로 하이드레이션을 미룬다.",
+        },
+        {
+          term: "Transition 의 여섯 클래스",
+          body: "요소가 들어오고 나갈 때 Vue가 프레임 순서로 붙이는 클래스. 들어옴: v-enter-from + v-enter-active(삽입 직전) → 다음 프레임 v-enter-from 제거·v-enter-to 추가 → 끝나면 전부 제거. 나감은 v-leave-* 대칭. 실제로 nextTick 'fade-enter-from fade-enter-active' → rAF2 'fade-enter-active fade-enter-to' → 150ms ''. 자식은 하나, 텍스트만 바뀌면 전환 없음(key 필요), mode='out-in'은 after-leave 뒤 before-enter.",
+        },
+        {
+          term: "TransitionGroup 과 FLIP",
+          body: "리스트 항목마다 들어옴·나감·이동(v-move) 전환을 거는 컴포넌트. key 필수('<TransitionGroup> children must be keyed.'), 래퍼 없음(tag로), mode 없음. 재정렬 때 옛·새 위치 차이를 transform으로 역적용해 전환으로 돌리는 FLIP(실제로 재정렬 직후 전부 list-move). 떠나는 항목은 .x-leave-active { position: absolute }로 흐름에서 빼야 나머지가 바로 move.",
+        },
+        {
+          term: "KeepAlive 와 LRU",
+          body: "동적 컴포넌트를 언마운트 대신 캐시해 돌아오면 복원하는 래퍼(실제로 A:1 유지). include/exclude는 컴포넌트 name과 매칭(SFC는 파일명), max는 LRU로 가장 오래 안 본 인스턴스를 unmounted(실제로 max=2에서 A 퇴출 → A:0). 캐시된 컴포넌트는 mounted/unmounted 대신 activated/deactivated가 돌아 타이머·구독 짝을 거기 둔다.",
+        },
+        {
+          term: "Teleport",
+          body: "자식을 DOM의 다른 자리(to)에 그리되 컴포넌트 트리의 자리는 두는 래퍼. 부모 자리엔 <!--teleport start--><!--teleport end--> 주석만 남고(실제로), 안에서 inject·props·emit은 그대로(논리 트리). 타깃은 마운트 전에 있어야('Failed to locate Teleport target…' 경고, 3.5+ defer), disabled로 제자리 토글, SSR은 ctx.teleports에 모여 body 타깃은 피한다.",
+        },
+        {
+          term: "Suspense 의 비동기 의존",
+          body: "Suspense가 기다리는 것은 둘만: async setup(<script setup>의 최상위 await 포함)과 비동기 컴포넌트 로딩. onMounted 안 fetch나 Router 지연 라우트는 모른다. 전부 끝나면 resolve(이벤트 순서 pending → fallback → resolve), 루트 교체만 다시 pending, 에러는 잡지 않아 부모 onErrorCaptured. 실험적이고 서버 렌더는 기다려 완성 HTML을 낸다(실제로).",
+        },
+        {
+          term: "요청 간 상태 오염 (cross-request state pollution)",
+          body: "SSR 서버의 모듈 수준 reactive·ref는 모든 요청이 공유해 A 사용자의 상태가 B의 HTML에 들어가는 문제. 실제로 모듈 reactive가 요청 1에서 1, 요청 2에서 2로 누적. 처방은 요청마다 앱·스토어를 만들어 provide하거나 Pinia(createPinia를 요청마다). 브라우저는 사용자 하나라 모듈 범위가 앱 범위와 같아 문제없다.",
+        },
+        {
+          term: "하이드레이션 불일치 (hydration mismatch)",
+          body: "서버가 보낸 HTML과 클라이언트 첫 렌더가 다를 때. 개발 모드는 'Hydration text content mismatch on …' 경고와 'Hydration completed but contains mismatches.'를 내고 클라이언트 값으로 고친다(실제로). 원인은 시간대·난수·window 분기·브라우저가 고친 잘못된 HTML 중첩. 불가피하면 3.5+ data-allow-mismatch=\"text\"를 그 요소에(실제로 경고 없음).",
+        },
+        {
+          term: "서버에 없는 셋",
+          body: "SSR에서 같은 코드가 다르게 도는 이유. DOM이 없어 window·마운트 훅·디렉티브 DOM 훅이 없고(실제로 돈 훅은 serverPrefetch만), 반응성 추적이 꺼져 watch·computed 갱신이 없고(실제로 watchEffect runs 1), 사용자 격리가 없어 모듈 전역이 공유된다. 코드를 공통(setup 동기·템플릿) / 서버 전용(onServerPrefetch·getSSRProps) / 브라우저 전용(onMounted 이후)으로 가른다.",
+        },
+        {
+          term: "패치 플래그 (patch flag)와 정적 캐시",
+          body: "컴파일러가 동적 vnode에 붙이는 비트 플래그(1 TEXT · 2 CLASS · 8 PROPS · 128 KEYED_FRAGMENT · 512 NEED_PATCH)로 런타임이 그것만 비교하고, 정적 노드는 -1 CACHED로 한 번 만들어 재사용한다(실제로 컴파일 출력에서 확인). v-if·v-for는 블록을 만들어 동적 자손만 평탄 배열로 추적. 손으로 쓴 h()·JSX에는 이 정보가 없어 전체 diff.",
+        },
+        {
+          term: "h() 와 렌더 함수",
+          body: "h(type, props?, children?)로 vnode를 직접 만드는 함수. 컴포넌트 자식은 슬롯 함수 객체(props 자리 null), 디렉티브는 withDirectives, 수식어는 withModifiers, 전역 등록 컴포넌트는 resolveComponent(없으면 'Failed to resolve component' 경고와 이름 문자열). setup은 vnode가 아니라 '함수'를 돌려줘야 갱신된다. 이 블로그의 측정 코드가 전부 h()였다.",
+        },
+        {
+          term: "<script setup> 매크로",
+          body: "import 없이 쓰는 컴파일러 매크로 defineProps·defineEmits·defineModel·defineExpose·defineOptions·defineSlots. 컴파일러가 전부 지우고 props·emits 선언과 __props·__expose·useModel로 바꾼다(실제로 compileScript 출력). 최상위에서 정적으로 읽혀야 하고 인자는 모듈 스코프로 끌어올려져 setup 로컬 변수를 못 본다. 최상위 await는 async setup이 되어 Suspense 필수.",
+        },
+        {
+          term: "scoped CSS 와 :deep · :slotted · :global",
+          body: "<style scoped>는 요소에 data-v-해시 속성을 붙이고 선택자마다 [data-v-해시]를 붙여 범위를 만든다(실제로 .a → .a[data-v-abc123]). 자식 루트는 부모·자식 둘 다의 영향. 자식 안쪽은 :deep(.b) → .a[data-v-abc123] .b, 슬롯 내용은 :slotted(div) → div[data-v-abc123-s], 전역 한 줄은 :global. 요소 선택자(p)는 모든 p를 속성 검사해 느리니 클래스로.",
+        },
+        {
+          term: "v-bind() in CSS",
+          body: "<style>의 값 자리에 컴포넌트 상태를 넣는 SFC 기능. color: v-bind(color), 식은 따옴표 v-bind('theme.color'). 컴파일러가 var(--해시-이름)으로 바꾸고(실제로 var(--abc123-size)) 런타임 useCssVars가 루트 요소에 인라인 CSS 변수를 넣어 반응형으로 갱신한다. CSSProperties 타입 증강 없이 동적 스타일을 CSS에 둘 수 있다.",
+        },
+        {
+          term: "useId (3.5+)",
+          body: "앱 안 고유하고 서버·클라이언트에서 같은 id 문자열. label for/input id·aria-describedby 연결용. 실제로 'v-0' 'v-1', app.config.idPrefix 'app'이면 'app-0', 서버도 'v-0'이라 하이드레이션이 맞는다. 같은 컴포넌트에서 여러 번 부르면 다른 id, computed 안에서 부르지 말 것.",
+        },
+        {
+          term: "점진적 프레임워크와 사용 방법 스펙트럼",
+          body: "스크립트 하나(CDN 전역 빌드로 서버 HTML 강화) · 웹 컴포넌트(defineCustomElement) · SPA(create-vue) · SSR(Nuxt) · SSG(VitePress) · 데스크톱·모바일·터미널(커스텀 렌더러)까지 같은 Vue. 자리를 정하는 변수 셋은 HTML을 누가 언제 만드나·상호작용 양·실행 환경. 이 블로그는 두 끝(esm-browser 빌드 576KB로 빌드 없이, server-renderer로 SSR)에서 측정했다.",
+        },
+        {
+          term: "컴파일 타임 플래그와 운영 빌드",
+          body: "__VUE_OPTIONS_API__(true) · __VUE_PROD_DEVTOOLS__(false) · __VUE_PROD_HYDRATION_MISMATCH_DETAILS__(false, 3.4+)를 빌드 때 상수로 치환해 압축기가 코드를 빼게 하는 것. process.env.NODE_ENV 치환과 같은 메커니즘이고 esm-bundler 빌드에서만. 개발 빌드는 경고·검증을 포함해 575,931바이트, 운영은 177,765바이트(실제로). 운영에서 빠진 검사는 개발·CI에서 잡고 에러는 errorHandler로 보고한다.",
+        },
+      ],
+    },
   ],
 };
 
