@@ -1541,6 +1541,72 @@ export const sheetIndex: {
             "label": "TypeScript 7.0 (Go 네이티브)"
           }
         ]
+      },
+      {
+        "id": "git-pro-git-과-github-문서로-세운-일곱-단계의-낱말",
+        "label": "Git — Pro Git 과 GitHub 문서로 세운 일곱 단계의 낱말",
+        "children": [
+          {
+            "id": "세-개의-트리-head-index-working-directory",
+            "label": "세 개의 트리 (HEAD · Index · Working Directory)"
+          },
+          {
+            "id": "블롭-트리-커밋-객체",
+            "label": "블롭 · 트리 · 커밋 객체"
+          },
+          {
+            "id": "브랜치-이름표-41바이트-파일",
+            "label": "브랜치 = 이름표 (41바이트 파일)"
+          },
+          {
+            "id": "도달-가능성-reachability",
+            "label": "도달 가능성 (reachability)"
+          },
+          {
+            "id": "범위-문법-과",
+            "label": "범위 문법 (.. 과 ...)"
+          },
+          {
+            "id": "reset-세-가지와-wd-안전성",
+            "label": "reset 세 가지와 WD 안전성"
+          },
+          {
+            "id": "reflog-와-gc-기한",
+            "label": "reflog 와 gc 기한"
+          },
+          {
+            "id": "원격-추적-브랜치-origin-x-와-upstream",
+            "label": "원격 추적 브랜치 (origin/x)와 upstream"
+          },
+          {
+            "id": "non-fast-forward-거절",
+            "label": "non-fast-forward 거절"
+          },
+          {
+            "id": "fast-forward-병합-커밋-squash",
+            "label": "fast-forward · 병합 커밋 · squash"
+          },
+          {
+            "id": "충돌-conflict-과-표시",
+            "label": "충돌 (conflict)과 표시"
+          },
+          {
+            "id": "rebase-와-the-perils-of-rebasing",
+            "label": "rebase 와 'The Perils of Rebasing'"
+          },
+          {
+            "id": "revert-와-m-1",
+            "label": "revert 와 -m 1"
+          },
+          {
+            "id": "stash",
+            "label": "stash"
+          },
+          {
+            "id": "pr-의-세-버튼과-로컬-명령",
+            "label": "PR 의 세 버튼과 로컬 명령"
+          }
+        ]
       }
     ],
     "algo-bruteforce": [
@@ -11581,6 +11647,18 @@ export const sheetIndex: {
       {
         "id": "연습은-버려도-되는-저장소에서",
         "label": "연습은 버려도 되는 저장소에서"
+      },
+      {
+        "id": "실제로-돌려-보면-버려도-되는-저장소에서-전부-쳐-봤다",
+        "label": "실제로 돌려 보면: 버려도 되는 저장소에서 전부 쳐 봤다"
+      },
+      {
+        "id": "일곱-단계가-각각-어떤-메시지를-설명하는가",
+        "label": "일곱 단계가 각각 어떤 메시지를 설명하는가"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       }
     ],
     "git-areas": [
@@ -11595,6 +11673,26 @@ export const sheetIndex: {
       {
         "id": "두-단계로-나눈-이유는-골라-담기-위해서",
         "label": "두 단계로 나눈 이유는 골라 담기 위해서"
+      },
+      {
+        "id": "실제로-돌려-보면-status-s-의-두-칸과-diff-두-가지",
+        "label": "실제로 돌려 보면: status -s 의 두 칸과 diff 두 가지"
+      },
+      {
+        "id": "커밋-안을-열어-보면-트리와-블롭을-가리키는-메타데이터",
+        "label": "커밋 안을 열어 보면: 트리와 블롭을 가리키는 메타데이터"
+      },
+      {
+        "id": "문제가-나는-경우-담기와-무시",
+        "label": "문제가 나는 경우: 담기와 무시"
+      },
+      {
+        "id": "문제의-구조-세-공간은-세-개의-트리-다",
+        "label": "문제의 구조: 세 공간은 '세 개의 트리' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       },
       {
         "id": "확인-질문",
@@ -11619,6 +11717,26 @@ export const sheetIndex: {
         "label": "브랜치를 지워도 커밋은 남는다"
       },
       {
+        "id": "실제로-돌려-보면-이름표-파일-head-파일-떨어진-head",
+        "label": "실제로 돌려 보면: 이름표 파일, HEAD 파일, 떨어진 HEAD"
+      },
+      {
+        "id": "log-의-범위-문법-과-과-left-right",
+        "label": "log 의 범위 문법: .. 과 ... 과 --left-right"
+      },
+      {
+        "id": "실제로-돌려-보면-d-는-닿는지를-보고-거절한다",
+        "label": "실제로 돌려 보면: -d 는 닿는지를 보고 거절한다"
+      },
+      {
+        "id": "문제의-구조-그래프-위의-도달-하나로-전부-설명된다",
+        "label": "문제의 구조: 그래프 위의 '도달' 하나로 전부 설명된다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
         "id": "확인-질문",
         "label": "확인 질문"
       }
@@ -11639,6 +11757,30 @@ export const sheetIndex: {
       {
         "id": "reflog-내-컴퓨터의-이동-기록",
         "label": "reflog — 내 컴퓨터의 이동 기록"
+      },
+      {
+        "id": "실제로-돌려-보면-reset-세-가지가-멈추는-자리",
+        "label": "실제로 돌려 보면: reset 세 가지가 멈추는 자리"
+      },
+      {
+        "id": "실제로-돌려-보면-reflog-로-되살리고-gc-가-지우는-조건",
+        "label": "실제로 돌려 보면: reflog 로 되살리고, gc 가 지우는 조건"
+      },
+      {
+        "id": "amend-와-revert-고쳐-쓰기와-덧쓰기",
+        "label": "amend 와 revert: 고쳐 쓰기와 덧쓰기"
+      },
+      {
+        "id": "문제가-나는-경우-어느-되돌리기인가",
+        "label": "문제가 나는 경우: 어느 되돌리기인가"
+      },
+      {
+        "id": "문제의-구조-커밋된-것은-거의-항상-돌아오고-커밋-안-된-것은-안-돌아온다",
+        "label": "문제의 구조: 커밋된 것은 거의 항상 돌아오고, 커밋 안 된 것은 안 돌아온다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       },
       {
         "id": "확인-질문",
@@ -11663,6 +11805,26 @@ export const sheetIndex: {
         "label": "지우는 일도 따로따로다"
       },
       {
+        "id": "실제로-돌려-보면-upstream-이-없을-때의-두-문구와-git-config",
+        "label": "실제로 돌려 보면: upstream 이 없을 때의 두 문구와 .git/config"
+      },
+      {
+        "id": "실제로-돌려-보면-거절되는-push-와-pull-rebase",
+        "label": "실제로 돌려 보면: 거절되는 push 와 pull --rebase"
+      },
+      {
+        "id": "실제로-돌려-보면-원격-브랜치가-지워진-뒤",
+        "label": "실제로 돌려 보면: 원격 브랜치가 지워진 뒤"
+      },
+      {
+        "id": "문제의-구조-저장소가-셋이고-이름표는-저장소마다-따로-있다",
+        "label": "문제의 구조: 저장소가 셋이고, 이름표는 저장소마다 따로 있다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
         "id": "확인-질문",
         "label": "확인 질문"
       }
@@ -11685,6 +11847,30 @@ export const sheetIndex: {
         "label": "rebase — 내 커밋을 상대 끝으로 옮겨 다시 쌓기"
       },
       {
+        "id": "실제로-돌려-보면-충돌의-모양과-status-diff-cc",
+        "label": "실제로 돌려 보면: 충돌의 모양과 status, diff --cc"
+      },
+      {
+        "id": "실제로-돌려-보면-fast-forward-no-ff-squash",
+        "label": "실제로 돌려 보면: fast-forward · --no-ff · --squash"
+      },
+      {
+        "id": "실제로-돌려-보면-rebase-는-새-커밋을-만들고-충돌은-커밋-단위로-멈춘다",
+        "label": "실제로 돌려 보면: rebase 는 새 커밋을 만들고, 충돌은 커밋 단위로 멈춘다"
+      },
+      {
+        "id": "문제가-나는-경우-합치기-전후",
+        "label": "문제가 나는 경우: 합치기 전후"
+      },
+      {
+        "id": "문제의-구조-합치기는-셋-다-같은-스냅샷-을-만들고-이력-모양만-다르다",
+        "label": "문제의 구조: 합치기는 셋 다 '같은 스냅샷' 을 만들고 이력 모양만 다르다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
         "id": "확인-질문",
         "label": "확인 질문"
       }
@@ -11705,6 +11891,26 @@ export const sheetIndex: {
       {
         "id": "병합-뒤-로컬에서-할-일",
         "label": "병합 뒤 로컬에서 할 일"
+      },
+      {
+        "id": "실제로-돌려-보면-병합-버튼-셋을-로컬-명령으로",
+        "label": "실제로 돌려 보면: 병합 버튼 셋을 로컬 명령으로"
+      },
+      {
+        "id": "pr-의-diff-는-세-점-비교다",
+        "label": "PR 의 diff 는 세 점(...) 비교다"
+      },
+      {
+        "id": "github-가-더하는-것-보호-브랜치-초안-충돌-해결-간접-병합",
+        "label": "GitHub 가 더하는 것: 보호 브랜치 · 초안 · 충돌 해결 · 간접 병합"
+      },
+      {
+        "id": "문제의-구조-github-는-git-의-원격-저장소-그-위의-대화다",
+        "label": "문제의 구조: GitHub 는 git 의 원격 저장소 + 그 위의 대화다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       },
       {
         "id": "확인-질문",
@@ -11731,6 +11937,30 @@ export const sheetIndex: {
       {
         "id": "무언가-사라진-것-같을-때",
         "label": "무언가 사라진 것 같을 때"
+      },
+      {
+        "id": "실제로-돌려-보면-stash-가-담는-것과-돌려주는-것",
+        "label": "실제로 돌려 보면: stash 가 담는 것과 돌려주는 것"
+      },
+      {
+        "id": "실제로-돌려-보면-cherry-pick-과-revert-가-멈추는-곳",
+        "label": "실제로 돌려 보면: cherry-pick 과 revert 가 멈추는 곳"
+      },
+      {
+        "id": "실제로-돌려-보면-엉뚱한-브랜치에-커밋했을-때의-두-명령",
+        "label": "실제로 돌려 보면: 엉뚱한 브랜치에 커밋했을 때의 두 명령"
+      },
+      {
+        "id": "상황-먼저-볼-것-명령",
+        "label": "상황 → 먼저 볼 것 → 명령"
+      },
+      {
+        "id": "문제의-구조-당황하는-순간의-세-질문",
+        "label": "문제의 구조: 당황하는 순간의 세 질문"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "i18n": [
@@ -13354,6 +13584,12 @@ export const sheetIndex: {
           "id": "ts",
           "role": "낱말이 나온 곳",
           "name": "TypeScript",
+          "kind": "theory"
+        },
+        {
+          "id": "git",
+          "role": "낱말이 나온 곳",
+          "name": "Git",
           "kind": "theory"
         }
       ],
@@ -18434,6 +18670,12 @@ export const sheetIndex: {
           "role": "하위 개념",
           "name": "실전 상황 대처",
           "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
         }
       ]
     },
@@ -20975,7 +21217,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 252"
+      "meta": "낱말 267"
     },
     "algo": {
       "meta": "챕터 1"

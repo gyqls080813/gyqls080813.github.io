@@ -1094,6 +1094,72 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "Git — Pro Git 과 GitHub 문서로 세운 일곱 단계의 낱말",
+      from: "git",
+      entries: [
+        {
+          term: "세 개의 트리 (HEAD · Index · Working Directory)",
+          body: "Pro Git 의 Reset Demystified 가 세 공간을 부르는 이름. HEAD 는 마지막 커밋의 스냅샷(다음 커밋의 부모), Index 는 다음 커밋으로 제안된 스냅샷(스테이징), Working Directory 는 모래밭. add 는 WD→Index, commit 은 Index→HEAD. status -s 의 두 칸(왼쪽 Index, 오른쪽 WD)과 diff(Index↔WD)·diff --staged(HEAD↔Index)가 이 셋을 비교한 것. 실제로 add 뒤 또 고치면 MM.",
+        },
+        {
+          term: "블롭 · 트리 · 커밋 객체",
+          body: "git 저장소의 세 객체. 블롭은 파일 내용(이름 없음), 트리는 디렉터리 항목(모드·종류·해시·이름), 커밋은 트리 하나·부모·작성자·메시지. 전부 내용의 SHA-1 로 이름이 붙어 같은 내용은 어디서나 같은 해시(echo 'a' → 7898192…). 커밋은 변경분이 아니라 스냅샷을 가리키고, 안 바뀐 파일은 같은 블롭을 다시 가리킨다. git cat-file -p 로 열어 본다.",
+        },
+        {
+          term: "브랜치 = 이름표 (41바이트 파일)",
+          body: ".git/refs/heads/<이름> 에 커밋 해시 한 줄(40자 + 줄바꿈). 브랜치를 만드는 일은 파일 하나를 쓰는 일이고 커밋하면 그 파일의 해시가 바뀐다. 브랜치에 부모는 없다 — 부모가 있는 것은 커밋. HEAD 는 .git/HEAD 의 'ref: refs/heads/master' 로 '어느 이름표 위에 있나', 해시가 직접 들어가면 detached HEAD(실제로 'HEAD detached at 5fd1dc1').",
+        },
+        {
+          term: "도달 가능성 (reachability)",
+          body: "어느 이름표(브랜치·태그·원격 추적·reflog)에서든 부모 사슬을 따라 갈 수 있는가. log 가 보여 주는 것, branch -d 가 지워 주는 것(끝 커밋이 현재 브랜치에서 닿아야), push 가 보내는 것(브랜치에서 닿되 원격에 없는 것), gc 가 남기는 것이 전부 이 하나의 기준. 이름표를 떼면 커밋은 '존재하되 도달 불가'가 된다.",
+        },
+        {
+          term: "범위 문법 (.. 과 ...)",
+          body: "A..B 는 B 에서 닿고 A 에서는 안 닿는 커밋(PR 의 Commits 탭 = base..head, push 가 보낼 것 = origin/x..HEAD). A...B 는 한쪽에서만 닿는 전부(--left-right 로 < > 표시). diff 에서는 뜻이 다르다 — A..B 는 두 끝 비교, A...B 는 merge base 와 B 비교(PR 의 Files changed). 실제로 base 가 파일을 더한 뒤 두 점은 그 파일을 '삭제'로 보였다.",
+        },
+        {
+          term: "reset 세 가지와 WD 안전성",
+          body: "reset 은 (1) 이름표 이동 → --soft 는 여기서 멈춤 (2) Index 를 HEAD 처럼 → --mixed(기본) 멈춤 (3) WD 까지 → --hard. 실제로 --soft 뒤 'A  x.txt', --mixed 뒤 '?? x.txt', --hard 뒤 파일 없음. 'WD Safe?' 가 NO 인 것은 --hard 와 checkout <paths> 둘뿐. 경로를 주는 reset <file> 은 이름표를 옮기지 않고 그 파일만 unstage (= restore --staged).",
+        },
+        {
+          term: "reflog 와 gc 기한",
+          body: "HEAD(와 각 브랜치)의 이동 기록. 지운 브랜치·잘못한 reset --hard 의 커밋 해시가 'commit: x' 로 남아 git branch <name> <sha> 로 되살린다. 로컬 전용(push 안 됨). 기본 보존은 도달 가능 항목 90일(gc.reflogExpire) · 도달 불가 30일(gc.reflogExpireUnreachable), 그 뒤 gc 가 치운다 — 실제로 expire + gc --prune=now 뒤 'could not get object info'. 마지막 길은 fsck --lost-found 의 dangling commit.",
+        },
+        {
+          term: "원격 추적 브랜치 (origin/x)와 upstream",
+          body: "refs/remotes/origin/x — 마지막으로 원격과 통신했을 때 원격 x 가 가리키던 커밋의 기록. 읽기 전용이라 거기서 커밋 못 함. fetch 가 이것만 옮기고 로컬 브랜치는 안 옮긴다('fetch 했는데 뒤처짐'). upstream 은 로컬 브랜치의 짝(.git/config 의 branch.x.remote/merge) — 없으면 'fatal: The current branch x has no upstream branch.' · 'There is no tracking information for the current branch.' branch -vv 의 ahead/behind 는 마지막 fetch 기준.",
+        },
+        {
+          term: "non-fast-forward 거절",
+          body: "원격의 이름표가 내 이름표의 조상이 아닐 때(동료가 먼저 push) push 가 '! [rejected] master -> master (fetch first)' 로 막히는 것. 처방은 pull --rebase(내 커밋을 원격 끝으로) 또는 merge 뒤 push. --force-with-lease 는 원격이 내가 본 그대로일 때만 덮어쓰고, 그새 바뀌면 '(stale info)' 로 거절 — 남의 커밋을 지우는 사고를 막는다.",
+        },
+        {
+          term: "fast-forward · 병합 커밋 · squash",
+          body: "상대가 내 후손이면 이름표만 이동(Updating a..b / Fast-forward). 양쪽에 커밋이 있으면 merge base 와 두 끝의 3-way 병합으로 부모 둘인 병합 커밋(Merge made by the 'ort' strategy — 2.55 기본 전략). --no-ff 는 후손이어도 병합 커밋을 만든다(GitHub 의 Create a merge commit). --squash 는 상대 변경을 한 덩어리로 Index 에 담고 멈춰(not updating HEAD) 부모 하나인 커밋이 되고, 원래 커밋은 닿지 않아 branch -d 가 거절한다(GitHub 의 Squash and merge 뒤 보는 것).",
+        },
+        {
+          term: "충돌 (conflict)과 표시",
+          body: "merge base 기준으로 같은 자리를 양쪽이 다르게 고쳤거나 한쪽은 고치고 한쪽은 지웠을 때만. 'CONFLICT (content): Merge conflict in a.txt' · 'Automatic merge failed; fix conflicts and then commit the result.' status --short 는 UU. 파일에 <<<<<<< HEAD / ======= / >>>>>>> topic, diff3 스타일이면 ||||||| base 도. 그때의 git diff 는 결합 diff(diff --cc, @@@). 풀고 add → commit(merge) 또는 rebase --continue, 그만두면 --abort(진행 중이 아니면 'There is no merge to abort (MERGE_HEAD missing).').",
+        },
+        {
+          term: "rebase 와 'The Perils of Rebasing'",
+          body: "내 커밋을 상대 끝에서 하나씩 다시 만드는 것 — 같은 내용, 새 해시(실제로 12686bd → 62e7c36), 한 줄 이력. 충돌은 커밋 단위로 멈춘다('error: could not apply d61f7a0…'). Pro Git 의 굵은 규칙: '내 저장소 밖에 있고 남이 그 위에 작업했을 수 있는 커밋은 rebase 하지 마라'. 로컬 커밋만, push 는 --force-with-lease. rebase -i 는 pick·reword·edit·squash·fixup·drop 으로 이력을 다듬는다.",
+        },
+        {
+          term: "revert 와 -m 1",
+          body: "반대 변경을 새 커밋으로 쌓아 공유 이력을 보존하는 되돌리기. 병합 커밋은 어느 부모 기준인지 -m 1 이 필요하다('is a merge but no -m option was given'). 병합을 revert 한 뒤 같은 브랜치를 다시 merge 하면 'Already up to date' 라 그 revert 를 다시 revert 해야 한다(Advanced Merging). push 된 커밋의 되돌리기는 reset 이 아니라 이것.",
+        },
+        {
+          term: "stash",
+          body: "추적 파일의 수정과 담긴 것을 스택에 치우고 WD 를 깨끗하게. untracked 는 -u, ignored 까지는 --all. pop 은 적용 뒤 제거하고 담겼던 것은 기본으로 '수정' 상태로 돌아온다(--index 면 유지). 실제로 'Saved working directory and index state WIP on master: …' → stash@{0}. git clean 은 untracked 를 지우고 되찾을 수 없으니 -n 으로 먼저.",
+        },
+        {
+          term: "PR 의 세 버튼과 로컬 명령",
+          body: "Create a merge commit = merge --no-ff(부모 둘, 로컬 -d OK). Squash and merge = merge --squash + commit(부모 하나, 원래 커밋이 닿지 않아 -d 거절 → -D). Rebase and merge = base 끝에 다시 만들어 ff(해시 변경, 커미터 정보 변경). GitHub 문서: squash 는 수명 짧은 브랜치에, 같은 head 를 계속 쓰면 같은 충돌 반복. PR 은 git 이 아니라 GitHub 의 기능이고 diff 는 세 점(merge base 기준).",
+        },
+      ],
+    },
   ],
 };
 
