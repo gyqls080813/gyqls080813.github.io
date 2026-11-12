@@ -1,8 +1,5 @@
 import type { GraphNodeData } from "@/components/graph/types";
-import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
-
-/* 이론과 생각이 같은 문법(허브 → 챕터)을 쓰므로 집계도 한 목록에서 본다 */
-const clusters = [...theoryClusters, ...ideaClusters];
+import { allClusters, fullGraphNodes } from "./graphData";
 import { getIdea } from "./ideas";
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
@@ -45,7 +42,8 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
     const words = dict.sections.reduce((sum, section) => sum + section.entries.length, 0);
     return { ...node, ...openable, meta: `낱말 ${words}` };
   }
-  const cluster = clusters.find((candidate) => candidate.hub === node.id);
+  /* 이론과 생각이 같은 문법(허브 → 챕터)을 쓰므로 집계도 한 목록에서 본다 */
+  const cluster = allClusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
     /* TIL 아래는 챕터가 아니라 날짜다 — 세는 것이 다르면 이름도 달라야 한다 */
     const unit = node.id === "til" ? "기록" : "챕터";

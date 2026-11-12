@@ -28,9 +28,7 @@ export function topologicalSort(
   edges: readonly GraphEdge[],
 ): string[] | null {
   const known = new Set(nodeIds);
-  const relevant = edges.filter(
-    (edge) => known.has(edge.source) && known.has(edge.target),
-  );
+  const relevant = edges.filter((edge) => known.has(edge.source) && known.has(edge.target));
 
   const adjacency = buildAdjacency(relevant);
   const inDegree = new Map<string, number>(nodeIds.map((id) => [id, 0]));
@@ -57,18 +55,12 @@ export function topologicalSort(
 }
 
 /** 이 노드를 만드는 데 필요한 노드들(자신 포함) — 상류. */
-export function ancestorsOf(
-  nodeId: string,
-  edges: readonly GraphEdge[],
-): Set<string> {
+export function ancestorsOf(nodeId: string, edges: readonly GraphEdge[]): Set<string> {
   return reachable(nodeId, edges, "up");
 }
 
 /** 이 노드의 결과가 흘러가는 곳(자신 포함) — 하류. */
-export function descendantsOf(
-  nodeId: string,
-  edges: readonly GraphEdge[],
-): Set<string> {
+export function descendantsOf(nodeId: string, edges: readonly GraphEdge[]): Set<string> {
   return reachable(nodeId, edges, "down");
 }
 
@@ -77,13 +69,29 @@ export function descendantsOf(
  * 「이 결과가 어디서 왔고 어디로 가는가」가 한 갈래다. 옆으로 뻗은 다른
  * 갈래는 이 노드와 상관이 없으므로 여기 들어오지 않는다.
  */
-export function lineageOf(
-  nodeId: string,
-  edges: readonly GraphEdge[],
-): Set<string> {
+export function lineageOf(nodeId: string, edges: readonly GraphEdge[]): Set<string> {
   const found = ancestorsOf(nodeId, edges);
   for (const id of descendantsOf(nodeId, edges)) found.add(id);
   return found;
+}
+
+/**
+ * 부모 지도를 따라 위로 — 가까운 부모부터 뿌리까지 (자신은 빼고).
+ *
+ * 계층이 간선이 아니라 "누가 누구의 부모인가" 표로 있을 때 쓴다(개념의 허브,
+ * 틀을 감싸는 틀). 고리가 있어도 한 번 본 것에서 멈춘다 — 데이터가 잘못돼도
+ * 화면이 멎지는 않아야 한다.
+ */
+export function ancestorChain(id: string, parentOf: ReadonlyMap<string, string>): string[] {
+  const chain: string[] = [];
+  const seen = new Set<string>([id]);
+  let cursor = parentOf.get(id);
+  while (cursor !== undefined && !seen.has(cursor)) {
+    seen.add(cursor);
+    chain.push(cursor);
+    cursor = parentOf.get(cursor);
+  }
+  return chain;
 }
 
 function reachable(
@@ -93,8 +101,7 @@ function reachable(
 ): Set<string> {
   const next = new Map<string, string[]>();
   for (const edge of edges) {
-    const [from, to] =
-      direction === "up" ? [edge.target, edge.source] : [edge.source, edge.target];
+    const [from, to] = direction === "up" ? [edge.target, edge.source] : [edge.source, edge.target];
     const known = next.get(from);
     if (known) known.push(to);
     else next.set(from, [to]);

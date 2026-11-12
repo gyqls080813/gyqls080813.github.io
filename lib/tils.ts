@@ -1,4 +1,4 @@
-import { tilEntries } from "./graphData";
+import { tilEntries } from "./catalog";
 
 /**
  * TIL 시트의 내용.
@@ -7,7 +7,7 @@ import { tilEntries } from "./graphData";
  * 문서를 읽고 정리한 것이라 어디서 읽었는지가 중요하고, 이쪽은 그날 있었던
  * 일이라 언제였는지가 중요하다.
  *
- * 이름과 날짜는 여기 적지 않는다 — 그래프의 tilEntries가 이미 갖고 있고,
+ * 이름과 날짜는 여기 적지 않는다 — 요약 목록(lib/catalog)의 tilEntries가 이미 갖고 있고,
  * 두 곳에 적으면 언젠가 어긋난다. getTil이 둘을 합쳐서 내준다.
  */
 export type TilBlock = {

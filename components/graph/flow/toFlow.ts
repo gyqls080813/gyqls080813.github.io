@@ -1,13 +1,24 @@
-import type { Edge, Node } from "@xyflow/react";
-import { LAYOUT_GAP, layoutTree, type LayoutItem } from "@/lib/layout";
-import type {
-  GraphBackdropData,
-  GraphEdgeData,
-  GraphNodeData,
-  NodeKind,
-} from "../types";
+import type { Edge } from "@xyflow/react";
+import { LAYOUT_GAP, layoutTree, type LayoutItem, type TreeLayout } from "@/lib/layout";
+import { descendantsOf } from "@/lib/topology";
+import { isDefined } from "@/lib/util";
+import type { GraphBackdropData, GraphEdgeData, GraphNodeData, NodeKind } from "../types";
 import type { BackdropFlowNode } from "./BackdropNode";
-import { cardWidth, type KnowledgeFlowNode } from "./KnowledgeNode";
+import type { KnowledgeFlowNode } from "./KnowledgeNode";
+import {
+  BACKDROP_PAD,
+  BACKDROP_TITLE,
+  cardHeight,
+  cardWidth,
+  collapsedWidth,
+  type GraphFlowNode,
+} from "./sizes";
+
+/**
+ * 그래프 계산 — 처음 배치(buildFlowGraph)와 "정렬"·접기 뒤의 재배치(KnowledgeGraph)가
+ * 같은 함수를 쓴다. 둘이 다른 것은 크기와 접힘을 어디서 읽는가뿐이라 그것만 인자로 받는다.
+ * 한쪽만 고치면 처음 화면과 정렬 뒤 화면이 다른 규칙으로 서게 된다.
+ */
 
 /* 선은 한 종류다. 굵기나 점선으로 갈래를 나누면 그 차이가 무슨 뜻인지 따로
    설명해야 하는데, 무엇과 무엇이 이어져 있는지는 노드 색과 자리로 이미 읽힌다 */
@@ -16,65 +27,28 @@ const EDGE_STYLE: React.CSSProperties = {
   strokeWidth: 1.6,
 };
 
-export const BACKDROP_PAD = 26;
-export const BACKDROP_TITLE = 30;
+// ── 틀의 계층 ──────────────────────────────────────────────
 
-/**
- * 접힌 틀의 폭 — 같은 갈래의 노드 카드와 같은 폭이다.
- *
- * 접히면 카드 한 장처럼 서므로 폭도 카드와 같아야 한 줄로 읽힌다.
- * 값은 KnowledgeNode의 cardWidth와 반드시 함께 맞춘다.
- */
-export function collapsedWidth(tint: NodeKind): number {
-  if (tint === "trouble") return 196;
-  if (tint === "project" || tint === "me") return 176;
-  return 174;
-}
-
-/** 카드 높이 추정치 — 초기 배치 계산용 (제목 한 줄 ≈ 37px) */
-export function cardHeight(node: GraphNodeData): number {
-  const twoLineTitle = node.kind === "trouble" && node.label.length > 13;
-  let height = twoLineTitle ? 52 : 37;
-  if (node.dateLabel) height += 15;
-  if (node.meta) height += 19;
-  return height;
+/** 틀 → 직속 멤버 간선 — 틀 안으로 내려가는 것은 topology.descendantsOf가 한다 */
+function membershipEdges(frames: readonly GraphBackdropData[]) {
+  return frames.flatMap((frame) =>
+    frame.members.map((member) => ({ source: frame.id, target: member })),
+  );
 }
 
 /**
  * 이 틀이 담고 있는 것 전부 — 안에 틀이 있으면 그 틀과 그 안까지 펼쳐 내려간다.
- * 자기를 담는 고리가 생겨도 여기서 끊긴다.
+ * 자기를 담는 고리가 생겨도 한 번 본 것은 다시 보지 않는다.
  */
-export function frameDescendants(
-  backdrop: GraphBackdropData,
-  byFrame: ReadonlyMap<string, GraphBackdropData>,
-): string[] {
-  const seen = new Set<string>([backdrop.id]);
-  const found: string[] = [];
-  const walk = (frame: GraphBackdropData) => {
-    for (const member of frame.members) {
-      if (seen.has(member)) continue;
-      seen.add(member);
-      found.push(member);
-      const inner = byFrame.get(member);
-      if (inner) walk(inner);
-    }
-  };
-  walk(backdrop);
-  return found;
+export function frameDescendants(frameId: string, frames: readonly GraphBackdropData[]): string[] {
+  return [...descendantsOf(frameId, membershipEdges(frames))].filter((id) => id !== frameId);
 }
 
 /** 어느 틀에도 담기지 않은 틀 — 배치의 맨 바깥에 서는 것들 */
-export function outerFrames(
-  backdrops: readonly GraphBackdropData[],
-): GraphBackdropData[] {
-  const nested = new Set(
-    backdrops.flatMap((frame) =>
-      frame.members.filter((member) =>
-        backdrops.some((candidate) => candidate.id === member),
-      ),
-    ),
-  );
-  return backdrops.filter((frame) => !nested.has(frame.id));
+export function outerFrames(frames: readonly GraphBackdropData[]): GraphBackdropData[] {
+  const ids = new Set(frames.map((frame) => frame.id));
+  const nested = new Set(frames.flatMap((frame) => frame.members.filter((id) => ids.has(id))));
+  return frames.filter((frame) => !nested.has(frame.id));
 }
 
 /**
@@ -85,19 +59,17 @@ export function outerFrames(
  * 안쪽 틀에 붙이면 그 틀 자체가 숨어 있어 선이 갈 곳이 없다.
  */
 export function hiddenByOf(
-  backdrops: readonly GraphBackdropData[],
+  frames: readonly GraphBackdropData[],
   isCollapsed: (id: string) => boolean,
 ): Map<string, string> {
-  const byFrame = new Map(backdrops.map((frame) => [frame.id, frame]));
+  const inside = new Map(frames.map((frame) => [frame.id, frameDescendants(frame.id, frames)]));
   const depthOf = (frame: GraphBackdropData) =>
-    backdrops.filter((candidate) =>
-      frameDescendants(candidate, byFrame).includes(frame.id),
-    ).length;
+    frames.filter((candidate) => inside.get(candidate.id)?.includes(frame.id)).length;
 
   const map = new Map<string, string>();
-  for (const frame of [...backdrops].sort((a, b) => depthOf(a) - depthOf(b))) {
+  for (const frame of [...frames].sort((a, b) => depthOf(a) - depthOf(b))) {
     if (!isCollapsed(frame.id)) continue;
-    for (const member of frameDescendants(frame, byFrame)) {
+    for (const member of inside.get(frame.id) ?? []) {
       if (!map.has(member)) map.set(member, frame.id);
     }
   }
@@ -105,125 +77,183 @@ export function hiddenByOf(
 }
 
 /**
- * 정렬이 볼 간선 — 안쪽을 가리키는 끝을 접힌 틀의 것으로 읽는다.
+ * 접힌 틀에 가려진 끝을 그 틀로 옮긴다 — 정렬이 볼 간선, 갈래를 따질 간선,
+ * 화면에 그릴 간선이 모두 이 하나를 거친다.
  *
- * 이걸 안 하면 접힌 상자에 들어오고 나가는 선이 하나도 없는 것으로 보여
- * 깊이가 0이 되고, 상자와 그 이웃들이 한 열에 세로로 쌓인다.
- * (원작 autoLayout.test의 「접힌 백드랍도 안쪽의 연결로 열이 정해진다」)
+ * - 양끝이 같은 틀로 들어가면 밖에서 볼 일이 없는 연결이라 버린다
+ *   (정렬에 쓰면 자기 자신에게 걸려 순환이 된다)
+ * - 같은 두 끝으로 모인 선은 하나만 남긴다. 틀에는 포트가 하나라 전부 한 점으로
+ *   모이고, 겹쳐 그려 봐야 같은 자리에 포개질 뿐이다
+ * - 나머지 칸(id·스타일)은 그대로 둔다. 접었다 펴도 같은 선이라야 React Flow가
+ *   새로 만들지 않는다
+ *
+ * (원작 asset-pipeline의 useCanvasView, autoLayout.test의 「접힌 백드랍도 안쪽의
+ * 연결로 열이 정해진다」와 같은 규칙이다)
  */
-export function layoutEdges(
-  edges: readonly GraphEdgeData[],
+export function rerouteEdges<E extends { source: string; target: string }>(
+  edges: readonly E[],
   hiddenBy: ReadonlyMap<string, string>,
-): { source: string; target: string }[] {
+): E[] {
   const seen = new Set<string>();
-  const result: { source: string; target: string }[] = [];
+  const result: E[] = [];
   for (const edge of edges) {
-    /* 가로지르는 다리 — 그려지되 깊이에는 끼지 않는다 (GraphEdgeData.skipLayout) */
-    if (edge.skipLayout) continue;
-    const source = hiddenBy.get(edge.from) ?? edge.from;
-    const target = hiddenBy.get(edge.to) ?? edge.to;
-    /* 같은 상자 안끼리 — 깊이를 정하는 데 쓰면 자기 자신에게 걸려 순환이 된다 */
+    const source = hiddenBy.get(edge.source) ?? edge.source;
+    const target = hiddenBy.get(edge.target) ?? edge.target;
     if (source === target) continue;
     const key = `${source}->${target}`;
     if (seen.has(key)) continue;
     seen.add(key);
-    result.push({ source, target });
+    result.push({ ...edge, source, target });
   }
   return result;
 }
 
+/** 데이터의 간선(from/to)을 계산용(source/target)으로 */
+export function sourceTarget(edges: readonly GraphEdgeData[]) {
+  return edges.map((edge) => ({ source: edge.from, target: edge.to }));
+}
+
+/** 틀 제목의 개수 단위 — 틀의 갈래가 정한다 */
+const COUNT_UNIT: Record<NodeKind, string> = {
+  project: "프로젝트",
+  trouble: "글",
+  idea: "항목",
+  til: "항목",
+  theory: "개념",
+  me: "개념",
+};
+
 /**
- * 초기 배치부터 원작의 layoutTree로 계산한다 — 틀은 하나의 덩어리,
- * 깊이(최장 경로)가 열을 정하고, 열 안의 순서는 데이터의 y 순서를 따른다.
- * 데이터 좌표는 순서를 정할 뿐, 실제 자리는 여기서 나온다.
+ * 틀 제목의 개수 — 안쪽 틀까지 펼쳐 내려가 진짜 노드만 센다.
+ * 처음 그릴 때와 노드를 끌어 넣은 뒤가 같은 함수를 써야 같은 뜻의 숫자가 나온다.
+ */
+export function frameCountLabel(
+  frame: GraphBackdropData,
+  frames: readonly GraphBackdropData[],
+  isNode: (id: string) => boolean,
+): string {
+  const count = frameDescendants(frame.id, frames).filter(isNode).length;
+  return `${COUNT_UNIT[frame.tint]} ${count}`;
+}
+
+// ── 배치 ───────────────────────────────────────────────────
+
+/**
+ * 배치할 항목 — 틀은 하나의 덩어리, 어떤 틀에도 안 담긴 노드는 잎.
  *
- * 접힌 틀은 덩어리가 아니라 **잎 하나**로 들어간다. 안쪽이 숨어 있으니
- * 자리도 카드 한 장만 차지해야 한다.
+ * 접힌 틀은 덩어리가 아니라 **잎 하나**로 들어간다. 안쪽이 숨어 있으니 자리도
+ * 카드 한 장만 차지해야 한다.
+ *
+ * 틀에 덩어리(clusters)가 적혀 있으면 덩어리째 움직인다. 덩어리는 처음 소속으로
+ * 적힌 것이라, 지금 그 틀에 없는 노드는 빼고, 덩어리에 없는 새 멤버(끌어 넣은 노드)는
+ * 따로 잎으로 넣는다 — 안 그러면 옮긴 노드가 옛 틀 자리로 돌아가거나 자리를 못 받는다.
+ */
+export function buildLayoutItems({
+  nodeIds,
+  frames,
+  isFolded,
+  leafOf,
+  frameY,
+}: {
+  nodeIds: readonly string[];
+  frames: readonly GraphBackdropData[];
+  isFolded: (frameId: string) => boolean;
+  /** 노드 하나의 크기와 위아래 자리. 그릴 수 없는 노드면 null */
+  leafOf: (id: string) => LayoutItem | null;
+  /** 틀의 위아래 자리 — 안쪽의 가장 위(minY)를 기본으로 받아 고를 수 있다 */
+  frameY: (frame: GraphBackdropData, minY: number) => number;
+}): LayoutItem[] {
+  const frameById = new Map(frames.map((frame) => [frame.id, frame]));
+  const topOf = (items: readonly { y: number }[]) =>
+    items.length > 0 ? Math.min(...items.map((item) => item.y)) : 0;
+
+  const frameItem = (frame: GraphBackdropData): LayoutItem | null => {
+    if (isFolded(frame.id)) {
+      const inside = frameDescendants(frame.id, frames).map(leafOf).filter(isDefined);
+      return {
+        id: frame.id,
+        width: collapsedWidth(frame.tint),
+        height: BACKDROP_TITLE,
+        y: frameY(frame, topOf(inside)),
+      };
+    }
+    const memberItem = (id: string) => {
+      const inner = frameById.get(id);
+      return inner ? frameItem(inner) : leafOf(id);
+    };
+    const members = new Set(frame.members);
+    const clustered = new Set<string>();
+    const clusterItems = (frame.clusters ?? []).map((cluster): LayoutItem | null => {
+      const inner = cluster.members.filter((id) => members.has(id));
+      inner.forEach((id) => clustered.add(id));
+      const leaves = inner.map(leafOf).filter(isDefined);
+      if (leaves.length === 0) return null;
+      return { id: cluster.id, width: 0, height: 0, y: topOf(leaves), children: leaves };
+    });
+    const strays = frame.members.filter((id) => !clustered.has(id)).map(memberItem);
+    const children = [...clusterItems, ...strays].filter(isDefined);
+    if (children.length === 0) return null;
+    return { id: frame.id, width: 0, height: 0, y: frameY(frame, topOf(children)), children };
+  };
+
+  /* 어떤 틀에도 안 담긴 노드만 잎으로 — 안쪽 틀을 거쳐 담긴 것까지 센다 */
+  const framed = new Set(frames.flatMap((frame) => frameDescendants(frame.id, frames)));
+  return [
+    ...nodeIds
+      .filter((id) => !framed.has(id))
+      .map(leafOf)
+      .filter(isDefined),
+    ...outerFrames(frames).map(frameItem).filter(isDefined),
+  ];
+}
+
+/**
+ * 원작의 layoutTree로 늘어놓는다 — 깊이(최장 경로)가 열을 정하고, 열 안의 순서는
+ * 항목의 y 순서를 따른다. 정렬이 볼 간선은 접힌 틀로 옮긴 것이고, 가로지르는
+ * 다리(skipLayout)는 그려지되 깊이에는 끼지 않는다.
+ */
+export function placeItems(
+  items: readonly LayoutItem[],
+  edges: readonly GraphEdgeData[],
+  hiddenBy: ReadonlyMap<string, string>,
+): TreeLayout | null {
+  const layoutEdges = rerouteEdges(
+    sourceTarget(edges.filter((edge) => !edge.skipLayout)),
+    hiddenBy,
+  );
+  return layoutTree(items, layoutEdges, LAYOUT_GAP, {
+    top: BACKDROP_PAD + BACKDROP_TITLE,
+    side: BACKDROP_PAD,
+  });
+}
+
+// ── 처음 그리기 ────────────────────────────────────────────
+
+/**
+ * 초기 배치부터 정렬과 같은 규칙으로 계산한다. 데이터 좌표는 순서를 정할 뿐,
+ * 실제 자리는 여기서 나온다. 처음 접혀 있는 틀은 백드랍 객체가 안다(collapsed).
  */
 export function buildFlowGraph(
   nodes: GraphNodeData[],
   edges: GraphEdgeData[],
   backdrops: GraphBackdropData[],
-): Node[] {
+): GraphFlowNode[] {
   const byId = new Map(nodes.map((node) => [node.id, node]));
+  const isFolded = (id: string) => Boolean(backdrops.find((frame) => frame.id === id)?.collapsed);
 
-  const leafItem = (id: string): LayoutItem | null => {
-    const node = byId.get(id);
-    if (!node) return null;
-    return { id, width: cardWidth(node), height: cardHeight(node), y: node.y };
-  };
-  const leafItems = (ids: readonly string[]): LayoutItem[] =>
-    ids.map(leafItem).filter((item): item is LayoutItem => item !== null);
-
-  /* 처음 접혀 있는 틀은 백드랍 객체가 안다 */
-  const hiddenBy = hiddenByOf(backdrops, (id) =>
-    Boolean(backdrops.find((frame) => frame.id === id)?.collapsed),
-  );
-
-  const byFrame = new Map(backdrops.map((frame) => [frame.id, frame]));
-
-  /** 틀 하나를 배치 항목으로. 안에 틀이 있으면 그것도 항목으로 내려간다 */
-  const frameItem = (backdrop: GraphBackdropData): LayoutItem | null => {
-    /* 접힌 틀은 안쪽을 데리고 들어가지 않는다 — 잎 하나로 선다 */
-    if (backdrop.collapsed) {
-      const ys = frameDescendants(backdrop, byFrame)
-        .map((id) => byId.get(id)?.y)
-        .filter((y): y is number => typeof y === "number");
-      return {
-        id: backdrop.id,
-        width: collapsedWidth(backdrop.tint),
-        height: BACKDROP_TITLE,
-        y: ys.length > 0 ? Math.min(...ys) : 0,
-      };
-    }
-    const children = backdrop.clusters
-      ? backdrop.clusters
-          .map((cluster): LayoutItem | null => {
-            const inner = leafItems(cluster.members);
-            if (inner.length === 0) return null;
-            return {
-              id: cluster.id,
-              width: 0,
-              height: 0,
-              y: Math.min(...inner.map((item) => item.y)),
-              children: inner,
-            };
-          })
-          .filter((item): item is LayoutItem => item !== null)
-      : backdrop.members
-          .map((id) => {
-            const inner = byFrame.get(id);
-            return inner ? frameItem(inner) : leafItem(id);
-          })
-          .filter((item): item is LayoutItem => item !== null);
-    if (children.length === 0) return null;
-    return {
-      id: backdrop.id,
-      width: 0,
-      height: 0,
-      y: Math.min(...children.map((item) => item.y)),
-      children,
-    };
-  };
-
-  /* 어떤 틀에도 안 담긴 노드만 잎으로 — 안쪽 틀을 거쳐 담긴 것까지 센다 */
-  const framed = new Set(
-    backdrops.flatMap((frame) => frameDescendants(frame, byFrame)),
-  );
-  const items: LayoutItem[] = [
-    ...leafItems(nodes.map((node) => node.id).filter((id) => !framed.has(id))),
-    ...outerFrames(backdrops)
-      .map(frameItem)
-      .filter((item): item is LayoutItem => item !== null),
-  ];
-
-  const tree = layoutTree(items, layoutEdges(edges, hiddenBy), LAYOUT_GAP, {
-    top: BACKDROP_PAD + BACKDROP_TITLE,
-    side: BACKDROP_PAD,
+  const items = buildLayoutItems({
+    nodeIds: nodes.map((node) => node.id),
+    frames: backdrops,
+    isFolded,
+    leafOf: (id) => {
+      const node = byId.get(id);
+      return node ? { id, width: cardWidth(node), height: cardHeight(node), y: node.y } : null;
+    },
+    frameY: (_, minY) => minY,
   });
+  const tree = placeItems(items, edges, hiddenByOf(backdrops, isFolded));
 
-  const backdropNodes: BackdropFlowNode[] = [];
-  for (const backdrop of backdrops) {
+  const backdropNodes: BackdropFlowNode[] = backdrops.flatMap((backdrop) => {
     const at = tree?.positions.get(backdrop.id);
     /* layoutTree는 자식을 가진 항목에만 크기를 돌려준다. 접힌 틀은 잎으로
        넣었으니 크기가 없다 — 그때는 카드 한 장 크기가 곧 그 크기다.
@@ -233,37 +263,27 @@ export function buildFlowGraph(
       (backdrop.collapsed
         ? { width: collapsedWidth(backdrop.tint), height: BACKDROP_TITLE }
         : undefined);
-    if (!at || !size) continue;
-    /* 안쪽에 틀이 있으면 멤버가 틀 id다 — 펼쳐 내려가 진짜 노드만 센다 */
-    const present = frameDescendants(backdrop, byFrame).filter((id) =>
-      byId.has(id),
-    );
-    const unit =
-      backdrop.tint === "project"
-        ? "프로젝트"
-        : backdrop.tint === "trouble"
-          ? "글"
-          : backdrop.tint === "idea"
-            ? "항목"
-            : "개념";
-    backdropNodes.push({
-      id: backdrop.id,
-      type: "backdrop",
-      position: at,
-      data: {
-        label: backdrop.label,
-        tint: backdrop.tint,
-        countLabel: `${unit} ${present.length}`,
-        memberIds: backdrop.members,
+    if (!at || !size) return [];
+    return [
+      {
+        id: backdrop.id,
+        type: "backdrop",
+        position: at,
+        data: {
+          label: backdrop.label,
+          tint: backdrop.tint,
+          countLabel: frameCountLabel(backdrop, backdrops, (id) => byId.has(id)),
+          memberIds: backdrop.members,
+        },
+        style: { width: size.width, height: size.height },
+        zIndex: -1,
+        selectable: false,
+        draggable: true,
+        dragHandle: ".backdrop-drag-handle",
+        focusable: false,
       },
-      style: { width: size.width, height: size.height },
-      zIndex: -1,
-      selectable: false,
-      draggable: true,
-      dragHandle: ".backdrop-drag-handle",
-      focusable: false,
-    });
-  }
+    ];
+  });
 
   const knowledgeNodes: KnowledgeFlowNode[] = nodes.map((node) => ({
     id: node.id,
@@ -277,19 +297,17 @@ export function buildFlowGraph(
 }
 
 export function toFlowEdges(edges: GraphEdgeData[]): Edge[] {
-  return edges.map((edge) => {
-    return {
-      id: `${edge.from}-${edge.to}`,
-      source: edge.from,
-      target: edge.to,
-      type: "default",
-      style: EDGE_STYLE,
-      focusable: false,
-      label: edge.label,
-      labelStyle: { fill: "var(--muted)", fontSize: 11, fontWeight: 500 },
-      labelBgStyle: { fill: "var(--bg)", fillOpacity: 0.85 },
-      labelBgPadding: [6, 3] as [number, number],
-      labelBgBorderRadius: 4,
-    };
-  });
+  return edges.map((edge): Edge => ({
+    id: `${edge.from}-${edge.to}`,
+    source: edge.from,
+    target: edge.to,
+    type: "default",
+    style: EDGE_STYLE,
+    focusable: false,
+    label: edge.label,
+    labelStyle: { fill: "var(--muted)", fontSize: 11, fontWeight: 500 },
+    labelBgStyle: { fill: "var(--bg)", fillOpacity: 0.85 },
+    labelBgPadding: [6, 3],
+    labelBgBorderRadius: 4,
+  }));
 }

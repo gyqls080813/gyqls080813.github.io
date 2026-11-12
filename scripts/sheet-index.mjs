@@ -8,7 +8,11 @@
  * 적는다. 본문 모듈은 서버(페이지)와 겹침 화면(홈)만 쓴다.
  *
  * 계산은 전부 원래 함수(lib/sheet·lib/annotatedGraph·lib/openKind)가 한다 —
- * 여기서 규칙을 다시 적으면 언젠가 어긋난다.
+ * 여기서 규칙을 다시 적으면 언젠가 어긋난다. 글의 뼈대(제목·소속)는 본문 없는
+ * 요약 목록(lib/catalog)이 이미 갖고 있어 여기서 뽑지 않는다.
+ *
+ * 여기서 불러오는 모듈은 생성물(lib/generated)을 불러오면 안 된다 — 생성물은 git에
+ * 없어서, 처음 받은 저장소에서는 이 스크립트가 만들기 전까지 그 파일이 없다.
  */
 import { register } from "node:module";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -24,9 +28,8 @@ const { fullGraphNodes } = await load("lib/graphData.ts");
 const { sheetNavItems, sheetPorts, sheetCrumbs } = await load("lib/sheet.ts");
 const { nodeOpenKindFromContent } = await load("lib/openKind.ts");
 const { annotatedGraphNodes } = await load("lib/annotatedGraph.ts");
-const { posts } = await load("lib/posts.ts");
 
-const index = { openKind: {}, nav: {}, ports: {}, crumbs: {}, annotations: {}, posts: [] };
+const index = { openKind: {}, nav: {}, ports: {}, crumbs: {}, annotations: {} };
 
 /* 카드에 덧붙는 것만 — 노드 자체(라벨·좌표)는 graphData에 이미 있다 */
 const base = new Map(fullGraphNodes.map((node) => [node.id, node]));
@@ -49,33 +52,16 @@ for (const { id } of fullGraphNodes) {
   index.crumbs[id] = sheetCrumbs(id).map((node) => node.id);
 }
 
-/* 트리·프로젝트 포트가 쓰는 글의 뼈대 — 본문(sections의 블록)은 뺀다 */
-index.posts = posts.map((post) => ({
-  id: post.id,
-  title: post.title,
-  date: post.date,
-  project: post.project,
-  theories: post.theories.map((theory) => theory.id),
-}));
-
 const OUT = join(ROOT, "lib", "generated", "sheetIndex.ts");
 mkdirSync(join(ROOT, "lib", "generated"), { recursive: true });
 writeFileSync(
   OUT,
-  `/* 자동 생성 — scripts/sheet-index.mjs. 직접 고치지 말 것.
-   시트 껍데기가 브라우저에서 쓰는 요약(목차·포트·머리말·열림 종류·카드 집계·글 뼈대).
+  `/* 자동 생성 — scripts/sheet-index.mjs. 직접 고치지 말 것 (git에 올리지 않는다).
+   시트 껍데기가 브라우저에서 쓰는 요약(목차·포트·머리말·열림 종류·카드 집계).
    본문 모듈을 브라우저로 보내지 않으려고 빌드 때 뽑아 둔다. */
 import type { GraphNodeData } from "@/components/graph/types";
-import type { NodeOpenKind } from "../nodeTarget";
+import type { NodeOpenKind } from "../nodeKinds";
 import type { NavItem, Port } from "../sheet";
-
-export type PostOutline = {
-  id: string;
-  title: string;
-  date: string;
-  project: string;
-  theories: string[];
-};
 
 /** 카드에 덧붙는 집계 — lib/annotatedGraph가 본문을 보고 붙인 값 */
 export type NodeAnnotation = Pick<GraphNodeData, "clickable" | "meta" | "dateLabel">;
@@ -86,12 +72,11 @@ export const sheetIndex: {
   ports: Record<string, { left: Port[]; right: Port[] }>;
   crumbs: Record<string, string[]>;
   annotations: Record<string, NodeAnnotation>;
-  posts: PostOutline[];
 } = ${JSON.stringify(index, null, 2)};
 `,
   "utf8",
 );
 
 console.log(
-  `시트 색인: 노드 ${Object.keys(index.openKind).length}개, 목차 ${Object.keys(index.nav).length}개, 글 ${index.posts.length}개 → ${relative(ROOT, OUT)}`,
+  `시트 색인: 노드 ${Object.keys(index.openKind).length}개, 목차 ${Object.keys(index.nav).length}개 → ${relative(ROOT, OUT)}`,
 );

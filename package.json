@@ -2,11 +2,17 @@
   "name": "knowledge-graph-blog",
   "private": true,
   "scripts": {
-    "dev": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs && next dev",
-    "build": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs && next build",
+    "generate": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs",
+    "postinstall": "npm run generate",
+    "dev": "npm run generate && next dev",
+    "build": "npm run generate && next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "highlight": "node scripts/highlight-code.mjs",
-    "sheet-index": "node scripts/sheet-index.mjs",
-    "lint": "eslint ."
+    "sheet-index": "node scripts/sheet-index.mjs"
   },
   "dependencies": {
     "@xyflow/react": "^12.11.3",
@@ -22,6 +28,8 @@
     "@typescript/native": "npm:typescript@^7.0.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.2",
-    "typescript": "npm:@typescript/typescript6@6.0.2"
+    "prettier": "^3.10.1",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "vitest": "^3.2.7"
   }
 }

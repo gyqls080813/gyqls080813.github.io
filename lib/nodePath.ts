@@ -1,5 +1,7 @@
 import type { GraphNodeData } from "@/components/graph/types";
-import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
+import { allClusters, nodeById } from "./graphData";
+import { ancestorChain } from "./topology";
+import { isDefined } from "./util";
 
 /**
  * 계층 지도 — 이론과 생각이 같은 문법(허브 → 챕터)을 쓰므로 한 벌로 본다.
@@ -7,14 +9,12 @@ import { fullGraphNodes, ideaClusters, theoryClusters } from "./graphData";
  * 트리(왼쪽 탐색기)와 머리말이 같은 계층을 각자 계산하고 있었다. 한쪽만
  * 고치면 둘이 다른 깊이를 말하게 되므로 여기 한 곳에서 만든다.
  */
-const clusters = [...theoryClusters, ...ideaClusters];
-
 export const chaptersOf = new Map<string, readonly string[]>(
-  clusters.map((cluster) => [cluster.hub, cluster.chapters]),
+  allClusters.map((cluster) => [cluster.hub, cluster.chapters]),
 );
 
 export const parentOf = new Map<string, string>(
-  clusters.flatMap((cluster) =>
+  allClusters.flatMap((cluster) =>
     cluster.chapters.map((chapter) => [chapter, cluster.hub] as const),
   ),
 );
@@ -29,18 +29,7 @@ export const parentOf = new Map<string, string>(
  * 고리가 있어도 멈춘다 — 데이터가 잘못돼도 화면이 멎지는 않아야 한다.
  */
 export function nodePath(id: string): GraphNodeData[] {
-  const byId = new Map(fullGraphNodes.map((node) => [node.id, node]));
-  const ids: string[] = [];
-  const seen = new Set<string>();
-
-  let cursor: string | undefined = id;
-  while (cursor && !seen.has(cursor)) {
-    seen.add(cursor);
-    ids.unshift(cursor);
-    cursor = parentOf.get(cursor);
-  }
-
-  return ids
-    .map((each) => byId.get(each))
-    .filter((node): node is GraphNodeData => node !== undefined);
+  return [...ancestorChain(id, parentOf).reverse(), id]
+    .map((each) => nodeById.get(each))
+    .filter(isDefined);
 }

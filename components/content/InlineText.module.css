@@ -4,8 +4,8 @@
   border-radius: 4px;
   background: var(--surface-inset);
   border: 1px solid var(--border-subtle);
-  font-family: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding",
-    monospace;
+  font-family:
+    ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace;
   font-size: 0.86em;
   color: #eb5757;
   /* 코드 한 덩어리가 줄 끝에서 둘로 쪼개지지 않게 */

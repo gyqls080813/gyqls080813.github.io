@@ -1,0 +1,18 @@
+# 빌드·생성물
+.next/
+out/
+node_modules/
+lib/generated/
+package-lock.json
+
+# 본문 데이터 — 긴 한국어 문장과 손으로 배열한 표가 대부분이라 줄을 다시 짜지 않는다
+lib/theories/
+lib/ideas/
+lib/dictionary.ts
+lib/posts.ts
+lib/projects.ts
+lib/tils.ts
+
+# 문서·정적 파일
+*.md
+public/

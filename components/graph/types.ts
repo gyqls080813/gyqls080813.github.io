@@ -14,21 +14,15 @@
  */
 export type NodeKind = "theory" | "project" | "trouble" | "me" | "idea" | "til";
 
-export type LabelPlacement = "top" | "bottom" | "left" | "right" | "inside";
-
 /** React Flow의 Node<T> 제약(Record<string, unknown>)을 만족하도록 interface가 아닌 type으로 선언 */
 export type GraphNodeData = {
   id: string;
   label: string;
-  /** 두 번째 줄 (프로젝트 허브 등) */
-  sublabel?: string;
   kind: NodeKind;
   x: number;
   y: number;
-  r: number;
   /** 허브 노드: 색 그라디언트 채움 + 점선 궤도 링 */
   hub?: boolean;
-  labelPlacement?: LabelPlacement;
   /** 카드 상단 날짜 줄 — 글은 작성 날짜, 프로젝트는 진행 기간 */
   dateLabel?: string;
   /** 카드 하단 집계 줄 ("트러블 4" / "5분 · 섹션 2" / "글 1") */
@@ -62,8 +56,6 @@ export type GraphBackdropData = {
 export type GraphEdgeData = {
   from: string;
   to: string;
-  /** 수직 방향 굽힘(px). 양수 = 진행 방향 기준 오른쪽으로 휨 */
-  bend?: number;
   /** 관계 이름 (연결 뷰: "발생한 곳" / "원인 개념" / "해결 기법") */
   label?: string;
   /**

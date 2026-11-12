@@ -11,29 +11,8 @@
   border: 1px dashed rgba(var(--tint), 0.32);
   border-radius: 12px;
   pointer-events: none;
-}
-
-/* 갈래 색을 한 곳에서 정한다 — 아래 규칙은 전부 이 값을 쓴다 */
-.theory {
-  --tint: var(--theory-rgb);
-}
-
-.project {
-  --tint: var(--project-rgb);
-}
-
-.trouble {
-  --tint: var(--trouble-rgb);
-}
-
-.me {
-  --tint: var(--me-rgb);
-}
-
-/* 생각과 그 안의 기록(til)은 한 갈래라 틀 색도 하나다 */
-.idea,
-.til {
-  --tint: var(--idea-rgb);
+  /* 갈래 색 — data-kind에서 (globals.css의 --kind-rgb). 아래 규칙은 전부 이 값을 쓴다 */
+  --tint: var(--kind-rgb);
 }
 
 /**
@@ -47,8 +26,7 @@
 .collapsed {
   /* 노드는 중립 회색, 틀은 갈래 색이 옅게 배어 있다 */
   background:
-    linear-gradient(rgba(var(--tint), 0.11), rgba(var(--tint), 0.05)),
-    var(--surface-node);
+    linear-gradient(rgba(var(--tint), 0.11), rgba(var(--tint), 0.05)), var(--surface-node);
   border-style: solid;
   border-color: rgba(var(--tint), 0.45);
   box-shadow:
@@ -73,6 +51,8 @@
   background: var(--surface-inset);
   border-width: 2px;
   border-style: solid;
+  /* 색은 카드의 data-kind에서 (globals.css의 --kind) */
+  border-color: var(--kind);
   pointer-events: none;
 }
 

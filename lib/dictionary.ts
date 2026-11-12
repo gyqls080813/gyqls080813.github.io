@@ -1,3 +1,5 @@
+import { dictionarySections } from "./catalog";
+
 /**
  * 사전 — 문서를 읽다 걸린 낱말을 내 말로 다시 적어 두는 곳.
  *
@@ -36,15 +38,9 @@ export type Dictionary = {
   sections: DictSection[];
 };
 
-export const dictionary: Dictionary = {
-  id: "dict",
-  name: "사전",
-  tagline: "문서를 읽다 걸린 낱말을 내 말로 다시 적는 곳",
-  intro:
-    "공식 문서는 첫 문장부터 낱말이 걸립니다. 사용자 인터페이스, 위에 구축된다, 선언적, 프로그래밍 모델. 아는 것 같은데 남에게 설명하라면 막히는 말들입니다. 그런 낱말을 만난 자리마다 하나씩 꺼내 내 말로 다시 적어 둡니다. 절은 낱말이 나온 문서이고, 그 문서에서 이 사전으로 선이 들어옵니다. 왼쪽 포트로 되돌아갈 수 있습니다.",
-  sections: [
+/** 문서마다의 낱말 — 절 이름과 순서는 catalog의 dictionarySections가 쥔다 */
+const entriesByDocument: { from: string; entries: DictEntry[] }[] = [
     {
-      heading: "Vue 소개 — Vue란 무엇인가요?",
       from: "vg-start-intro",
       entries: [
         {
@@ -75,7 +71,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "i18n — 문장을 코드에서 떼어 내는 열네 단계",
       from: "i18n",
       entries: [
         {
@@ -269,7 +264,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "브라우저 렌더링 — 주소가 픽셀이 되기까지",
       from: "render",
       entries: [
         {
@@ -427,7 +421,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "JavaScript — javascript.info 를 따라 읽은 스물일곱 챕터",
       from: "js",
       entries: [
         {
@@ -593,7 +586,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "React — react.dev 의 배우기와 참고서를 따라 읽은 서른여섯 장",
       from: "react",
       entries: [
         {
@@ -743,7 +735,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "Vue — vuejs.org 의 가이드와 참고서를 따라 읽은 백여섯 장",
       from: "vue",
       entries: [
         {
@@ -921,7 +912,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "TypeScript — typescriptlang.org 의 핸드북과 참고서를 따라 읽은 아흔여덟 장",
       from: "ts",
       entries: [
         {
@@ -1095,7 +1085,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "Git — Pro Git 과 GitHub 문서로 세운 일곱 단계의 낱말",
       from: "git",
       entries: [
         {
@@ -1161,7 +1150,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "CSS — MDN 의 스타일링 기초와 레이아웃 모듈로 세운 열네 장의 낱말",
       from: "css",
       entries: [
         {
@@ -1263,7 +1251,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "번들링 · Vite — vite.dev 가이드로 세운 열두 장의 낱말",
       from: "bundle",
       entries: [
         {
@@ -1325,7 +1312,6 @@ export const dictionary: Dictionary = {
       ],
     },
     {
-      heading: "Next.js · Nuxt — 같은 질문 열넷에 두 답을 놓은 낱말",
       from: "nn",
       entries: [
         {
@@ -1394,7 +1380,18 @@ export const dictionary: Dictionary = {
         },
       ],
     },
-  ],
+];
+
+export const dictionary: Dictionary = {
+  id: "dict",
+  name: "사전",
+  tagline: "문서를 읽다 걸린 낱말을 내 말로 다시 적는 곳",
+  intro:
+    "공식 문서는 첫 문장부터 낱말이 걸립니다. 사용자 인터페이스, 위에 구축된다, 선언적, 프로그래밍 모델. 아는 것 같은데 남에게 설명하라면 막히는 말들입니다. 그런 낱말을 만난 자리마다 하나씩 꺼내 내 말로 다시 적어 둡니다. 절은 낱말이 나온 문서이고, 그 문서에서 이 사전으로 선이 들어옵니다. 왼쪽 포트로 되돌아갈 수 있습니다.",
+  sections: dictionarySections.map((section) => ({
+    ...section,
+    entries: entriesByDocument.find((group) => group.from === section.from)?.entries ?? [],
+  })),
 };
 
 export function getDictionary(id: string): Dictionary | undefined {

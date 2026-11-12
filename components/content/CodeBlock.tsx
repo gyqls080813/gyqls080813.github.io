@@ -1,3 +1,5 @@
+import { codeKey } from "@/lib/codeKey";
+import type { CodeLang } from "@/lib/theories";
 import { highlightedCode } from "@/lib/generated/codeHighlight";
 import styles from "./CodeBlock.module.css";
 
@@ -11,15 +13,18 @@ import styles from "./CodeBlock.module.css";
  * 아직 안 칠해진 조각(방금 쓴 것)은 원문 그대로 나온다 — 색만 없을 뿐 읽힌다.
  * 스크립트를 다시 돌리면 채워진다.
  */
-export default function CodeBlock({ children }: { children: string }) {
-  const painted = highlightedCode[children];
+export default function CodeBlock({
+  children,
+  lang = "tsx",
+}: {
+  children: string;
+  /** 칠할 문법 — 데이터의 codeLang. 없으면 tsx */
+  lang?: CodeLang;
+}) {
+  const painted = highlightedCode[codeKey(lang, children)];
   return (
     <pre className={styles.code}>
-      {painted ? (
-        <code dangerouslySetInnerHTML={{ __html: painted }} />
-      ) : (
-        <code>{children}</code>
-      )}
+      {painted ? <code dangerouslySetInnerHTML={{ __html: painted }} /> : <code>{children}</code>}
     </pre>
   );
 }

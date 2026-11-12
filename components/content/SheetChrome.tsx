@@ -21,8 +21,8 @@ import styles from "./Sheet.module.css";
  *
  * 예전에는 글·프로젝트·개념·소개 네 뷰가 이 껍데기를 각자 그렸다. 그러니
  * 주소가 바뀔 때마다 페이지 서브트리가 갈아 끼워지면서 껍데기까지 다시
- * 마운트됐다 — 190줄짜리 트리의 스크롤이 맨 위로 튀고, 접어 둔 갈래가 전부
- * 펴지고, 노드 200개짜리 그래프가 통째로 다시 그려졌다.
+ * 마운트됐다 — 수백 줄짜리 트리의 스크롤이 맨 위로 튀고, 접어 둔 갈래가 전부
+ * 펴지고, 노드 수백 개짜리 그래프가 통째로 다시 그려졌다.
  *
  * 루트 레이아웃에 두면 주소가 바뀌어도 이 컴포넌트는 살아 있다. 갈래를
  * 건너뛰어도(개념 → 글) 마찬가지다 — 라우트 그룹으로 나누지 않고 루트에
@@ -30,8 +30,9 @@ import styles from "./Sheet.module.css";
  *
  * ## 그래서 노드 id 하나만 안다
  *
- * 껍데기는 페이지에서 무엇도 받지 않는다. 주소에서 노드 id를 읽고, 나머지는
- * 전부 lib/sheet.ts가 계산한다. 페이지는 본문만 넘긴다.
+ * 껍데기는 페이지에서 무엇도 받지 않는다. 주소에서 노드 id를 읽고, 나머지(목차·
+ * 포트·머리말)는 빌드 때 lib/sheet가 계산해 둔 색인을 lib/outline으로 읽는다.
+ * 페이지는 본문만 넘긴다.
  *
  * 시트가 아닌 곳(그래프 홈, 글 목록)에서는 아무것도 감싸지 않고 지나 보낸다.
  */
@@ -41,7 +42,7 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
   const inSheet = nodeId !== null;
 
   /* 뒤 그래프는 한 박자 늦게 그린다. 홈에서 노드를 열고 넘어오는 순간 시트·트리·
-     본문과 노드 300개짜리 그래프를 한 프레임에 같이 그리면, 열림 전환이 끝나는
+     본문과 노드 수백 개짜리 그래프를 한 프레임에 같이 그리면, 열림 전환이 끝나는
      자리에서 화면이 멈춘다. 그래프는 시트 뒤에 비치는 배경이라 늦게 떠도 읽기를
      막지 않는다 — 전환(transition)으로 넘겨 React가 쪼개 그리게 한다.
      껍데기는 시트 사이를 오가도 살아 있으므로, 시트에 들어올 때 한 번만이다. */
@@ -56,9 +57,7 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!inSheet || graphReady) return;
     /* 시트가 한 번 칠해진 다음 프레임에 전환으로 넘긴다 */
-    const frame = requestAnimationFrame(() =>
-      startTransition(() => setGraphReady(true)),
-    );
+    const frame = requestAnimationFrame(() => startTransition(() => setGraphReady(true)));
     return () => cancelAnimationFrame(frame);
   }, [inSheet, graphReady]);
 

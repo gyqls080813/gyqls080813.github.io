@@ -108,32 +108,7 @@
   display: block;
 }
 
-.portDot {
-  display: block;
-  width: 15px;
-  height: 15px;
-  box-sizing: border-box;
-  border-radius: 50%;
-  background: var(--surface-inset);
-  border: 2.5px solid;
-  transition: background 0.15s ease;
-}
-
-.portDotProject {
-  border-color: var(--project);
-}
-
-.portDotTheory {
-  border-color: var(--theory);
-}
-
-.portDotTrouble {
-  border-color: var(--trouble);
-}
-
-.portDotIdea {
-  border-color: var(--idea);
-}
+/* 점 자체는 <PortDot size="md">가 그린다 — 여기는 눌러 볼 수 있다는 표시만 */
 
 .port:hover .portDot {
   background: var(--surface-node-hover);
@@ -249,18 +224,8 @@
 }
 
 .meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
+  /* 줄 모양은 <PostMeta>가 — 여기는 제목과의 간격만 */
   margin-bottom: 18px;
-  font-size: 12.5px;
-}
-
-/* 메타 칩(프로젝트·이론)은 <Chip variant="soft"> 로 옮겨졌다 */
-.metaDate {
-  color: var(--faint);
-  margin-left: 6px;
 }
 
 .title {
@@ -313,61 +278,29 @@
   white-space: nowrap;
 }
 
-.crumbProject {
+/* 머리말의 알약 하나 — 색은 data-kind에서 (globals.css의 --kind·--kind-text·--kind-rgb) */
+.crumb {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 5px 12px;
   border-radius: 99px;
-  background: rgba(var(--project-rgb), 0.1);
-  border: 1px solid rgba(var(--project-rgb), 0.35);
-  color: var(--project-text);
+  background: rgba(var(--kind-rgb), 0.1);
+  border: 1px solid rgba(var(--kind-rgb), 0.35);
+  color: var(--kind-text);
   font-weight: 500;
   white-space: nowrap;
 }
 
-.crumbTrouble {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+.crumbDot {
+  width: 7px;
+  height: 7px;
   border-radius: 99px;
-  background: rgba(var(--trouble-rgb), 0.12);
-  border: 1px solid rgba(var(--trouble-rgb), 0.45);
-  color: var(--trouble-bright);
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  border: 1.5px solid var(--kind);
+  flex-shrink: 0;
 }
 
-.crumbTheory {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 99px;
-  background: rgba(var(--theory-rgb), 0.1);
-  border: 1px solid rgba(var(--theory-rgb), 0.35);
-  color: var(--theory-text);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.crumbIdea {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 99px;
-  background: rgba(var(--idea-rgb), 0.1);
-  border: 1px solid rgba(var(--idea-rgb), 0.35);
-  color: var(--idea-text);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-/* 길의 마지막 칸 = 지금 보고 있는 것. 트러블 머리말의 끝 칸과 같은 굵기다 */
+/* 길의 마지막 칸 = 지금 보고 있는 것 */
 .crumbHere {
   font-weight: 600;
 }
@@ -382,57 +315,4 @@
   .breadcrumb > svg {
     display: none;
   }
-}
-
-.crumbDotIdea {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  border: 1.5px solid var(--idea);
-  flex-shrink: 0;
-}
-
-.crumbMe {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 99px;
-  background: rgba(var(--me-rgb), 0.1);
-  border: 1px solid rgba(var(--me-rgb), 0.35);
-  color: var(--me-bright);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.crumbDotMe {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  border: 1.5px solid var(--me);
-  flex-shrink: 0;
-}
-
-.crumbDotTheory {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  border: 1.5px solid var(--theory);
-  flex-shrink: 0;
-}
-
-.crumbDotProject {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  border: 1.5px solid var(--project);
-  flex-shrink: 0;
-}
-
-.crumbDotTrouble {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  background: var(--trouble);
-  flex-shrink: 0;
 }

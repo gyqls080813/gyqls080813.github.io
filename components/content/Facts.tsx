@@ -16,7 +16,7 @@ export function FactRow({
   children: ReactNode;
 }) {
   return (
-    <div className={styles.factRow} data-accent={accent}>
+    <div className={styles.factRow} data-kind={accent}>
       <span className={styles.label}>{label}</span>
       <span className={styles.value}>{children}</span>
     </div>
@@ -26,13 +26,7 @@ export function FactRow({
 /**
  * 불릿 + 내용 + 오른쪽 날짜 한 줄 (예: 이력·수상). 호버하면 옅게 강조된다.
  */
-export function EntryRow({
-  date,
-  children,
-}: {
-  date?: string;
-  children: ReactNode;
-}) {
+export function EntryRow({ date, children }: { date?: string; children: ReactNode }) {
   return (
     <div className={styles.entryRow}>
       <span className={styles.entryBullet} />

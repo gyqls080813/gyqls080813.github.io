@@ -1,4 +1,5 @@
 import styles from "./Figure.module.css";
+import { cx } from "@/lib/util";
 
 /**
  * 그림(이미지) 박스 — 테두리·라운드·반응형 폭을 갖춘 이미지.
@@ -32,7 +33,7 @@ export default function Figure({
        써도 unoptimized로 같은 <img>가 나가므로 그대로 둔다 */
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      className={`${styles.img} ${variant === "wide" ? styles.wide : ""}`}
+      className={cx(styles.img, variant === "wide" && styles.wide)}
       src={src}
       alt={alt}
       width={width}

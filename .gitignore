@@ -4,3 +4,6 @@ out/
 *.tsbuildinfo
 next-env.d.ts
 .claude/
+
+# 생성물 — npm install(postinstall)·dev·build가 매번 다시 만든다 (scripts/highlight-code·sheet-index)
+lib/generated/

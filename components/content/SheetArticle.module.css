@@ -1,5 +1,6 @@
-/* 폭·여백은 PostView.module.css의 .articleInner가 맡는다 — 여기는 레이아웃 컨테이너만.
-   텍스트 박스·코드·노드 카드는 components/content 로 옮겨져 있다. */
+/* 시트 본문의 뼈대 — 이론·생각·TIL·사전이 함께 쓴다.
+   폭·여백은 Sheet.module.css의 .articleInner가 맡고, 여기는 안쪽 레이아웃만.
+   갈래 색은 바깥 div의 data-kind에서 온다 (globals.css의 --kind·--kind-text). */
 .title {
   margin: 0 0 10px;
   font-size: var(--fs-sheet-title);
@@ -9,6 +10,15 @@
   color: var(--text-strong);
 }
 
+/* 제목 아래 한 줄 (TIL의 날짜) — 제목 위가 아니라 아래에 둔다. 이 갈래에서 먼저
+   읽혀야 하는 것은 언제가 아니라 무엇이고, 날짜는 그 뒤에 붙는 단서다 */
+.afterTitle {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--kind-text);
+}
+
 .tagline {
   margin: 0 0 26px;
   font-size: var(--fs-sheet-lead);
@@ -16,7 +26,7 @@
   color: var(--text-body);
 }
 
-/* 본문 <TextBlock> 묶음 — 코드가 붙는 블록은 아래 .withCode가 간격을 맡는다 */
+/* 블록 묶음 */
 .blocks {
   display: flex;
   flex-direction: column;
@@ -24,7 +34,7 @@
   margin-top: 30px;
 }
 
-/* 텍스트 박스와 그 아래 코드 한 조각을 한 덩어리로 묶는다 */
+/* 텍스트 박스와 그 아래 낱말·표·코드를 한 덩어리로 묶는다 */
 .block {
   display: flex;
   flex-direction: column;
@@ -38,8 +48,8 @@
   padding-left: 22px;
 }
 
-/* 이 개념이 나온 글 <NodeCard> 묶음 */
-.posts {
+/* 갈래만의 칸에 쓰는 카드 목록 (이론의 "이 개념이 나온 글") */
+.cards {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -71,8 +81,8 @@
 }
 
 .source:hover {
-  color: var(--theory-text);
-  border-color: var(--theory);
+  color: var(--kind-text);
+  border-color: var(--kind);
 }
 
 .sourceArrow {

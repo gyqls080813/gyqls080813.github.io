@@ -1,16 +1,5 @@
 import type { NodeKind } from "./types";
 
-const KIND_COLOR: Record<NodeKind, string> = {
-  theory: "var(--theory)",
-  project: "var(--project)",
-  trouble: "var(--trouble)",
-  me: "var(--me)",
-  idea: "var(--idea)",
-  /* 기록은 자기 색을 갖지 않는다 — 색은 갈래(생각)가 정하고,
-     종류는 표식으로 갈린다. 아래 KIND_PATH의 달력이 그 몫이다 */
-  til: "var(--idea)",
-};
-
 const KIND_PATH: Record<NodeKind, React.ReactNode> = {
   /* 폴더 — 글이 모이는 곳 */
   project: (
@@ -55,7 +44,12 @@ interface KindIconProps {
   color?: string;
 }
 
-/** 노드 종류 아이콘 — 카드·백드랍·트리·범례가 공유하는 표식 */
+/**
+ * 노드 종류 아이콘 — 카드·백드랍·트리·범례가 공유하는 표식.
+ *
+ * 색은 자기에게 단 data-kind로 globals.css의 종류 → 색 표에서 받는다.
+ * 기록(til)이 생각과 같은 초록인 것도 그 표가 정한다 — 종류는 표식(달력)이 가른다.
+ */
 export default function KindIcon({ kind, size = 14, color }: KindIconProps) {
   return (
     <svg
@@ -63,7 +57,8 @@ export default function KindIcon({ kind, size = 14, color }: KindIconProps) {
       height={size}
       viewBox="0 0 24 24"
       fill="none"
-      stroke={color ?? KIND_COLOR[kind]}
+      data-kind={kind}
+      stroke={color ?? "var(--kind)"}
       strokeWidth="1.8"
       strokeLinejoin="round"
       strokeLinecap="round"

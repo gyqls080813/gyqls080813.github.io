@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
@@ -10,7 +8,7 @@ import styles from "./NodeCard.module.css";
 /**
  * 노드 하나를 나타내는 카드(=노드 박스). 아이콘 · 제목(+역할) · 설명 · 메타 · 기술 배지 ·
  * 오른쪽 포트 점으로 이뤄진다. 색은 kind에서 나오고, 호버하면 그 색으로 살아난다.
- * href면 Link, onClick이면 button, 둘 다 없으면 정적 div로 렌더된다.
+ * href가 있으면 링크, 없으면 정적 div로 그린다.
  * 소개의 프로젝트/이론 행, 프로젝트 시트의 "트러블 슈팅" 행을 하나로 통합.
  */
 export default function NodeCard({
@@ -21,7 +19,6 @@ export default function NodeCard({
   meta,
   tags,
   href,
-  onClick,
 }: {
   kind: NodeKind;
   title: string;
@@ -33,7 +30,6 @@ export default function NodeCard({
   /** 기술 배지 목록 */
   tags?: string[];
   href?: string;
-  onClick?: () => void;
 }) {
   const inner = (
     <>
@@ -68,18 +64,6 @@ export default function NodeCard({
       <Link href={href} className={styles.card} data-kind={kind}>
         {inner}
       </Link>
-    );
-  }
-  if (onClick) {
-    return (
-      <button
-        type="button"
-        className={styles.card}
-        data-kind={kind}
-        onClick={onClick}
-      >
-        {inner}
-      </button>
     );
   }
   return (

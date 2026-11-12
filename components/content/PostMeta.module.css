@@ -1,0 +1,12 @@
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12.5px;
+}
+
+.date {
+  color: var(--faint);
+  margin-left: 6px;
+}

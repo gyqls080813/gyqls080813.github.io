@@ -1,5 +1,5 @@
-"use client";
-
+import { projectSummaries, roleTitle, techBranches } from "@/lib/catalog";
+import { nodeHref } from "@/lib/nodeTarget";
 import { slugify } from "@/lib/slug";
 /* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
 import { INTRO_HEADINGS as HEADINGS } from "@/lib/headings";
@@ -12,104 +12,6 @@ import NodeCard from "./content/NodeCard";
 import { Kicker, SectionHeading } from "./content/Prose";
 import TextBlock from "./content/TextBlock";
 import styles from "./IntroSheet.module.css";
-
-type Project = {
-  id: string;
-  name: string;
-  desc: string;
-  /** 프론트엔드 리더를 맡은 프로젝트에만 붙는다 */
-  role?: string;
-  tech: string[];
-};
-
-const PROJECTS: Project[] = [
-  {
-    id: "withy",
-    name: "WITHY",
-    desc: "멀리 있는 지인과 넷플릭스를 같이 보는 워치파티 크롬 익스텐션",
-    tech: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Zustand",
-      "TanStack Query",
-      "WXT",
-      "Shadow DOM",
-      "WebSocket",
-    ],
-  },
-  {
-    id: "petfolio",
-    name: "Petfolio",
-    desc: "반려동물 지출을 여러 보호자가 함께 기록하는 공동 가계부",
-    role: "FE Leader",
-    tech: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "TanStack Query",
-      "Effect-TS",
-      "MSW",
-    ],
-  },
-  {
-    id: "tickle",
-    name: "Tickle",
-    desc: "AI가 매크로를 걸러내는 공정한 티켓 예매 플랫폼",
-    role: "FE Leader",
-    tech: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Zustand",
-      "TanStack Query",
-      "Effect-TS",
-      "Canvas",
-      "Storybook",
-      "Playwright",
-    ],
-  },
-];
-
-/**
- * 기술 갈래 — id는 그래프의 뿌리 노드와 같다.
- *
- * 프로젝트 행이 프로젝트 노드로 가듯 이 행도 그 갈래의 뿌리로 간다.
- * 배지는 목차의 장 이름이 아니라 그 갈래에서 실제로 붙잡은 주제다 —
- * 프로젝트 행의 기술 배지와 같은 층위로 읽히게.
- */
-const TECHS = [
-  {
-    id: "react",
-    name: "React",
-    desc: "공식 문서 목차를 그대로 옮겨 두고, 프로젝트에서 부딪힌 자리부터 채웁니다",
-    topics: ["렌더링과 커밋", "상태", "훅", "Effect", "Context", "탈출구"],
-  },
-  {
-    id: "js",
-    name: "JavaScript",
-    desc: "javascript.info를 따라 언어와 브라우저를 같은 지도 위에 둡니다",
-    topics: ["프로토타입", "클로저", "이벤트 루프", "DOM", "이벤트", "비동기"],
-  },
-  {
-    id: "ts",
-    name: "TypeScript",
-    desc: "핸드북과 레퍼런스 — 타입으로 규칙을 화면에 드러내려고 붙잡은 것들",
-    topics: ["좁히기", "제네릭", "타입 조작", "유틸리티 타입", "선언 파일", "tsconfig"],
-  },
-  {
-    id: "vue",
-    name: "Vue",
-    desc: "가이드와 API 참고서 목차를 옮겨 두고, 반응성이 React와 갈리는 자리부터 봅니다",
-    topics: ["반응성", "템플릿 문법", "v-model", "슬롯", "컴포저블", "Provide / inject"],
-  },
-  {
-    id: "git",
-    name: "Git",
-    desc: "명령어보다 모델 먼저 — 커밋과 이름표로 브랜치·원격·복구를 한 그림에 둡니다",
-    topics: ["스테이징", "브랜치", "HEAD", "reflog", "fetch / pull", "충돌"],
-  },
-];
 
 const STACK = [
   "React",
@@ -156,24 +58,18 @@ const AWARDS = [
   { text: "연세대학교 환경공학부 성적우수상", date: "2022.02" },
 ];
 
-/* 절 이름은 한 곳에서 — 본문과 목차가 갈라져 어긋나지 않게 */
-interface IntroSheetProps {
-  /** 소개 속 프로젝트 클릭 → 그래프의 그 노드로 */
-  onProjectClick: (nodeId: string) => void;
-  /** 기술 행 클릭 → 그래프의 그 갈래(react·js·ts)로 */
-  onTheoryClick: (rootId: string) => void;
-}
-
 /**
  * 소개 시트의 안쪽.
  *
- * 껍데기(트리·목차·조작)는 갖지 않는다 — 주소가 있는 페이지(IntroView)와
- * 노드가 열리는 중의 겹침 화면이 각자 같은 틀로 감싼다.
+ * 껍데기(트리·목차·조작)는 갖지 않는다 — 주소가 있는 페이지(/about)와 노드가
+ * 열리는 중의 겹침 화면이 각자 같은 틀로 감싼다.
+ *
+ * 프로젝트·기술 카드는 다른 시트의 카드처럼 링크다(nodeHref). 목적지 페이지로
+ * 바로 보내지 않고 그래프를 거쳐, 어느 노드로 가는지 이동·확대가 보이게 한다.
+ * 카드의 소개 문구·기술 목록·직함은 요약 목록(lib/catalog)에서 온다 — 프로젝트
+ * 시트와 같은 값이라, 한쪽만 고쳐 둘이 갈라질 일이 없다.
  */
-export default function IntroSheet({
-  onProjectClick,
-  onTheoryClick,
-}: IntroSheetProps) {
+export default function IntroSheet() {
   return (
     <article className={styles.article}>
       <div className={styles.inner}>
@@ -186,9 +82,8 @@ export default function IntroSheet({
           </h1>
 
           <p className={styles.lead}>
-            비추다에는 세 가지 뜻이 있습니다. 어두운 데를 밝히는 것, 거울처럼
-            그대로 보여주는 것, 서로 견주어 보는 것. 제가 화면으로 하고 싶은
-            일이 이 셋입니다.
+            비추다에는 세 가지 뜻이 있습니다. 어두운 데를 밝히는 것, 거울처럼 그대로 보여주는 것,
+            서로 견주어 보는 것. 제가 화면으로 하고 싶은 일이 이 셋입니다.
           </p>
 
           {/* 세 뜻을 풀어놓는 대목만 사진과 나란히 선다 — 위의 문단이 셋을
@@ -209,9 +104,8 @@ export default function IntroSheet({
           </div>
 
           <p className={styles.lead}>
-            대신 화면에 올리기 전까지는 오래 붙잡습니다. 제가 이해하지 못한
-            것은 보여줄 수도 없으니까요. 그래서 되는 걸 확인하고 넘어가기보다,
-            왜 되는지 알 때까지 묻는 편입니다.
+            대신 화면에 올리기 전까지는 오래 붙잡습니다. 제가 이해하지 못한 것은 보여줄 수도
+            없으니까요. 그래서 되는 걸 확인하고 넘어가기보다, 왜 되는지 알 때까지 묻는 편입니다.
           </p>
 
           <div className={styles.factsSection} id={slugify(HEADINGS.history)}>
@@ -251,15 +145,15 @@ export default function IntroSheet({
             <span id={slugify(HEADINGS.projects)}>{HEADINGS.projects}</span>
           </SectionHeading>
           <div className={styles.projects}>
-            {PROJECTS.map((project) => (
+            {projectSummaries.map((project) => (
               <NodeCard
                 key={project.id}
                 kind="project"
                 title={project.name}
-                role={project.role}
-                description={project.desc}
-                tags={project.tech}
-                onClick={() => onProjectClick(project.id)}
+                role={roleTitle(project.role)}
+                description={project.tagline}
+                tags={project.stack}
+                href={nodeHref(project.id)}
               />
             ))}
           </div>
@@ -268,21 +162,20 @@ export default function IntroSheet({
             <span id={slugify(HEADINGS.blog)}>{HEADINGS.blog}</span>
           </SectionHeading>
           <div className={styles.projects}>
-            {TECHS.map((tech) => (
+            {techBranches.map((branch) => (
               <NodeCard
-                key={tech.id}
+                key={branch.root}
                 kind="theory"
-                title={tech.name}
-                description={tech.desc}
-                tags={tech.topics}
-                onClick={() => onTheoryClick(tech.id)}
+                title={branch.label}
+                description={branch.desc}
+                tags={branch.topics}
+                href={nodeHref(branch.root)}
               />
             ))}
           </div>
 
           <p className={styles.hint}>
-            바깥을 클릭하면 지식 그래프 전체가 보입니다. 붉은 트러블 노드를
-            누르면 그 글이 열려요.
+            바깥을 클릭하면 지식 그래프 전체가 보입니다. 붉은 트러블 노드를 누르면 그 글이 열려요.
           </p>
         </div>
       </div>

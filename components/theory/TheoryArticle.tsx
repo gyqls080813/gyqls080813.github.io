@@ -1,135 +1,43 @@
-import type { Theory, TheoryBlock } from "@/lib/theories";
-import { posts } from "@/lib/posts";
-import { nodeHref } from "@/lib/nodeTarget";
-import { sectionBlockId, slugify } from "@/lib/slug";
-import {
-  CodeBlock,
-  DataTable,
-  Kicker,
-  NodeCard,
-  SectionHeading,
-  TermNote,
-  TextBlock,
-} from "../content";
-/* 시트 안쪽 폭은 글·프로젝트와 같은 것을 쓴다 */
-import sheetStyles from "../content/Sheet.module.css";
-import styles from "./TheoryArticle.module.css";
+import type { Theory } from "@/lib/theories";
+import { postSummaries } from "@/lib/catalog";
+import { PostCard, SectionHeading } from "../content";
+import SheetArticle from "../content/SheetArticle";
+import styles from "../content/SheetArticle.module.css";
 
-/** 한 블록 — 문단, 낱말 풀이, 참고, 코드 순서. 절이 있든 없든 모양이 같아야 한다 */
-function Block({ block, id }: { block: TheoryBlock; id?: string }) {
-  return (
-    <div className={styles.block} id={id ?? slugify(block.label)}>
-      <TextBlock label={block.label} accent="theory">
-        {block.body}
-      </TextBlock>
-      {block.terms?.map((term) => (
-        <TermNote key={term.term} term={term.term}>
-          {term.body}
-        </TermNote>
-      ))}
-      {/* 참고는 본문 설명에 이어 붙는 곁가지라, 예제 코드보다 먼저 읽힌다 */}
-      {block.notes
-        ?.filter((note) => !note.bottom)
-        .map((note) => (
-          <TermNote key={note.title} term={note.title} kicker="참고">
-            {note.body}
-          </TermNote>
-        ))}
-      {/* 표는 설명과 예제 코드 사이 — 경우를 견주거나 구조를 칸으로 보여 준다 */}
-      {block.tables?.map((table, index) => (
-        <DataTable key={index} {...table} />
-      ))}
-      {block.code && <CodeBlock>{block.code}</CodeBlock>}
-      {/* 코드까지 다 본 뒤에 읽을 참고 — 블록을 마무리하는 곁가지 */}
-      {block.notes
-        ?.filter((note) => note.bottom)
-        .map((note) => (
-          <TermNote key={note.title} term={note.title} kicker="참고">
-            {note.body}
-          </TermNote>
-        ))}
-    </div>
-  );
-}
-
-/** 개념 시트 안쪽 — 노드가 열리는 중에도 같은 내용이 그대로 보여야 해서 따로 뒀다 */
+/**
+ * 개념 시트 안쪽 — 노드가 열리는 중에도 같은 내용이 그대로 보여야 해서 따로 뒀다.
+ * 뼈대는 SheetArticle이 쥐고, 여기는 이론에만 있는 칸("이 개념이 나온 글")만 더한다.
+ */
 export default function TheoryArticle({ theory }: { theory: Theory }) {
   /* 그래프에서 이 개념 노드에 다리로 이어진 트러블 글들과 같은 목록 */
-  const related = posts.filter((post) =>
+  const related = postSummaries.filter((post) =>
     post.theories.some((item) => item.id === theory.id),
   );
 
   return (
-    <div className={sheetStyles.articleInner}>
-      <Kicker kind="theory">이론</Kicker>
-
-      <h1 className={styles.title}>{theory.name}</h1>
-      <p className={styles.tagline}>{theory.tagline}</p>
-
-      <div className={styles.blocks}>
-        <TextBlock label="무엇을 푸는가" accent="theory">
-          {theory.intro}
-        </TextBlock>
-
-        {theory.blocks?.map((block) => (
-          <Block key={block.label} block={block} />
-        ))}
-      </div>
-
-      {/* 문서를 따라 읽는 시트는 절 제목을 문서의 번호·이름 그대로 세운다 */}
-      {theory.sections?.map((section) => (
-        /* id는 오른쪽 목차가 걸어 두는 앵커다 */
-        <section key={section.heading} id={slugify(section.heading)}>
-          <SectionHeading icon="theory" spaced>
-            {section.heading}
-          </SectionHeading>
-          <div className={`${styles.blocks} ${styles.sectionBlocks}`}>
-            {section.blocks.map((block) => (
-              <Block
-                key={block.label}
-                block={block}
-                id={sectionBlockId(section.heading, block.label)}
-              />
-            ))}
-          </div>
-        </section>
-      ))}
-
+    <SheetArticle
+      kind="theory"
+      kicker="이론"
+      title={theory.name}
+      tagline={theory.tagline}
+      introLabel="무엇을 푸는가"
+      intro={theory.intro}
+      blocks={theory.blocks}
+      sections={theory.sections}
+      sources={theory.sources}
+    >
       {related.length > 0 && (
         <>
           <SectionHeading icon="trouble" spaced>
             이 개념이 나온 글
           </SectionHeading>
-          <div className={styles.posts}>
+          <div className={styles.cards}>
             {related.map((post) => (
-              <NodeCard
-                key={post.id}
-                kind="trouble"
-                title={post.title}
-                meta={`${post.date}, ${post.readMinutes}분`}
-                href={nodeHref(post.id)}
-              />
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
         </>
       )}
-
-      {theory.sources && theory.sources.length > 0 && (
-        <div className={styles.sources}>
-          {theory.sources.map((source) => (
-            <a
-              key={source.href}
-              className={styles.source}
-              href={source.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {source.label}
-              <span className={styles.sourceArrow}>↗</span>
-            </a>
-          ))}
-        </div>
-      )}
-    </div>
+    </SheetArticle>
   );
 }

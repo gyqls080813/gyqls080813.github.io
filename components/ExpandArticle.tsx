@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import IntroSheet from "./IntroSheet";
 import PostArticle from "./post/PostArticle";
 import ProjectArticle from "./project/ProjectArticle";
@@ -11,7 +12,39 @@ import { getTheory } from "@/lib/theories";
 import { getIdea } from "@/lib/ideas";
 import { getTil } from "@/lib/tils";
 import { getDictionary } from "@/lib/dictionary";
-import type { NodeOpenKind } from "@/lib/nodeTarget";
+import type { NodeOpenKind } from "@/lib/nodeKinds";
+
+/**
+ * 종류 → 본문. 찾은 것이 없으면 아무것도 그리지 않는다 — 열림 판단(색인)과
+ * 본문이 어긋나도 겹침 화면이 터지지 않고 빈 시트로 열린다.
+ */
+const ARTICLE: Record<NodeOpenKind, (nodeId: string) => ReactNode> = {
+  intro: () => <IntroSheet />,
+  project: (id) => {
+    const project = getProject(id);
+    return project && <ProjectArticle project={project} />;
+  },
+  post: (id) => {
+    const post = getPost(id);
+    return post && <PostArticle post={post} />;
+  },
+  theory: (id) => {
+    const theory = getTheory(id);
+    return theory && <TheoryArticle theory={theory} />;
+  },
+  idea: (id) => {
+    const idea = getIdea(id);
+    return idea && <IdeaArticle idea={idea} />;
+  },
+  til: (id) => {
+    const til = getTil(id);
+    return til && <TilArticle til={til} />;
+  },
+  dict: (id) => {
+    const dictionary = getDictionary(id);
+    return dictionary && <DictArticle dictionary={dictionary} />;
+  },
+};
 
 /**
  * 홈에서 노드가 열리는 동안 겹침 화면에 그리는 본문.
@@ -20,29 +53,6 @@ import type { NodeOpenKind } from "@/lib/nodeTarget";
  * GraphHome이 React.lazy로 불러오고, 화면이 한가해지면 미리 받아 둔다.
  * 노드를 누르면 카메라가 옮겨 가는 동안(0.5초) 받을 시간도 있다.
  */
-export default function ExpandArticle({
-  kind,
-  nodeId,
-  onOpenNode,
-}: {
-  kind: NodeOpenKind;
-  nodeId: string;
-  onOpenNode: (nodeId: string) => void;
-}) {
-  switch (kind) {
-    case "project":
-      return <ProjectArticle project={getProject(nodeId)!} />;
-    case "theory":
-      return <TheoryArticle theory={getTheory(nodeId)!} />;
-    case "idea":
-      return <IdeaArticle idea={getIdea(nodeId)!} />;
-    case "post":
-      return <PostArticle post={getPost(nodeId)!} />;
-    case "til":
-      return <TilArticle til={getTil(nodeId)!} />;
-    case "dict":
-      return <DictArticle dictionary={getDictionary(nodeId)!} />;
-    default:
-      return <IntroSheet onProjectClick={onOpenNode} onTheoryClick={onOpenNode} />;
-  }
+export default function ExpandArticle({ kind, nodeId }: { kind: NodeOpenKind; nodeId: string }) {
+  return ARTICLE[kind](nodeId);
 }

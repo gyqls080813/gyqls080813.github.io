@@ -1,11 +1,11 @@
 import type { Project } from "@/lib/projects";
-import { nodeHref } from "@/lib/nodeTarget";
 import {
   Chip,
+  ExternalLink,
   FactRow,
   Figure,
   Kicker,
-  NodeCard,
+  PostCard,
   SectionHeading,
   TextBlock,
 } from "../content";
@@ -37,9 +37,9 @@ export default function ProjectArticle({ project }: { project: Project }) {
         {project.award && <FactRow label="성과">{project.award}</FactRow>}
         {project.repo && (
           <FactRow label="저장소">
-            <a href={project.repo} target="_blank" rel="noopener noreferrer">
+            <ExternalLink href={project.repo}>
               {project.repo.replace(/^https:\/\//, "")}
-            </a>
+            </ExternalLink>
           </FactRow>
         )}
       </div>
@@ -95,13 +95,7 @@ export default function ProjectArticle({ project }: { project: Project }) {
           </SectionHeading>
           <div className={styles.troubles}>
             {troubles.map((post) => (
-              <NodeCard
-                key={post.id}
-                kind="trouble"
-                title={post.title}
-                meta={`${post.date}, ${post.readMinutes}분`}
-                href={nodeHref(post.id)}
-              />
+              <PostCard key={post.id} post={post} />
             ))}
           </div>
         </section>

@@ -1,31 +1,14 @@
-/* 그래프 노드의 포트와 같은 점. 색은 kind에서. */
+/* 그래프 노드의 포트와 같은 점. 색은 data-kind에서 (globals.css의 --kind) */
 .dot {
   display: block;
   box-sizing: border-box;
   border-radius: 50%;
   background: var(--surface-inset);
   border-style: solid;
-  border-color: var(--c);
+  border-color: var(--kind);
   transition:
     background 0.15s ease,
     box-shadow 0.15s ease;
-}
-
-.dot[data-kind="theory"] {
-  --c: var(--theory);
-}
-.dot[data-kind="project"] {
-  --c: var(--project);
-}
-.dot[data-kind="trouble"] {
-  --c: var(--trouble);
-}
-.dot[data-kind="me"] {
-  --c: var(--me);
-}
-.dot[data-kind="idea"],
-.dot[data-kind="til"] {
-  --c: var(--idea);
 }
 
 /* 카드·행 안의 작은 점 */

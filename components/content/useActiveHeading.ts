@@ -34,8 +34,8 @@ export function useActiveHeading(ids: string[]): string | null {
     if (!root || list.length === 0) return;
 
     const pick = () => {
-      /* 끝까지 내려왔으면 마지막 절이다. 짧은 글에서는 뒤쪽 절이 1/3 선에
-         닿을 만큼 올라오지 못해, 이 규칙이 없으면 영영 안 밝혀진다 */
+      /* 끝까지 내려왔으면 마지막 절이다. 짧은 글에서는 뒤쪽 절이 위쪽 선
+         (HEADING_LINE)에 닿을 만큼 올라오지 못해, 이 규칙이 없으면 영영 안 밝혀진다 */
       if (root.scrollTop + root.clientHeight >= root.scrollHeight - 2) {
         setActive(list[list.length - 1]);
         return;

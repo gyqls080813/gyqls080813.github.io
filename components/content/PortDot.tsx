@@ -1,4 +1,5 @@
 import type { NodeKind } from "../graph/types";
+import { cx } from "@/lib/util";
 import styles from "./PortDot.module.css";
 
 /** 연결 점 크기 — sm: 카드/행 안 · md: 시트 가장자리 포트 */
@@ -11,17 +12,11 @@ export type PortSize = "sm" | "md";
 export default function PortDot({
   kind,
   size = "sm",
-  className = "",
+  className,
 }: {
   kind: NodeKind;
   size?: PortSize;
   className?: string;
 }) {
-  return (
-    <span
-      className={`${styles.dot} ${styles[size]} ${className}`}
-      data-kind={kind}
-      aria-hidden
-    />
-  );
+  return <span className={cx(styles.dot, styles[size], className)} data-kind={kind} aria-hidden />;
 }

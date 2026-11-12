@@ -26,12 +26,11 @@ export function planClaim(
   frames: readonly FrameState[],
   frameId: string,
   ids: readonly string[],
-): { writes: MemberWrite[]; donors: string[] } {
+): MemberWrite[] {
   const taken = new Set(ids);
-  if (taken.size === 0) return { writes: [], donors: [] };
+  if (taken.size === 0) return [];
 
   const writes: MemberWrite[] = [];
-  const donors: string[] = [];
 
   for (const frame of frames) {
     if (frame.id === frameId) continue;
@@ -39,7 +38,6 @@ export function planClaim(
     if (kept.length === frame.members.length) continue;
 
     writes.push({ frameId: frame.id, members: kept });
-    donors.push(frame.id);
   }
 
   const target = frames.find((frame) => frame.id === frameId);
@@ -51,5 +49,5 @@ export function planClaim(
     }
   }
 
-  return { writes, donors };
+  return writes;
 }

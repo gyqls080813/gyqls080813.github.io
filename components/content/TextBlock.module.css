@@ -5,28 +5,12 @@
    제목은 선이 시작하는 자리에 맞춘다. 본문 글자에 맞추면 제목이 한 단
    들어가 이 덩어리가 어디서 시작하는지가 흐려진다 — 선의 왼쪽 끝이 곧
    블록의 왼쪽 끝이고, 제목이 그 자리에서 시작해야 한 덩어리로 읽힌다. */
-.block[data-accent="theory"] {
-  --c-text: var(--theory-text);
-}
-.block[data-accent="project"] {
-  --c-text: var(--project-text);
-}
-.block[data-accent="trouble"] {
-  --c-text: var(--trouble-bright);
-}
-.block[data-accent="me"] {
-  --c-text: var(--me-bright);
-}
-.block[data-accent="idea"],
-.block[data-accent="til"] {
-  --c-text: var(--idea-text);
-}
 
 .label {
   margin: 0 0 8px;
   font-size: 14px;
   font-weight: 700;
-  color: var(--c-text);
+  color: var(--kind-text);
 }
 
 .body {

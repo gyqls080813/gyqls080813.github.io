@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
+import { cx } from "@/lib/util";
+import SheetColumns from "./SheetColumns";
 import { useSheetView } from "./SheetView";
-import { SHEET_SCROLL_ATTR } from "./sheetScroll";
-import styles from "./SheetShell.module.css";
 import sheetStyles from "./Sheet.module.css";
 
 /**
@@ -16,6 +15,7 @@ import sheetStyles from "./Sheet.module.css";
  *
  * 안에 들어가는 것들(트리·본문·목차)은 서버에서 그려도 되는 것들이라 자식으로
  * 받는다 — 서버 컴포넌트를 클라이언트 컴포넌트에 넘기는 그 방식이다.
+ * 세 열 자체는 홈의 겹침 화면과 같은 컴포넌트(SheetColumns)다.
  */
 export default function SheetShell({
   nodeId,
@@ -24,13 +24,12 @@ export default function SheetShell({
   children,
 }: {
   /** 지금 열린 노드 — 바뀌면 본문을 맨 위로 되돌린다 */
-  nodeId?: string;
+  nodeId: string;
   tree: ReactNode;
   nav: ReactNode;
   children: ReactNode;
 }) {
-  const router = useRouter();
-  const { full, tree: treeOpen, nav: navOpen, toggle } = useSheetView();
+  const { full, toggle } = useSheetView();
   const articleRef = useRef<HTMLElement>(null);
 
   /* 이 틀은 레이아웃에 있어 주소가 바뀌어도 살아 있다 — 트리 스크롤을
@@ -56,130 +55,10 @@ export default function SheetShell({
   }, [full, toggle]);
 
   return (
-    <div className={`${sheetStyles.sheet} ${full ? sheetStyles.sheetFull : ""}`}>
-      {treeOpen && <aside className={sheetStyles.treePanel}>{tree}</aside>}
-
-      {/* 목차가 스크롤을 들으려면 어느 요소가 스크롤하는지 표식이 있어야 한다 */}
-      <article
-        ref={articleRef}
-        className={sheetStyles.article}
-        {...{ [SHEET_SCROLL_ATTR]: true }}
-      >
-        {/* 조작은 본문 안에 붙어 다닌다 — 양옆 패널이 닫히면 그 자리가 없어진다 */}
-        <div className={styles.toolbar}>
-          <button
-            type="button"
-            className={`${styles.control} ${treeOpen ? styles.on : ""}`}
-            onClick={() => toggle("tree")}
-            aria-pressed={treeOpen}
-            title={treeOpen ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
-            aria-label={treeOpen ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
-          >
-            <PanelIcon side="left" />
-          </button>
-          <button
-            type="button"
-            className={`${styles.control} ${navOpen ? styles.on : ""}`}
-            onClick={() => toggle("nav")}
-            aria-pressed={navOpen}
-            title={navOpen ? "목차 닫기" : "목차 열기"}
-            aria-label={navOpen ? "목차 닫기" : "목차 열기"}
-          >
-            <PanelIcon side="right" />
-          </button>
-          <span className={styles.divider} />
-          <button
-            type="button"
-            className={styles.control}
-            onClick={() => toggle("full")}
-            aria-pressed={full}
-            title={full ? "원래 크기로 (Esc)" : "전체 화면"}
-            aria-label={full ? "원래 크기로" : "전체 화면"}
-          >
-            {full ? <Shrink /> : <Expand />}
-          </button>
-          <span className={styles.divider} />
-          {/* 닫기는 어느 시트에서든 뜻이 하나다 — 그래프로 돌아간다.
-              바깥(스크림)을 눌러도 같은 일이 일어나지만, 전체 화면에서는
-              누를 바깥이 없어서 이 버튼이 유일한 길이 된다 */}
-          <button
-            type="button"
-            className={styles.control}
-            onClick={() => router.push("/")}
-            title="닫고 그래프로"
-            aria-label="닫고 그래프로"
-          >
-            <Close />
-          </button>
-        </div>
-
+    <div className={cx(sheetStyles.sheet, full && sheetStyles.sheetFull)}>
+      <SheetColumns tree={tree} nav={nav} articleRef={articleRef} scrollRoot>
         {children}
-      </article>
-
-      {navOpen && <aside className={sheetStyles.navPanel}>{nav}</aside>}
+      </SheetColumns>
     </div>
-  );
-}
-
-/** 한쪽 기둥이 서 있는 판 — 그 쪽 패널을 뜻한다 */
-function PanelIcon({ side }: { side: "left" | "right" }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect
-        x="3.5"
-        y="4.5"
-        width="17"
-        height="15"
-        rx="2.5"
-        stroke="currentColor"
-        strokeWidth="1.9"
-      />
-      <path
-        d={side === "left" ? "M9.5 4.5 V19.5" : "M14.5 4.5 V19.5"}
-        stroke="currentColor"
-        strokeWidth="1.9"
-      />
-    </svg>
-  );
-}
-
-function Close() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M6 6 L18 18 M18 6 L6 18"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function Expand() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function Shrink() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path
-        d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"
-        stroke="currentColor"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }

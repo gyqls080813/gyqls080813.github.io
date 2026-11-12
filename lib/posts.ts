@@ -1,4 +1,6 @@
-export type TheoryRole = "원인 개념" | "해결 기법" | "관련 개념";
+import { postSummaries, type PostSummary } from "./catalog";
+
+export type { TheoryRole } from "./catalog";
 
 export type PostSection = {
   heading: string;
@@ -8,28 +10,20 @@ export type PostSection = {
   code?: string;
 };
 
-export type Post = {
-  /** 그래프의 트러블 노드 id와 동일 */
-  id: string;
-  title: string;
-  date: string;
-  readMinutes: number;
-  /** 프로젝트 노드 id */
-  project: string;
-  theories: { id: string; role: TheoryRole }[];
+/**
+ * 글 = 요약(lib/catalog) + 본문. 제목·날짜·소속 프로젝트·이어진 개념은 catalog에만 적는다 —
+ * 그래프의 간선과 틀, 트리가 같은 것을 본다.
+ */
+export type Post = PostSummary & {
   lead: string;
   sections: PostSection[];
 };
 
-export const posts: Post[] = [
+/** 본문만 — 요약은 catalog의 postSummaries에 있다 */
+const bodies: Pick<Post, "id" | "lead" | "sections">[] = [
   /* ─────────────── WITHY — 넷플릭스 워치파티 크롬 익스텐션 ─────────────── */
   {
     id: "t-isolated",
-    title: "video.currentTime은 됐는데, 넷플릭스는 그 사실을 몰랐다",
-    date: "2026.02.05",
-    readMinutes: 9,
-    project: "withy",
-    theories: [{ id: "js-frames", role: "원인 개념" }],
     lead: "넷플릭스 위에 얹히는 익스텐션에서 플레이어를 제어해야 했다. <video>를 직접 조작하면 재생·정지는 됐지만 탐색에서 진행바가 어긋나고 영상이 튀었다. 정상 경로인 내부 API는 콘솔에 undefined로 찍혔다 — 만질 수 있는 건 부작용이 있고, 제대로 된 건 안 보이는 상황이었다.",
     sections: [
       {
@@ -62,12 +56,6 @@ export const posts: Post[] = [
   },
   {
     id: "t-focus",
-    title: "넷플릭스가 유휴 상태가 되면 채팅 커서가 사라졌다",
-    date: "2026.02.06",
-    readMinutes: 7,
-    project: "withy",
-    theories: [{ id: "js-events", role: "원인 개념" },
-      { id: "js-ui-events", role: "관련 개념" }],
     lead: "우리 채팅창은 남의 페이지 위에 얹혀 있다. 그래서 입력이 우리 것으로 끝나지 않았다. 유튜브에서는 치는 글자가 단축키로 새어 나갔고, 넷플릭스에서는 몇 글자 치고 나면 커서가 그냥 사라졌다. 증상은 비슷해 보였지만 원인이 서로 달랐고, 그래서 해결도 달라야 했다.",
     sections: [
       {
@@ -111,14 +99,6 @@ export const posts: Post[] = [
   },
   {
     id: "t-sync",
-    title: "완벽히 맞추려던 동기화가 오히려 영상을 끊고 있었다",
-    date: "2026.02.08",
-    readMinutes: 7,
-    project: "withy",
-    theories: [
-      { id: "js-network", role: "해결 기법" },
-      { id: "rl-escape", role: "관련 개념" },
-    ],
     lead: "호스트의 재생 위치를 참여자에게 전파했더니 영상이 계속 끊겼다. 네트워크 지연 때문에 참여자의 위치는 호스트와 항상 미세하게 다른데, 그 차이를 매번 seek로 맞추려 한 것이 원인이었다. 오차를 0으로 만들려는 시도 자체가 불안정을 만들고 있었다.",
     sections: [
       {
@@ -152,14 +132,6 @@ export const posts: Post[] = [
   /* ─────────────── Petfolio — 반려동물 공동 가계부 ─────────────── */
   {
     id: "t-schema",
-    title: "백엔드 스키마가 바뀌면 전원이 같은 흰 화면을 봤다",
-    date: "2026.03.24",
-    readMinutes: 6,
-    project: "petfolio",
-    theories: [
-      { id: "ts-hb-everyday", role: "원인 개념" },
-      { id: "ts-hb-narrowing", role: "해결 기법" },
-    ],
     lead: "API 응답을 타입만 믿고 그대로 썼다. 백엔드 스키마가 변경되면 프론트엔드에서 TypeError가 터지고 사용자에게 빈 화면이 노출됐다. 공동 가계부라 그룹 전원이 동시에 같은 빈 화면을 본다 — 이 서비스에서 특히 나쁜 실패였다.",
     sections: [
       {
@@ -186,12 +158,6 @@ export const posts: Post[] = [
   },
   {
     id: "t-tagged",
-    title: "에러 타입이 unknown인 채로는, 놓친 분기가 크래시가 된다",
-    date: "2026.03.28",
-    readMinutes: 6,
-    project: "petfolio",
-    theories: [{ id: "ts-hb-narrowing", role: "해결 기법" },
-      { id: "ts-tm-creating", role: "관련 개념" }],
     lead: "try/catch의 에러는 unknown으로 추론된다. 어떤 에러가 올 수 있는지 컴파일러가 모르니, 예외 처리를 빠뜨린 지점은 조용히 통과되다가 런타임 크래시로 드러났다. 에러 처리 누락을 사람의 성실함이 아니라 컴파일러가 잡게 만들고 싶었다.",
     sections: [
       {
@@ -222,11 +188,6 @@ export const posts: Post[] = [
   /* ─────────────── Tickle — 공정한 티켓 예매 플랫폼 ─────────────── */
   {
     id: "t-canvas",
-    title: "DOM으로 그린 좌석은 셀렉터 한 줄에 뚫렸다",
-    date: "2026.05.10",
-    readMinutes: 7,
-    project: "tickle",
-    theories: [{ id: "js-document", role: "관련 개념" }],
     lead: "좌석을 DOM으로 그리니 구조가 개발자 도구에 투명하게 보였다. 콘솔에서 querySelector로 좌석을 찾아 click()을 부르면 사람이 클릭한 것과 똑같이 동작했다. 좌석의 '의미'가 마크업에 그대로 적혀 있다는 게 문제였다.",
     sections: [
       {
@@ -264,11 +225,6 @@ export const posts: Post[] = [
   },
   {
     id: "t-webdriver",
-    title: "봇 방어가 서버 AI 한 곳뿐이라는 게 문제였다",
-    date: "2026.05.15",
-    readMinutes: 5,
-    project: "tickle",
-    theories: [{ id: "js-document", role: "관련 개념" }],
     lead: "방어가 단일 층이면 그 층이 곧 단일 실패 지점이다. Selenium·Playwright처럼 브라우저에 명백한 흔적을 남기는 자동화까지 행동 수집 → 전송 → AI 추론 파이프라인을 전부 태우면, 정작 정밀 판정이 필요한 트래픽에 쓸 자원이 줄어든다.",
     sections: [
       {
@@ -295,15 +251,6 @@ export const posts: Post[] = [
   },
   {
     id: "t-buffer",
-    title: "행동 데이터를 수집하자 좌석 화면이 버벅였다",
-    date: "2026.05.22",
-    readMinutes: 9,
-    project: "tickle",
-    theories: [
-      { id: "js-ui-misc", role: "원인 개념" },
-      { id: "rl-interact", role: "원인 개념" },
-      { id: "rl-escape", role: "해결 기법" },
-    ],
     lead: "봇 판별용 마우스 궤적을 수집하기 시작하자 좌석 화면 프레임이 뚝뚝 떨어졌다. 고빈도 이벤트를 React state에 담고, 무거운 지표 계산을 핸들러 안에서 하고, 이벤트마다 전송했다 — 수집·계산·전송이 한 지점에 몰려 있었다.",
     sections: [
       {
@@ -340,6 +287,11 @@ export const posts: Post[] = [
     ],
   },
 ];
+
+export const posts: Post[] = postSummaries.flatMap((summary) => {
+  const body = bodies.find((entry) => entry.id === summary.id);
+  return body ? [{ ...summary, ...body }] : [];
+});
 
 export function getPost(id: string): Post | undefined {
   return posts.find((post) => post.id === id);

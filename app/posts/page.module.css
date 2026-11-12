@@ -66,30 +66,3 @@
   background: var(--trouble);
   flex-shrink: 0;
 }
-
-.cardMeta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 7px;
-  font-size: 12px;
-}
-
-.chipProject {
-  padding: 3px 9px;
-  border-radius: 5px;
-  background: rgba(var(--project-rgb), 0.1);
-  color: var(--project-text);
-}
-
-.chipTheory {
-  padding: 3px 9px;
-  border-radius: 5px;
-  background: rgba(var(--theory-rgb), 0.1);
-  color: var(--theory-text);
-}
-
-.date {
-  color: var(--faint);
-  margin-left: 4px;
-}

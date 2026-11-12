@@ -140,6 +140,42 @@
   --sheet-gap: clamp(24px, 4cqi, 44px);
 }
 
+/**
+ * 노드 종류 → 색. 화면 어디서든 data-kind만 달면 아래 셋을 받는다.
+ *   --kind       선·점·아이콘의 색
+ *   --kind-text  글자 색 (바탕 위에서 읽히는 밝기)
+ *   --kind-rgb   옅게 칠할 때 쓰는 세 숫자 (rgba(var(--kind-rgb), 0.1))
+ *
+ * 이 표가 종류와 색을 잇는 유일한 곳이다. 컴포넌트는 종류를 묻지 않고 변수만 쓴다.
+ * 기록(til)은 자기 색이 없다 — 색은 갈래(생각)가 정하고, 종류는 아이콘이 가른다.
+ */
+[data-kind="theory"] {
+  --kind: var(--theory);
+  --kind-text: var(--theory-text);
+  --kind-rgb: var(--theory-rgb);
+}
+[data-kind="project"] {
+  --kind: var(--project);
+  --kind-text: var(--project-text);
+  --kind-rgb: var(--project-rgb);
+}
+[data-kind="trouble"] {
+  --kind: var(--trouble);
+  --kind-text: var(--trouble-bright);
+  --kind-rgb: var(--trouble-rgb);
+}
+[data-kind="me"] {
+  --kind: var(--me);
+  --kind-text: var(--me-bright);
+  --kind-rgb: var(--me-rgb);
+}
+[data-kind="idea"],
+[data-kind="til"] {
+  --kind: var(--idea);
+  --kind-text: var(--idea-text);
+  --kind-rgb: var(--idea-rgb);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -153,8 +189,7 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-space-grotesk), var(--font-plex-kr), system-ui,
-    sans-serif;
+  font-family: var(--font-space-grotesk), var(--font-plex-kr), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

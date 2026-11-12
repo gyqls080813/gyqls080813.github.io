@@ -42,9 +42,7 @@ export function layoutGraph(
 
   const ids = nodes.map((node) => node.id);
   const known = new Set(ids);
-  const inside = edges.filter(
-    (edge) => known.has(edge.source) && known.has(edge.target),
-  );
+  const inside = edges.filter((edge) => known.has(edge.source) && known.has(edge.target));
 
   const order = topologicalSort(ids, inside);
   if (!order) return null;
@@ -82,8 +80,7 @@ export function layoutGraph(
     column.sort((a, b) => a.y - b.y);
 
     const total =
-      column.reduce((sum, node) => sum + node.height, 0) +
-      gap.row * (column.length - 1);
+      column.reduce((sum, node) => sum + node.height, 0) + gap.row * (column.length - 1);
     let y = -total / 2;
 
     for (const node of column) {
@@ -220,10 +217,7 @@ function arrange(
 }
 
 /** 잎끼리의 연결을 이 층의 덩어리 사이 연결로 끌어올린다. */
-function liftEdges(
-  items: readonly LayoutItem[],
-  edges: readonly GraphEdge[],
-): GraphEdge[] {
+function liftEdges(items: readonly LayoutItem[], edges: readonly GraphEdge[]): GraphEdge[] {
   const owner = new Map<string, string>();
   const claim = (item: LayoutItem, top: string) => {
     owner.set(item.id, top);

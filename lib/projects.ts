@@ -1,3 +1,5 @@
+import { projectSummaries, type ProjectSummary } from "./catalog";
+
 /** 프로젝트 시트의 한 블록 — 라벨 하나에 문단 하나 */
 export type ProjectBlock = {
   label: string;
@@ -12,20 +14,11 @@ export type ProjectView = {
   caption: string;
 };
 
-export type Project = {
-  /** 그래프의 프로젝트 노드 id와 동일 */
-  id: string;
-  name: string;
-  tagline: string;
-  period: string;
-  team: string;
-  /** 그 팀에서 내가 맡은 자리 */
-  role: string;
-  /** 받은 상이 있으면 */
-  award?: string;
-  /** 코드가 있는 곳 — 소스는 이 블로그에 복사해 두지 않고 저장소로 보낸다 */
-  repo?: string;
-  stack: string[];
+/**
+ * 프로젝트 시트의 내용 = 요약(lib/catalog) + 본문.
+ * 이름·기간·역할·기술 같은 요약은 catalog에만 적는다 — 소개 카드와 그래프가 같은 것을 본다.
+ */
+export type Project = ProjectSummary & {
   /** 소개 — 무엇을 왜 만들었는지, 화면을 보여주기 전에 */
   intro: string;
   /** 만든 화면들 — 소개 바로 뒤에 온다 */
@@ -33,29 +26,10 @@ export type Project = {
   blocks: ProjectBlock[];
 };
 
-export const projects: Project[] = [
+/** 본문만 — 요약은 catalog의 projectSummaries에 있다 */
+const bodies: Pick<Project, "id" | "intro" | "views" | "blocks">[] = [
   {
     id: "withy",
-    name: "WITHY",
-    tagline: "멀리 있는 지인과 같은 순간을 보는 AI 워치파티 플랫폼",
-    period: "2026.01.12 – 2026.02.09, 5주",
-    team: "6인, 프론트엔드 3인",
-    role: "프론트엔드 — 익스텐션 전반",
-    award: "SSAFY 공통 프로젝트 최우수상",
-    repo: "https://github.com/gyqls080813/WITHY",
-    stack: [
-      "WXT",
-      "React",
-      "TypeScript",
-      "Chrome Extension API",
-      "Shadow DOM",
-      "postMessage",
-      "STOMP / SockJS",
-      "TanStack Query",
-      "Next.js",
-      "Zustand",
-      "Tailwind CSS",
-    ],
     intro:
       "떨어져 있는 사람과 같이 보려면 보통 화면을 공유합니다. 그러면 끊기고, 화질이 무너지고, 결국 아무도 제대로 못 봅니다. WITHY는 화면을 보내지 않습니다. 각자의 넷플릭스를 각자 재생하되 재생 시각만 주고받아, 원본 화질 그대로 같은 장면에 머물게 합니다. 그리고 그 화면 위에 채팅을 얹었습니다.",
     views: [
@@ -101,23 +75,6 @@ export const projects: Project[] = [
   },
   {
     id: "petfolio",
-    name: "Petfolio",
-    tagline: "여러 보호자의 결제 내역에서 반려동물 지출만 찾아내는 AI 공동 가계부",
-    period: "2026.02.19 – 2026.03.30, 6주",
-    team: "6인, 프론트엔드 2인",
-    role: "프론트엔드 리더 — API 계층과 에러 처리",
-    repo: "https://github.com/gyqls080813/Petfolio",
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Effect-TS",
-      "@effect/schema",
-      "TanStack Query",
-      "SSE",
-      "MSW",
-      "Tailwind CSS",
-    ],
     intro:
       "반려동물 하나를 여러 사람이 같이 돌보면 지출도 흩어집니다. 병원비는 누가 냈고 사료는 누가 샀는지가 각자의 카드 내역에만 남습니다. Petfolio는 그 흩어진 결제 내역을 연동해, AI가 반려동물 관련 지출만 골라내고 태그까지 붙여 하나의 공동 가계부로 모읍니다. 손으로 적지 않아도 기록이 쌓이게 만드는 것이 목표였습니다.",
     views: [
@@ -155,26 +112,6 @@ export const projects: Project[] = [
   },
   {
     id: "tickle",
-    name: "Tickle",
-    tagline: "AI가 매크로를 걸러내는 공정한 티켓 예매 플랫폼",
-    period: "2026.04.14 – 2026.05.22, 6주",
-    team: "6인, 프론트엔드 2인",
-    role: "프론트엔드 리더 — 예매 흐름과 봇 탐지",
-    award: "SSAFY 자율 프로젝트 우수상",
-    repo: "https://github.com/gyqls080813/Tickle",
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Canvas",
-      "Zustand",
-      "TanStack Query",
-      "Effect-TS",
-      "SSE",
-      "Storybook",
-      "Playwright / Vitest",
-      "MSW",
-    ],
     intro:
       "티켓이 순식간에 사라지는 이유는 대부분 사람이 아닙니다. Tickle은 예매하는 동안의 마우스 궤적과 클릭 간격, 키 입력을 모아 사람인지 자동화인지를 판정하고, 매크로로 판정되면 예매를 막는 티켓 예매 플랫폼입니다. 공연을 고르고 대기열에 서고 좌석을 골라 결제하기까지, 예매의 처음부터 끝까지가 이 판정 위에서 돌아갑니다.",
     views: [
@@ -216,6 +153,11 @@ export const projects: Project[] = [
     ],
   },
 ];
+
+export const projects: Project[] = projectSummaries.flatMap((summary) => {
+  const body = bodies.find((entry) => entry.id === summary.id);
+  return body ? [{ ...summary, ...body }] : [];
+});
 
 export function getProject(id: string): Project | undefined {
   return projects.find((project) => project.id === id);

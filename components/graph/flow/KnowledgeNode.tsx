@@ -1,42 +1,23 @@
 import { useContext } from "react";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 import KindIcon from "../KindIcon";
-import type { GraphNodeData, NodeKind } from "../types";
+import { cx } from "@/lib/util";
+import type { GraphNodeData } from "../types";
 import { HoverHighlightContext } from "./hoverContext";
+import { cardWidth } from "./sizes";
 import styles from "./KnowledgeNode.module.css";
 
 export type KnowledgeFlowNode = Node<GraphNodeData, "knowledge">;
 
-/** 카드 폭 — 노드 에디터처럼 종류별 고정 폭 (toFlow의 중심 보정과 맞출 것) */
-export function cardWidth(data: GraphNodeData): number {
-  if (data.kind === "trouble") return 196;
-  if (data.kind === "project" || data.kind === "me") return 176;
-  return data.hub ? 158 : 174;
-}
-
-/** 포트 색 — 노드 종류의 색을 그대로 (asset-pipeline의 포트 문법, 이름 없이) */
-const PORT_COLOR: Record<NodeKind, string> = {
-  theory: "var(--theory)",
-  project: "var(--project)",
-  trouble: "var(--trouble)",
-  me: "var(--me)",
-  idea: "var(--idea)",
-  /* 기록은 생각 갈래의 색을 그대로 쓴다 (KindIcon 참조) */
-  til: "var(--idea)",
-};
-
 export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>) {
   const { hovered, neighbors } = useContext(HoverHighlightContext);
   const dimmed = hovered !== null && hovered !== id && !neighbors?.has(id);
-  const title = data.sublabel ? `${data.label} ${data.sublabel}` : data.label;
 
   return (
     <div
-      className={[
-        styles.card,
-        data.hub ? styles.hub : "",
-        data.clickable ? styles.clickable : "",
-      ].join(" ")}
+      className={cx(styles.card, data.hub && styles.hub, data.clickable && styles.clickable)}
+      /* 포트·아이콘의 색은 여기 단 종류에서 내려온다 (globals.css의 --kind) */
+      data-kind={data.kind}
       style={{ width: cardWidth(data), opacity: dimmed ? 0.18 : 1 }}
     >
       {/* 포트: 왼쪽 = 입력, 오른쪽 = 출력. 나는 출력만, 트러블은 입력만 —
@@ -46,7 +27,6 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
           type="target"
           position={Position.Left}
           className={styles.port}
-          style={{ borderColor: PORT_COLOR[data.kind] }}
           isConnectable={false}
         />
       )}
@@ -55,7 +35,6 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
           type="source"
           position={Position.Right}
           className={styles.port}
-          style={{ borderColor: PORT_COLOR[data.kind] }}
           isConnectable={false}
         />
       )}
@@ -66,10 +45,8 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
       {/* 2단: 제목 */}
       <div className={styles.header}>
         <KindIcon kind={data.kind} />
-        <span
-          className={`${styles.title} ${data.kind === "trouble" ? styles.titleWrap : ""}`}
-        >
-          {title}
+        <span className={cx(styles.title, data.kind === "trouble" && styles.titleWrap)}>
+          {data.label}
         </span>
       </div>
 

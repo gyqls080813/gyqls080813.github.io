@@ -1,95 +1,90 @@
 import type { GraphNodeData, NodeKind } from "@/components/graph/types";
-import { fullGraphEdges, fullGraphNodes } from "./graphData";
+import { fullGraphEdges, labelOf, nodeById } from "./graphData";
 import { nodePath } from "./nodePath";
+import { getDictionary } from "./dictionary";
 import { getIdea } from "./ideas";
+import type { NodeOpenKind } from "./nodeKinds";
 import { getPost, posts } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
-import { getDictionary } from "./dictionary";
-import { nodeOpenKindFromContent as nodeOpenKind } from "./openKind";
+import { nodeOpenKindFromContent } from "./openKind";
 import { sectionBlockId, slugify } from "./slug";
 import { PROJECT_HEADINGS, INTRO_HEADINGS } from "./headings";
+import { isDefined } from "./util";
 
 /**
- * 껍데기가 "지금 열린 노드" 하나로부터 알아내야 하는 것 전부.
+ * 껍데기가 "지금 열린 노드" 하나로부터 알아내야 하는 것 전부 — 목차·머리말·포트.
  *
- * 예전에는 시트를 여는 네 뷰(글·프로젝트·개념·소개)가 각자 머리말·포트·목차를
- * 만들었다. 그래서 껍데기가 페이지 안에 있었고, 주소가 바뀌면 트리와 그래프까지
- * 통째로 다시 마운트됐다 — 트리 스크롤이 맨 위로 튀고 접어 둔 갈래가 펴졌다.
+ * 껍데기를 루트 레이아웃에 두려면 껍데기가 노드 id 하나만 알면 되게 만들어야 한다.
+ * 그 계산이 여기 모여 있다. 본문 모듈을 전부 부르므로 브라우저는 이 파일을 쓰지
+ * 않는다 — 빌드 때 scripts/sheet-index.mjs가 결과를 색인으로 뽑고, 브라우저는
+ * lib/outline으로 그 색인을 읽는다.
  *
- * 껍데기를 레이아웃으로 올리려면 껍데기가 노드 id 하나만 알면 되게 만들어야
- * 한다. 그 계산이 여기 모여 있다. 데이터는 전부 번들에 있으므로 서버가
- * 넘겨 줄 것이 없다.
+ * 목차와 포트는 노드의 종류(lib/nodeKinds)로 갈린다. 둘 다 종류 → 계산 표라,
+ * 갈래가 하나 늘면 두 표가 함께 타입 오류로 알려 준다.
  */
 
 // ── 목차 ────────────────────────────────────────────────
 
 export type NavItem = { id: string; label: string; children?: NavItem[] };
 
-export { INTRO_HEADINGS, PROJECT_HEADINGS } from "./headings";
-
 const item = (label: string): NavItem => ({ id: slugify(label), label });
 
 /** 이 프로젝트에서 나온 글 — 목차·본문·포트가 같은 목록을 본다 */
-export const troublesOf = (projectId: string) =>
-  posts.filter((post) => post.project === projectId);
+export const troublesOf = (projectId: string) => posts.filter((post) => post.project === projectId);
+
+/**
+ * 생각 시트는 이론 시트와 같은 모양이라 목차도 같은 규칙으로 세운다.
+ * 절이 있으면 절 제목을, 없으면(길잡이 시트) 블록 라벨을 세운다. 절이 있을 때는
+ * 그 아래 블록까지 두 층으로 넘긴다 — 펴는 판단은 목차가 한다.
+ * 블록 앵커는 절 id를 앞에 붙인다 — 본문(SheetArticle)과 같은 규칙이다.
+ */
+function theoryNav(theory: ReturnType<typeof getTheory>): NavItem[] {
+  if (!theory) return [];
+  if (!theory.sections) return (theory.blocks ?? []).map((block) => item(block.label));
+  return theory.sections.map((section) => ({
+    ...item(section.heading),
+    children: section.blocks.map((block) => ({
+      id: sectionBlockId(section.heading, block.label),
+      label: block.label,
+    })),
+  }));
+}
 
 /** 오른쪽 목차 — 노드 종류마다 제목을 어디서 얻는지가 다르다 */
-export function sheetNavItems(nodeId: string): NavItem[] {
-  /* 생각 시트는 이론 시트와 같은 모양이라 목차도 같은 규칙으로 세운다 */
-  const theory = getTheory(nodeId) ?? getIdea(nodeId);
-  if (theory) {
-    /* 절이 있으면 절 제목을, 없으면(길잡이 시트) 블록 라벨을 세운다.
-       절이 있을 때는 그 아래 블록까지 두 층으로 넘긴다 — 펴는 판단은 목차가 한다 */
-    if (theory.sections) {
-      return theory.sections.map((section) => ({
-        ...item(section.heading),
-        /* 블록 앵커는 절 id를 앞에 붙인다 — 본문(TheoryArticle·IdeaArticle)과 같은 규칙 */
-        children: section.blocks.map((block) => ({
-          id: sectionBlockId(section.heading, block.label),
-          label: block.label,
-        })),
-      }));
-    }
-    return (theory.blocks ?? []).map((block) => item(block.label));
-  }
-
+const NAV: Record<NodeOpenKind, (nodeId: string) => NavItem[]> = {
+  theory: (id) => theoryNav(getTheory(id)),
+  idea: (id) => theoryNav(getIdea(id)),
   /* 기록은 절만 세운다 — 블록 라벨까지 펴면 하루치 메모가 목차를 다 먹는다 */
-  const til = getTil(nodeId);
-  if (til) return til.sections.map((section) => item(section.heading));
-
+  til: (id) => getTil(id)?.sections.map((section) => item(section.heading)) ?? [],
   /* 사전은 절(나온 문서) 아래 낱말까지 두 층 — 찾는 것이 낱말이라 목차에 있어야 한다 */
-  const dict = getDictionary(nodeId);
-  if (dict) {
-    return dict.sections.map((section) => ({
+  dict: (id) =>
+    getDictionary(id)?.sections.map((section) => ({
       ...item(section.heading),
       children: section.entries.map((entry) => item(entry.term)),
-    }));
-  }
-
-  const project = getProject(nodeId);
-  if (project) {
+    })) ?? [],
+  project: (id) => {
+    const project = getProject(id);
+    if (!project) return [];
     return [
       PROJECT_HEADINGS.intro,
       ...(project.views?.length ? [PROJECT_HEADINGS.views] : []),
       ...project.blocks.map((block) => block.label),
       ...(troublesOf(project.id).length > 0 ? [PROJECT_HEADINGS.troubles] : []),
     ].map(item);
-  }
-
-  const post = getPost(nodeId);
-  if (post) return post.sections.map((section) => item(section.heading));
-
+  },
+  post: (id) => getPost(id)?.sections.map((section) => item(section.heading)) ?? [],
   /* 소개는 내용이 고정이라 목록도 고정이다 */
-  if (nodeId === "me") return Object.values(INTRO_HEADINGS).map(item);
+  intro: () => Object.values(INTRO_HEADINGS).map(item),
+};
 
-  return [];
+export function sheetNavItems(nodeId: string): NavItem[] {
+  const kind = nodeOpenKindFromContent(nodeId);
+  return kind ? NAV[kind](nodeId) : [];
 }
 
 // ── 머리말 ──────────────────────────────────────────────
-
-const nodeById = new Map(fullGraphNodes.map((node) => [node.id, node]));
 
 /**
  * 머리말에 세울 길 — 뿌리부터 지금까지.
@@ -101,9 +96,7 @@ const nodeById = new Map(fullGraphNodes.map((node) => [node.id, node]));
 export function sheetCrumbs(nodeId: string): GraphNodeData[] {
   const post = getPost(nodeId);
   if (post) {
-    return [post.project, nodeId]
-      .map((id) => nodeById.get(id))
-      .filter((node): node is GraphNodeData => node !== undefined);
+    return [post.project, nodeId].map((id) => nodeById.get(id)).filter(isDefined);
   }
   return nodePath(nodeId);
 }
@@ -119,6 +112,14 @@ const ME_ROLE: Partial<Record<NodeKind, string>> = {
   idea: "생각",
 };
 
+/** 개념·생각 시트의 포트 이름 — 건너편 노드가 무엇이고 어느 쪽에서 왔는지로 정한다 */
+function edgeRole(node: GraphNodeData, side: "in" | "out"): string {
+  if (node.kind === "me") return "공부한 사람";
+  if (node.kind === "trouble") return "트러블슈팅";
+  if (node.id === "dict") return "사전";
+  return side === "in" ? "상위 개념" : "하위 개념";
+}
+
 /**
  * 개념·생각 노드의 포트는 간선에서 그대로 끌어낸다.
  *
@@ -128,94 +129,88 @@ const ME_ROLE: Partial<Record<NodeKind, string>> = {
 function edgePorts(nodeId: string, side: "in" | "out"): Port[] {
   return fullGraphEdges
     .filter((edge) => (side === "in" ? edge.to : edge.from) === nodeId)
-    .map((edge) => (side === "in" ? edge.from : edge.to))
-    .flatMap((id) => {
-      const node = nodeById.get(id);
-      if (!node) return [];
-      const role =
-        node.kind === "me"
-          ? "공부한 사람"
-          : node.kind === "trouble"
-            ? "트러블슈팅"
-            : id === "dict"
-              ? "사전"
-              : side === "in"
-                ? "상위 개념"
-                : "하위 개념";
-      return [{ id, role, name: node.label, kind: node.kind }];
-    });
+    .map((edge) => nodeById.get(side === "in" ? edge.from : edge.to))
+    .filter(isDefined)
+    .map((node) => ({
+      id: node.id,
+      role: edgeRole(node, side),
+      name: node.label,
+      kind: node.kind,
+    }));
 }
 
-const labelOf = (id: string) => nodeById.get(id)?.label ?? id;
+type Ports = { left: Port[]; right: Port[] };
+
+/** 개념·생각·기록은 계층이 간선에 있으므로 같은 방식으로 뽑는다 */
+const hierarchyPorts = (id: string): Ports => ({
+  left: edgePorts(id, "in"),
+  right: edgePorts(id, "out"),
+});
 
 /** 시트 양옆의 포트 = 그래프에서 이 노드에 들어오고 나가는 선 */
-export function sheetPorts(nodeId: string): { left: Port[]; right: Port[] } {
-  switch (nodeOpenKind(nodeId)) {
-    /* 생각·기록도 계층이 간선에 있으므로 개념과 같은 방식으로 뽑는다 */
-    case "theory":
-    case "idea":
-    case "til":
-      return { left: edgePorts(nodeId, "in"), right: edgePorts(nodeId, "out") };
+const PORTS: Record<NodeOpenKind, (nodeId: string) => Ports> = {
+  theory: hierarchyPorts,
+  idea: hierarchyPorts,
+  til: hierarchyPorts,
 
-    /* 사전의 왼쪽은 낱말이 나온 문서들 — 문서 → 사전 간선이 그대로 답이다.
-       트러블 글의 왼쪽이 발생한 곳이듯, 여기도 들어온 쪽이 출처다 */
-    case "dict":
-      return {
-        left: edgePorts(nodeId, "in").map((port) =>
-          port.kind === "theory" ? { ...port, role: "낱말이 나온 곳" } : port,
-        ),
-        right: [],
-      };
+  /* 사전의 왼쪽은 낱말이 나온 문서들 — 문서 → 사전 간선이 그대로 답이다.
+     트러블 글의 왼쪽이 발생한 곳이듯, 여기도 들어온 쪽이 출처다 */
+  dict: (id) => ({
+    left: edgePorts(id, "in").map((port) =>
+      port.kind === "theory" ? { ...port, role: "낱말이 나온 곳" } : port,
+    ),
+    right: [],
+  }),
 
-    case "project": {
-      /* 왼쪽은 만든 사람, 오른쪽은 여기서 나온 트러블 슈팅 */
-      return {
-        left: [{ id: "me", role: "만든 사람", name: "민엽", kind: "project" }],
-        right: troublesOf(nodeId).map((post) => ({
-          id: post.id,
-          role: "트러블슈팅",
-          name: post.title,
-          kind: "trouble" as const,
-        })),
-      };
-    }
+  /* 왼쪽은 만든 사람, 오른쪽은 여기서 나온 트러블 슈팅.
+     그래프에서 민엽은 보라다 — 시트 포트도 같은 색이어야 같은 노드로 읽힌다 */
+  project: (id) => ({
+    left: [{ id: "me", role: "만든 사람", name: "민엽", kind: "me" }],
+    right: troublesOf(id).map((post) => ({
+      id: post.id,
+      role: "트러블슈팅",
+      name: post.title,
+      kind: "trouble",
+    })),
+  }),
 
-    case "post": {
-      const post = getPost(nodeId);
-      if (!post) return { left: [], right: [] };
-      return {
-        left: [
-          {
-            id: post.project,
-            role: "프로젝트 / 발생한 곳",
-            name: labelOf(post.project),
-            kind: "project",
-          },
-        ],
-        right: post.theories.map((theory) => ({
-          id: theory.id,
-          role: `이론 / ${theory.role}`,
-          name: labelOf(theory.id),
-          kind: "theory" as const,
-        })),
-      };
-    }
+  post: (id) => {
+    const post = getPost(id);
+    if (!post) return { left: [], right: [] };
+    return {
+      left: [
+        {
+          id: post.project,
+          role: "프로젝트 / 발생한 곳",
+          name: labelOf(post.project),
+          kind: "project",
+        },
+      ],
+      right: post.theories.map((theory) => ({
+        id: theory.id,
+        role: `이론 / ${theory.role}`,
+        name: labelOf(theory.id),
+        kind: "theory",
+      })),
+    };
+  },
 
-    case "intro":
-      return {
-        left: [],
-        right: fullGraphEdges
-          .filter((edge) => edge.from === "me")
-          .flatMap((edge) => {
-            const node = nodeById.get(edge.to);
-            const role = node && ME_ROLE[node.kind];
-            return node && role
-              ? [{ id: node.id, role, name: node.label, kind: node.kind }]
-              : [];
-          }),
-      };
+  intro: () => ({
+    left: [],
+    right: fullGraphEdges
+      .filter((edge) => edge.from === "me")
+      .map((edge) => nodeById.get(edge.to))
+      .filter(isDefined)
+      .flatMap((node) => {
+        const role = ME_ROLE[node.kind];
+        return role ? [{ id: node.id, role, name: node.label, kind: node.kind }] : [];
+      }),
+  }),
+};
 
-    default:
-      return { left: [], right: [] };
-  }
+export function sheetPorts(nodeId: string): Ports {
+  const kind = nodeOpenKindFromContent(nodeId);
+  return kind ? PORTS[kind](nodeId) : { left: [], right: [] };
 }
+
+export { INTRO_HEADINGS, PROJECT_HEADINGS } from "./headings";

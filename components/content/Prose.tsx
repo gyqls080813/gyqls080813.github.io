@@ -1,16 +1,11 @@
 import type { ReactNode } from "react";
 import KindIcon from "../graph/KindIcon";
 import type { NodeKind } from "../graph/types";
+import { cx } from "@/lib/util";
 import styles from "./Prose.module.css";
 
 /** 시트 상단 아이라인 — 아이콘 + 라벨 (예: "프로젝트", "자기소개") */
-export function Kicker({
-  kind,
-  children,
-}: {
-  kind: NodeKind;
-  children: ReactNode;
-}) {
+export function Kicker({ kind, children }: { kind: NodeKind; children: ReactNode }) {
   return (
     <div className={styles.kicker} data-kind={kind}>
       <KindIcon kind={kind} size={15} />
@@ -37,7 +32,7 @@ export function SectionHeading({
   children: ReactNode;
 }) {
   return (
-    <h2 className={`${styles.heading} ${spaced ? styles.spaced : ""}`}>
+    <h2 className={cx(styles.heading, spaced && styles.spaced)}>
       {icon ? (
         <KindIcon kind={icon} size={15} />
       ) : (

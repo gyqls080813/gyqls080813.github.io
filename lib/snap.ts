@@ -44,12 +44,7 @@ function marks(rect: SnapRect, axis: Axis): [number, number, number] {
 }
 
 /** 이 축에서 얼마나 당겨야 가장 가까운 선에 붙는가 */
-function pull(
-  moving: SnapRect,
-  others: readonly SnapRect[],
-  axis: Axis,
-  range: number,
-): number {
+function pull(moving: SnapRect, others: readonly SnapRect[], axis: Axis, range: number): number {
   const mine = marks(moving, axis);
   let best = 0;
   let closest = Infinity;
@@ -73,11 +68,7 @@ function pull(
 const TOUCHING = 0.5;
 
 /** 옮겨 놓은 뒤 실제로 맞물린 선들 — 셋이 한 줄에 서면 선도 셋을 지난다 */
-function guidesFor(
-  placed: SnapRect,
-  others: readonly SnapRect[],
-  axis: Axis,
-): Guide[] {
+function guidesFor(placed: SnapRect, others: readonly SnapRect[], axis: Axis): Guide[] {
   const mine = marks(placed, axis);
   const found = new Map<number, Guide>();
 
@@ -91,10 +82,7 @@ function guidesFor(
               Math.min(placed.y, other.y),
               Math.max(placed.y + placed.height, other.y + other.height),
             ]
-          : [
-              Math.min(placed.x, other.x),
-              Math.max(placed.x + placed.width, other.x + other.width),
-            ];
+          : [Math.min(placed.x, other.x), Math.max(placed.x + placed.width, other.x + other.width)];
 
       const already = found.get(at);
       found.set(

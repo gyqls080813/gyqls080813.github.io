@@ -93,14 +93,8 @@
   width: 7px;
   height: 7px;
   border-radius: 99px;
-}
-
-.dotTheory {
-  border: 1.5px solid var(--theory);
-}
-
-.dotIdea {
-  border: 1.5px solid var(--idea);
+  /* 색은 data-kind에서 (globals.css의 --kind) */
+  border: 1.5px solid var(--kind);
 }
 
 .rowLabel {

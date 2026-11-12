@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { NodeKind } from "../graph/types";
+import { cx } from "@/lib/util";
 import styles from "./Chip.module.css";
 
 /** 칩 종류 — soft: 채운 메타 칩 · outline: 스택 칩 · badge: 카드 안 작은 배지 · role: 역할 태그 */
@@ -19,7 +20,7 @@ export default function Chip({
   children: ReactNode;
 }) {
   return (
-    <span className={`${styles.chip} ${styles[variant]}`} data-kind={kind}>
+    <span className={cx(styles.chip, styles[variant])} data-kind={kind}>
       {children}
     </span>
   );

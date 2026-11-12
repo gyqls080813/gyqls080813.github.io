@@ -4,23 +4,7 @@
   gap: 8px;
   margin-bottom: 14px;
   font-size: 12.5px;
-}
-
-.kicker[data-kind="theory"] {
-  color: var(--theory-text);
-}
-.kicker[data-kind="project"] {
-  color: var(--project-text);
-}
-.kicker[data-kind="trouble"] {
-  color: var(--trouble-bright);
-}
-.kicker[data-kind="me"] {
-  color: var(--me-bright);
-}
-.kicker[data-kind="idea"],
-.kicker[data-kind="til"] {
-  color: var(--idea-text);
+  color: var(--kind-text);
 }
 
 .heading {

@@ -5,8 +5,7 @@ import styles from "./SheetNav.module.css";
 /* 목차를 만드는 쪽이 lib/sheet.ts로 내려가서 타입도 거기 산다 —
    서버·클라이언트 어느 쪽에서도 쓰이므로 컴포넌트에 두면 방향이 거꾸로다 */
 import type { NavItem } from "@/lib/sheet";
-
-export type { NavItem };
+import { cx } from "@/lib/util";
 
 /** 지금 읽는 줄을 찾으려면 층을 눌러 한 줄로 봐야 한다 */
 function flatIds(items: NavItem[]): string[] {
@@ -29,7 +28,7 @@ function Row({ item, active, sub }: { item: NavItem; active: string | null; sub?
   return (
     <button
       type="button"
-      className={`${styles.item} ${sub ? styles.sub : ""} ${current ? styles.active : ""}`}
+      className={cx(styles.item, sub && styles.sub, current && styles.active)}
       onClick={() => goTo(item.id)}
       aria-current={current ? "true" : undefined}
     >
@@ -58,15 +57,13 @@ export default function SheetNav({ items }: { items: NavItem[] }) {
 
   if (items.length === 0) return null;
 
-
   return (
     <nav className={styles.nav} aria-label="이 글 안에서">
       <p className={styles.label}>이 글 안에서</p>
       <ol className={styles.list}>
         {items.map((item) => {
           const children = item.children ?? [];
-          const inside =
-            item.id === active || children.some((child) => child.id === active);
+          const inside = item.id === active || children.some((child) => child.id === active);
           return (
             <li key={item.id}>
               <Row item={item} active={active} />
