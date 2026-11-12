@@ -28,9 +28,23 @@ export type TheoryNote = {
 export type CodeLang = "tsx" | "bash" | "text";
 
 /** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이, 참고 */
+/**
+ * 진짜 표 — 코드 블록 안의 글자 표는 한글과 영문의 폭이 달라 칸이 어긋나고,
+ * 좁은 화면에서 줄을 바꿀 수 없다. 칸을 나눠 적으면 브라우저가 맞춰 준다.
+ */
+export type TheoryTable = {
+  /** 표 위의 짧은 제목 — 무엇을 견주는 표인지 */
+  caption?: string;
+  /** 열 제목 */
+  head: string[];
+  /** 행마다 head와 같은 수의 칸. 첫 칸은 행의 머리로 굵게 그린다. 칸 안의 \n은 줄바꿈 */
+  rows: string[][];
+};
 export type TheoryBlock = {
   label: string;
   body: string;
+  /** 본문·참고 다음, 코드 앞에 그린다 */
+  tables?: TheoryTable[];
   code?: string;
   /** code 바로 다음 줄에 적는다 — 빌드 스크립트(highlight-code.mjs)가 그 자리에서 읽는다 */
   codeLang?: CodeLang;

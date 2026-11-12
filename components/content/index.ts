@@ -10,6 +10,7 @@ export { default as NodeCard } from "./NodeCard";
 export { default as TextBlock } from "./TextBlock";
 export { default as Figure } from "./Figure";
 export { default as CodeBlock } from "./CodeBlock";
+export { default as DataTable } from "./DataTable";
 export { default as TermNote } from "./TermNote";
 export { default as SheetNav } from "./SheetNav";
 export { default as SheetShell } from "./SheetShell";

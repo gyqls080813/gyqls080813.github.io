@@ -13,9 +13,12 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  /* 로고는 줄지 않는다 — 줄어드는 것은 브레드크럼 */
+  flex-shrink: 0;
 }
 
 .wordmark {
+  white-space: nowrap;
   font-weight: 700;
   font-size: 17px;
   letter-spacing: -0.01em;
@@ -26,3 +29,11 @@
   flex: 1;
 }
 
+
+/* 휴대폰 폭 — 여백을 줄여 브레드크럼에 자리를 준다 */
+@media (max-width: 600px) {
+  .bar {
+    gap: 12px;
+    padding: 0 16px;
+  }
+}

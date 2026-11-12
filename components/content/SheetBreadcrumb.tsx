@@ -51,7 +51,7 @@ export default function SheetBreadcrumb({ nodeId }: { nodeId: string }) {
             {index > 0 && <Chevron />}
             <span className={`${pill} ${here ? styles.crumbHere : ""}`}>
               <span className={dot} />
-              {node.label}
+              <span className={styles.crumbText}>{node.label}</span>
             </span>
           </Fragment>
         );

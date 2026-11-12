@@ -1,0 +1,64 @@
+/* 표 — 코드 블록과 같은 판(panel-deep) 위에 칸을 나눈다.
+   시트 안의 다른 블록과 같은 표면이라야 한 페이지로 읽힌다. */
+.figure {
+  margin: 0 0 26px;
+}
+
+.caption {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* 좁은 화면에서는 표만 옆으로 민다 — 시트 전체가 밀리면 안 된다 */
+.scroll {
+  overflow-x: auto;
+  border: 1px solid var(--divider);
+  border-radius: 10px;
+  background: var(--panel-deep);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+.table th,
+.table td {
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--divider);
+  /* 칸 안에 적은 줄바꿈(\n)은 그대로, 긴 칸은 칸 안에서 접는다 */
+  white-space: pre-line;
+  /* 좁은 화면에서 칸이 한 글자 폭으로 짜부라지지 않게 */
+  min-width: 6.5em;
+}
+
+.table thead th {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-inset);
+}
+
+/* 행의 머리 — 그 행이 무엇인지 */
+.table tbody th {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.table tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* 열 사이 옅은 세로선 — 칸이 길어 여러 줄이 되면 어디까지가 한 칸인지 보이게 */
+.table th + th,
+.table th + td,
+.table td + td {
+  border-left: 1px solid var(--divider);
+}

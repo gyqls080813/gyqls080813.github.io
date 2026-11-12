@@ -4,6 +4,7 @@ import { nodeHref } from "@/lib/nodeTarget";
 import { sectionBlockId, slugify } from "@/lib/slug";
 import {
   CodeBlock,
+  DataTable,
   Kicker,
   NodeCard,
   SectionHeading,
@@ -34,6 +35,10 @@ function Block({ block, id }: { block: TheoryBlock; id?: string }) {
             {note.body}
           </TermNote>
         ))}
+      {/* 표는 설명과 예제 코드 사이 — 경우를 견주거나 구조를 칸으로 보여 준다 */}
+      {block.tables?.map((table, index) => (
+        <DataTable key={index} {...table} />
+      ))}
       {block.code && <CodeBlock>{block.code}</CodeBlock>}
       {/* 코드까지 다 본 뒤에 읽을 참고 — 블록을 마무리하는 곁가지 */}
       {block.notes
