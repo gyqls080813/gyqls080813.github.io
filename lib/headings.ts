@@ -12,6 +12,6 @@ export const INTRO_HEADINGS = {
   history: "이력",
   awards: "수상",
   stack: "사용 기술",
-  projects: "Projects",
+  projects: "프로젝트",
   blog: "기술 블로그",
 } as const;
