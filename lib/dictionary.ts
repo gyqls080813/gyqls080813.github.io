@@ -1324,6 +1324,76 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "Next.js · Nuxt — 같은 질문 열넷에 두 답을 놓은 낱말",
+      from: "nn",
+      entries: [
+        {
+          term: "메타 프레임워크 (meta-framework)",
+          body: "React·Vue 가 비워 둔 네 칸 — 라우팅 · 서버 렌더와 하이드레이션 · 데이터 전달 · 배포 — 를 채우고 그 대가로 프로젝트 구조와 실행 모델을 정하는 것. Next.js 16(Turbopack · 자체 서버) 과 Nuxt 4(Vite 8 · Nitro). 결정의 위치가 다르다: Next 는 코드 안의 지시어('use client' · 'use server' · 'use cache'), Nuxt 는 설정과 관례(routeRules · server/ · .client.vue · useFetch). index.html 이 없다 — 프레임워크가 HTML 을 만든다.",
+        },
+        {
+          term: "○ ◐ ƒ (Next 빌드 표)",
+          body: "next build 라우트 표의 세 기호. ○ Static: 빌드 때 프리렌더(x-nextjs-prerender: 1 · Cache-Control s-maxage=31536000). ◐ Partial Prerender: 정적 셸은 빌드 때, Suspense 안의 동적 구멍은 요청 때 스트리밍(x-nextjs-postponed: 1, 실제로 폴백 h1 뒤 실제 내용). ƒ Dynamic: 요청마다(route.ts GET 기본). Cache Components(16 기본)에서 ◐ 가 기본이고 generateStaticParams 가 돌려준 경로만 ○.",
+        },
+        {
+          term: "Cache Components 와 'use cache'",
+          body: "Next 16 기본(cacheComponents: true). 함수·컴포넌트·파일 위의 'use cache' 가 캐시 경계, cacheLife(profile) 가 stale(클라, 최소 30s)·revalidate(서버, SWR)·expire 셋(minutes = 5m/1m/1h, 빌드 표에 '1m 1h'), cacheTag 가 태그. 실제로 1초 간격 두 요청이 같은 시각. 키는 함수+직렬화 인자+클로저 — cookies()/headers() 는 안에서 금지(인자로). 요청 시점 데이터는 Suspense 안이어야 하고 어기면 빌드 에러 'accessed outside of <Suspense>' + 세 처방 [stream]·[cache]·[block instant=false]; export const dynamic 은 비호환 에러.",
+        },
+        {
+          term: "재검증 (revalidateTag · updateTag · revalidatePath)",
+          body: "Next 의 캐시 버리기 셋. revalidateTag(tag, 'max') — 태그 캐시를 오래됨으로(SWR, 둘째 인자가 stale 창), Server Action·Route Handler 에서. updateTag(tag) — 즉시 만료 + 같은 요청에서 새 값(read-your-own-writes), Server Action 전용, redirect 와 짝. revalidatePath — 경로 단위('태그 선호'). 시간 기반은 cacheLife 가. 서버리스는 인메모리라 인스턴스별 → cacheHandler/'use cache: remote'.",
+        },
+        {
+          term: "'use client' 경계와 직렬화",
+          body: "파일 맨 위의 지시어가 클라이언트 번들의 경계. 그 파일의 import 와 직접 렌더하는 컴포넌트가 클라이언트로 가고, 서버 컴포넌트는 children/props 로 끼워야 서버에 남는다(import 하면 끌려감 → DB 코드 노출). 경계를 넘는 props 는 직렬화 가능(원시·배열·객체·Date·Map·Promise·JSX; 함수·클래스·Symbol 불가). 클라이언트 컴포넌트도 서버에서 HTML 위해 1회 렌더 — window 는 useEffect 안. 빌드 결과 page_client-reference-manifest.js 가 지도.",
+        },
+        {
+          term: "Server Action ('use server')",
+          body: "서버에서 도는 async 함수를 form action·이벤트·useActionState 에서 함수처럼 부르는 RPC. 프레임워크가 POST 를 만들고 암호화 ID 로 식별하되 '직접 POST 로도 도달 가능' → 안에서 인증·검증. form action 은 void 반환(값은 useActionState — 실제로 객체 반환이 타입 에러), redirect 는 던지므로 revalidateTag 를 앞에, cookies().set 가능, 클라이언트 파일에서 정의 불가(import). 예상 에러는 던지지 말고 값으로.",
+        },
+        {
+          term: "universal 렌더링과 routeRules",
+          body: "Nuxt 기본 — 서버가 HTML + payload(data-ssr=\"true\" __NUXT_DATA__)를 만들고 브라우저가 하이드레이션. routeRules 로 경로마다 하이브리드: prerender(빌드 때 HTML) · swr: N(실제로 cache-control: s-maxage=60, stale-while-revalidate) · isr(CDN) · ssr: false(빈 <div id=\"__nuxt\"> SPA, spa-loading-template 권장) · redirect · proxy · headers · cors. 주의: nuxt generate 에서는 하이브리드 불가, redirect/proxy 는 미들웨어보다 먼저라 보안 수단 아님.",
+        },
+        {
+          term: "두 번 실행 (Nuxt 컴포넌트)",
+          body: "Nuxt 컴포넌트는 기본으로 서버(HTML)와 브라우저(하이드레이션)에서 둘 다 실행된다 — Next 서버 컴포넌트(1회)와 다른 모델. 그래서 window 는 onMounted/import.meta.client, 한쪽만은 <ClientOnly>(서버엔 fallback) · .client.vue · .server.vue(아일랜드, 실험적, 격리된 Vue 앱), 서버엔 반응성 없음(위에서 아래 1회), setup 루트의 setInterval 은 누수. 생명주기: 서버 Nitro 플러그인 → 서버 미들웨어 → 앱 플러그인 → validate → 라우트 미들웨어 → 렌더; 클라이언트 플러그인 → validate → 미들웨어 → mount+hydrate → onMounted.",
+        },
+        {
+          term: "payload (__NUXT_DATA__)와 useFetch",
+          body: "서버가 렌더하며 모은 상태(useFetch/useAsyncData 의 data, useState, 에러)를 devalue 로 직렬화해 <script id=\"__NUXT_DATA__\"> 에 실어 보내고 하이드레이션이 복원하는 통로 — 그래서 두 번 받지 않는다. 실제로 useFetch('/api/hello') 의 자동 키 $f… 와 응답이 payload 에, <h1>home world</h1> 은 서버가 그림. $fetch 는 이 통로가 없어 setup 에서 쓰면 2회 요청(이벤트 핸들러용). lazy(내비게이션 안 막음, status 로) · server:false · immediate:false+execute · watch · transform/pick · getCachedData. 서버에서 $fetch('/api/x') 는 핸들러 직접 호출.",
+        },
+        {
+          term: "Nitro · h3 · server/",
+          body: "Nuxt 의 서버 엔진. server/api/*.ts(/api 접두어, .get/.post 접미사가 메서드, [id] 파라미터) · server/routes(접두어 없음) · server/middleware(모든 요청 먼저 — 응답 돌려주지 말고 event.context 에) · server/utils(자동 import) · server/plugins(시작 1회). h3 헬퍼 readBody·readValidatedBody·getQuery·getRouterParam·setHeader·setResponseStatus·createError(→ HTTP 상태 + JSON, 실제로 404 JSON)·getCookie. defineCachedEventHandler({ maxAge }) 가 핸들러 캐시(실제로 두 응답 같은 at — 키 기본 URL, 사용자별엔 getKey). nuxt build → .output(node_modules 독립, nitro.json 에 preset).",
+        },
+        {
+          term: "라우트 미들웨어 vs 서버 미들웨어 (Nuxt)",
+          body: "둘은 전혀 다르다. 라우트 미들웨어(app/middleware, definePageMeta({ middleware }) · .global)는 Vue 앱 안에서 페이지 전환마다 — 서버 라우트(/api/*)에는 돌지 않는다(문서: 'does not run for server routes'); navigateTo 로 리다이렉트(실제로 /posts/0 → 302 /). 서버 미들웨어(server/middleware)는 Nitro 에서 모든 HTTP 요청에 먼저(실제로 x-nitro 헤더가 모든 응답에). /api 를 막으려면 후자. Next 의 proxy.ts(16 에서 Middleware 개명, matcher)가 후자의 자리.",
+        },
+        {
+          term: "useState (Nuxt)와 요청 간 상태 오염",
+          body: "SSR 친화 ref — 키로 공유되고 payload 에 실려 하이드레이션에 복원(실제로 payload 의 state 에 count). 직렬화 가능한 값만, 패턴 export const useX = () => useState('x', init), 비동기 초기화는 callOnce, 더 크면 Pinia. 모듈 최상위 const state = ref() 는 서버 프로세스가 요청 사이에 공유해 다른 사용자 데이터가 샌다(Vue 허브에서 실제로 shared 1→2) — Next 도 같아 React.cache(요청 범위)·'use cache: private'. 상태의 수명은 서버에서 '요청'이다.",
+        },
+        {
+          term: "하이드레이션 불일치 (hydration mismatch)",
+          body: "서버 HTML 과 브라우저 첫 렌더가 다를 때의 경고('Hydration text content mismatch…', React 'Text content does not match…'). 원인은 전부 양쪽이 다른 값을 봄 — Date.now()·Math.random()·window·로캘 포맷·확장 프로그램 DOM·잘못된 HTML 중첩. 처방: 서버에서 정해 통로(payload·props)로 넘기기, 브라우저 전용은 ClientOnly/useEffect 뒤, useId, Next 는 connection() 뒤(Suspense 안 — 빌드 인사이트 blocking-prerender-random). 억제는 data-allow-mismatch · suppressHydrationWarning(마지막 수단).",
+        },
+        {
+          term: "runtimeConfig 와 NUXT_ 환경 변수",
+          body: "nuxt.config 의 runtimeConfig(비공개 키는 서버만, public 은 클라이언트도)를 런타임에 NUXT_<KEY>(public 은 NUXT_PUBLIC_<KEY>) 환경 변수로 덮어쓰는 것 — 실제로 재빌드 없이 apiBase=/v2-from-env secret=overridden. '한 번 빌드, 환경마다 다른 값'의 Nuxt 답(번들링 허브의 VITE_ 치환 한계와 대비). 비공개 키를 SSR 템플릿에 찍으면 HTML 에 들어간다(실제로) — server/ 안에서만. app.config.ts 는 빌드 시점·반응형·비밀 금지. Next 는 process.env.X 가 서버 런타임, NEXT_PUBLIC_X 만 빌드 인라인.",
+        },
+        {
+          term: "배포 산출물 (.next · .output)과 타깃",
+          body: "Next: .next/server/app 에 라우트별 .html/.rsc/.meta/.segments 와 prerender-manifest.json(routes · dynamicRoutes); next start(모든 기능) · Docker standalone · output: 'export'(서버 기능 포기) · 어댑터(Vercel·Bun 검증); 다중 인스턴스는 cacheHandler + NEXT_SERVER_ACTIONS_ENCRYPTION_KEY + deploymentId. Nuxt: .output/server/index.mjs + chunks + public + nitro.json(preset node-server 기본, NITRO_PRESET 으로 vercel·cloudflare·netlify, PORT/NITRO_PORT) — .output 만 복사; nuxt generate 는 정적(200/404.html, API 없음). 빌드는 결정을 고정하고 런타임이 남은 것을 채운다 — 정적 export 는 런타임 쪽 전부 포기.",
+        },
+        {
+          term: "Nuxt 모듈과 레이어",
+          body: "모듈: modules: [] 에 등록되는 빌드 시점 async 함수(defineNuxtModule + Nuxt Kit 의 addPlugin·addServerHandler·addImports·addTemplate) — 런타임 동작은 끼워 넣은 runtime/ 파일이; @nuxtjs/i18n·@nuxt/image·@pinia/nuxt 가 그것, 설정 키 false 로 끔(4.3). 레이어: nuxt.config 가 있는 디렉터리를 extends 로 상속(app/ 의 components·pages·server·config 가 defu 병합), 우선순위 프로젝트 > ~~/layers > extends, 레이어 안의 ~/ 는 사용자 프로젝트를 가리키니 상대/#layers. Next 는 모듈 시스템 없이 config 감싸기(withMDX) · 어댑터 · React 생태계.",
+        },
+      ],
+    },
   ],
 };
 

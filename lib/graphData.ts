@@ -524,6 +524,23 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "bundle-s11", label: "11장 · 설정 레퍼런스 요약", kind: "theory", x: 2050, y: 760, r: 14 },
   { id: "bundle-s12", label: "12장 · 성능과 트러블슈팅", kind: "theory", x: 2050, y: 800, r: 14 },
 
+  // Next.js · Nuxt — 같은 질문 열넷에 두 답
+  { id: "nn", label: "Next.js · Nuxt", kind: "theory", x: 2265, y: 300, r: 20, hub: true },
+  { id: "nn-s1", label: "1장 · 메타 프레임워크가 하는 일", kind: "theory", x: 2265, y: 360, r: 14 },
+  { id: "nn-s2", label: "2장 · 파일 기반 라우팅", kind: "theory", x: 2265, y: 400, r: 14 },
+  { id: "nn-s3", label: "3장 · 렌더링 모드", kind: "theory", x: 2265, y: 440, r: 14 },
+  { id: "nn-s4", label: "4장 · 서버와 클라이언트의 경계", kind: "theory", x: 2265, y: 480, r: 14 },
+  { id: "nn-s5", label: "5장 · 데이터 받기", kind: "theory", x: 2265, y: 520, r: 14 },
+  { id: "nn-s6", label: "6장 · 캐시와 재검증", kind: "theory", x: 2265, y: 560, r: 14 },
+  { id: "nn-s7", label: "7장 · 데이터 바꾸기", kind: "theory", x: 2265, y: 600, r: 14 },
+  { id: "nn-s8", label: "8장 · 서버 라우트와 미들웨어", kind: "theory", x: 2265, y: 640, r: 14 },
+  { id: "nn-s9", label: "9장 · 에러 처리", kind: "theory", x: 2265, y: 680, r: 14 },
+  { id: "nn-s10", label: "10장 · 메타데이터와 SEO", kind: "theory", x: 2265, y: 720, r: 14 },
+  { id: "nn-s11", label: "11장 · 이미지 · 폰트 · CSS", kind: "theory", x: 2265, y: 760, r: 14 },
+  { id: "nn-s12", label: "12장 · 상태와 하이드레이션", kind: "theory", x: 2265, y: 800, r: 14 },
+  { id: "nn-s13", label: "13장 · 설정 · 빌드 · 배포", kind: "theory", x: 2265, y: 840, r: 14 },
+  { id: "nn-s14", label: "14장 · 확장 — 모듈 · 레이어 · 어댑터", kind: "theory", x: 2265, y: 880, r: 14 },
+
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
   { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100, r: 14 },
   { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205, r: 13 },
@@ -1041,6 +1058,15 @@ export const theoryClusters = [
       "bundle-s7", "bundle-s8", "bundle-s9", "bundle-s10", "bundle-s11", "bundle-s12",
     ],
   },
+
+  /* Next.js · Nuxt */
+  {
+    hub: "nn",
+    chapters: [
+      "nn-s1", "nn-s2", "nn-s3", "nn-s4", "nn-s5", "nn-s6", "nn-s7",
+      "nn-s8", "nn-s9", "nn-s10", "nn-s11", "nn-s12", "nn-s13", "nn-s14",
+    ],
+  },
 ] as const;
 
 export const fullGraphEdges: GraphEdgeData[] = [
@@ -1059,6 +1085,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
   { from: "me", to: "render" },
   { from: "me", to: "css" },
   { from: "me", to: "bundle" },
+  { from: "me", to: "nn" },
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
   { from: "me", to: "fe-craft" },
@@ -1121,6 +1148,7 @@ const techRoots = [
   { root: "render", label: "브라우저 렌더링", collapsed: true },
   { root: "css", label: "CSS", collapsed: true },
   { root: "bundle", label: "번들링 · Vite", collapsed: true },
+  { root: "nn", label: "Next.js · Nuxt", collapsed: true },
 ] as const;
 
 const chaptersOf = new Map<string, readonly string[]>(

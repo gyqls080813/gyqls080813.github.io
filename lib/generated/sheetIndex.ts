@@ -389,6 +389,21 @@ export const sheetIndex: {
     "bundle-s10": "theory",
     "bundle-s11": "theory",
     "bundle-s12": "theory",
+    "nn": "theory",
+    "nn-s1": "theory",
+    "nn-s2": "theory",
+    "nn-s3": "theory",
+    "nn-s4": "theory",
+    "nn-s5": "theory",
+    "nn-s6": "theory",
+    "nn-s7": "theory",
+    "nn-s8": "theory",
+    "nn-s9": "theory",
+    "nn-s10": "theory",
+    "nn-s11": "theory",
+    "nn-s12": "theory",
+    "nn-s13": "theory",
+    "nn-s14": "theory",
     "t-isolated": "post",
     "t-focus": "post",
     "t-sync": "post",
@@ -1797,6 +1812,76 @@ export const sheetIndex: {
           {
             "id": "개발과-배포가-다른-자리",
             "label": "개발과 배포가 다른 자리"
+          }
+        ]
+      },
+      {
+        "id": "next-js-nuxt-같은-질문-열넷에-두-답을-놓은-낱말",
+        "label": "Next.js · Nuxt — 같은 질문 열넷에 두 답을 놓은 낱말",
+        "children": [
+          {
+            "id": "메타-프레임워크-meta-framework",
+            "label": "메타 프레임워크 (meta-framework)"
+          },
+          {
+            "id": "ƒ-next-빌드-표",
+            "label": "○ ◐ ƒ (Next 빌드 표)"
+          },
+          {
+            "id": "cache-components-와-use-cache",
+            "label": "Cache Components 와 'use cache'"
+          },
+          {
+            "id": "재검증-revalidatetag-updatetag-revalidatepath",
+            "label": "재검증 (revalidateTag · updateTag · revalidatePath)"
+          },
+          {
+            "id": "use-client-경계와-직렬화",
+            "label": "'use client' 경계와 직렬화"
+          },
+          {
+            "id": "server-action-use-server",
+            "label": "Server Action ('use server')"
+          },
+          {
+            "id": "universal-렌더링과-routerules",
+            "label": "universal 렌더링과 routeRules"
+          },
+          {
+            "id": "두-번-실행-nuxt-컴포넌트",
+            "label": "두 번 실행 (Nuxt 컴포넌트)"
+          },
+          {
+            "id": "payload-nuxt-data-와-usefetch",
+            "label": "payload (__NUXT_DATA__)와 useFetch"
+          },
+          {
+            "id": "nitro-h3-server",
+            "label": "Nitro · h3 · server/"
+          },
+          {
+            "id": "라우트-미들웨어-vs-서버-미들웨어-nuxt",
+            "label": "라우트 미들웨어 vs 서버 미들웨어 (Nuxt)"
+          },
+          {
+            "id": "usestate-nuxt-와-요청-간-상태-오염",
+            "label": "useState (Nuxt)와 요청 간 상태 오염"
+          },
+          {
+            "id": "하이드레이션-불일치-hydration-mismatch",
+            "label": "하이드레이션 불일치 (hydration mismatch)"
+          },
+          {
+            "id": "runtimeconfig-와-nuxt-환경-변수",
+            "label": "runtimeConfig 와 NUXT_ 환경 변수"
+          },
+          {
+            "id": "배포-산출물-next-output-과-타깃",
+            "label": "배포 산출물 (.next · .output)과 타깃"
+          },
+          {
+            "id": "nuxt-모듈과-레이어",
+            "label": "Nuxt 모듈과 레이어"
           }
         ]
       }
@@ -14207,6 +14292,456 @@ export const sheetIndex: {
         "label": "확인 질문"
       }
     ],
+    "nn": [
+      {
+        "id": "열네-질문",
+        "label": "열네 질문"
+      },
+      {
+        "id": "실제로-돌려-보면-두-앱의-빌드-출력",
+        "label": "실제로 돌려 보면: 두 앱의 빌드 출력"
+      },
+      {
+        "id": "문제의-구조-두-프레임워크는-결정의-위치-가-다르다",
+        "label": "문제의 구조: 두 프레임워크는 '결정의 위치' 가 다르다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "nn-s1": [
+      {
+        "id": "네-칸과-두-답",
+        "label": "네 칸과 두 답"
+      },
+      {
+        "id": "실제로-돌려-보면-뼈대-둘",
+        "label": "실제로 돌려 보면: 뼈대 둘"
+      },
+      {
+        "id": "실행-모델-한-번-실행-vs-두-번-실행",
+        "label": "실행 모델: 한 번 실행 vs 두 번 실행"
+      },
+      {
+        "id": "문제의-구조-네-칸을-채운-대가는-실행-환경이-둘-이라는-것",
+        "label": "문제의 구조: 네 칸을 채운 대가는 '실행 환경이 둘' 이라는 것"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s2": [
+      {
+        "id": "실제로-돌려-보면-두-트리",
+        "label": "실제로 돌려 보면: 두 트리"
+      },
+      {
+        "id": "레이아웃과-특수-파일",
+        "label": "레이아웃과 특수 파일"
+      },
+      {
+        "id": "동적-세그먼트-캐치올-정적-생성",
+        "label": "동적 세그먼트 · 캐치올 · 정적 생성"
+      },
+      {
+        "id": "내비게이션-link-와-프리페치",
+        "label": "내비게이션: Link 와 프리페치"
+      },
+      {
+        "id": "문제가-나는-경우-라우팅에서",
+        "label": "문제가 나는 경우: 라우팅에서"
+      },
+      {
+        "id": "문제의-구조-파일-트리가-라우트-트리-이자-렌더-트리의-뼈대-다",
+        "label": "문제의 구조: 파일 트리가 '라우트 트리' 이자 '렌더 트리의 뼈대' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s3": [
+      {
+        "id": "실제로-돌려-보면-next-의-세-기호와-헤더",
+        "label": "실제로 돌려 보면: Next 의 세 기호와 헤더"
+      },
+      {
+        "id": "next-정적-셸과-동적-구멍-그리고-빌드가-막는-것",
+        "label": "Next: 정적 셸과 동적 구멍, 그리고 빌드가 막는 것"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-의-routerules",
+        "label": "실제로 돌려 보면: Nuxt 의 routeRules"
+      },
+      {
+        "id": "모드-비교표",
+        "label": "모드 비교표"
+      },
+      {
+        "id": "문제가-나는-경우-렌더링-모드에서",
+        "label": "문제가 나는 경우: 렌더링 모드에서"
+      },
+      {
+        "id": "문제의-구조-next-는-컴포넌트-단위-nuxt-는-경로-단위-로-모드를-정한다",
+        "label": "문제의 구조: Next 는 '컴포넌트 단위', Nuxt 는 '경로 단위' 로 모드를 정한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s4": [
+      {
+        "id": "next-경계는-파일이고-방향은-한쪽이다",
+        "label": "Next: 경계는 파일이고 방향은 한쪽이다"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-는-같은-코드가-두-번-돈다",
+        "label": "실제로 돌려 보면: Nuxt 는 같은 코드가 두 번 돈다"
+      },
+      {
+        "id": "서버-전용-코드-보호-server-only-와-서버-디렉터리",
+        "label": "서버 전용 코드 보호: server-only 와 서버 디렉터리"
+      },
+      {
+        "id": "문제가-나는-경우-경계에서",
+        "label": "문제가 나는 경우: 경계에서"
+      },
+      {
+        "id": "문제의-구조-경계는-코드가-가는-곳-과-데이터가-가는-곳-둘을-정한다",
+        "label": "문제의 구조: 경계는 '코드가 가는 곳' 과 '데이터가 가는 곳' 둘을 정한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s5": [
+      {
+        "id": "실제로-돌려-보면-nuxt-의-payload-에-데이터가-실려-온다",
+        "label": "실제로 돌려 보면: Nuxt 의 payload 에 데이터가 실려 온다"
+      },
+      {
+        "id": "nuxt-usefetch-useasyncdata-fetch-의-자리",
+        "label": "Nuxt: useFetch · useAsyncData · $fetch 의 자리"
+      },
+      {
+        "id": "next-서버-컴포넌트의-fetch-와-스트리밍",
+        "label": "Next: 서버 컴포넌트의 fetch 와 스트리밍"
+      },
+      {
+        "id": "문제가-나는-경우-데이터-받기에서",
+        "label": "문제가 나는 경우: 데이터 받기에서"
+      },
+      {
+        "id": "문제의-구조-두-번-받지-않으려면-한-번-받은-결과를-넘길-통로-가-있어야-한다",
+        "label": "문제의 구조: 두 번 받지 않으려면 '한 번 받은 결과를 넘길 통로' 가 있어야 한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s6": [
+      {
+        "id": "실제로-돌려-보면-use-cache-는-같은-시각을-두-번-돌려준다",
+        "label": "실제로 돌려 보면: 'use cache' 는 같은 시각을 두 번 돌려준다"
+      },
+      {
+        "id": "next-재검증-세-함수",
+        "label": "Next: 재검증 세 함수"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-의-세-층",
+        "label": "실제로 돌려 보면: Nuxt 의 세 층"
+      },
+      {
+        "id": "문제가-나는-경우-캐시에서",
+        "label": "문제가 나는 경우: 캐시에서"
+      },
+      {
+        "id": "문제의-구조-캐시-키에-누구-무엇-언제-가-들어가야-한다",
+        "label": "문제의 구조: 캐시 키에 '누구 · 무엇 · 언제' 가 들어가야 한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s7": [
+      {
+        "id": "실제로-돌려-보면-next-의-form-action-과-타입-제약",
+        "label": "실제로 돌려 보면: Next 의 form action 과 타입 제약"
+      },
+      {
+        "id": "next-호출-방식-보안-뒤처리",
+        "label": "Next: 호출 방식 · 보안 · 뒤처리"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-의-post-핸들러",
+        "label": "실제로 돌려 보면: Nuxt 의 POST 핸들러"
+      },
+      {
+        "id": "비교와-함정",
+        "label": "비교와 함정"
+      },
+      {
+        "id": "문제의-구조-변경은-서버-함수-호출-이고-둘의-차이는-그-호출을-누가-만드나",
+        "label": "문제의 구조: 변경은 '서버 함수 호출' 이고, 둘의 차이는 그 호출을 누가 만드나"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s8": [
+      {
+        "id": "실제로-돌려-보면-두-api-와-두-미들웨어",
+        "label": "실제로 돌려 보면: 두 API 와 두 미들웨어"
+      },
+      {
+        "id": "next-route-ts-와-proxy-ts-의-규칙",
+        "label": "Next: route.ts 와 proxy.ts 의 규칙"
+      },
+      {
+        "id": "nuxt-nitro-와-h3",
+        "label": "Nuxt: Nitro 와 h3"
+      },
+      {
+        "id": "문제가-나는-경우-서버-라우트에서",
+        "label": "문제가 나는 경우: 서버 라우트에서"
+      },
+      {
+        "id": "문제의-구조-요청은-미들웨어-라우트-렌더-세-층을-지난다",
+        "label": "문제의 구조: 요청은 '미들웨어 → 라우트 → 렌더' 세 층을 지난다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s9": [
+      {
+        "id": "실제로-돌려-보면-404-셋",
+        "label": "실제로 돌려 보면: 404 셋"
+      },
+      {
+        "id": "next-경계-파일-셋과-server-action-의-에러",
+        "label": "Next: 경계 파일 셋과 Server Action 의 에러"
+      },
+      {
+        "id": "nuxt-네-원천과-도구",
+        "label": "Nuxt: 네 원천과 도구"
+      },
+      {
+        "id": "문제가-나는-경우-에러-처리에서",
+        "label": "문제가 나는 경우: 에러 처리에서"
+      },
+      {
+        "id": "문제의-구조-에러는-어느-층에서-났나-와-예상했나-두-축으로-처리된다",
+        "label": "문제의 구조: 에러는 '어느 층에서 났나' 와 '예상했나' 두 축으로 처리된다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s10": [
+      {
+        "id": "next-metadata-generatemetadata-파일-규약",
+        "label": "Next: metadata · generateMetadata · 파일 규약"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-의-useseometa-와-payload",
+        "label": "실제로 돌려 보면: Nuxt 의 useSeoMeta 와 payload"
+      },
+      {
+        "id": "i18n-과-seo-hreflang-canonical-lang",
+        "label": "i18n 과 SEO: hreflang · canonical · lang"
+      },
+      {
+        "id": "문제가-나는-경우-head-에서",
+        "label": "문제가 나는 경우: head 에서"
+      },
+      {
+        "id": "문제의-구조-head-는-서버가-완성해야-하는-유일한-ui-다",
+        "label": "문제의 구조: head 는 '서버가 완성해야 하는 유일한 UI' 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s11": [
+      {
+        "id": "next-next-image-와-next-font",
+        "label": "Next: next/image 와 next/font"
+      },
+      {
+        "id": "next-css-의-네-길과-순서",
+        "label": "Next: CSS 의 네 길과 순서"
+      },
+      {
+        "id": "nuxt-모듈이-맡는다-nuxt-image-nuxt-fonts-assets-vs-public",
+        "label": "Nuxt: 모듈이 맡는다 — @nuxt/image · @nuxt/fonts · assets vs public"
+      },
+      {
+        "id": "문제가-나는-경우-자산에서",
+        "label": "문제가 나는 경우: 자산에서"
+      },
+      {
+        "id": "문제의-구조-최적화를-프레임워크에-맡기면-정보-를-미리-줘야-한다",
+        "label": "문제의 구조: 최적화를 프레임워크에 맡기면 '정보' 를 미리 줘야 한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s12": [
+      {
+        "id": "실제로-돌려-보면-nuxt-usestate-가-payload-에-실린다",
+        "label": "실제로 돌려 보면: Nuxt useState 가 payload 에 실린다"
+      },
+      {
+        "id": "요청-간-상태-오염-모듈-최상위의-ref",
+        "label": "요청 간 상태 오염: 모듈 최상위의 ref"
+      },
+      {
+        "id": "하이드레이션-불일치-원인과-처방",
+        "label": "하이드레이션 불일치: 원인과 처방"
+      },
+      {
+        "id": "하이드레이션의-비용과-스트리밍-지연",
+        "label": "하이드레이션의 비용과 스트리밍 · 지연"
+      },
+      {
+        "id": "문제가-나는-경우-상태와-하이드레이션에서",
+        "label": "문제가 나는 경우: 상태와 하이드레이션에서"
+      },
+      {
+        "id": "문제의-구조-상태에는-수명-이-있고-서버에서는-그-수명이-요청-이다",
+        "label": "문제의 구조: 상태에는 '수명' 이 있고 서버에서는 그 수명이 '요청' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s13": [
+      {
+        "id": "실제로-돌려-보면-두-빌드-산출물",
+        "label": "실제로 돌려 보면: 두 빌드 산출물"
+      },
+      {
+        "id": "실제로-돌려-보면-nuxt-runtimeconfig-는-런타임에-nuxt-로-덮인다",
+        "label": "실제로 돌려 보면: Nuxt runtimeConfig 는 런타임에 NUXT_ 로 덮인다"
+      },
+      {
+        "id": "배포-타깃",
+        "label": "배포 타깃"
+      },
+      {
+        "id": "문제가-나는-경우-빌드와-배포에서",
+        "label": "문제가 나는 경우: 빌드와 배포에서"
+      },
+      {
+        "id": "문제의-구조-빌드는-결정을-고정-하고-런타임은-남은-것을-채운다",
+        "label": "문제의 구조: 빌드는 '결정을 고정' 하고 런타임은 '남은 것을 채운다'"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "nn-s14": [
+      {
+        "id": "nuxt-모듈-빌드-시점에-nuxt-를-바꾸는-함수",
+        "label": "Nuxt 모듈: 빌드 시점에 Nuxt 를 바꾸는 함수"
+      },
+      {
+        "id": "nuxt-레이어-앱-조각을-상속한다",
+        "label": "Nuxt 레이어: 앱 조각을 상속한다"
+      },
+      {
+        "id": "next-의-확장-config-플러그인-어댑터-생태계",
+        "label": "Next 의 확장: config 플러그인 · 어댑터 · 생태계"
+      },
+      {
+        "id": "실무-앱이-서는-자리-commerce-web-nuxt-을-이-허브로-읽기",
+        "label": "실무 앱이 서는 자리: commerce-web (Nuxt) 을 이 허브로 읽기"
+      },
+      {
+        "id": "문제가-나는-경우-확장에서",
+        "label": "문제가 나는 경우: 확장에서"
+      },
+      {
+        "id": "문제의-구조-확장은-빌드-시점에-프레임워크를-바꾸는-것-과-런타임에-앱을-바꾸는-것-으로-갈린다",
+        "label": "문제의 구조: 확장은 '빌드 시점에 프레임워크를 바꾸는 것' 과 '런타임에 앱을 바꾸는 것' 으로 갈린다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
     "t-isolated": [
       {
         "id": "증상-동작은-하는데-상태가-어긋난다",
@@ -14465,6 +15000,12 @@ export const sheetIndex: {
           "kind": "theory"
         },
         {
+          "id": "nn",
+          "role": "이론",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        },
+        {
           "id": "fe-craft",
           "role": "생각",
           "name": "코드 작성법",
@@ -14646,6 +15187,12 @@ export const sheetIndex: {
           "id": "bundle",
           "role": "낱말이 나온 곳",
           "name": "번들링 · Vite",
+          "kind": "theory"
+        },
+        {
+          "id": "nn",
+          "role": "낱말이 나온 곳",
+          "name": "Next.js · Nuxt",
           "kind": "theory"
         }
       ],
@@ -20785,6 +21332,262 @@ export const sheetIndex: {
       ],
       "right": []
     },
+    "nn": {
+      "left": [
+        {
+          "id": "me",
+          "role": "공부한 사람",
+          "name": "Who am I",
+          "kind": "me"
+        }
+      ],
+      "right": [
+        {
+          "id": "nn-s1",
+          "role": "하위 개념",
+          "name": "1장 · 메타 프레임워크가 하는 일",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s2",
+          "role": "하위 개념",
+          "name": "2장 · 파일 기반 라우팅",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s3",
+          "role": "하위 개념",
+          "name": "3장 · 렌더링 모드",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s4",
+          "role": "하위 개념",
+          "name": "4장 · 서버와 클라이언트의 경계",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s5",
+          "role": "하위 개념",
+          "name": "5장 · 데이터 받기",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s6",
+          "role": "하위 개념",
+          "name": "6장 · 캐시와 재검증",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s7",
+          "role": "하위 개념",
+          "name": "7장 · 데이터 바꾸기",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s8",
+          "role": "하위 개념",
+          "name": "8장 · 서버 라우트와 미들웨어",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s9",
+          "role": "하위 개념",
+          "name": "9장 · 에러 처리",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s10",
+          "role": "하위 개념",
+          "name": "10장 · 메타데이터와 SEO",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s11",
+          "role": "하위 개념",
+          "name": "11장 · 이미지 · 폰트 · CSS",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s12",
+          "role": "하위 개념",
+          "name": "12장 · 상태와 하이드레이션",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s13",
+          "role": "하위 개념",
+          "name": "13장 · 설정 · 빌드 · 배포",
+          "kind": "theory"
+        },
+        {
+          "id": "nn-s14",
+          "role": "하위 개념",
+          "name": "14장 · 확장 — 모듈 · 레이어 · 어댑터",
+          "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
+        }
+      ]
+    },
+    "nn-s1": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s2": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s3": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s4": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s5": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s6": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s7": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s8": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s9": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s10": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s11": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s12": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s13": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "nn-s14": {
+      "left": [
+        {
+          "id": "nn",
+          "role": "상위 개념",
+          "name": "Next.js · Nuxt",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "t-isolated": {
       "left": [
         {
@@ -22809,6 +23612,65 @@ export const sheetIndex: {
       "bundle",
       "bundle-s12"
     ],
+    "nn": [
+      "nn"
+    ],
+    "nn-s1": [
+      "nn",
+      "nn-s1"
+    ],
+    "nn-s2": [
+      "nn",
+      "nn-s2"
+    ],
+    "nn-s3": [
+      "nn",
+      "nn-s3"
+    ],
+    "nn-s4": [
+      "nn",
+      "nn-s4"
+    ],
+    "nn-s5": [
+      "nn",
+      "nn-s5"
+    ],
+    "nn-s6": [
+      "nn",
+      "nn-s6"
+    ],
+    "nn-s7": [
+      "nn",
+      "nn-s7"
+    ],
+    "nn-s8": [
+      "nn",
+      "nn-s8"
+    ],
+    "nn-s9": [
+      "nn",
+      "nn-s9"
+    ],
+    "nn-s10": [
+      "nn",
+      "nn-s10"
+    ],
+    "nn-s11": [
+      "nn",
+      "nn-s11"
+    ],
+    "nn-s12": [
+      "nn",
+      "nn-s12"
+    ],
+    "nn-s13": [
+      "nn",
+      "nn-s13"
+    ],
+    "nn-s14": [
+      "nn",
+      "nn-s14"
+    ],
     "t-isolated": [
       "withy",
       "t-isolated"
@@ -22861,7 +23723,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 305"
+      "meta": "낱말 321"
     },
     "algo": {
       "meta": "챕터 1"
@@ -24031,6 +24893,52 @@ export const sheetIndex: {
       "clickable": true
     },
     "bundle-s12": {
+      "clickable": true
+    },
+    "nn": {
+      "clickable": true,
+      "meta": "챕터 14"
+    },
+    "nn-s1": {
+      "clickable": true
+    },
+    "nn-s2": {
+      "clickable": true
+    },
+    "nn-s3": {
+      "clickable": true
+    },
+    "nn-s4": {
+      "clickable": true
+    },
+    "nn-s5": {
+      "clickable": true
+    },
+    "nn-s6": {
+      "clickable": true
+    },
+    "nn-s7": {
+      "clickable": true
+    },
+    "nn-s8": {
+      "clickable": true
+    },
+    "nn-s9": {
+      "clickable": true
+    },
+    "nn-s10": {
+      "clickable": true
+    },
+    "nn-s11": {
+      "clickable": true
+    },
+    "nn-s12": {
+      "clickable": true
+    },
+    "nn-s13": {
+      "clickable": true
+    },
+    "nn-s14": {
       "clickable": true
     },
     "t-isolated": {
