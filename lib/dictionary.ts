@@ -592,6 +592,156 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "React — react.dev 의 배우기와 참고서를 따라 읽은 서른여섯 장",
+      from: "react",
+      entries: [
+        {
+          term: "렌더 (render)와 커밋 (commit)",
+          body: "렌더는 컴포넌트 함수를 불러 '무엇을 보여줄지' 계산하는 단계, 커밋은 그 차이를 DOM에 반영하는 단계. 리렌더가 났다고 DOM이 바뀐 것이 아니고, 같은 값을 set하면 렌더는 한 번 더 돌되 커밋은 없다. StrictMode는 렌더만 두 번 부르고 두 번째 결과를 버린다.",
+        },
+        {
+          term: "순수 컴포넌트 (pure component)",
+          body: "같은 props·state·컨텍스트면 같은 JSX를 돌려주고, 렌더 중에 바깥(전역, DOM, props 객체)을 바꾸지 않는 컴포넌트. React가 언제 몇 번 부르든 결과가 같아야 StrictMode·전환·컴파일러가 안전하다. 렌더 중 만든 지역 변수를 바꾸는 것은 괜찮다.",
+        },
+        {
+          term: "스냅샷 (snapshot)으로서의 state",
+          body: "렌더 한 번 안에서 state는 고정된 값이다. set(n + 1)을 세 번 불러도 n은 그 렌더의 값이라 +1만 되고, set(x => x + 1) 함수형 갱신은 큐를 차례로 밟아 +3이 된다. 핸들러 안의 setTimeout도 그 렌더의 스냅샷을 본다.",
+        },
+        {
+          term: "묶음 갱신 (batching)",
+          body: "같은 틱(이벤트 핸들러, 프라미스, 타임아웃)에서 부른 set들을 모아 렌더 한 번으로 처리하는 것. set(1) set(2) set(3)이 렌더 한 번에 n=3. React 18부터 어디서 부르든 묶인다. 지금 당장 커밋해야 하면 flushSync.",
+        },
+        {
+          term: "key",
+          body: "리스트 항목의 정체를 React에 알려 주는 문자열. 순서가 바뀌어도 같은 key면 같은 컴포넌트(state·DOM 유지), key가 바뀌면 새로 마운트(state 초기화). 인덱스를 key로 쓰면 정렬·삭제 때 state가 옆 항목으로 샌다. 같은 자리의 컴포넌트를 강제로 리셋할 때도 key를 바꾼다.",
+        },
+        {
+          term: "제어 컴포넌트 (controlled)와 비제어 (uncontrolled)",
+          body: "value·checked를 넘기면 React가 값의 주인(제어)이라 onChange로 state를 갱신해야 하고, 없으면 읽기 전용 경고. defaultValue·defaultChecked는 초깃값만 주고 DOM이 주인(비제어)이라 FormData·ref로 읽는다. 하나의 요소는 수명 중 한쪽이어야 하고, 제어 값은 문자열(null 금지)이다.",
+        },
+        {
+          term: "Effect 와 동기화",
+          body: "커밋·페인트 뒤에 돌아 React 바깥(구독, 타이머, DOM API, 네트워크)과 트리를 맞추는 코드. '마운트 때'가 아니라 '이 의존성으로 동기화를 시작하고, 바뀌면 정리 뒤 다시'. 렌더 중 계산할 수 있는 값(파생 값)이나 사용자 이벤트의 응답에는 쓰지 않는다.",
+        },
+        {
+          term: "useLayoutEffect",
+          body: "useEffect와 같되 커밋 직후 페인트 전에 동기로 돈다. 측정(getBoundingClientRect) 뒤 위치를 바꿔도 사용자는 중간 상태를 못 본다. 페인트를 막으니 측정에만 쓰고, 서버에서는 돌지 않아 경고가 난다.",
+        },
+        {
+          term: "useEffectEvent",
+          body: "Effect 안에서 쓰되 의존성이 되지 않는 '비반응' 로직을 싸는 훅(19 정식). 최신 props·state를 읽지만 바뀌어도 Effect를 다시 돌리지 않는다. 채팅방 연결은 roomId에 반응하되 알림 테마는 반응하지 않게 할 때. Effect 안에서만 부른다.",
+        },
+        {
+          term: "ref",
+          body: "렌더와 무관하게 렌더 사이에 남는 값({ current }). 바꿔도 리렌더가 없고, 렌더 중 읽기·쓰기는 규칙 위반(refs 린트). DOM 노드를 받는 자리이기도 하다. 19부터 ref는 보통 prop이라 forwardRef가 필요 없고, ref 콜백은 정리 함수를 돌려줄 수 있다.",
+        },
+        {
+          term: "디스패처 (dispatcher)와 훅 순서",
+          body: "훅 함수가 '지금 렌더 중인 컴포넌트'를 찾는 내부 객체. 렌더 중이 아니면 null이라 컴포넌트 밖 훅은 'Cannot read properties of null (reading useState)'. 훅은 이름이 아니라 호출 순서로 슬롯을 받으므로 조건·반복·조기 return 뒤에서 부르면 슬롯이 뒤바뀐다. use만 조건에서 예외.",
+        },
+        {
+          term: "전환 (Transition)과 액션 (Action)",
+          body: "startTransition 안의 갱신은 '긴급하지 않다'고 표시되어 입력 같은 긴급 갱신이 먼저 처리되고 isPending이 true다. 전환 중 Suspense는 fallback 대신 옛 내용을 유지한다. 19에서 async 함수를 넘기면 액션이라 부르고 끝날 때까지 pending이 이어지며 useActionState·useOptimistic·폼과 묶인다.",
+        },
+        {
+          term: "useDeferredValue",
+          body: "값의 '지연된 사본'. 먼저 옛 값으로 렌더하고 뒤에 새 값으로 다시 렌더한다. 갱신을 내가 부를 수 있으면 startTransition, 값만 받아 쓰는 자리면 useDeferredValue. 받는 컴포넌트가 memo여야 지연의 이득이 있다.",
+        },
+        {
+          term: "Suspense 경계 (boundary)",
+          body: "자식 중 하나가 '아직'(lazy 로딩, use의 pending 프라미스)이면 그 영역 전체를 fallback으로 바꾸고 준비되면 되돌리는 래퍼. 가장 가까운 경계가 받으므로 위치가 '누가 함께 기다리나'를 정한다. 빠른 응답에도 드러내기를 약 300ms 묶어 깜빡임을 막는다. useEffect의 fetch는 모른다.",
+        },
+        {
+          term: "use",
+          body: "렌더 중 프라미스나 컨텍스트를 '읽는' 훅(19). 프라미스가 아직이면 가장 가까운 Suspense가 기다린다. 다른 훅과 달리 조건·반복 안에서도 되지만 try/catch는 안 된다. 렌더 중 만든 프라미스는 매번 새것이라 cache나 바깥에서 만들어 넘긴다.",
+        },
+        {
+          term: "StrictMode",
+          body: "개발 모드에서만 자식 트리에 추가 검사를 거는 래퍼. 컴포넌트를 두 번 불러 순수성을, Effect를 한 번 더 정리·실행해 정리 누락을, ref 콜백도 한 번 더 검사한다(renders 2 · effects 2 · cleanups 1). 운영 빌드에서는 아무 일도 안 한다. 두 번 들어가는 로그는 버그가 아니라 규칙 위반의 신호다.",
+        },
+        {
+          term: "memo 와 얕은 비교",
+          body: "memo(C)는 부모가 렌더될 때 새·옛 props를 각각 Object.is로 비교해 같으면 C를 건너뛴다. 매 렌더 새로 만드는 객체·배열·함수 prop은 늘 다르다고 보아 무력하다(3 vs 1). useMemo·useCallback으로 참조를 고정하거나 컴파일러가 대신한다. state·컨텍스트 변화는 막지 못한다.",
+        },
+        {
+          term: "lazy 와 코드 분할",
+          body: "lazy(() => import('./X'))는 처음 렌더될 때 모듈을 받는 컴포넌트를 만든다. 번들러가 import()를 별도 청크로 떼고, 받는 동안 가장 가까운 Suspense의 fallback이 보인다. 모듈 최상위에 두고({ default }를 resolve) 컴포넌트 안에서 만들면 매 렌더 재로드된다.",
+        },
+        {
+          term: "하이드레이션 (hydration)과 불일치",
+          body: "서버 HTML에 React가 이벤트 핸들러를 붙이고 트리를 세우는 일. 다시 그리지 않고 기존 DOM을 자기 것으로 인정하므로 클라이언트 첫 렌더가 서버 HTML과 같아야 한다. 다르면(시간·난수·window 분기·다른 데이터) 그 트리를 다시 그리고 onRecoverableError로 알린다. console.error가 아니다.",
+        },
+        {
+          term: "포털 (portal)",
+          body: "createPortal(children, node)로 React 트리의 위치와 DOM 위치를 떼어 놓는 것. DOM은 body 끝에 있어도 React에서는 그 컴포넌트의 자식이라 컨텍스트를 읽고 이벤트가 React 부모의 onClick으로 올라간다. 서버에서는 DOM 노드가 없어 쓸 수 없다.",
+        },
+        {
+          term: "flushSync",
+          body: "콜백 안의 갱신을 묶지 않고 지금 동기로 커밋한다. 다음 줄에서 DOM이 바뀌어 있다. window.print처럼 브라우저가 '지금' DOM을 읽는 자리에서만 쓰고, 렌더·Effect 안에서 부르면 'already rendering' 경고다. 남발하면 묶음의 이득이 사라지고 Suspense가 fallback으로 튄다.",
+        },
+        {
+          term: "precedence 와 리소스 호이스팅",
+          body: "19에서 <title> <meta> <link> <script> <style>은 어디서 렌더해도 head로 올라간다. 단 <link rel=stylesheet>와 <style>은 precedence(순서 묶음 이름)가 있어야, <script>는 src + async여야 올라가고 같은 href·src는 하나로 합쳐진다. 없으면 보통 태그처럼 제자리. 렌더 뒤 props 변경은 무시되고 언마운트 뒤에도 남을 수 있다.",
+        },
+        {
+          term: "셸 (shell)과 스트리밍 SSR",
+          body: "셸은 Suspense 경계 바깥의 모든 것, 즉 바로 보낼 수 있는 첫 HTML. renderToPipeableStream은 onShellReady에 셸을 보내고 경계 안은 준비되는 대로 <div hidden> + $RC 스크립트로 제자리에 끼운다. 셸이 나간 뒤에는 상태 코드를 바꿀 수 없고, 셸 자체가 실패하면 onShellError로 대체 HTML을 보낸다. renderToString은 기다리지 못해 fallback을 그대로 낸다.",
+        },
+        {
+          term: "prerender 와 postponed",
+          body: "prerender는 모든 Suspense가 끝날 때까지 기다려 template·script 없는 완성 HTML(prelude)을 낸다(SSG). signal로 중단하면 미완성 경계는 fallback 상태로 남고 '어디서 멈췄나'를 담은 불투명 객체 postponed가 생긴다. 요청 때 resume에 넘기면 그 자리부터 이어 스트리밍한다(부분 사전 렌더링). 열지 말고 같은 React 버전으로 넘긴다.",
+        },
+        {
+          term: "useFormStatus 와 폼 액션",
+          body: "<form action={fn}>에 함수를 넘기면 React가 전환 안에서 FormData로 부르고, 성공하면 비제어 필드를 리셋한다. useFormStatus는 '자기를 감싼' form의 pending·data를 읽으므로 form을 렌더하는 컴포넌트 자신은 늘 false이고 안의 자식(<SubmitButton/>)에서 읽어야 한다. 액션의 결과 state는 useActionState.",
+        },
+        {
+          term: "React 컴파일러와 자동 메모이제이션",
+          body: "babel-plugin-react-compiler가 빌드 때 컴포넌트를 읽어 '입력이 같으면 재사용'하는 코드(react/compiler-runtime의 c(n) 슬롯)로 바꾼다. 손으로 쓰던 useMemo·useCallback·memo를 대신한다. React 규칙을 지킨 함수만 바꾸고 어긴 함수는 CompileError와 함께 원문으로 건너뛴다(panicThreshold none). 어디가 건너뛰어졌는지는 logger와 ESLint 플러그인이 보여 준다.",
+        },
+        {
+          term: "'use memo' 와 'use no memo'",
+          body: "컴파일러 지시어. 함수 몸 첫 줄(또는 파일 첫 줄)의 문자열. 'use memo'는 컴파일하라(annotation 모드에서 필수), 'use no memo'는 건너뛰라(모든 모드보다 우선, 별칭 'use no forget'). 비호환 라이브러리(react-hook-form watch, MobX observer)를 쓰는 동안의 임시 탈출구이고, 원인이 해소되면 뗀다.",
+        },
+        {
+          term: "게이팅 (gating)",
+          body: "컴파일러 설정으로, 같은 컴포넌트의 컴파일판과 원본을 둘 다 번들에 넣고 런타임 불리언 함수(named export)로 고르게 한다. isCompilerOn() ? List_compiled : List_original. 플래그는 모듈 평가 때 한 번 읽히고 번들이 두 배 가까이 커지므로 도입기에만 쓰고 뗀다.",
+        },
+        {
+          term: "컴파일러 진단 (compiler diagnostics)과 린트",
+          body: "컴파일러가 '이 함수는 규칙을 어겨 컴파일할 수 없다'고 낼 때의 이유. eslint-plugin-react-hooks 7은 같은 분석기를 린트로 감싸 그 이유('Cannot access refs during render', 'Cannot call impure function during render' 등)를 쓰는 중에 에디터에 보여 준다. 컴파일러를 쓰지 않아도 켤 수 있고, 린트가 깨끗하면 컴파일러가 건너뛸 함수도 거의 없다.",
+        },
+        {
+          term: "연쇄 렌더 (cascading render)",
+          body: "커밋이 끝난 Effect 안에서 바로 setState를 불러 방금 그린 화면을 버리고 다시 렌더하는 것. 한 갱신이 두 렌더가 되고 중간 상태가 한 프레임 보일 수 있다. set-state-in-effect 린트가 잡고 Performance 트랙에 Cascading update로 보인다. 다른 state·props로 계산할 수 있는 값은 렌더 중 파생한다.",
+        },
+        {
+          term: "레인 (lane)과 Performance 트랙",
+          body: "React가 갱신을 우선순위별로 나누는 통로. 동기 갱신은 Blocking, startTransition은 Transition, Suspense 재시도는 Suspense, 남는 시간은 Idle. 19.2의 Performance 트랙은 브라우저 Performance 패널에 Scheduler(레인별 Update·Render·Commit·Effects)·Components(컴포넌트별 렌더·효과)·Server 트랙을 그린다. 개발·프로파일링 빌드(react-dom/profiling)에서만.",
+        },
+        {
+          term: "React 규칙 (Rules of React)",
+          body: "'지침이 아니라 규칙'. 셋이다. 컴포넌트와 훅은 순수해야 한다(멱등, 부수 효과는 렌더 밖, props·state·훅 인자·반환·JSX에 넘긴 값은 불변, 지역 변경은 OK). React가 컴포넌트와 훅을 부른다(직접 호출 X, 훅을 값처럼 X). 훅의 규칙(최상위, React 함수에서만). 어기면 지금은 돌아도 StrictMode·컴파일러·전환·서버에서 깨진다.",
+        },
+        {
+          term: "서버 컴포넌트 (Server Component)",
+          body: "번들링 전에 서버(또는 빌드)에서 미리 렌더되는 컴포넌트. async로 await하며 DB·파일을 직접 읽고, 코드가 브라우저로 가지 않아 state·Effect·이벤트가 없다. 결과(데이터·JSX)를 클라이언트 컴포넌트에 props로 넘긴다. 지시어가 없고 기본이 서버다. React API지만 번들러·프레임워크가 있어야 돈다.",
+        },
+        {
+          term: "'use client' 와 직렬화 경계",
+          body: "파일 첫 줄에 두어 그 모듈과 전이적 의존성을 클라이언트 번들로 표시하는 지시어. 서버 컴포넌트가 이 모듈의 컴포넌트를 렌더하는 자리가 경계이고, 넘는 props는 직렬화 가능해야 한다(원시값·Array/Map/Set·Date·플레인 객체·Promise·JSX·서버 함수). 일반 함수·클래스·인스턴스는 못 넘는다. 경계는 가능한 한 아래(leaf)에.",
+        },
+        {
+          term: "서버 함수 ('use server')",
+          body: "async 함수 몸(또는 파일) 첫 줄에 두어 클라이언트가 부를 수 있는 서버 함수로 표시하는 지시어. 함수는 서버에 남고 참조만 넘어가 <form action>·useActionState·startTransition에서 부른다. 인자는 클라이언트가 통제하는 공개 엔드포인트라 늘 검증하고 권한을 확인한다. 데이터 가져오기용이 아니다. 번들러가 없으면 그냥 문자열이다.",
+        },
+        {
+          term: "레거시 API (legacy)",
+          body: "react가 여전히 내보내지만 새 코드에는 권하지 않는 여덟: Children, cloneElement, Component, createElement, createRef, forwardRef, isValidElement, PureComponent. 깨진 것이 아니라 '도구가 볼 수 없는 암묵'의 목록이다. 대안은 함수 컴포넌트 + 훅 + JSX, 자식 대신 배열·렌더 prop·컨텍스트, 19의 ref prop. 에러 경계 클래스 하나는 예외.",
+        },
+      ],
+    },
   ],
 };
 
