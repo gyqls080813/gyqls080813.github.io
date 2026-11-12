@@ -121,7 +121,13 @@ export const sheetIndex: {
     "js-regexp": "theory",
     "ts": "theory",
     "ts-start": "theory",
+    "ts-start-new": "theory",
+    "ts-start-js": "theory",
+    "ts-start-oop": "theory",
+    "ts-start-fp": "theory",
+    "ts-start-tooling": "theory",
     "ts-handbook": "theory",
+    "ts-hb-basics": "theory",
     "ts-hb-everyday": "theory",
     "ts-ev-primitives": "theory",
     "ts-ev-arrays": "theory",
@@ -137,13 +143,80 @@ export const sheetIndex: {
     "ts-ev-null": "theory",
     "ts-ev-enums": "theory",
     "ts-ev-rare": "theory",
+    "ts-hb-narrowing": "theory",
+    "ts-hb-functions": "theory",
+    "ts-hb-objects": "theory",
+    "ts-hb-manipulation": "theory",
+    "ts-tm-creating": "theory",
+    "ts-tm-generics": "theory",
+    "ts-tm-keyof": "theory",
+    "ts-tm-typeof": "theory",
+    "ts-tm-indexed": "theory",
+    "ts-tm-conditional": "theory",
+    "ts-tm-mapped": "theory",
+    "ts-tm-template": "theory",
+    "ts-hb-classes": "theory",
+    "ts-hb-modules": "theory",
     "ts-reference": "theory",
+    "ts-ref-utility": "theory",
+    "ts-ref-cheat": "theory",
+    "ts-ref-decorators": "theory",
+    "ts-ref-merging": "theory",
+    "ts-ref-enums": "theory",
+    "ts-ref-iterators": "theory",
+    "ts-ref-jsx": "theory",
+    "ts-ref-mixins": "theory",
+    "ts-ref-namespaces": "theory",
+    "ts-ref-ns-modules": "theory",
+    "ts-ref-symbols": "theory",
+    "ts-ref-triple": "theory",
+    "ts-ref-compat": "theory",
+    "ts-ref-inference": "theory",
+    "ts-ref-vardecl": "theory",
     "ts-modules-ref": "theory",
+    "ts-mr-intro": "theory",
+    "ts-mr-theory": "theory",
+    "ts-mr-guides": "theory",
+    "ts-mr-options": "theory",
+    "ts-mr-reference": "theory",
+    "ts-mr-appendices": "theory",
+    "ts-mr-esm-cjs": "theory",
     "ts-tutorials": "theory",
+    "ts-tut-aspnet": "theory",
+    "ts-tut-gulp": "theory",
+    "ts-tut-dom": "theory",
+    "ts-tut-migrate": "theory",
+    "ts-tut-babel": "theory",
     "ts-whatsnew": "theory",
     "ts-declaration": "theory",
+    "ts-dcl-intro": "theory",
+    "ts-dcl-reference": "theory",
+    "ts-dcl-structures": "theory",
+    "ts-dcl-templates": "theory",
+    "ts-dcl-t-modules": "theory",
+    "ts-dcl-t-plugin": "theory",
+    "ts-dcl-t-class": "theory",
+    "ts-dcl-t-function": "theory",
+    "ts-dcl-t-global": "theory",
+    "ts-dcl-t-globalmod": "theory",
+    "ts-dcl-dos": "theory",
+    "ts-dcl-deep": "theory",
+    "ts-dcl-publish": "theory",
+    "ts-dcl-consume": "theory",
     "ts-js": "theory",
+    "ts-js-projects": "theory",
+    "ts-js-checking": "theory",
+    "ts-js-jsdoc": "theory",
+    "ts-js-dts": "theory",
     "ts-config": "theory",
+    "ts-cfg-tsconfig": "theory",
+    "ts-cfg-msbuild": "theory",
+    "ts-cfg-tsconfig-ref": "theory",
+    "ts-cfg-cli": "theory",
+    "ts-cfg-references": "theory",
+    "ts-cfg-buildtools": "theory",
+    "ts-cfg-watch": "theory",
+    "ts-cfg-nightly": "theory",
     "vue": "theory",
     "vg": "theory",
     "vg-start": "theory",
@@ -1292,6 +1365,180 @@ export const sheetIndex: {
           {
             "id": "컴파일-타임-플래그와-운영-빌드",
             "label": "컴파일 타임 플래그와 운영 빌드"
+          }
+        ]
+      },
+      {
+        "id": "typescript-typescriptlang-org-의-핸드북과-참고서를-따라-읽은-아흔여덟-장",
+        "label": "TypeScript — typescriptlang.org 의 핸드북과 참고서를 따라 읽은 아흔여덟 장",
+        "children": [
+          {
+            "id": "정적-타입-검사-static-type-checking",
+            "label": "정적 타입 검사 (static type checking)"
+          },
+          {
+            "id": "검사기와-변환기-check-vs-emit",
+            "label": "검사기와 변환기 (check vs emit)"
+          },
+          {
+            "id": "ts-코드-번호",
+            "label": "TS 코드 번호"
+          },
+          {
+            "id": "strict-묶음",
+            "label": "strict 묶음"
+          },
+          {
+            "id": "구조적-타입-structural-typing",
+            "label": "구조적 타입 (structural typing)"
+          },
+          {
+            "id": "초과-속성-검사-excess-property-check",
+            "label": "초과 속성 검사 (excess property check)"
+          },
+          {
+            "id": "좁히기-narrowing",
+            "label": "좁히기 (narrowing)"
+          },
+          {
+            "id": "판별-유니온-discriminated-union-과-never-소진",
+            "label": "판별 유니온 (discriminated union)과 never 소진"
+          },
+          {
+            "id": "타입-서술-type-predicate-과-추론-5-5",
+            "label": "타입 서술 (type predicate)과 추론 (5.5)"
+          },
+          {
+            "id": "넓힘-widening-과-as-const",
+            "label": "넓힘 (widening)과 as const"
+          },
+          {
+            "id": "최적-공통-타입과-문맥적-타이핑",
+            "label": "최적 공통 타입과 문맥적 타이핑"
+          },
+          {
+            "id": "오버로드-overload-와-구현-시그니처",
+            "label": "오버로드 (overload)와 구현 시그니처"
+          },
+          {
+            "id": "void-반환-규칙",
+            "label": "void 반환 규칙"
+          },
+          {
+            "id": "readonly-는-얕고-호환성에-안-들어간다",
+            "label": "readonly 는 얕고 호환성에 안 들어간다"
+          },
+          {
+            "id": "제네릭-generics-과-제약-extends",
+            "label": "제네릭 (generics)과 제약 (extends)"
+          },
+          {
+            "id": "분산-어노테이션-in-out",
+            "label": "분산 어노테이션 (in / out)"
+          },
+          {
+            "id": "keyof-typeof-인덱스-접근-t-k",
+            "label": "keyof · typeof · 인덱스 접근 (T[K])"
+          },
+          {
+            "id": "조건부-타입과-분배-distributive",
+            "label": "조건부 타입과 분배 (distributive)"
+          },
+          {
+            "id": "매핑된-타입-mapped-type-과-키-재매핑-as",
+            "label": "매핑된 타입 (mapped type)과 키 재매핑 (as)"
+          },
+          {
+            "id": "템플릿-리터럴-타입",
+            "label": "템플릿 리터럴 타입"
+          },
+          {
+            "id": "유틸리티-타입-utility-types",
+            "label": "유틸리티 타입 (utility types)"
+          },
+          {
+            "id": "클래스-필드-초기화와-순서",
+            "label": "클래스 필드 초기화와 순서"
+          },
+          {
+            "id": "private-과-private",
+            "label": "private 과 #private"
+          },
+          {
+            "id": "런타임의-this-와-this-매개변수",
+            "label": "런타임의 this 와 this 매개변수"
+          },
+          {
+            "id": "모듈과-스크립트-export",
+            "label": "모듈과 스크립트, export {}"
+          },
+          {
+            "id": "import-지우기-elision-와-verbatimmodulesyntax",
+            "label": "import 지우기 (elision)와 verbatimModuleSyntax"
+          },
+          {
+            "id": "호스트-host",
+            "label": "호스트 (host)"
+          },
+          {
+            "id": "module-nodenext-와-파일별-포맷",
+            "label": "module: nodenext 와 파일별 포맷"
+          },
+          {
+            "id": "moduleresolution-bundler",
+            "label": "moduleResolution: bundler"
+          },
+          {
+            "id": "지정자는-변환되지-않는다",
+            "label": "지정자는 변환되지 않는다"
+          },
+          {
+            "id": "esm-cjs-상호운용과-이중-default",
+            "label": "ESM·CJS 상호운용과 이중 default"
+          },
+          {
+            "id": "esmoduleinterop-과-allowsyntheticdefaultimports",
+            "label": "esModuleInterop 과 allowSyntheticDefaultImports"
+          },
+          {
+            "id": "선언-파일-d-ts-과-declare",
+            "label": "선언 파일 (.d.ts)과 declare"
+          },
+          {
+            "id": "export-와-세-가지-import",
+            "label": "export = 와 세 가지 import"
+          },
+          {
+            "id": "선언-병합-declaration-merging-과-세-칸",
+            "label": "선언 병합 (declaration merging)과 세 칸"
+          },
+          {
+            "id": "types-와-6-0-의-types",
+            "label": "@types 와 6.0 의 types: []"
+          },
+          {
+            "id": "checkjs-ts-check-jsdoc",
+            "label": "checkJs · @ts-check · JSDoc"
+          },
+          {
+            "id": "tsconfig-files-include-exclude-extends",
+            "label": "tsconfig: files · include · exclude · extends"
+          },
+          {
+            "id": "6-0-기본값-전환과-7-0-제거",
+            "label": "6.0 기본값 전환과 7.0 제거"
+          },
+          {
+            "id": "프로젝트-참조-project-references-와-tsc-b",
+            "label": "프로젝트 참조 (project references)와 tsc -b"
+          },
+          {
+            "id": "erasablesyntaxonly-5-8-와-node-의-타입-벗기기",
+            "label": "erasableSyntaxOnly (5.8)와 Node 의 타입 벗기기"
+          },
+          {
+            "id": "typescript-7-0-go-네이티브",
+            "label": "TypeScript 7.0 (Go 네이티브)"
           }
         ]
       }
@@ -6520,6 +6767,22 @@ export const sheetIndex: {
       {
         "id": "실제로-부딪힌-곳",
         "label": "실제로 부딪힌 곳"
+      },
+      {
+        "id": "실제로-돌려-보면-지금의-tsc-는-7-0-이고-기본값이-바뀌었다",
+        "label": "실제로 돌려 보면: 지금의 tsc 는 7.0 이고, 기본값이 바뀌었다"
+      },
+      {
+        "id": "문제의-구조-검사기와-변환기는-한-도구에-들어-있지만-다른-일을-한다",
+        "label": "문제의 구조: 검사기와 변환기는 한 도구에 들어 있지만 다른 일을 한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-start": [
@@ -6534,6 +6797,148 @@ export const sheetIndex: {
       {
         "id": "제가-실제로-지나온-문",
         "label": "제가 실제로 지나온 문"
+      },
+      {
+        "id": "다섯-문이-각각-바로잡는-오해",
+        "label": "다섯 문이 각각 바로잡는 오해"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-start-new": [
+      {
+        "id": "javascript-의-느슨함이-문제가-된-지점",
+        "label": "JavaScript 의 느슨함이 문제가 된 지점"
+      },
+      {
+        "id": "문법-오류와-타입-오류는-다른-것이다",
+        "label": "문법 오류와 타입 오류는 다른 것이다"
+      },
+      {
+        "id": "실제로-돌려-보면-타입은-지워지고-런타임-라이브러리는-없다",
+        "label": "실제로 돌려 보면: 타입은 지워지고, 런타임 라이브러리는 없다"
+      },
+      {
+        "id": "문제-타입을-적었으니-안전하다고-믿는다",
+        "label": "문제: 타입을 적었으니 안전하다고 믿는다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-start-js": [
+      {
+        "id": "추론-적지-않아도-안다",
+        "label": "추론: 적지 않아도 안다"
+      },
+      {
+        "id": "interface-와-type-문서는-interface-를-먼저-권한다",
+        "label": "interface 와 type: 문서는 interface 를 먼저 권한다"
+      },
+      {
+        "id": "원시-타입-일곱-개와-ts-가-더한-네-개",
+        "label": "원시 타입 일곱 개와 TS 가 더한 네 개"
+      },
+      {
+        "id": "실제로-돌려-보면-유니온은-typeof-로-좁히고-제네릭은-변수-같은-타입이다",
+        "label": "실제로 돌려 보면: 유니온은 typeof 로 좁히고, 제네릭은 변수 같은 타입이다"
+      },
+      {
+        "id": "문제의-구조-이름이-아니라-모양이-맞는지-본다",
+        "label": "문제의 구조: 이름이 아니라 모양이 맞는지 본다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-start-oop": [
+      {
+        "id": "클래스는-필수가-아니다",
+        "label": "클래스는 필수가 아니다"
+      },
+      {
+        "id": "실제로-돌려-보면-빈-클래스는-모든-것을-받는다",
+        "label": "실제로 돌려 보면: 빈 클래스는 모든 것을 받는다"
+      },
+      {
+        "id": "타입은-런타임에-없다-리플렉션이-안-된다",
+        "label": "타입은 런타임에 없다: 리플렉션이 안 된다"
+      },
+      {
+        "id": "문제가-나는-경우-명목적-습관으로-설계할-때",
+        "label": "문제가 나는 경우: 명목적 습관으로 설계할 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-start-fp": [
+      {
+        "id": "유니온은-태그가-없다",
+        "label": "유니온은 태그가 없다"
+      },
+      {
+        "id": "실제로-돌려-보면-단위-타입은-대입하면-넓어진다",
+        "label": "실제로 돌려 보면: 단위 타입은 대입하면 넓어진다"
+      },
+      {
+        "id": "교차-타입과-태그된-교차",
+        "label": "교차 타입과 태그된 교차"
+      },
+      {
+        "id": "없는-것들-고차-종류-타입과-포인트프리",
+        "label": "없는 것들: 고차 종류 타입과 포인트프리"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-start-tooling": [
+      {
+        "id": "설치와-첫-컴파일",
+        "label": "설치와 첫 컴파일"
+      },
+      {
+        "id": "실제로-돌려-보면-에러가-있어도-js-는-나온다",
+        "label": "실제로 돌려 보면: 에러가 있어도 .js 는 나온다"
+      },
+      {
+        "id": "인터페이스와-클래스-implements-없이도-맞는다",
+        "label": "인터페이스와 클래스: implements 없이도 맞는다"
+      },
+      {
+        "id": "문제-에디터는-빨간-줄을-그리는데-빌드는-통과한다",
+        "label": "문제: 에디터는 빨간 줄을 그리는데 빌드는 통과한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-handbook": [
@@ -6552,12 +6957,66 @@ export const sheetIndex: {
       {
         "id": "실제로-부딪힌-곳",
         "label": "실제로 부딪힌 곳"
+      },
+      {
+        "id": "문서가-스스로-정한-목표와-비목표",
+        "label": "문서가 스스로 정한 목표와 비목표"
+      },
+      {
+        "id": "실제로-돌려-보면-여덟-장이-각각-어떤-에러를-내는가",
+        "label": "실제로 돌려 보면: 여덟 장이 각각 어떤 에러를 내는가"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-hb-basics": [
+      {
+        "id": "예외가-아닌-실패까지-잡는다",
+        "label": "예외가 아닌 실패까지 잡는다"
+      },
+      {
+        "id": "실제로-돌려-보면-tsc-에러와-emit-noemitonerror",
+        "label": "실제로 돌려 보면: tsc, 에러와 emit, noEmitOnError"
+      },
+      {
+        "id": "명시적-타입-그리고-지워지는-타입",
+        "label": "명시적 타입, 그리고 지워지는 타입"
+      },
+      {
+        "id": "다운레벨링-target-이-정하는-문법의-높이",
+        "label": "다운레벨링: target 이 정하는 문법의 높이"
+      },
+      {
+        "id": "엄격함-strict-는-스위치-묶음이고-지금은-기본이-켜짐이다",
+        "label": "엄격함: strict 는 스위치 묶음이고, 지금은 기본이 켜짐이다"
+      },
+      {
+        "id": "문제의-구조-검사기는-약속-을-런타임은-사실-을-다룬다",
+        "label": "문제의 구조: 검사기는 '약속'을, 런타임은 '사실'을 다룬다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-hb-everyday": [
       {
         "id": "열네-개의-대제목",
         "label": "열네 개의 대제목"
+      },
+      {
+        "id": "실제로-돌려-보면-열네-절의-대표-에러",
+        "label": "실제로 돌려 보면: 열네 절의 대표 에러"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       }
     ],
     "ts-ev-primitives": [
@@ -6744,6 +7203,398 @@ export const sheetIndex: {
         "label": "절대 겹치지 않는 참조를 만드는 symbol"
       }
     ],
+    "ts-hb-narrowing": [
+      {
+        "id": "typeof-가드와-null-의-함정",
+        "label": "typeof 가드와 null 의 함정"
+      },
+      {
+        "id": "진실성-좁히기와-빈-문자열의-함정",
+        "label": "진실성 좁히기와 빈 문자열의 함정"
+      },
+      {
+        "id": "동등성-in-instanceof-대입",
+        "label": "동등성 · in · instanceof · 대입"
+      },
+      {
+        "id": "실제로-돌려-보면-제어-흐름-분석과-타입-서술-추론되는-서술-5-5",
+        "label": "실제로 돌려 보면: 제어 흐름 분석과 타입 서술, 추론되는 서술 (5.5)"
+      },
+      {
+        "id": "판별-유니온과-never-소진-검사",
+        "label": "판별 유니온과 never 소진 검사"
+      },
+      {
+        "id": "문제가-나는-경우-좁힘이-새지-않는-자리",
+        "label": "문제가 나는 경우: 좁힘이 '새지' 않는 자리"
+      },
+      {
+        "id": "문제의-구조-좁히기는-값의-검사-를-타입의-사실-로-번역하는-규칙표다",
+        "label": "문제의 구조: 좁히기는 '값의 검사' 를 '타입의 사실' 로 번역하는 규칙표다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-hb-functions": [
+      {
+        "id": "함수-타입-표현식과-시그니처",
+        "label": "함수 타입 표현식과 시그니처"
+      },
+      {
+        "id": "제네릭-함수-추론-제약-세-가지-지침",
+        "label": "제네릭 함수: 추론 · 제약 · 세 가지 지침"
+      },
+      {
+        "id": "실제로-돌려-보면-오버로드는-구현-시그니처가-보이지-않는다",
+        "label": "실제로 돌려 보면: 오버로드는 구현 시그니처가 보이지 않는다"
+      },
+      {
+        "id": "this-void-unknown-never-function",
+        "label": "this · void · unknown · never · Function"
+      },
+      {
+        "id": "나머지-매개변수와-as-const-매개변수-구조-분해",
+        "label": "나머지 매개변수와 as const, 매개변수 구조 분해"
+      },
+      {
+        "id": "함수의-대입-가능성-void-반환-규칙",
+        "label": "함수의 대입 가능성: void 반환 규칙"
+      },
+      {
+        "id": "문제의-구조-함수-타입은-호출하는-쪽-의-약속이다",
+        "label": "문제의 구조: 함수 타입은 '호출하는 쪽' 의 약속이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-hb-objects": [
+      {
+        "id": "선택적-속성과-readonly-그리고-readonly-는-얕다",
+        "label": "선택적 속성과 readonly, 그리고 readonly 는 얕다"
+      },
+      {
+        "id": "인덱스-시그니처-이름을-모르는-속성",
+        "label": "인덱스 시그니처: 이름을 모르는 속성"
+      },
+      {
+        "id": "실제로-돌려-보면-초과-속성-검사는-리터럴을-바로-넘길-때만-이다",
+        "label": "실제로 돌려 보면: 초과 속성 검사는 '리터럴을 바로 넘길 때만' 이다"
+      },
+      {
+        "id": "extends-와-교차-타입-충돌할-때-갈린다",
+        "label": "extends 와 교차 타입: 충돌할 때 갈린다"
+      },
+      {
+        "id": "array-readonlyarray-튜플",
+        "label": "Array · ReadonlyArray · 튜플"
+      },
+      {
+        "id": "문제의-구조-수식어는-이-자리에서의-쓰기-허용-이고-호환성은-읽기-모양-만-본다",
+        "label": "문제의 구조: 수식어는 '이 자리에서의 쓰기 허용' 이고, 호환성은 '읽기 모양' 만 본다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-hb-manipulation": [
+      {
+        "id": "여덟-절의-역할-분담",
+        "label": "여덟 절의 역할 분담"
+      },
+      {
+        "id": "실제로-돌려-보면-여덟-절의-대표-결과",
+        "label": "실제로 돌려 보면: 여덟 절의 대표 결과"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-tm-creating": [
+      {
+        "id": "문서의-일곱-줄",
+        "label": "문서의 일곱 줄"
+      },
+      {
+        "id": "서로-기대는-순서",
+        "label": "서로 기대는 순서"
+      },
+      {
+        "id": "실제로-돌려-보면-재료가-다-들어간-한-줄",
+        "label": "실제로 돌려 보면: 재료가 다 들어간 한 줄"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-tm-generics": [
+      {
+        "id": "타입-변수와-추론",
+        "label": "타입 변수와 추론"
+      },
+      {
+        "id": "제약-모양을-요구하기",
+        "label": "제약: 모양을 요구하기"
+      },
+      {
+        "id": "실제로-돌려-보면-클래스의-static-은-타입-매개변수를-못-쓴다",
+        "label": "실제로 돌려 보면: 클래스의 static 은 타입 매개변수를 못 쓴다"
+      },
+      {
+        "id": "기본값과-분산-어노테이션",
+        "label": "기본값과 분산 어노테이션"
+      },
+      {
+        "id": "문제가-나는-경우-제네릭을-쓰지-않아도-될-자리에-쓸-때",
+        "label": "문제가 나는 경우: 제네릭을 쓰지 않아도 될 자리에 쓸 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-keyof": [
+      {
+        "id": "키의-유니온",
+        "label": "키의 유니온"
+      },
+      {
+        "id": "실제로-돌려-보면-인덱스-시그니처를-만나면-string-number",
+        "label": "실제로 돌려 보면: 인덱스 시그니처를 만나면 string | number"
+      },
+      {
+        "id": "문제-keyof-가-string-을-포함해서-템플릿-리터럴에-못-넣는다",
+        "label": "문제: keyof 가 string 을 포함해서 템플릿 리터럴에 못 넣는다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-typeof": [
+      {
+        "id": "값에서-타입을-꺼낸다",
+        "label": "값에서 타입을 꺼낸다"
+      },
+      {
+        "id": "실제로-돌려-보면-호출식에는-쓸-수-없다",
+        "label": "실제로 돌려 보면: 호출식에는 쓸 수 없다"
+      },
+      {
+        "id": "관용구-typeof-와-keyof-as-const",
+        "label": "관용구: typeof 와 keyof, as const"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-indexed": [
+      {
+        "id": "속성-타입-꺼내기",
+        "label": "속성 타입 꺼내기"
+      },
+      {
+        "id": "실제로-돌려-보면-number-로-배열-요소를-값-변수는-안-된다",
+        "label": "실제로 돌려 보면: [number] 로 배열 요소를, 값 변수는 안 된다"
+      },
+      {
+        "id": "문제의-구조-대괄호-안은-타입의-자리다",
+        "label": "문제의 구조: 대괄호 안은 타입의 자리다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-conditional": [
+      {
+        "id": "오버로드를-한-줄로",
+        "label": "오버로드를 한 줄로"
+      },
+      {
+        "id": "실제로-돌려-보면-참-분기에서는-제약이-좁혀진다",
+        "label": "실제로 돌려 보면: 참 분기에서는 제약이 좁혀진다"
+      },
+      {
+        "id": "infer-조각을-꺼내는-변수-선언",
+        "label": "infer: 조각을 꺼내는 변수 선언"
+      },
+      {
+        "id": "분배-유니온은-멤버마다-따로-들어간다",
+        "label": "분배: 유니온은 멤버마다 따로 들어간다"
+      },
+      {
+        "id": "문제가-나는-경우-분배와-never",
+        "label": "문제가 나는 경우: 분배와 never"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-mapped": [
+      {
+        "id": "키를-돌면서-속성을-만든다",
+        "label": "키를 돌면서 속성을 만든다"
+      },
+      {
+        "id": "실제로-돌려-보면-수식어는-와-로-붙이고-뗀다",
+        "label": "실제로 돌려 보면: 수식어는 + 와 - 로 붙이고 뗀다"
+      },
+      {
+        "id": "as-로-키-재매핑-4-1-never-로-필터링",
+        "label": "as 로 키 재매핑 (4.1), never 로 필터링"
+      },
+      {
+        "id": "임의의-유니온을-돌-수-있다",
+        "label": "임의의 유니온을 돌 수 있다"
+      },
+      {
+        "id": "문제의-구조-매핑된-타입은-속성에-대한-for-문-이다",
+        "label": "문제의 구조: 매핑된 타입은 '속성에 대한 for 문' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tm-template": [
+      {
+        "id": "조합-유니온은-곱이-된다",
+        "label": "조합: 유니온은 곱이 된다"
+      },
+      {
+        "id": "실제로-돌려-보면-속성-이름에서-이벤트-이름을-만든다",
+        "label": "실제로 돌려 보면: 속성 이름에서 이벤트 이름을 만든다"
+      },
+      {
+        "id": "거꾸로-추론-문자열에서-key-를-꺼내-콜백-타입을-맞춘다",
+        "label": "거꾸로 추론: 문자열에서 Key 를 꺼내 콜백 타입을 맞춘다"
+      },
+      {
+        "id": "내장-문자열-조작-타입-네-개",
+        "label": "내장 문자열 조작 타입 네 개"
+      },
+      {
+        "id": "문제가-나는-경우-조합이-너무-커질-때",
+        "label": "문제가 나는 경우: 조합이 너무 커질 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-hb-classes": [
+      {
+        "id": "필드는-생성자에서-초기화되어야-한다",
+        "label": "필드는 생성자에서 초기화되어야 한다"
+      },
+      {
+        "id": "실제로-돌려-보면-초기화-순서와-implements-의-한계",
+        "label": "실제로 돌려 보면: 초기화 순서와 implements 의 한계"
+      },
+      {
+        "id": "가시성-private-은-소프트-private-은-하드",
+        "label": "가시성: private 은 소프트, #private 은 하드"
+      },
+      {
+        "id": "static-제네릭-클래스-런타임의-this",
+        "label": "static · 제네릭 클래스 · 런타임의 this"
+      },
+      {
+        "id": "getter-setter-매개변수-속성-abstract-override",
+        "label": "getter/setter · 매개변수 속성 · abstract · override"
+      },
+      {
+        "id": "문제의-구조-클래스는-값과-타입을-동시에-만들고-비교는-여전히-구조적이다",
+        "label": "문제의 구조: 클래스는 값과 타입을 동시에 만들고, 비교는 여전히 구조적이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-hb-modules": [
+      {
+        "id": "모듈과-스크립트-한-줄의-차이",
+        "label": "모듈과 스크립트: 한 줄의 차이"
+      },
+      {
+        "id": "실제로-돌려-보면-타입-import-는-지워지고-verbatimmodulesyntax-는-적게-한다",
+        "label": "실제로 돌려 보면: 타입 import 는 지워지고, verbatimModuleSyntax 는 적게 한다"
+      },
+      {
+        "id": "import-x-require-와-commonjs",
+        "label": "import x = require() 와 CommonJS"
+      },
+      {
+        "id": "module-과-target-은-다른-축이다",
+        "label": "module 과 target 은 다른 축이다"
+      },
+      {
+        "id": "문제-타입만-가져온-모듈의-부수-효과가-사라졌다",
+        "label": "문제: 타입만 가져온 모듈의 부수 효과가 사라졌다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
     "ts-reference": [
       {
         "id": "무엇이-들어-있나",
@@ -6756,6 +7607,424 @@ export const sheetIndex: {
       {
         "id": "타입-호환성과-타입-추론",
         "label": "타입 호환성과 타입 추론"
+      },
+      {
+        "id": "열다섯-항목의-성격-셋으로-나뉜다",
+        "label": "열다섯 항목의 성격: 셋으로 나뉜다"
+      },
+      {
+        "id": "실제로-돌려-보면-참고서가-다루는-제거되었거나-바뀐-것들",
+        "label": "실제로 돌려 보면: 참고서가 다루는 '제거되었거나 바뀐' 것들"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-ref-utility": [
+      {
+        "id": "객체를-바꾸는-것-partial-required-readonly-record-pick-omit",
+        "label": "객체를 바꾸는 것: Partial · Required · Readonly · Record · Pick · Omit"
+      },
+      {
+        "id": "유니온을-바꾸는-것-exclude-extract-nonnullable",
+        "label": "유니온을 바꾸는 것: Exclude · Extract · NonNullable"
+      },
+      {
+        "id": "실제로-돌려-보면-함수와-클래스에서-꺼내는-것",
+        "label": "실제로 돌려 보면: 함수와 클래스에서 꺼내는 것"
+      },
+      {
+        "id": "noinfer-thistype-문자열-네-개",
+        "label": "NoInfer · ThisType · 문자열 네 개"
+      },
+      {
+        "id": "스물두-개-한눈에",
+        "label": "스물두 개 한눈에"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-cheat": [
+      {
+        "id": "네-장이-가리키는-핸드북의-자리",
+        "label": "네 장이 가리키는 핸드북의 자리"
+      },
+      {
+        "id": "실제로-돌려-보면-제어-흐름-한-장을-코드로",
+        "label": "실제로 돌려 보면: 제어 흐름 한 장을 코드로"
+      },
+      {
+        "id": "직접-만들어-두면-좋은-다섯째-장-설정",
+        "label": "직접 만들어 두면 좋은 다섯째 장: 설정"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-ref-decorators": [
+      {
+        "id": "두-세계-시그니처가-다르다",
+        "label": "두 세계: 시그니처가 다르다"
+      },
+      {
+        "id": "실제로-돌려-보면-legacy-의-평가-순서",
+        "label": "실제로 돌려 보면: legacy 의 평가 순서"
+      },
+      {
+        "id": "표준의-도구-addinitializer-와-metadata",
+        "label": "표준의 도구: addInitializer 와 metadata"
+      },
+      {
+        "id": "emit-의-모양과-reflect-metadata",
+        "label": "emit 의 모양과 reflect-metadata"
+      },
+      {
+        "id": "문제의-구조-데코레이터는-타입을-바꾸지-않는다",
+        "label": "문제의 구조: 데코레이터는 타입을 바꾸지 않는다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-merging": [
+      {
+        "id": "인터페이스-병합-멤버는-합쳐지고-함수는-오버로드가-된다",
+        "label": "인터페이스 병합: 멤버는 합쳐지고, 함수는 오버로드가 된다"
+      },
+      {
+        "id": "실제로-돌려-보면-네임스페이스는-함수-enum-클래스에-붙는다",
+        "label": "실제로 돌려 보면: 네임스페이스는 함수·enum·클래스에 붙는다"
+      },
+      {
+        "id": "안-되는-병합-클래스와-클래스-타입-별칭과-무엇이든",
+        "label": "안 되는 병합: 클래스와 클래스, 타입 별칭과 무엇이든"
+      },
+      {
+        "id": "모듈-보강과-전역-보강",
+        "label": "모듈 보강과 전역 보강"
+      },
+      {
+        "id": "문제의-구조-이름-하나에-세-칸이-있고-칸이-겹칠-때만-충돌한다",
+        "label": "문제의 구조: 이름 하나에 세 칸이 있고, 칸이 겹칠 때만 충돌한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-enums": [
+      {
+        "id": "숫자-enum-과-역매핑-문자열-enum",
+        "label": "숫자 enum 과 역매핑, 문자열 enum"
+      },
+      {
+        "id": "실제로-돌려-보면-emit-과-const-enum-인라이닝",
+        "label": "실제로 돌려 보면: emit 과 const enum 인라이닝"
+      },
+      {
+        "id": "유니온-enum-멤버-타입-keyof-typeof",
+        "label": "유니온 enum, 멤버 타입, keyof typeof"
+      },
+      {
+        "id": "objects-vs-enums-as-const-객체라는-대안",
+        "label": "Objects vs Enums: as const 객체라는 대안"
+      },
+      {
+        "id": "문제가-나는-경우-enum-을-쓸-때의-표",
+        "label": "문제가 나는 경우: enum 을 쓸 때의 표"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-iterators": [
+      {
+        "id": "for-of-와-for-in",
+        "label": "for..of 와 for..in"
+      },
+      {
+        "id": "실제로-돌려-보면-직접-만드는-이터러블과-제너레이터",
+        "label": "실제로 돌려 보면: 직접 만드는 이터러블과 제너레이터"
+      },
+      {
+        "id": "es5-타깃의-제한은-역사가-됐다",
+        "label": "ES5 타깃의 제한은 역사가 됐다"
+      },
+      {
+        "id": "strictbuiltiniteratorreturn-과-iterator-헬퍼-5-6",
+        "label": "strictBuiltinIteratorReturn 과 Iterator 헬퍼 (5.6)"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-jsx": [
+      {
+        "id": "jsx-옵션-다섯-값과-emit",
+        "label": "jsx 옵션 다섯 값과 emit"
+      },
+      {
+        "id": "실제로-돌려-보면-intrinsicelements-가-소문자-태그의-사전이다",
+        "label": "실제로 돌려 보면: IntrinsicElements 가 소문자 태그의 사전이다"
+      },
+      {
+        "id": "jsx-네임스페이스의-나머지-조각",
+        "label": "JSX 네임스페이스의 나머지 조각"
+      },
+      {
+        "id": "문제-tsx-에서-꺾쇠-단언이-파서-에러다",
+        "label": "문제: .tsx 에서 꺾쇠 단언이 파서 에러다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-mixins": [
+      {
+        "id": "패턴-생성자-타입을-받아-확장한-클래스를-돌려준다",
+        "label": "패턴: 생성자 타입을 받아 확장한 클래스를 돌려준다"
+      },
+      {
+        "id": "실제로-돌려-보면-제약된-믹스인은-모양이-맞는-기반만-받는다",
+        "label": "실제로 돌려 보면: 제약된 믹스인은 모양이 맞는 기반만 받는다"
+      },
+      {
+        "id": "옛-대안-인터페이스-병합-applymixins",
+        "label": "옛 대안: 인터페이스 병합 + applyMixins"
+      },
+      {
+        "id": "제약-데코레이터와-static",
+        "label": "제약: 데코레이터와 static"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-namespaces": [
+      {
+        "id": "선언과-emit-iife-로-객체를-만든다",
+        "label": "선언과 emit: IIFE 로 객체를 만든다"
+      },
+      {
+        "id": "실제로-돌려-보면-module-키워드와-outfile-은-끝났다",
+        "label": "실제로 돌려 보면: module 키워드와 outFile 은 끝났다"
+      },
+      {
+        "id": "별칭과-앰비언트-네임스페이스",
+        "label": "별칭과 앰비언트 네임스페이스"
+      },
+      {
+        "id": "문제의-구조-네임스페이스는-전역-객체이고-모듈은-파일-스코프다",
+        "label": "문제의 구조: 네임스페이스는 전역 객체이고, 모듈은 파일 스코프다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-ns-modules": [
+      {
+        "id": "모듈을-쓰라",
+        "label": "모듈을 쓰라"
+      },
+      {
+        "id": "함정-1-모듈에-reference-를-쓰는-것",
+        "label": "함정 1: 모듈에 /// <reference> 를 쓰는 것"
+      },
+      {
+        "id": "함정-2-불필요한-네임스페이싱",
+        "label": "함정 2: 불필요한 네임스페이싱"
+      },
+      {
+        "id": "실제로-돌려-보면-outfile-조합-절은-끝났다",
+        "label": "실제로 돌려 보면: outFile 조합 절은 끝났다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-symbols": [
+      {
+        "id": "유일한-값-그리고-unique-symbol",
+        "label": "유일한 값, 그리고 unique symbol"
+      },
+      {
+        "id": "실제로-돌려-보면-잘-알려진-심볼로-동작을-끼운다",
+        "label": "실제로 돌려 보면: 잘 알려진 심볼로 동작을 끼운다"
+      },
+      {
+        "id": "쓸모-충돌하지-않는-키와-브랜드",
+        "label": "쓸모: 충돌하지 않는 키와 브랜드"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-triple": [
+      {
+        "id": "types-lib-path",
+        "label": "types · lib · path"
+      },
+      {
+        "id": "실제로-돌려-보면-types-가-못-찾으면-ts2688-그리고-6-0-의-types",
+        "label": "실제로 돌려 보면: types 가 못 찾으면 TS2688, 그리고 6.0 의 types: []"
+      },
+      {
+        "id": "맨-위에서만-그리고-5-5-부터-emit-하지-않는다",
+        "label": "맨 위에서만, 그리고 5.5 부터 emit 하지 않는다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-compat": [
+      {
+        "id": "객체-y-가-x-의-멤버를-전부-가지면-x-자리에-들어간다",
+        "label": "객체: y 가 x 의 멤버를 전부 가지면 x 자리에 들어간다"
+      },
+      {
+        "id": "실제로-돌려-보면-함수는-매개변수가-적은-쪽이-많은-쪽에-들어간다",
+        "label": "실제로 돌려 보면: 함수는 매개변수가 '적은' 쪽이 '많은' 쪽에 들어간다"
+      },
+      {
+        "id": "매개변수-이변성과-strictfunctiontypes",
+        "label": "매개변수 이변성과 strictFunctionTypes"
+      },
+      {
+        "id": "enum-클래스-제네릭",
+        "label": "enum · 클래스 · 제네릭"
+      },
+      {
+        "id": "특수-타입의-대입표",
+        "label": "특수 타입의 대입표"
+      },
+      {
+        "id": "문제의-구조-건전하지-않은-자리는-편의를-위해-열어-둔-문-이다",
+        "label": "문제의 구조: 건전하지 않은 자리는 '편의를 위해 열어 둔 문' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-inference": [
+      {
+        "id": "최적-공통-타입-후보들의-상위-타입을-찾는다",
+        "label": "최적 공통 타입: 후보들의 상위 타입을 찾는다"
+      },
+      {
+        "id": "실제로-돌려-보면-문맥적-타이핑은-자리에서-흘러-들어온다",
+        "label": "실제로 돌려 보면: 문맥적 타이핑은 자리에서 흘러 들어온다"
+      },
+      {
+        "id": "리터럴-넓힘-const-와-let-그리고-as-const",
+        "label": "리터럴 넓힘: const 와 let, 그리고 as const"
+      },
+      {
+        "id": "문제가-나는-경우-추론이-너무-넓게-또는-너무-좁게-될-때",
+        "label": "문제가 나는 경우: 추론이 '너무 넓게' 또는 '너무 좁게' 될 때"
+      },
+      {
+        "id": "문제의-구조-추론은-두-방향으로-흐른다",
+        "label": "문제의 구조: 추론은 두 방향으로 흐른다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-ref-vardecl": [
+      {
+        "id": "var-의-함수-스코프-let-의-블록-스코프",
+        "label": "var 의 함수 스코프, let 의 블록 스코프"
+      },
+      {
+        "id": "const-는-재대입-금지이고-불변이-아니다",
+        "label": "const 는 재대입 금지이고 불변이 아니다"
+      },
+      {
+        "id": "실제로-돌려-보면-구조-분해와-전개",
+        "label": "실제로 돌려 보면: 구조 분해와 전개"
+      },
+      {
+        "id": "using-과-await-using-5-2",
+        "label": "using 과 await using (5.2)"
+      },
+      {
+        "id": "문제의-구조-선언-키워드는-언제-사라지는가-를-정한다",
+        "label": "문제의 구조: 선언 키워드는 '언제 사라지는가' 를 정한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-modules-ref": [
@@ -6770,6 +8039,188 @@ export const sheetIndex: {
       {
         "id": "esm과-cjs의-상호운용",
         "label": "ESM과 CJS의 상호운용"
+      },
+      {
+        "id": "실제로-돌려-보면-같은-import-가-설정마다-다르게-끝난다",
+        "label": "실제로 돌려 보면: 같은 import 가 설정마다 다르게 끝난다"
+      },
+      {
+        "id": "일곱-장의-지도",
+        "label": "일곱 장의 지도"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-mr-intro": [
+      {
+        "id": "네-갈래가-답하는-질문",
+        "label": "네 갈래가 답하는 질문"
+      },
+      {
+        "id": "먼저-가려-둘-용어",
+        "label": "먼저 가려 둘 용어"
+      },
+      {
+        "id": "실제로-돌려-보면-7-0-에서-살아-있는-값",
+        "label": "실제로 돌려 보면: 7.0 에서 살아 있는 값"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-mr-theory": [
+      {
+        "id": "세-가지-일-그리고-호스트",
+        "label": "세 가지 일, 그리고 호스트"
+      },
+      {
+        "id": "module-호스트에-맞는-출력-포맷",
+        "label": "module: 호스트에 맞는 출력 포맷"
+      },
+      {
+        "id": "실제로-돌려-보면-지정자는-변환되지-않는다",
+        "label": "실제로 돌려 보면: 지정자는 변환되지 않는다"
+      },
+      {
+        "id": "moduleresolution-과-package-json-exports",
+        "label": "moduleResolution 과 package.json exports"
+      },
+      {
+        "id": "라이브러리-선언-파일은-출력과-짝이어야-한다",
+        "label": "라이브러리: 선언 파일은 출력과 짝이어야 한다"
+      },
+      {
+        "id": "문제의-구조-설정은-호스트-선언-이고-어긋나면-컴파일은-통과하되-실행이-깨진다",
+        "label": "문제의 구조: 설정은 '호스트 선언' 이고, 어긋나면 컴파일은 통과하되 실행이 깨진다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-mr-guides": [
+      {
+        "id": "가이드가-전제하는-한-가지",
+        "label": "가이드가 전제하는 한 가지"
+      },
+      {
+        "id": "실제로-돌려-보면-가이드의-처방-두-줄",
+        "label": "실제로 돌려 보면: 가이드의 처방 두 줄"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-mr-options": [
+      {
+        "id": "앱-번들러",
+        "label": "앱 + 번들러"
+      },
+      {
+        "id": "실제로-돌려-보면-앱-node-는-nodenext-한-줄",
+        "label": "실제로 돌려 보면: 앱 + Node 는 nodenext 한 줄"
+      },
+      {
+        "id": "라이브러리-node18-가장-낮은-target-verbatimmodulesyntax",
+        "label": "라이브러리: node18 + 가장 낮은 target + verbatimModuleSyntax"
+      },
+      {
+        "id": "번들된-라이브러리와-이중-출력의-함정",
+        "label": "번들된 라이브러리와 이중 출력의 함정"
+      },
+      {
+        "id": "문제가-나는-경우-설정-조합표",
+        "label": "문제가 나는 경우: 설정 조합표"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-mr-reference": [
+      {
+        "id": "module-node16-nodenext-는-파일마다-포맷을-정한다",
+        "label": "module: node16 → nodenext 는 파일마다 포맷을 정한다"
+      },
+      {
+        "id": "module-es2015-esnext-preserve-commonjs",
+        "label": "module: es2015 → esnext · preserve · commonjs"
+      },
+      {
+        "id": "실제로-돌려-보면-moduleresolution-의-두-가족",
+        "label": "실제로 돌려 보면: moduleResolution 의 두 가족"
+      },
+      {
+        "id": "paths-baseurl-제거-typesversions-타입-전용-import",
+        "label": "paths · baseUrl(제거) · typesVersions · 타입 전용 import"
+      },
+      {
+        "id": "문제의-구조-레퍼런스의-모든-값은-호스트의-한-측면-이다",
+        "label": "문제의 구조: 레퍼런스의 모든 값은 '호스트의 한 측면' 이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-mr-appendices": [
+      {
+        "id": "부록이-답하는-질문",
+        "label": "부록이 답하는 질문"
+      },
+      {
+        "id": "실제로-돌려-보면-node-가-cjs-를-import-하면",
+        "label": "실제로 돌려 보면: Node 가 CJS 를 import 하면"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-mr-esm-cjs": [
+      {
+        "id": "문제의-시작-module-exports-가-함수일-때",
+        "label": "문제의 시작: module.exports 가 함수일 때"
+      },
+      {
+        "id": "allowsyntheticdefaultimports-1-8-와-esmoduleinterop-2-7",
+        "label": "allowSyntheticDefaultImports(1.8) 와 esModuleInterop(2.7)"
+      },
+      {
+        "id": "실제로-돌려-보면-node-의-규칙과-이중-default",
+        "label": "실제로 돌려 보면: Node 의 규칙과 이중 default"
+      },
+      {
+        "id": "권고-라이브러리와-앱이-다르다",
+        "label": "권고: 라이브러리와 앱이 다르다"
+      },
+      {
+        "id": "문제의-구조-세-규칙이-esmodule-한-플래그를-다르게-본다",
+        "label": "문제의 구조: 세 규칙이 '__esModule' 한 플래그를 다르게 본다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-tutorials": [
@@ -6784,6 +8235,120 @@ export const sheetIndex: {
       {
         "id": "필요할-때-여는-곳",
         "label": "필요할 때 여는 곳"
+      },
+      {
+        "id": "실제로-돌려-보면-다섯-장이-각각-어떤-도구를-가리키는가",
+        "label": "실제로 돌려 보면: 다섯 장이 각각 어떤 도구를 가리키는가"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-tut-aspnet": [
+      {
+        "id": "원리만-남는다",
+        "label": "원리만 남는다"
+      },
+      {
+        "id": "실제로-돌려-보면-이-설정을-7-0-에-그대로-넣으면",
+        "label": "실제로 돌려 보면: 이 설정을 7.0 에 그대로 넣으면"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-tut-gulp": [
+      {
+        "id": "네-단계는-지금도-같다",
+        "label": "네 단계는 지금도 같다"
+      },
+      {
+        "id": "실제로-돌려-보면-babel-을-끼우는-마지막-절이-지금의-분업이다",
+        "label": "실제로 돌려 보면: Babel 을 끼우는 마지막 절이 지금의 분업이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-tut-dom": [
+      {
+        "id": "getelementbyid-는-null-일-수-있다",
+        "label": "getElementById 는 null 일 수 있다"
+      },
+      {
+        "id": "실제로-돌려-보면-createelement-의-두-오버로드와-htmlelementtagnamemap",
+        "label": "실제로 돌려 보면: createElement 의 두 오버로드와 HTMLElementTagNameMap"
+      },
+      {
+        "id": "appendchild-children-과-childnodes-textcontent",
+        "label": "appendChild · children 과 childNodes · textContent"
+      },
+      {
+        "id": "문제의-구조-dom-타입은-브라우저가-돌려줄-수-있는-것-을-전부-적어-둔-것이다",
+        "label": "문제의 구조: DOM 타입은 '브라우저가 돌려줄 수 있는 것' 을 전부 적어 둔 것이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tut-migrate": [
+      {
+        "id": "1단계-공존-allowjs-와-outdir",
+        "label": "1단계: 공존 — allowJs 와 outDir"
+      },
+      {
+        "id": "2단계-파일을-ts-로-바꾸면-나오는-에러들",
+        "label": "2단계: 파일을 .ts 로 바꾸면 나오는 에러들"
+      },
+      {
+        "id": "실제로-돌려-보면-엄격함은-순서대로",
+        "label": "실제로 돌려 보면: 엄격함은 순서대로"
+      },
+      {
+        "id": "문제가-나는-경우-순서를-어길-때",
+        "label": "문제가 나는 경우: 순서를 어길 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-tut-babel": [
+      {
+        "id": "babel-은-검사하지-않는다",
+        "label": "Babel 은 검사하지 않는다"
+      },
+      {
+        "id": "실제로-돌려-보면-분업의-tsconfig",
+        "label": "실제로 돌려 보면: 분업의 tsconfig"
+      },
+      {
+        "id": "지금의-변환기들-esbuild-swc-vite-node",
+        "label": "지금의 변환기들: esbuild · swc · Vite · Node"
+      },
+      {
+        "id": "문제의-구조-단일-파일-변환기는-다른-파일을-모른다",
+        "label": "문제의 구조: 단일 파일 변환기는 '다른 파일을 모른다'"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-whatsnew": [
@@ -6798,6 +8363,18 @@ export const sheetIndex: {
       {
         "id": "버전을-올리기-전에",
         "label": "버전을 올리기 전에"
+      },
+      {
+        "id": "실제로-돌려-보면-5-0-7-0-의-굵은-줄",
+        "label": "실제로 돌려 보면: 5.0 → 7.0 의 굵은 줄"
+      },
+      {
+        "id": "7-0-무엇이-같고-무엇이-다른가",
+        "label": "7.0: 무엇이 같고 무엇이 다른가"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
       }
     ],
     "ts-declaration": [
@@ -6812,6 +8389,322 @@ export const sheetIndex: {
       {
         "id": "읽는-법을-배우는-데-먼저-쓴다",
         "label": "읽는 법을 배우는 데 먼저 쓴다"
+      },
+      {
+        "id": "실제로-돌려-보면-선언이-없을-때-임시-처방-제대로",
+        "label": "실제로 돌려 보면: 선언이 없을 때 → 임시 처방 → 제대로"
+      },
+      {
+        "id": "여덟-갈래의-역할",
+        "label": "여덟 갈래의 역할"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-dcl-intro": [
+      {
+        "id": "세-종류의-독자",
+        "label": "세 종류의 독자"
+      },
+      {
+        "id": "실제로-돌려-보면-d-ts-는-구현이-없는-ts-다",
+        "label": "실제로 돌려 보면: .d.ts 는 구현이 없는 .ts 다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-dcl-reference": [
+      {
+        "id": "일곱-짝",
+        "label": "일곱 짝"
+      },
+      {
+        "id": "실제로-돌려-보면-전역-선언-하나로-쓰는-쪽이-전부-검사된다",
+        "label": "실제로 돌려 보면: 전역 선언 하나로 쓰는 쪽이 전부 검사된다"
+      },
+      {
+        "id": "declare-가-뜻하는-것",
+        "label": "declare 가 뜻하는 것"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-structures": [
+      {
+        "id": "세-종류와-단서",
+        "label": "세 종류와 단서"
+      },
+      {
+        "id": "템플릿-고르기",
+        "label": "템플릿 고르기"
+      },
+      {
+        "id": "실제로-돌려-보면-의존은-종류-조합에-따라-적는다",
+        "label": "실제로 돌려 보면: 의존은 종류 조합에 따라 적는다"
+      },
+      {
+        "id": "두-각주-이름-충돌과-es6-의-호출-시그니처",
+        "label": "두 각주: 이름 충돌과 ES6 의 호출 시그니처"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-templates": [
+      {
+        "id": "여섯-뼈대의-핵심-한-줄",
+        "label": "여섯 뼈대의 핵심 한 줄"
+      },
+      {
+        "id": "실제로-돌려-보면-export-하나로-세-가지-import-가-된다",
+        "label": "실제로 돌려 보면: export = 하나로 세 가지 import 가 된다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-dcl-t-modules": [
+      {
+        "id": "commonjs-세-패턴과-esm",
+        "label": "CommonJS 세 패턴과 ESM"
+      },
+      {
+        "id": "실제로-돌려-보면-타입도-내보내고-소비자는-import-type-으로-받는다",
+        "label": "실제로 돌려 보면: 타입도 내보내고, 소비자는 import type 으로 받는다"
+      },
+      {
+        "id": "umd-전역-이름과-파일-배치",
+        "label": "UMD 전역 이름과 파일 배치"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-t-plugin": [
+      {
+        "id": "템플릿의-세-줄",
+        "label": "템플릿의 세 줄"
+      },
+      {
+        "id": "실제로-돌려-보면-보강은-패치만-새-최상위-선언은-못-한다",
+        "label": "실제로 돌려 보면: 보강은 패치만, 새 최상위 선언은 못 한다"
+      },
+      {
+        "id": "문제의-구조-타입은-병합되지만-값은-런타임이-넣어야-한다",
+        "label": "문제의 구조: 타입은 병합되지만 값은 런타임이 넣어야 한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-t-class": [
+      {
+        "id": "뼈대",
+        "label": "뼈대"
+      },
+      {
+        "id": "실제로-돌려-보면-소비자의-세-import-와-wrong-주석",
+        "label": "실제로 돌려 보면: 소비자의 세 import 와 WRONG 주석"
+      },
+      {
+        "id": "클래스-선언에서-적는-것",
+        "label": "클래스 선언에서 적는 것"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-t-function": [
+      {
+        "id": "뼈대",
+        "label": "뼈대"
+      },
+      {
+        "id": "실제로-돌려-보면-같은-모양을-d-ts-로-두고-세-방식으로-소비",
+        "label": "실제로 돌려 보면: 같은 모양을 .d.ts 로 두고 세 방식으로 소비"
+      },
+      {
+        "id": "오버로드를-적을-때의-규칙",
+        "label": "오버로드를 적을 때의 규칙"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-t-global": [
+      {
+        "id": "뼈대와-템플릿의-주석",
+        "label": "뼈대와 템플릿의 주석"
+      },
+      {
+        "id": "실제로-돌려-보면-전역-선언은-스크립트-파일-이어야-한다",
+        "label": "실제로 돌려 보면: 전역 선언은 '스크립트 파일' 이어야 한다"
+      },
+      {
+        "id": "문제의-구조-전역은-이름-하나를-모든-파일이-공유-하는-것이다",
+        "label": "문제의 구조: 전역은 '이름 하나를 모든 파일이 공유' 하는 것이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-t-globalmod": [
+      {
+        "id": "뼈대",
+        "label": "뼈대"
+      },
+      {
+        "id": "실제로-돌려-보면-declare-global-로-array-와-window-를-보강",
+        "label": "실제로 돌려 보면: declare global 로 Array 와 Window 를 보강"
+      },
+      {
+        "id": "문제의-구조-전역을-바꾸는-모듈은-누가-먼저-import-했나-에-기댄다",
+        "label": "문제의 구조: 전역을 바꾸는 모듈은 '누가 먼저 import 했나' 에 기댄다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-dos": [
+      {
+        "id": "일반-타입-소문자-그리고-unknown",
+        "label": "일반 타입: 소문자, 그리고 unknown"
+      },
+      {
+        "id": "실제로-돌려-보면-콜백의-반환은-void-매개변수는-적어도-된다",
+        "label": "실제로 돌려 보면: 콜백의 반환은 void, 매개변수는 적어도 된다"
+      },
+      {
+        "id": "오버로드-순서-선택적-유니온",
+        "label": "오버로드: 순서 · 선택적 · 유니온"
+      },
+      {
+        "id": "문제의-구조-선언은-쓰는-쪽에-무엇을-허용하는가-를-정한다",
+        "label": "문제의 구조: 선언은 '쓰는 쪽에 무엇을 허용하는가' 를 정한다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-deep": [
+      {
+        "id": "무엇이-타입을-만들고-무엇이-값을-만드는가",
+        "label": "무엇이 타입을 만들고 무엇이 값을 만드는가"
+      },
+      {
+        "id": "실제로-돌려-보면-같은-칸이-충돌하고-다른-칸은-병합된다",
+        "label": "실제로 돌려 보면: 같은 칸이 충돌하고 다른 칸은 병합된다"
+      },
+      {
+        "id": "조합-규칙과-export-의-자리",
+        "label": "조합 규칙과 export = 의 자리"
+      },
+      {
+        "id": "문제의-구조-에러-문구가-칸-을-말해-준다",
+        "label": "문제의 구조: 에러 문구가 '칸' 을 말해 준다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-publish": [
+      {
+        "id": "types-필드와-dependencies",
+        "label": "types 필드와 dependencies"
+      },
+      {
+        "id": "실제로-돌려-보면-typesversions-로-ts-버전별-선언",
+        "label": "실제로 돌려 보면: typesVersions 로 TS 버전별 선언"
+      },
+      {
+        "id": "적신호와-definitelytyped",
+        "label": "적신호와 DefinitelyTyped"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-dcl-consume": [
+      {
+        "id": "받고-쓰기",
+        "label": "받고 쓰기"
+      },
+      {
+        "id": "실제로-돌려-보면-6-0-부터-전역-types-는-자동으로-들어오지-않는다",
+        "label": "실제로 돌려 보면: 6.0 부터 전역 @types 는 자동으로 들어오지 않는다"
+      },
+      {
+        "id": "문제가-나는-경우-받았는데-안-될-때",
+        "label": "문제가 나는 경우: 받았는데 안 될 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-js": [
@@ -6826,6 +8719,110 @@ export const sheetIndex: {
       {
         "id": "왜-남겨-뒀나",
         "label": "왜 남겨 뒀나"
+      },
+      {
+        "id": "실제로-돌려-보면-세-스위치로-강도가-갈린다",
+        "label": "실제로 돌려 보면: 세 스위치로 강도가 갈린다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-js-projects": [
+      {
+        "id": "엄격함의-사다리",
+        "label": "엄격함의 사다리"
+      },
+      {
+        "id": "실제로-돌려-보면-세-지시어-주석",
+        "label": "실제로 돌려 보면: 세 지시어 주석"
+      },
+      {
+        "id": "jsconfig-json-과-allowjs-checkjs",
+        "label": "jsconfig.json 과 allowJs/checkJs"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-js-checking": [
+      {
+        "id": "클래스-속성은-대입에서-추론된다",
+        "label": "클래스 속성은 대입에서 추론된다"
+      },
+      {
+        "id": "실제로-돌려-보면-열린-객체-매개변수-선택적-null-은-any",
+        "label": "실제로 돌려 보면: 열린 객체 · 매개변수 선택적 · null 은 any"
+      },
+      {
+        "id": "commonjs-네임스페이스처럼-쓰이는-것-가변-인자-제네릭-기본",
+        "label": "CommonJS · 네임스페이스처럼 쓰이는 것 · 가변 인자 · 제네릭 기본"
+      },
+      {
+        "id": "문제의-구조-js-의-관대함은-적을-자리가-없어서-이고-jsdoc-이-그-자리다",
+        "label": "문제의 구조: .js 의 관대함은 '적을 자리가 없어서' 이고, JSDoc 이 그 자리다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-js-jsdoc": [
+      {
+        "id": "타입-태그",
+        "label": "타입 태그"
+      },
+      {
+        "id": "클래스-태그",
+        "label": "클래스 태그"
+      },
+      {
+        "id": "문서-태그와-그-밖-그리고-지원하지-않는-것",
+        "label": "문서 태그와 그 밖, 그리고 지원하지 않는 것"
+      },
+      {
+        "id": "문제의-구조-jsdoc-은-주석에-쓰는-ts-문법-이고-런타임엔-없다",
+        "label": "문제의 구조: JSDoc 은 '주석에 쓰는 .ts 문법' 이고 런타임엔 없다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-js-dts": [
+      {
+        "id": "설정과-명령",
+        "label": "설정과 명령"
+      },
+      {
+        "id": "실제로-돌려-보면-jsdoc-이-있는-곳과-없는-곳",
+        "label": "실제로 돌려 보면: JSDoc 이 있는 곳과 없는 곳"
+      },
+      {
+        "id": "package-json-과-테스트",
+        "label": "package.json 과 테스트"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "ts-config": [
@@ -6840,6 +8837,194 @@ export const sheetIndex: {
       {
         "id": "설정이-곧-팀의-합의다",
         "label": "설정이 곧 팀의 합의다"
+      },
+      {
+        "id": "실제로-돌려-보면-7-0-의-tsconfig-는-짧아졌고-옛-옵션은-에러다",
+        "label": "실제로 돌려 보면: 7.0 의 tsconfig 는 짧아졌고, 옛 옵션은 에러다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-cfg-tsconfig": [
+      {
+        "id": "files-include-exclude",
+        "label": "files · include · exclude"
+      },
+      {
+        "id": "실제로-돌려-보면-extends-와-showconfig",
+        "label": "실제로 돌려 보면: extends 와 showConfig"
+      },
+      {
+        "id": "tsconfig-bases-tsconfig",
+        "label": "TSConfig bases: @tsconfig/*"
+      },
+      {
+        "id": "문제-명령줄에-파일을-적으면-tsconfig-가-무시된다-6-0-은-그걸-에러로",
+        "label": "문제: 명령줄에 파일을 적으면 tsconfig 가 무시된다 — 6.0 은 그걸 에러로"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-msbuild": [
+      {
+        "id": "한-문단으로",
+        "label": "한 문단으로"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      }
+    ],
+    "ts-cfg-tsconfig-ref": [
+      {
+        "id": "그룹-지도",
+        "label": "그룹 지도"
+      },
+      {
+        "id": "실제로-돌려-보면-자주-보는-옵션의-7-0-기본값",
+        "label": "실제로 돌려 보면: 자주 보는 옵션의 7.0 기본값"
+      },
+      {
+        "id": "엄격함을-더-올리는-다섯-개",
+        "label": "엄격함을 더 올리는 다섯 개"
+      },
+      {
+        "id": "문제의-구조-옵션은-네-축-위에-있다",
+        "label": "문제의 구조: 옵션은 네 축 위에 있다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-cli": [
+      {
+        "id": "여섯-모양과-한-규칙",
+        "label": "여섯 모양과 한 규칙"
+      },
+      {
+        "id": "실제로-돌려-보면-진단-플래그-셋",
+        "label": "실제로 돌려 보면: 진단 플래그 셋"
+      },
+      {
+        "id": "init-build-watch",
+        "label": "--init · --build · --watch"
+      },
+      {
+        "id": "문제가-나는-경우-명령줄과-tsconfig-가-어긋날-때",
+        "label": "문제가 나는 경우: 명령줄과 tsconfig 가 어긋날 때"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-references": [
+      {
+        "id": "구조와-composite-의-요구",
+        "label": "구조와 composite 의 요구"
+      },
+      {
+        "id": "실제로-돌려-보면-tsc-b-의-동작",
+        "label": "실제로 돌려 보면: tsc -b 의 동작"
+      },
+      {
+        "id": "플래그와-주의",
+        "label": "플래그와 주의"
+      },
+      {
+        "id": "문제의-구조-참조는-타입-경계-를-d-ts-로-고정하는-것이다",
+        "label": "문제의 구조: 참조는 '타입 경계' 를 .d.ts 로 고정하는 것이다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-buildtools": [
+      {
+        "id": "도구별-한-줄",
+        "label": "도구별 한 줄"
+      },
+      {
+        "id": "실제로-돌려-보면-변환기들은-검사하지-않는다",
+        "label": "실제로 돌려 보면: 변환기들은 검사하지 않는다"
+      },
+      {
+        "id": "7-0-과-도구들의-api-문제",
+        "label": "7.0 과 도구들의 API 문제"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-watch": [
+      {
+        "id": "watchoptions-의-여섯-항목",
+        "label": "watchOptions 의 여섯 항목"
+      },
+      {
+        "id": "폴링과-fs-이벤트",
+        "label": "폴링과 fs 이벤트"
+      },
+      {
+        "id": "실제로-돌려-보면-7-0-의-watch-는-다시-쓰였다",
+        "label": "실제로 돌려 보면: 7.0 의 watch 는 다시 쓰였다"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
+      }
+    ],
+    "ts-cfg-nightly": [
+      {
+        "id": "태그와-버전",
+        "label": "태그와 버전"
+      },
+      {
+        "id": "실제로-돌려-보면-에디터가-어느-버전을-보는가",
+        "label": "실제로 돌려 보면: 에디터가 어느 버전을 보는가"
+      },
+      {
+        "id": "왜-나이틀리를-쓰는가",
+        "label": "왜 나이틀리를 쓰는가"
+      },
+      {
+        "id": "다음-입구",
+        "label": "다음 입구"
+      },
+      {
+        "id": "확인-질문",
+        "label": "확인 질문"
       }
     ],
     "vue": [
@@ -11164,6 +13349,12 @@ export const sheetIndex: {
           "role": "낱말이 나온 곳",
           "name": "Vue",
           "kind": "theory"
+        },
+        {
+          "id": "ts",
+          "role": "낱말이 나온 곳",
+          "name": "TypeScript",
+          "kind": "theory"
         }
       ],
       "right": []
@@ -12703,6 +14894,12 @@ export const sheetIndex: {
           "role": "하위 개념",
           "name": "프로젝트 설정",
           "kind": "theory"
+        },
+        {
+          "id": "dict",
+          "role": "사전",
+          "name": "사전",
+          "kind": "idea"
         }
       ]
     },
@@ -12747,6 +14944,61 @@ export const sheetIndex: {
           "kind": "theory"
         }
       ]
+    },
+    "ts-start-new": {
+      "left": [
+        {
+          "id": "ts-start",
+          "role": "상위 개념",
+          "name": "시작하기",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-start-js": {
+      "left": [
+        {
+          "id": "ts-start",
+          "role": "상위 개념",
+          "name": "시작하기",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-start-oop": {
+      "left": [
+        {
+          "id": "ts-start",
+          "role": "상위 개념",
+          "name": "시작하기",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-start-fp": {
+      "left": [
+        {
+          "id": "ts-start",
+          "role": "상위 개념",
+          "name": "시작하기",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-start-tooling": {
+      "left": [
+        {
+          "id": "ts-start",
+          "role": "상위 개념",
+          "name": "시작하기",
+          "kind": "theory"
+        }
+      ],
+      "right": []
     },
     "ts-handbook": {
       "left": [
@@ -12807,6 +15059,17 @@ export const sheetIndex: {
           "kind": "theory"
         }
       ]
+    },
+    "ts-hb-basics": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": []
     },
     "ts-hb-everyday": {
       "left": [
@@ -13064,6 +15327,229 @@ export const sheetIndex: {
       ],
       "right": []
     },
+    "ts-hb-narrowing": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "t-schema",
+          "role": "트러블슈팅",
+          "name": "런타임 스키마 검증",
+          "kind": "trouble"
+        },
+        {
+          "id": "t-tagged",
+          "role": "트러블슈팅",
+          "name": "타입 안전 예외 처리",
+          "kind": "trouble"
+        }
+      ]
+    },
+    "ts-hb-functions": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-hb-objects": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-hb-manipulation": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "ts-tm-creating",
+          "role": "하위 개념",
+          "name": "타입에서 타입 만들기",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-generics",
+          "role": "하위 개념",
+          "name": "제네릭",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-keyof",
+          "role": "하위 개념",
+          "name": "keyof 연산자",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-typeof",
+          "role": "하위 개념",
+          "name": "typeof 연산자",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-indexed",
+          "role": "하위 개념",
+          "name": "인덱스 접근 타입",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-conditional",
+          "role": "하위 개념",
+          "name": "조건부 타입",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-mapped",
+          "role": "하위 개념",
+          "name": "매핑된 타입",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-tm-template",
+          "role": "하위 개념",
+          "name": "템플릿 리터럴 타입",
+          "kind": "theory"
+        }
+      ]
+    },
+    "ts-tm-creating": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "t-tagged",
+          "role": "트러블슈팅",
+          "name": "타입 안전 예외 처리",
+          "kind": "trouble"
+        }
+      ]
+    },
+    "ts-tm-generics": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-keyof": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-typeof": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-indexed": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-conditional": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-mapped": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tm-template": {
+      "left": [
+        {
+          "id": "ts-hb-manipulation",
+          "role": "상위 개념",
+          "name": "타입 조작",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-hb-classes": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-hb-modules": {
+      "left": [
+        {
+          "id": "ts-handbook",
+          "role": "상위 개념",
+          "name": "핸드북",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "ts-reference": {
       "left": [
         {
@@ -13166,6 +15652,171 @@ export const sheetIndex: {
         }
       ]
     },
+    "ts-ref-utility": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-cheat": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-decorators": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-merging": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-enums": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-iterators": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-jsx": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-mixins": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-namespaces": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-ns-modules": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-symbols": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-triple": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-compat": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-inference": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-ref-vardecl": {
+      "left": [
+        {
+          "id": "ts-reference",
+          "role": "상위 개념",
+          "name": "참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "ts-modules-ref": {
       "left": [
         {
@@ -13208,6 +15859,97 @@ export const sheetIndex: {
         }
       ]
     },
+    "ts-mr-intro": {
+      "left": [
+        {
+          "id": "ts-modules-ref",
+          "role": "상위 개념",
+          "name": "모듈 참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-mr-theory": {
+      "left": [
+        {
+          "id": "ts-modules-ref",
+          "role": "상위 개념",
+          "name": "모듈 참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-mr-guides": {
+      "left": [
+        {
+          "id": "ts-modules-ref",
+          "role": "상위 개념",
+          "name": "모듈 참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "ts-mr-options",
+          "role": "하위 개념",
+          "name": "컴파일러 옵션 고르기",
+          "kind": "theory"
+        }
+      ]
+    },
+    "ts-mr-options": {
+      "left": [
+        {
+          "id": "ts-mr-guides",
+          "role": "상위 개념",
+          "name": "모듈 가이드",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-mr-reference": {
+      "left": [
+        {
+          "id": "ts-modules-ref",
+          "role": "상위 개념",
+          "name": "모듈 참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-mr-appendices": {
+      "left": [
+        {
+          "id": "ts-modules-ref",
+          "role": "상위 개념",
+          "name": "모듈 참고서",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "ts-mr-esm-cjs",
+          "role": "하위 개념",
+          "name": "ESM·CJS 상호운용",
+          "kind": "theory"
+        }
+      ]
+    },
+    "ts-mr-esm-cjs": {
+      "left": [
+        {
+          "id": "ts-mr-appendices",
+          "role": "상위 개념",
+          "name": "모듈 부록",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "ts-tutorials": {
       "left": [
         {
@@ -13249,6 +15991,61 @@ export const sheetIndex: {
           "kind": "theory"
         }
       ]
+    },
+    "ts-tut-aspnet": {
+      "left": [
+        {
+          "id": "ts-tutorials",
+          "role": "상위 개념",
+          "name": "튜토리얼",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tut-gulp": {
+      "left": [
+        {
+          "id": "ts-tutorials",
+          "role": "상위 개념",
+          "name": "튜토리얼",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tut-dom": {
+      "left": [
+        {
+          "id": "ts-tutorials",
+          "role": "상위 개념",
+          "name": "튜토리얼",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tut-migrate": {
+      "left": [
+        {
+          "id": "ts-tutorials",
+          "role": "상위 개념",
+          "name": "튜토리얼",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-tut-babel": {
+      "left": [
+        {
+          "id": "ts-tutorials",
+          "role": "상위 개념",
+          "name": "튜토리얼",
+          "kind": "theory"
+        }
+      ],
+      "right": []
     },
     "ts-whatsnew": {
       "left": [
@@ -13321,6 +16118,197 @@ export const sheetIndex: {
         }
       ]
     },
+    "ts-dcl-intro": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-reference": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-structures": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-templates": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": [
+        {
+          "id": "ts-dcl-t-modules",
+          "role": "하위 개념",
+          "name": "모듈 d.ts",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-dcl-t-plugin",
+          "role": "하위 개념",
+          "name": "모듈: 플러그인",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-dcl-t-class",
+          "role": "하위 개념",
+          "name": "모듈: 클래스",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-dcl-t-function",
+          "role": "하위 개념",
+          "name": "모듈: 함수",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-dcl-t-global",
+          "role": "하위 개념",
+          "name": "전역 d.ts",
+          "kind": "theory"
+        },
+        {
+          "id": "ts-dcl-t-globalmod",
+          "role": "하위 개념",
+          "name": "전역: 모듈 수정",
+          "kind": "theory"
+        }
+      ]
+    },
+    "ts-dcl-t-modules": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-t-plugin": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-t-class": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-t-function": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-t-global": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-t-globalmod": {
+      "left": [
+        {
+          "id": "ts-dcl-templates",
+          "role": "상위 개념",
+          "name": "d.ts 템플릿",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-dos": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-deep": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-publish": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-dcl-consume": {
+      "left": [
+        {
+          "id": "ts-declaration",
+          "role": "상위 개념",
+          "name": "선언 파일",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
     "ts-js": {
       "left": [
         {
@@ -13356,6 +16344,50 @@ export const sheetIndex: {
           "kind": "theory"
         }
       ]
+    },
+    "ts-js-projects": {
+      "left": [
+        {
+          "id": "ts-js",
+          "role": "상위 개념",
+          "name": "JavaScript 지원",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-js-checking": {
+      "left": [
+        {
+          "id": "ts-js",
+          "role": "상위 개념",
+          "name": "JavaScript 지원",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-js-jsdoc": {
+      "left": [
+        {
+          "id": "ts-js",
+          "role": "상위 개념",
+          "name": "JavaScript 지원",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-js-dts": {
+      "left": [
+        {
+          "id": "ts-js",
+          "role": "상위 개념",
+          "name": "JavaScript 지원",
+          "kind": "theory"
+        }
+      ],
+      "right": []
     },
     "ts-config": {
       "left": [
@@ -13416,6 +16448,94 @@ export const sheetIndex: {
           "kind": "theory"
         }
       ]
+    },
+    "ts-cfg-tsconfig": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-msbuild": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-tsconfig-ref": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-cli": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-references": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-buildtools": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-watch": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
+    },
+    "ts-cfg-nightly": {
+      "left": [
+        {
+          "id": "ts-config",
+          "role": "상위 개념",
+          "name": "프로젝트 설정",
+          "kind": "theory"
+        }
+      ],
+      "right": []
     },
     "vue": {
       "left": [
@@ -16549,9 +19669,39 @@ export const sheetIndex: {
       "ts",
       "ts-start"
     ],
+    "ts-start-new": [
+      "ts",
+      "ts-start",
+      "ts-start-new"
+    ],
+    "ts-start-js": [
+      "ts",
+      "ts-start",
+      "ts-start-js"
+    ],
+    "ts-start-oop": [
+      "ts",
+      "ts-start",
+      "ts-start-oop"
+    ],
+    "ts-start-fp": [
+      "ts",
+      "ts-start",
+      "ts-start-fp"
+    ],
+    "ts-start-tooling": [
+      "ts",
+      "ts-start",
+      "ts-start-tooling"
+    ],
     "ts-handbook": [
       "ts",
       "ts-handbook"
+    ],
+    "ts-hb-basics": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-basics"
     ],
     "ts-hb-everyday": [
       "ts",
@@ -16642,17 +19792,232 @@ export const sheetIndex: {
       "ts-hb-everyday",
       "ts-ev-rare"
     ],
+    "ts-hb-narrowing": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-narrowing"
+    ],
+    "ts-hb-functions": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-functions"
+    ],
+    "ts-hb-objects": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-objects"
+    ],
+    "ts-hb-manipulation": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation"
+    ],
+    "ts-tm-creating": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-creating"
+    ],
+    "ts-tm-generics": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-generics"
+    ],
+    "ts-tm-keyof": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-keyof"
+    ],
+    "ts-tm-typeof": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-typeof"
+    ],
+    "ts-tm-indexed": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-indexed"
+    ],
+    "ts-tm-conditional": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-conditional"
+    ],
+    "ts-tm-mapped": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-mapped"
+    ],
+    "ts-tm-template": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-manipulation",
+      "ts-tm-template"
+    ],
+    "ts-hb-classes": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-classes"
+    ],
+    "ts-hb-modules": [
+      "ts",
+      "ts-handbook",
+      "ts-hb-modules"
+    ],
     "ts-reference": [
       "ts",
       "ts-reference"
+    ],
+    "ts-ref-utility": [
+      "ts",
+      "ts-reference",
+      "ts-ref-utility"
+    ],
+    "ts-ref-cheat": [
+      "ts",
+      "ts-reference",
+      "ts-ref-cheat"
+    ],
+    "ts-ref-decorators": [
+      "ts",
+      "ts-reference",
+      "ts-ref-decorators"
+    ],
+    "ts-ref-merging": [
+      "ts",
+      "ts-reference",
+      "ts-ref-merging"
+    ],
+    "ts-ref-enums": [
+      "ts",
+      "ts-reference",
+      "ts-ref-enums"
+    ],
+    "ts-ref-iterators": [
+      "ts",
+      "ts-reference",
+      "ts-ref-iterators"
+    ],
+    "ts-ref-jsx": [
+      "ts",
+      "ts-reference",
+      "ts-ref-jsx"
+    ],
+    "ts-ref-mixins": [
+      "ts",
+      "ts-reference",
+      "ts-ref-mixins"
+    ],
+    "ts-ref-namespaces": [
+      "ts",
+      "ts-reference",
+      "ts-ref-namespaces"
+    ],
+    "ts-ref-ns-modules": [
+      "ts",
+      "ts-reference",
+      "ts-ref-ns-modules"
+    ],
+    "ts-ref-symbols": [
+      "ts",
+      "ts-reference",
+      "ts-ref-symbols"
+    ],
+    "ts-ref-triple": [
+      "ts",
+      "ts-reference",
+      "ts-ref-triple"
+    ],
+    "ts-ref-compat": [
+      "ts",
+      "ts-reference",
+      "ts-ref-compat"
+    ],
+    "ts-ref-inference": [
+      "ts",
+      "ts-reference",
+      "ts-ref-inference"
+    ],
+    "ts-ref-vardecl": [
+      "ts",
+      "ts-reference",
+      "ts-ref-vardecl"
     ],
     "ts-modules-ref": [
       "ts",
       "ts-modules-ref"
     ],
+    "ts-mr-intro": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-intro"
+    ],
+    "ts-mr-theory": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-theory"
+    ],
+    "ts-mr-guides": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-guides"
+    ],
+    "ts-mr-options": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-guides",
+      "ts-mr-options"
+    ],
+    "ts-mr-reference": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-reference"
+    ],
+    "ts-mr-appendices": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-appendices"
+    ],
+    "ts-mr-esm-cjs": [
+      "ts",
+      "ts-modules-ref",
+      "ts-mr-appendices",
+      "ts-mr-esm-cjs"
+    ],
     "ts-tutorials": [
       "ts",
       "ts-tutorials"
+    ],
+    "ts-tut-aspnet": [
+      "ts",
+      "ts-tutorials",
+      "ts-tut-aspnet"
+    ],
+    "ts-tut-gulp": [
+      "ts",
+      "ts-tutorials",
+      "ts-tut-gulp"
+    ],
+    "ts-tut-dom": [
+      "ts",
+      "ts-tutorials",
+      "ts-tut-dom"
+    ],
+    "ts-tut-migrate": [
+      "ts",
+      "ts-tutorials",
+      "ts-tut-migrate"
+    ],
+    "ts-tut-babel": [
+      "ts",
+      "ts-tutorials",
+      "ts-tut-babel"
     ],
     "ts-whatsnew": [
       "ts",
@@ -16662,13 +20027,149 @@ export const sheetIndex: {
       "ts",
       "ts-declaration"
     ],
+    "ts-dcl-intro": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-intro"
+    ],
+    "ts-dcl-reference": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-reference"
+    ],
+    "ts-dcl-structures": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-structures"
+    ],
+    "ts-dcl-templates": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates"
+    ],
+    "ts-dcl-t-modules": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-modules"
+    ],
+    "ts-dcl-t-plugin": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-plugin"
+    ],
+    "ts-dcl-t-class": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-class"
+    ],
+    "ts-dcl-t-function": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-function"
+    ],
+    "ts-dcl-t-global": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-global"
+    ],
+    "ts-dcl-t-globalmod": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-templates",
+      "ts-dcl-t-globalmod"
+    ],
+    "ts-dcl-dos": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-dos"
+    ],
+    "ts-dcl-deep": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-deep"
+    ],
+    "ts-dcl-publish": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-publish"
+    ],
+    "ts-dcl-consume": [
+      "ts",
+      "ts-declaration",
+      "ts-dcl-consume"
+    ],
     "ts-js": [
       "ts",
       "ts-js"
     ],
+    "ts-js-projects": [
+      "ts",
+      "ts-js",
+      "ts-js-projects"
+    ],
+    "ts-js-checking": [
+      "ts",
+      "ts-js",
+      "ts-js-checking"
+    ],
+    "ts-js-jsdoc": [
+      "ts",
+      "ts-js",
+      "ts-js-jsdoc"
+    ],
+    "ts-js-dts": [
+      "ts",
+      "ts-js",
+      "ts-js-dts"
+    ],
     "ts-config": [
       "ts",
       "ts-config"
+    ],
+    "ts-cfg-tsconfig": [
+      "ts",
+      "ts-config",
+      "ts-cfg-tsconfig"
+    ],
+    "ts-cfg-msbuild": [
+      "ts",
+      "ts-config",
+      "ts-cfg-msbuild"
+    ],
+    "ts-cfg-tsconfig-ref": [
+      "ts",
+      "ts-config",
+      "ts-cfg-tsconfig-ref"
+    ],
+    "ts-cfg-cli": [
+      "ts",
+      "ts-config",
+      "ts-cfg-cli"
+    ],
+    "ts-cfg-references": [
+      "ts",
+      "ts-config",
+      "ts-cfg-references"
+    ],
+    "ts-cfg-buildtools": [
+      "ts",
+      "ts-config",
+      "ts-cfg-buildtools"
+    ],
+    "ts-cfg-watch": [
+      "ts",
+      "ts-config",
+      "ts-cfg-watch"
+    ],
+    "ts-cfg-nightly": [
+      "ts",
+      "ts-config",
+      "ts-cfg-nightly"
     ],
     "vue": [
       "vue"
@@ -17474,7 +20975,7 @@ export const sheetIndex: {
     },
     "dict": {
       "clickable": true,
-      "meta": "낱말 210"
+      "meta": "낱말 252"
     },
     "algo": {
       "meta": "챕터 1"
@@ -17803,9 +21304,27 @@ export const sheetIndex: {
       "clickable": true,
       "meta": "챕터 5"
     },
+    "ts-start-new": {
+      "clickable": true
+    },
+    "ts-start-js": {
+      "clickable": true
+    },
+    "ts-start-oop": {
+      "clickable": true
+    },
+    "ts-start-fp": {
+      "clickable": true
+    },
+    "ts-start-tooling": {
+      "clickable": true
+    },
     "ts-handbook": {
       "clickable": true,
       "meta": "챕터 8"
+    },
+    "ts-hb-basics": {
+      "clickable": true
     },
     "ts-hb-everyday": {
       "clickable": true,
@@ -17854,31 +21373,144 @@ export const sheetIndex: {
       "clickable": true
     },
     "ts-hb-narrowing": {
+      "clickable": true,
       "meta": "글 2"
     },
+    "ts-hb-functions": {
+      "clickable": true
+    },
+    "ts-hb-objects": {
+      "clickable": true
+    },
     "ts-hb-manipulation": {
+      "clickable": true,
       "meta": "챕터 8"
     },
     "ts-tm-creating": {
+      "clickable": true,
       "meta": "글 1"
+    },
+    "ts-tm-generics": {
+      "clickable": true
+    },
+    "ts-tm-keyof": {
+      "clickable": true
+    },
+    "ts-tm-typeof": {
+      "clickable": true
+    },
+    "ts-tm-indexed": {
+      "clickable": true
+    },
+    "ts-tm-conditional": {
+      "clickable": true
+    },
+    "ts-tm-mapped": {
+      "clickable": true
+    },
+    "ts-tm-template": {
+      "clickable": true
+    },
+    "ts-hb-classes": {
+      "clickable": true
+    },
+    "ts-hb-modules": {
+      "clickable": true
     },
     "ts-reference": {
       "clickable": true,
       "meta": "챕터 15"
     },
+    "ts-ref-utility": {
+      "clickable": true
+    },
+    "ts-ref-cheat": {
+      "clickable": true
+    },
+    "ts-ref-decorators": {
+      "clickable": true
+    },
+    "ts-ref-merging": {
+      "clickable": true
+    },
+    "ts-ref-enums": {
+      "clickable": true
+    },
+    "ts-ref-iterators": {
+      "clickable": true
+    },
+    "ts-ref-jsx": {
+      "clickable": true
+    },
+    "ts-ref-mixins": {
+      "clickable": true
+    },
+    "ts-ref-namespaces": {
+      "clickable": true
+    },
+    "ts-ref-ns-modules": {
+      "clickable": true
+    },
+    "ts-ref-symbols": {
+      "clickable": true
+    },
+    "ts-ref-triple": {
+      "clickable": true
+    },
+    "ts-ref-compat": {
+      "clickable": true
+    },
+    "ts-ref-inference": {
+      "clickable": true
+    },
+    "ts-ref-vardecl": {
+      "clickable": true
+    },
     "ts-modules-ref": {
       "clickable": true,
       "meta": "챕터 5"
     },
+    "ts-mr-intro": {
+      "clickable": true
+    },
+    "ts-mr-theory": {
+      "clickable": true
+    },
     "ts-mr-guides": {
+      "clickable": true,
       "meta": "챕터 1"
     },
+    "ts-mr-options": {
+      "clickable": true
+    },
+    "ts-mr-reference": {
+      "clickable": true
+    },
     "ts-mr-appendices": {
+      "clickable": true,
       "meta": "챕터 1"
+    },
+    "ts-mr-esm-cjs": {
+      "clickable": true
     },
     "ts-tutorials": {
       "clickable": true,
       "meta": "챕터 5"
+    },
+    "ts-tut-aspnet": {
+      "clickable": true
+    },
+    "ts-tut-gulp": {
+      "clickable": true
+    },
+    "ts-tut-dom": {
+      "clickable": true
+    },
+    "ts-tut-migrate": {
+      "clickable": true
+    },
+    "ts-tut-babel": {
+      "clickable": true
     },
     "ts-whatsnew": {
       "clickable": true
@@ -17887,16 +21519,92 @@ export const sheetIndex: {
       "clickable": true,
       "meta": "챕터 8"
     },
+    "ts-dcl-intro": {
+      "clickable": true
+    },
+    "ts-dcl-reference": {
+      "clickable": true
+    },
+    "ts-dcl-structures": {
+      "clickable": true
+    },
     "ts-dcl-templates": {
+      "clickable": true,
       "meta": "챕터 6"
+    },
+    "ts-dcl-t-modules": {
+      "clickable": true
+    },
+    "ts-dcl-t-plugin": {
+      "clickable": true
+    },
+    "ts-dcl-t-class": {
+      "clickable": true
+    },
+    "ts-dcl-t-function": {
+      "clickable": true
+    },
+    "ts-dcl-t-global": {
+      "clickable": true
+    },
+    "ts-dcl-t-globalmod": {
+      "clickable": true
+    },
+    "ts-dcl-dos": {
+      "clickable": true
+    },
+    "ts-dcl-deep": {
+      "clickable": true
+    },
+    "ts-dcl-publish": {
+      "clickable": true
+    },
+    "ts-dcl-consume": {
+      "clickable": true
     },
     "ts-js": {
       "clickable": true,
       "meta": "챕터 4"
     },
+    "ts-js-projects": {
+      "clickable": true
+    },
+    "ts-js-checking": {
+      "clickable": true
+    },
+    "ts-js-jsdoc": {
+      "clickable": true
+    },
+    "ts-js-dts": {
+      "clickable": true
+    },
     "ts-config": {
       "clickable": true,
       "meta": "챕터 8"
+    },
+    "ts-cfg-tsconfig": {
+      "clickable": true
+    },
+    "ts-cfg-msbuild": {
+      "clickable": true
+    },
+    "ts-cfg-tsconfig-ref": {
+      "clickable": true
+    },
+    "ts-cfg-cli": {
+      "clickable": true
+    },
+    "ts-cfg-references": {
+      "clickable": true
+    },
+    "ts-cfg-buildtools": {
+      "clickable": true
+    },
+    "ts-cfg-watch": {
+      "clickable": true
+    },
+    "ts-cfg-nightly": {
+      "clickable": true
     },
     "vue": {
       "clickable": true,

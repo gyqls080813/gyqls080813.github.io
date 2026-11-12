@@ -920,6 +920,180 @@ export const dictionary: Dictionary = {
         },
       ],
     },
+    {
+      heading: "TypeScript — typescriptlang.org 의 핸드북과 참고서를 따라 읽은 아흔여덟 장",
+      from: "ts",
+      entries: [
+        {
+          term: "정적 타입 검사 (static type checking)",
+          body: "코드를 실행하지 않고 값의 종류가 맞는지 확인하는 일. JavaScript는 실행해야 아는 동적 언어이고 TypeScript는 그 위에 정적 검사를 더한다. 잡는 것은 예외(호출 불가)뿐 아니라 '예외가 아닌 실패'(없는 속성 읽기 → undefined)까지. 타입은 검사 뒤 지워져 런타임 동작을 바꾸지 않는다 — 실제로 tsc 출력에서 : number 가 사라졌다.",
+        },
+        {
+          term: "검사기와 변환기 (check vs emit)",
+          body: "tsc 한 번에 일어나는 두 일. 검사는 약속의 모순을 에러로, 변환은 타입을 지우고 문법을 낮춰 .js 로. 둘은 독립적이라 에러가 있어도 .js 가 나오고(noEmitOnError 로 막음), Babel·esbuild·Vite·Node 의 타입 벗기기는 변환만 한다 — 실제로 타입 에러가 있는 파일이 Babel 에서 조용히 .js 가 됐다. 그래서 CI 에 tsc --noEmit 한 줄이 필요하다.",
+        },
+        {
+          term: "TS 코드 번호",
+          body: "에러 앞의 TS2322 같은 번호. 1xxx 문법·파서, 2xxx 타입 검사, 4xxx 선언 emit, 5xxx 컴파일러 옵션(5108 removed, 5112 tsconfig 무시), 6xxx 프로그램 구성(6053 파일 없음, 6306 composite), 7xxx noImplicitAny 계열, 9xxx isolatedDeclarations, 18xxx 최근 추가(18047 possibly null, 18046 unknown). 검색은 문구보다 번호가 정확하다.",
+        },
+        {
+          term: "strict 묶음",
+          body: "noImplicitAny · strictNullChecks · strictFunctionTypes · strictBindCallApply · strictPropertyInitialization · strictBuiltinIteratorReturn · noImplicitThis · useUnknownInCatchVariables · alwaysStrict 를 한 번에 켜는 스위치. 6.0 부터 기본 true 라 '안 켰는데 왜 엄격하지' 가 아니라 '옛 tsconfig 에 strict: false 가 남았나' 를 본다. 밖에 있는 것: exactOptionalPropertyTypes · noUncheckedIndexedAccess · noImplicitOverride · noPropertyAccessFromIndexSignature.",
+        },
+        {
+          term: "구조적 타입 (structural typing)",
+          body: "이름이 아니라 모양(멤버)으로 호환을 정하는 규칙. 'y 가 x 의 멤버를 전부 가지면 x 자리에 들어간다'. implements 없이도 맞고, 빈 클래스는 모든 것을 받는다(실제로 fn({ k: 10 }) 통과). 유일한 명목적 예외는 private/protected 멤버 — 같은 선언에서 온 것이어야 한다(Types have separate declarations of a private property 'x').",
+        },
+        {
+          term: "초과 속성 검사 (excess property check)",
+          body: "객체 리터럴을 타입 자리에 '직접' 쓸 때만 켜지는 오타 방지 검사. Object literal may only specify known properties, and 'z' does not exist in type 'Pt'. 변수에 담았다가 넘기면 구조적 규칙으로 통과한다(실제로 확인). satisfies 도 리터럴이라 같은 검사를 받는다.",
+        },
+        {
+          term: "좁히기 (narrowing)",
+          body: "typeof · 진실성 · === · in · instanceof · 대입 · 타입 서술 · kind 비교 같은 값의 검사를 TypeScript 가 읽어 분기 안의 타입을 확정하는 과정. 함정: typeof null 은 \"object\"(실제로 'strs' is possibly 'null'), if (str) 은 \"\" 도 뺀다. 표에 없는 검사는 아무것도 좁히지 않아 타입 서술 함수(x is T)로 표에 추가한다.",
+        },
+        {
+          term: "판별 유니온 (discriminated union)과 never 소진",
+          body: "kind: \"circle\" | \"square\" 같은 리터럴 속성으로 객체 유니온을 가르는 설계. switch 의 각 case 에서 멤버 하나로 좁혀지고, default 에 const _x: never = shape 를 두면 멤버가 늘었는데 case 가 없을 때 Type '{ kind: \"tri\"; … }' is not assignable to type 'never' 로 컴파일에서 걸린다(실제로).",
+        },
+        {
+          term: "타입 서술 (type predicate)과 추론 (5.5)",
+          body: "반환 타입 자리의 pet is Fish. 참이면 호출 지점에서 그 타입으로 좁힌다. 5.5 부터 x => typeof x === \"number\" 같은 함수는 적지 않아도 (x: unknown) => x is number 로 추론되어 filter 결과가 number[] 가 된다(실제로). 조건: 명시 반환 타입 없음, return 하나, 매개변수 변이 없음. asserts v is string 은 호출 뒤부터 좁히는 단언 함수.",
+        },
+        {
+          term: "넓힘 (widening)과 as const",
+          body: "리터럴이 변경 가능한 자리(let, 객체 속성)에 들어가면 string·number 로 넓혀지는 추론 규칙. const c1 = { kind: \"left\" } 의 kind 는 string 이라 \"left\" | \"right\" 자리에 못 들어간다(실제로 TS2345). as const 는 전부 readonly 리터럴로 고정(readonly kind: \"left\", readonly [1, \"a\"]). readonly 튜플은 가변 튜플 자리에 못 들어간다(TS4104).",
+        },
+        {
+          term: "최적 공통 타입과 문맥적 타이핑",
+          body: "추론의 두 방향. 아래→위: [0, 1, null] 의 요소 후보에서 (number | null)[] 을 고른다 — 공통 조상(Animal)은 후보가 아니라 (Rhino | Elephant)[] 가 된다. 위→아래: names.forEach((s) => …) 의 s 가 자리의 타입에서 string 으로 흘러 들어온다(실제로). 제네릭 호출은 둘을 동시에 쓰고 NoInfer 는 '이 인자에서는 올리지 말라'.",
+        },
+        {
+          term: "오버로드 (overload)와 구현 시그니처",
+          body: "본문 없는 선언 여러 줄(오버로드 시그니처) + 본문 있는 마지막 선언(구현 시그니처). 밖에서는 오버로드만 보여 유니온 값은 어느 것에도 안 맞는다(실제로 No overload matches this call). 지침: 가능하면 유니온 매개변수로, 구체적인 것을 먼저(첫 매치가 뽑힘 — 일반을 앞에 두면 구체는 영원히 안 뽑힌다, 실제로 bad(\"s\") 가 unknown), 끝 매개변수 차이는 선택적으로, infer 와 ReturnType 은 마지막 시그니처만 본다.",
+        },
+        {
+          term: "void 반환 규칙",
+          body: "타입으로 선언된 () => void 자리에는 무엇을 돌려주든 함수가 들어가고 결과는 void 로 무시된다(forEach(x => arr.push(x)) 가 되는 이유, 실제로 v() 의 타입 void). 함수 선언에 직접 : void 를 적고 return 42 하면 에러. 콜백 타입에 any 가 아니라 void 를 쓰라는 Do's and Don'ts 가 이 규칙 위에 있다.",
+        },
+        {
+          term: "readonly 는 얕고 호환성에 안 들어간다",
+          body: "readonly 는 '이 자리에서 쓰지 말라'는 표시. 안쪽 객체는 바뀌고(home.resident.age++ OK), 호환성 검사는 readonly 를 무시해 쓰기 가능한 참조를 대입할 수 있다. 불변이 필요하면 값 쪽에서(Object.freeze) 또는 깊은 Readonly 타입을 직접. 매핑된 타입의 -readonly 로 벗긴다.",
+        },
+        {
+          term: "제네릭 (generics)과 제약 (extends)",
+          body: "타입 자리에 변수를 두고 쓰는 쪽이 채우게 하는 것. 추론은 인자에서(first([1,2]) → number, first([]) → never). 제약 T extends { length: number } 를 벗어나면 Argument of type 'number' is not assignable to parameter of type '{ length: number; }'. 지침 셋: 제약보다 T 자체를, T 는 적게, 한 자리에만 나오는 T 는 없애라. static 은 클래스 T 를 못 쓴다(TS2302).",
+        },
+        {
+          term: "분산 어노테이션 (in / out)",
+          body: "타입 매개변수가 반환 쪽에만(out, 공변) · 매개변수 쪽에만(in, 반공변) 쓰인다는 선언(4.7). 문서: '거의 필요 없다', '검사 동작을 바꾸려고 쓰지 마라'. Producer<string> 은 Producer<string | number> 자리에 들어가고 반대는 TS2322(실제로). 순환 타입의 검사 속도와 확정을 위한 힌트.",
+        },
+        {
+          term: "keyof · typeof · 인덱스 접근 (T[K])",
+          body: "타입 조작의 '조각 꺼내기' 셋. keyof { x; y } → \"x\" | \"y\", 문자열 인덱서는 string | number(숫자 키도 문자열이라서, 실제로). typeof 는 값→타입의 유일한 다리로 식별자에만(typeof f() 는 파서 에러). T[\"k\"] 의 대괄호는 타입 자리라 const key 는 못 넣고 typeof key 를(TS2538/2749). (typeof arr)[number] 가 요소 타입.",
+        },
+        {
+          term: "조건부 타입과 분배 (distributive)",
+          body: "T extends U ? X : Y. 참 분기에서는 T 가 U 모양임을 알아 T[\"message\"] 가 허용된다(밖에서는 TS2536). infer 로 조각을 꺼낸다(Unwrap<Promise<string>> → string). 벗은 타입 매개변수에 유니온을 넣으면 멤버마다 적용되어 ToArr<string | number> → string[] | number[] (실제로); 막으려면 [T] extends [U]. Exclude·Extract·NonNullable 이 이 원리.",
+        },
+        {
+          term: "매핑된 타입 (mapped type)과 키 재매핑 (as)",
+          body: "{ [K in keyof T]: … } — 속성에 대한 for 문. 수식어 -readonly · -? 로 벗기고(실제로 Mut<Readonly<Opt>> → { a: number; b: string }), 4.1 의 as 절로 키를 바꾸고(`get${Capitalize<string & K>}`), as 가 never 면 그 키가 빠진다(필터). 임의의 객체 유니온을 돌며 as E[\"kind\"] 로 키를 뽑을 수도 있다. Partial·Pick·Record 의 정체.",
+        },
+        {
+          term: "템플릿 리터럴 타입",
+          body: "`${A}${B}` 로 문자열 리터럴을 조합하는 타입. 유니온은 곱이 된다(`${\"click\" | \"focus\"}Event` → 두 개, 실제로). 함수 매개변수 자리에서 거꾸로 추론해 콜백 타입을 맞출 수 있다(`${Key}Changed` → Key). Uppercase·Lowercase·Capitalize·Uncapitalize 는 컴파일러 내장(intrinsic)이라 .d.ts 에 본문이 없고 로캘을 모른다. keyof 는 symbol 때문에 string & keyof T 로.",
+        },
+        {
+          term: "유틸리티 타입 (utility types)",
+          body: "lib.d.ts 에 미리 든 스물두 개의 타입 변환 — Partial·Required·Readonly·Record·Pick·Omit(객체), Exclude·Extract·NonNullable(유니온), Parameters·ConstructorParameters·ReturnType·InstanceType·Awaited·ThisParameterType·OmitThisParameter(함수·클래스), NoInfer(5.4)·ThisType·문자열 넷. 전부 매핑된·조건부·infer 로 쓰여 있어 없는 것은 직접 만든다.",
+        },
+        {
+          term: "클래스 필드 초기화와 순서",
+          body: "strictPropertyInitialization: 필드는 '생성자 자체 안에서' 초기화되어야(TS2564), 확정 할당 단언 x!: T 로 미룬다. 초기화 순서는 기반 필드 → 기반 생성자 → 파생 필드 → 파생 생성자라 기반 생성자가 this.name 을 읽으면 파생 값이 아직 없다(실제로 \"base\" 출력). implements 는 검사일 뿐 속성을 만들지 않는다(\"pong\" in ball → false).",
+        },
+        {
+          term: "private 과 #private",
+          body: "TypeScript 의 private 은 컴파일 때만 — 대괄호 p[\"soft\"] 로 읽히고 런타임엔 보통 속성(Object.keys 에 보임). #hard 는 JavaScript 의 하드 private 으로 런타임에도 밖에서 못 읽고 keys 에 없다(실제로 undefined). ES2021 이하 타깃은 WeakMap 으로 흉내. 모양이 같은 클래스를 구분하는 가장 가벼운 명목적 장치가 private 필드 하나.",
+        },
+        {
+          term: "런타임의 this 와 this 매개변수",
+          body: "const f = obj.method; f() 는 this 가 undefined 라 터진다(실제로 Cannot read properties of undefined). 화살표 함수 속성은 바인딩을 유지하되 인스턴스마다 메모리를 쓰고 super 를 못 부른다. this 매개변수(m(this: Counter))는 컴파일 때 The 'this' context of type 'void' is not assignable… 로 잡지만 런타임 보장은 없다.",
+        },
+        {
+          term: "모듈과 스크립트, export {}",
+          body: "최상위 import/export 가 하나라도 있으면 모듈(자기 스코프), 없으면 스크립트(전역). 두 스크립트의 같은 이름 const 는 Cannot redeclare block-scoped variable(실제로), export {} 한 줄로 해결. moduleDetection: force 는 전부 모듈로. 전역 .d.ts 에 import 를 넣으면 모듈이 되어 전역 선언이 아니게 된다.",
+        },
+        {
+          term: "import 지우기 (elision)와 verbatimModuleSyntax",
+          body: "값으로 쓰이지 않은 import 를 출력에서 빼는 것 — 타입 import 가 런타임 로드를 안 하게. 실제로 import { a, T } 가 import { a } 로. 단일 파일 변환기는 T 가 타입인지 몰라 지울 수 없으므로 5.0 의 verbatimModuleSyntax 는 적은 대로 내보내되 타입에 type 을 강제한다('T' is a type and must be imported using a type-only import…, TS1484). import type 으로 받은 것을 값으로 쓰면 TS1361. 부수 효과 모듈은 import \"./x.js\" 를 따로.",
+        },
+        {
+          term: "호스트 (host)",
+          body: "컴파일 출력을 실제로 실행하거나 묶는 것 — Node.js · 브라우저 · 번들러. 'TypeScript 컴파일러 자체는 호스트가 아니다'. module(출력 포맷) · moduleResolution(경로 찾기) 은 호스트가 무엇인지 TypeScript 에 알리는 선언이고, 어긋나면 컴파일은 통과하되 실행이 깨진다 — 실제로 bundler 로 통과한 확장자 없는 import 를 Node 가 ERR_MODULE_NOT_FOUND.",
+        },
+        {
+          term: "module: nodenext 와 파일별 포맷",
+          body: "출력 포맷을 파일마다 정하는 모드 — .mts/.mjs 는 ESM, .cts/.cjs 는 CJS, .ts/.js 는 가장 가까운 package.json 의 type. 실제로 같은 설정에서 type: module 폴더는 import 그대로, type: commonjs 폴더는 require()/exports.x =. moduleResolution nodenext · target esnext · esModuleInterop 이 암묵. Node 에서 돌 코드에 esnext/commonjs 를 적는 것은 '올바르지 않다'. 상대 import 는 .js 확장자 필수(TS2835).",
+        },
+        {
+          term: "moduleResolution: bundler",
+          body: "번들러의 느슨한 규칙(확장자 생략 · 디렉터리 index)을 흉내 내는 해석. module 은 esnext/preserve(6.0+ commonjs 도)여야(TS5095). package.json exports 는 읽는다. 라이브러리에 쓰면 export * from \"./utils\" 가 .d.ts 에 남아 Node 사용자에게서 깨지는 '전염성'. classic · node10 은 7.0 에서 제거.",
+        },
+        {
+          term: "지정자는 변환되지 않는다",
+          body: "출력의 import 문자열은 입력과 같다 — TypeScript 가 ./a.ts 를 ./a.js 로 바꿔 주지 않는다. 그래서 Node ESM 소스에 .js 를 적어야 하고(nodenext 가 TS2835 로 강제), .ts 를 적으려면 allowImportingTsExtensions + noEmit(출력에 .ts 가 남으면 안 되니, TS5096). 유일한 예외가 5.7 rewriteRelativeImportExtensions(실제로 ./a.ts → ./a.js). paths 도 검사만 바꾸고 출력은 그대로(실제로).",
+        },
+        {
+          term: "ESM·CJS 상호운용과 이중 default",
+          body: "ES2015 가 ESM→CJS 를 정하지 않아 Babel·TypeScript(esModuleInterop)·Node 가 각자 규칙을 만들었다. 앞의 둘은 __esModule 이 있으면 default 를 벗기고 없으면 module.exports 를 default 로 감싼다, Node 는 항상 module.exports 전체를 default 로. 그래서 TS 가 컴파일한 CJS 를 Node ESM 에서 default import 하면 함수가 .default.default 에(실제로 typeof compiled === \"object\"). 처방: CJS 라이브러리는 default 를 내보내지 말고 export = 또는 named, 라이브러리는 verbatimModuleSyntax.",
+        },
+        {
+          term: "esModuleInterop 과 allowSyntheticDefaultImports",
+          body: "후자(1.8)는 검사만 — default 가 없는 모듈의 default import 를 허용. 전자(2.7)는 emit 도 — __importDefault/__importStar 헬퍼로 Babel 과 같은 규칙을 런타임에 만든다. 문서: 'CJS 가 있는 앱은 항상 esModuleInterop', '전자만 켜는 것은 피하라'. 6.0 부터 false 로 둘 수 없다(실제로 Option 'esModuleInterop=false' has been removed).",
+        },
+        {
+          term: "선언 파일 (.d.ts)과 declare",
+          body: "구현 없이 모양만 적은 파일. declare 는 '이 이름은 밖에 있다' — var/function/class/namespace/module \"x\"/global, 전부 emit 에 남지 않는다. tsc --declaration 이 만드는 것과 같은 문법(실제로 본문이 사라지고 추론 반환 타입이 적힘). 손으로 쓴 .d.ts 는 '위험하고 실수가 잦다'; 5.5 isolatedDeclarations 는 추론에 기대는 선언을 거부해(TS9007/9016) 다른 도구도 생성할 수 있게.",
+        },
+        {
+          term: "export = 와 세 가지 import",
+          body: "CJS 의 module.exports = X 에 대응하는 선언. 모듈 자체가 함수·클래스일 때(템플릿 module-function/class). 소비자는 import x = require() · default import(interop) · import * as(객체일 때만) 중 환경에 맞게 — 실제로 nodenext CJS 에서 셋 다 통과, 함수를 namespace import 로 받으면 호출 불가(WRONG! DO NOT DO THIS!). module esnext 에서 import = require 는 TS1202.",
+        },
+        {
+          term: "선언 병합 (declaration merging)과 세 칸",
+          body: "모든 이름은 네임스페이스·타입·값 세 칸 중 하나 이상을 채운다(class·enum 은 타입+값, interface·type 은 타입, function·변수는 값, namespace 는 네임스페이스+값). 같은 칸을 둘이 채우면 충돌(class+class, type+무엇이든 → Duplicate identifier), 다른 칸이거나 합치기가 정의된 것(interface+interface 멤버 합치고 함수는 오버로드로, namespace+function/class/enum)은 병합. 모듈 보강(declare module \"x\")·전역 보강(declare global)이 실전 — 패치만, 새 최상위 선언 불가.",
+        },
+        {
+          term: "@types 와 6.0 의 types: []",
+          body: "DefinitelyTyped 가 @types/이름 으로 배포하는 선언. 패키지가 자기 types 필드를 가지면 불필요. 모듈 @types 는 import 때 해석되지만 전역 @types(node·jest)는 프로그램에 넣어야 하는데, 6.0 부터 types 기본값이 [] 라 자동으로 안 들어온다 — 설치했는데 Cannot find name 'process'… then add 'node' to the types field in your tsconfig(TS2591). \"types\": [\"*\"] 가 옛 동작.",
+        },
+        {
+          term: "checkJs · @ts-check · JSDoc",
+          body: ".js 를 검사하는 세 스위치. allowJs 는 넣고 변환만(에러 0, 실제로), checkJs 또는 파일 첫 줄 // @ts-check 는 검사, // @ts-nocheck 는 제외. 타입은 JSDoc 으로 — @type·@param·@returns·@typedef·@template·@satisfies·@import(5.5). .js 는 적을 자리가 없어 관대하다(열린 객체 리터럴, 매개변수 기본 선택적, null 초기화는 any)가 JSDoc 하나로 .ts 규칙이 된다. @ts-expect-error 는 에러가 없으면 그 자체가 에러(TS2578).",
+        },
+        {
+          term: "tsconfig: files · include · exclude · extends",
+          body: "files 는 허용 목록(없으면 TS6053), include 는 glob, exclude 는 include 가 찾은 것만 걸러 import·types·reference·files 로는 들어온다(실제로 exclude 한 gen/g.ts 가 import 로 들어와 에러 보고). extends 는 compilerOptions 를 물려받되 files/include/exclude 는 교체, references 는 상속 안 됨, 5.0 부터 배열. --showConfig 로 최종 결과 확인. 명령줄에 파일을 적으면 tsconfig 무시 → 6.0 은 TS5112 에러, --ignoreConfig 로만.",
+        },
+        {
+          term: "6.0 기본값 전환과 7.0 제거",
+          body: "6.0: strict true · module esnext · target 그해 ES(es2025) · types [] · rootDir . · noUncheckedSideEffectImports true · libReplacement false, 그리고 폐기 예고. 7.0: 폐기된 것 전부 에러 — target es5 · module amd/umd/system/none · moduleResolution classic/node10 · baseUrl · outFile · downlevelIteration · esModuleInterop false · alwaysStrict false(실제로 전부 Option '…' has been removed). 옛 글의 tsconfig 를 복사할 때 먼저 볼 표.",
+        },
+        {
+          term: "프로젝트 참조 (project references)와 tsc -b",
+          body: "tsconfig 의 references 로 다른 프로젝트의 출력 .d.ts 를 import 하고, tsc -b 가 의존 순서대로 오래된 것만 빌드한다(tsbuildinfo, 실제로 두 번째 실행 up to date). 참조되는 쪽은 composite: true(없으면 TS6306) — declaration 켜짐, rootDir 기본 tsconfig 폴더, 모든 파일이 include/files 에(TS6307). 일반 tsc 는 의존을 빌드하지 않는다(TS6305). -b 는 noEmitOnError 처럼. 경계가 .d.ts 로 고정되어 환경마다 tsconfig 가 가능해진다.",
+        },
+        {
+          term: "erasableSyntaxOnly (5.8)와 Node 의 타입 벗기기",
+          body: "'지우기만으로 JavaScript 가 되는 문법만' 허용하는 옵션 — enum · 값을 가진 namespace · 매개변수 속성 · import =/export = 를 TS1294 로 막는다(실제로 넷 다). Node 24 는 기본으로 타입을 벗기며(process.features.typescript === \"strip\") enum 을 TypeScript enum is not supported in strip-only mode 로 거부, --experimental-transform-types 면 변환. enum 대신 as const 객체를 권하는 배경.",
+        },
+        {
+          term: "TypeScript 7.0 (Go 네이티브)",
+          body: "컴파일러를 Go 로 옮긴 메이저. 구조·로직은 원본을 따라 검사 결과는 6.0 과 같게, 공유 메모리 멀티스레딩으로 전체 빌드 8~12× 빠름(vscode 125.7s → 10.6s), --checkers(기본 4) · --builders · --singleThreaded. npm i typescript 그대로(실제로 7.0.2, bin/tsc + dist, lib 에는 .d.ts 만). 안정된 프로그래밍 API 는 7.1 예정이라 vue-tsc·ts-loader 등은 6.0 API(@typescript/typescript6) — 이 허브의 추론 타입 꺼내기도 6.0.3 으로 했다.",
+        },
+      ],
+    },
   ],
 };
 
