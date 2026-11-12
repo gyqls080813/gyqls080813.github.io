@@ -97,20 +97,20 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "커밋 안을 열어 보면: 트리와 블롭을 가리키는 메타데이터",
-        body: "`git cat-file -p HEAD` 로 커밋 객체를 열면 tree(스냅샷의 뿌리) · parent(앞 커밋) · author · committer · 메시지만 있습니다. 파일 내용은 없습니다. tree 를 열면 `100644 blob de98044… a.txt` — 이름과 모드와 블롭의 해시. 블롭을 열면 파일 내용 그대로. 그래서 커밋은 '그 시점 파일 전체'를 가리키되 바뀌지 않은 파일은 같은 블롭 해시를 다시 가리켜 공간을 아낍니다. 해시는 내용에서 나옵니다 — `echo 'a' | git hash-object --stdin` 은 어느 컴퓨터에서나 78981922…입니다.",
+        body: "`git cat-file -p HEAD` 로 커밋 객체를 열면 tree(스냅샷의 뿌리) · parent(앞 커밋) · author · committer · 메시지만 있습니다. 파일 내용은 없습니다. tree 를 열면 `100644 blob de98044… a.txt` 가 나옵니다. 이름과 모드와 블롭의 해시입니다. 블롭을 열면 파일 내용이 그대로 나옵니다. 그래서 커밋은 '그 시점 파일 전체'를 가리킵니다. 다만 바뀌지 않은 파일은 같은 블롭 해시를 다시 가리켜 공간을 아낍니다. 해시는 내용에서 나옵니다. `echo 'a' | git hash-object --stdin` 은 어느 컴퓨터에서나 78981922…입니다.",
         code: "$ git cat-file -t HEAD\ncommit\n$ git cat-file -p HEAD\ntree 5eb56f37d65808cb4cec9d09269ecad72aa06c9b\nparent 5fd1dc12b1e2f3d76214fef7068559f1a631ce02\nauthor probe <probe@example.com> 1794445200 +0900\ncommitter probe <probe@example.com> 1794445200 +0900\n\nadd c\n$ git cat-file -p HEAD^{tree}\n100644 blob de980441c3ab03a8c07dda1ad27b8a11f39deb1e\ta.txt\n$ git cat-file -p HEAD:a.txt\na\nb\nc\n$ echo 'a' | git hash-object --stdin\n78981922613b2afb6025042ff6bd878ac1994e85     # 내용이 같으면 해시가 같다",
         codeLang: "bash",
         terms: [
           {
             term: "블롭 · 트리 · 커밋 (blob · tree · commit)",
-            body: "git 객체의 세 종류. 블롭은 파일 내용(이름 없음), 트리는 디렉터리(이름·모드·하위 해시 목록), 커밋은 트리 하나와 부모·작성자·메시지. 넷째로 주석 달린 태그 객체가 있습니다. 전부 `<type> <size>\\0내용` 의 SHA-1 로 이름이 붙고 .git/objects 에 zlib 압축으로 저장됩니다.",
+            body: "git 객체의 세 종류입니다. 블롭은 파일 내용이며 이름이 없습니다. 트리는 디렉터리이며 이름·모드·하위 해시 목록을 담습니다. 커밋은 트리 하나와 부모·작성자·메시지를 담습니다. 넷째로 주석 달린 태그 객체가 있습니다. 전부 `<type> <size>\\0내용` 의 SHA-1 로 이름이 붙고 .git/objects 에 zlib 압축으로 저장됩니다.",
           },
         ],
       },
       {
         label: "문제가 나는 경우: 담기와 무시",
         body: "세 공간 사이에서 자주 보는 어긋남입니다.",
-        code: "증상                                               원인                                  처방\n─────────────────────────────────────────────────  ───────────────────────────────────  ─────────────────────────────\nadd 했는데 커밋에 마지막 수정이 없다                 add 는 그 순간의 파일을 담는다            다시 add (MM 상태 확인)\ngit commit 이 'nothing added to commit…' 으로 거절   담긴 것이 없다 (untracked 만 있음)         add 먼저, 또는 commit -a (추적 파일만)\n.gitignore 에 적은 파일이 계속 추적된다              이미 추적 중인 파일은 ignore 가 안 막음     git rm --cached <file> 로 추적 해제\ngit add 가 'paths are ignored by one of your .gitignore files'   패턴에 걸린 새 파일                 정말 필요하면 git add -f\n어느 규칙이 막는지 모른다                            중첩 .gitignore · 전역 ignore            git check-ignore -v <file>\ngit add . 로 임시 파일까지 들어갔다                  골라 담지 않았다                        status 보고 경로 단위로 add",
+        code: "증상                                       원인                          처방\n─────────────────────────────────────────  ───────────────────────────  ─────────────────────────────\nadd 했는데 커밋에 마지막 수정이 없다         add 는 그 순간의 파일을 담는다    다시 add (MM 상태 확인)\ngit commit 이 'nothing added to commit…' 으로 거절  담긴 것이 없다 (untracked 만 있음)  add 먼저, 또는 commit -a\n                                                                                (추적 파일만)\n.gitignore 에 적은 파일이 계속 추적된다      이미 추적 중인 파일은 ignore 가 안 막음  git rm --cached <file> 로 추적 해제\ngit add 가 'paths are ignored by one of your .gitignore files'  패턴에 걸린 새 파일         정말 필요하면 git\n                                                               add -f\n어느 규칙이 막는지 모른다                    중첩 .gitignore · 전역 ignore    git check-ignore -v <file>\ngit add . 로 임시 파일까지 들어갔다          골라 담지 않았다                status 보고 경로 단위로 add",
         codeLang: "text",
       },
       {
@@ -185,7 +185,7 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "log 의 범위 문법: .. 과 ... 과 --left-right",
-        body: "'여기서는 닿고 저기서는 안 닿는' 커밋을 고르는 문법이 `A..B` 입니다 — B 에서 도달하되 A 에서는 도달하지 않는 커밋. 실제로 `master..side` 는 side 가 더 쌓은 둘(side 1, side 2), `side..master` 는 master 만 가진 하나(local only)였습니다. `A...B` 는 양쪽 중 한쪽에서만 닿는 커밋 전부이고 `--left-right` 가 `<`(A 쪽) `>`(B 쪽)로 표시합니다. PR 이 보여 주는 커밋이 정확히 `base..compare` 이고, push 가 보낼 커밋이 `origin/master..HEAD` 입니다(git cherry -v 도 같은 답). 한쪽을 비우면 HEAD 입니다.",
+        body: "'여기서는 닿고 저기서는 안 닿는' 커밋을 고르는 문법이 `A..B` 입니다. B 에서 도달하되 A 에서는 도달하지 않는 커밋입니다. 실제로 `master..side` 는 side 가 더 쌓은 둘(side 1, side 2)이었습니다. `side..master` 는 master 만 가진 하나(local only)였습니다. `A...B` 는 양쪽 중 한쪽에서만 닿는 커밋 전부입니다. `--left-right` 가 `<`(A 쪽) `>`(B 쪽)로 표시합니다. PR 이 보여 주는 커밋이 정확히 `base..compare` 입니다. push 가 보낼 커밋이 `origin/master..HEAD` 입니다(git cherry -v 도 같은 답입니다). 한쪽을 비우면 HEAD 입니다.",
         code: "$ git log --oneline master..side\nf6f340b side 2\nfec5462 side 1\n$ git log --oneline side..master\n6237d9f local only\n$ git log --oneline --left-right master...side\n> f6f340b side 2\n> fec5462 side 1\n< 6237d9f local only\n\n$ git cherry -v origin/master      # push 하면 갈 커밋\n+ 933221202d3d5ac8398e7a3416e6664bd14bcae6 not pushed yet",
         codeLang: "bash",
         terms: [
@@ -261,7 +261,7 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: reset 세 가지가 멈추는 자리",
-        body: "x.txt 를 커밋한 뒤 `reset --soft HEAD~1` 을 치면 이름표만 한 칸 뒤로 가고 x.txt 는 담긴 채(`A  x.txt`)입니다. `reset --mixed HEAD`(기본값)는 Index 까지 되돌려 x.txt 가 `?? x.txt` — 작업 폴더에는 그대로. `reset --hard HEAD~1` 은 작업 폴더까지 되돌려 x.txt 가 사라집니다(`ls: x.txt: No such file or directory`). Reset Demystified 의 문장 — '--hard 가 reset 을 위험하게 만드는 유일한 길'. 경로를 주는 `git reset a.txt` 는 이름표를 옮기지 않고(커밋의 일부를 가리킬 수 없으니) Index 의 그 파일만 HEAD 로 되돌립니다 = `restore --staged a.txt`. 둘을 나란히 돌려 결과(` M a.txt`)가 같았습니다.",
+        body: "x.txt 를 커밋한 뒤 `reset --soft HEAD~1` 을 치면 이름표만 한 칸 뒤로 갑니다. x.txt 는 담긴 채(`A  x.txt`)입니다.\n`reset --mixed HEAD`(기본값)는 Index 까지 되돌립니다. x.txt 가 `?? x.txt` 가 되고 작업 폴더에는 그대로 있습니다.\n`reset --hard HEAD~1` 은 작업 폴더까지 되돌려 x.txt 가 사라집니다(`ls: x.txt: No such file or directory`). Reset Demystified 의 문장은 '--hard 가 reset 을 위험하게 만드는 유일한 길'입니다.\n경로를 주는 `git reset a.txt` 는 이름표를 옮기지 않습니다(커밋의 일부를 가리킬 수 없으니). Index 의 그 파일만 HEAD 로 되돌립니다. `restore --staged a.txt` 와 같습니다. 둘을 나란히 돌려 결과(` M a.txt`)가 같았습니다.",
         code: "$ git add x.txt && git commit -q -m x\n$ git reset --soft HEAD~1 && git status --short\nA  x.txt                 # 이름표만 뒤로, 담긴 것은 그대로\n$ git reset --mixed HEAD && git status --short\n?? x.txt                 # Index 도 되돌림, 파일은 남음\n$ git add x.txt && git commit -q -m x && git reset --hard HEAD~1 && ls x.txt\nls: x.txt: No such file or directory      # 작업 폴더까지\n\n$ git add a.txt && git reset -q a.txt && git status --short\n M a.txt                 # = git restore --staged a.txt",
         codeLang: "bash",
         terms: [
@@ -429,32 +429,32 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 충돌의 모양과 status, diff --cc",
-        body: "같은 파일 a.txt 의 같은 줄을 양쪽이 다르게 고친 뒤 merge 하면 `Auto-merging a.txt` → `CONFLICT (content): Merge conflict in a.txt` → `Automatic merge failed; fix conflicts and then commit the result.` 세 줄입니다. `git status --short` 는 `UU a.txt`(양쪽 수정, unmerged), 긴 status 는 'Unmerged paths' 아래 'both modified:'. 파일에는 `<<<<<<< HEAD` / `=======` / `>>>>>>> topic` 표시가 들어가고, 이때의 `git diff` 는 두 열짜리 결합 diff(`diff --cc`, `@@@`)로 아직 안 푼 부분만 보여 줍니다. 표시를 정리하고 add · commit 하면 부모가 둘인 병합 커밋이 생깁니다 — 실제로 `git cat-file -p HEAD | grep -c '^parent'` 가 2. `merge.conflictstyle diff3` 을 켜면 `||||||| base` 로 갈라진 시점의 원문도 함께 보여 어느 쪽이 무엇을 바꿨는지 읽기가 쉬워집니다.",
+        body: "같은 파일 a.txt 의 같은 줄을 양쪽이 다르게 고친 뒤 merge 하면 세 줄이 나옵니다. `Auto-merging a.txt` → `CONFLICT (content): Merge conflict in a.txt` → `Automatic merge failed; fix conflicts and then commit the result.` 입니다. `git status --short` 는 `UU a.txt`(양쪽 수정, unmerged)를 보여 줍니다. 긴 status 는 'Unmerged paths' 아래 'both modified:' 를 보여 줍니다. 파일에는 `<<<<<<< HEAD` / `=======` / `>>>>>>> topic` 표시가 들어갑니다. 이때의 `git diff` 는 두 열짜리 결합 diff(`diff --cc`, `@@@`)로 아직 안 푼 부분만 보여 줍니다. 표시를 정리하고 add · commit 하면 부모가 둘인 병합 커밋이 생깁니다. 실제로 `git cat-file -p HEAD | grep -c '^parent'` 가 2 였습니다. `merge.conflictstyle diff3` 을 켜면 `||||||| base` 로 갈라진 시점의 원문도 함께 보입니다. 어느 쪽이 무엇을 바꿨는지 읽기가 쉬워집니다.",
         code: "$ git merge topic\nAuto-merging a.txt\nCONFLICT (content): Merge conflict in a.txt\nAutomatic merge failed; fix conflicts and then commit the result.\n$ git status --short\nUU a.txt\n$ cat a.txt\n<<<<<<< HEAD\nMAIN\n=======\nTOPIC\n>>>>>>> topic\n$ git diff | head -6\ndiff --cc a.txt\nindex e5cdc04,ddd5e2b..0000000\n@@@ -1,1 -1,1 +1,5 @@@\n++<<<<<<< HEAD\n +MAIN\n\n$ printf 'RESOLVED\\n' > a.txt && git add a.txt && git commit -q -m 'merge topic'\n$ git cat-file -p HEAD | grep -c '^parent'\n2",
         codeLang: "bash",
       },
       {
         label: "실제로 돌려 보면: fast-forward · --no-ff · --squash",
-        body: "feature 가 master 의 후손이면 `git merge feature` 는 `Updating 454e82b..f7235cf` / `Fast-forward` — 이름표만 옮기고 커밋을 만들지 않습니다. `--no-ff` 는 그래도 병합 커밋을 만듭니다(`Merge made by the 'ort' strategy.` — 2.55 의 기본 전략 이름이 ort 이고 옛 문서는 recursive). GitHub 의 'Create a merge commit' 이 이 모양입니다. `--squash` 는 상대 커밋들의 변경을 한 덩어리로 Index 에 담고 멈춥니다(`Squash commit -- not updating HEAD`) — 커밋은 내가 하고, 부모는 하나입니다. 그래서 squash 뒤 원래 브랜치는 '닿지 않는' 브랜치가 되어 `branch -d` 가 거절합니다(실제로 `error: the branch 'sq' is not fully merged`). GitHub 의 'Squash and merge' 뒤 로컬에서 보는 그 거절입니다.",
+        body: "feature 가 master 의 후손이면 `git merge feature` 는 `Updating 454e82b..f7235cf` / `Fast-forward` 를 보여 줍니다. 이름표만 옮기고 커밋을 만들지 않습니다.\n`--no-ff` 는 그래도 병합 커밋을 만듭니다(`Merge made by the 'ort' strategy.`). 2.55 의 기본 전략 이름이 ort 이고 옛 문서는 recursive 입니다. GitHub 의 'Create a merge commit' 이 이 모양입니다.\n`--squash` 는 상대 커밋들의 변경을 한 덩어리로 Index 에 담고 멈춥니다(`Squash commit -- not updating HEAD`). 커밋은 내가 하고, 부모는 하나입니다. 그래서 squash 뒤 원래 브랜치는 '닿지 않는' 브랜치가 되어 `branch -d` 가 거절합니다(실제로 `error: the branch 'sq' is not fully merged` 였습니다). GitHub 의 'Squash and merge' 뒤 로컬에서 보는 그 거절입니다.",
         code: "$ git merge --ff-only feature\nUpdating 454e82b..f7235cf\nFast-forward\n$ git merge --no-ff --no-edit nf\nMerge made by the 'ort' strategy.\n*   1c44ff3 Merge branch 'nf'\n|\\\n| * b02296d nf\n|/\n$ git merge --squash sq\nAutomatic merge went well; stopped before committing as requested\nSquash commit -- not updating HEAD\n$ git commit -q -m 'squash sq' && git branch -d sq\nerror: the branch 'sq' is not fully merged     # 내용은 들어갔지만 커밋은 닿지 않는다",
         codeLang: "bash",
       },
       {
         label: "실제로 돌려 보면: rebase 는 새 커밋을 만들고, 충돌은 커밋 단위로 멈춘다",
-        body: "`git rebase master` 는 내 커밋을 master 끝에서 하나씩 다시 만듭니다 — 실제로 `rb work` 가 12686bd 에서 62e7c36 으로 해시가 바뀌었고 그래프는 한 줄입니다. 충돌이 나면 커밋 하나 단위로 멈춥니다. `CONFLICT (content): Merge conflict in a.txt` / `error: could not apply d61f7a0... rb2 edits a`, status 는 `UU a.txt` 와 'interactive rebase in progress; onto 5e697d0'. 풀고 add 한 뒤 `git rebase --continue`(편집기를 띄우니 `GIT_EDITOR=true` 로 넘김) 하면 `Successfully rebased and updated refs/heads/rb2.`, 그만두려면 `--abort`. Pro Git 의 굵은 규칙 — '내 저장소 밖에 존재하고 남이 그 위에 작업했을 수 있는 커밋은 rebase 하지 마라'. 혼자 쓰는 브랜치에서 rebase 한 뒤의 push 는 `--force-with-lease` 입니다.",
+        body: "`git rebase master` 는 내 커밋을 master 끝에서 하나씩 다시 만듭니다. 실제로 `rb work` 가 12686bd 에서 62e7c36 으로 해시가 바뀌었고 그래프는 한 줄입니다. 충돌이 나면 커밋 하나 단위로 멈춥니다. `CONFLICT (content): Merge conflict in a.txt` / `error: could not apply d61f7a0... rb2 edits a` 가 나옵니다. status 는 `UU a.txt` 와 'interactive rebase in progress; onto 5e697d0' 을 보여 줍니다. 풀고 add 한 뒤 `git rebase --continue` 를 하면 `Successfully rebased and updated refs/heads/rb2.` 가 나옵니다(편집기를 띄우니 `GIT_EDITOR=true` 로 넘겼습니다). 그만두려면 `--abort` 입니다. Pro Git 의 굵은 규칙은 '내 저장소 밖에 존재하고 남이 그 위에 작업했을 수 있는 커밋은 rebase 하지 마라'입니다. 혼자 쓰는 브랜치에서 rebase 한 뒤의 push 는 `--force-with-lease` 입니다.",
         code: "$ git log --oneline -1\n12686bd rb work\n$ git rebase master\nSuccessfully rebased and updated refs/heads/rb.\n$ git log --oneline -1\n62e7c36 rb work                 # 같은 내용, 새 해시\n\n$ git rebase master            # rb2: 충돌\nCONFLICT (content): Merge conflict in a.txt\nerror: could not apply d61f7a0... rb2 edits a\n$ git status | sed -n 1p\ninteractive rebase in progress; onto 5e697d0\n$ printf 'RB2 RESOLVED\\n' > a.txt && git add a.txt && GIT_EDITOR=true git rebase --continue\nSuccessfully rebased and updated refs/heads/rb2.",
         codeLang: "bash",
         terms: [
           {
             term: "rebase -i (interactive)",
-            body: "커밋 목록을 편집기로 열어 pick · reword · edit · squash · fixup · drop 을 적는 것. 메시지 고치기(reword), 여러 커밋 합치기(squash/fixup), 쪼개기(edit 뒤 reset HEAD^), 순서 바꾸기·지우기가 됩니다. 스크립트의 주석 — '여기서 줄을 지우면 그 커밋은 사라진다'. 실제로 GIT_SEQUENCE_EDITOR 로 둘째 줄을 squash 로 바꿔 두 커밋을 하나(part 1)로 합쳤습니다. 로컬 커밋에만.",
+            body: "커밋 목록을 편집기로 열어 pick · reword · edit · squash · fixup · drop 을 적는 것입니다. 메시지 고치기(reword), 여러 커밋 합치기(squash/fixup), 쪼개기(edit 뒤 reset HEAD^), 순서 바꾸기·지우기가 됩니다. 스크립트의 주석은 '여기서 줄을 지우면 그 커밋은 사라진다'입니다. 실제로 GIT_SEQUENCE_EDITOR 로 둘째 줄을 squash 로 바꿔 두 커밋을 하나(part 1)로 합쳤습니다. 로컬 커밋에만 씁니다.",
           },
         ],
       },
       {
         label: "문제가 나는 경우: 합치기 전후",
         body: "합치기에서 자주 보는 상황과 문구입니다.",
-        code: "증상                                                      뜻                                              처방\n────────────────────────────────────────────────────────  ─────────────────────────────────────────────  ────────────────────────────\nAlready up to date.                                        상대 커밋이 전부 이미 닿는다                       할 일 없음 (revert 한 병합이면 revert 를 revert)\nUpdating a..b / Fast-forward                                내 쪽에 새 커밋이 없어 이름표만 이동                 기록을 남기려면 --no-ff\nCONFLICT (content) … fix conflicts and then commit          같은 자리를 양쪽이 고쳤다                           표시 정리 → add → commit (또는 merge --abort)\nCONFLICT (modify/delete)                                   한쪽은 고치고 한쪽은 지웠다                          남길지 지울지 골라 add/rm\nfatal: There is no merge to abort (MERGE_HEAD missing).     진행 중인 병합이 없다                               (이미 끝났거나 rebase 중 → rebase --abort)\nerror: could not apply <sha>… (rebase)                      rebase 가 그 커밋에서 멈춤                           풀고 add → rebase --continue / --abort / --skip\n! [rejected] … (fetch first)                                원격이 내 후손이 아님                               pull --rebase 또는 merge 뒤 push\n! [rejected] … (stale info)                                 force-with-lease 가 본 원격이 바뀜                    fetch 로 확인 뒤 다시",
+        code: "증상                                          뜻                                  처방\n────────────────────────────────────────────  ─────────────────────────────────\nAlready up to date.                            상대 커밋이 전부 이미 닿는다           할 일 없음 (revert 한 병합이면\n                                                                               revert 를 revert)\nUpdating a..b / Fast-forward                    내 쪽에 새 커밋이 없어 이름표만 이동     기록을 남기려면 --no-ff\nCONFLICT (content) … fix conflicts and then commit  같은 자리를 양쪽이 고쳤다               표시 정리 → add →\n                                                    commit (또는 merge --abort)\nCONFLICT (modify/delete)                       한쪽은 고치고 한쪽은 지웠다              남길지 지울지 골라 add/rm\nfatal: There is no merge to abort (MERGE_HEAD missing).  진행 중인 병합이 없다                   (이미 끝났거나\n                                                         rebase 중 → rebase --abort)\nerror: could not apply <sha>… (rebase)          rebase 가 그 커밋에서 멈춤               풀고 add → rebase\n                                                --continue / --abort / --skip\n! [rejected] … (fetch first)                    원격이 내 후손이 아님                   pull --rebase 또는\n                                                merge 뒤 push\n! [rejected] … (stale info)                     force-with-lease 가 본 원격이 바뀜        fetch 로 확인 뒤 다시",
         codeLang: "text",
       },
       {
@@ -512,7 +512,7 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 병합 버튼 셋을 로컬 명령으로",
-        body: "GitHub 의 세 버튼은 앞 장의 세 명령입니다. 'Create a merge commit' = `git merge --no-ff`(실제로 `Merge made by the 'ort' strategy.`, 부모 둘). 'Squash and merge' = `git merge --squash` + 커밋 하나(원래 커밋들은 base 에서 닿지 않음 → 로컬 `branch -d` 거절). 'Rebase and merge' = base 끝에 커밋들을 다시 만들어 올림(해시 변경, GitHub 문서: 커미터 정보가 항상 바뀌고 처음부터 빈 커밋은 떨어진다). GitHub 문서의 주의 둘 — squash 는 '수명이 짧은 브랜치에 가장 잘 맞고', squash 뒤 같은 head 브랜치를 계속 쓰면 같은 충돌이 되풀이될 수 있다(처방: 다음 PR 전에 base 를 merge 하거나 rebase); rebase and merge 를 GitHub 가 안전하게 할 수 없으면 로컬에서 rebase 해 push 하라.",
+        body: "GitHub 의 세 버튼은 앞 장의 세 명령입니다.\n'Create a merge commit' 은 `git merge --no-ff` 입니다. 실제로 `Merge made by the 'ort' strategy.` 가 나오고 부모는 둘입니다.\n'Squash and merge' 는 `git merge --squash` 뒤 커밋 하나입니다. 원래 커밋들은 base 에서 닿지 않아 로컬 `branch -d` 가 거절합니다.\n'Rebase and merge' 는 base 끝에 커밋들을 다시 만들어 올립니다. 해시가 바뀝니다. GitHub 문서는 커미터 정보가 항상 바뀌고 처음부터 빈 커밋은 떨어진다고 적습니다.\nGitHub 문서의 주의는 둘입니다. squash 는 '수명이 짧은 브랜치에 가장 잘 맞고', squash 뒤 같은 head 브랜치를 계속 쓰면 같은 충돌이 되풀이될 수 있습니다. 처방은 다음 PR 전에 base 를 merge 하거나 rebase 하는 것입니다. rebase and merge 를 GitHub 가 안전하게 할 수 없으면 로컬에서 rebase 해 push 하라고 합니다.",
         code: "GitHub 버튼               로컬 명령                      결과 그래프            로컬 branch -d\n────────────────────────  ─────────────────────────────  ────────────────────  ──────────────\nCreate a merge commit     git merge --no-ff feature       부모 둘인 M            OK (닿음)\nSquash and merge          git merge --squash + commit     부모 하나인 S           거절 (-D 필요)\nRebase and merge          git rebase base → ff            X', Y' 새 해시          거절 (-D 필요)",
         codeLang: "text",
       },
@@ -524,7 +524,7 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "GitHub 가 더하는 것: 보호 브랜치 · 초안 · 충돌 해결 · 간접 병합",
-        body: "git 에 없고 GitHub 에만 있는 것들입니다. 보호 브랜치 — force push 와 삭제를 막고, 상태 검사·리뷰·코드 오너 승인·서명 커밋을 요구할 수 있으며, 관리자는 'Include administrators' 가 아니면 조건 미달이어도 병합할 수 있다는 노트. 초안(Draft) PR — '병합할 수 없고 코드 오너 리뷰가 자동 요청되지 않는다'. 충돌 — 'PR 을 GitHub 에서 병합하려면 모든 병합 충돌을 먼저 풀어야' 하고 '단순한 줄 충돌은 GitHub 에서 풀 수 있다'(복잡하면 로컬에서 풀어 push). 간접 병합 — head 의 커밋이 다른 경로(다른 PR·직접 push)로 base 에서 닿게 되면 그 PR 도 merged 로 표시됩니다 — 역시 '도달 가능성'입니다.",
+        body: "git 에 없고 GitHub 에만 있는 것들입니다.\n보호 브랜치는 force push 와 삭제를 막습니다. 상태 검사·리뷰·코드 오너 승인·서명 커밋을 요구할 수 있습니다. 관리자는 'Include administrators' 가 아니면 조건 미달이어도 병합할 수 있다는 노트가 있습니다.\n초안(Draft) PR 은 '병합할 수 없고 코드 오너 리뷰가 자동 요청되지 않는다'고 합니다.\n충돌은 'PR 을 GitHub 에서 병합하려면 모든 병합 충돌을 먼저 풀어야' 하고 '단순한 줄 충돌은 GitHub 에서 풀 수 있다'고 합니다. 복잡하면 로컬에서 풀어 push 합니다.\n간접 병합은 head 의 커밋이 다른 경로(다른 PR·직접 push)로 base 에서 닿게 되면 그 PR 도 merged 로 표시되는 것입니다. 역시 '도달 가능성'입니다.",
         code: "git 에 있는 것                     GitHub 가 더한 것\n────────────────────────────────  ─────────────────────────────────────────────\nmerge · rebase · squash            병합 버튼 셋 + 저장소 설정으로 허용 방식 제한\nbranch · push                      보호 브랜치 (force push · 삭제 금지, 검사·리뷰 요구)\n(없음)                              PR · Draft · 리뷰 · Checks · 모의 병합 ref\nlog base..head · diff base...head   PR 의 Commits · Files changed 탭\n도달 가능성                          '간접 병합' 으로 merged 표시 · 병합 뒤 브랜치 자동 삭제",
         codeLang: "text",
       },
@@ -534,7 +534,7 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "다음 입구",
-        body: "마지막 장은 이 모델로 자주 만나는 상황을 풉니다 — stash · cherry-pick · 엉뚱한 브랜치 커밋 · push 한 커밋 되돌리기 · 사라진 것 찾기. 출처는 GitHub 문서의 About pull request merges · About branches · About merge conflicts 입니다.",
+        body: "마지막 장은 이 모델로 자주 만나는 상황을 풉니다. stash · cherry-pick · 엉뚱한 브랜치 커밋 · push 한 커밋 되돌리기 · 사라진 것 찾기입니다. 출처는 GitHub 문서의 About pull request merges · About branches · About merge conflicts 입니다.",
       },
       {
         label: "확인 질문",
@@ -589,37 +589,37 @@ export const gitTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: stash 가 담는 것과 돌려주는 것",
-        body: "`git stash` 는 추적 파일의 수정과 담긴 것을 스택에 넣고 작업 폴더를 깨끗하게 만듭니다 — `Saved working directory and index state WIP on master: 5e697d0 merge topic`, 그 뒤 status 는 비어 있고 `stash list` 에 `stash@{0}: WIP on master: …`. `pop` 은 적용 뒤 스택에서 빼고(`Dropped refs/stash@{0} (7d12d52…)`) 담겼던 것은 기본으로 '담기지 않은 수정'으로 돌아옵니다(--index 를 주면 담긴 채로). 새 파일(untracked)은 기본으로 담지 않아 `-u` 가 필요하고(실제로 `stash -u` 뒤 pop 에 `?? newfile` 이 함께 돌아옴), 이름을 주려면 `-m`. Pro Git 의 주의 — `git clean` 은 untracked 파일을 지우고 '그 내용은 대개 되찾을 수 없다'; `-n` 으로 먼저 보고, 지우기보다 `stash --all` 이 안전합니다.",
+        body: "`git stash` 는 추적 파일의 수정과 담긴 것을 스택에 넣고 작업 폴더를 깨끗하게 만듭니다. `Saved working directory and index state WIP on master: 5e697d0 merge topic` 이 나옵니다. 그 뒤 status 는 비어 있고 `stash list` 에 `stash@{0}: WIP on master: …` 가 보입니다. `pop` 은 적용 뒤 스택에서 뺍니다(`Dropped refs/stash@{0} (7d12d52…)`). 담겼던 것은 기본으로 '담기지 않은 수정'으로 돌아옵니다(--index 를 주면 담긴 채로 돌아옵니다). 새 파일(untracked)은 기본으로 담지 않아 `-u` 가 필요합니다(실제로 `stash -u` 뒤 pop 에 `?? newfile` 이 함께 돌아왔습니다). 이름을 주려면 `-m` 입니다. Pro Git 의 주의가 있습니다. `git clean` 은 untracked 파일을 지우고 '그 내용은 대개 되찾을 수 없다'고 합니다. `-n` 으로 먼저 보고, 지우기보다 `stash --all` 이 안전합니다.",
         code: "$ printf 'wip\\n' >> a.txt && git stash\nSaved working directory and index state WIP on master: 5e697d0 merge topic\n$ git status --short            # (비어 있음)\n$ git stash list\nstash@{0}: WIP on master: 5e697d0 merge topic\n$ git stash pop\nDropped refs/stash@{0} (7d12d52bcf82758474181085ac3653b1451627cb)\n$ git status --short\n M a.txt                         # 담겼던 것도 '수정' 으로 돌아온다 (--index 면 유지)\n\n$ touch newfile && git stash -u && git stash pop && git status --short\n M a.txt\n?? newfile                       # -u 가 아니면 untracked 는 stash 에 안 들어간다",
         codeLang: "bash",
       },
       {
         label: "실제로 돌려 보면: cherry-pick 과 revert 가 멈추는 곳",
-        body: "`git cherry-pick <sha>` 는 그 커밋의 변경을 새 커밋으로 다시 만듭니다. 같은 자리를 내 쪽이 다르게 고쳤으면 merge 처럼 멈춥니다 — 실제로 `UU a.txt` 와 `hint: To abort and get back to the state before \"git cherry-pick\", run \"git cherry-pick --abort\".` 풀고 add 한 뒤 `--continue`. revert 도 같은 메커니즘(반대 변경을 적용)이라 같은 자리에서 멈출 수 있고, 병합 커밋에는 `-m 1` 이 필요합니다(되돌리기 장). 둘 다 '새 커밋'이라 공유된 이력을 고쳐 쓰지 않습니다 — 그래서 push 된 것을 되돌릴 때의 답이 revert 입니다.",
+        body: "`git cherry-pick <sha>` 는 그 커밋의 변경을 새 커밋으로 다시 만듭니다. 같은 자리를 내 쪽이 다르게 고쳤으면 merge 처럼 멈춥니다. 실제로 `UU a.txt` 와 `hint: To abort and get back to the state before \"git cherry-pick\", run \"git cherry-pick --abort\".` 가 나왔습니다. 풀고 add 한 뒤 `--continue` 입니다. revert 도 같은 메커니즘(반대 변경을 적용)이라 같은 자리에서 멈출 수 있습니다. 병합 커밋에는 `-m 1` 이 필요합니다(되돌리기 장). 둘 다 '새 커밋'이라 공유된 이력을 고쳐 쓰지 않습니다. 그래서 push 된 것을 되돌릴 때의 답이 revert 입니다.",
         code: "$ git cherry-pick topic\nhint: To abort and get back to the state before \"git cherry-pick\",\nhint: run \"git cherry-pick --abort\".\n$ git status --short\nUU a.txt\n$ git cherry-pick --abort       # 또는 풀고 add → git cherry-pick --continue",
         codeLang: "bash",
       },
       {
         label: "실제로 돌려 보면: 엉뚱한 브랜치에 커밋했을 때의 두 명령",
         body: "본문의 처방을 그대로 돌렸습니다. master 에서 커밋 x 를 만든 뒤 `git branch feature`(지금 커밋에 새 이름표) → `git reset --hard HEAD~1`(master 만 뒤로) → `git switch feature`. x 는 feature 에서 닿으므로 잃지 않습니다. 이미 push 했다면 reset 대신 revert 로 master 에 취소 커밋을 쌓고, x 가 들어간 브랜치를 따로 올립니다. 그리고 커밋 전에 알아챘다면 — 수정은 작업 폴더에 있으니 — 그냥 `git switch -c feature` 로 수정을 들고 옮기면 됩니다(대상 브랜치가 그 파일을 다르게 가지지 않는 한 전환이 허용됩니다).",
-        code: "상황                              처방                                                 왜 안전한가\n───────────────────────────────  ──────────────────────────────────────────────────  ──────────────────────────\n커밋 전에 알았다                   git switch -c feature  (수정을 들고 이동)             작업 폴더는 브랜치와 무관\n커밋했고 push 전                   git branch feature; git reset --hard HEAD~1          커밋은 feature 에서 닿는다\n커밋하고 push 까지 했다            git revert <sha> on master; cherry-pick 을 feature 로   공유 이력은 덧쓴다\n--hard 를 잘못 쳤다                git reflog → git reset --hard HEAD@{1}              HEAD 이동은 전부 기록됨",
+        code: "상황                            처방                                               왜 안전한가\n─────────────────────────────  ────────────────────────────────────────────────\n커밋 전에 알았다                 git switch -c feature  (수정을 들고 이동)           작업 폴더는 브랜치와 무관\n커밋했고 push 전                 git branch feature; git reset --hard HEAD~1        커밋은 feature 에서 닿는다\n커밋하고 push 까지 했다          git revert <sha> on master; cherry-pick 을 feature 로  공유 이력은 덧쓴다\n--hard 를 잘못 쳤다              git reflog → git reset --hard HEAD@{1}            HEAD 이동은 전부 기록됨",
         codeLang: "text",
       },
       {
         label: "상황 → 먼저 볼 것 → 명령",
         body: "앞의 여섯 장을 한 표로 접습니다. 공통 첫 단계는 `git status` 와 `git log --oneline --graph --all` 로 이름표가 어디 있는지 보는 것입니다.",
-        code: "상황                                       먼저 볼 것                        명령\n─────────────────────────────────────────  ───────────────────────────────  ─────────────────────────────────\n다른 브랜치로 급히 가야 하는데 수정이 있다    status (담긴 것? 새 파일?)          stash [-u] → switch → stash pop\npush 가 (fetch first) 로 거절됐다            log HEAD..origin/x (무엇이 들어오나)  pull --rebase → push\npull 뒤 충돌이 났다                          status 의 UU 파일                   표시 정리 → add → (merge: commit / rebase: --continue)\n병합된 PR 브랜치가 -d 로 안 지워진다           squash/rebase 로 병합됐나             -D (내용은 base 에 있음)\norigin/feature 가 남아 있다                  원격에 실제로 있나                   fetch --prune\n브랜치를 잘못 지웠다                          reflog 에 마지막 커밋이 있나          branch <name> <sha>\n--hard 로 커밋을 날렸다                       reflog                              reset --hard HEAD@{n} 또는 branch\n커밋하지 않은 수정을 --hard 로 날렸다          (reflog 에 없음)                     에디터 로컬 히스토리 외엔 복구 불가\n마지막 커밋 메시지만 고치고 싶다 (push 전)      cherry -v (push 됐나)                commit --amend\n중간 커밋들을 합치거나 지우고 싶다 (push 전)     log --oneline                       rebase -i HEAD~n\n이미 push 한 커밋을 취소해야 한다              -                                   revert <sha> (병합이면 -m 1)\n이게 어느 커밋에서 깨졌는지 모른다             -                                   bisect start <bad> <good> → good/bad → reset",
+        code: "상황                            먼저 볼 것             명령\n──────────────────────────────  ────────────────────  ─────────────────────────────────\n다른 브랜치로 급히 가야 하는데 수정이 있다  status (담긴 것? 새 파일?)  stash [-u] → switch → stash pop\npush 가 (fetch first) 로 거절됐다  log HEAD..origin/x (무엇이 들어오나)  pull --rebase → push\npull 뒤 충돌이 났다               status 의 UU 파일        표시 정리 → add → (merge: commit / rebase: --continue)\n병합된 PR 브랜치가 -d 로 안 지워진다  squash/rebase 로 병합됐나  -D (내용은 base 에 있음)\norigin/feature 가 남아 있다       원격에 실제로 있나        fetch --prune\n브랜치를 잘못 지웠다               reflog 에 마지막 커밋이 있나  branch <name> <sha>\n--hard 로 커밋을 날렸다            reflog                   reset --hard HEAD@{n} 또는 branch\n커밋하지 않은 수정을 --hard 로 날렸다  (reflog 에 없음)          에디터 로컬 히스토리 외엔 복구 불가\n마지막 커밋 메시지만 고치고 싶다 (push 전)  cherry -v (push 됐나)     commit --amend\n중간 커밋들을 합치거나 지우고 싶다 (push 전)  log --oneline            rebase -i HEAD~n\n이미 push 한 커밋을 취소해야 한다   -                        revert <sha> (병합이면 -m 1)\n이게 어느 커밋에서 깨졌는지 모른다  -                        bisect start <bad> <good> → good/bad → reset",
         codeLang: "text",
       },
       {
         label: "문제의 구조: 당황하는 순간의 세 질문",
-        body: "모든 상황은 세 질문으로 좁혀집니다. (1) 지금 이름표(HEAD·브랜치·origin/*)가 어디에 있나 — status · log --graph --all. (2) 되돌릴 대상이 작업 폴더인가, Index 인가, 커밋인가 — 세 트리 중 어디. (3) 그 커밋이 공유됐나(push 됐나) — cherry -v · branch -vv. (1) 이 서면 명령의 대상이 정해지고, (2) 로 restore/reset/revert 가 갈리고, (3) 으로 reset·amend·rebase(로컬) 와 revert(공유) 가 갈립니다. 그리고 커밋된 것은 reflog 거리 안에 있다는 사실이 당황을 줄입니다 — 위험한 것은 작업 폴더를 덮어쓰는 명령뿐이니, 모르겠으면 먼저 커밋(또는 stash)하고 생각하면 됩니다.",
+        body: "모든 상황은 세 질문으로 좁혀집니다.\n(1) 지금 이름표(HEAD·브랜치·origin/*)가 어디에 있을까요? status · log --graph --all 로 봅니다.\n(2) 되돌릴 대상이 작업 폴더일까요, Index 일까요, 커밋일까요? 세 트리 중 어디인지 묻는 질문입니다.\n(3) 그 커밋이 공유됐을까요(push 됐을까요)? cherry -v · branch -vv 로 봅니다.\n(1) 이 서면 명령의 대상이 정해집니다. (2) 로 restore/reset/revert 가 갈립니다. (3) 으로 reset·amend·rebase(로컬) 와 revert(공유) 가 갈립니다. 그리고 커밋된 것은 reflog 거리 안에 있다는 사실이 당황을 줄입니다. 위험한 것은 작업 폴더를 덮어쓰는 명령뿐입니다. 모르겠으면 먼저 커밋(또는 stash)하고 생각하면 됩니다.",
         code: "① 이름표가 어디?      git status · git log --oneline --graph --all\n        │\n② 무엇을 되돌리나?    작업 폴더 → restore      Index → restore --staged      커밋 → ③\n        │\n③ 공유됐나?           아니오 → reset / amend / rebase -i      예 → revert (병합은 -m 1)\n\n커밋된 것은 reflog 안에 있다 → 당황하지 말고 reflog 부터\n커밋 안 된 것을 덮어쓰는 명령(restore · reset --hard · checkout <paths> · clean)만 조심",
         codeLang: "text",
       },
       {
         label: "확인 질문",
-        body: "1) `git stash` 가 기본으로 담지 않는 것은 무엇이고 어떤 옵션이 필요한가요? 2) 엉뚱한 브랜치에 커밋했을 때 push 전과 후의 처방이 어떻게 다른가요? 3) push 가 'fetch first' 로 거절됐을 때 먼저 볼 것과 그다음 명령은? 4) '커밋된 것은 거의 항상 돌아온다' 가 적용되지 않는 유일한 종류의 손실은?",
+        body: "1) `git stash` 가 기본으로 담지 않는 것은 무엇이고 어떤 옵션이 필요한가요?\n2) 엉뚱한 브랜치에 커밋했을 때 push 전과 후의 처방이 어떻게 다른가요?\n3) push 가 'fetch first' 로 거절됐을 때 먼저 볼 것과 그다음 명령은?\n4) '커밋된 것은 거의 항상 돌아온다' 가 적용되지 않는 유일한 종류의 손실은?",
       },
     ],
     sources: [

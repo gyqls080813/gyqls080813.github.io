@@ -25,7 +25,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "문서가 갈라 놓은 아홉 갈래",
-        body: "시작하기, 핸드북, 참고서, 모듈 참고서, 튜토리얼, 릴리스 노트, 선언 파일, JavaScript 지원, 프로젝트 설정. 배우는 곳(핸드북)과 찾아보는 곳(참고서)이 나뉘어 있고, 남의 코드를 다루는 일(선언 파일·JavaScript 지원)과 빌드를 다루는 일(프로젝트 설정)이 또 따로입니다.",
+        body: "아홉 갈래는 시작하기, 핸드북, 참고서, 모듈 참고서, 튜토리얼, 릴리스 노트, 선언 파일, JavaScript 지원, 프로젝트 설정입니다. 배우는 곳(핸드북)과 찾아보는 곳(참고서)이 나뉘어 있습니다. 남의 코드를 다루는 일(선언 파일·JavaScript 지원)과 빌드를 다루는 일(프로젝트 설정)이 또 따로입니다.",
       },
       {
         label: "타입은 런타임에 없다",
@@ -33,11 +33,11 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 부딪힌 곳",
-        body: "백엔드 스키마가 바뀌었는데 화면은 흰 화면 하나로만 그 사실을 알렸던 적이 있습니다. 타입은 그대로였고 코드도 컴파일됐지만, 오는 데이터가 달랐던 거죠. 그 뒤로 경계에서는 타입 대신 검증을 두고, 안쪽에서는 그 결과로 좁혀진 타입을 쓰는 쪽으로 정리했습니다.",
+        body: "백엔드 스키마가 바뀌었는데 화면은 흰 화면 하나로만 그 사실을 알렸던 적이 있습니다. 타입은 그대로였고 코드도 컴파일됐지만, 오는 데이터가 달랐습니다. 그 뒤로 경계에서는 타입 대신 검증을 두고, 안쪽에서는 그 결과로 좁혀진 타입을 쓰는 쪽으로 정리했습니다.",
       },
       {
         label: "실제로 돌려 보면: 지금의 tsc 는 7.0 이고, 기본값이 바뀌었다",
-        body: "이 허브의 근거는 2026년 11월 기준 `npm i typescript`로 받은 7.0.2입니다. 7.0은 컴파일러를 Go로 옮긴 네이티브 빌드로, 문서의 발표 글은 전체 빌드가 8~12배 빨라졌다고 적습니다. 타입 검사 규칙은 6.0과 같게 맞췄지만, 6.0에서 '폐기 예고'였던 옵션이 7.0에서는 전부 에러가 됩니다. 실제로 `--target es5`, `--module amd`, `--moduleResolution classic`, `--outFile`, `--baseUrl`, `--downlevelIteration`, `--esModuleInterop false`를 넘기면 모두 \"Option '…' has been removed. Please remove it from your configuration.\"로 멈췁니다. 기본값도 바뀌었습니다. `strict`는 true, `module`은 esnext, `target`은 그해의 ES 버전(지금 es2025), `types`는 빈 배열, `rootDir`는 tsconfig 디렉터리. 아래 시트의 에러 문구는 전부 이 버전에서 받은 것입니다.",
+        body: "이 허브의 근거는 2026년 11월 기준 `npm i typescript`로 받은 7.0.2입니다. 7.0은 컴파일러를 Go로 옮긴 네이티브 빌드로, 문서의 발표 글은 전체 빌드가 8~12배 빨라졌다고 적습니다. 타입 검사 규칙은 6.0과 같게 맞췄지만, 6.0에서 '폐기 예고'였던 옵션이 7.0에서는 전부 에러가 됩니다. 실제로 `--target es5`, `--module amd`, `--moduleResolution classic`, `--outFile`, `--baseUrl`, `--downlevelIteration`, `--esModuleInterop false`를 넘기면 모두 \"Option '…' has been removed. Please remove it from your configuration.\"로 멈춥니다. 기본값도 바뀌었습니다. `strict`는 true, `module`은 esnext, `target`은 그해의 ES 버전(지금 es2025), `types`는 빈 배열, `rootDir`는 tsconfig 디렉터리입니다. 아래 시트의 에러 문구는 전부 이 버전에서 받은 것입니다.",
         code: "$ npx tsc --version\nVersion 7.0.2\n\n$ npx tsc --noEmit --target es5 a.ts\nerror TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.\n\n$ npx tsc --noEmit --baseUrl . a.ts\nerror TS5102: Option 'baseUrl' has been removed. Please remove it from your configuration.\n\n$ npx tsc --help --all | grep -A1 checkers\n--checkers\nSet the number of checkers per project.   # 7.0 — 병렬 검사기 수",
         codeLang: "text",
         terms: [
@@ -63,7 +63,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 타입 에러가 있는 파일을 Vite로 빌드하면 빌드가 실패할까요, 성공할까요? 왜 그럴까요? 2) 7.0에서 `--target es5`가 에러인 이유를 '폐기 → 제거' 두 단계로 설명해 보세요. 3) 서버에서 받은 JSON에 `User` 타입을 적어 두면 런타임에 무엇이 보장되나요?",
+        body: "1) 타입 에러가 있는 파일을 Vite로 빌드하면 빌드가 실패할까요, 성공할까요? 왜 그럴까요?\n2) 7.0에서 `--target es5`가 에러인 이유를 '폐기 → 제거' 두 단계로 설명해 보세요.\n3) 서버에서 받은 JSON에 `User` 타입을 적어 두면 런타임에 무엇이 보장되나요?",
       },
     ],
     sources: [
@@ -83,7 +83,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "다섯 개의 입구",
-        body: "처음 프로그래밍을 배우는 사람, JavaScript를 아는 사람, Java·C# 배경, 함수형 배경, 그리고 5분 만에 도구부터 만져 보는 길. 배경에 따라 오해하는 지점이 다르다는 전제가 깔려 있습니다.",
+        body: "다섯 입구는 처음 프로그래밍을 배우는 사람, JavaScript를 아는 사람, Java·C# 배경, 함수형 배경, 그리고 5분 만에 도구부터 만져 보는 길입니다. 배경에 따라 오해하는 지점이 다르다는 전제가 깔려 있습니다.",
       },
       {
         label: "OOP 배경을 위한 문이 따로 있는 이유",
@@ -125,8 +125,8 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "문법 오류와 타입 오류는 다른 것이다",
-        body: "`let a = (4`처럼 괄호가 안 닫힌 것은 문법 오류입니다. JavaScript도 잡습니다(실행도 못 하니까). TypeScript가 더하는 것은 타입 오류입니다 — 문법은 맞는데 값의 종류가 맞지 않는 쓰임. 문서가 두 오류를 나눠 보여 주는 이유는, '타입스크립트가 잡아 주는 것'이 무엇인지 정확히 그리기 위해서입니다. 실제로 돌려 보면 둘의 코드 번호도 다릅니다. 문법 오류는 1000번대(`TS1005: ')' expected.`), 타입 오류는 2000번대입니다.",
-        code: "$ npx tsc --noEmit src/basics.ts\nsrc/basics.ts(1,5): error TS2322: Type 'string' is not assignable to type 'number'.\nsrc/basics.ts(3,3): error TS2339: Property 'b' does not exist on type '{ a: number; }'.\nsrc/basics.ts(5,1): error TS2554: Expected 2 arguments, but got 1.\nsrc/basics.ts(12,20): error TS2367: This comparison appears to be unintentional because the types 'string' and 'number' have no overlap.\nsrc/basics.ts(13,25): error TS2551: Property 'lenght' does not exist on type 'number[]'. Did you mean 'length'?",
+        body: "`let a = (4`처럼 괄호가 안 닫힌 것은 문법 오류입니다. 실행도 못 하니 JavaScript도 잡습니다. TypeScript가 더하는 것은 타입 오류입니다. 문법은 맞는데 값의 종류가 맞지 않는 쓰임입니다. 문서가 두 오류를 나눠 보여 주는 이유는 '타입스크립트가 잡아 주는 것'이 무엇인지 정확히 그리기 위해서입니다. 실제로 돌려 보면 둘의 코드 번호도 다릅니다. 문법 오류는 1000번대(`TS1005: ')' expected.`)이고, 타입 오류는 2000번대입니다.",
+        code: "$ npx tsc --noEmit src/basics.ts\nsrc/basics.ts(1,5): error TS2322: Type 'string' is not assignable to type 'number'.\nsrc/basics.ts(3,3): error TS2339: Property 'b' does not exist on type '{ a: number; }'.\nsrc/basics.ts(5,1): error TS2554: Expected 2 arguments, but got 1.\nsrc/basics.ts(12,20): error TS2367: This comparison appears to be unintentional because the types\n'string' and 'number' have no overlap.\nsrc/basics.ts(13,25): error TS2551: Property 'lenght' does not exist on type 'number[]'. Did you\nmean 'length'?",
         codeLang: "text",
         terms: [
           {
@@ -157,7 +157,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `obj.heigth`를 JavaScript로 실행하면 어떻게 되고, TypeScript는 왜 실행 전에 잡을 수 있나요? 2) `TS1005`와 `TS2322`는 어느 쪽이 문법 오류일까요? 3) `const u: User = await res.json()`이라고 적으면 런타임에 `u.name`이 문자열임이 보장되나요?",
+        body: "1) `obj.heigth`를 JavaScript로 실행하면 어떻게 되고, TypeScript는 왜 실행 전에 잡을 수 있나요?\n2) `TS1005`와 `TS2322`는 어느 쪽이 문법 오류일까요?\n3) `const u: User = await res.json()`이라고 적으면 런타임에 `u.name`이 문자열임이 보장되나요?",
       },
     ],
     sources: [
@@ -181,7 +181,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "interface 와 type: 문서는 interface 를 먼저 권한다",
         body: "객체의 모양에 이름을 붙이는 방법은 둘입니다. 문서의 지침은 짧습니다. 'interface를 선호하라. type은 특정 기능이 필요할 때 쓰라.' 둘의 차이는 핸드북 일상적인 타입의 인터페이스 절에서 자세히 다루고, 여기서는 '객체 모양은 interface, 유니온이나 원시 타입의 별칭은 type'이라는 감만 잡으면 됩니다. 객체 리터럴을 넘길 때 모양에 없는 속성이 있으면 바로 걸립니다.",
-        code: "interface User { name: string; id: number; }\nconst user: User = { username: \"Monkey\", id: 0 };\n//                   ~~~~~~~~\n// Object literal may only specify known properties, and 'username' does not exist in type 'User'. (TS2353)\n\n// 클래스도 모양으로 맞춰진다 — implements 없이도 User 자리에 들어간다\nclass UserAccount { name: string; id: number; constructor(name: string, id: number) { this.name = name; this.id = id; } }\nconst u: User = new UserAccount(\"Murphy\", 1);",
+        code: "interface User { name: string; id: number; }\nconst user: User = { username: \"Monkey\", id: 0 };\n//                   ~~~~~~~~\n// Object literal may only specify known properties, and 'username' does not exist in type 'User'.\n  (TS2353)\n\n// 클래스도 모양으로 맞춰진다 — implements 없이도 User 자리에 들어간다\nclass UserAccount { name: string; id: number; constructor(name: string, id: number) { this.name = name;\n  this.id = id; } }\nconst u: User = new UserAccount(\"Murphy\", 1);",
       },
       {
         label: "원시 타입 일곱 개와 TS 가 더한 네 개",
@@ -209,7 +209,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `const s = \"a\"`와 `let s = \"a\"`의 추론 타입은 어떻게 다른가요? 2) `logPoint({ x: 1, y: 2, z: 3 })`는 되는데 `const p: Point = { x: 1, y: 2, z: 3 }`은 왜 에러일까요(힌트: 객체 리터럴 초과 속성 검사)? 3) 문서가 interface를 먼저 권하는 문장을 그대로 적어 보세요.",
+        body: "1) `const s = \"a\"`와 `let s = \"a\"`의 추론 타입은 어떻게 다른가요?\n2) `logPoint({ x: 1, y: 2, z: 3 })`는 되는데 `const p: Point = { x: 1, y: 2, z: 3 }`은 왜 에러일까요(힌트: 객체 리터럴 초과 속성 검사)?\n3) 문서가 interface를 먼저 권하는 문장을 그대로 적어 보세요.",
       },
     ],
     sources: [
@@ -262,7 +262,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `fn({ k: 10 })`이 `Empty`를 받는 함수에 통과하는 이유를 한 문장으로 적어 보세요. 2) 인터페이스에 `instanceof`를 쓸 수 없는 이유는? 3) `UserId`와 `OrderId`를 둘 다 string으로 두면 서로 섞여도 에러가 안 납니다. 어떻게 구분하나요?",
+        body: "1) `fn({ k: 10 })`이 `Empty`를 받는 함수에 통과하는 이유를 한 문장으로 적어 보세요.\n2) 인터페이스에 `instanceof`를 쓸 수 없는 이유는?\n3) `UserId`와 `OrderId`를 둘 다 string으로 두면 서로 섞여도 에러가 안 납니다. 어떻게 구분하나요?",
       },
     ],
     sources: [
@@ -307,11 +307,11 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "다음 입구",
-        body: "이 문이 가리키는 핸드북의 자리는 셋입니다. 좁히기 장(태그를 직접 다는 판별 유니온과 never 소진 검사), 일상적인 타입의 리터럴 타입 절(넓힘과 as const), 타입 조작(조건부·매핑된 타입 — 함수형의 타입 수준 계산과 가장 가까운 곳).",
+        body: "이 문이 가리키는 핸드북의 자리는 셋입니다.\n좁히기 장은 태그를 직접 다는 판별 유니온과 never 소진 검사를 다룹니다.\n일상적인 타입의 리터럴 타입 절은 넓힘과 as const를 다룹니다.\n타입 조작은 조건부·매핑된 타입을 다루며, 함수형의 타입 수준 계산과 가장 가까운 곳입니다.",
       },
       {
         label: "확인 질문",
-        body: "1) `let dir = \"left\"`를 `\"left\" | \"right\"` 자리에 넘기면 왜 에러가 나고, 어떻게 고치나요? 2) `{ a: number } & { a: string }`의 a는 어떤 타입이 되나요? 3) TypeScript에서 Functor 인터페이스를 `F<_>`로 일반화할 수 없는 이유를 한 문장으로.",
+        body: "1) `let dir = \"left\"`를 `\"left\" | \"right\"` 자리에 넘기면 왜 에러가 나고, 어떻게 고치나요?\n2) `{ a: number } & { a: string }`의 a는 어떤 타입이 되나요?\n3) TypeScript에서 Functor 인터페이스를 `F<_>`로 일반화할 수 없는 이유를 한 문장으로.",
       },
     ],
     sources: [
@@ -331,7 +331,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "설치와 첫 컴파일",
         body: "전역 설치보다 프로젝트에 개발 의존성으로 두는 쪽이 요즘 관례입니다(`npm i -D typescript`, 실행은 `npx tsc`). 문서의 greeter 예제는 함수 매개변수에 `: string` 하나를 붙이고, 숫자 배열을 넘겨 에러를 받아 보는 것으로 끝납니다. 에러 문구는 \"Argument of type 'number[]' is not assignable to parameter of type 'string'.\"입니다. 실제로 7.0.2에서 돌려 보면 같은 코드로 같은 문구가 나오고, 파일 위치 `(행,열)`과 `error TS2345`가 앞에 붙습니다.",
-        code: "$ npm i -D typescript\n$ npx tsc --version\nVersion 7.0.2\n\n$ cat greeter.ts\nfunction greeter(person: string) { return \"Hello, \" + person; }\nlet user = [0, 1, 2];\ndocument.body.textContent = greeter(user);\n\n$ npx tsc greeter.ts\ngreeter.ts(3,37): error TS2345: Argument of type 'number[]' is not assignable to parameter of type 'string'.\n\n$ ls\ngreeter.js  greeter.ts     # ← 에러가 났는데도 .js 는 나왔다",
+        code: "$ npm i -D typescript\n$ npx tsc --version\nVersion 7.0.2\n\n$ cat greeter.ts\nfunction greeter(person: string) { return \"Hello, \" + person; }\nlet user = [0, 1, 2];\ndocument.body.textContent = greeter(user);\n\n$ npx tsc greeter.ts\ngreeter.ts(3,37): error TS2345: Argument of type 'number[]' is not assignable to parameter of type\n  'string'.\n\n$ ls\ngreeter.js  greeter.ts     # ← 에러가 났는데도 .js 는 나왔다",
         codeLang: "bash",
       },
       {
@@ -357,7 +357,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `tsc greeter.ts`에서 에러가 났는데 greeter.js가 생긴 이유는? 막으려면 어떤 플래그를 쓰나요? 2) 에디터는 에러를 보이는데 Vite 빌드는 성공합니다. 무엇이 빠졌나요? 3) `constructor(public x: number) {}`가 만들어 내는 JavaScript를 적어 보세요.",
+        body: "1) `tsc greeter.ts`에서 에러가 났는데 greeter.js가 생긴 이유는? 막으려면 어떤 플래그를 쓰나요?\n2) 에디터는 에러를 보이는데 Vite 빌드는 성공합니다. 무엇이 빠졌나요?\n3) `constructor(public x: number) {}`가 만들어 내는 JavaScript를 적어 보세요.",
       },
     ],
     sources: [
@@ -400,7 +400,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "실제로 돌려 보면: 여덟 장이 각각 어떤 에러를 내는가",
         body: "장마다 대표 에러 하나씩을 tsc 7.0.2에서 받아 두면 지도가 됩니다. 기초는 TS2345(인자 타입), 일상적인 타입은 TS2353(객체 리터럴 초과 속성), 좁히기는 TS18047('possibly null'), 함수는 TS2769(맞는 오버로드 없음), 객체는 TS2540(readonly 대입), 타입 조작은 TS2536(인덱스 불가), 클래스는 TS2564(초기화 안 됨), 모듈은 TS2835(확장자 필요). 이 번호들이 아래 시트의 '실제로 돌려 보면'에 다시 나옵니다.",
-        code: "기초        TS2345  Argument of type 'string' is not assignable to parameter of type 'Date'.\n일상        TS2353  Object literal may only specify known properties, and 'z' does not exist in type 'Pt'.\n좁히기      TS18047 'el' is possibly 'null'.\n함수        TS2769  No overload matches this call.\n객체        TS2540  Cannot assign to 'id' because it is a read-only property.\n타입 조작   TS2536  Type '\"message\"' cannot be used to index type 'T'.\n클래스      TS2564  Property 'x' has no initializer and is not definitely assigned in the constructor.\n모듈        TS2835  Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'.",
+        code: "기초  TS2345  Argument of type 'string' is not assignable to parameter of type 'Date'.\n일상  TS2353  Object literal may only specify known properties, and 'z' does not exist in type 'Pt'.\n좁히기  TS18047 'el' is possibly 'null'.\n함수  TS2769  No overload matches this call.\n객체  TS2540  Cannot assign to 'id' because it is a read-only property.\n타입 조작  TS2536  Type '\"message\"' cannot be used to index type 'T'.\n클래스  TS2564  Property 'x' has no initializer and is not definitely assigned in the constructor.\n모듈  TS2835  Relative import paths need explicit file extensions in ECMAScript imports when\n             '--moduleResolution' is 'node16' or 'nodenext'.",
         codeLang: "text",
       },
       {
@@ -424,13 +424,13 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "예외가 아닌 실패까지 잡는다",
-        body: "JavaScript에서 `message()`를 문자열에 부르면 실행 중 TypeError가 납니다. 이건 '예외'라 실행하면 어차피 알게 됩니다. 문서가 더 강조하는 것은 '예외가 아닌 실패(non-exception failures)'입니다. 없는 속성을 읽으면 JavaScript는 에러 없이 `undefined`를 돌려주고, 그 undefined가 한참 뒤 다른 곳에서 터집니다. TypeScript는 이것도 그 자리에서 에러로 봅니다. \"Property 'location' does not exist on type '{ name: string; age: number; }'.\" 같은 식으로요. 오타(`toLocaleLowercase`), 호출하지 않은 함수와의 비교(`Math.random < 0.5`), 겹치지 않는 비교(`\"a\" === \"b\"`)도 같은 종류입니다.",
+        body: "JavaScript에서 `message()`를 문자열에 부르면 실행 중 TypeError가 납니다. 이건 '예외'라 실행하면 어차피 알게 됩니다. 문서가 더 강조하는 것은 '예외가 아닌 실패(non-exception failures)'입니다. 없는 속성을 읽으면 JavaScript는 에러 없이 `undefined`를 돌려주고, 그 undefined가 한참 뒤 다른 곳에서 터집니다. TypeScript는 이것도 그 자리에서 에러로 봅니다. \"Property 'location' does not exist on type '{ name: string; age: number; }'.\" 같은 식입니다. 오타(`toLocaleLowercase`), 호출하지 않은 함수와의 비교(`Math.random < 0.5`), 겹치지 않는 비교(`\"a\" === \"b\"`)도 같은 종류입니다.",
         code: 'const message = "hello!";\nmessage();\n// This expression is not callable.\n//   Type \'String\' has no call signatures.                               (TS2349)\n\nconst user = { name: "Daniel", age: 26 };\nuser.location;   // JS 는 undefined — 예외가 아닌 실패\n// Property \'location\' does not exist on type \'{ name: string; age: number; }\'. (TS2339)\n\nfunction flipCoin() { return Math.random < 0.5; }\n// Operator \'<\' cannot be applied to types \'() => number\' and \'number\'.      (TS2365)',
       },
       {
         label: "실제로 돌려 보면: tsc, 에러와 emit, noEmitOnError",
         body: "`tsc hello.ts`를 돌리면 에러가 없을 때는 아무것도 출력하지 않고 hello.js를 씁니다. 에러가 있으면 에러를 출력하고 — 그래도 hello.js를 씁니다. 문서의 문장은 'TypeScript는 당신이 TypeScript보다 더 잘 안다는 전제에서 방해하지 않는다'입니다. 막고 싶으면 `--noEmitOnError`. 실제로 7.0.2에서 인자 하나가 빠진 호출은 \"Expected 2 arguments, but got 1.\"(TS2554)로 보고되고, `--noEmitOnError`를 켠 쪽은 출력 디렉터리가 만들어지지 않았습니다.",
-        code: "$ npx tsc --noEmit src/basics.ts\nsrc/basics.ts(5,1): error TS2554: Expected 2 arguments, but got 1.\nsrc/basics.ts(6,6): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\nsrc/basics.ts(7,12): error TS7006: Parameter 'x' implicitly has an 'any' type.\nsrc/basics.ts(9,1): error TS18048: 'maybe' is possibly 'undefined'.\nsrc/basics.ts(11,1): error TS18047: 'el' is possibly 'null'.\n\n# emit 은 그대로, noEmitOnError 를 켜면 멈춘다\n$ npx tsc --noEmitOnError --outDir out2 src/basics.ts; ls out2\nls: out2: No such file or directory",
+        code: "$ npx tsc --noEmit src/basics.ts\nsrc/basics.ts(5,1): error TS2554: Expected 2 arguments, but got 1.\nsrc/basics.ts(6,6): error TS2345: Argument of type 'number' is not assignable to parameter of type\n  'string'.\nsrc/basics.ts(7,12): error TS7006: Parameter 'x' implicitly has an 'any' type.\nsrc/basics.ts(9,1): error TS18048: 'maybe' is possibly 'undefined'.\nsrc/basics.ts(11,1): error TS18047: 'el' is possibly 'null'.\n\n# emit 은 그대로, noEmitOnError 를 켜면 멈춘다\n$ npx tsc --noEmitOnError --outDir out2 src/basics.ts; ls out2\nls: out2: No such file or directory",
         codeLang: "bash",
       },
       {
@@ -446,7 +446,7 @@ export const typescriptTheories: Theory[] = [
         terms: [
           {
             term: "다운레벨링 (downleveling)",
-            body: "새 ECMAScript 문법을 오래된 런타임이 읽을 수 있는 옛 문법으로 바꿔 쓰는 일. 문법만 바꾸고(예: async → generator 기반 코드) 런타임 API(Promise, Map)는 채워 주지 않습니다 — 그건 폴리필의 일입니다.",
+            body: "새 ECMAScript 문법을 오래된 런타임이 읽을 수 있는 옛 문법으로 바꿔 쓰는 일입니다. 문법만 바꾸고(예: async → generator 기반 코드) 런타임 API(Promise, Map)는 채워 주지 않습니다. 그건 폴리필의 일입니다.",
           },
         ],
       },
@@ -466,7 +466,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `user.location`은 JavaScript에서 예외가 아닙니다. 그런데 TypeScript가 에러로 보는 이유는? 2) `greet(\"Maddison\", Date())`가 에러인 이유는 무엇이고 어떻게 고치나요? 3) 6.0 이후 프로젝트에서 `'x' is possibly 'undefined'`가 전혀 안 뜬다면 tsconfig에서 무엇을 의심해야 할까요?",
+        body: "1) `user.location`은 JavaScript에서 예외가 아닙니다. 그런데 TypeScript가 에러로 보는 이유는?\n2) `greet(\"Maddison\", Date())`가 에러인 이유는 무엇이고 어떻게 고치나요?\n3) 6.0 이후 프로젝트에서 `'x' is possibly 'undefined'`가 전혀 안 뜬다면 tsconfig에서 무엇을 의심해야 할까요?",
       },
     ],
     sources: [
@@ -485,12 +485,12 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "열네 개의 대제목",
-        body: "원시 타입, 배열, any, 변수의 타입 어노테이션, 함수, 객체 타입, 유니온 타입, 타입 별칭, 인터페이스, 타입 단언, 리터럴 타입, null과 undefined, 열거형, 덜 쓰는 원시 타입.\n앞의 다섯은 타입 하나를 적는 법이고, 유니온 타입부터는 타입을 조합하고 이름을 붙이는 법입니다.",
+        body: "대제목은 원시 타입, 배열, any, 변수의 타입 어노테이션, 함수, 객체 타입, 유니온 타입, 타입 별칭, 인터페이스, 타입 단언, 리터럴 타입, null과 undefined, 열거형, 덜 쓰는 원시 타입입니다.\n앞의 다섯은 타입 하나를 적는 법이고, 유니온 타입부터는 타입을 조합하고 이름을 붙이는 법입니다.",
       },
       {
         label: "실제로 돌려 보면: 열네 절의 대표 에러",
         body: "절마다 가장 자주 만나는 에러를 tsc 7.0.2로 받아 두었습니다. 아래 시트들의 코드 조각은 이 표의 한 줄씩을 자세히 풉니다.",
-        code: "원시 타입        String 을 string 자리에     TS2345  'String' is a primitive wrapper… (문서) / Argument of type 'String'…\n배열             arr.lenght                 TS2551  Property 'lenght' does not exist on type 'number[]'. Did you mean 'length'?\nany              function g(x)              TS7006  Parameter 'x' implicitly has an 'any' type.\n어노테이션       let n: number = \"hello\"    TS2322  Type 'string' is not assignable to type 'number'.\n함수             f(1) (인자 부족)            TS2554  Expected 2 arguments, but got 1.\n객체 타입        obj.last (선택 속성)        TS18048 'obj.last' is possibly 'undefined'.\n유니온           id.toUpperCase()           TS2339  Property 'toUpperCase' does not exist on type 'string | number'.\n타입 별칭 / 인터페이스  중복 인터페이스 vs 별칭  TS2300  Duplicate identifier 'Alias'.\n타입 단언        \"x\" as number              TS2352  Conversion of type 'string' to type 'number' may be a mistake…\n리터럴           go(c1.kind)                TS2345  Argument of type 'string' is not assignable to parameter of type '\"left\" | \"right\"'.\nnull/undefined   el.focus()                 TS18047 'el' is possibly 'null'.\n열거형           const d: Dir = 5           TS2322  Type '5' is not assignable to type 'Dir'.\n덜 쓰는 원시     unique symbol 을 let 에     TS1332  A variable whose type is a 'unique symbol' type must be 'const'.",
+        code: "원시 타입  String 을 string 자리에  TS2345  'String' is a primitive wrapper… (문서) / Argument of\n                                        type 'String'…\n배열   arr.lenght       TS2551  Property 'lenght' does not exist on type 'number[]'. Did you mean 'length'?\nany    function g(x)    TS7006  Parameter 'x' implicitly has an 'any' type.\n어노테이션  let n: number = \"hello\"  TS2322  Type 'string' is not assignable to type 'number'.\n함수   f(1) (인자 부족)  TS2554  Expected 2 arguments, but got 1.\n객체 타입  obj.last (선택 속성)  TS18048 'obj.last' is possibly 'undefined'.\n유니온  id.toUpperCase()  TS2339  Property 'toUpperCase' does not exist on type 'string | number'.\n타입 별칭 / 인터페이스  중복 인터페이스 vs 별칭  TS2300  Duplicate identifier 'Alias'.\n타입 단언  \"x\" as number    TS2352  Conversion of type 'string' to type 'number' may be a mistake…\n리터럴  go(c1.kind)      TS2345  Argument of type 'string' is not assignable to parameter of type '\"left\"\n                               | \"right\"'.\nnull/undefined  el.focus()       TS18047 'el' is possibly 'null'.\n열거형  const d: Dir = 5  TS2322  Type '5' is not assignable to type 'Dir'.\n덜 쓰는 원시  unique symbol 을 let 에  TS1332  A variable whose type is a 'unique symbol' type must\n                                           be 'const'.",
         codeLang: "text",
       },
       {
@@ -512,7 +512,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "자바스크립트 원시 값마다 짝이 되는 타입이 있다",
-        body: "자바스크립트에서 가장 많이 쓰는 원시 값은 문자열, 숫자, 불리언 세 가지입니다.\n타입스크립트에는 각각에 짝이 되는 타입이 있습니다. 타입 이름은 자바스크립트에서 값에 `typeof`를 썼을 때 나오는 이름과 동일합니다!\n(여기서 `typeof`에 대해 이야기를 하는 것이 아니라, 이미 알고 있는 이름을 그대로 쓴다는 의미에요.)\n\n- `string`: `\"Hello, world\"` 같은 문자열 값\n- `number`: `42` 같은 숫자 값\n- `boolean`: `true`와 `false` 두 값",
+        body: "자바스크립트에서 가장 많이 쓰는 원시 값은 문자열, 숫자, 불리언 세 가지입니다.\n타입스크립트에는 각각에 짝이 되는 타입이 있습니다. 타입 이름은 자바스크립트에서 값에 `typeof`를 썼을 때 나오는 이름과 동일합니다!\n(여기서 `typeof`에 대해 이야기를 하는 것이 아니라, 이미 알고 있는 이름을 그대로 쓴다는 의미입니다.)\n\n- `string`: `\"Hello, world\"` 같은 문자열 값\n- `number`: `42` 같은 숫자 값\n- `boolean`: `true`와 `false` 두 값",
         terms: [
           {
             term: "number",
@@ -523,7 +523,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "대문자 String, Number, Boolean은 래퍼 객체의 타입이다",
-        body: "대문자 `String`, `Number`, `Boolean`도 문법상 쓸 수 있지만, 코드에 나올 일이 거의 없는 특별한 내장 타입을 가리킵니다. 원시 값이 아니라 `new String(\"a\")` 같은 래퍼 객체의 타입이에요. 래퍼 객체는 `typeof`가 `\"object\"`이고, 같은 글자여도 `===`로 같지 않으며, `new Boolean(false)`도 객체라서 참이 됩니다. 이런 이유로 소문자 `string`을 요구하는 자리에 넘길 수도 없습니다. 그래서 타입은 항상 소문자로 씁니다. 반면 `new` 없이 `String(123)`처럼 함수로 부르는 것은 원시 값으로 바꾸는 형 변환이라 흔하게 씁니다.",
+        body: "대문자 `String`, `Number`, `Boolean`도 문법상 쓸 수 있지만, 코드에 나올 일이 거의 없는 특별한 내장 타입을 가리킵니다. 원시 값이 아니라 `new String(\"a\")` 같은 래퍼 객체의 타입입니다. 래퍼 객체는 `typeof`가 `\"object\"`이고, 같은 글자여도 `===`로 같지 않으며, `new Boolean(false)`도 객체라서 참이 됩니다. 이런 이유로 소문자 `string`을 요구하는 자리에 넘길 수도 없습니다. 그래서 타입은 항상 소문자로 씁니다. 반면 `new` 없이 `String(123)`처럼 함수로 부르는 것은 원시 값으로 바꾸는 형 변환이라 흔하게 씁니다.",
         terms: [
           {
             term: "래퍼 객체 (wrapper object)",
@@ -581,7 +581,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "any는 그 값의 타입 검사를 끈다",
-        body: "`any`는 특정 값 때문에 타입 검사 에러가 나지 않게 할 때 쓰는 타입입니다.\n값의 타입이 `any`이면\n1. 아무 속성에나 접근하고,\n2. 함수처럼 호출하고,\n3. 아무 타입과 서로 대입하는 등\n문법만 맞으면 거의 모든 것을 할 수 있습니다. 이때 꺼낸 속성도 다시 `any`가 되어, 검사가 꺼진 상태가 꺼내 쓰는 곳으로 계속 번집니다.\n단순한 코드 한 줄을 위해 긴 타입을 적어야 하는 상황이라면, `any` 타입은 상당히 유용합니다. 하지만 타입스크립트보다 내가 상황을 더 잘 알아 타입을 무시해도 돼! 라는 의미입니다. 만약 틀린 코드에 `any` 를 사용했다면, 컴파일은 통과하고 런타임 단계에서 문제가 발생합니다.",
+        body: "`any`는 특정 값 때문에 타입 검사 에러가 나지 않게 할 때 쓰는 타입입니다.\n값의 타입이 `any`이면\n1. 아무 속성에나 접근하고,\n2. 함수처럼 호출하고,\n3. 아무 타입과 서로 대입하는 등\n문법만 맞으면 거의 모든 것을 할 수 있습니다. 이때 꺼낸 속성도 다시 `any`가 되어, 검사가 꺼진 상태가 꺼내 쓰는 곳으로 계속 번집니다.\n단순한 코드 한 줄을 위해 긴 타입을 적어야 하는 상황이라면, `any` 타입은 상당히 유용합니다. 하지만 이는 타입스크립트보다 내가 상황을 더 잘 알아 타입을 무시해도 된다는 의미입니다. 만약 틀린 코드에 `any`를 사용했다면, 컴파일은 통과하고 런타임 단계에서 문제가 발생합니다.",
         code: "let obj: any = { x: 0 };\n// 아래 어느 줄도 컴파일 에러가 나지 않는다.\n// any 를 쓰면 그 뒤의 타입 검사가 모두 꺼지고,\n// 타입스크립트보다 내가 환경을 더 잘 안다고 가정한다.\nobj.foo();             // 없는 메서드 호출 → 실행하면 터진다\nobj();                 // 객체를 함수처럼 호출 → 실행하면 터진다\nobj.bar = 100;         // 없는 속성에 대입\nobj = \"hello\";         // 객체였는데 문자열 대입\nconst n: number = obj; // 문자열인데 number 변수에 대입",
       },
       {
@@ -698,7 +698,7 @@ export const typescriptTheories: Theory[] = [
         notes: [
           {
             title: "원시 타입과 객체 타입은 무엇이 다른가",
-            body: "값이 한 덩어리냐, 속성을 여러 개 가진 묶음이냐의 차이입니다.\n- 원시 타입: `string`, `number`, `boolean`, `bigint`, `symbol`, `null`, `undefined`. 값 하나이고, 이름(`string`)으로 적습니다. 바꿀 수 없고, `===`는 값이 같으면 같습니다. 복사하면 값이 복사됩니다.\n- 객체 타입: 객체, 배열, 함수, `Date` 등 나머지 전부. 속성을 모은 묶음이고, 모양(`{ x: number }`)으로 적습니다. 속성을 바꿀 수 있고, `===`는 같은 객체(주소)여야 같습니다. 복사하면 주소가 복사되어 같은 객체를 함께 가리킵니다.\n그래서 `{ x: 1 } === { x: 1 }`은 모양이 같아도 `false`이고, `const b = a` 뒤에 `b.x`를 바꾸면 `a.x`도 바뀌어 보입니다. 원시 값인데 `\"hi\".toUpperCase()`처럼 메서드를 쓸 수 있는 건 1절의 래퍼 객체로 잠깐 감싸기 때문입니다. 배열(`number[]`)과 함수도 자주 쓰여서 전용 표기가 있을 뿐, 넓게 보면 객체 타입입니다.",
+            body: "값이 한 덩어리냐, 속성을 여러 개 가진 묶음이냐의 차이입니다.\n- 원시 타입: `string`, `number`, `boolean`, `bigint`, `symbol`, `null`, `undefined`가 여기 속합니다. 값 하나이고, 이름(`string`)으로 적습니다. 바꿀 수 없고, `===`는 값이 같으면 같습니다. 복사하면 값이 복사됩니다.\n- 객체 타입: 객체, 배열, 함수, `Date` 등 나머지 전부입니다. 속성을 모은 묶음이고, 모양(`{ x: number }`)으로 적습니다. 속성을 바꿀 수 있고, `===`는 같은 객체(주소)여야 같습니다. 복사하면 주소가 복사되어 같은 객체를 함께 가리킵니다.\n그래서 `{ x: 1 } === { x: 1 }`은 모양이 같아도 `false`이고, `const b = a` 뒤에 `b.x`를 바꾸면 `a.x`도 바뀌어 보입니다. 원시 값인데 `\"hi\".toUpperCase()`처럼 메서드를 쓸 수 있는 것은 1절의 래퍼 객체로 잠깐 감싸기 때문입니다. 배열(`number[]`)과 함수도 자주 쓰여서 전용 표기가 있을 뿐, 넓게 보면 객체 타입입니다.",
           },
         ],
       },
@@ -786,7 +786,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "타입 별칭은 타입에 붙이는 이름이다",
-        body: "지금까지는 객체 타입과 유니온 타입을 타입 어노테이션에 직접 적어 썼습니다. 편하긴 하지만, 같은 타입을 여러 곳에서 여러번 사용하는 경우가 있습니다. 같은 모양을 여러 곳에 적어 두면, 모양이 바뀔 때 모든 곳을 고쳐야 하고 하나라도 빠뜨리면 서로 어긋나는 문제가 생깁니다.\n타입 별칭은 말 그대로 어떤 타입에든 붙이는 이름입니다. `type 이름 = 타입;` 모양으로, 변수에 값을 담는 것처럼 타입에 이름을 붙여 둡니다. 아래 `printCoord(pt: Point)`는 6절의 `printCoord(pt: { x: number; y: number })`와 동일한 뜻이고, 긴 모양 대신 `Point`라는 이름을 썼다는 차이점만 존재합니다. 즉, 이름만 다른 것 뿐이죠!",
+        body: "지금까지는 객체 타입과 유니온 타입을 타입 어노테이션에 직접 적어 썼습니다. 편하긴 하지만, 같은 타입을 여러 곳에서 여러번 사용하는 경우가 있습니다. 같은 모양을 여러 곳에 적어 두면, 모양이 바뀔 때 모든 곳을 고쳐야 하고 하나라도 빠뜨리면 서로 어긋나는 문제가 생깁니다.\n타입 별칭은 말 그대로 어떤 타입에든 붙이는 이름입니다. `type 이름 = 타입;` 모양으로, 변수에 값을 담는 것처럼 타입에 이름을 붙여 둡니다. 아래 `printCoord(pt: Point)`는 6절의 `printCoord(pt: { x: number; y: number })`와 동일한 뜻이고, 긴 모양 대신 `Point`라는 이름을 썼다는 차이점만 존재합니다. 즉, 이름만 다를 뿐입니다.",
         notes: [
           {
             title: "타입 어노테이션과 타입 별칭은 무엇이 다른가",
@@ -802,7 +802,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "별칭은 별칭일 뿐, 새 타입이 아니다",
-        body: "별칭은 별칭일 뿐입니다. 타입 별칭으로 같은 타입의 서로 다른 \"버전\"을 만들 수는 없고, 별칭을 쓰는 것은 원래 타입을 그 자리에 그대로 적은 것과 똑같습니다.\n예를 들어 `type Won = number`와 `type Dollar = number`로 원화와 달러에 이름을 붙여도, 둘 다 결국 `number`의 별명이라 원화 금액을 달러 변수에 넣어도 에러가 나지 않습니다. 이름으로 구분하고 싶어도, 타입스크립트는 이름이 아니라 원래 타입(`number`)을 보기 때문입니다.\n공식 문서에서는 다음과 같은 예시를 들어 줍니다.\n아래 코드는 정리를 거친 문자열만 담고 싶어서 `UserInputSanitizedString`이라는 이름을 붙였어요. 그런데 이 이름도 결국 `string`의 별명일 뿐이라, 정리하지 않은 아무 문자열(`\"new input\"`)을 넣어도 에러가 나지 않습니다. 얼핏 보면 틀린 코드 같지만, 두 타입 모두 같은 `string`을 가리키는 이름이라 문제가 없는 거죠! 결국 이름을 붙여도, 타입스크립트는 이름이 아니라 모양을 봅니다.",
+        body: "별칭은 별칭일 뿐입니다. 타입 별칭으로 같은 타입의 서로 다른 \"버전\"을 만들 수는 없고, 별칭을 쓰는 것은 원래 타입을 그 자리에 그대로 적은 것과 똑같습니다.\n예를 들어 `type Won = number`와 `type Dollar = number`로 원화와 달러에 이름을 붙여도, 둘 다 결국 `number`의 별명이라 원화 금액을 달러 변수에 넣어도 에러가 나지 않습니다. 이름으로 구분하고 싶어도, 타입스크립트는 이름이 아니라 원래 타입(`number`)을 보기 때문입니다.\n공식 문서에서는 다음과 같은 예시를 들어 줍니다.\n아래 코드는 정리를 거친 문자열만 담고 싶어서 `UserInputSanitizedString`이라는 이름을 붙였습니다. 그런데 이 이름도 결국 `string`의 별명일 뿐이라, 정리하지 않은 아무 문자열(`\"new input\"`)을 넣어도 에러가 나지 않습니다. 얼핏 보면 틀린 코드 같지만, 두 타입 모두 같은 `string`을 가리키는 이름이라 문제가 없습니다. 결국 이름을 붙여도, 타입스크립트는 이름이 아니라 모양을 봅니다.",
         code: "// 이름은 다르지만 둘 다 number 의 별명이다\ntype Won = number;\ntype Dollar = number;\n\nconst price: Won = 10000;\nconst usd: Dollar = price; // 원화를 달러 변수에 넣어도 에러가 나지 않는다\n\ntype UserInputSanitizedString = string;\n\nfunction sanitizeInput(str: string): UserInputSanitizedString {\n  return sanitize(str);\n}\n\n// 정리된 입력을 만든다\nlet userInput = sanitizeInput(getInput());\n\n// 그래도 그냥 string 을 다시 넣을 수 있다 — 에러 없음\nuserInput = \"new input\";",
       },
     ],
@@ -820,7 +820,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "인터페이스는 객체 타입에 이름을 붙이는 또 다른 방법이다",
-        body: "인터페이스 선언은 객체 타입에 이름을 붙이는 또 다른 방법입니다. `interface 이름 { ... }` 모양으로 적고, 타입 별칭과 달리 `=`를 쓰지 않습니다.\n아래 `printCoord(pt: Point)`는 앞의 타입 별칭 예제처럼, 이름 없는 객체 타입을 직접 적었을 때와 똑같이 동작합니다. 타입스크립트는 `printCoord`에 넘긴 값의 구조만 봅니다. 기대한 속성(`x`, `y`)을 가지고 있는지만 신경 쓰고, 그 값이 `Point`라는 이름으로 만들어졌는지는 보지 않아요.\n이렇게 이름이 아니라 구조와 할 수 있는 일만 보기 때문에, 타입스크립트를 구조적 타입 시스템이라고 부릅니다.",
+        body: "인터페이스 선언은 객체 타입에 이름을 붙이는 또 다른 방법입니다. `interface 이름 { ... }` 모양으로 적고, 타입 별칭과 달리 `=`를 쓰지 않습니다.\n아래 `printCoord(pt: Point)`는 앞의 타입 별칭 예제처럼, 이름 없는 객체 타입을 직접 적었을 때와 똑같이 동작합니다. 타입스크립트는 `printCoord`에 넘긴 값의 구조만 봅니다. 기대한 속성(`x`, `y`)을 가지고 있는지만 신경 쓰고, 그 값이 `Point`라는 이름으로 만들어졌는지는 보지 않습니다.\n이렇게 이름이 아니라 구조와 할 수 있는 일만 보기 때문에, 타입스크립트를 구조적 타입 시스템이라고 부릅니다.",
         terms: [
           {
             term: "구조적 타입 시스템 (structural type system)",
@@ -830,8 +830,8 @@ export const typescriptTheories: Theory[] = [
         code: "interface Point {\n  x: number;\n  y: number;\n}\n\nfunction printCoord(pt: Point) {\n  console.log(\"The coordinate's x value is \" + pt.x);\n  console.log(\"The coordinate's y value is \" + pt.y);\n}\n\n// Point 로 만든 값이 아니어도, x 와 y 가 있으면 된다\nprintCoord({ x: 100, y: 100 });",
       },
       {
-        label: "타입 별칭과 인터페이스의 차이 (Differences Between Type Aliases and Interfaces)",
-        body: "타입 별칭과 인터페이스는 아주 비슷해서, 대부분의 경우 둘 중 아무거나 골라 써도 됩니다. `interface`의 거의 모든 기능을 `type`으로도 할 수 있어요.\n**가장 큰 차이는 나중에 속성을 더할 수 있느냐입니다.** **인터페이스는 언제든 다시 열어 속성을 추가할 수 있지만, 타입 별칭은 한 번 만들면 다시 열 수 없습니다.**\n- 확장하기: 인터페이스는 `extends`로, 타입 별칭은 `&`(교차 타입)로 다른 타입의 속성을 이어받습니다.\n- 속성 추가하기: 같은 이름의 인터페이스를 한 번 더 선언하면 두 선언이 합쳐지고, 타입 별칭은 만든 뒤에 바꿀 수 없어서 같은 이름으로 한 번 더 선언하면 에러가 납니다. 문서 예제는 브라우저에 이미 있는 `Window` 인터페이스에 `ts` 속성을 더하는 모습입니다.\n문서도 이 개념들은 뒤 장에서 더 자세히 다루니, 지금 전부 이해하지 못해도 괜찮다고 말합니다.",
+        label: "타입 별칭과 인터페이스의 차이",
+        body: "문서 원문의 제목은 'Differences Between Type Aliases and Interfaces'입니다. 타입 별칭과 인터페이스는 아주 비슷해서, 대부분의 경우 둘 중 아무거나 골라 써도 됩니다. `interface`의 거의 모든 기능을 `type`으로도 할 수 있습니다.\n**가장 큰 차이는 나중에 속성을 더할 수 있느냐입니다.** **인터페이스는 언제든 다시 열어 속성을 추가할 수 있지만, 타입 별칭은 한 번 만들면 다시 열 수 없습니다.**\n- 확장하기: 인터페이스는 `extends`로, 타입 별칭은 `&`(교차 타입)로 다른 타입의 속성을 이어받습니다.\n- 속성 추가하기: 같은 이름의 인터페이스를 한 번 더 선언하면 두 선언이 합쳐지고, 타입 별칭은 만든 뒤에 바꿀 수 없어서 같은 이름으로 한 번 더 선언하면 에러가 납니다. 문서 예제는 브라우저에 이미 있는 `Window` 인터페이스에 `ts` 속성을 더하는 모습입니다.\n문서도 이 개념들은 뒤 장에서 더 자세히 다루니, 지금 전부 이해하지 못해도 괜찮다고 말합니다.",
         terms: [
           {
             term: "교차 타입 (&)",
@@ -864,7 +864,7 @@ export const typescriptTheories: Theory[] = [
         notes: [
           {
             title: "단언이 틀려도 실행 중에 알려 주지 않는다",
-            body: "타입 단언은 컴파일할 때 지워지기 때문에, 실행 중에 확인하는 일이 전혀 없습니다. 단언이 틀려도 예외가 나거나 `null`이 되지 않아요. 예를 들어 그 아이디의 요소가 캔버스가 아니었다면, 타입스크립트는 캔버스라고 믿고 넘어가고 실제로 캔버스 메서드를 부르는 순간 실행 에러가 납니다. 그래서 단언은 정말 확실할 때만 씁니다.",
+            body: "타입 단언은 컴파일할 때 지워지기 때문에, 실행 중에 확인하는 일이 전혀 없습니다. 단언이 틀려도 예외가 나거나 `null`이 되지 않습니다. 예를 들어 그 아이디의 요소가 캔버스가 아니었다면, 타입스크립트는 캔버스라고 믿고 넘어가고 실제로 캔버스 메서드를 부르는 순간 실행 에러가 납니다. 그래서 단언은 정말 확실할 때만 씁니다.",
           },
         ],
         code: "// 타입스크립트는 HTMLElement | null 까지만 안다\nconst myCanvas = document.getElementById(\"main_canvas\") as HTMLCanvasElement;\n\n// 꺾쇠 문법 — .tsx 파일에서는 쓸 수 없다\nconst myCanvas2 = <HTMLCanvasElement>document.getElementById(\"main_canvas\");",
@@ -889,21 +889,21 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "특정 값 하나도 타입이 될 수 있다",
-        body: "`string`, `number` 같은 일반 타입 말고도, 타입 자리에 특정 문자열이나 숫자 하나를 적을 수 있습니다. 이걸 리터럴 타입이라고 합니다.\n자바스크립트의 변수 선언을 떠올리면 이해가 쉬워요. `var`와 `let`은 안에 든 값을 바꿀 수 있고 `const`는 바꿀 수 없죠. 타입스크립트는 이 차이를 그대로 타입에 반영합니다. `let`으로 만든 변수는 아무 문자열이나 담을 수 있으니 `string`이 되고, `const`로 만든 변수는 그 문자열 하나만 담을 수 있으니 `\"Hello World\"`라는 리터럴 타입이 됩니다.",
+        body: "`string`, `number` 같은 일반 타입 말고도, 타입 자리에 특정 문자열이나 숫자 하나를 적을 수 있습니다. 이걸 리터럴 타입이라고 합니다.\n자바스크립트의 변수 선언을 떠올리면 이해가 쉽습니다. `var`와 `let`은 안에 든 값을 바꿀 수 있고 `const`는 바꿀 수 없죠. 타입스크립트는 이 차이를 그대로 타입에 반영합니다. `let`으로 만든 변수는 아무 문자열이나 담을 수 있으니 `string`이 되고, `const`로 만든 변수는 그 문자열 하나만 담을 수 있으니 `\"Hello World\"`라는 리터럴 타입이 됩니다.",
         code: "let changingString = \"Hello World\";\nchangingString = \"Olá Mundo\";\n// 어떤 문자열이든 담을 수 있으니 타입은 string\n\nconst constantString = \"Hello World\";\n// 이 문자열 하나만 담을 수 있으니 타입은 \"Hello World\"",
       },
       {
         label: "리터럴 타입은 유니온으로 묶을 때 쓸모가 생긴다",
-        body: "리터럴 타입 하나만으로는 별로 쓸모가 없습니다. 값이 하나뿐인 변수는 쓸 일이 거의 없으니까요.\n하지만 리터럴 타입을 유니온으로 묶으면 훨씬 쓸모 있어집니다. 예를 들어 정해진 값들만 받는 함수를 만들 수 있어요. `\"left\" | \"right\" | \"center\"`로 적어 두면 오타(`\"centre\"`)도 컴파일에서 잡힙니다. 숫자 리터럴도 똑같이 쓸 수 있고, `Options | \"auto\"`처럼 리터럴이 아닌 타입과 섞을 수도 있습니다.\n불리언 리터럴 타입도 있습니다. `true`와 `false` 두 개뿐이고, 사실 `boolean` 타입은 `true | false` 유니온의 별칭입니다.",
+        body: "리터럴 타입 하나만으로는 별로 쓸모가 없습니다. 값이 하나뿐인 변수는 쓸 일이 거의 없으니까요.\n하지만 리터럴 타입을 유니온으로 묶으면 훨씬 쓸모 있어집니다. 예를 들어 정해진 값들만 받는 함수를 만들 수 있습니다. `\"left\" | \"right\" | \"center\"`로 적어 두면 오타(`\"centre\"`)도 컴파일에서 잡힙니다. 숫자 리터럴도 똑같이 쓸 수 있고, `Options | \"auto\"`처럼 리터럴이 아닌 타입과 섞을 수도 있습니다.\n불리언 리터럴 타입도 있습니다. `true`와 `false` 두 개뿐이고, 사실 `boolean` 타입은 `true | false` 유니온의 별칭입니다.",
         code: "let x: \"hello\" = \"hello\";\n// OK\nx = \"hello\";\n// ...\nx = \"howdy\";\n// '\"howdy\"' 형식은 '\"hello\"' 형식에 할당할 수 없습니다.\n\n// 정해진 값만 받는다\nfunction printText(s: string, alignment: \"left\" | \"right\" | \"center\") {}\nprintText(\"Hello, world\", \"left\");\nprintText(\"G'day, mate\", \"centre\");\n// '\"centre\"' 형식의 인수는 '\"left\" | \"right\" | \"center\"' 형식의 매개 변수에 할당될 수 없습니다.\n\n// 숫자 리터럴\nfunction compare(a: string, b: string): -1 | 0 | 1 {\n  return a === b ? 0 : a > b ? 1 : -1;\n}\n\n// 리터럴이 아닌 타입과 섞기\ninterface Options {\n  width: number;\n}\nfunction configure(x: Options | \"auto\") {}\nconfigure({ width: 100 });\nconfigure(\"auto\");\nconfigure(\"automatic\");\n// '\"automatic\"' 형식의 인수는 'Options | \"auto\"' 형식의 매개 변수에 할당될 수 없습니다.",
       },
       {
         label: "리터럴 추론 (Literal Inference)",
-        body: "객체로 변수를 초기화하면, 타입스크립트는 그 객체의 속성 값이 나중에 바뀔 수 있다고 봅니다. 그래서 `{ counter: 0 }`의 `counter`는 `0`이 아니라 `number`가 됩니다. 타입은 읽을 때와 쓸 때 모두에 쓰이기 때문이에요.\n문자열도 마찬가지입니다. 아래 `req.method`는 `\"GET\"`이 아니라 `string`으로 추론됩니다. `req`를 만든 뒤 `handleRequest`를 부르기 전에 누군가 `req.method`에 `\"GUESS\"` 같은 문자열을 넣을 수도 있으니, `\"GET\" | \"POST\"`만 받는 함수에 넘기면 에러가 납니다.\n해결 방법은 두 가지입니다.\n1. 둘 중 한 곳에 타입 단언을 붙여 추론을 바꿉니다. 객체를 만들 때 `\"GET\" as \"GET\"`으로 적으면 \"`req.method`는 언제나 `\"GET\"`이라는 리터럴 타입이어야 한다\"는 뜻이라, 그 뒤에 `\"GUESS\"`를 넣는 것도 막아 줍니다. 함수에 넘길 때 `req.method as \"GET\"`으로 적으면 \"다른 이유로 지금은 `\"GET\"`인 걸 안다\"라는 뜻입니다.\n2. `as const`로 객체 전체를 리터럴 타입으로 바꿉니다. `as const`는 타입 시스템을 위한 `const` 같은 것이라, 모든 속성이 `string`이나 `number` 같은 넓은 타입 대신 리터럴 타입이 됩니다.",
+        body: "객체로 변수를 초기화하면, 타입스크립트는 그 객체의 속성 값이 나중에 바뀔 수 있다고 봅니다. 그래서 `{ counter: 0 }`의 `counter`는 `0`이 아니라 `number`가 됩니다. 타입은 읽을 때와 쓸 때 모두에 쓰이기 때문입니다.\n문자열도 마찬가지입니다. 아래 `req.method`는 `\"GET\"`이 아니라 `string`으로 추론됩니다. `req`를 만든 뒤 `handleRequest`를 부르기 전에 누군가 `req.method`에 `\"GUESS\"` 같은 문자열을 넣을 수도 있으니, `\"GET\" | \"POST\"`만 받는 함수에 넘기면 에러가 납니다.\n해결 방법은 두 가지입니다.\n1. 둘 중 한 곳에 타입 단언을 붙여 추론을 바꿉니다. 객체를 만들 때 `\"GET\" as \"GET\"`으로 적으면 \"`req.method`는 언제나 `\"GET\"`이라는 리터럴 타입이어야 한다\"는 뜻이라, 그 뒤에 `\"GUESS\"`를 넣는 것도 막아 줍니다. 함수에 넘길 때 `req.method as \"GET\"`으로 적으면 \"다른 이유로 지금은 `\"GET\"`인 걸 안다\"라는 뜻입니다.\n2. `as const`로 객체 전체를 리터럴 타입으로 바꿉니다. `as const`는 타입 시스템을 위한 `const` 같은 것이라, 모든 속성이 `string`이나 `number` 같은 넓은 타입 대신 리터럴 타입이 됩니다.",
         notes: [
           {
             title: "실제로 부딪힌 곳: as const 를 붙였는데 효과가 없었다",
-            body: "키 목록을 `as const` 배열로 만들고 타입도 따로 적어 둔 적이 있습니다. `const METHODS: readonly Method[] = [\"GET\", \"POST\"] as const`처럼요. 그런데 변수에 타입을 직접 적으면 적은 타입이 우선하기 때문에(변수의 타입 어노테이션 절), `as const`로 좁힌 정보가 버려집니다. 그래서 배열에서 `\"PUT\"`이 빠져도 에러가 나지 않았어요.\n변수 타입을 적지 않고 배열을 기준으로 타입을 뽑으면(`(typeof METHODS)[number]`), 배열과 타입이 한 곳에서 관리되어 빠뜨리는 실수를 막을 수 있습니다. 여기서 쓰인 `typeof`와 `[number]`는 핸드북 타입 조작 장에서 다룹니다.",
+            body: "키 목록을 `as const` 배열로 만들고 타입도 따로 적어 둔 적이 있습니다. `const METHODS: readonly Method[] = [\"GET\", \"POST\"] as const`가 그 예입니다. 그런데 변수에 타입을 직접 적으면 적은 타입이 우선하기 때문에(변수의 타입 어노테이션 절), `as const`로 좁힌 정보가 버려집니다. 그래서 배열에서 `\"PUT\"`이 빠져도 에러가 나지 않았습니다.\n변수 타입을 적지 않고 배열을 기준으로 타입을 뽑으면(`(typeof METHODS)[number]`), 배열과 타입이 한 곳에서 관리되어 빠뜨리는 실수를 막을 수 있습니다. 여기서 쓰인 `typeof`와 `[number]`는 핸드북 타입 조작 장에서 다룹니다.",
             bottom: true,
           },
         ],
@@ -924,11 +924,11 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "값이 없다는 뜻의 두 원시 값",
-        body: "자바스크립트에는 값이 없거나 아직 정해지지 않았다는 걸 나타내는 원시 값이 두 개 있습니다. `null`과 `undefined`입니다. 타입스크립트에도 같은 이름의 타입이 두 개 있어요.\n이 두 타입이 어떻게 동작하는지는 `strictNullChecks` 옵션을 켰는지에 따라 달라집니다.",
+        body: "자바스크립트에는 값이 없거나 아직 정해지지 않았다는 걸 나타내는 원시 값이 두 개 있습니다. `null`과 `undefined`입니다. 타입스크립트에도 같은 이름의 타입이 두 개 있습니다.\n이 두 타입이 어떻게 동작하는지는 `strictNullChecks` 옵션을 켰는지에 따라 달라집니다.",
       },
       {
         label: "strictNullChecks 꺼짐",
-        body: "`strictNullChecks`를 끄면, `null`이나 `undefined`일 수 있는 값도 아무 확인 없이 그냥 쓸 수 있고, 어떤 타입의 속성에든 `null`과 `undefined`를 넣을 수 있습니다. null 검사가 없는 C#이나 Java와 비슷한 동작이에요.\n하지만 이 값들을 확인하지 않는 것은 버그의 큰 원인이 됩니다. 그래서 문서는 코드베이스에서 가능하다면 항상 `strictNullChecks`를 켜라고 권합니다.",
+        body: "`strictNullChecks`를 끄면, `null`이나 `undefined`일 수 있는 값도 아무 확인 없이 그냥 쓸 수 있고, 어떤 타입의 속성에든 `null`과 `undefined`를 넣을 수 있습니다. null 검사가 없는 C#이나 Java와 비슷한 동작입니다.\n하지만 이 값들을 확인하지 않는 것은 버그의 큰 원인이 됩니다. 그래서 문서는 코드베이스에서 가능하다면 항상 `strictNullChecks`를 켜라고 권합니다.",
         code: "// strictNullChecks 가 꺼져 있으면 아래 코드에 에러가 없다\nlet name: string = null;\n\nfunction getLength(s: string | null) {\n  return s.length; // s 가 null 이면 실행할 때 터진다\n}",
       },
       {
@@ -962,7 +962,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "열거형은 타입이 아니라 실행되는 코드까지 더한다",
-        body: "열거형(enum)은 타입스크립트가 자바스크립트에 더한 기능으로, 이름 붙은 상수 중 하나일 수 있는 값을 표현합니다.\n대부분의 타입스크립트 기능과 달리, 열거형은 타입만 더하는 게 아닙니다. 자바스크립트 언어와 실행 코드 자체에 무언가를 더해요. 다른 타입들은 컴파일하면 사라지지만, 열거형은 컴파일한 뒤에도 실제 객체로 남습니다.\n그래서 문서는 이런 기능이 있다는 것만 알아 두고, 확실하지 않다면 쓰는 것을 미뤄 두라고 권합니다. 자세한 내용은 참고서의 열거형 페이지에서 다룹니다.",
+        body: "열거형(enum)은 타입스크립트가 자바스크립트에 더한 기능으로, 이름 붙은 상수 중 하나일 수 있는 값을 표현합니다.\n대부분의 타입스크립트 기능과 달리, 열거형은 타입만 더하는 게 아닙니다. 자바스크립트 언어와 실행 코드 자체에 무언가를 더합니다. 다른 타입들은 컴파일하면 사라지지만, 열거형은 컴파일한 뒤에도 실제 객체로 남습니다.\n그래서 문서는 이런 기능이 있다는 것만 알아 두고, 확실하지 않다면 쓰는 것을 미뤄 두라고 권합니다. 자세한 내용은 참고서의 열거형 페이지에서 다룹니다.",
         notes: [
           {
             title: "같은 일을 리터럴 유니온으로",
@@ -1064,7 +1064,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `typeof strs === \"object\"` 분기에 null이 남는 이유는? 2) 함수 전체를 `if (str)`로 감싸면 무엇을 잃나요? 3) Shape에 네 번째 멤버를 추가했을 때 컴파일이 어디서 어떤 문구로 막히게 하려면 무엇을 두어야 하나요? 4) `[1, \"a\"].filter(x => typeof x === \"number\")`의 타입이 5.4와 5.5에서 어떻게 다른가요?",
+        body: "1) `typeof strs === \"object\"` 분기에 null이 남는 이유는?\n2) 함수 전체를 `if (str)`로 감싸면 무엇을 잃나요?\n3) Shape에 네 번째 멤버를 추가했을 때 컴파일이 어디서 어떤 문구로 막히게 하려면 무엇을 두어야 하나요?\n4) `[1, \"a\"].filter(x => typeof x === \"number\")`의 타입이 5.4와 5.5에서 어떻게 다른가요?",
       },
     ],
     sources: [
@@ -1093,7 +1093,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 오버로드는 구현 시그니처가 보이지 않는다",
-        body: "같은 함수를 인자 종류에 따라 다르게 부르게 하려면 오버로드 시그니처를 여러 줄 적고 마지막에 구현을 둡니다. 구현 시그니처는 바깥에서 보이지 않습니다. 그래서 `len(\"a\")`와 `len([1])`은 되지만 `len(Math.random() > 0.5 ? \"a\" : [1])`은 '어느 오버로드에도 맞지 않아' 실패합니다. 실제로 7.0.2는 \"No overload matches this call. The last overload gave the following error. Argument of type '\"a\" | number[]' is not assignable to parameter of type 'any[]'.\"를 냈습니다. 문서의 지침 — '가능하면 오버로드 대신 유니온 매개변수를 쓰라' — 가 이 자리의 답입니다. `len(x: string | any[])` 한 줄이면 위 호출이 전부 통과합니다.",
+        body: "같은 함수를 인자 종류에 따라 다르게 부르게 하려면 오버로드 시그니처를 여러 줄 적고 마지막에 구현을 둡니다. 구현 시그니처는 바깥에서 보이지 않습니다. 그래서 `len(\"a\")`와 `len([1])`은 되지만 `len(Math.random() > 0.5 ? \"a\" : [1])`은 '어느 오버로드에도 맞지 않아' 실패합니다. 실제로 7.0.2는 \"No overload matches this call. The last overload gave the following error. Argument of type '\"a\" | number[]' is not assignable to parameter of type 'any[]'.\"를 냈습니다. 문서의 지침인 '가능하면 오버로드 대신 유니온 매개변수를 쓰라'가 이 자리의 답입니다. `len(x: string | any[])` 한 줄이면 위 호출이 전부 통과합니다.",
         code: "function len(s: string): number;\nfunction len(a: any[]): number;\nfunction len(x: any) { return x.length; }   // 구현 시그니처 — 밖에서 안 보임\n\nlen(Math.random() > 0.5 ? \"a\" : [1]);\n// No overload matches this call.\n//   The last overload gave the following error.\n//     Argument of type '\"a\" | number[]' is not assignable to parameter of type 'any[]'.\n//       Type 'string' is not assignable to type 'any[]'.               (TS2769)\n\n// 유니온으로 바꾸면 끝\nfunction len2(x: string | any[]) { return x.length; }\nlen2(Math.random() > 0.5 ? \"a\" : [1]);   // OK",
         terms: [
           {
@@ -1104,12 +1104,12 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "this · void · unknown · never · Function",
-        body: "`function f(this: User, e: Event)`처럼 첫 매개변수 이름을 this로 적으면 호출 시 this의 타입을 검사합니다. 컴파일 결과에서는 사라집니다. 실제로 `withThis(new Event(\"x\"))`처럼 그냥 부르면 \"The 'this' context of type 'void' is not assignable to method's 'this' of type 'HTMLElement'.\"(TS2684)입니다. `void`는 '반환값을 쓰지 말라'는 뜻이고 문서는 'void는 undefined와 같지 않다'고 적습니다. `unknown`은 좁히기 전에 아무것도 못 하는 any(\"'a' is of type 'unknown'.\" TS18046). `never`는 '돌아오지 않는다'(throw, 무한 루프)와 '소진된 유니온'. `Function`은 부르면 any를 돌려주는 포괄 타입이라 피하고 `() => void`를 쓰라고 합니다. 그리고 'object는 Object가 아니다. 항상 object를 쓰라'.",
-        code: "const u = { v: 1, m(this: { v: number }) { return this.v; } };\nconst m = u.m;\nm();\n// The 'this' context of type 'void' is not assignable to method's 'this' of type '{ v: number; }'. (TS2684)\n\nfunction f(x: unknown) {\n  x.toFixed();                     // 'x' is of type 'unknown'. (TS18046)\n  if (typeof x === \"number\") x.toFixed();   // OK\n}",
+        body: "`function f(this: User, e: Event)`처럼 첫 매개변수 이름을 this로 적으면 호출 시 this의 타입을 검사합니다. 컴파일 결과에서는 사라집니다. 실제로 `withThis(new Event(\"x\"))`처럼 그냥 부르면 \"The 'this' context of type 'void' is not assignable to method's 'this' of type 'HTMLElement'.\"(TS2684)입니다.\n`void`는 '반환값을 쓰지 말라'는 뜻이고, 문서는 'void는 undefined와 같지 않다'고 적습니다.\n`unknown`은 좁히기 전에는 아무것도 못 하는 any입니다(\"'a' is of type 'unknown'.\" TS18046).\n`never`는 '돌아오지 않는다'(throw, 무한 루프)와 '소진된 유니온'을 뜻합니다.\n`Function`은 부르면 any를 돌려주는 포괄 타입이라 피하고 `() => void`를 쓰라고 합니다. 그리고 문서는 'object는 Object가 아니다. 항상 object를 쓰라'고 적습니다.",
+        code: "const u = { v: 1, m(this: { v: number }) { return this.v; } };\nconst m = u.m;\nm();\n// The 'this' context of type 'void' is not assignable to method's 'this' of type '{ v: number;\n  }'. (TS2684)\n\nfunction f(x: unknown) {\n  x.toFixed();                     // 'x' is of type 'unknown'. (TS18046)\n  if (typeof x === \"number\") x.toFixed();   // OK\n}",
       },
       {
         label: "나머지 매개변수와 as const, 매개변수 구조 분해",
-        body: "`...rest: number[]`는 가변 인자이고 어노테이션이 없으면 `any[]`입니다. 거꾸로 배열을 펼쳐 넘길 때는 길이를 모르니 고정 인자 함수에 못 넘깁니다. `Math.atan2(...args)`에 `number[]`를 넘기면 \"A spread argument must either have a tuple type or be passed to a rest parameter.\"(TS2556). `const args = [1, 2] as const`로 튜플 `readonly [1, 2]`를 만들면 통과합니다. 매개변수 구조 분해는 패턴 뒤에 어노테이션을 붙입니다 — `function sum({ a, b }: { a: number; b: number })`.",
+        body: "`...rest: number[]`는 가변 인자이고 어노테이션이 없으면 `any[]`입니다. 거꾸로 배열을 펼쳐 넘길 때는 길이를 모르니 고정 인자 함수에 못 넘깁니다. `Math.atan2(...args)`에 `number[]`를 넘기면 \"A spread argument must either have a tuple type or be passed to a rest parameter.\"(TS2556)가 납니다. `const args = [1, 2] as const`로 튜플 `readonly [1, 2]`를 만들면 통과합니다. 매개변수 구조 분해는 패턴 뒤에 어노테이션을 붙입니다. `function sum({ a, b }: { a: number; b: number })`가 그 예입니다.",
         code: "const args = [1, 2];\nMath.atan2(...args);\n// A spread argument must either have a tuple type or be passed to a rest parameter. (TS2556)\n\nconst argsC = [1, 2] as const;   // readonly [1, 2]\nMath.atan2(...argsC);            // OK\n\nfunction dflt(a: number, b = \"x\", ...rest: boolean[]) {}\ndflt(1, \"y\", true, \"z\");\n// Argument of type 'string' is not assignable to parameter of type 'boolean'. (TS2345)",
       },
       {
@@ -1127,7 +1127,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `(string) => void`는 무엇을 뜻하나요? 2) 오버로드 두 개가 있는 함수에 `string | any[]` 값을 넘기면 왜 실패하고, 어떻게 고치나요? 3) `const f: () => void = () => 42`는 왜 통과하고 `function g(): void { return 42 }`는 왜 에러인가요? 4) `Math.atan2(...[1, 2])`가 에러인 이유와 `as const`가 고치는 이유는?",
+        body: "1) `(string) => void`는 무엇을 뜻하나요?\n2) 오버로드 두 개가 있는 함수에 `string | any[]` 값을 넘기면 왜 실패하고, 어떻게 고치나요?\n3) `const f: () => void = () => 42`는 왜 통과하고 `function g(): void { return 42 }`는 왜 에러인가요?\n4) `Math.atan2(...[1, 2])`가 에러인 이유와 `as const`가 고치는 이유는?",
       },
     ],
     sources: [
@@ -1145,18 +1145,18 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "선택적 속성과 readonly, 그리고 readonly 는 얕다",
-        body: "`xPos?: number`는 있어도 없어도 되는 속성이고, strictNullChecks에서 읽으면 `number | undefined`입니다. `readonly prop: string`은 대입을 막습니다 — \"Cannot assign to 'prop' because it is a read-only property.\"(TS2540). 문서가 바로 붙이는 두 경고. 첫째, readonly는 얕습니다. `readonly resident: { name: string }`에서 `resident` 자체는 못 바꾸지만 `resident.name`은 바꿀 수 있습니다. 둘째, 호환성 검사는 readonly를 무시합니다. `readonly` 속성을 가진 타입에 같은 모양의 쓰기 가능한 객체를 대입하고 그쪽으로 바꾸면 readonly 쪽 값도 바뀝니다. 'readonly는 쓰지 말라는 표시이지 불변성이 아니다'로 기억하면 됩니다.",
-        code: "interface Home { readonly resident: { name: string; age: number } }\nfunction visit(home: Home) {\n  home.resident.age++;                      // OK — 안쪽은 바뀐다\n  home.resident = { name: \"x\", age: 1 };    // Cannot assign to 'resident' because it is a read-only property. (TS2540)\n}\n\ninterface Person { name: string; age: number }\ninterface ReadonlyPerson { readonly name: string; readonly age: number }\nlet w: Person = { name: \"P\", age: 42 };\nlet r: ReadonlyPerson = w;   // OK — readonly 는 호환성에 안 들어간다\nw.age++;                      // r.age 도 43 이 된다",
+        body: "`xPos?: number`는 있어도 없어도 되는 속성이고, strictNullChecks에서 읽으면 `number | undefined`입니다. `readonly prop: string`은 대입을 막습니다. 대입하면 \"Cannot assign to 'prop' because it is a read-only property.\"(TS2540)가 납니다. 문서는 바로 두 경고를 붙입니다. 첫째, readonly는 얕습니다. `readonly resident: { name: string }`에서 `resident` 자체는 못 바꾸지만 `resident.name`은 바꿀 수 있습니다. 둘째, 호환성 검사는 readonly를 무시합니다. `readonly` 속성을 가진 타입에 같은 모양의 쓰기 가능한 객체를 대입하고 그쪽으로 바꾸면 readonly 쪽 값도 바뀝니다. 'readonly는 쓰지 말라는 표시이지 불변성이 아니다'로 기억하면 됩니다.",
+        code: "interface Home { readonly resident: { name: string; age: number } }\nfunction visit(home: Home) {\n  home.resident.age++;                      // OK — 안쪽은 바뀐다\n  // Cannot assign to 'resident' because it is a read-only property. (TS2540)\n  home.resident = { name: \"x\", age: 1 };\n}\n\ninterface Person { name: string; age: number }\ninterface ReadonlyPerson { readonly name: string; readonly age: number }\nlet w: Person = { name: \"P\", age: 42 };\nlet r: ReadonlyPerson = w;   // OK — readonly 는 호환성에 안 들어간다\nw.age++;                      // r.age 도 43 이 된다",
       },
       {
         label: "인덱스 시그니처: 이름을 모르는 속성",
-        body: "`[index: number]: string`처럼 키의 타입과 값의 타입만 적는 것이 인덱스 시그니처입니다. 키로 쓸 수 있는 타입은 string·number·symbol·템플릿 리터럴 패턴·이들의 유니온입니다. 숫자 인덕서와 문자열 인덕서를 함께 두면 숫자 쪽 값이 문자열 쪽 값의 서브타입이어야 합니다(obj[100]은 obj[\"100\"]이기도 하니까). 그리고 문자열 인덱스 시그니처가 있으면 모든 속성이 그 값 타입에 맞아야 합니다 — \"Property 'name' of type 'string' is not assignable to 'string' index type 'number'.\"(TS2411). `readonly [index: number]: string`이면 쓰기가 막힙니다. `noUncheckedIndexedAccess`를 켜면 인덱스로 읽은 값에 `| undefined`가 붙습니다. 실제로 `Record<string, number>`의 `dict.a`가 그 옵션에서 `number | undefined`로 잡혔고, `noPropertyAccessFromIndexSignature`까지 켜면 점 접근 자체가 \"Property 'a' comes from an index signature, so it must be accessed with ['a'].\"(TS4111)입니다.",
+        body: "`[index: number]: string`처럼 키의 타입과 값의 타입만 적는 것이 인덱스 시그니처입니다. 키로 쓸 수 있는 타입은 string·number·symbol·템플릿 리터럴 패턴·이들의 유니온입니다. 숫자 인덱서와 문자열 인덱서를 함께 두면 숫자 쪽 값이 문자열 쪽 값의 서브타입이어야 합니다. obj[100]은 obj[\"100\"]이기도 하기 때문입니다. 그리고 문자열 인덱스 시그니처가 있으면 모든 속성이 그 값 타입에 맞아야 합니다. 어긋나면 \"Property 'name' of type 'string' is not assignable to 'string' index type 'number'.\"(TS2411)입니다. `readonly [index: number]: string`이면 쓰기가 막힙니다. `noUncheckedIndexedAccess`를 켜면 인덱스로 읽은 값에 `| undefined`가 붙습니다. 실제로 `Record<string, number>`의 `dict.a`가 그 옵션에서 `number | undefined`로 잡혔고, `noPropertyAccessFromIndexSignature`까지 켜면 점 접근 자체가 \"Property 'a' comes from an index signature, so it must be accessed with ['a'].\"(TS4111)입니다.",
         code: "const dict: Record<string, number> = {};\nconst d: number = dict.a;\n// --noUncheckedIndexedAccess:\n// Type 'number | undefined' is not assignable to type 'number'. (TS2322)\n// --noPropertyAccessFromIndexSignature:\n// Property 'a' comes from an index signature, so it must be accessed with ['a']. (TS4111)\ndict[\"c\"];   // 이쪽은 허용",
       },
       {
         label: "실제로 돌려 보면: 초과 속성 검사는 '리터럴을 바로 넘길 때만' 이다",
-        body: "`const p: Pt = { x: 1, y: 2, z: 3 }`은 에러입니다. \"Object literal may only specify known properties, and 'z' does not exist in type 'Pt'.\"(TS2353). 오타를 잡기 위한 검사라 \"Did you mean to write 'color'?\" 같은 제안도 붙습니다. 그런데 같은 객체를 변수에 먼저 담고 `const p2: Pt = q`로 넘기면 통과합니다. 구조적 타입에서는 속성이 더 있어도 호환되기 때문이고, 초과 속성 검사는 '객체 리터럴을 그 자리에서 쓸 때'만 켜지는 특별 규칙입니다. 실제로 둘을 나란히 돌려 첫 줄만 TS2353이었습니다. 공통 속성이 하나도 없는 변수는 그래도 걸립니다 — \"Type '{ colour: string; }' has no properties in common with type 'SquareConfig'.\"(TS2559).",
-        code: "interface Pt { x: number; y: number }\nconst p: Pt = { x: 1, y: 2, z: 3 };\n//                           ~~~~\n// Object literal may only specify known properties, and 'z' does not exist in type 'Pt'. (TS2353)\n\nconst q = { x: 1, y: 2, z: 3 };\nconst p2: Pt = q;        // OK — 변수를 거치면 초과 속성 검사가 없다\n\n// satisfies 도 리터럴이라 같은 검사를 받는다\nconst bad = { red: \"x\", extra: 1 } satisfies { red: string };\n// Object literal may only specify known properties, and 'extra' does not exist in type '{ red: string; }'.",
+        body: "`const p: Pt = { x: 1, y: 2, z: 3 }`은 에러입니다. \"Object literal may only specify known properties, and 'z' does not exist in type 'Pt'.\"(TS2353)이 납니다. 오타를 잡기 위한 검사라 \"Did you mean to write 'color'?\" 같은 제안도 붙습니다. 그런데 같은 객체를 변수에 먼저 담고 `const p2: Pt = q`로 넘기면 통과합니다. 구조적 타입에서는 속성이 더 있어도 호환되기 때문이고, 초과 속성 검사는 '객체 리터럴을 그 자리에서 쓸 때'만 켜지는 특별 규칙입니다. 실제로 둘을 나란히 돌려 첫 줄만 TS2353이었습니다. 공통 속성이 하나도 없는 변수는 그래도 걸립니다. \"Type '{ colour: string; }' has no properties in common with type 'SquareConfig'.\"(TS2559)입니다.",
+        code: "interface Pt { x: number; y: number }\nconst p: Pt = { x: 1, y: 2, z: 3 };\n//                           ~~~~\n// Object literal may only specify known properties, and 'z' does not exist in type 'Pt'. (TS2353)\n\nconst q = { x: 1, y: 2, z: 3 };\nconst p2: Pt = q;        // OK — 변수를 거치면 초과 속성 검사가 없다\n\n// satisfies 도 리터럴이라 같은 검사를 받는다\nconst bad = { red: \"x\", extra: 1 } satisfies { red: string };\n// Object literal may only specify known properties, and 'extra' does not exist in type\n  '{ red: string; }'.",
         terms: [
           {
             term: "초과 속성 검사 (excess property check)",
@@ -1171,7 +1171,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "Array · ReadonlyArray · 튜플",
-        body: "`number[]`는 `Array<number>`의 줄임이고 Array는 제네릭 객체 타입입니다. `ReadonlyArray<string>`(줄임 `readonly string[]`)은 push가 없고(\"Property 'push' does not exist on type 'readonly string[]'.\") `new ReadonlyArray`로 만들 수도 없습니다(값이 아니라 타입). 대입은 한 방향입니다 — 실제로 `const c2: [\"a\", 1] = id([\"a\", 1])`에서 \"The type 'readonly [\"a\", 1]' is 'readonly' and cannot be assigned to the mutable type '[\"a\", 1]'.\"(TS4104). 튜플은 길이와 자리별 타입이 고정된 배열입니다. `[string, number]`의 2번을 읽으면 \"Tuple type '[string, number]' of length '2' has no element at index '2'.\"(TS2493). 선택 요소는 끝에만 올 수 있고 length가 `2 | 3`처럼 됩니다. 나머지 요소 `...boolean[]`은 앞·중간·끝 어디든 됩니다. `as const`는 `readonly [3, 4]`를 만들어 `[number, number]` 자리에 못 들어가는 점을 기억해야 합니다.",
+        body: "`number[]`는 `Array<number>`의 줄임이고, Array는 제네릭 객체 타입입니다.\n`ReadonlyArray<string>`(줄임 `readonly string[]`)은 push가 없고(\"Property 'push' does not exist on type 'readonly string[]'.\") `new ReadonlyArray`로 만들 수도 없습니다. 값이 아니라 타입이기 때문입니다. 대입은 한 방향입니다. 실제로 `const c2: [\"a\", 1] = id([\"a\", 1])`에서 \"The type 'readonly [\"a\", 1]' is 'readonly' and cannot be assigned to the mutable type '[\"a\", 1]'.\"(TS4104)가 났습니다.\n튜플은 길이와 자리별 타입이 고정된 배열입니다. `[string, number]`의 2번을 읽으면 \"Tuple type '[string, number]' of length '2' has no element at index '2'.\"(TS2493)입니다. 선택 요소는 끝에만 올 수 있고 length가 `2 | 3`처럼 됩니다. 나머지 요소 `...boolean[]`은 앞·중간·끝 어디든 됩니다. `as const`는 `readonly [3, 4]`를 만들어 `[number, number]` 자리에 못 들어가는 점을 기억해야 합니다.",
         code: "// 6.0.3 추론 결과\nconst tupOpt: [string, number?] = [\"a\"];\nconst len = tupOpt.length;          // len: 2 | 1\nconst tup: [string, number] = [\"a\", 1];\ntup[2];\n// Tuple type '[string, number]' of length '2' has no element at index '2'. (TS2493)\n\nconst pair = [3, 4] as const;        // readonly [3, 4]\nfunction dist(p: [number, number]) {}\ndist(pair);\n// Argument of type 'readonly [3, 4]' is not assignable to parameter of type '[number, number]'. (TS2345)",
       },
       {
@@ -1184,7 +1184,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `const p: Pt = { x, y, z }`는 에러인데 `const q = { x, y, z }; const p: Pt = q`는 왜 통과하나요? 2) `readonly resident`인데 `resident.age++`가 되는 이유는? 3) interface extends와 `&`가 같은 속성 충돌에서 각각 어떻게 다르게 행동하나요? 4) `[3, 4] as const`를 `[number, number]` 자리에 못 넘기는 이유는?",
+        body: "1) `const p: Pt = { x, y, z }`는 에러인데 `const q = { x, y, z }; const p: Pt = q`는 왜 통과하나요?\n2) `readonly resident`인데 `resident.age++`가 되는 이유는?\n3) interface extends와 `&`가 같은 속성 충돌에서 각각 어떻게 다르게 행동하나요?\n4) `[3, 4] as const`를 `[number, number]` 자리에 못 넘기는 이유는?",
       },
     ],
     sources: [
@@ -1199,7 +1199,7 @@ export const typescriptTheories: Theory[] = [
     name: "타입 조작",
     tagline: "타입에서 타입을 만들어 같은 사실을 두 번 적지 않는다",
     intro:
-      "핸드북에서 난이도가 꺾이는 장입니다. 지금까지는 있는 타입을 적었고, 여기서부터는 타입으로 타입을 계산합니다. 제네릭(타입 매개변수), keyof(키의 유니온), typeof(값에서 타입), 인덱스 접근(T[K]), 조건부 타입(extends ? :), 매핑된 타입([K in keyof T]), 템플릿 리터럴 타입(`${A}${B}`). 여덟 절이 각각 시트입니다. 공통 동기는 하나 — 같은 사실을 두 군데 적으면 언젠가 어긋난다.",
+      "핸드북에서 난이도가 꺾이는 장입니다. 지금까지는 있는 타입을 적었고, 여기서부터는 타입으로 타입을 계산합니다. 제네릭(타입 매개변수), keyof(키의 유니온), typeof(값에서 타입), 인덱스 접근(T[K]), 조건부 타입(extends ? :), 매핑된 타입([K in keyof T]), 템플릿 리터럴 타입(`${A}${B}`)을 다룹니다. 여덟 절이 각각 시트입니다. 공통 동기는 하나입니다. 같은 사실을 두 군데 적으면 언젠가 어긋납니다.",
     blocks: [
       {
         label: "여덟 절의 역할 분담",
@@ -1233,7 +1233,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "문서의 일곱 줄",
-        body: "제네릭 — 매개변수를 받는 타입. keyof 타입 연산자 — 새 타입을 만들기 위해 keyof를 쓰는 것. typeof 타입 연산자 — 새 타입을 만들기 위해 typeof를 쓰는 것. 인덱스 접근 타입 — Type['a']로 타입의 부분을 접근하는 것. 조건부 타입 — 타입 시스템 안에서 if 문처럼 동작하는 타입. 매핑된 타입 — 기존 타입의 각 속성을 매핑해 타입을 만드는 것. 템플릿 리터럴 타입 — 템플릿 리터럴 문자열로 속성을 바꾸는 매핑된 타입.",
+        body: "제네릭은 매개변수를 받는 타입입니다.\nkeyof 타입 연산자는 새 타입을 만들기 위해 keyof를 쓰는 것입니다.\ntypeof 타입 연산자는 새 타입을 만들기 위해 typeof를 쓰는 것입니다.\n인덱스 접근 타입은 Type['a']로 타입의 부분을 접근하는 것입니다.\n조건부 타입은 타입 시스템 안에서 if 문처럼 동작하는 타입입니다.\n매핑된 타입은 기존 타입의 각 속성을 매핑해 타입을 만드는 것입니다.\n템플릿 리터럴 타입은 템플릿 리터럴 문자열로 속성을 바꾸는 매핑된 타입입니다.",
       },
       {
         label: "서로 기대는 순서",
@@ -1244,7 +1244,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "실제로 돌려 보면: 재료가 다 들어간 한 줄",
         body: "`Getters<T>`는 문서의 매핑된 타입 절에 나오는 예제인데 일곱 도구 중 다섯이 들어 있습니다. 제네릭 T, keyof T로 키 순회, `as`로 키 재매핑, 템플릿 리터럴 `get${…}`과 내장 Capitalize, 값 자리에 인덱스 접근 T[K]. 실제로 6.0.3에서 `Getters<{ name: string; age: number }>`는 `{ getName: () => string; getAge: () => number }`로 계산됐고, 없는 키 `getC`를 넣은 객체는 \"Object literal may only specify known properties, and 'getC' does not exist in type 'Getters<P>'.\"로 막혔습니다.",
-        code: "type Getters<T> = {\n  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K]\n};\ntype G = Getters<{ name: string; age: number }>;\n// G = { getName: () => string; getAge: () => number; }\n\nconst g: G = { getName: () => \"\", getAge: () => 1, getC: () => 0 };\n// Object literal may only specify known properties, and 'getC' does not exist in type 'Getters<P>'. (TS2353)",
+        code: "type Getters<T> = {\n  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K]\n};\ntype G = Getters<{ name: string; age: number }>;\n// G = { getName: () => string; getAge: () => number; }\n\nconst g: G = { getName: () => \"\", getAge: () => 1, getC: () => 0 };\n// Object literal may only specify known properties, and 'getC' does not exist in type 'Getters<P>'.\n  (TS2353)",
       },
       {
         label: "다음 입구",
@@ -1285,14 +1285,14 @@ export const typescriptTheories: Theory[] = [
         terms: [
           {
             term: "공변 (covariant) · 반공변 (contravariant)",
-            body: "T가 더 넓어질 때 전체 타입도 같은 방향으로 넓어지면 공변(생산자·반환 위치), 반대 방향이면 반공변(소비자·매개변수 위치). `out`은 '반환 쪽에만 쓴다', `in`은 '매개변수 쪽에만 쓴다'는 선언이고, 둘 다면 불변입니다.",
+            body: "T가 더 넓어질 때 전체 타입도 같은 방향으로 넓어지면 공변(생산자·반환 위치)이고, 반대 방향이면 반공변(소비자·매개변수 위치)입니다. `out`은 '반환 쪽에만 쓴다', `in`은 '매개변수 쪽에만 쓴다'는 선언이고, 둘 다면 불변입니다.",
           },
         ],
       },
       {
         label: "문제가 나는 경우: 제네릭을 쓰지 않아도 될 자리에 쓸 때",
         body: "함수 장의 세 지침이 여기서도 유효합니다.",
-        code: "코드                                            문제                               고치기\n──────────────────────────────────────────────  ────────────────────────────────  ──────────────────────────\nfunction greet<S extends string>(s: S)           S 가 한 자리에만 나온다              (s: string)\nfunction first<T extends any[]>(a: T): T[0]      제약을 거치며 T[0] 가 any 로         <T>(a: T[]): T | undefined\nfunction f<T, F extends (a: T) => any>(a: T, f: F) 타입 매개변수가 둘인데 F 는 관계만  <T, R>(a: T, f: (a: T) => R)\nclass Box<T> { static d: T }                     static 은 인스턴스 타입을 못 안다    static 을 밖으로\n<T>(x: T) => x.length                            T 에 length 가 없다                  T extends { length: number }",
+        code: "코드                                         문제                            고치기\n───────────────────────────────────────────  ─────────────────────────────  ──────────────────────────\nfunction greet<S extends string>(s: S)        S 가 한 자리에만 나온다           (s: string)\nfunction first<T extends any[]>(a: T): T[0]   제약을 거치며 T[0] 가 any 로      <T>(a: T[]): T | undefined\nfunction f<T, F extends (a: T) => any>(a: T, f: F) 타입 매개변수가 둘인데 F 는 관계만  <T, R>(a: T, f: (a: T)\n                                                                               => R)\nclass Box<T> { static d: T }                  static 은 인스턴스 타입을 못 안다  static 을 밖으로\n<T>(x: T) => x.length                         T 에 length 가 없다               T extends { length: number }",
         codeLang: "text",
       },
       {
@@ -1301,7 +1301,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `identity(arg: any)`와 `identity<T>(arg: T): T`의 차이를 '돌려주는 타입' 관점에서 설명하세요. 2) `class Box<T> { static def: T }`가 에러인 이유는? 3) `function greet<S extends string>(s: S)`에서 S를 없애도 되는 이유는 무엇인가요? 4) `out T`를 붙이면 타입 검사 결과가 바뀌나요?",
+        body: "1) `identity(arg: any)`와 `identity<T>(arg: T): T`의 차이를 '돌려주는 타입' 관점에서 설명하세요.\n2) `class Box<T> { static def: T }`가 에러인 이유는?\n3) `function greet<S extends string>(s: S)`에서 S를 없애도 되는 이유는 무엇인가요?\n4) `out T`를 붙이면 타입 검사 결과가 바뀌나요?",
       },
     ],
     sources: [
@@ -1338,7 +1338,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `keyof { [k: string]: boolean }`이 `string`이 아니라 `string | number`인 이유는? 2) `${keyof T}Changed`가 거부되는 이유와 고치는 관용구는? 3) `keyof typeof obj`는 무엇을 뜻하나요?",
+        body: "1) `keyof { [k: string]: boolean }`이 `string`이 아니라 `string | number`인 이유는?\n2) `${keyof T}Changed`가 거부되는 이유와 고치는 관용구는?\n3) `keyof typeof obj`는 무엇을 뜻하나요?",
       },
     ],
     sources: [
@@ -1375,7 +1375,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `ReturnType<f>`가 에러인 이유를 '이름 공간' 관점에서 설명하세요. 2) `typeof f()`가 안 되는 이유는? 3) 설정 객체를 한 번만 적고 타입을 꺼내 쓰는 관용구를 적어 보세요.",
+        body: "1) `ReturnType<f>`가 에러인 이유를 '이름 공간' 관점에서 설명하세요.\n2) `typeof f()`가 안 되는 이유는?\n3) 설정 객체를 한 번만 적고 타입을 꺼내 쓰는 관용구를 적어 보세요.",
       },
     ],
     sources: [
@@ -1398,7 +1398,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: [number] 로 배열 요소를, 값 변수는 안 된다",
-        body: "배열 리터럴의 요소 타입은 `typeof MyArray[number]`로 꺼냅니다 — 배열 타입의 숫자 인덱스 시그니처 값이니까요. 반면 `const key = \"age\"; type A = Person[key]`는 안 됩니다. key는 값이고 인덱스 자리는 타입입니다. 에러가 둘 납니다. \"Type 'key' cannot be used as an index type.\"(TS2538)과 \"'key' refers to a value, but is being used as a type here. Did you mean 'typeof key'?\"(TS2749). 고치는 길은 둘 — `type key = \"age\"`로 타입 별칭을 만들거나 `Person[typeof key]`.",
+        body: "배열 리터럴의 요소 타입은 `typeof MyArray[number]`로 꺼냅니다. 배열 타입의 숫자 인덱스 시그니처 값이기 때문입니다. 반면 `const key = \"age\"; type A = Person[key]`는 안 됩니다. key는 값이고 인덱스 자리는 타입입니다. 에러가 둘 납니다. \"Type 'key' cannot be used as an index type.\"(TS2538)과 \"'key' refers to a value, but is being used as a type here. Did you mean 'typeof key'?\"(TS2749)입니다. 고치는 길은 둘입니다. `type key = \"age\"`로 타입 별칭을 만들거나 `Person[typeof key]`로 적습니다.",
         code: "const MyArray = [{ name: \"Alice\", age: 15 }, { name: \"Bob\", age: 23 }];\ntype Person = (typeof MyArray)[number];   // { name: string; age: number }\ntype Age = (typeof MyArray)[number][\"age\"]; // number\n\nconst key = \"age\";\ntype A1 = Person[key];\n// Type 'key' cannot be used as an index type. (TS2538)\n// 'key' refers to a value, but is being used as a type here. Did you mean 'typeof key'? (TS2749)\ntype A2 = Person[typeof key];   // OK — number",
       },
       {
@@ -1413,7 +1413,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `Person[keyof Person]`은 어떤 타입인가요? 2) `const key = \"age\"; Person[key]`가 에러인 이유와 두 가지 고치는 길은? 3) 배열 리터럴의 요소 타입을 꺼내는 식을 적어 보세요.",
+        body: "1) `Person[keyof Person]`은 어떤 타입인가요?\n2) `const key = \"age\"; Person[key]`가 에러인 이유와 두 가지 고치는 길은?\n3) 배열 리터럴의 요소 타입을 꺼내는 식을 적어 보세요.",
       },
     ],
     sources: [
@@ -1457,7 +1457,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "문제가 나는 경우: 분배와 never",
         body: "분배의 부작용 몇 가지를 적어 둡니다.",
-        code: "상황                                       결과                                 설명\n─────────────────────────────────────────  ──────────────────────────────────  ─────────────────────────\nToArr<never>                                never                               never 는 빈 유니온 → 멤버가 없어 아무것도 안 나옴\nIsString<string | number>                   true | false (= boolean)            멤버마다 따로 답해서 합쳐짐\nT extends string ? \"s\" : \"n\" 에 string | number  \"s\" | \"n\"                       실제로 \"x\" 를 넣으면 Type '\"x\"' is not assignable to type '\"n\" | \"s\"'\n[T] extends [string] ? … 에 string | number  거짓 분기 한 번                     유니온 전체가 string 에 대입되는지 한 번만 봄\n오버로드 함수의 infer                        마지막 시그니처만                   오버로드 해결은 타입 수준에서 불가",
+        code: "상황                           결과                     설명\n─────────────────────────────  ──────────────────────  ─────────────────────────\nToArr<never>                    never                   never 는 빈 유니온 → 멤버가 없어 아무것도 안 나옴\nIsString<string | number>       true | false (= boolean)  멤버마다 따로 답해서 합쳐짐\nT extends string ? \"s\" : \"n\" 에 string | number  \"s\" | \"n\"           실제로 \"x\" 를 넣으면 Type '\"x\"' is not\n                                                                    assignable to type '\"n\" | \"s\"'\n[T] extends [string] ? … 에 string | number  거짓 분기 한 번         유니온 전체가 string 에 대입되는지 한 번만 봄\n오버로드 함수의 infer            마지막 시그니처만       오버로드 해결은 타입 수준에서 불가",
         codeLang: "text",
       },
       {
@@ -1466,7 +1466,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `T[\"message\"]`가 에러인데 `T extends { message: unknown } ? T[\"message\"] : never`는 되는 이유는? 2) `ToArray<string | number>`가 `string[] | number[]`가 되는 이유와, `(string | number)[]`로 만드는 법은? 3) 오버로드된 함수에 `ReturnType`을 쓰면 어느 시그니처를 보나요?",
+        body: "1) `T[\"message\"]`가 에러인데 `T extends { message: unknown } ? T[\"message\"] : never`는 되는 이유는?\n2) `ToArray<string | number>`가 `string[] | number[]`가 되는 이유와, `(string | number)[]`로 만드는 법은?\n3) 오버로드된 함수에 `ReturnType`을 쓰면 어느 시그니처를 보나요?",
       },
     ],
     sources: [
@@ -1504,7 +1504,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "문제의 구조: 매핑된 타입은 '속성에 대한 for 문' 이다",
-        body: "조건부 타입이 if라면 매핑된 타입은 for입니다. `in`이 반복 변수, `as`가 키 변환, 값 자리가 본문, never가 continue. 이 비유로 lib.d.ts의 유틸리티들이 전부 읽힙니다. Partial은 '모든 키에 ?를 붙이는 for', Pick은 '주어진 키만 도는 for', Omit은 'Exclude로 뺀 키만 도는 for'. 함정도 for와 같습니다. 중첩 객체는 한 겹만 돕니다(깊게 하려면 재귀 조건부 타입 `Deep<T>`), 그리고 유니온 타입을 넘기면 조건부와 달리 분배되지 않고 유니온의 공통 키만 돕니다.",
+        body: "조건부 타입이 if라면 매핑된 타입은 for입니다. `in`이 반복 변수, `as`가 키 변환, 값 자리가 본문, never가 continue에 해당합니다. 이 비유로 lib.d.ts의 유틸리티들이 전부 읽힙니다. Partial은 '모든 키에 ?를 붙이는 for', Pick은 '주어진 키만 도는 for', Omit은 'Exclude로 뺀 키만 도는 for'입니다. 함정도 for와 같습니다. 중첩 객체는 한 겹만 돕니다. 깊게 하려면 재귀 조건부 타입 `Deep<T>`가 필요합니다. 그리고 유니온 타입을 넘기면 조건부와 달리 분배되지 않고 유니온의 공통 키만 돕니다.",
         code: "타입 수준           값 수준 비유\n──────────────────  ──────────────────────────────\n[K in keyof T]      for (const K of Object.keys(T))\nas NewKey           key = transform(K)\n: T[K]              result[key] = T[K]\nas never            continue\n\n// 깊게 하려면 재귀\ntype Deep<T> = T extends object ? { [K in keyof T]: Deep<T[K]> } : T;",
         codeLang: "text",
       },
@@ -1514,7 +1514,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `Partial<T>`를 매핑된 타입으로 직접 적어 보세요. 2) `-readonly`와 `-?`를 한 번에 적용하면 `{ readonly a?: number }`는 무엇이 되나요? 3) 특정 키를 제거하는 매핑된 타입에서 never가 하는 일은? 4) 객체 유니온을 `in`으로 돌 때 키를 무엇으로 뽑나요?",
+        body: "1) `Partial<T>`를 매핑된 타입으로 직접 적어 보세요.\n2) `-readonly`와 `-?`를 한 번에 적용하면 `{ readonly a?: number }`는 무엇이 되나요?\n3) 특정 키를 제거하는 매핑된 타입에서 never가 하는 일은?\n4) 객체 유니온을 `in`으로 돌 때 키를 무엇으로 뽑나요?",
       },
     ],
     sources: [
@@ -1537,7 +1537,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 속성 이름에서 이벤트 이름을 만든다",
-        body: "문서의 예는 `on(eventName: \\`${string & keyof Type}Changed\\`, callback)`입니다. 객체의 키마다 `firstNameChanged` 같은 이벤트 이름을 자동으로 만들고, 없는 이름은 거부합니다 — \"Argument of type '\"firstName\"' is not assignable to parameter of type '\"firstNameChanged\" | \"lastNameChanged\" | \"ageChanged\"'.\"(TS2345). `string & keyof Type`인 이유는 keyof에 symbol이 들어 있어 템플릿에 못 들어가기 때문입니다(keyof 절). 매핑된 타입의 `as` 절에 두면 `Getters`처럼 키 자체를 바꾸는 데 쓰입니다.",
+        body: "문서의 예는 `on(eventName: \\`${string & keyof Type}Changed\\`, callback)`입니다. 객체의 키마다 `firstNameChanged` 같은 이벤트 이름을 자동으로 만들고, 없는 이름은 거부합니다. 그때의 에러는 \"Argument of type '\"firstName\"' is not assignable to parameter of type '\"firstNameChanged\" | \"lastNameChanged\" | \"ageChanged\"'.\"(TS2345)입니다. `string & keyof Type`인 이유는 keyof에 symbol이 들어 있어 템플릿에 못 들어가기 때문입니다(keyof 절). 매핑된 타입의 `as` 절에 두면 `Getters`처럼 키 자체를 바꾸는 데 쓰입니다.",
         code: "type PropEventSource<Type> = {\n  on(eventName: `${string & keyof Type}Changed`, callback: (newValue: any) => void): void;\n};\ndeclare function makeWatchedObject<Type>(obj: Type): Type & PropEventSource<Type>;\nconst person = makeWatchedObject({ firstName: \"Saoirse\", lastName: \"Ronan\", age: 26 });\n\nperson.on(\"firstNameChanged\", (v) => {});   // OK\nperson.on(\"firstName\", (v) => {});\n// Argument of type '\"firstName\"' is not assignable to parameter of type\n// '\"firstNameChanged\" | \"lastNameChanged\" | \"ageChanged\"'. (TS2345)",
       },
       {
@@ -1547,7 +1547,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "내장 문자열 조작 타입 네 개",
-        body: "`Uppercase<\"abc\">` → \"ABC\", `Lowercase<\"ABC\">` → \"abc\", `Capitalize<\"abc\">` → \"Abc\", `Uncapitalize<\"Abc\">` → \"abc\". 문서의 주의 둘. 이 타입들은 '성능을 위해 컴파일러에 내장되어 있어서 TypeScript에 포함된 .d.ts 파일에서 찾을 수 없다'. 그리고 '4.1 기준으로 이 내장 함수들은 JavaScript 문자열 런타임 함수를 직접 쓰므로 로캘을 인식하지 않는다' — toUpperCase를 그대로 부르는 것이라 터키어 i 같은 예외는 없습니다. 실제로 6.0.3에서 `Uppercase<\"abc\">`는 \"ABC\", `Capitalize<\"abc\">`는 \"Abc\"였습니다.",
+        body: "`Uppercase<\"abc\">`는 \"ABC\", `Lowercase<\"ABC\">`는 \"abc\", `Capitalize<\"abc\">`는 \"Abc\", `Uncapitalize<\"Abc\">`는 \"abc\"가 됩니다. 문서의 주의는 둘입니다. 하나는 이 타입들이 '성능을 위해 컴파일러에 내장되어 있어서 TypeScript에 포함된 .d.ts 파일에서 찾을 수 없다'는 점입니다. 다른 하나는 '4.1 기준으로 이 내장 함수들은 JavaScript 문자열 런타임 함수를 직접 쓰므로 로캘을 인식하지 않는다'는 점입니다. toUpperCase를 그대로 부르는 것이라 터키어 i 같은 예외는 없습니다. 실제로 6.0.3에서 `Uppercase<\"abc\">`는 \"ABC\", `Capitalize<\"abc\">`는 \"Abc\"였습니다.",
         code: "type Up = Uppercase<\"abc\">;        // \"ABC\"\ntype Cap = Capitalize<\"abc\">;      // \"Abc\"\ntype ASCIICacheKey<Str extends string> = `ID-${Uppercase<Str>}`;\ntype MainID = ASCIICacheKey<\"my_app\">;   // \"ID-MY_APP\"\n\n// lib.es5.d.ts 에는 이름만 있다\ntype Uppercase<S extends string> = intrinsic;",
       },
       {
@@ -1562,7 +1562,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `${\"a\" | \"b\"}_${\"x\" | \"y\"}`는 몇 개의 리터럴이 되나요? 2) `${keyof T}Changed`가 거부되는 이유는? 3) `\"firstNameChanged\"`에서 콜백 인자 타입을 string으로 맞추려면 시그니처를 어떻게 바꾸나요? 4) Capitalize가 .d.ts에 본문이 없는 이유는?",
+        body: "1) `${\"a\" | \"b\"}_${\"x\" | \"y\"}`는 몇 개의 리터럴이 되나요?\n2) `${keyof T}Changed`가 거부되는 이유는?\n3) `\"firstNameChanged\"`에서 콜백 인자 타입을 string으로 맞추려면 시그니처를 어떻게 바꾸나요?\n4) Capitalize가 .d.ts에 본문이 없는 이유는?",
       },
     ],
     sources: [
@@ -1580,32 +1580,32 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "필드는 생성자에서 초기화되어야 한다",
-        body: "`class Point { x: number; }`는 strict에서 \"Property 'x' has no initializer and is not definitely assigned in the constructor.\"(TS2564)입니다. 문서의 강조 — '필드는 생성자 자체 안에서 초기화되어야 한다'. init() 메서드를 생성자에서 불러도 TypeScript는 따라가지 않습니다. 확실히 다른 곳에서 채운다면 `name!: string`의 확정 할당 단언. `readonly`는 생성자 밖의 대입을 막습니다. 생성자에는 타입 매개변수와 반환 타입 어노테이션을 쓸 수 없고('인스턴스 타입이 항상 반환되니까'), 파생 클래스에서는 this를 쓰기 전에 `super()`를 불러야 합니다(\"'super' must be called before accessing 'this' in the constructor of a derived class.\" TS17009).",
+        body: "`class Point { x: number; }`는 strict에서 \"Property 'x' has no initializer and is not definitely assigned in the constructor.\"(TS2564)입니다. 문서는 '필드는 생성자 자체 안에서 초기화되어야 한다'고 강조합니다. init() 메서드를 생성자에서 불러도 TypeScript는 따라가지 않습니다. 확실히 다른 곳에서 채운다면 `name!: string`처럼 확정 할당 단언을 씁니다. `readonly`는 생성자 밖의 대입을 막습니다. 생성자에는 타입 매개변수와 반환 타입 어노테이션을 쓸 수 없고('인스턴스 타입이 항상 반환되니까'), 파생 클래스에서는 this를 쓰기 전에 `super()`를 불러야 합니다(\"'super' must be called before accessing 'this' in the constructor of a derived class.\" TS17009).",
         code: "class A { x: number; constructor() {} }\n//        ~\n// Property 'x' has no initializer and is not definitely assigned in the constructor. (TS2564)\n\nclass OK {\n  a = 0;            // 초기화자\n  b: number;        // 생성자에서\n  c!: string;       // 확정 할당 단언 — 다른 곳에서 채운다는 약속\n  readonly d = 1;\n  constructor() { this.b = 1; }\n}",
       },
       {
         label: "실제로 돌려 보면: 초기화 순서와 implements 의 한계",
-        body: "문서의 예를 그대로 돌렸습니다. `class Base { name = \"base\"; constructor() { console.log(\"My name is \" + this.name); } }`, `class Derived extends Base { name = \"derived\"; }`. `new Derived()`는 \"base\"를 찍습니다. 순서는 '기반 필드 → 기반 생성자 → 파생 필드 → 파생 생성자'라서 기반 생성자가 돌 때 파생 필드는 아직 없습니다. 그리고 `implements`는 검사일 뿐입니다 — '클래스나 메서드의 타입을 전혀 바꾸지 않는다'. 인터페이스의 선택적 속성 `pong?()`은 클래스에 생기지 않습니다. 실제로 `\"pong\" in new Ball()`은 false였습니다. 멤버가 같지 않으면 \"Class 'Ball' incorrectly implements interface 'Pingable'.\"(TS2420).",
-        code: "class Base { name = \"base\"; constructor() { console.log(\"Base ctor sees name =\", this.name); } }\nclass Derived extends Base { name = \"derived\"; constructor() { super(); console.log(\"Derived ctor sees name =\", this.name); } }\nnew Derived();\n// Base ctor sees name = base        ← 파생 필드는 아직 없다\n// Derived ctor sees name = derived\n\ninterface Pingable { ping(): void; pong?(): void }\nclass Ball implements Pingable { ping() {} }\n\"pong\" in new Ball();   // false — implements 는 속성을 만들지 않는다",
+        body: "문서의 예를 그대로 돌렸습니다. `class Base { name = \"base\"; constructor() { console.log(\"My name is \" + this.name); } }`와 `class Derived extends Base { name = \"derived\"; }`입니다. `new Derived()`는 \"base\"를 찍습니다. 순서는 '기반 필드 → 기반 생성자 → 파생 필드 → 파생 생성자'라서 기반 생성자가 돌 때 파생 필드는 아직 없습니다. 그리고 `implements`는 검사일 뿐입니다. 문서는 '클래스나 메서드의 타입을 전혀 바꾸지 않는다'고 적습니다. 인터페이스의 선택적 속성 `pong?()`은 클래스에 생기지 않습니다. 실제로 `\"pong\" in new Ball()`은 false였습니다. 멤버가 같지 않으면 \"Class 'Ball' incorrectly implements interface 'Pingable'.\"(TS2420)입니다.",
+        code: "class Base { name = \"base\"; constructor() { console.log(\"Base ctor sees name =\", this.name); } }\nclass Derived extends Base { name = \"derived\"; constructor() { super();\n  console.log(\"Derived ctor sees name =\", this.name); } }\nnew Derived();\n// Base ctor sees name = base        ← 파생 필드는 아직 없다\n// Derived ctor sees name = derived\n\ninterface Pingable { ping(): void; pong?(): void }\nclass Ball implements Pingable { ping() {} }\n\"pong\" in new Ball();   // false — implements 는 속성을 만들지 않는다",
       },
       {
         label: "가시성: private 은 소프트, #private 은 하드",
-        body: "`public`(기본)·`protected`(하위 클래스까지)·`private`(이 클래스만). TypeScript의 private은 컴파일 때만 검사합니다. 문서의 문장 — 'private은 타입 검사 중 대괄호 표기로의 접근을 허용한다'. 실제로 `(p as any)[\"soft\"]`뿐 아니라 `p[\"soft\"]`도 통과하고 런타임에는 그냥 속성(Object.keys에 보임)입니다. 반면 JavaScript의 `#hard`는 런타임에서도 밖에서 못 읽고 Object.keys에도 없습니다 — 실제로 `(p as any)[\"#hard\"]`는 undefined, keys는 `['soft']`였습니다. ES2021 이하로 컴파일하면 WeakMap으로 흉내 냅니다. 바깥에서 private을 읽으면 \"Property 'p' is private and only accessible within class 'B'.\"(TS2341), #private은 \"Property '#q' is not accessible outside class 'B' because it has a private identifier.\"(TS18013).",
-        code: "class Priv { private soft = 1; #hard = 2; }\nconst p = new Priv();\np.soft;   // Property 'soft' is private and only accessible within class 'Priv'. (TS2341)\np.#hard;  // Property '#hard' is not accessible outside class 'Priv' because it has a private identifier. (TS18013)\np[\"soft\"];   // 통과! — 소프트 private\n\n// 런타임 (node)\n(p as any)[\"soft\"]   → 1\n(p as any)[\"#hard\"]  → undefined\nObject.keys(p)       → ['soft']",
+        body: "가시성은 `public`(기본)·`protected`(하위 클래스까지)·`private`(이 클래스만) 셋입니다. TypeScript의 private은 컴파일 때만 검사합니다. 문서의 문장은 'private은 타입 검사 중 대괄호 표기로의 접근을 허용한다'입니다. 실제로 `(p as any)[\"soft\"]`뿐 아니라 `p[\"soft\"]`도 통과했습니다. 런타임에는 그냥 속성이라 Object.keys에 보입니다. 반면 JavaScript의 `#hard`는 런타임에서도 밖에서 못 읽고 Object.keys에도 없습니다. 실제로 `(p as any)[\"#hard\"]`는 undefined였고 keys는 `['soft']`였습니다. ES2021 이하로 컴파일하면 WeakMap으로 흉내 냅니다. 바깥에서 private을 읽으면 \"Property 'p' is private and only accessible within class 'B'.\"(TS2341)가 납니다. #private은 \"Property '#q' is not accessible outside class 'B' because it has a private identifier.\"(TS18013)가 납니다.",
+        code: "class Priv { private soft = 1; #hard = 2; }\nconst p = new Priv();\np.soft;   // Property 'soft' is private and only accessible within class 'Priv'. (TS2341)\n// Property '#hard' is not accessible outside class 'Priv' because it has a private identifier. (TS18013)\np.#hard;\np[\"soft\"];   // 통과! — 소프트 private\n\n// 런타임 (node)\n(p as any)[\"soft\"]   → 1\n(p as any)[\"#hard\"]  → undefined\nObject.keys(p)       → ['soft']",
       },
       {
         label: "static · 제네릭 클래스 · 런타임의 this",
-        body: "static 멤버는 클래스 자체에 붙고 상속됩니다(실제로 `class T2 extends S {}`의 `T2.value`가 1). `name`·`length`·`call`은 Function의 속성이라 static 이름으로 못 씁니다(\"Static property 'name' conflicts with built-in property 'Function.name'…\" TS2699). static 블록 `static { … }`은 클래스 정의 시점에 한 번 돌고 private 필드에 접근할 수 있습니다. 제네릭 클래스의 static은 타입 매개변수를 못 씁니다(TS2302). 런타임의 this는 호출 방식에 따릅니다 — 실제로 `const detached = c.inc; detached()`는 \"Cannot read properties of undefined (reading 'count')\"로 터지고, 화살표 함수 속성 `incArrow = () => …`는 됩니다. 문서의 교환 조건 — 화살표는 메모리를 더 쓰고 super.method를 못 부르며, `this` 매개변수(`inc(this: Counter)`)는 컴파일 때 잡지만 런타임 보장은 없습니다.",
+        body: "static 멤버는 클래스 자체에 붙고 상속됩니다. 실제로 `class T2 extends S {}`의 `T2.value`가 1이었습니다. `name`·`length`·`call`은 Function의 속성이라 static 이름으로 못 씁니다. \"Static property 'name' conflicts with built-in property 'Function.name'…\"(TS2699)이 납니다. static 블록 `static { … }`은 클래스 정의 시점에 한 번 돌고 private 필드에 접근할 수 있습니다. 제네릭 클래스의 static은 타입 매개변수를 못 씁니다(TS2302). 런타임의 this는 호출 방식에 따릅니다. 실제로 `const detached = c.inc; detached()`는 \"Cannot read properties of undefined (reading 'count')\"로 터졌습니다. 화살표 함수 속성 `incArrow = () => …`는 됩니다. 문서는 교환 조건을 적습니다. 화살표는 메모리를 더 쓰고 super.method를 못 부릅니다. `this` 매개변수(`inc(this: Counter)`)는 컴파일 때 잡지만 런타임 보장은 없습니다.",
         code: "class Counter {\n  count = 0;\n  inc() { this.count++; return this; }\n  incArrow = () => { this.count++; return this; };\n}\nconst c = new Counter();\nconst detached = c.inc; detached();\n// TypeError: Cannot read properties of undefined (reading 'count')\nconst detachedArrow = c.incArrow; detachedArrow();   // OK — count 1\n\n// 컴파일 타임에 막는 길\nclass Safe { count = 0; inc(this: Safe) { this.count++; } }\nconst s = new Safe(); const f = s.inc; f();\n// The 'this' context of type 'void' is not assignable to method's 'this' of type 'Safe'. (TS2684)",
       },
       {
         label: "getter/setter · 매개변수 속성 · abstract · override",
-        body: "getter만 있으면 readonly입니다(런타임에서도 strict 모드 대입이 \"Cannot set property v of #<Acc> which has only a getter\"로 터짐). setter 매개변수 타입은 getter 반환에서 추론되고, 4.3부터 둘이 달라도 됩니다. `constructor(public a: number, private b: string)`은 매개변수 속성 — 같은 이름의 필드를 자동으로 만듭니다(실제로 emit에 `this.x = x` 생성). `abstract class`는 `new`를 못 하고(\"Cannot create an instance of an abstract class.\" TS2511) 추상 멤버를 구현하지 않은 파생은 TS2515. 추상 클래스를 생성자로 받으려면 `typeof Base` 대신 `new () => Base`. `override` 키워드는 `noImplicitOverride`와 함께 쓰면 기반에 없는 멤버에 붙이면 \"This member cannot have an 'override' modifier because it is not declared in the base class 'C'.\"(TS4113)로 리팩터링 실수를 잡습니다.",
-        code: "abstract class S { abstract m(): void }\nnew S();\n// Cannot create an instance of an abstract class. (TS2511)\n\nclass C { m() {} }\nclass D extends C { override m() {} override nope() {} }\n//                                           ~~~~\n// --noImplicitOverride:\n// This member cannot have an 'override' modifier because it is not declared in the base class 'C'. (TS4113)\n\nclass Acc { get v() { return 1 } set v(x: string) {} }\n// 4.3+ : get 과 set 의 타입이 달라도 된다 (단, get 타입이 set 타입에 대입 가능해야)",
+        body: "getter만 있으면 readonly입니다. 런타임에서도 strict 모드 대입이 \"Cannot set property v of #<Acc> which has only a getter\"로 터집니다. setter 매개변수 타입은 getter 반환에서 추론됩니다. 4.3부터 둘이 달라도 됩니다. `constructor(public a: number, private b: string)`은 매개변수 속성입니다. 같은 이름의 필드를 자동으로 만듭니다. 실제로 emit에 `this.x = x`가 생성됐습니다. `abstract class`는 `new`를 못 합니다. \"Cannot create an instance of an abstract class.\"(TS2511)가 납니다. 추상 멤버를 구현하지 않은 파생은 TS2515입니다. 추상 클래스를 생성자로 받으려면 `typeof Base` 대신 `new () => Base`를 씁니다. `override` 키워드를 `noImplicitOverride`와 함께 쓰면 리팩터링 실수를 잡습니다. 기반에 없는 멤버에 붙이면 \"This member cannot have an 'override' modifier because it is not declared in the base class 'C'.\"(TS4113)가 납니다.",
+        code: "abstract class S { abstract m(): void }\nnew S();\n// Cannot create an instance of an abstract class. (TS2511)\n\nclass C { m() {} }\nclass D extends C { override m() {} override nope() {} }\n//                                           ~~~~\n// --noImplicitOverride:\n// This member cannot have an 'override' modifier because it is not declared in the base class 'C'.\n  (TS4113)\n\nclass Acc { get v() { return 1 } set v(x: string) {} }\n// 4.3+ : get 과 set 의 타입이 달라도 된다 (단, get 타입이 set 타입에 대입 가능해야)",
       },
       {
         label: "문제의 구조: 클래스는 값과 타입을 동시에 만들고, 비교는 여전히 구조적이다",
-        body: "클래스 선언은 두 가지를 만듭니다. 생성자 함수라는 값(`typeof Point`)과 인스턴스 모양이라는 타입(`Point`). 그래서 `InstanceType<typeof Point>`가 Point입니다. 그리고 관계 비교는 마지막 절이 말하듯 구조적입니다 — 멤버가 같은 두 클래스는 서로 대입되고, '멤버가 없는 타입은 다른 모든 것의 상위 타입'입니다. 유일한 명목적 예외가 private·protected 멤버입니다. 두 클래스가 각자 `private x`를 가지면 모양이 같아도 호환되지 않습니다(\"Types have separate declarations of a private property 'x'.\"). 그러니 '이 클래스 인스턴스만 받겠다'를 보장하는 가장 가벼운 방법이 private 필드 하나입니다.",
+        body: "클래스 선언은 두 가지를 만듭니다. 하나는 생성자 함수라는 값(`typeof Point`)입니다. 다른 하나는 인스턴스 모양이라는 타입(`Point`)입니다. 그래서 `InstanceType<typeof Point>`가 Point입니다. 그리고 관계 비교는 마지막 절이 말하듯 구조적입니다. 멤버가 같은 두 클래스는 서로 대입됩니다. '멤버가 없는 타입은 다른 모든 것의 상위 타입'입니다. 유일한 명목적 예외가 private·protected 멤버입니다. 두 클래스가 각자 `private x`를 가지면 모양이 같아도 호환되지 않습니다. \"Types have separate declarations of a private property 'x'.\"가 납니다. 그러니 '이 클래스 인스턴스만 받겠다'를 보장하는 가장 가벼운 방법이 private 필드 하나입니다.",
         code: "class Point1 { x = 0; y = 0 }\nclass Point2 { x = 0; y = 0 }\nconst p: Point1 = new Point2();   // OK — 구조적\n\nclass A2 { private x = 1 } class B2 { private x = 1 }\nconst a2: A2 = new B2();\n// Type 'B2' is not assignable to type 'A2'.\n//   Types have separate declarations of a private property 'x'. (TS2322)\n\nclass Empty {}\nfunction fn(x: Empty) {}\nfn(42); fn(\"x\"); fn({});   // 전부 OK — Empty 는 아무것도 요구하지 않는다",
       },
       {
@@ -1614,7 +1614,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `new Derived()`가 \"base\"를 찍는 이유를 초기화 순서로 설명하세요. 2) `private`과 `#private`의 차이를 '컴파일 타임'과 '런타임' 두 단어로 적어 보세요. 3) `const f = obj.method; f()`가 터지는 이유와, 컴파일 때 잡는 두 가지 방법은? 4) 모양이 같은 두 클래스가 서로 대입되지 않게 만드는 가장 가벼운 방법은?",
+        body: "1) `new Derived()`가 \"base\"를 찍는 이유를 초기화 순서로 설명하세요.\n2) `private`과 `#private`의 차이를 '컴파일 타임'과 '런타임' 두 단어로 적어 보세요.\n3) `const f = obj.method; f()`가 터지는 이유와, 컴파일 때 잡는 두 가지 방법은?\n4) 모양이 같은 두 클래스가 서로 대입되지 않게 만드는 가장 가벼운 방법은?",
       },
     ],
     sources: [
@@ -1637,9 +1637,9 @@ export const typescriptTheories: Theory[] = [
         code: "// s1.ts\nconst shared = 1;\n// s2.ts\nconst shared = 2;\n// Cannot redeclare block-scoped variable 'shared'. (TS2451) — 둘 다 스크립트라 전역\n\n// s2.ts 를 모듈로\nconst shared = 2;\nexport {};          // ← 이 한 줄로 자기 스코프",
       },
       {
-        label: "실제로 돌려 보면: 타입 import 는 지워지고, verbatimModuleSyntax 는 적게 한다",
-        body: "`import { a, T } from \"./a.js\"`에서 T가 타입이면 컴파일 결과에서 T는 사라집니다(타입은 런타임에 없으니까). 실제로 emit된 b.js에는 `import { a } from \"./a.js\"`만 남았습니다. 이 '지우기(elision)'는 단일 파일 변환기(Babel·esbuild)가 할 수 없는 일이라 — 다른 파일을 봐야 T가 타입인지 알 수 있으니까 — 5.0의 `verbatimModuleSyntax`는 적은 대로 내보내되 타입은 `type`을 붙이라고 강제합니다. 실제로 켜면 \"'T' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.\"(TS1484). `import type { T }`(전체) 또는 `import { a, type T }`(4.5 인라인)가 처방이고, type-only로 가져온 것을 값으로 쓰면 \"'Observable' cannot be used as a value because it was imported using 'import type'.\"(TS1361)입니다.",
-        code: "// esm/b.ts\nimport { a, T, I } from \"./a.js\";      // T, I 는 타입\n\n// tsc 출력 b.js — 타입은 지워졌다\nimport { a } from \"./a.js\";\n\n// --verbatimModuleSyntax\n// 'T' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled. (TS1484)\nimport { a, type T, type I } from \"./a.js\";   // 처방 — 그대로 emit 되고 type 은 빠진다\n\nimport type { Observable } from \"./observable.js\";\nnew Observable(1);\n// 'Observable' cannot be used as a value because it was imported using 'import type'. (TS1361)",
+        label: "실제로 돌려 보면: 타입 import 지우기",
+        body: "타입 import는 지워지고, verbatimModuleSyntax는 타입임을 적게 합니다. `import { a, T } from \"./a.js\"`에서 T가 타입이면 컴파일 결과에서 T는 사라집니다. 타입은 런타임에 없기 때문입니다. 실제로 emit된 b.js에는 `import { a } from \"./a.js\"`만 남았습니다. 이 '지우기(elision)'는 단일 파일 변환기(Babel·esbuild)가 할 수 없는 일입니다. 다른 파일을 봐야 T가 타입인지 알 수 있기 때문입니다. 그래서 5.0의 `verbatimModuleSyntax`는 적은 대로 내보내되 타입은 `type`을 붙이라고 강제합니다. 실제로 켜면 \"'T' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.\"(TS1484)가 납니다. 처방은 `import type { T }`(전체) 또는 `import { a, type T }`(4.5 인라인)입니다. type-only로 가져온 것을 값으로 쓰면 \"'Observable' cannot be used as a value because it was imported using 'import type'.\"(TS1361)입니다.",
+        code: "// esm/b.ts\nimport { a, T, I } from \"./a.js\";      // T, I 는 타입\n\n// tsc 출력 b.js — 타입은 지워졌다\nimport { a } from \"./a.js\";\n\n// --verbatimModuleSyntax\n// 'T' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.\n  (TS1484)\nimport { a, type T, type I } from \"./a.js\";   // 처방 — 그대로 emit 되고 type 은 빠진다\n\nimport type { Observable } from \"./observable.js\";\nnew Observable(1);\n// 'Observable' cannot be used as a value because it was imported using 'import type'. (TS1361)",
         terms: [
           {
             term: "import 지우기 (import elision)",
@@ -1649,7 +1649,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "import x = require() 와 CommonJS",
-        body: "TypeScript에는 CommonJS의 require에 직접 대응하는 문법 `import fs = require(\"fs\")`가 있습니다. ES 모듈을 출력할 때는 쓸 수 없습니다 — 실제로 `--module esnext`에서 \"Import assignment cannot be used when targeting ECMAScript modules. Consider using 'import * as ns from \"mod\"'…\"(TS1202). `module: nodenext`에서 package.json의 type이 commonjs인 파일은 CommonJS로 emit되어 `require(\"…\")`와 `exports.x =`가 나옵니다(실제로 cjs/e.js가 그렇게 나옴). ESM과 CJS가 섞일 때의 규칙은 모듈 참고서로 넘깁니다 — 이 장은 '같은 import가 설정에 따라 다른 코드가 된다'까지만 말합니다.",
+        body: "TypeScript에는 CommonJS의 require에 직접 대응하는 문법 `import fs = require(\"fs\")`가 있습니다. ES 모듈을 출력할 때는 쓸 수 없습니다. 실제로 `--module esnext`에서 \"Import assignment cannot be used when targeting ECMAScript modules. Consider using 'import * as ns from \"mod\"'…\"(TS1202)가 났습니다. `module: nodenext`에서 package.json의 type이 commonjs인 파일은 CommonJS로 emit됩니다. `require(\"…\")`와 `exports.x =`가 나옵니다. 실제로 cjs/e.js가 그렇게 나왔습니다. ESM과 CJS가 섞일 때의 규칙은 모듈 참고서로 넘깁니다. 이 장은 '같은 import가 설정에 따라 다른 코드가 된다'까지만 말합니다.",
         code: "// cjs/e.ts (package.json type: commonjs, --module nodenext)\nimport { a } from \"../esm/a.js\";\nexport const e = String(a);\nexport default function hello() { return \"hi\"; }\n\n// emit\n\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.e = void 0;\nexports.default = hello;\nconst a_js_1 = require(\"../esm/a.js\");\nexports.e = String(a_js_1.a);",
       },
       {
@@ -1669,7 +1669,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 두 .ts 파일에 같은 이름의 최상위 const가 있을 때 에러가 나는 조건과 고치는 한 줄은? 2) `import { a, T }`에서 T가 타입이면 출력은 어떻게 되고, verbatimModuleSyntax는 왜 이걸 에러로 보나요? 3) `import fs = require(\"fs\")`가 `module: esnext`에서 거부되는 이유는? 4) target과 module이 각각 정하는 것을 한 문장씩.",
+        body: "1) 두 .ts 파일에 같은 이름의 최상위 const가 있을 때 에러가 나는 조건과 고치는 한 줄은?\n2) `import { a, T }`에서 T가 타입이면 출력은 어떻게 되고, verbatimModuleSyntax는 왜 이걸 에러로 보나요?\n3) `import fs = require(\"fs\")`가 `module: esnext`에서 거부되는 이유는?\n4) target과 module이 각각 정하는 것을 한 문장씩.",
       },
     ],
     sources: [
@@ -1700,14 +1700,14 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "열다섯 항목의 성격: 셋으로 나뉜다",
-        body: "항목들을 나란히 놓으면 세 묶음입니다. 핸드북의 보충(유틸리티 타입·타입 호환성·타입 추론·변수 선언·심벌·이터레이터) — 핸드북 장의 모서리를 더 길게 적은 것. 옛 기능과 그 자리(네임스페이스·네임스페이스와 모듈·삼중 슬래시·Enum·믹스인) — 모듈 이전 시대의 문법이고 문서가 '지금은 이렇게 하라'를 함께 적는 것. 그리고 다른 생태계와의 접점(JSX·데코레이터) — React와 프레임워크 데코레이터가 TypeScript에 요구한 것. 세 번째 묶음은 TypeScript 자체보다 바깥 사정에 따라 바뀌어서 버전 주의가 가장 필요합니다.",
+        body: "항목들을 나란히 놓으면 세 묶음입니다.\n첫째는 핸드북의 보충(유틸리티 타입·타입 호환성·타입 추론·변수 선언·심벌·이터레이터)입니다. 핸드북 장의 모서리를 더 길게 적은 것입니다.\n둘째는 옛 기능과 그 자리(네임스페이스·네임스페이스와 모듈·삼중 슬래시·Enum·믹스인)입니다. 모듈 이전 시대의 문법이고, 문서가 '지금은 이렇게 하라'를 함께 적는 것입니다.\n셋째는 다른 생태계와의 접점(JSX·데코레이터)입니다. React와 프레임워크 데코레이터가 TypeScript에 요구한 것입니다.\n세 번째 묶음은 TypeScript 자체보다 바깥 사정에 따라 바뀌어서 버전 주의가 가장 필요합니다.",
         code: "핸드북 보충              옛 기능과 그 자리            바깥과의 접점\n──────────────────────   ─────────────────────────   ────────────────────\n유틸리티 타입 · 치트시트   네임스페이스 · ns 와 모듈      JSX (React)\n타입 호환성 · 타입 추론    삼중 슬래시 지시어             데코레이터 (TC39 vs legacy)\n변수 선언 · 심벌           Enum (vs as const 객체)\n이터레이터와 제너레이터    믹스인",
         codeLang: "text",
       },
       {
         label: "실제로 돌려 보면: 참고서가 다루는 '제거되었거나 바뀐' 것들",
         body: "7.0.2에서 이 섹션의 몇 가지 문장이 더는 사실이 아닙니다. 네임스페이스 장의 `--outFile` 다중 파일 묶기는 \"Option 'outFile' has been removed.\"로 불가능하고, `module Legacy {}` 키워드는 \"A 'namespace' declaration should not be declared using the 'module' keyword.\"(TS1540) 에러이며, 이터레이터 장의 ES5 타깃 제한은 ES5 자체가 제거되어 의미가 없어졌습니다. 데코레이터 장은 여전히 '실험적 2단계 구현'을 설명하며 머리에 '3단계 데코레이터는 5.0부터'라고만 적고 있습니다. 각 시트에 '지금 어떤가'를 따로 적어 두었습니다.",
-        code: "$ npx tsc --module amd --outFile out/all.js rt/ns.ts\nerror TS5102: Option 'outFile' has been removed. Please remove it from your configuration.\n\nrt/ns.ts(4,8): error TS1540: A 'namespace' declaration should not be declared using the 'module' keyword. Please use the 'namespace' keyword instead.\n\n$ npx tsc --noEmit --target es5 rt/iter.ts\nerror TS5108: Option 'target=ES5' has been removed.",
+        code: "$ npx tsc --module amd --outFile out/all.js rt/ns.ts\nerror TS5102: Option 'outFile' has been removed. Please remove it from your configuration.\n\nrt/ns.ts(4,8): error TS1540: A 'namespace' declaration should not be declared using the 'module' keyword.\nPlease use the 'namespace' keyword instead.\n\n$ npx tsc --noEmit --target es5 rt/iter.ts\nerror TS5108: Option 'target=ES5' has been removed.",
         codeLang: "text",
       },
       {
@@ -1729,8 +1729,8 @@ export const typescriptTheories: Theory[] = [
       "전역으로 쓸 수 있는 타입 변환 모음입니다. 전부 핸드북 타입 조작 장의 재료(매핑된·조건부·infer·내장 문자열)로 쓰여 있습니다. 문서는 항목마다 '릴리스' 버전을 적습니다. 이 시트는 스물두 개를 한 줄씩, 그리고 6.0.3 타입 API로 각각 계산한 결과를 붙입니다.",
     blocks: [
       {
-        label: "객체를 바꾸는 것: Partial · Required · Readonly · Record · Pick · Omit",
-        body: "Partial<T>(2.1)는 모든 속성을 선택적으로, Required<T>(2.8)는 전부 필수로, Readonly<T>(2.1)는 전부 readonly로. `Object.freeze`의 반환 타입이 Readonly<T>입니다. Record<K, T>(2.1)는 키 K에 값 T인 객체, Pick<T, K>(2.1)는 K 키만 남기기, Omit<T, K>(3.5)는 K 키 빼기. 실제로 6.0.3에서 `Partial<{ a: 1; b: 2 }>`는 `{ a?: 1 | undefined; b?: 2 | undefined }`, `Omit<{ a: 1; b: 2 }, \"a\">`는 `{ b: 2 }`였습니다.",
+        label: "객체를 바꾸는 것: Partial 부터 Omit 까지",
+        body: "객체를 바꾸는 유틸리티 타입은 Partial·Required·Readonly·Record·Pick·Omit입니다. Partial<T>(2.1)는 모든 속성을 선택적으로 만듭니다. Required<T>(2.8)는 전부 필수로 만듭니다. Readonly<T>(2.1)는 전부 readonly로 만듭니다. `Object.freeze`의 반환 타입이 Readonly<T>입니다. Record<K, T>(2.1)는 키 K에 값 T인 객체입니다. Pick<T, K>(2.1)는 K 키만 남깁니다. Omit<T, K>(3.5)는 K 키를 뺍니다. 실제로 6.0.3에서 `Partial<{ a: 1; b: 2 }>`는 `{ a?: 1 | undefined; b?: 2 | undefined }`였습니다. `Omit<{ a: 1; b: 2 }, \"a\">`는 `{ b: 2 }`였습니다.",
         code: "// 6.0.3 checker.typeToString\ntype P   = Partial<{ a: 1; b: 2 }>;        // { a?: 1 | undefined; b?: 2 | undefined; }\ntype R   = Required<{ a?: 1 }>;            // { a: 1; }\ntype RO  = Readonly<{ a: 1 }>;             // { readonly a: 1; }\ntype Rec = Record<\"x\" | \"y\", number>;      // { x: number; y: number; }\ntype Pk  = Pick<{ a: 1; b: 2 }, \"a\">;      // { a: 1; }\ntype Om  = Omit<{ a: 1; b: 2 }, \"a\">;      // { b: 2; }\n\n// 정의 (lib.es5.d.ts)\ntype Partial<T> = { [P in keyof T]?: T[P] };\ntype Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;",
       },
       {
@@ -1740,7 +1740,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 함수와 클래스에서 꺼내는 것",
-        body: "Parameters<F>(3.1)는 매개변수 튜플, ConstructorParameters<C>(3.1)는 생성자 매개변수 튜플, ReturnType<F>(2.8)는 반환 타입, InstanceType<C>(2.8)는 인스턴스 타입. 문서의 주의 — 오버로드는 마지막 시그니처를 쓰고, any를 넣으면 unknown[], never를 넣으면 never. ThisParameterType<F>(3.3)는 this 매개변수 타입(없으면 unknown), OmitThisParameter<F>(3.3)는 this 매개변수를 뺀 함수 타입. Awaited<T>(4.5)는 Promise를 재귀적으로 벗깁니다. 실제로 `Parameters<(a: number, b: string) => void>`는 이름이 남은 튜플 `[a: number, b: string]`, `ConstructorParameters<typeof Date>`는 `[value: string | number | Date]`, `Awaited<Promise<Promise<number>>>`는 number였습니다.",
+        body: "Parameters<F>(3.1)는 매개변수 튜플을 꺼냅니다. ConstructorParameters<C>(3.1)는 생성자 매개변수 튜플을 꺼냅니다. ReturnType<F>(2.8)는 반환 타입을, InstanceType<C>(2.8)는 인스턴스 타입을 꺼냅니다. 문서의 주의가 있습니다. 오버로드는 마지막 시그니처를 씁니다. any를 넣으면 unknown[]이고, never를 넣으면 never입니다. ThisParameterType<F>(3.3)는 this 매개변수 타입입니다(없으면 unknown). OmitThisParameter<F>(3.3)는 this 매개변수를 뺀 함수 타입입니다. Awaited<T>(4.5)는 Promise를 재귀적으로 벗깁니다. 실제로 `Parameters<(a: number, b: string) => void>`는 이름이 남은 튜플 `[a: number, b: string]`이었습니다. `ConstructorParameters<typeof Date>`는 `[value: string | number | Date]`였습니다. `Awaited<Promise<Promise<number>>>`는 number였습니다.",
         code: "type Pa = Parameters<(a: number, b: string) => void>;   // [a: number, b: string]\ntype CP = ConstructorParameters<typeof Date>;            // [value: string | number | Date]\ntype RT = ReturnType<() => Promise<number>>;             // Promise<number>\ntype IT = InstanceType<typeof Map>;                      // Map<unknown, unknown>\ntype Aw = Awaited<Promise<Promise<number>>>;             // number\ntype TP = ThisParameterType<(this: Window, x: number) => void>;   // Window\ntype OT = OmitThisParameter<(this: Window, x: number) => void>;   // (x: number) => void\n\n// 정의\ntype ReturnType<T extends (...args: any) => any> = T extends (...args: any) => infer R ? R : any;",
       },
       {
@@ -1760,7 +1760,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) Omit을 Pick과 Exclude로 정의해 보세요. 2) 오버로드된 함수의 ReturnType은 어느 시그니처를 보나요? 3) NoInfer가 없을 때 `f([\"red\", \"green\"], \"blue\")`에서 C가 어떻게 추론되고, NoInfer가 그걸 어떻게 바꾸나요? 4) Capitalize의 정의가 .d.ts에 없는 이유는?",
+        body: "1) Omit을 Pick과 Exclude로 정의해 보세요.\n2) 오버로드된 함수의 ReturnType은 어느 시그니처를 보나요?\n3) NoInfer가 없을 때 `f([\"red\", \"green\"], \"blue\")`에서 C가 어떻게 추론되고, NoInfer가 그걸 어떻게 바꾸나요?\n4) Capitalize의 정의가 .d.ts에 없는 이유는?",
       },
     ],
     sources: [
@@ -1774,11 +1774,11 @@ export const typescriptTheories: Theory[] = [
     name: "치트 시트",
     tagline: "한 장짜리 그림 네 개 — 제어 흐름 분석 · 인터페이스 · 타입 · 클래스",
     intro:
-      "typescriptlang.org/cheatsheets 에는 내려받을 수 있는 그림 네 장이 있습니다. 제어 흐름 분석(Control Flow Analysis), 인터페이스(Interfaces), 타입(Types), 클래스(Classes). PDF와 PNG, 네 장 묶음 zip. 텍스트 페이지가 아니라 그림이라 이 시트는 '각 장이 핸드북의 어디를 압축했는지'와, 실제로 압축해 두면 좋은 것들을 적습니다.",
+      "typescriptlang.org/cheatsheets 에는 내려받을 수 있는 그림 네 장이 있습니다. 제어 흐름 분석(Control Flow Analysis), 인터페이스(Interfaces), 타입(Types), 클래스(Classes)입니다. PDF와 PNG로 받을 수 있고, 네 장 묶음 zip도 있습니다. 텍스트 페이지가 아니라 그림입니다. 그래서 이 시트는 '각 장이 핸드북의 어디를 압축했는지'와, 실제로 압축해 두면 좋은 것들을 적습니다.",
     blocks: [
       {
         label: "네 장이 가리키는 핸드북의 자리",
-        body: "제어 흐름 분석 장은 핸드북 좁히기 장을 한 그림으로 — if/else·typeof·instanceof·in·판별 유니온·타입 가드·단언 함수·never 소진. 인터페이스 장은 일상적인 타입의 인터페이스 절과 객체 타입 장 — extends·제네릭·오버로드·getter/setter·인덱스 시그니처·readonly. 타입 장은 타입 조작 장 — 유니온·교차·조건부·매핑된·템플릿 리터럴·튜플·typeof·keyof. 클래스 장은 클래스 장 — 가시성·abstract·static·매개변수 속성·데코레이터·제네릭 클래스. 그림마다 '언제 interface 대신 type을 쓰나' 같은 결정 메모가 한 귀퉁이에 있습니다.",
+        body: "제어 흐름 분석 장은 핸드북 좁히기 장을 한 그림으로 압축한 것입니다. if/else·typeof·instanceof·in·판별 유니온·타입 가드·단언 함수·never 소진이 들어 있습니다.\n인터페이스 장은 일상적인 타입의 인터페이스 절과 객체 타입 장입니다. extends·제네릭·오버로드·getter/setter·인덱스 시그니처·readonly가 들어 있습니다.\n타입 장은 타입 조작 장입니다. 유니온·교차·조건부·매핑된·템플릿 리터럴·튜플·typeof·keyof가 들어 있습니다.\n클래스 장은 클래스 장입니다. 가시성·abstract·static·매개변수 속성·데코레이터·제네릭 클래스가 들어 있습니다.\n그림마다 '언제 interface 대신 type을 쓰나' 같은 결정 메모가 한 귀퉁이에 있습니다.",
         code: "치트 시트              압축한 핸드북 장\n────────────────────  ───────────────────────────────────\nControl Flow Analysis  좁히기\nInterfaces             일상적인 타입 — 인터페이스 · 객체 타입\nTypes                  타입 조작 (여덟 절)\nClasses                클래스",
         codeLang: "text",
       },
@@ -1814,7 +1814,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "두 세계: 시그니처가 다르다",
         body: "표준 데코레이터는 `(value, context)` 두 인자를 받습니다. context에 `kind`(\"class\" | \"method\" | \"getter\" | \"setter\" | \"field\" | \"accessor\")·`name`·`static`·`private`·`addInitializer`·`metadata`가 들어 있습니다. legacy는 `(target, propertyKey, descriptor)` 세 인자입니다. 같은 `@logged`를 두 모드에서 돌리면 전혀 다른 것이 들어옵니다. 실제로 표준 모드에서는 \"standard decorator sees method m false false\", legacy 모드에서는 \"legacy decorator sees object m function\"이 찍혔습니다. 그리고 표준 모드용으로 쓴 데코레이터를 `--experimentalDecorators`로 컴파일하면 \"Unable to resolve signature of method decorator when called as an expression. Argument of type 'string' is not assignable to parameter of type 'ClassMethodDecoratorContext…'\"(TS1241)로 막힙니다 — 두 번째 인자로 문자열(propertyKey)이 오니까요.",
-        code: "// 표준 (5.0+, 기본)\nfunction logged<T extends (...a: any[]) => any>(value: T, ctx: ClassMethodDecoratorContext) {\n  console.log(\"standard decorator sees\", ctx.kind, String(ctx.name), ctx.static, ctx.private);\n  return function (this: any, ...args: any[]) { console.log(\"→\", String(ctx.name), args); return value.apply(this, args); } as T;\n}\nclass Svc { n = 1; @logged m(x: number) { return x + this.n; } }\nnew Svc().m(2);\n// standard decorator sees method m false false\n// → m [ 2 ]\n// 3\n\n// 같은 코드를 --experimentalDecorators 로\n// Unable to resolve signature of method decorator when called as an expression.\n//   Argument of type 'string' is not assignable to parameter of type 'ClassMethodDecoratorContext<…>'. (TS1241)",
+        code: "// 표준 (5.0+, 기본)\nfunction logged<T extends (...a: any[]) => any>(value: T, ctx: ClassMethodDecoratorContext) {\n  console.log(\"standard decorator sees\", ctx.kind, String(ctx.name), ctx.static, ctx.private);\n  return function (this: any, ...args: any[]) { console.log(\"→\", String(ctx.name), args); return\n    value.apply(this, args); } as T;\n}\nclass Svc { n = 1; @logged m(x: number) { return x + this.n; } }\nnew Svc().m(2);\n// standard decorator sees method m false false\n// → m [ 2 ]\n// 3\n\n// 같은 코드를 --experimentalDecorators 로\n// Unable to resolve signature of method decorator when called as an expression.\n//   Argument of type 'string' is not assignable to parameter of type 'ClassMethodDecoratorContext<…>'.\n  (TS1241)",
       },
       {
         label: "실제로 돌려 보면: legacy 의 평가 순서",
@@ -1825,12 +1825,12 @@ export const typescriptTheories: Theory[] = [
       {
         label: "표준의 도구: addInitializer 와 metadata",
         body: "표준 데코레이터에는 legacy에 없던 둘이 있습니다. `context.addInitializer(fn)`은 인스턴스가 만들어질 때(또는 클래스가 정의될 때) 돌 코드를 등록합니다 — 메서드를 this에 bind하는 `@bound`가 대표 예이고, 실제로 `const { k } = s; k()`가 1을 돌려줬습니다. `context.metadata`(5.2)는 클래스마다 하나인 객체이고 `Class[Symbol.metadata]`로 읽습니다. Node 24에는 Symbol.metadata가 아직 없어 `Symbol.metadata ??= Symbol(\"Symbol.metadata\")` 폴리필이 필요했고, 그러고 나니 `[Object: null prototype] { touched: 'm' }`이 읽혔습니다. 컴파일에는 `lib`에 `esnext.decorators`가 필요합니다.",
-        code: "function bound(_v: any, ctx: ClassMethodDecoratorContext) {\n  ctx.addInitializer(function (this: any) { this[ctx.name] = this[ctx.name].bind(this); });\n}\nclass Svc { n = 1; @bound k() { return this.n; } }\nconst { k } = new Svc(); k();   // 1 — bind 되어 있다\n\n(Symbol as any).metadata ??= Symbol(\"Symbol.metadata\");   // Node 24 폴리필\nfunction meta(_v: any, ctx: ClassMethodDecoratorContext) { (ctx.metadata as any).touched = String(ctx.name); }\nclass A { @meta m() {} }\n(A as any)[Symbol.metadata];   // [Object: null prototype] { touched: 'm' }\n// tsc --lib es2022,esnext.decorators,dom",
+        code: "function bound(_v: any, ctx: ClassMethodDecoratorContext) {\n  ctx.addInitializer(function (this: any) { this[ctx.name] = this[ctx.name].bind(this); });\n}\nclass Svc { n = 1; @bound k() { return this.n; } }\nconst { k } = new Svc(); k();   // 1 — bind 되어 있다\n\n(Symbol as any).metadata ??= Symbol(\"Symbol.metadata\");   // Node 24 폴리필\nfunction meta(_v: any, ctx: ClassMethodDecoratorContext) { (ctx.metadata as any).touched =\n  String(ctx.name); }\nclass A { @meta m() {} }\n(A as any)[Symbol.metadata];   // [Object: null prototype] { touched: 'm' }\n// tsc --lib es2022,esnext.decorators,dom",
       },
       {
         label: "emit 의 모양과 reflect-metadata",
         body: "표준 데코레이터는 `__esDecorate`·`__runInitializers` 헬퍼로 컴파일되고, legacy는 `__decorate`로 컴파일됩니다(실제로 두 출력의 헬퍼 이름이 그렇게 갈렸습니다). legacy 세계의 `emitDecoratorMetadata`는 `reflect-metadata` 라이브러리와 함께 타입 정보를 런타임에 남기는 기능이고 문서가 '실험적이며 향후 호환성이 깨질 수 있다'고 적습니다. 표준 데코레이터는 `emitDecoratorMetadata`와 호환되지 않습니다(5.0 릴리스 노트). Angular·NestJS 같은 프레임워크가 legacy 시그니처와 메타데이터에 기대 왔기 때문에, 어느 모드인지는 프레임워크가 정합니다.",
-        code: "모드         플래그                         인자                          메타데이터\n──────────  ─────────────────────────────  ────────────────────────────  ─────────────────────────\n표준 (5.0+)  없음 (기본)                     (value, context)              context.metadata · Symbol.metadata (5.2)\nlegacy      --experimentalDecorators       (target, key, descriptor)     --emitDecoratorMetadata + reflect-metadata\n\n표준에 없는 것: 매개변수 데코레이터 · emitDecoratorMetadata\nlegacy 에 없는 것: addInitializer · context.metadata · accessor 키워드",
+        code: "모드      플래그                      인자                       메타데이터\n───────  ──────────────────────────  ─────────────────────────  ─────────────────────────\n표준 (5.0+)  없음 (기본)                  (value, context)           context.metadata · Symbol.metadata (5.2)\nlegacy   --experimentalDecorators    (target, key, descriptor)  --emitDecoratorMetadata + reflect-metadata\n\n표준에 없는 것: 매개변수 데코레이터 · emitDecoratorMetadata\nlegacy 에 없는 것: addInitializer · context.metadata · accessor 키워드",
         codeLang: "text",
       },
       {
@@ -1843,7 +1843,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 참고서 데코레이터 페이지 본문이 설명하는 모드는 어느 쪽인가요? 2) `@first() @second()`에서 팩토리 평가와 데코레이터 호출의 순서는? 3) 표준 모드용 데코레이터를 `--experimentalDecorators`로 컴파일하면 어떤 에러가 나고 왜인가요? 4) 데코레이터가 추가한 속성을 TypeScript가 모르는 이유는?",
+        body: "1) 참고서 데코레이터 페이지 본문이 설명하는 모드는 어느 쪽인가요?\n2) `@first() @second()`에서 팩토리 평가와 데코레이터 호출의 순서는?\n3) 표준 모드용 데코레이터를 `--experimentalDecorators`로 컴파일하면 어떤 에러가 나고 왜인가요?\n4) 데코레이터가 추가한 속성을 TypeScript가 모르는 이유는?",
       },
     ],
     sources: [
@@ -1867,8 +1867,8 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 네임스페이스는 함수·enum·클래스에 붙는다",
-        body: "네임스페이스를 같은 이름의 함수 뒤에 선언하면 함수에 속성이 붙습니다 — `buildLabel.prefix`. enum 뒤에 두면 enum에 메서드가 붙습니다 — `Color.mixColor`. 클래스 뒤에 두면 클래스 안의 보조 클래스를 담을 수 있습니다 — `Album.AlbumLabel`. 세 경우 모두 '네임스페이스가 뒤에 와야' 합니다. 실제로 세 예제를 그대로 돌려 \"Hello, Sam\", `enum+namespace: 3 Up`(mixColor(\"yellow\") = red + green = 3), `lbl`을 얻었습니다. 컴파일 결과는 IIFE로 같은 객체에 속성을 더하는 모양입니다.",
-        code: "function buildLabel(name: string) { return buildLabel.prefix + name + buildLabel.suffix; }\nnamespace buildLabel { export let suffix = \"\"; export let prefix = \"Hello, \"; }\nbuildLabel(\"Sam\");   // \"Hello, Sam\"\n\nenum Color { red = 1, green, blue }\nnamespace Color { export function mixColor(n: string) { return n === \"yellow\" ? Color.red + Color.green : undefined; } }\nColor.mixColor(\"yellow\");   // 3\n\n// emit — 같은 객체에 덧붙인다\nvar Color;\n(function (Color) { Color[Color[\"red\"] = 1] = \"red\"; /* … */ })(Color || (Color = {}));\n(function (Color) { function mixColor(n) { /* … */ } Color.mixColor = mixColor; })(Color || (Color = {}));",
+        body: "네임스페이스를 같은 이름의 함수 뒤에 선언하면 함수에 속성이 붙습니다. `buildLabel.prefix`가 그 예입니다.\nenum 뒤에 두면 enum에 메서드가 붙습니다. `Color.mixColor`가 그 예입니다.\n클래스 뒤에 두면 클래스 안의 보조 클래스를 담을 수 있습니다. `Album.AlbumLabel`이 그 예입니다.\n세 경우 모두 '네임스페이스가 뒤에 와야' 합니다. 실제로 세 예제를 그대로 돌려 \"Hello, Sam\", `enum+namespace: 3 Up`(mixColor(\"yellow\") = red + green = 3), `lbl`을 얻었습니다. 컴파일 결과는 IIFE로 같은 객체에 속성을 더하는 모양입니다.",
+        code: "function buildLabel(name: string) { return buildLabel.prefix + name + buildLabel.suffix; }\nnamespace buildLabel { export let suffix = \"\"; export let prefix = \"Hello, \"; }\nbuildLabel(\"Sam\");   // \"Hello, Sam\"\n\nenum Color { red = 1, green, blue }\nnamespace Color { export function mixColor(n: string) { return n === \"yellow\" ? Color.red + Color.green :\n  undefined; } }\nColor.mixColor(\"yellow\");   // 3\n\n// emit — 같은 객체에 덧붙인다\nvar Color;\n(function (Color) { Color[Color[\"red\"] = 1] = \"red\"; /* … */ })(Color || (Color = {}));\n(function (Color) { function mixColor(n) { /* … */ } Color.mixColor = mixColor; })(Color || (Color = {}));",
       },
       {
         label: "안 되는 병합: 클래스와 클래스, 타입 별칭과 무엇이든",
@@ -1877,7 +1877,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "모듈 보강과 전역 보강",
-        body: "`declare module \"./observable.js\" { interface Observable<T> { map<U>(f: (x: T) => U): Observable<U>; } }`처럼 이미 있는 모듈의 인터페이스에 멤버를 더하는 것이 모듈 보강입니다. 라이브러리의 타입에 플러그인이 추가한 메서드를 알리는 표준 방법입니다. 한계 — '보강에서는 새 최상위 선언을 할 수 없고, 기존 선언에 대한 패치만'. default export는 보강할 수 없고 named export만 됩니다. 전역에 더하려면 모듈 파일 안에서 `declare global { interface Array<T> { toObservable(): … } }`. 실제로 세 가지(모듈 인터페이스 보강, 전역 Array 보강, Window에 속성 추가)를 한 파일에서 선언하고 다른 파일에서 쓰는 것이 에러 없이 통과했습니다. 선언 파일 템플릿의 '모듈: 플러그인'과 '전역: 모듈 수정'이 이 둘의 뼈대입니다.",
+        body: "`declare module \"./observable.js\" { interface Observable<T> { map<U>(f: (x: T) => U): Observable<U>; } }`처럼 이미 있는 모듈의 인터페이스에 멤버를 더하는 것이 모듈 보강입니다. 라이브러리의 타입에 플러그인이 추가한 메서드를 알리는 표준 방법입니다. 한계가 있습니다. '보강에서는 새 최상위 선언을 할 수 없고, 기존 선언에 대한 패치만'입니다. default export는 보강할 수 없고 named export만 됩니다. 전역에 더하려면 모듈 파일 안에서 `declare global { interface Array<T> { toObservable(): … } }`를 씁니다. 실제로 세 가지(모듈 인터페이스 보강, 전역 Array 보강, Window에 속성 추가)를 한 파일에서 선언하고 다른 파일에서 쓰는 것이 에러 없이 통과했습니다. 선언 파일 템플릿의 '모듈: 플러그인'과 '전역: 모듈 수정'이 이 둘의 뼈대입니다.",
         code: "// augment.ts\nimport \"./observable.js\";\ndeclare module \"./observable.js\" {\n  interface Observable<T> { map<U>(f: (x: T) => U): Observable<U>; }\n}\ndeclare global {\n  interface Array<T> { toObservable(): import(\"./observable.js\").Observable<T>; }\n  interface Window { __APP__: string; }\n}\nexport {};\n\n// use.ts\nnew Observable(1).map((x) => String(x));   // OK\n[1].toObservable();                        // OK\nwindow.__APP__ = \"x\";                      // OK\nwindow.__NOT_DECLARED__;\n// Property '__NOT_DECLARED__' does not exist on type 'Window & typeof globalThis'. (TS2339)",
       },
       {
@@ -1892,7 +1892,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 두 인터페이스의 같은 이름 함수 멤버는 어떻게 되고 순서 규칙은? 2) `class A {} class A {}`가 거부되는 이유와, 클래스를 확장하려면 무엇을 쓰나요? 3) 모듈 보강에서 할 수 없는 것 두 가지는? 4) `window.__APP__`을 에러 없이 쓰려면 무엇을 선언하나요?",
+        body: "1) 두 인터페이스의 같은 이름 함수 멤버는 어떻게 되고 순서 규칙은?\n2) `class A {} class A {}`가 거부되는 이유와, 클래스를 확장하려면 무엇을 쓰나요?\n3) 모듈 보강에서 할 수 없는 것 두 가지는?\n4) `window.__APP__`을 에러 없이 쓰려면 무엇을 선언하나요?",
       },
     ],
     sources: [
@@ -1910,7 +1910,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "숫자 enum 과 역매핑, 문자열 enum",
-        body: "`enum Dir { Up = 1, Down, Left, Right }`는 Up부터 1·2·3·4로 자동 증가합니다. 초기화자가 없으면 0부터. 숫자 enum은 컴파일되면 '이름 → 값'과 '값 → 이름' 양방향을 가진 객체가 됩니다(역매핑). 실제로 `Dir[3]`은 \"Left\", `Object.keys(Dir)`는 `['1','2','3','4','Up','Down','Left','Right']` 여덟 개였습니다. 문자열 enum은 자동 증가도 역매핑도 없습니다 — `Str[\"a\"]`는 undefined. 계산 멤버 뒤에 초기화자 없는 멤버가 오면 \"Enum member must have initializer.\"(TS1061). 그리고 enum 타입에는 리터럴을 직접 넣을 수 없습니다 — `const d: Dir = 5`는 \"Type '5' is not assignable to type 'Dir'.\", `const s: Str = \"a\"`도 \"Type '\"a\"' is not assignable to type 'Str'.\"입니다(5.0부터 모든 enum이 유니온 enum이 되어 숫자도 엄격해졌습니다).",
+        body: "`enum Dir { Up = 1, Down, Left, Right }`는 Up부터 1·2·3·4로 자동 증가합니다. 초기화자가 없으면 0부터 시작합니다. 숫자 enum은 컴파일되면 '이름 → 값'과 '값 → 이름' 양방향을 가진 객체가 됩니다(역매핑). 실제로 `Dir[3]`은 \"Left\"였습니다. `Object.keys(Dir)`는 `['1','2','3','4','Up','Down','Left','Right']` 여덟 개였습니다. 문자열 enum은 자동 증가도 역매핑도 없습니다. `Str[\"a\"]`는 undefined입니다. 계산 멤버 뒤에 초기화자 없는 멤버가 오면 \"Enum member must have initializer.\"(TS1061)가 납니다. 그리고 enum 타입에는 리터럴을 직접 넣을 수 없습니다. `const d: Dir = 5`는 \"Type '5' is not assignable to type 'Dir'.\"입니다. `const s: Str = \"a\"`도 \"Type '\"a\"' is not assignable to type 'Str'.\"입니다. 5.0부터 모든 enum이 유니온 enum이 되어 숫자도 엄격해졌습니다.",
         code: "enum Dir { Up = 1, Down, Left, Right }\nDir.Left;          // 3\nDir[3];            // \"Left\"   ← 역매핑\nObject.keys(Dir);  // ['1','2','3','4','Up','Down','Left','Right']\n\nenum Str { A = \"a\" }\n(Str as any)[\"a\"]; // undefined — 문자열 enum 은 역매핑 없음\n\nconst d: Dir = 5;  // Type '5' is not assignable to type 'Dir'. (TS2322)\nconst s: Str = \"a\";// Type '\"a\"' is not assignable to type 'Str'. (TS2322)",
       },
       {
@@ -1920,8 +1920,8 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "유니온 enum, 멤버 타입, keyof typeof",
-        body: "멤버가 전부 리터럴이면 각 멤버가 타입이 됩니다. `ShapeKind.Circle` 타입의 자리에 `ShapeKind.Square`를 넣으면 \"Type 'ShapeKind.Square' is not assignable to type 'ShapeKind.Circle'.\". 그리고 겹치지 않는 비교는 잡힙니다 — 실제로 `x !== E.Foo || x !== E.Bar`가 \"This comparison appears to be unintentional because the types 'E.Foo' and 'E.Bar' have no overlap.\"(TS2367)이었습니다(첫 조건이 거짓이면 x는 E.Foo라 둘째 비교가 항상 참). 키 이름의 유니온이 필요하면 `keyof typeof Dir` — 실제로 `\"Up\" | \"Down\" | \"Left\" | \"Right\"`이고 `\"Diag\"`를 넣으면 \"Type '\"Diag\"' is not assignable to type '\"Down\" | \"Left\" | \"Right\" | \"Up\"'.\"입니다.",
-        code: "enum E { Foo, Bar }\nfunction f(x: E) {\n  if (x !== E.Foo || x !== E.Bar) {}\n  //                 ~~~~~~~~~~~~\n  // This comparison appears to be unintentional because the types 'E.Foo' and 'E.Bar' have no overlap. (TS2367)\n}\n\ntype K = keyof typeof Dir;   // \"Up\" | \"Down\" | \"Left\" | \"Right\"\nconst k: K = \"Diag\";\n// Type '\"Diag\"' is not assignable to type '\"Down\" | \"Left\" | \"Right\" | \"Up\"'. (TS2322)",
+        body: "멤버가 전부 리터럴이면 각 멤버가 타입이 됩니다. `ShapeKind.Circle` 타입의 자리에 `ShapeKind.Square`를 넣으면 \"Type 'ShapeKind.Square' is not assignable to type 'ShapeKind.Circle'.\"이 납니다. 그리고 겹치지 않는 비교는 잡힙니다. 실제로 `x !== E.Foo || x !== E.Bar`가 \"This comparison appears to be unintentional because the types 'E.Foo' and 'E.Bar' have no overlap.\"(TS2367)이었습니다. 첫 조건이 거짓이면 x는 E.Foo라 둘째 비교가 항상 참이기 때문입니다. 키 이름의 유니온이 필요하면 `keyof typeof Dir`를 씁니다. 실제로 `\"Up\" | \"Down\" | \"Left\" | \"Right\"`였습니다. `\"Diag\"`를 넣으면 \"Type '\"Diag\"' is not assignable to type '\"Down\" | \"Left\" | \"Right\" | \"Up\"'.\"입니다.",
+        code: "enum E { Foo, Bar }\nfunction f(x: E) {\n  if (x !== E.Foo || x !== E.Bar) {}\n  //                 ~~~~~~~~~~~~\n  // This comparison appears to be unintentional because the types 'E.Foo' and 'E.Bar' have no overlap.\n    (TS2367)\n}\n\ntype K = keyof typeof Dir;   // \"Up\" | \"Down\" | \"Left\" | \"Right\"\nconst k: K = \"Diag\";\n// Type '\"Diag\"' is not assignable to type '\"Down\" | \"Left\" | \"Right\" | \"Up\"'. (TS2322)",
       },
       {
         label: "Objects vs Enums: as const 객체라는 대안",
@@ -1940,7 +1940,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 숫자 enum을 컴파일하면 Object.keys가 몇 개인가요? 문자열 enum은? 2) const enum이 isolatedModules에서 문제가 되는 이유는? 3) `enum E { A }`를 `erasableSyntaxOnly`가 거부하는 이유와 대안은? 4) `x !== E.Foo || x !== E.Bar`가 에러인 이유는?",
+        body: "1) 숫자 enum을 컴파일하면 Object.keys가 몇 개인가요? 문자열 enum은?\n2) const enum이 isolatedModules에서 문제가 되는 이유는?\n3) `enum E { A }`를 `erasableSyntaxOnly`가 거부하는 이유와 대안은?\n4) `x !== E.Foo || x !== E.Bar`가 에러인 이유는?",
       },
     ],
     sources: [
@@ -1984,7 +1984,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `for (const i in [4, 5, 6])`의 i는 무엇이고 어떤 타입인가요? 2) 객체 리터럴에 for..of를 쓰면 컴파일·런타임 각각 어떤 에러가 나나요? 3) `[...gen()]`에 return 값이 들어가나요? 4) ES5 타깃 제한 절이 지금 적용되지 않는 이유는?",
+        body: "1) `for (const i in [4, 5, 6])`의 i는 무엇이고 어떤 타입인가요?\n2) 객체 리터럴에 for..of를 쓰면 컴파일·런타임 각각 어떤 에러가 나나요?\n3) `[...gen()]`에 return 값이 들어가나요?\n4) ES5 타깃 제한 절이 지금 적용되지 않는 이유는?",
       },
     ],
     sources: [
@@ -2002,17 +2002,17 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "jsx 옵션 다섯 값과 emit",
-        body: "preserve는 JSX를 그대로 두고 `.jsx`로 내보냅니다(Babel 같은 다음 단계가 처리). react는 `React.createElement(...)`로, react-native는 JSX를 유지하되 `.js`로. react-jsx(17+ 자동 런타임)는 `react/jsx-runtime`의 `_jsx`·`_jsxs`를 import해 호출로 바꾸고, react-jsxdev는 디버그 정보가 붙는 `_jsxDEV`를 씁니다. 실제로 같은 `.tsx`를 react-jsx로 컴파일하면 `import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from \"react/jsx-runtime\"`이 자동으로 들어갔고, preserve는 소스 그대로 `react-jsx.jsx`를 썼습니다. `jsxFactory`(react 모드의 함수 이름, 실제로 `h`로 바꾸면 `h(\"foo\", { … })`), `jsxFragmentFactory`, `jsxImportSource`(react-jsx 모드의 모듈)로 바꿉니다.",
-        code: "// 입력 rt/react-jsx.tsx\nexport const App = () => <div className=\"a\"><span>hi</span><></></div>;\n\n// --jsx react-jsx\nimport { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from \"react/jsx-runtime\";\nexport const App = () => _jsxs(\"div\", { className: \"a\", children: [_jsx(\"span\", { children: \"hi\" }), _jsx(_Fragment, {})] });\n\n// --jsx preserve  → react-jsx.jsx (그대로)\nexport const App = () => <div className=\"a\"><span>hi</span><></></div>;\n\n// --jsx react --jsxFactory h\nconst a = h(\"foo\", { requiredProp: \"bar\" });",
+        body: "preserve는 JSX를 그대로 두고 `.jsx`로 내보냅니다. Babel 같은 다음 단계가 처리합니다.\nreact는 `React.createElement(...)`로 바꿉니다.\nreact-native는 JSX를 유지하되 `.js`로 내보냅니다.\nreact-jsx(17+ 자동 런타임)는 `react/jsx-runtime`의 `_jsx`·`_jsxs`를 import해 호출로 바꿉니다.\nreact-jsxdev는 디버그 정보가 붙는 `_jsxDEV`를 씁니다.\n실제로 같은 `.tsx`를 react-jsx로 컴파일하면 `import { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from \"react/jsx-runtime\"`이 자동으로 들어갔습니다. preserve는 소스 그대로 `react-jsx.jsx`를 썼습니다. `jsxFactory`(react 모드의 함수 이름, 실제로 `h`로 바꾸면 `h(\"foo\", { … })`), `jsxFragmentFactory`, `jsxImportSource`(react-jsx 모드의 모듈)로 바꿉니다.",
+        code: "// 입력 rt/react-jsx.tsx\nexport const App = () => <div className=\"a\"><span>hi</span><></></div>;\n\n// --jsx react-jsx\nimport { Fragment as _Fragment, jsx as _jsx, jsxs as _jsxs } from \"react/jsx-runtime\";\nexport const App = () => _jsxs(\"div\", { className: \"a\", children: [_jsx(\"span\", { children: \"hi\" }),\n  _jsx(_Fragment, {})] });\n\n// --jsx preserve  → react-jsx.jsx (그대로)\nexport const App = () => <div className=\"a\"><span>hi</span><></></div>;\n\n// --jsx react --jsxFactory h\nconst a = h(\"foo\", { requiredProp: \"bar\" });",
       },
       {
         label: "실제로 돌려 보면: IntrinsicElements 가 소문자 태그의 사전이다",
         body: "소문자 태그(`<foo />`)는 내장 요소, 대문자(`<Foo />`)는 값 기반 요소(함수·클래스 컴포넌트)입니다. 내장 요소의 허용 목록과 속성은 `JSX.IntrinsicElements`에 적습니다. 실제로 `foo: { requiredProp: string; optionalProp?: number }`만 선언한 뒤 `<bar />`는 \"Property 'bar' does not exist on type 'JSX.IntrinsicElements'.\"(TS2339), `<foo requiredProp={0} />`는 \"Type 'number' is not assignable to type 'string'.\", 모르는 속성 `extra`는 \"Property 'extra' does not exist on type '{ requiredProp: string; optionalProp?: number | undefined; }'.\"였습니다. 반면 `data-x=\"ok\"`처럼 하이픈이 든 속성은 모르는 이름이어도 에러가 아닙니다(문서의 규칙). IntrinsicElements가 없으면 모든 태그가 any로 허용되고 noImplicitAny에서 \"JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists.\"(TS7026)가 납니다 — @types/react 없이 .tsx를 컴파일할 때 보는 에러입니다.",
-        code: "declare namespace JSX {\n  interface IntrinsicElements { foo: { requiredProp: string; optionalProp?: number }; }\n}\nconst a = <foo requiredProp=\"bar\" />;        // OK\nconst b = <foo requiredProp={0} />;          // Type 'number' is not assignable to type 'string'. (TS2322)\nconst c = <bar />;                           // Property 'bar' does not exist on type 'JSX.IntrinsicElements'. (TS2339)\nconst d = <foo requiredProp=\"x\" data-x=\"ok\" extra=\"no\" />;\n// Property 'extra' does not exist on type '{ requiredProp: string; optionalProp?: number | undefined; }'.\n// — data-x 는 하이픈이라 통과\n\n// @types/react 없이 .tsx 를 컴파일하면\n// JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists. (TS7026)\n// This JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. (TS2875)",
+        code: "declare namespace JSX {\n  interface IntrinsicElements { foo: { requiredProp: string; optionalProp?: number }; }\n}\nconst a = <foo requiredProp=\"bar\" />;        // OK\nconst b = <foo requiredProp={0} />;          // Type 'number' is not assignable to type 'string'. (TS2322)\n// Property 'bar' does not exist on type 'JSX.IntrinsicElements'. (TS2339)\nconst c = <bar />;\nconst d = <foo requiredProp=\"x\" data-x=\"ok\" extra=\"no\" />;\n// Property 'extra' does not exist on type '{ requiredProp: string; optionalProp?: number | undefined; }'.\n// — data-x 는 하이픈이라 통과\n\n// @types/react 없이 .tsx 를 컴파일하면\n// JSX element implicitly has type 'any' because no interface 'JSX.IntrinsicElements' exists. (TS7026)\n// This JSX tag requires the module path 'react/jsx-runtime' to exist, but none could be found. (TS2875)",
       },
       {
         label: "JSX 네임스페이스의 나머지 조각",
-        body: "값 기반 요소의 props는 `JSX.ElementAttributesProperty`가 가리키는 속성(React는 `props`)에서 읽고, 함수 컴포넌트는 `JSX.Element`를 돌려줘야 합니다. `JSX.IntrinsicAttributes`(key)와 `JSX.IntrinsicClassAttributes<T>`(ref)는 모든 요소에 허용되는 추가 속성입니다. 자식 검사는 `JSX.ElementChildrenAttribute`가 이름(`children`)을 정합니다(2.3). 5.1의 `JSX.ElementType`은 '무엇이 컴포넌트가 될 수 있는가'를 덮어씁니다 — React 18의 비동기 컴포넌트가 가능해진 자리입니다. JSX 표현식의 결과 타입은 `JSX.Element`로 불투명하고, 네임스페이스를 찾는 위치는 모드에 따릅니다(react 모드는 jsxFactory의 네임스페이스 `React.JSX`, react-jsx는 `${jsxImportSource}/jsx-runtime`, 둘 다 없으면 전역 JSX).",
+        body: "값 기반 요소의 props는 `JSX.ElementAttributesProperty`가 가리키는 속성(React는 `props`)에서 읽습니다. 함수 컴포넌트는 `JSX.Element`를 돌려줘야 합니다. `JSX.IntrinsicAttributes`(key)와 `JSX.IntrinsicClassAttributes<T>`(ref)는 모든 요소에 허용되는 추가 속성입니다. 자식 검사는 `JSX.ElementChildrenAttribute`가 이름(`children`)을 정합니다(2.3). 5.1의 `JSX.ElementType`은 '무엇이 컴포넌트가 될 수 있는가'를 덮어씁니다. React 18의 비동기 컴포넌트가 가능해진 자리입니다. JSX 표현식의 결과 타입은 `JSX.Element`로 불투명합니다. 네임스페이스를 찾는 위치는 모드에 따릅니다. react 모드는 jsxFactory의 네임스페이스 `React.JSX`에서 찾습니다. react-jsx는 `${jsxImportSource}/jsx-runtime`에서 찾습니다. 둘 다 없으면 전역 JSX입니다.",
         code: "JSX 네임스페이스 멤버            정하는 것\n──────────────────────────────  ─────────────────────────────────────\nIntrinsicElements                소문자 태그 목록과 속성 타입\nElementAttributesProperty        값 기반 요소에서 props 를 읽을 속성 이름 (React: props)\nElementChildrenAttribute         자식의 속성 이름 (children) — 2.3\nIntrinsicAttributes              모든 요소 허용 속성 (key)\nIntrinsicClassAttributes<T>      클래스 요소 허용 속성 (ref)\nElement                          JSX 식의 결과 타입 (불투명)\nElementClass                     클래스 컴포넌트가 만족할 인스턴스 타입\nElementType                      컴포넌트가 될 수 있는 타입 — 5.1",
         codeLang: "text",
       },
@@ -2027,7 +2027,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) react-jsx 모드가 emit에 자동으로 넣는 import 한 줄은? 2) `<bar />`가 에러인 조건과, `data-x`가 에러가 아닌 이유는? 3) @types/react 없이 .tsx를 컴파일하면 어떤 두 에러가 나나요? 4) `.tsx`에서 `<T>x`가 안 되는 이유는?",
+        body: "1) react-jsx 모드가 emit에 자동으로 넣는 import 한 줄은?\n2) `<bar />`가 에러인 조건과, `data-x`가 에러가 아닌 이유는?\n3) @types/react 없이 .tsx를 컴파일하면 어떤 두 에러가 나나요?\n4) `.tsx`에서 `<T>x`가 안 되는 이유는?",
       },
     ],
     sources: [
@@ -2052,7 +2052,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "실제로 돌려 보면: 제약된 믹스인은 모양이 맞는 기반만 받는다",
         body: "`Constructor<{ name: string }>`로 제약하면 name을 가진 클래스만 기반으로 넣을 수 있습니다. 실제로 `Activatable(class { id = 1 })`은 \"Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'Constructor<{ name: string; }>'. Property 'name' is missing in type '(Anonymous class)' but required in type '{ name: string; }'.\"(TS2345)였습니다. 제네릭 장의 '클래스 타입을 제네릭에서 쓰기'(`new () => T`)가 바로 이 자리를 위한 것이었습니다.",
-        code: "const Bad = Activatable(class { id = 1 });\n// Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type 'Constructor<{ name: string; }>'.\n//   Property 'name' is missing in type '(Anonymous class)' but required in type '{ name: string; }'. (TS2345)",
+        code: "const Bad = Activatable(class { id = 1 });\n// Argument of type 'typeof (Anonymous class)' is not assignable to parameter of type\n  'Constructor<{ name: string; }>'.\n//   Property 'name' is missing in type '(Anonymous class)' but required in type '{ name: string; }'.\n  (TS2345)",
       },
       {
         label: "옛 대안: 인터페이스 병합 + applyMixins",
@@ -2061,7 +2061,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "제약: 데코레이터와 static",
-        body: "문서의 제약 두 가지. 첫째, 데코레이터로 믹스인을 적용하면 타입에 반영되지 않습니다 — `@Pausable class Player {}` 뒤에 `player.shouldFreeze`는 \"Property 'shouldFreeze' does not exist on type 'Player'.\"(TS2339). 데코레이터 장의 '데코레이터는 타입을 바꾸지 않는다'와 같은 사실입니다. 둘째, 클래스 표현식은 한 번 평가되면 하나의 클래스(싱글턴)라 static 속성을 믹스인마다 따로 가지려면 제네릭 함수로 매번 새 클래스를 만들어야 합니다. 그리고 믹스인 안에서 `private` 멤버를 선언하면 돌려주는 클래스의 타입을 바깥에 내보낼 수 없어 에러가 되는 경우가 있어, 하드 private `#x`를 쓰는 것이 처방입니다.",
+        body: "문서는 제약 두 가지를 적습니다. 첫째, 데코레이터로 믹스인을 적용하면 타입에 반영되지 않습니다. `@Pausable class Player {}` 뒤에 `player.shouldFreeze`는 \"Property 'shouldFreeze' does not exist on type 'Player'.\"(TS2339)가 납니다. 데코레이터 장의 '데코레이터는 타입을 바꾸지 않는다'와 같은 사실입니다. 둘째, 클래스 표현식은 한 번 평가되면 하나의 클래스(싱글턴)입니다. 그래서 static 속성을 믹스인마다 따로 가지려면 제네릭 함수로 매번 새 클래스를 만들어야 합니다. 그리고 믹스인 안에서 `private` 멤버를 선언하면 돌려주는 클래스의 타입을 바깥에 내보낼 수 없어 에러가 되는 경우가 있습니다. 하드 private `#x`를 쓰는 것이 처방입니다.",
         code: "제약                               증상                                         처방\n─────────────────────────────────  ──────────────────────────────────────────  ─────────────────────────\n데코레이터로 믹스인 적용            Property 'shouldFreeze' does not exist…       함수 호출 패턴으로\n클래스 표현식은 싱글턴              static 이 모든 믹스인 결과에서 공유됨          제네릭 함수로 매번 생성\n믹스인 안의 private/protected       반환 타입을 표현할 수 없어 선언 에러            #private 필드",
         codeLang: "text",
       },
@@ -2071,7 +2071,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `type Constructor<T = {}> = new (...args: any[]) => T`가 뜻하는 것은? 2) `Activatable(class { id = 1 })`이 거부되는 이유는? 3) 믹스인 안에서 private 대신 무엇을 쓰라고 하나요? 4) 데코레이터로 믹스인을 적용하면 무엇이 안 되나요?",
+        body: "1) `type Constructor<T = {}> = new (...args: any[]) => T`가 뜻하는 것은?\n2) `Activatable(class { id = 1 })`이 거부되는 이유는?\n3) 믹스인 안에서 private 대신 무엇을 쓰라고 하나요?\n4) 데코레이터로 믹스인을 적용하면 무엇이 안 되나요?",
       },
     ],
     sources: [
@@ -2090,18 +2090,18 @@ export const typescriptTheories: Theory[] = [
       {
         label: "선언과 emit: IIFE 로 객체를 만든다",
         body: "네임스페이스는 컴파일되면 '변수 하나 + 그 변수에 속성을 채우는 즉시 실행 함수'가 됩니다. export한 것만 그 객체의 속성이 되고, export하지 않은 `lettersRegexp`는 함수 안의 지역 변수로 남아 밖에서는 undefined입니다. 중첩 네임스페이스는 안쪽 IIFE가 됩니다. 실제로 emit된 ns.js는 `var Validation; (function (Validation) { const lettersRegexp = …; class LettersOnly {…} Validation.LettersOnly = LettersOnly; let Inner; (function (Inner) { Inner.deep = 1; })(Inner = Validation.Inner || (Validation.Inner = {})); })(Validation || (Validation = {}));` 모양이었고, `(Validation as any).lettersRegexp`는 undefined였습니다. 같은 이름의 네임스페이스를 다시 선언하면 같은 객체에 덧붙여집니다(선언 병합) — 실제로 `Validation.added`가 2로 읽혔습니다.",
-        code: "namespace Validation {\n  export interface StringValidator { isAcceptable(s: string): boolean; }\n  const lettersRegexp = /^[A-Za-z]+$/;                 // export 안 함 → 밖에서 안 보임\n  export class LettersOnly implements StringValidator { isAcceptable(s: string) { return lettersRegexp.test(s); } }\n  export namespace Inner { export const deep = 1; }\n}\n\n// emit\nvar Validation;\n(function (Validation) {\n    const lettersRegexp = /^[A-Za-z]+$/;\n    class LettersOnly { isAcceptable(s) { return lettersRegexp.test(s); } }\n    Validation.LettersOnly = LettersOnly;\n    let Inner;\n    (function (Inner) { Inner.deep = 1; })(Inner = Validation.Inner || (Validation.Inner = {}));\n})(Validation || (Validation = {}));",
+        code: "namespace Validation {\n  export interface StringValidator { isAcceptable(s: string): boolean; }\n  const lettersRegexp = /^[A-Za-z]+$/;                 // export 안 함 → 밖에서 안 보임\n  export class LettersOnly implements StringValidator { isAcceptable(s: string) { return\n    lettersRegexp.test(s); } }\n  export namespace Inner { export const deep = 1; }\n}\n\n// emit\nvar Validation;\n(function (Validation) {\n    const lettersRegexp = /^[A-Za-z]+$/;\n    class LettersOnly { isAcceptable(s) { return lettersRegexp.test(s); } }\n    Validation.LettersOnly = LettersOnly;\n    let Inner;\n    (function (Inner) { Inner.deep = 1; })(Inner = Validation.Inner || (Validation.Inner = {}));\n})(Validation || (Validation = {}));",
       },
       {
         label: "실제로 돌려 보면: module 키워드와 outFile 은 끝났다",
-        body: "문서의 '다중 파일 네임스페이스' 절은 `/// <reference path=\"Validation.ts\" />`로 파일을 잇고 `tsc --outFile sample.js Test.ts`로 하나로 묶으라고 합니다. 7.0에서는 `--outFile`이 \"Option 'outFile' has been removed.\"(TS5102)로 사라졌습니다. 묶음은 번들러의 일이 됐습니다. `module Legacy { … }`처럼 옛 키워드로 네임스페이스를 선언하면 \"A 'namespace' declaration should not be declared using the 'module' keyword. Please use the 'namespace' keyword instead.\"(TS1540)입니다 — 6.0 폐기, 7.0 에러. 그리고 값을 가진 네임스페이스는 `erasableSyntaxOnly`에서 TS1294로 막힙니다(타입만 담은 네임스페이스는 됩니다).",
-        code: "$ npx tsc --module amd --outFile out/all.js rt/ns.ts\nerror TS5102: Option 'outFile' has been removed. Please remove it from your configuration.\n\nmodule Legacy { export const x = 1; }\n// A 'namespace' declaration should not be declared using the 'module' keyword. Please use the 'namespace' keyword instead. (TS1540)\n\n$ npx tsc --noEmit --erasableSyntaxOnly src/enums.ts\nsrc/enums.ts(3,11): error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.   # namespace NS { export const v = 1 }",
+        body: "문서의 '다중 파일 네임스페이스' 절은 `/// <reference path=\"Validation.ts\" />`로 파일을 잇고 `tsc --outFile sample.js Test.ts`로 하나로 묶으라고 합니다. 7.0에서는 `--outFile`이 \"Option 'outFile' has been removed.\"(TS5102)로 사라졌습니다. 묶음은 번들러의 일이 됐습니다. `module Legacy { … }`처럼 옛 키워드로 네임스페이스를 선언하면 \"A 'namespace' declaration should not be declared using the 'module' keyword. Please use the 'namespace' keyword instead.\"(TS1540)입니다. 6.0에서 폐기됐고 7.0에서 에러가 됐습니다. 그리고 값을 가진 네임스페이스는 `erasableSyntaxOnly`에서 TS1294로 막힙니다. 타입만 담은 네임스페이스는 됩니다.",
+        code: "$ npx tsc --module amd --outFile out/all.js rt/ns.ts\nerror TS5102: Option 'outFile' has been removed. Please remove it from your configuration.\n\nmodule Legacy { export const x = 1; }\n// A 'namespace' declaration should not be declared using the 'module' keyword. Please use the\n'namespace' keyword instead. (TS1540)\n\n$ npx tsc --noEmit --erasableSyntaxOnly src/enums.ts\nsrc/enums.ts(3,11): error TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.   #\n  namespace NS { export const v = 1 }",
         codeLang: "text",
       },
       {
         label: "별칭과 앰비언트 네임스페이스",
         body: "`import polygons = Shapes.Polygons;`는 네임스페이스 안의 깊은 이름에 짧은 이름을 붙이는 별칭입니다. ES import와 다른 문법이고, 값에 대해서는 '원래 심벌과 별개의 참조'를 만듭니다. 실제로 `import deep = Validation.Inner.deep`으로 1을 읽었습니다. `.d.ts`에서 `declare namespace D3 { export interface Base {…} }`와 `declare var d3: D3.Base;`로 전역 라이브러리의 모양을 적는 것이 앰비언트 네임스페이스이고, 선언 파일 섹션의 전역 템플릿이 이 문법 위에 있습니다.",
-        code: "import deep = Validation.Inner.deep;   // 별칭 — 1\n\n// d3.d.ts (앰비언트)\ndeclare namespace D3 {\n  export interface Selectors { select: { (selector: string): Selection; (element: EventTarget): Selection } }\n  export interface Base extends Selectors { event: Event }\n}\ndeclare var d3: D3.Base;",
+        code: "import deep = Validation.Inner.deep;   // 별칭 — 1\n\n// d3.d.ts (앰비언트)\ndeclare namespace D3 {\n  export interface Selectors { select: { (selector: string): Selection; (element: EventTarget): Selection\n    } }\n  export interface Base extends Selectors { event: Event }\n}\ndeclare var d3: D3.Base;",
       },
       {
         label: "문제의 구조: 네임스페이스는 전역 객체이고, 모듈은 파일 스코프다",
@@ -2115,7 +2115,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) export하지 않은 네임스페이스 멤버는 emit에서 어디로 가나요? 2) `module X {}`가 7.0에서 에러인 이유는? 3) 다중 파일 네임스페이스를 하나로 묶던 옵션은 무엇이고 지금은 어떻게 되나요? 4) 네임스페이스가 지금도 쓰이는 두 자리는?",
+        body: "1) export하지 않은 네임스페이스 멤버는 emit에서 어디로 가나요?\n2) `module X {}`가 7.0에서 에러인 이유는?\n3) 다중 파일 네임스페이스를 하나로 묶던 옵션은 무엇이고 지금은 어떻게 되나요?\n4) 네임스페이스가 지금도 쓰이는 두 자리는?",
       },
     ],
     sources: [
@@ -2129,7 +2129,7 @@ export const typescriptTheories: Theory[] = [
     name: "네임스페이스와 모듈",
     tagline: "둘을 나란히 놓고, 섞을 때 생기는 함정을 적는다",
     intro:
-      "짧은 비교 페이지입니다. 모듈은 파일 스코프와 의존성 명시를 가져 '현대 코드에서는 모듈을 권한다'. 네임스페이스는 전역 객체다. 함정 둘 — 모듈 파일에 `/// <reference>`를 쓰는 것, 그리고 '불필요한 네임스페이싱'. 그리고 outFile과 module 포맷의 조합 제한이 적혀 있는데 outFile이 사라져 그 절은 끝났습니다.",
+      "짧은 비교 페이지입니다. 모듈은 파일 스코프와 의존성 명시를 가지므로 '현대 코드에서는 모듈을 권한다'고 합니다. 네임스페이스는 전역 객체입니다. 함정은 둘입니다. 모듈 파일에 `/// <reference>`를 쓰는 것, 그리고 '불필요한 네임스페이싱'입니다. 그리고 outFile과 module 포맷의 조합 제한이 적혀 있습니다. outFile이 사라져 그 절은 끝났습니다.",
     blocks: [
       {
         label: "모듈을 쓰라",
@@ -2157,7 +2157,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 모듈이 네임스페이스보다 권해지는 두 이유는? 2) 모듈 파일을 `/// <reference path>`로 가리키면 무엇이 안 되나요? 3) `shapes.Shapes.Triangle`이 생기는 원인과 고치는 법은?",
+        body: "1) 모듈이 네임스페이스보다 권해지는 두 이유는?\n2) 모듈 파일을 `/// <reference path>`로 가리키면 무엇이 안 되나요?\n3) `shapes.Shapes.Triangle`이 생기는 원인과 고치는 법은?",
       },
     ],
     sources: [
@@ -2175,8 +2175,8 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "유일한 값, 그리고 unique symbol",
-        body: "`Symbol(\"key\") === Symbol(\"key\")`는 false입니다 — 설명 문자열이 같아도 다른 심벌이고, 실제로 false, `s1.toString()`은 \"Symbol(key)\", `s1.description`은 \"key\"였습니다. 심벌 키 속성은 `Object.keys`와 `JSON.stringify`에 안 나옵니다(실제로 `[]`와 `{}`). 타입 수준에서 `const s1 = Symbol()`의 타입은 `typeof s1`이라는 unique symbol이고, 두 unique symbol은 서로 비교조차 할 수 없습니다 — \"This comparison appears to be unintentional because the types 'typeof s1' and 'typeof s2' have no overlap.\"(TS2367). `let`에 `unique symbol`을 적으면 \"A variable whose type is a 'unique symbol' type must be 'const'.\"(TS1332)입니다.",
-        code: "const s1 = Symbol(\"key\"); const s2 = Symbol(\"key\");\ns1 === s2;   // false (런타임)\n// This comparison appears to be unintentional because the types 'typeof s1' and 'typeof s2' have no overlap. (TS2367)\n\nconst o = { [s1]: \"v\" };\no[s1];                // \"v\"\nObject.keys(o);       // []\nJSON.stringify(o);    // \"{}\"\n\nlet notConst: unique symbol = Symbol();\n// A variable whose type is a 'unique symbol' type must be 'const'. (TS1332)",
+        body: "`Symbol(\"key\") === Symbol(\"key\")`는 false입니다. 설명 문자열이 같아도 다른 심벌입니다. 실제로 false였고, `s1.toString()`은 \"Symbol(key)\", `s1.description`은 \"key\"였습니다. 심벌 키 속성은 `Object.keys`와 `JSON.stringify`에 안 나옵니다. 실제로 `[]`와 `{}`였습니다. 타입 수준에서 `const s1 = Symbol()`의 타입은 `typeof s1`이라는 unique symbol입니다. 두 unique symbol은 서로 비교조차 할 수 없습니다. \"This comparison appears to be unintentional because the types 'typeof s1' and 'typeof s2' have no overlap.\"(TS2367)이 납니다. `let`에 `unique symbol`을 적으면 \"A variable whose type is a 'unique symbol' type must be 'const'.\"(TS1332)입니다.",
+        code: "const s1 = Symbol(\"key\"); const s2 = Symbol(\"key\");\ns1 === s2;   // false (런타임)\n// This comparison appears to be unintentional because the types 'typeof s1' and 'typeof s2' have no\n  overlap. (TS2367)\n\nconst o = { [s1]: \"v\" };\no[s1];                // \"v\"\nObject.keys(o);       // []\nJSON.stringify(o);    // \"{}\"\n\nlet notConst: unique symbol = Symbol();\n// A variable whose type is a 'unique symbol' type must be 'const'. (TS1332)",
       },
       {
         label: "실제로 돌려 보면: 잘 알려진 심볼로 동작을 끼운다",
@@ -2194,7 +2194,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `Symbol(\"a\") === Symbol(\"a\")`의 결과와 이유는? 2) `let s: unique symbol`이 거부되는 이유는? 3) `+obj`가 42를 돌려주게 하려면 어떤 심벌 메서드를 두나요? 4) 브랜드 타입의 키로 unique symbol을 쓰는 이점은?",
+        body: "1) `Symbol(\"a\") === Symbol(\"a\")`의 결과와 이유는?\n2) `let s: unique symbol`이 거부되는 이유는?\n3) `+obj`가 42를 돌려주게 하려면 어떤 심벌 메서드를 두나요?\n4) 브랜드 타입의 키로 unique symbol을 쓰는 이점은?",
       },
     ],
     sources: [
@@ -2218,7 +2218,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "실제로 돌려 보면: types 가 못 찾으면 TS2688, 그리고 6.0 의 types: []",
         body: "`@types/node`가 설치되지 않은 상태에서 `/// <reference types=\"node\" />`를 두면 \"Cannot find type definition file for 'node'.\"(TS2688)이고, 그 뒤의 `NodeJS`·`process`는 각각 TS2503·TS2591(\"Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\")입니다. `--typeRoots`로 @types가 있는 폴더를 가리키자 셋 다 사라졌습니다. 6.0부터 `types`의 기본값이 `[]`로 바뀌어 `node_modules/@types`가 자동으로 들어오지 않습니다. 그래서 전역 타입(node·jest)이 갑자기 사라지면 tsconfig의 `types`에 적거나 파일 맨 위에 이 지시어를 두는 것이 처방이고, 에러 문구 자체가 그 두 길을 안내합니다.",
-        code: "$ npx tsc --noEmit rt/triple.ts          # @types/node 없음\nrt/triple.ts(1,23): error TS2688: Cannot find type definition file for 'node'.\nrt/triple.ts(3,10): error TS2503: Cannot find namespace 'NodeJS'.\nrt/triple.ts(3,27): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n\n$ npx tsc --noEmit --typeRoots ts6/node_modules/@types rt/triple.ts\n(에러 없음)",
+        code: "$ npx tsc --noEmit rt/triple.ts          # @types/node 없음\nrt/triple.ts(1,23): error TS2688: Cannot find type definition file for 'node'.\nrt/triple.ts(3,10): error TS2503: Cannot find namespace 'NodeJS'.\nrt/triple.ts(3,27): error TS2591: Cannot find name 'process'. Do you need to install type definitions for\n  node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n\n$ npx tsc --noEmit --typeRoots ts6/node_modules/@types rt/triple.ts\n(에러 없음)",
         codeLang: "bash",
       },
       {
@@ -2233,7 +2233,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `/// <reference types=\"node\" />`가 TS2688을 내는 상황은? 2) 6.0에서 `types`의 기본값이 무엇으로 바뀌었고, 그 영향으로 어떤 에러가 늘었나요? 3) 문장 뒤에 둔 지시어는 어떻게 취급되나요? 4) `path`와 `types` 중 선언 파일에서 권하는 것은?",
+        body: "1) `/// <reference types=\"node\" />`가 TS2688을 내는 상황은?\n2) 6.0에서 `types`의 기본값이 무엇으로 바뀌었고, 그 영향으로 어떤 에러가 늘었나요?\n3) 문장 뒤에 둔 지시어는 어떻게 취급되나요?\n4) `path`와 `types` 중 선언 파일에서 권하는 것은?",
       },
     ],
     sources: [
@@ -2257,12 +2257,12 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 함수는 매개변수가 '적은' 쪽이 '많은' 쪽에 들어간다",
-        body: "`let x = (a: number) => 0; let y = (b: number, s: string) => 0;`에서 `y = x`는 되고 `x = y`는 안 됩니다. 매개변수가 적은 함수는 많은 인자를 받는 자리에 들어가도 남는 인자를 무시하면 되니까요. 실제로 `x = y`만 \"Type '(b: number, s: string) => number' is not assignable to type '(a: number) => number'. Target signature provides too few arguments. Expected 2 or more, but got 1.\"였습니다. 이것이 `forEach((item) => …)`처럼 콜백 인자를 일부만 받는 코드가 되는 이유입니다. 반환 타입은 반대로 '소스가 타깃의 서브타입'이어야 합니다. 선택적 매개변수와 필수 매개변수는 서로 교환되고(건전하지 않지만 흔한 콜백 패턴을 위해), 나머지 매개변수는 무한 선택 매개변수처럼 취급됩니다. 오버로드는 타깃의 각 시그니처가 소스의 어떤 시그니처에든 맞아야 합니다.",
+        body: "`let x = (a: number) => 0; let y = (b: number, s: string) => 0;`에서 `y = x`는 되고 `x = y`는 안 됩니다. 매개변수가 적은 함수는 많은 인자를 받는 자리에 들어가도 남는 인자를 무시하면 되기 때문입니다. 실제로 `x = y`만 \"Type '(b: number, s: string) => number' is not assignable to type '(a: number) => number'. Target signature provides too few arguments. Expected 2 or more, but got 1.\"였습니다. 이것이 `forEach((item) => …)`처럼 콜백 인자를 일부만 받는 코드가 되는 이유입니다. 반환 타입은 반대로 '소스가 타깃의 서브타입'이어야 합니다. 선택적 매개변수와 필수 매개변수는 서로 교환됩니다. 건전하지 않지만 흔한 콜백 패턴을 위해서입니다. 나머지 매개변수는 무한 선택 매개변수처럼 취급됩니다. 오버로드는 타깃의 각 시그니처가 소스의 어떤 시그니처에든 맞아야 합니다.",
         code: "let x = (a: number) => 0;\nlet y = (b: number, s: string) => 0;\ny = x;   // OK — 적은 쪽이 많은 자리에\nx = y;\n// Type '(b: number, s: string) => number' is not assignable to type '(a: number) => number'.\n//   Target signature provides too few arguments. Expected 2 or more, but got 1. (TS2322)\n\nconst items = [1, 2, 3];\nitems.forEach((item, index, array) => {});   // 셋 다\nitems.forEach((item) => {});                 // 하나만 — 같은 규칙",
       },
       {
         label: "매개변수 이변성과 strictFunctionTypes",
-        body: "매개변수 타입을 비교할 때 TypeScript는 역사적으로 '어느 방향이든 대입 가능하면' 통과시켰습니다(이변성, bivariance). `(e: MouseEvent) => void`를 `(e: Event) => void` 자리에 넣는 것 — 건전하지 않지만(Event만 오면 e.button이 없음) 리스너 패턴에 흔해서 허용했습니다. `strictFunctionTypes`(strict에 포함)는 함수 타입에서 이 검사를 반공변(contravariant)으로 바꿉니다 — 매개변수는 타깃이 소스보다 좁거나 같아야. 단 메서드 문법(`m(x): void`)으로 선언한 것은 여전히 이변적입니다. 실제로 같은 파일을 strictFunctionTypes 켜고 끄고 비교하면, 켰을 때 함수 속성 `p: (x: string | number) => void`에 `(x: string) => void`를 넣는 줄만 추가로 걸렸고(\"Types of parameters 'x' and 'x' are incompatible.\"), 메서드 `m(x: string | number): void`에 `m(x: string) {}`를 넣는 줄은 양쪽 모두 통과했습니다.",
+        body: "매개변수 타입을 비교할 때 TypeScript는 역사적으로 '어느 방향이든 대입 가능하면' 통과시켰습니다(이변성, bivariance). `(e: MouseEvent) => void`를 `(e: Event) => void` 자리에 넣는 것이 그 예입니다. 건전하지 않습니다. Event만 오면 e.button이 없습니다. 그래도 리스너 패턴에 흔해서 허용했습니다. `strictFunctionTypes`(strict에 포함)는 함수 타입에서 이 검사를 반공변(contravariant)으로 바꿉니다. 매개변수는 타깃이 소스보다 좁거나 같아야 합니다. 단 메서드 문법(`m(x): void`)으로 선언한 것은 여전히 이변적입니다. 실제로 같은 파일을 strictFunctionTypes 켜고 끄고 비교했습니다. 켰을 때 함수 속성 `p: (x: string | number) => void`에 `(x: string) => void`를 넣는 줄만 추가로 걸렸습니다(\"Types of parameters 'x' and 'x' are incompatible.\"). 메서드 `m(x: string | number): void`에 `m(x: string) {}`를 넣는 줄은 양쪽 모두 통과했습니다.",
         code: "let m1: { m(x: string | number): void } = { m(x: string) {} };          // 통과 — 메서드는 이변\nlet p1: { p: (x: string | number) => void } = { p: (x: string) => {} };\n// strictFunctionTypes (strict 포함):\n// Type '(x: string) => void' is not assignable to type '(x: string | number) => void'.\n//   Types of parameters 'x' and 'x' are incompatible.\n//     Type 'string | number' is not assignable to type 'string'.\n//       Type 'number' is not assignable to type 'string'. (TS2322)\n\n// --strictFunctionTypes false → 위 줄도 통과 (에러 수 6 → 5)",
         terms: [
           {
@@ -2273,12 +2273,12 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "enum · 클래스 · 제네릭",
-        body: "enum은 숫자와는 호환되지만 서로 다른 enum끼리는 아닙니다 — 실제로 `let st = Status.Ready; st = Color.Red`는 \"Type 'Color.Red' is not assignable to type 'Status'.\", `st = 1`은 통과. 클래스는 인스턴스 멤버만 비교하고 static과 생성자는 무시합니다 — 생성자 시그니처가 다른 Animal과 Size가 서로 대입됐습니다. 예외가 private·protected입니다. '같은 선언에서 온' 멤버여야 하므로 각자 `private x`를 가진 두 클래스는 \"Types have separate declarations of a private property 'x'.\"로 비호환입니다 — 구조적 시스템 안의 유일한 명목적 자리. 제네릭은 쓰이지 않은 타입 매개변수는 무시하고(`Empty<number>`에 `Empty<string>` OK), 쓰인 것은 비교합니다(`NotEmpty<string>`→`NotEmpty<number>`는 \"Type 'string' is not assignable to type 'number'.\").",
+        body: "enum은 숫자와는 호환되지만 서로 다른 enum끼리는 아닙니다. 실제로 `let st = Status.Ready; st = Color.Red`는 \"Type 'Color.Red' is not assignable to type 'Status'.\"였습니다. `st = 1`은 통과했습니다.\n클래스는 인스턴스 멤버만 비교하고 static과 생성자는 무시합니다. 생성자 시그니처가 다른 Animal과 Size가 서로 대입됐습니다. 예외가 private·protected입니다. '같은 선언에서 온' 멤버여야 하므로 각자 `private x`를 가진 두 클래스는 \"Types have separate declarations of a private property 'x'.\"로 비호환입니다. 구조적 시스템 안의 유일한 명목적 자리입니다.\n제네릭은 쓰이지 않은 타입 매개변수는 무시합니다(`Empty<number>`에 `Empty<string>` OK). 쓰인 것은 비교합니다(`NotEmpty<string>`→`NotEmpty<number>`는 \"Type 'string' is not assignable to type 'number'.\").",
         code: "enum Status { Ready, Waiting } enum Color { Red, Blue }\nlet st = Status.Ready;\nst = Color.Red;   // Type 'Color.Red' is not assignable to type 'Status'. (TS2322)\nst = 1;           // OK — 숫자와는 호환\n\nclass A2 { private x = 1 } class B2 { private x = 1 }\nlet a2: A2 = new B2();\n// Type 'B2' is not assignable to type 'A2'.\n//   Types have separate declarations of a private property 'x'. (TS2322)\n\ninterface Empty<T> {} let e1: Empty<number> = {} as Empty<string>;        // OK — T 가 안 쓰임\ninterface NotEmpty<T> { data: T } let ne1: NotEmpty<number> = {} as NotEmpty<string>;\n// Type 'string' is not assignable to type 'number'.",
       },
       {
         label: "특수 타입의 대입표",
-        body: "문서 끝의 표를 strictNullChecks 기준으로 정리합니다. any는 never를 제외한 모든 것에 대입되고 모든 것이 any에 대입됩니다. unknown은 any와 unknown에만 대입되고(실제로 `let str: string = u`는 \"Type 'unknown' is not assignable to type 'string'.\") 모든 것이 unknown에 들어갑니다. never는 모든 것에 대입되고 never에는 never만. void에는 undefined(와 any·never)만, undefined와 null은 서로에게도 다른 타입에도 못 들어갑니다(strictNullChecks). object에는 원시값이 못 들어갑니다. 이 표가 '서브타입 관계'와 '대입 가능성'의 차이 — 대입은 any와 enum↔number 규칙을 더한 것 — 를 설명합니다.",
+        body: "문서 끝의 표를 strictNullChecks 기준으로 정리합니다.\nany는 never를 제외한 모든 것에 대입되고, 모든 것이 any에 대입됩니다.\nunknown은 any와 unknown에만 대입됩니다. 실제로 `let str: string = u`는 \"Type 'unknown' is not assignable to type 'string'.\"이었습니다. 모든 것이 unknown에 들어갑니다.\nnever는 모든 것에 대입되고, never에는 never만 들어갑니다.\nvoid에는 undefined(와 any·never)만 들어갑니다. undefined와 null은 서로에게도 다른 타입에도 못 들어갑니다(strictNullChecks).\nobject에는 원시값이 못 들어갑니다.\n이 표가 '서브타입 관계'와 '대입 가능성'의 차이를 설명합니다. 대입은 any와 enum↔number 규칙을 더한 것입니다.",
         code: "소스 ↓ / 타깃 →   any  unknown  object  void  undefined  null  never\n────────────────  ───  ───────  ──────  ────  ─────────  ────  ─────\nany                ·     ✓        ✓      ✓      ✓         ✓     ✗\nunknown            ✓     ·        ✗      ✗      ✗         ✗     ✗\nobject             ✓     ✓        ·      ✗      ✗         ✗     ✗\nvoid               ✓     ✓        ✗      ·      ✗         ✗     ✗\nundefined          ✓     ✓        ✗      ✓      ·         ✗     ✗\nnull               ✓     ✓        ✗      ✗      ✗         ·     ✗\nnever              ✓     ✓        ✓      ✓      ✓         ✓     ·\n(strictNullChecks 켜짐 기준 — 6.0+ 기본)",
         codeLang: "text",
       },
@@ -2292,7 +2292,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `y = x`는 되고 `x = y`는 안 되는 이유를 매개변수 수로 설명하세요. 2) strictFunctionTypes가 메서드 문법에는 적용되지 않는 이유는? 3) 모양이 같은 두 클래스가 비호환이 되는 유일한 조건은? 4) unknown을 string에 대입할 수 없는데 string은 unknown에 대입되는 이유는?",
+        body: "1) `y = x`는 되고 `x = y`는 안 되는 이유를 매개변수 수로 설명하세요.\n2) strictFunctionTypes가 메서드 문법에는 적용되지 않는 이유는?\n3) 모양이 같은 두 클래스가 비호환이 되는 유일한 조건은?\n4) unknown을 string에 대입할 수 없는데 string은 unknown에 대입되는 이유는?",
       },
     ],
     sources: [
@@ -2311,22 +2311,22 @@ export const typescriptTheories: Theory[] = [
       {
         label: "최적 공통 타입: 후보들의 상위 타입을 찾는다",
         body: "`let x = [0, 1, null]`의 x는 `(number | null)[]`입니다. 요소 후보 number와 null을 모두 담는 타입을 고릅니다. 실제로 6.0.3이 그렇게 잡았습니다. 후보들 중 하나가 다른 전부의 상위 타입이면 그것을 고르고, 없으면 유니온입니다. 문서의 zoo 예 — `[new Rhino(), new Elephant(), new Snake()]`는 공통 조상 Animal이 후보에 없으니 `(Rhino | Elephant | Snake)[]`가 되고, Animal[]을 원하면 어노테이션으로 적어야 합니다.",
-        code: "const mixed = [0, 1, null];   // (number | null)[]\n\nclass Animal {} class Rhino extends Animal {} class Elephant extends Animal {} class Snake extends Animal {}\nlet zoo = [new Rhino(), new Elephant(), new Snake()];   // (Rhino | Elephant | Snake)[]  — Animal 은 후보에 없다\nlet zoo2: Animal[] = [new Rhino(), new Elephant(), new Snake()];   // 원하면 적는다",
+        code: "const mixed = [0, 1, null];   // (number | null)[]\n\nclass Animal {} class Rhino extends Animal {} class Elephant extends Animal {} class Snake extends Animal\n  {}\n// (Rhino | Elephant | Snake)[]  — Animal 은 후보에 없다\nlet zoo = [new Rhino(), new Elephant(), new Snake()];\nlet zoo2: Animal[] = [new Rhino(), new Elephant(), new Snake()];   // 원하면 적는다",
       },
       {
         label: "실제로 돌려 보면: 문맥적 타이핑은 자리에서 흘러 들어온다",
-        body: "`window.onmousedown = function (mouseEvent) { … }`에서 mouseEvent에 타입을 안 적어도 MouseEvent입니다. 대입 왼쪽의 타입이 오른쪽 함수 식으로 흘러 들어오기 때문입니다. 그래서 `mouseEvent.button`은 되고 `mouseEvent.kangaroo`는 \"Property 'kangaroo' does not exist on type 'MouseEvent'.\". 반대로 `window.onscroll`에 넣으면 uiEvent는 UIEvent라 `.button`이 \"Property 'button' does not exist on type 'Event'.\"로 걸립니다. 실제로 `names.forEach((s) => …)`의 s는 string으로, `[1, \"a\", 2].filter((x) => …)`의 x는 `string | number`로 잡혔습니다. 문맥이 되는 자리 — 함수 호출의 인자, 대입의 오른쪽, 타입 단언, 객체·배열 리터럴의 멤버, return 문. 문맥이 없고 noImplicitAny가 꺼져 있으면 매개변수는 any입니다.",
+        body: "`window.onmousedown = function (mouseEvent) { … }`에서 mouseEvent에 타입을 안 적어도 MouseEvent입니다. 대입 왼쪽의 타입이 오른쪽 함수 식으로 흘러 들어오기 때문입니다. 그래서 `mouseEvent.button`은 됩니다. `mouseEvent.kangaroo`는 \"Property 'kangaroo' does not exist on type 'MouseEvent'.\"가 납니다. 반대로 `window.onscroll`에 넣으면 uiEvent는 UIEvent입니다. 그래서 `.button`이 \"Property 'button' does not exist on type 'Event'.\"로 걸립니다. 실제로 `names.forEach((s) => …)`의 s는 string으로 잡혔습니다. `[1, \"a\", 2].filter((x) => …)`의 x는 `string | number`로 잡혔습니다. 문맥이 되는 자리는 함수 호출의 인자, 대입의 오른쪽, 타입 단언, 객체·배열 리터럴의 멤버, return 문입니다. 문맥이 없고 noImplicitAny가 꺼져 있으면 매개변수는 any입니다.",
         code: "// 6.0.3 — 어노테이션 없는 매개변수의 문맥적 타입\nconst names = [\"a\", \"b\"];\nnames.forEach((s) => s.toUpperCase());        // s: string\n[1, \"a\", 2].filter((x) => typeof x === \"number\");   // x: string | number\n\nwindow.onmousedown = function (mouseEvent) {\n  console.log(mouseEvent.button);     // OK — MouseEvent\n  console.log(mouseEvent.kangaroo);   // Property 'kangaroo' does not exist on type 'MouseEvent'. (TS2339)\n};",
       },
       {
         label: "리터럴 넓힘: const 와 let, 그리고 as const",
-        body: "이 장에 직접 적혀 있지는 않지만 추론을 읽을 때 매번 만나는 규칙입니다. `const c = \"a\"`는 리터럴 `\"a\"`, `let l = \"a\"`는 string. 객체 속성은 변경 가능하니 넓혀집니다 — `{ kind: \"left\" }`의 kind는 string. `as const`는 모든 속성을 readonly 리터럴로 고정합니다. 실제로 `helloWorld: \"Hello World\"`(const), `changing: string`(let), `widened: { kind: string }`, `narrowKind: { readonly kind: \"left\" }`(as const), `tup: readonly [1, \"a\"]`가 각각의 결과였습니다. 함수 반환도 추론됩니다 — `function f(a: number, b?: string) { return { a, b }; }`의 반환은 `{ a: number; b: string | undefined }`.",
+        body: "이 장에 직접 적혀 있지는 않지만 추론을 읽을 때 매번 만나는 규칙입니다. `const c = \"a\"`는 리터럴 `\"a\"`입니다. `let l = \"a\"`는 string입니다. 객체 속성은 변경 가능하니 넓혀집니다. `{ kind: \"left\" }`의 kind는 string입니다. `as const`는 모든 속성을 readonly 리터럴로 고정합니다. 실제로 `helloWorld: \"Hello World\"`(const), `changing: string`(let), `widened: { kind: string }`, `narrowKind: { readonly kind: \"left\" }`(as const), `tup: readonly [1, \"a\"]`가 각각의 결과였습니다. 함수 반환도 추론됩니다. `function f(a: number, b?: string) { return { a, b }; }`의 반환은 `{ a: number; b: string | undefined }`입니다.",
         code: "const helloWorld = \"Hello World\";          // \"Hello World\"\nlet changing = \"x\";                        // string\nlet widened = { kind: \"left\" };            // { kind: string }\nconst narrowKind = { kind: \"left\" } as const;   // { readonly kind: \"left\" }\nconst tup = [1, \"a\"] as const;             // readonly [1, \"a\"]\n\nfunction f(a: number, b?: string) { return { a, b }; }\n// f: (a: number, b?: string | undefined) => { a: number; b: string | undefined }",
       },
       {
         label: "문제가 나는 경우: 추론이 '너무 넓게' 또는 '너무 좁게' 될 때",
         body: "추론 결과가 뜻과 다를 때의 표입니다.",
-        code: "증상                                        원인                               처방\n──────────────────────────────────────────  ────────────────────────────────  ─────────────────────────────\n[Rhino, Elephant] 가 Animal[] 이 아님         공통 조상은 후보가 아님               : Animal[] 어노테이션\n{ kind: \"left\" } 의 kind 가 string            속성은 변경 가능 → 넓힘               as const · satisfies\n[] 가 never[] 또는 any[]                      요소 후보 없음                       : string[] 어노테이션\n콜백 매개변수가 any (noImplicitAny 꺼짐)       문맥이 없음                          매개변수 타입 적기 · strict\nreturn 이 여럿인 함수의 반환이 유니온          각 return 의 최적 공통 타입            반환 타입 어노테이션\nlongest(\"abc\", \"de\") 가 \"abc\" | \"de\"         제네릭 T 에 리터럴이 그대로            필요하면 <string> 명시",
+        code: "증상                                       원인                              처방\n─────────────────────────────────────────  ───────────────────────────────  ─────────────────────────────\n[Rhino, Elephant] 가 Animal[] 이 아님        공통 조상은 후보가 아님              : Animal[] 어노테이션\n{ kind: \"left\" } 의 kind 가 string           속성은 변경 가능 → 넓힘              as const · satisfies\n[] 가 never[] 또는 any[]                     요소 후보 없음                      : string[] 어노테이션\n콜백 매개변수가 any (noImplicitAny 꺼짐)      문맥이 없음                         매개변수 타입 적기 · strict\nreturn 이 여럿인 함수의 반환이 유니온         각 return 의 최적 공통 타입           반환 타입 어노테이션\nlongest(\"abc\", \"de\") 가 \"abc\" | \"de\"        제네릭 T 에 리터럴이 그대로           필요하면 <string> 명시",
         codeLang: "text",
       },
       {
@@ -2341,7 +2341,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `[new Rhino(), new Elephant()]`가 Animal[]로 추론되지 않는 이유는? 2) `names.forEach((s) => …)`의 s가 string인 메커니즘의 이름은? 3) `{ kind: \"left\" }`의 kind가 string으로 넓혀지는 이유와 막는 방법 둘은? 4) satisfies가 as와 다른 점을 '방향'으로 설명하세요.",
+        body: "1) `[new Rhino(), new Elephant()]`가 Animal[]로 추론되지 않는 이유는?\n2) `names.forEach((s) => …)`의 s가 string인 메커니즘의 이름은?\n3) `{ kind: \"left\" }`의 kind가 string으로 넓혀지는 이유와 막는 방법 둘은?\n4) satisfies가 as와 다른 점을 '방향'으로 설명하세요.",
       },
     ],
     sources: [
@@ -2355,7 +2355,7 @@ export const typescriptTheories: Theory[] = [
     name: "변수 선언",
     tagline: "var · let · const 의 스코프, 구조 분해와 전개, 그리고 using",
     intro:
-      "JavaScript의 변수 선언을 TypeScript 관점에서 다시 적은 장입니다. var의 함수 스코프와 호이스팅 문제, let의 블록 스코프·TDZ·재선언 금지, const, 배열·객체 구조 분해(기본값·이름 바꾸기·나머지·함수 매개변수), 전개(메서드를 잃음), 그리고 5.2의 `using`·`await using`(Symbol.dispose) 선언까지.",
+      "JavaScript의 변수 선언을 TypeScript 관점에서 다시 적은 장입니다. var의 함수 스코프와 호이스팅 문제, let의 블록 스코프·TDZ·재선언 금지, const를 다룹니다. 배열·객체 구조 분해(기본값·이름 바꾸기·나머지·함수 매개변수)와 전개(메서드를 잃음)도 다룹니다. 그리고 5.2의 `using`·`await using`(Symbol.dispose) 선언까지 다룹니다.",
     blocks: [
       {
         label: "var 의 함수 스코프, let 의 블록 스코프",
@@ -2364,7 +2364,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "const 는 재대입 금지이고 불변이 아니다",
-        body: "const는 바인딩을 다시 대입할 수 없다는 뜻입니다. 객체의 속성은 바뀝니다. 문서는 '내부 상태가 바뀌지 않아야 하면 readonly 타입 수식어를 쓰라'고 적습니다 — 객체 타입 장의 readonly와 `as const`. 추론에서 const는 리터럴 타입을 유지하고 let은 넓힙니다(타입 추론 장).",
+        body: "const는 바인딩을 다시 대입할 수 없다는 뜻입니다. 객체의 속성은 바뀝니다. 문서는 '내부 상태가 바뀌지 않아야 하면 readonly 타입 수식어를 쓰라'고 적습니다. 객체 타입 장의 readonly와 `as const`가 그 자리입니다. 추론에서 const는 리터럴 타입을 유지하고 let은 넓힙니다(타입 추론 장).",
         code: "const kitty = { name: \"Aurora\", numLives: 9 };\nkitty.name = \"Rory\";   // OK — 속성은 바뀐다\nkitty = { name: \"x\", numLives: 1 };   // Cannot assign to 'kitty' because it is a constant. (TS2588)\n\nconst frozen = { name: \"Aurora\" } as const;\nfrozen.name = \"Rory\";   // Cannot assign to 'name' because it is a read-only property. (TS2540)",
       },
       {
@@ -2374,8 +2374,8 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "using 과 await using (5.2)",
-        body: "`using r = res()`는 블록을 벗어날 때 `r[Symbol.dispose]()`를 자동으로 부르는 선언입니다(TC39 명시적 자원 관리, 3단계). `await using`은 `Symbol.asyncDispose`를 부르고 await합니다 — async 함수나 모듈 최상위에서만. null·undefined도 허용되고, for·for..of 안에서도 쓸 수 있으며, 구조 분해와는 함께 쓸 수 없습니다. `Disposable`·`AsyncDisposable` 인터페이스는 lib에 있고(`esnext.disposable`), 런타임에 Symbol.dispose가 없는 환경에는 폴리필이 필요합니다. 실제로 `--lib es2022,esnext.disposable`로 컴파일하면 `__addDisposableResource` 헬퍼가 든 코드가 나왔습니다. 파일 핸들·DB 커넥션·락처럼 '열면 꼭 닫아야 하는 것'의 try/finally를 선언 한 줄로 바꾸는 기능입니다.",
-        code: "function res() { return { [Symbol.dispose]() { console.log(\"disposed\"); } }; }\n{\n  using r = res();\n  // … 블록 끝에서 r[Symbol.dispose]() 자동 호출\n}\n\n// emit (--lib es2022,esnext.disposable)\nvar __addDisposableResource = (this && this.__addDisposableResource) || function (env, value, async) { /* … */ };\n// try { … } catch (e) { env.error = e; env.hasError = true; } finally { __disposeResources(env); }",
+        body: "`using r = res()`는 블록을 벗어날 때 `r[Symbol.dispose]()`를 자동으로 부르는 선언입니다(TC39 명시적 자원 관리, 3단계). `await using`은 `Symbol.asyncDispose`를 부르고 await합니다. async 함수나 모듈 최상위에서만 쓸 수 있습니다. null·undefined도 허용되고, for·for..of 안에서도 쓸 수 있으며, 구조 분해와는 함께 쓸 수 없습니다. `Disposable`·`AsyncDisposable` 인터페이스는 lib에 있습니다(`esnext.disposable`). 런타임에 Symbol.dispose가 없는 환경에는 폴리필이 필요합니다. 실제로 `--lib es2022,esnext.disposable`로 컴파일하면 `__addDisposableResource` 헬퍼가 든 코드가 나왔습니다. 파일 핸들·DB 커넥션·락처럼 '열면 꼭 닫아야 하는 것'의 try/finally를 선언 한 줄로 바꾸는 기능입니다.",
+        code: "function res() { return { [Symbol.dispose]() { console.log(\"disposed\"); } }; }\n{\n  using r = res();\n  // … 블록 끝에서 r[Symbol.dispose]() 자동 호출\n}\n\n// emit (--lib es2022,esnext.disposable)\nvar __addDisposableResource = (this && this.__addDisposableResource) || function (env, value, async) { /*\n  … */ };\n// try { … } catch (e) { env.error = e; env.hasError = true; } finally { __disposeResources(env); }",
       },
       {
         label: "문제의 구조: 선언 키워드는 '언제 사라지는가' 를 정한다",
@@ -2389,7 +2389,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `for (var i …) setTimeout(() => i)`가 같은 값을 찍는 이유와 let이 고치는 메커니즘은? 2) `{ ...instance }`가 메서드를 잃는 이유는? 3) `using`이 블록을 벗어날 때 부르는 메서드와, 컴파일에 필요한 lib은? 4) const 객체의 속성이 바뀌는 것을 타입으로 막는 두 방법은?",
+        body: "1) `for (var i …) setTimeout(() => i)`가 같은 값을 찍는 이유와 let이 고치는 메커니즘은?\n2) `{ ...instance }`가 메서드를 잃는 이유는?\n3) `using`이 블록을 벗어날 때 부르는 메서드와, 컴파일에 필요한 lib은?\n4) const 객체의 속성이 바뀌는 것을 타입으로 막는 두 방법은?",
       },
     ],
     sources: [
@@ -2419,13 +2419,13 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 같은 import 가 설정마다 다르게 끝난다",
-        body: "`import { a } from \"./a\"`(확장자 없음) 한 줄을 세 설정에서 돌렸습니다. `module: nodenext`는 \"Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './a.js'?\"(TS2835), `module: preserve`(bundler)는 통과, `module: esnext --moduleResolution bundler`도 통과하되 같은 파일의 `import fs = require()`는 \"Import assignment cannot be used when targeting ECMAScript modules.\"(TS1202). 그리고 Node 24에서 확장자 없는 ESM import를 실행하면 \"ERR_MODULE_NOT_FOUND: Cannot find module '…/a'\"입니다. nodenext가 까다로운 이유가 그 런타임 에러를 컴파일 때 미리 내는 것이기 때문입니다.",
-        code: "// esm/c.ts\nimport { a } from \"./a\";\n\n--module nodenext\n  error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './a.js'?\n--module preserve   (moduleResolution bundler 암묵)\n  (통과)\n--module esnext --moduleResolution bundler\n  (통과)\n\n$ node interop/noext.mjs         # 같은 코드를 Node 가 실행하면\nError [ERR_MODULE_NOT_FOUND]: Cannot find module '…/interop/a' imported from …/noext.mjs",
+        body: "`import { a } from \"./a\"`(확장자 없음) 한 줄을 세 설정에서 돌렸습니다.\n`module: nodenext`는 \"Relative import paths need explicit file extensions in ECMAScript imports when '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './a.js'?\"(TS2835)를 냈습니다.\n`module: preserve`(bundler)는 통과했습니다.\n`module: esnext --moduleResolution bundler`도 통과했습니다. 다만 같은 파일의 `import fs = require()`는 \"Import assignment cannot be used when targeting ECMAScript modules.\"(TS1202)였습니다.\n그리고 Node 24에서 확장자 없는 ESM import를 실행하면 \"ERR_MODULE_NOT_FOUND: Cannot find module '…/a'\"입니다. nodenext가 까다로운 이유는 그 런타임 에러를 컴파일 때 미리 내기 때문입니다.",
+        code: "// esm/c.ts\nimport { a } from \"./a\";\n\n--module nodenext\n  error TS2835: Relative import paths need explicit file extensions in ECMAScript imports when\n  '--moduleResolution' is 'node16' or 'nodenext'. Did you mean './a.js'?\n--module preserve   (moduleResolution bundler 암묵)\n  (통과)\n--module esnext --moduleResolution bundler\n  (통과)\n\n$ node interop/noext.mjs         # 같은 코드를 Node 가 실행하면\nError [ERR_MODULE_NOT_FOUND]: Cannot find module '…/interop/a' imported from …/noext.mjs",
         codeLang: "text",
       },
       {
         label: "일곱 장의 지도",
-        body: "소개는 목차. 이론은 '호스트가 누구인가'와 TypeScript의 세 가지 일(출력 포맷·import 해석·타입 부여). 가이드는 '컴파일러 옵션 고르기' 한 장 — 앱(번들러·Node)과 라이브러리의 처방. 레퍼런스는 module·moduleResolution 각 값과 paths·typesVersions. 부록은 ESM/CJS 상호운용 — 왜 default가 `.default.default`가 되는가. 이 섹션에서 가장 자주 돌아오는 것은 가이드의 처방 두 줄(앱은 `module: esnext + moduleResolution: bundler`, Node와 라이브러리는 `module: nodenext/node18`)과 부록입니다.",
+        body: "소개는 목차입니다.\n이론은 '호스트가 누구인가'와 TypeScript의 세 가지 일(출력 포맷·import 해석·타입 부여)을 다룹니다.\n가이드는 '컴파일러 옵션 고르기' 한 장입니다. 앱(번들러·Node)과 라이브러리의 처방을 적습니다.\n레퍼런스는 module·moduleResolution 각 값과 paths·typesVersions를 다룹니다.\n부록은 ESM/CJS 상호운용입니다. 왜 default가 `.default.default`가 되는지를 설명합니다.\n이 섹션에서 가장 자주 돌아오는 것은 가이드의 처방 두 줄(앱은 `module: esnext + moduleResolution: bundler`, Node와 라이브러리는 `module: nodenext/node18`)과 부록입니다.",
       },
       {
         label: "다음 입구",
@@ -2447,18 +2447,18 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "네 갈래가 답하는 질문",
-        body: "이론 — 'TypeScript는 모듈에 대해 무엇을 하고 무엇을 하지 않는가'. 가이드 — '내 프로젝트는 어떤 설정을 적어야 하는가'. 레퍼런스 — '이 옵션 값은 정확히 무엇을 하는가'. 부록 — '왜 default import가 깨지는가'. 읽는 순서는 그대로이지만 돌아오는 빈도는 가이드 > 레퍼런스 > 부록 > 이론입니다.",
+        body: "이론은 'TypeScript는 모듈에 대해 무엇을 하고 무엇을 하지 않는가'에 답합니다.\n가이드는 '내 프로젝트는 어떤 설정을 적어야 하는가'에 답합니다.\n레퍼런스는 '이 옵션 값은 정확히 무엇을 하는가'에 답합니다.\n부록은 '왜 default import가 깨지는가'에 답합니다.\n읽는 순서는 그대로이지만 돌아오는 빈도는 가이드 > 레퍼런스 > 부록 > 이론입니다.",
       },
       {
         label: "먼저 가려 둘 용어",
-        body: "이 섹션은 비슷한 낱말을 구분해서 씁니다. 모듈 포맷(format) — 출력 .js가 ESM인가 CJS인가(`module` 옵션). 모듈 해석(resolution) — import 문자열을 파일 경로로 바꾸는 알고리즘(`moduleResolution`). 모듈 지정자(specifier) — import 뒤의 문자열 자체. 호스트(host) — 출력을 실제로 실행하거나 묶는 것(Node, 브라우저, 번들러). 'TypeScript 컴파일러 자체는 호스트가 아니다'가 이론 장의 첫 문장급 선언입니다.",
+        body: "이 섹션은 비슷한 낱말을 구분해서 씁니다.\n모듈 포맷(format)은 출력 .js가 ESM인가 CJS인가를 가리킵니다(`module` 옵션).\n모듈 해석(resolution)은 import 문자열을 파일 경로로 바꾸는 알고리즘입니다(`moduleResolution`).\n모듈 지정자(specifier)는 import 뒤의 문자열 자체입니다.\n호스트(host)는 출력을 실제로 실행하거나 묶는 것입니다(Node, 브라우저, 번들러).\n'TypeScript 컴파일러 자체는 호스트가 아니다'가 이론 장의 첫 문장급 선언입니다.",
         code: "낱말                  뜻                                        옵션\n───────────────────  ───────────────────────────────────────  ─────────────────\n모듈 포맷            출력의 import/export 모양 (ESM · CJS)       module\n모듈 해석            지정자 → 파일 경로                          moduleResolution\n모듈 지정자          import { a } from \"./a.js\" 의 \"./a.js\"       (코드)\n호스트               출력을 실행·번들하는 것 (Node · 번들러)      (설정이 아님 — 맞춰야 할 대상)\n모듈 감지            이 파일이 모듈인가 스크립트인가             moduleDetection",
         codeLang: "text",
       },
       {
         label: "실제로 돌려 보면: 7.0 에서 살아 있는 값",
-        body: "이 섹션의 옵션 값 중 7.0에서 남은 것만 적어 둡니다. module은 es2015·es2020·es2022·esnext·commonjs·node16·node18·node20·nodenext·preserve. moduleResolution은 node16·nodenext·bundler. amd·umd·system·none과 classic·node10은 \"Option '…' has been removed.\"입니다. 실제로 `--module amd`와 `--moduleResolution classic`이 그렇게 거부됐습니다. 그래서 레퍼런스 장의 '쓰지 말라'(commonjs의 'You probably shouldn't use this', classic의 'Do not use classic') 중 일부는 이미 선택지에서 빠졌습니다.",
-        code: "$ npx tsc --noEmit --module amd a.ts\nerror TS5108: Option 'module=AMD' has been removed. Please remove it from your configuration.\n$ npx tsc --noEmit --module commonjs --moduleResolution classic a.ts\nerror TS5108: Option 'moduleResolution=Classic' has been removed. Please remove it from your configuration.",
+        body: "이 섹션의 옵션 값 중 7.0에서 남은 것만 적어 둡니다. module은 es2015·es2020·es2022·esnext·commonjs·node16·node18·node20·nodenext·preserve입니다. moduleResolution은 node16·nodenext·bundler입니다. amd·umd·system·none과 classic·node10은 \"Option '…' has been removed.\"입니다. 실제로 `--module amd`와 `--moduleResolution classic`이 그렇게 거부됐습니다. 그래서 레퍼런스 장의 '쓰지 말라'(commonjs의 'You probably shouldn't use this', classic의 'Do not use classic') 중 일부는 이미 선택지에서 빠졌습니다.",
+        code: "$ npx tsc --noEmit --module amd a.ts\nerror TS5108: Option 'module=AMD' has been removed. Please remove it from your configuration.\n$ npx tsc --noEmit --module commonjs --moduleResolution classic a.ts\nerror TS5108: Option 'moduleResolution=Classic' has been removed. Please remove it from your\nconfiguration.",
         codeLang: "text",
       },
       {
@@ -2486,23 +2486,23 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "module: 호스트에 맞는 출력 포맷",
-        body: "`module` 값은 출력 .js의 모양을 정합니다. 문서의 노트 — 'Node.js의 모듈 포맷 감지와 상호운용 규칙 때문에 Node에서 실행할 코드에 esnext나 commonjs를 지정하는 것은 올바르지 않다. 올바른 값은 node16과 nodenext뿐'. node16/nodenext는 파일마다 포맷을 정합니다. `.mts`/`.mjs`는 ESM, `.cts`/`.cjs`는 CJS, `.ts`/`.js`는 가장 가까운 package.json의 `type`을 따릅니다. 실제로 같은 `--module nodenext`에서 `type: module` 폴더의 파일은 `import … from` 그대로, `type: commonjs` 폴더의 파일은 `require()`와 `exports.x =`로 나왔습니다. 번들러에는 esnext(또는 5.4의 preserve), 라이브러리에는 node18. 'commonjs·system·amd·umd는 더는 권하지 않음'이고 그중 셋은 7.0에서 제거됐습니다.",
+        body: "`module` 값은 출력 .js의 모양을 정합니다. 문서의 노트는 이렇습니다. 'Node.js의 모듈 포맷 감지와 상호운용 규칙 때문에 Node에서 실행할 코드에 esnext나 commonjs를 지정하는 것은 올바르지 않다. 올바른 값은 node16과 nodenext뿐'. node16/nodenext는 파일마다 포맷을 정합니다. `.mts`/`.mjs`는 ESM, `.cts`/`.cjs`는 CJS, `.ts`/`.js`는 가장 가까운 package.json의 `type`을 따릅니다. 실제로 같은 `--module nodenext`에서 `type: module` 폴더의 파일은 `import … from` 그대로, `type: commonjs` 폴더의 파일은 `require()`와 `exports.x =`로 나왔습니다. 번들러에는 esnext(또는 5.4의 preserve)를, 라이브러리에는 node18을 씁니다. 'commonjs·system·amd·umd는 더는 권하지 않음'이고 그중 셋은 7.0에서 제거됐습니다.",
         code: "// 같은 --module nodenext, 다른 package.json type\n// esm/ (type: module) → b.js\nimport { a } from \"./a.js\";\n\n// cjs/ (type: commonjs) → e.js\n\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst a_js_1 = require(\"../esm/a.js\");\nexports.e = String(a_js_1.a);",
       },
       {
         label: "실제로 돌려 보면: 지정자는 변환되지 않는다",
         body: "이 장의 가장 중요한 규칙입니다. '출력 파일의 모듈 지정자는 입력 파일의 모듈 지정자와 같다'. `import \"./a.ts\"`라고 써도 TypeScript가 `./a.js`로 바꿔 주지 않습니다(5.7의 `rewriteRelativeImportExtensions`가 예외). 그래서 Node ESM처럼 확장자가 필수인 호스트에서는 소스에 `.js`를 적어야 하고, nodenext는 그걸 TS2835로 강제합니다. `.ts` 확장자를 적으려면 `allowImportingTsExtensions`가 필요한데, 실제로 그냥 쓰면 \"An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\"(TS5097)이고, 켜되 emit도 하려 하면 \"Option 'allowImportingTsExtensions' can only be used when one of 'noEmit', 'emitDeclarationOnly', or 'rewriteRelativeImportExtensions' is set.\"(TS5096)입니다 — 출력에 `.ts`가 남으면 어떤 호스트도 못 읽으니까요. `rewriteRelativeImportExtensions`를 켜면 `./a.ts`가 출력에서 `./a.js`로 바뀌었습니다.",
-        code: "import { a } from \"./a.ts\";\n// An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled. (TS5097)\n\n--allowImportingTsExtensions (emit 함께)\n// Option 'allowImportingTsExtensions' can only be used when one of 'noEmit', 'emitDeclarationOnly', or 'rewriteRelativeImportExtensions' is set. (TS5096)\n\n--rewriteRelativeImportExtensions   → 출력 ext.js\nimport { a } from \"./a.js\";          // 이 옵션만 지정자를 바꾼다 (5.7)",
+        code: "import { a } from \"./a.ts\";\n// An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.\n  (TS5097)\n\n--allowImportingTsExtensions (emit 함께)\n// Option 'allowImportingTsExtensions' can only be used when one of 'noEmit', 'emitDeclarationOnly', or\n  'rewriteRelativeImportExtensions' is set. (TS5096)\n\n--rewriteRelativeImportExtensions   → 출력 ext.js\nimport { a } from \"./a.js\";          // 이 옵션만 지정자를 바꾼다 (5.7)",
       },
       {
         label: "moduleResolution 과 package.json exports",
-        body: "해석 알고리즘은 호스트의 것을 흉내 냅니다. node16/nodenext는 Node의 규칙 — import는 확장자 필수·디렉터리 import 불가, require는 확장자 생략 가능. bundler는 번들러의 느슨한 규칙 — 확장자 생략·디렉터리 index 허용 — 이되 module은 esnext/preserve여야 합니다('`bundler`는 module을 esnext로 설정해야 한다'; 실제로 amd와 섞으면 TS5095). 둘 다 package.json의 `exports`·`imports`와 조건(`types`·`import`·`require`)을 읽습니다. 실제로 exports에 `.`과 `./sub`만 적은 패키지에서 `pkg/dist/hidden`은 \"Cannot find module 'pkg/dist/hidden' or its corresponding type declarations.\"(TS2307)였고, `--traceResolution`은 \"Entering conditional exports. Matched 'exports' condition 'types'.\"를 찍었습니다. classic은 '6.0에서 폐기 예정'이었고 7.0에서 제거, node10은 '새 프로젝트에 쓰지 말 것'이었고 역시 제거.",
-        code: "$ npx tsc --noEmit --module nodenext --traceResolution esm/usepkg.ts | grep -E \"exports|resolved\"\nEntering conditional exports.\nMatched 'exports' condition 'types'.\nUsing 'exports' subpath '.' with target './dist/index.d.ts'.\n======== Module name 'pkg' was successfully resolved to '…/node_modules/pkg/dist/index.d.ts' with Package ID 'pkg/dist/index.d.ts@1.0.0'. ========\n\nimport { h } from \"pkg/dist/hidden\";   // exports 에 없는 경로\n// Cannot find module 'pkg/dist/hidden' or its corresponding type declarations. (TS2307)",
+        body: "해석 알고리즘은 호스트의 것을 흉내 냅니다. node16/nodenext는 Node의 규칙을 따릅니다. import는 확장자가 필수이고 디렉터리 import가 안 되며, require는 확장자를 생략할 수 있습니다. bundler는 번들러의 느슨한 규칙을 따라 확장자 생략과 디렉터리 index를 허용합니다. 다만 module은 esnext/preserve여야 합니다('`bundler`는 module을 esnext로 설정해야 한다'; 실제로 amd와 섞으면 TS5095). 둘 다 package.json의 `exports`·`imports`와 조건(`types`·`import`·`require`)을 읽습니다. 실제로 exports에 `.`과 `./sub`만 적은 패키지에서 `pkg/dist/hidden`은 \"Cannot find module 'pkg/dist/hidden' or its corresponding type declarations.\"(TS2307)였고, `--traceResolution`은 \"Entering conditional exports. Matched 'exports' condition 'types'.\"를 찍었습니다. classic은 '6.0에서 폐기 예정'이었고 7.0에서 제거됐습니다. node10은 '새 프로젝트에 쓰지 말 것'이었고 역시 제거됐습니다.",
+        code: "$ npx tsc --noEmit --module nodenext --traceResolution esm/usepkg.ts | grep -E \"exports|resolved\"\nEntering conditional exports.\nMatched 'exports' condition 'types'.\nUsing 'exports' subpath '.' with target './dist/index.d.ts'.\n======== Module name 'pkg' was successfully resolved to '…/node_modules/pkg/dist/index.d.ts' with Package\nID 'pkg/dist/index.d.ts@1.0.0'. ========\n\nimport { h } from \"pkg/dist/hidden\";   // exports 에 없는 경로\n// Cannot find module 'pkg/dist/hidden' or its corresponding type declarations. (TS2307)",
         codeLang: "text",
       },
       {
         label: "라이브러리: 선언 파일은 출력과 짝이어야 한다",
-        body: "`tsc --declaration`은 `.js`와 `.d.ts`를 함께 내보내고, 쓰는 쪽 컴파일러는 '둘이 대응한다'고 가정합니다. 확장자 짝 — `.d.ts`↔`.js`↔`.ts`, `.d.mts`↔`.mjs`↔`.mts`, `.d.cts`↔`.cjs`↔`.cts`. 문서의 경고 — '선언 파일을 손으로 쓰는 것은 위험하고 실수가 잦은 일'. 그리고 라이브러리에 `moduleResolution: bundler`를 쓰면 '번들러에서만 동작하는 코드'가 나올 수 있어 '전염성(infectious)'이 있다고 적습니다 — `export * from \"./utils\"`(확장자 없음)가 .d.ts에 그대로 남으면 Node 사용자의 컴파일이 깨집니다. 라이브러리는 `module: node18`이 처방입니다. 'ES 모듈이 CommonJS 모듈을 import하는 것을 막는 TypeScript 설정은 현재 없다'도 이 장의 솔직한 한 줄입니다.",
+        body: "`tsc --declaration`은 `.js`와 `.d.ts`를 함께 내보내고, 쓰는 쪽 컴파일러는 '둘이 대응한다'고 가정합니다. 확장자 짝은 `.d.ts`↔`.js`↔`.ts`, `.d.mts`↔`.mjs`↔`.mts`, `.d.cts`↔`.cjs`↔`.cts`입니다. 문서는 '선언 파일을 손으로 쓰는 것은 위험하고 실수가 잦은 일'이라고 경고합니다. 그리고 라이브러리에 `moduleResolution: bundler`를 쓰면 '번들러에서만 동작하는 코드'가 나올 수 있어 '전염성(infectious)'이 있다고 적습니다. `export * from \"./utils\"`(확장자 없음)가 .d.ts에 그대로 남으면 Node 사용자의 컴파일이 깨집니다. 라이브러리는 `module: node18`이 처방입니다. 'ES 모듈이 CommonJS 모듈을 import하는 것을 막는 TypeScript 설정은 현재 없다'도 이 장의 솔직한 한 줄입니다.",
         code: "소스        출력 JS    선언\n─────────  ────────  ─────────\n.ts        .js       .d.ts\n.mts       .mjs      .d.mts\n.cts       .cjs      .d.cts\n(.*  →  .d.*.ts  — allowArbitraryExtensions)\n\n라이브러리 처방: module: node18 → moduleResolution node16, 확장자 강제 → .d.ts 가 어느 호스트에서도 해석됨",
         codeLang: "text",
       },
@@ -2518,7 +2518,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) TypeScript가 모듈에 대해 하는 세 가지 일은? 2) 'TypeScript는 호스트가 아니다'가 module 옵션의 의미를 어떻게 바꾸나요? 3) `import \"./a.ts\"`가 출력에서 `./a.js`로 바뀌지 않는 이유와 바꾸는 유일한 옵션은? 4) 라이브러리에 `moduleResolution: bundler`가 '전염성'이 있다는 뜻은?",
+        body: "1) TypeScript가 모듈에 대해 하는 세 가지 일은?\n2) 'TypeScript는 호스트가 아니다'가 module 옵션의 의미를 어떻게 바꾸나요?\n3) `import \"./a.ts\"`가 출력에서 `./a.js`로 바뀌지 않는 이유와 바꾸는 유일한 옵션은?\n4) 라이브러리에 `moduleResolution: bundler`가 '전염성'이 있다는 뜻은?",
       },
     ],
     sources: [
@@ -2540,7 +2540,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 가이드의 처방 두 줄",
-        body: "앱이 번들러로 빌드되면 `module: esnext`(또는 preserve) + `moduleResolution: bundler` + `noEmit`(검사만). 앱이 Node에서 돌면 `module: nodenext` 하나로 moduleResolution·target·esModuleInterop이 따라옵니다. 라이브러리는 `module: node18`. 실제로 5.9 이후 `tsc --init`이 쓰는 최소 설정이 `module: nodenext, target: esnext, verbatimModuleSyntax: true, isolatedModules: true, moduleDetection: force, skipLibCheck: true`였습니다 — Node 처방에 가장 가깝고, 번들러 프로젝트라면 module과 moduleResolution 두 줄만 바꾸면 됩니다.",
+        body: "앱이 번들러로 빌드되면 `module: esnext`(또는 preserve) + `moduleResolution: bundler` + `noEmit`(검사만)입니다.\n앱이 Node에서 돌면 `module: nodenext` 하나로 moduleResolution·target·esModuleInterop이 따라옵니다.\n라이브러리는 `module: node18`입니다.\n실제로 5.9 이후 `tsc --init`이 쓰는 최소 설정이 `module: nodenext, target: esnext, verbatimModuleSyntax: true, isolatedModules: true, moduleDetection: force, skipLibCheck: true`였습니다. Node 처방에 가장 가깝습니다. 번들러 프로젝트라면 module과 moduleResolution 두 줄만 바꾸면 됩니다.",
         code: "$ npx tsc --init   (7.0.2)\n{\n  \"compilerOptions\": {\n    \"module\": \"nodenext\",\n    \"target\": \"esnext\",\n    \"types\": [],\n    \"sourceMap\": true,\n    \"declaration\": true,\n    \"declarationMap\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"exactOptionalPropertyTypes\": true,\n    \"strict\": true,\n    \"jsx\": \"react-jsx\",\n    \"verbatimModuleSyntax\": true,\n    \"isolatedModules\": true,\n    \"noUncheckedSideEffectImports\": true,\n    \"moduleDetection\": \"force\",\n    \"skipLibCheck\": true\n  }\n}",
         codeLang: "text",
       },
@@ -2560,22 +2560,22 @@ export const typescriptTheories: Theory[] = [
     name: "컴파일러 옵션 고르기",
     tagline: "번들러 앱 · Node 앱 · 라이브러리 — 셋의 설정 세트",
     intro:
-      "이론 장의 '호스트가 누구인가'에 대한 답마다 설정을 적어 준 페이지입니다. 번들러로 빌드하는 앱, Node에서 실행하는 앱(ts-node·tsx 포함), 번들러 없이 브라우저에서 ESM을 직접 쓰는 경우, 라이브러리, 번들된 라이브러리. 그리고 '두 포맷으로 내보내되 검사는 한 번'의 위험까지.",
+      "이론 장의 '호스트가 누구인가'에 대한 답마다 설정을 적어 준 페이지입니다. 번들러로 빌드하는 앱, Node에서 실행하는 앱(ts-node·tsx 포함), 번들러 없이 브라우저에서 ESM을 직접 쓰는 경우, 라이브러리, 번들된 라이브러리가 그 답들입니다. 그리고 '두 포맷으로 내보내되 검사는 한 번'의 위험까지 다룹니다.",
     blocks: [
       {
         label: "앱 + 번들러",
-        body: "`module: esnext`, `moduleResolution: bundler`, `esModuleInterop: true`, `customConditions: [\"module\"]`(exports 조건), `noEmit`(또는 `emitDeclarationOnly`), `allowImportingTsExtensions: true`, `allowArbitraryExtensions: true`, 그리고 `verbatimModuleSyntax` 또는 `isolatedModules`. 번들러가 변환하니 tsc는 검사만 하고, `.ts` 확장자 import도 허용됩니다(noEmit이니 출력에 안 남음). 문서의 주의 — '번들러 프로젝트에서는 당장은 package.json에 `type: module`을 두거나 .mts 파일을 쓰지 않는 것을 권한다'. 번들러들의 Node 포맷 규칙 지원이 고르지 않기 때문입니다. tsx도 '번들러와 같은 설정'을 쓰라고 합니다.",
-        code: "{\n  \"compilerOptions\": {\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"esModuleInterop\": true,\n    \"customConditions\": [\"module\"],\n    \"noEmit\": true,                    // 번들러가 .js 를 만든다\n    \"allowImportingTsExtensions\": true,\n    \"allowArbitraryExtensions\": true,\n    \"verbatimModuleSyntax\": true,\n    \"strict\": true\n  }\n}\n// 실제로: allowImportingTsExtensions 는 noEmit 없이 켜면\n// Option 'allowImportingTsExtensions' can only be used when one of 'noEmit', 'emitDeclarationOnly', or 'rewriteRelativeImportExtensions' is set. (TS5096)",
+        body: "설정은 `module: esnext`, `moduleResolution: bundler`, `esModuleInterop: true`, `customConditions: [\"module\"]`(exports 조건), `noEmit`(또는 `emitDeclarationOnly`), `allowImportingTsExtensions: true`, `allowArbitraryExtensions: true`, 그리고 `verbatimModuleSyntax` 또는 `isolatedModules`입니다. 번들러가 변환하니 tsc는 검사만 하고, `.ts` 확장자 import도 허용됩니다(noEmit이니 출력에 남지 않습니다). 문서는 '번들러 프로젝트에서는 당장은 package.json에 `type: module`을 두거나 .mts 파일을 쓰지 않는 것을 권한다'고 주의를 둡니다. 번들러들의 Node 포맷 규칙 지원이 고르지 않기 때문입니다. tsx도 '번들러와 같은 설정'을 쓰라고 합니다.",
+        code: "{\n  \"compilerOptions\": {\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"bundler\",\n    \"esModuleInterop\": true,\n    \"customConditions\": [\"module\"],\n    \"noEmit\": true,                    // 번들러가 .js 를 만든다\n    \"allowImportingTsExtensions\": true,\n    \"allowArbitraryExtensions\": true,\n    \"verbatimModuleSyntax\": true,\n    \"strict\": true\n  }\n}\n// 실제로: allowImportingTsExtensions 는 noEmit 없이 켜면\n// Option 'allowImportingTsExtensions' can only be used when one of 'noEmit', 'emitDeclarationOnly', or\n  'rewriteRelativeImportExtensions' is set. (TS5096)",
       },
       {
         label: "실제로 돌려 보면: 앱 + Node 는 nodenext 한 줄",
-        body: "`module: nodenext`를 적으면 `moduleResolution: nodenext`, `esModuleInterop: true`, `target: esnext`가 암묵적으로 따라옵니다. 권장 추가는 `verbatimModuleSyntax: true`. ESM으로 내보낼 거면 package.json에 `type: module` 또는 `.mts`. 실제로 nodenext에서는 Node의 규칙이 그대로 검사됩니다 — 확장자 없는 import는 TS2835, CJS 파일의 최상위 await는 \"The current file is a CommonJS module and cannot use 'await' at the top level.\"(TS1309), `module: commonjs`로 최상위 await를 쓰면 \"Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.\"(TS1378). ts-node는 Node 설정을 그대로 따릅니다.",
-        code: "// cjs/c.ts (type: commonjs) under --module nodenext\nimport { a } from \"../esm/a.js\";\nawait Promise.resolve(1);\n// The current file is a CommonJS module and cannot use 'await' at the top level. (TS1309)\n\n// --module commonjs\n// Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system',\n// 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher. (TS1378)",
+        body: "`module: nodenext`를 적으면 `moduleResolution: nodenext`, `esModuleInterop: true`, `target: esnext`가 암묵적으로 따라옵니다. 권장 추가는 `verbatimModuleSyntax: true`입니다. ESM으로 내보낼 거면 package.json에 `type: module`을 두거나 `.mts`를 씁니다. 실제로 nodenext에서는 Node의 규칙이 그대로 검사됩니다.\n확장자 없는 import는 TS2835입니다.\nCJS 파일의 최상위 await는 \"The current file is a CommonJS module and cannot use 'await' at the top level.\"(TS1309)입니다.\n`module: commonjs`로 최상위 await를 쓰면 \"Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.\"(TS1378)입니다.\nts-node는 Node 설정을 그대로 따릅니다.",
+        code: "// cjs/c.ts (type: commonjs) under --module nodenext\nimport { a } from \"../esm/a.js\";\nawait Promise.resolve(1);\n// The current file is a CommonJS module and cannot use 'await' at the top level. (TS1309)\n\n// --module commonjs\n// Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext',\n  'system',\n// 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or\n  higher. (TS1378)",
       },
       {
         label: "라이브러리: node18 + 가장 낮은 target + verbatimModuleSyntax",
         body: "문서의 템플릿 — `module: node18`(moduleResolution node16 암묵), 지원할 가장 낮은 `target`, `strict: true`, `verbatimModuleSyntax: true`, `declaration: true`, `sourceMap`, `declarationMap`, `rootDir: src`, `outDir: dist`. 왜 bundler가 아닌가 — `moduleResolution: bundler`는 `export * from \"./utils\"`(확장자 없음)를 통과시키고 그 줄이 .d.ts에 그대로 남아 Node 사용자에게서 \"Error [ERR_MODULE_NOT_FOUND]: Cannot find module '…/node_modules/dependency/utils'… Did you mean to import ./utils.js?\"로 터집니다. '한마디로 bundler는 전염성이 있다'. verbatimModuleSyntax는 esModuleInterop에 따라 뜻이 달라지는 import 문을 막고, CJS 출력에서 `export default`를 막습니다 — 실제로 CJS 파일의 `export default function`은 \"A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when 'verbatimModuleSyntax' is enabled.\"(TS1287), `import x from`은 \"ECMAScript imports and exports cannot be written in a CommonJS file under 'verbatimModuleSyntax'.\"(TS1295)였습니다.",
-        code: "{\n  \"compilerOptions\": {\n    \"module\": \"node18\",\n    \"target\": \"es2020\",             // 지원할 가장 낮은 것\n    \"strict\": true,\n    \"verbatimModuleSyntax\": true,\n    \"declaration\": true,\n    \"sourceMap\": true,\n    \"declarationMap\": true,\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\"\n  }\n}\n\n// cjs/f.ts (type: commonjs) + verbatimModuleSyntax\nexport default function hello() {}\n// A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when 'verbatimModuleSyntax' is enabled. (TS1287)\n// → 처방: export = hello  또는  파일을 ESM 으로",
+        code: "{\n  \"compilerOptions\": {\n    \"module\": \"node18\",\n    \"target\": \"es2020\",             // 지원할 가장 낮은 것\n    \"strict\": true,\n    \"verbatimModuleSyntax\": true,\n    \"declaration\": true,\n    \"sourceMap\": true,\n    \"declarationMap\": true,\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\"\n  }\n}\n\n// cjs/f.ts (type: commonjs) + verbatimModuleSyntax\nexport default function hello() {}\n// A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when\n  'verbatimModuleSyntax' is enabled. (TS1287)\n// → 처방: export = hello  또는  파일을 ESM 으로",
       },
       {
         label: "번들된 라이브러리와 이중 출력의 함정",
@@ -2584,7 +2584,7 @@ export const typescriptTheories: Theory[] = [
       {
         label: "문제가 나는 경우: 설정 조합표",
         body: "실제로 돌려 본 에러를 조합별로 묶었습니다.",
-        code: "조합                                         에러 / 결과\n───────────────────────────────────────────  ─────────────────────────────────────────────────────\nnodenext + 확장자 없는 상대 import              TS2835 Relative import paths need explicit file extensions…\nnodenext + CJS 파일에 최상위 await              TS1309 The current file is a CommonJS module and cannot use 'await'…\ncommonjs + 최상위 await                        TS1378 Top-level 'await' expressions are only allowed when…\nesnext + import x = require()                  TS1202 Import assignment cannot be used when targeting ECMAScript modules.\nbundler + module amd/commonjs(옛)              TS5095 Option 'bundler' can only be used when 'module' is set to 'preserve', 'commonjs', or 'es2015' or later.\nverbatimModuleSyntax + 타입을 값 import         TS1484 'T' is a type and must be imported using a type-only import…\nverbatimModuleSyntax + CJS 파일의 export default TS1287 / import → TS1295\nallowImportingTsExtensions + emit              TS5096 … can only be used when one of 'noEmit', 'emitDeclarationOnly', or 'rewriteRelativeImportExtensions'\nimport defer + nodenext                        TS18060 Deferred imports are only supported when the '--module' flag is set to 'esnext' or 'preserve'.",
+        code: "조합                             에러 / 결과\n───────────────────────────────  ─────────────────────────────────────────────────────\nnodenext + 확장자 없는 상대 import  TS2835 Relative import paths need explicit file extensions…\nnodenext + CJS 파일에 최상위 await  TS1309 The current file is a CommonJS module and cannot use 'await'…\ncommonjs + 최상위 await            TS1378 Top-level 'await' expressions are only allowed when…\nesnext + import x = require()      TS1202 Import assignment cannot be used when targeting\n                                   ECMAScript modules.\nbundler + module amd/commonjs(옛)  TS5095 Option 'bundler' can only be used when 'module' is set to\n                                  'preserve', 'commonjs', or 'es2015' or later.\nverbatimModuleSyntax + 타입을 값 import  TS1484 'T' is a type and must be imported using a type-only import…\nverbatimModuleSyntax + CJS 파일의 export default TS1287 / import → TS1295\nallowImportingTsExtensions + emit              TS5096 … can only be used when one of 'noEmit',\n                                               'emitDeclarationOnly', or 'rewriteRelativeImportExtensions'\nimport defer + nodenext                        TS18060 Deferred imports are only supported when the\n                                               '--module' flag is set to 'esnext' or 'preserve'.",
         codeLang: "text",
       },
       {
@@ -2593,7 +2593,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 번들러 앱에 `noEmit`을 두는 이유와, 그것이 `allowImportingTsExtensions`와 어떻게 묶이나요? 2) `module: nodenext`가 암묵적으로 켜는 세 옵션은? 3) 라이브러리에 bundler 해석을 쓰면 사용자에게 어떤 런타임 에러가 날 수 있나요? 4) ESM·CJS 이중 출력의 근본 문제는?",
+        body: "1) 번들러 앱에 `noEmit`을 두는 이유와, 그것이 `allowImportingTsExtensions`와 어떻게 묶이나요?\n2) `module: nodenext`가 암묵적으로 켜는 세 옵션은?\n3) 라이브러리에 bundler 해석을 쓰면 사용자에게 어떤 런타임 에러가 날 수 있나요?\n4) ESM·CJS 이중 출력의 근본 문제는?",
       },
     ],
     sources: [
@@ -2611,24 +2611,24 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "module: node16 → nodenext 는 파일마다 포맷을 정한다",
-        body: "문서의 첫 교정 — '흔한 오해는 node16~nodenext가 ES 모듈만 내보낸다는 것'. 실제로는 파일의 포맷(확장자·package.json type)에 따라 CJS 또는 ESM을 내보냅니다. 표 — node16은 target es2022·moduleResolution node16·`require(esm)` 불가, node18은 import 속성(`with { type: \"json\" }`) 추가, node20은 target es2023(5.9 안정), nodenext는 target esnext·`require(esm)` 지원(5.8, Node 22.12+). 암묵 옵션 — nodenext는 moduleResolution nodenext·target esnext·esModuleInterop, node16/18은 moduleResolution node16·target es2022·esModuleInterop. 실제로 `import data from \"./data.json\" with { type: \"json\" }`이 nodenext에서 그대로 통과했고, `resolveJsonModule`을 따로 켜지 않아도 JSON의 타입(`{ name: string; n: number }`)이 검사됐습니다.",
+        body: "문서의 첫 교정은 '흔한 오해는 node16~nodenext가 ES 모듈만 내보낸다는 것'입니다. 실제로는 파일의 포맷(확장자·package.json type)에 따라 CJS 또는 ESM을 내보냅니다. 표를 옮기면 이렇습니다.\nnode16은 target es2022·moduleResolution node16이고 `require(esm)`은 불가입니다.\nnode18은 import 속성(`with { type: \"json\" }`)이 추가됩니다.\nnode20은 target es2023입니다(5.9 안정).\nnodenext는 target esnext이고 `require(esm)`을 지원합니다(5.8, Node 22.12+).\n암묵 옵션은 nodenext가 moduleResolution nodenext·target esnext·esModuleInterop, node16/18이 moduleResolution node16·target es2022·esModuleInterop입니다. 실제로 `import data from \"./data.json\" with { type: \"json\" }`이 nodenext에서 그대로 통과했고, `resolveJsonModule`을 따로 켜지 않아도 JSON의 타입(`{ name: string; n: number }`)이 검사됐습니다.",
         code: "module      target    moduleResolution  require(esm)  import 속성\n─────────  ────────  ────────────────  ───────────  ──────────\nnode16     es2022    node16            ✗             ✗\nnode18     es2022    node16            ✗             ✓\nnode20     es2023    node16            ✗             ✓\nnodenext   esnext    nodenext          ✓ (Node 22.12+)✓\n(전부 esModuleInterop 암묵 켜짐 · 파일 포맷은 .mts/.cts 또는 package.json type)\n\n// nodenext 에서 JSON\nimport data from \"./data.json\" with { type: \"json\" };\nexport const s: number = data.name;   // Type 'string' is not assignable to type 'number'. — 타입이 검사된다",
         codeLang: "text",
       },
       {
         label: "module: es2015 → esnext · preserve · commonjs",
-        body: "es2015~esnext는 ESM만 내보냅니다. '`import mod = require(\"mod\")`는 선언 파일이 아닌 곳에서 허용되지 않음'(실제로 TS1202). es2020은 `import.meta`, es2022는 최상위 await, esnext는 5.9의 `import defer`(실제로 nodenext에서는 \"Deferred imports are only supported when the '--module' flag is set to 'esnext' or 'preserve'.\" TS18060, esnext에서는 `import defer * as ns from \"./a.js\"`가 그대로 출력). preserve(5.4)는 import와 require를 적은 그대로 두고 moduleResolution bundler와 esModuleInterop을 암묵적으로 켭니다 — 번들러가 둘 다 처리하는 세계용. commonjs는 '아마 쓰지 말아야 한다(You probably shouldn't use this)'. amd·umd·system은 제거.",
-        code: "// esm/d.ts — import defer (5.9)\nimport defer * as ns from \"./a.js\";\nexport const d = () => ns.a;        // ns.a 를 처음 읽을 때 모듈이 평가된다\n\n--module nodenext\n// Deferred imports are only supported when the '--module' flag is set to 'esnext' or 'preserve'. (TS18060)\n--module esnext → 출력 d.js (그대로)\nimport defer * as ns from \"./a.js\";",
+        body: "es2015~esnext는 ESM만 내보냅니다. '`import mod = require(\"mod\")`는 선언 파일이 아닌 곳에서 허용되지 않음'입니다(실제로 TS1202). es2020에서는 `import.meta`를, es2022에서는 최상위 await를, esnext에서는 5.9의 `import defer`를 쓸 수 있습니다. 실제로 nodenext에서는 \"Deferred imports are only supported when the '--module' flag is set to 'esnext' or 'preserve'.\" TS18060이 났고, esnext에서는 `import defer * as ns from \"./a.js\"`가 그대로 출력됐습니다. preserve(5.4)는 import와 require를 적은 그대로 두고 moduleResolution bundler와 esModuleInterop을 암묵적으로 켭니다. 번들러가 둘 다 처리하는 세계를 위한 값입니다. commonjs는 '아마 쓰지 말아야 한다(You probably shouldn't use this)'입니다. amd·umd·system은 제거됐습니다.",
+        code: "// esm/d.ts — import defer (5.9)\nimport defer * as ns from \"./a.js\";\nexport const d = () => ns.a;        // ns.a 를 처음 읽을 때 모듈이 평가된다\n\n--module nodenext\n// Deferred imports are only supported when the '--module' flag is set to 'esnext' or 'preserve'.\n  (TS18060)\n--module esnext → 출력 d.js (그대로)\nimport defer * as ns from \"./a.js\";",
       },
       {
         label: "실제로 돌려 보면: moduleResolution 의 두 가족",
-        body: "node16/nodenext — import와 require가 다른 알고리즘을 씁니다. '확장자 없는 import와 디렉터리 import는 require에서만 동작'. package.json exports/imports와 조건을 읽습니다. bundler — module이 esnext 또는 preserve여야 하고(실제로 amd와 섞으면 \"Option 'bundler' can only be used when 'module' is set to 'preserve', 'commonjs', or 'es2015' or later.\" TS5095 — 6.0부터 commonjs와도 허용), 확장자 생략과 디렉터리 import를 허용하되 exports도 읽고, allowSyntheticDefaultImports를 암묵적으로 켭니다. classic은 'Do not use', node10(5.0에서 node에서 개명)은 'should no longer be used' — 둘 다 7.0에서 \"Option 'moduleResolution=Classic' has been removed.\". 그래서 지금 선택지는 '호스트가 Node면 nodenext, 번들러면 bundler' 둘입니다.",
+        body: "node16/nodenext는 import와 require가 다른 알고리즘을 씁니다. '확장자 없는 import와 디렉터리 import는 require에서만 동작'입니다. package.json exports/imports와 조건을 읽습니다.\nbundler는 module이 esnext 또는 preserve여야 합니다(실제로 amd와 섞으면 \"Option 'bundler' can only be used when 'module' is set to 'preserve', 'commonjs', or 'es2015' or later.\" TS5095이고, 6.0부터 commonjs와도 허용됩니다). 확장자 생략과 디렉터리 import를 허용하되 exports도 읽고, allowSyntheticDefaultImports를 암묵적으로 켭니다.\nclassic은 'Do not use', node10(5.0에서 node에서 개명)은 'should no longer be used'입니다. 둘 다 7.0에서 \"Option 'moduleResolution=Classic' has been removed.\"입니다. 그래서 지금 선택지는 '호스트가 Node면 nodenext, 번들러면 bundler' 둘입니다.",
         code: "moduleResolution   import 확장자   디렉터리 import   exports 읽기   짝이 되는 module\n────────────────  ────────────  ──────────────  ───────────  ────────────────────\nnode16/nodenext    import 필수    require 만        ✓            node16/18/20/nodenext\nbundler            생략 가능      ✓                 ✓            esnext · preserve · (commonjs 6.0+)\nclassic / node10   —             —                 ✗            제거됨 (7.0)",
         codeLang: "text",
       },
       {
         label: "paths · baseUrl(제거) · typesVersions · 타입 전용 import",
-        body: "`paths`는 지정자 패턴을 파일 위치로 바꾸는 매핑인데 '출력 코드의 import 경로를 바꾸지 않는다' — 번들러나 런타임에 같은 별칭 설정이 따로 필요합니다. 실제로 `@lib/*` 매핑으로 타입 검사는 통과했지만 출력 .js에는 `import { a } from \"@lib/a.js\"`가 그대로 남았습니다. 그리고 `main`·`types`·`exports`·`typesVersions`를 전부 덮어씁니다. 4.1부터 baseUrl 없이 쓸 수 있고 baseUrl은 7.0에서 제거됐습니다(\"Option 'baseUrl' has been removed.\"). typesVersions는 패키지가 TypeScript 버전별로 다른 .d.ts를 주는 장치 — 실제로 `\">=6.0\": { \"*\": [\"ts6/*\"] }`를 둔 패키지에서 7.0.2가 ts6 쪽 선언을 읽어 `which: \"ts6\"`가 되고 `\"ts4\"`에 넣으면 에러였습니다. `import type`·`export type`·인라인 `type`은 '항상 지워진다'. 타입 전용 import는 default와 named를 함께 못 적습니다(\"A type-only import can specify a default import or named bindings, but not both.\").",
+        body: "`paths`는 지정자 패턴을 파일 위치로 바꾸는 매핑입니다. 다만 '출력 코드의 import 경로를 바꾸지 않는다'고 하니, 번들러나 런타임에 같은 별칭 설정이 따로 필요합니다. 실제로 `@lib/*` 매핑으로 타입 검사는 통과했지만 출력 .js에는 `import { a } from \"@lib/a.js\"`가 그대로 남았습니다. 그리고 `main`·`types`·`exports`·`typesVersions`를 전부 덮어씁니다. 4.1부터 baseUrl 없이 쓸 수 있고 baseUrl은 7.0에서 제거됐습니다(\"Option 'baseUrl' has been removed.\"). typesVersions는 패키지가 TypeScript 버전별로 다른 .d.ts를 주는 장치입니다. 실제로 `\">=6.0\": { \"*\": [\"ts6/*\"] }`를 둔 패키지에서 7.0.2가 ts6 쪽 선언을 읽어 `which: \"ts6\"`가 되고 `\"ts4\"`에 넣으면 에러였습니다. `import type`·`export type`·인라인 `type`은 '항상 지워진다'고 적혀 있습니다. 타입 전용 import는 default와 named를 함께 못 적습니다(\"A type-only import can specify a default import or named bindings, but not both.\").",
         code: "// paths 는 검사만 바꾼다\n{ \"compilerOptions\": { \"paths\": { \"@lib/*\": [\"../esm/*\"] } } }\nimport { a } from \"@lib/a.js\";   // 검사 OK\n// 출력 dist/use.js\nimport { a } from \"@lib/a.js\";   // 그대로! — 번들러 alias 가 따로 필요\n\n// typesVersions\n{ \"types\": \"ts4/index.d.ts\", \"typesVersions\": { \">=6.0\": { \"*\": [\"ts6/*\"] } } }\nimport { which } from \"tv\"; const w: \"ts4\" = which;\n// Type '\"ts6\"' is not assignable to type '\"ts4\"'.   ← 7.0.2 는 ts6/ 를 읽었다",
       },
       {
@@ -2641,7 +2641,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `module: nodenext`가 ESM만 내보낸다는 말이 오해인 이유는? 2) `import defer`가 허용되는 module 값 둘은? 3) `paths`가 바꾸는 것과 바꾸지 않는 것은? 4) typesVersions는 누구를 위한 분기인가요?",
+        body: "1) `module: nodenext`가 ESM만 내보낸다는 말이 오해인 이유는?\n2) `import defer`가 허용되는 module 값 둘은?\n3) `paths`가 바꾸는 것과 바꾸지 않는 것은?\n4) typesVersions는 누구를 위한 분기인가요?",
       },
     ],
     sources: [
@@ -2660,12 +2660,12 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "부록이 답하는 질문",
-        body: "'왜 `import x from \"lib\"`가 어떤 설정에서는 함수이고 어떤 설정에서는 `{ default: 함수 }`인가'. 답은 ES2015 명세가 ESM→CJS 상호운용을 정하지 않아 Babel·TypeScript·Node가 각자 규칙을 만들었고, 그 규칙들이 서로 조금씩 다르다는 것입니다.",
+        body: "질문은 '왜 `import x from \"lib\"`가 어떤 설정에서는 함수이고 어떤 설정에서는 `{ default: 함수 }`인가'입니다. 답은 ES2015 명세가 ESM→CJS 상호운용을 정하지 않아 Babel·TypeScript·Node가 각자 규칙을 만들었고, 그 규칙들이 서로 조금씩 다르다는 것입니다.",
       },
       {
         label: "실제로 돌려 보면: Node 가 CJS 를 import 하면",
         body: "부록을 읽기 전에 Node의 실제 동작을 먼저 봐 두면 좋습니다. `module.exports = function`인 CJS를 ESM에서 `import fn, * as ns`로 가져오면 fn은 그 함수, ns의 키는 `['default', 'extra', 'module.exports']`입니다. `exports.default = …; exports.named = 1`로 컴파일된 CJS를 default import하면 `compiled`는 함수가 아니라 `{ default, named }` 객체이고 함수는 `compiled.default()`에 있습니다 — 이것이 '이중 default' 문제입니다. 그리고 Node는 CJS의 named export를 정적 분석(cjs-module-lexer)으로 찾기 때문에 `exports[key] = 2`처럼 계산된 이름과 defineProperty getter는 보이지 않았습니다(`one`만 보임).",
-        code: "// lib.cjs: module.exports = function doSomething() {…}; module.exports.extra = \"x\";\nimport fn, * as ns from \"./lib.cjs\";\ntypeof fn        // \"function\"\nObject.keys(ns)  // [ 'default', 'extra', 'module.exports' ]\n\n// compiled.cjs: exports.__esModule = true; exports.default = function compiledDefault(){…}; exports.named = 1;\nimport compiled from \"./compiled.cjs\";\ntypeof compiled           // \"object\"   ← 함수가 아니다\ntypeof compiled.default   // \"function\" ← 이중 default\n\n// obj.cjs: exports.one = 1; exports[key] = 2; Object.defineProperty(exports, \"three\", { get(){…} })\nimport * as o from \"./obj.cjs\";\nObject.keys(o)   // [ 'default', 'module.exports', 'one' ]  — two, three 는 lexer 가 못 본다",
+        code: "// lib.cjs: module.exports = function doSomething() {…}; module.exports.extra = \"x\";\nimport fn, * as ns from \"./lib.cjs\";\ntypeof fn        // \"function\"\nObject.keys(ns)  // [ 'default', 'extra', 'module.exports' ]\n\n// compiled.cjs: exports.__esModule = true; exports.default = function compiledDefault(){…}; exports.named\n  = 1;\nimport compiled from \"./compiled.cjs\";\ntypeof compiled           // \"object\"   ← 함수가 아니다\ntypeof compiled.default   // \"function\" ← 이중 default\n\n// obj.cjs: exports.one = 1; exports[key] = 2; Object.defineProperty(exports, \"three\", { get(){…} })\nimport * as o from \"./obj.cjs\";\nObject.keys(o)   // [ 'default', 'module.exports', 'one' ]  — two, three 는 lexer 가 못 본다",
       },
       {
         label: "다음 입구",
@@ -2690,14 +2690,14 @@ export const typescriptTheories: Theory[] = [
         code: "// hello.cjs\nmodule.exports = function hello() {};\n\n// ESM 명세대로라면\nimport * as hello from \"./hello.cjs\";   // hello 는 객체 — 함수를 담을 수 없다\nhello();  // TS2497: … resolves to a non-module entity and cannot be imported using this construct.\n\n// TypeScript 의 원래 답\nimport hello = require(\"./hello.cjs\");\n// Babel 의 답 (합성 default)\nimport hello from \"./hello.cjs\";",
       },
       {
-        label: "allowSyntheticDefaultImports(1.8) 와 esModuleInterop(2.7)",
-        body: "allowSyntheticDefaultImports는 '타입 검사만' 바꿉니다 — default가 없는 모듈의 default import를 허용. emit은 그대로라 런타임에서 `undefined`가 될 수 있었습니다. esModuleInterop은 emit도 바꿉니다 — `__importDefault`·`__importStar` 헬퍼로 Babel과 같은 규칙을 런타임에 만듭니다. `__esModule` 플래그가 있으면 그대로, 없으면 `{ default: module.exports }`로 감쌉니다. 실제로 CJS 출력의 `import * as ns`에는 `__importStar`가, default import에는 `__importDefault`가 들어갔고, 이 헬퍼들이 'default가 아닌 키만 복사하고 default에 module.exports를 둔다'는 규칙을 코드로 담고 있습니다. 6.0부터 esModuleInterop을 false로 둘 수 없습니다 — 실제로 \"Option 'esModuleInterop=false' has been removed.\". 문서의 두 줄 — 'CommonJS 코드가 있는 앱은 항상 esModuleInterop을 켜야 한다', 'esModuleInterop 없이 allowSyntheticDefaultImports만 켜는 것은 피해야 한다'.",
+        label: "ESM/CJS 상호운용의 두 옵션",
+        body: "두 옵션은 allowSyntheticDefaultImports(1.8)와 esModuleInterop(2.7)입니다. allowSyntheticDefaultImports는 '타입 검사만' 바꿉니다. default가 없는 모듈의 default import를 허용합니다. emit은 그대로라 런타임에서 `undefined`가 될 수 있었습니다. esModuleInterop은 emit도 바꿉니다. `__importDefault`·`__importStar` 헬퍼로 Babel과 같은 규칙을 런타임에 만듭니다. `__esModule` 플래그가 있으면 그대로 두고, 없으면 `{ default: module.exports }`로 감쌉니다. 실제로 CJS 출력의 `import * as ns`에는 `__importStar`가, default import에는 `__importDefault`가 들어갔고, 이 헬퍼들이 'default가 아닌 키만 복사하고 default에 module.exports를 둔다'는 규칙을 코드로 담고 있습니다. 6.0부터 esModuleInterop을 false로 둘 수 없습니다. 실제로 \"Option 'esModuleInterop=false' has been removed.\"가 났습니다. 문서의 두 줄은 'CommonJS 코드가 있는 앱은 항상 esModuleInterop을 켜야 한다'와 'esModuleInterop 없이 allowSyntheticDefaultImports만 켜는 것은 피해야 한다'입니다.",
         code: "// tsc emit (CJS, esModuleInterop) 의 헬퍼 일부\nvar __importStar = … function (mod) {\n    if (mod && mod.__esModule) return mod;          // TS/Babel 이 만든 모듈이면 그대로\n    var result = {};\n    if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++)\n        if (k[i] !== \"default\") __createBinding(result, mod, k[i]);   // default 뺀 키 복사\n    __setModuleDefault(result, mod);                // default = module.exports\n    return result;\n};\n\n$ npx tsc --noEmit --esModuleInterop false a.ts\nerror TS5108: Option 'esModuleInterop=false' has been removed. Please remove it from your configuration.",
       },
       {
         label: "실제로 돌려 보면: Node 의 규칙과 이중 default",
         body: "Node(v12+)는 CJS를 import할 때 `module.exports` 전체를 default로 줍니다. `__esModule` 플래그를 보지 않습니다. 그래서 TypeScript나 Babel이 `exports.default = fn`으로 컴파일한 CJS를 Node ESM에서 default import하면 `{ default: fn, named }` 객체가 오고, 함수는 `.default.default`에 있습니다 — 실제로 `typeof compiled`는 \"object\", `typeof compiled.default`는 \"function\"이었습니다. 같은 코드를 TypeScript로 컴파일한 쪽에서 import하면 `__importDefault`가 `__esModule`을 보고 벗겨 주니 함수가 바로 옵니다. 같은 import 문이 '누가 소비하는가'에 따라 다른 값이 되는 것이 이중 default 문제의 전부입니다. named export는 Node가 cjs-module-lexer로 정적으로 찾으므로 계산된 이름은 빠집니다(실제로 `exports[key] = 2`가 보이지 않음). `require(esm)`은 Node 22.12부터 되지만 최상위 await가 있으면 \"ERR_REQUIRE_ASYNC_MODULE: require() cannot be used on an ESM graph with top-level await.\"입니다.",
-        code: "// compiled.cjs (TS/Babel 이 만든 것)\n\"use strict\"; Object.defineProperty(exports, \"__esModule\", { value: true });\nexports.default = function compiledDefault() {}; exports.named = 1;\n\n// Node ESM 에서\nimport compiled from \"./compiled.cjs\";\ntypeof compiled;           // \"object\"    — Node 는 module.exports 전체를 default 로\ntypeof compiled.default;   // \"function\"  — 이중 default\n\n// TS 로 컴파일된 소비자(CJS, esModuleInterop)에서는\nconst m = __importDefault(require(\"./compiled.cjs\"));   // __esModule 보고 그대로 → m.default 가 함수\n\n$ node interop/req-tla.cjs\nERR_REQUIRE_ASYNC_MODULE - require() cannot be used on an ESM graph with top-level await. Use import() instead.",
+        code: "// compiled.cjs (TS/Babel 이 만든 것)\n\"use strict\"; Object.defineProperty(exports, \"__esModule\", { value: true });\nexports.default = function compiledDefault() {}; exports.named = 1;\n\n// Node ESM 에서\nimport compiled from \"./compiled.cjs\";\ntypeof compiled;           // \"object\"    — Node 는 module.exports 전체를 default 로\ntypeof compiled.default;   // \"function\"  — 이중 default\n\n// TS 로 컴파일된 소비자(CJS, esModuleInterop)에서는\nconst m = __importDefault(require(\"./compiled.cjs\"));   // __esModule 보고 그대로 → m.default 가 함수\n\n$ node interop/req-tla.cjs\nERR_REQUIRE_ASYNC_MODULE - require() cannot be used on an ESM graph with top-level await. Use import()\n  instead.",
       },
       {
         label: "권고: 라이브러리와 앱이 다르다",
@@ -2717,7 +2717,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `import * as fn`으로 CJS 함수 모듈을 받을 수 없는 명세상의 이유는? 2) allowSyntheticDefaultImports와 esModuleInterop의 차이를 '검사'와 'emit'으로 설명하세요. 3) TS가 컴파일한 CJS를 Node ESM에서 default import하면 왜 함수가 `.default.default`에 있나요? 4) CJS 라이브러리 저자에게 문서가 권하는 export 방식은?",
+        body: "1) `import * as fn`으로 CJS 함수 모듈을 받을 수 없는 명세상의 이유는?\n2) allowSyntheticDefaultImports와 esModuleInterop의 차이를 '검사'와 'emit'으로 설명하세요.\n3) TS가 컴파일한 CJS를 Node ESM에서 default import하면 왜 함수가 `.default.default`에 있나요?\n4) CJS 라이브러리 저자에게 문서가 권하는 export 방식은?",
       },
     ],
     sources: [
@@ -2736,7 +2736,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "다섯 개의 상황",
-        body: "ASP.NET Core, Gulp, DOM 조작, JavaScript에서 마이그레이션하기, Babel과 함께 쓰기. 요즘 프론트엔드 환경과는 거리가 있는 항목도 있지만, 각각이 '빌드 파이프라인 어디에 타입 검사를 끼워 넣을 것인가'라는 같은 질문을 다릅니다.",
+        body: "다섯 상황은 ASP.NET Core, Gulp, DOM 조작, JavaScript에서 마이그레이션하기, Babel과 함께 쓰기입니다. 요즘 프론트엔드 환경과는 거리가 있는 항목도 있지만, 각각이 '빌드 파이프라인 어디에 타입 검사를 끼워 넣을 것인가'라는 같은 질문을 다룹니다.",
       },
       {
         label: "마이그레이션 문서가 본편이다",
@@ -2777,7 +2777,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 이 설정을 7.0 에 그대로 넣으면",
-        body: "`target: es6`는 es2015의 별칭이라 7.0에서도 됩니다(es5가 아니니까). `noImplicitAny`는 strict 기본값에 이미 포함. `compileOnSave`는 에디터 힌트일 뿐 tsc는 무시합니다. 그러니 이 tsconfig는 아직 유효한 몇 안 되는 2017년 설정입니다. 다만 `files`로 한 파일만 적었으니 import하는 다른 파일은 자동으로 따라 들어오고, 6.0부터 `types: []`가 기본이라 DOM 타입은 `lib`에 dom이 들어 있는지에 달립니다(target 기본 lib에 dom은 포함).",
+        body: "`target: es6`는 es2015의 별칭이라 7.0에서도 됩니다(es5가 아니기 때문입니다). `noImplicitAny`는 strict 기본값에 이미 포함됩니다. `compileOnSave`는 에디터 힌트일 뿐 tsc는 무시합니다. 그러니 이 tsconfig는 아직 유효한 몇 안 되는 2017년 설정입니다. 다만 `files`로 한 파일만 적었으니 import하는 다른 파일은 자동으로 따라 들어옵니다. 그리고 6.0부터 `types: []`가 기본이라 DOM 타입은 `lib`에 dom이 들어 있는지에 달립니다(target 기본 lib에 dom은 포함됩니다).",
       },
       {
         label: "다음 입구",
@@ -2805,7 +2805,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: Babel 을 끼우는 마지막 절이 지금의 분업이다",
-        body: "튜토리얼의 마지막 절은 tsconfig를 `target: es2015`로 두고 Babel(babelify)이 ES5로 낮추게 합니다. '타입은 tsc가, 문법 낮추기는 Babel이'. 이 분업이 다음 장 Babel과 함께 쓰기의 주제이고, 실제로 `@babel/preset-typescript`는 타입 에러가 있는 파일도 그냥 변환했습니다. 7.0에서 ES5 타깃이 사라진 것도 이 분업의 결과입니다 — 더 낮춰야 하면 Babel 같은 도구가 하라는 것.",
+        body: "튜토리얼의 마지막 절은 tsconfig를 `target: es2015`로 두고 Babel(babelify)이 ES5로 낮추게 합니다. '타입은 tsc가, 문법 낮추기는 Babel이'라는 분업입니다. 이 분업이 다음 장 Babel과 함께 쓰기의 주제입니다. 실제로 `@babel/preset-typescript`는 타입 에러가 있는 파일도 그냥 변환했습니다. 7.0에서 ES5 타깃이 사라진 것도 이 분업의 결과입니다. 더 낮춰야 하면 Babel 같은 도구가 하라는 뜻입니다.",
         code: "// 튜토리얼의 Babel 절\nbrowserify({ entries: [\"main.ts\"], debug: true })\n  .plugin(tsify)\n  .transform(\"babelify\", { presets: [\"es2015\"], extensions: [\".ts\"] })\n  .bundle()\n\n// tsconfig: \"target\": \"es2015\"  — tsc 는 여기까지, 나머지는 Babel",
       },
       {
@@ -2832,9 +2832,9 @@ export const typescriptTheories: Theory[] = [
         code: "// lib.dom.d.ts:13080\ngetElementById(elementId: string): HTMLElement | null;\n\nconst el = document.getElementById(\"x\");   // el: HTMLElement | null\nel.focus();\n// 'el' is possibly 'null'. (TS18047)\nel?.focus();                                // OK\nel!.focus();                                // 컴파일은 OK — 없으면 런타임 TypeError",
       },
       {
-        label: "실제로 돌려 보면: createElement 의 두 오버로드와 HTMLElementTagNameMap",
-        body: "`createElement(\"p\")`가 `HTMLParagraphElement`인 이유는 오버로드 두 개 때문입니다. 첫째는 `createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?): HTMLElementTagNameMap[K]` — 태그 이름이 맵의 키이면 맵의 값 타입을 돌려줍니다. 둘째는 `createElement(tagName: string, options?): HTMLElement` — 모르는 태그는 HTMLElement. 실제로 lib.dom.d.ts 12,929행에 첫 오버로드가 있고, HTMLElementTagNameMap에는 141개 태그가 등록돼 있습니다. 6.0.3 API로 `document.createElement(\"p\")`는 `HTMLParagraphElement`, `querySelector(\"a\")`는 `HTMLAnchorElement | null`, 선택자가 태그가 아닌 `querySelector(\".cls\")`는 `Element | null`로 잡혔습니다. 타입 조작 장의 제네릭 제약(`K extends keyof`)과 인덱스 접근(`Map[K]`)이 그대로 쓰인 자리입니다.",
-        code: "// lib.dom.d.ts:12929\ncreateElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: ElementCreationOptions): HTMLElementTagNameMap[K];\ncreateElement(tagName: string, options?: ElementCreationOptions): HTMLElement;\n\ninterface HTMLElementTagNameMap { \"a\": HTMLAnchorElement; \"p\": HTMLParagraphElement; /* … 141 개 */ }\n\nconst p = document.createElement(\"p\");          // HTMLParagraphElement\nconst q = document.querySelector(\"a\");          // HTMLAnchorElement | null\nconst q2 = document.querySelector(\".cls\");      // Element | null  — 선택자는 태그가 아니라서\nconst q3 = document.querySelector<HTMLInputElement>(\".cls\");   // 제네릭으로 알려 준다",
+        label: "실제로 돌려 보면: createElement 의 두 오버로드",
+        body: "`createElement(\"p\")`가 `HTMLParagraphElement`인 이유는 오버로드 두 개와 HTMLElementTagNameMap 때문입니다. 첫째는 `createElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?): HTMLElementTagNameMap[K]`입니다. 태그 이름이 맵의 키이면 맵의 값 타입을 돌려줍니다. 둘째는 `createElement(tagName: string, options?): HTMLElement`입니다. 모르는 태그는 HTMLElement가 됩니다. 실제로 lib.dom.d.ts 12,929행에 첫 오버로드가 있고, HTMLElementTagNameMap에는 141개 태그가 등록돼 있습니다. 6.0.3 API로 `document.createElement(\"p\")`는 `HTMLParagraphElement`, `querySelector(\"a\")`는 `HTMLAnchorElement | null`, 선택자가 태그가 아닌 `querySelector(\".cls\")`는 `Element | null`로 잡혔습니다. 타입 조작 장의 제네릭 제약(`K extends keyof`)과 인덱스 접근(`Map[K]`)이 그대로 쓰인 자리입니다.",
+        code: "// lib.dom.d.ts:12929\ncreateElement<K extends keyof HTMLElementTagNameMap>(tagName: K, options?: ElementCreationOptions):\n  HTMLElementTagNameMap[K];\ncreateElement(tagName: string, options?: ElementCreationOptions): HTMLElement;\n\ninterface HTMLElementTagNameMap { \"a\": HTMLAnchorElement; \"p\": HTMLParagraphElement; /* … 141 개 */ }\n\nconst p = document.createElement(\"p\");          // HTMLParagraphElement\nconst q = document.querySelector(\"a\");          // HTMLAnchorElement | null\nconst q2 = document.querySelector(\".cls\");      // Element | null  — 선택자는 태그가 아니라서\nconst q3 = document.querySelector<HTMLInputElement>(\".cls\");   // 제네릭으로 알려 준다",
       },
       {
         label: "appendChild · children 과 childNodes · textContent",
@@ -2851,7 +2851,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `getElementById`가 `| null`인 이유와 두 가지 처리법(그리고 각 위험)은? 2) `createElement(\"p\")`가 HTMLParagraphElement인 메커니즘을 두 오버로드로 설명하세요. 3) `querySelector(\".cls\")`가 Element인 이유와 더 좁히는 법은? 4) children과 childNodes의 차이는?",
+        body: "1) `getElementById`가 `| null`인 이유와 두 가지 처리법(그리고 각 위험)은?\n2) `createElement(\"p\")`가 HTMLParagraphElement인 메커니즘을 두 오버로드로 설명하세요.\n3) `querySelector(\".cls\")`가 Element인 이유와 더 좁히는 법은?\n4) children과 childNodes의 차이는?",
       },
     ],
     sources: [
@@ -2869,13 +2869,13 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "1단계: 공존 — allowJs 와 outDir",
-        body: "첫 tsconfig는 작습니다. `outDir: \"./built\"`, `allowJs: true`, `include: [\"./src/**/*\"]`. 이렇게만 해도 tsc가 .js 파일을 읽어 built/로 내보내고(변환만, 검사 없음), 프로젝트는 그대로 돌아갑니다. 문서가 이 단계에서 켜 보라는 가벼운 검사 — `noImplicitReturns`, `noFallthroughCasesInSwitch`, `allowUnreachableCode`, `allowUnusedLabels`. 타입과 무관하게 코드 흐름만 보는 것들이라 .js에서도 걸립니다. 실제로 `allowJs`만으로는 .js의 타입 에러가 전혀 보고되지 않았고(`checkJs` 없이), `// @ts-check`를 붙인 파일만 검사됐습니다.",
+        body: "첫 tsconfig는 작습니다. `outDir: \"./built\"`, `allowJs: true`, `include: [\"./src/**/*\"]`를 적습니다. 이렇게만 해도 tsc가 .js 파일을 읽어 built/로 내보내고(변환만 하고 검사는 없습니다), 프로젝트는 그대로 돌아갑니다. 문서가 이 단계에서 켜 보라는 가벼운 검사는 `noImplicitReturns`, `noFallthroughCasesInSwitch`, `allowUnreachableCode`, `allowUnusedLabels`입니다. 타입과 무관하게 코드 흐름만 보는 것들이라 .js에서도 걸립니다. 실제로 `allowJs`만으로는 .js의 타입 에러가 전혀 보고되지 않았고(`checkJs` 없이), `// @ts-check`를 붙인 파일만 검사됐습니다.",
         code: "{\n  \"compilerOptions\": {\n    \"outDir\": \"./built\",\n    \"allowJs\": true,\n    \"target\": \"es2015\"      // 튜토리얼은 es5 — 7.0 에서는 es2015 이상\n  },\n  \"include\": [\"./src/**/*\"]\n}\n\n$ npx tsc --noEmit --allowJs b.js     # @ts-check 없는 .js\n(에러 없음 — 변환만, 검사 안 함)",
       },
       {
         label: "2단계: 파일을 .ts 로 바꾸면 나오는 에러들",
-        body: "확장자를 바꾸면 '빨간 밑줄'이 나옵니다. 문서의 비유 — 'Word의 빨간 밑줄처럼, 고치지 않아도 문서는 인쇄된다'. `noEmitOnError`를 켜면 에러가 있는 동안 출력이 막힙니다. 자주 나오는 셋. (1) `Cannot find name 'require'.` / `'define'` — CommonJS·AMD 호출을 import 문으로 바꾸거나 `declare function require`. (2) `Cannot find module 'foo'.` — 타입 선언이 없는 패키지. `npm i -D @types/foo` 또는 `declare module \"foo\";`. 실제로 선언 없는 패키지를 import하면 \"Could not find a declaration file for module 'untyped'. '…/index.js' implicitly has an 'any' type. Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';`\"(TS7016)로 처방까지 적힌 문구가 옵니다. (3) `module.exports = foo` → `export = foo`. 그리고 '`Object`보다 `{}`를, any는 최후의 수단으로'.",
-        code: "import greet from \"untyped\";\n// Could not find a declaration file for module 'untyped'. '…/node_modules/untyped/index.js' implicitly has an 'any' type.\n//   Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';` (TS7016)\n\n// 임시 처방 — shorthand.d.ts\ndeclare module \"untyped\";          // greet 은 any\n// 제대로 — untyped.d.ts\ndeclare module \"untyped\" { function greet(name: string): string; export = greet; }",
+        body: "확장자를 바꾸면 '빨간 밑줄'이 나옵니다. 문서의 비유는 'Word의 빨간 밑줄처럼, 고치지 않아도 문서는 인쇄된다'입니다. `noEmitOnError`를 켜면 에러가 있는 동안 출력이 막힙니다. 자주 나오는 에러는 셋입니다.\n(1) `Cannot find name 'require'.` / `'define'`입니다. CommonJS·AMD 호출을 import 문으로 바꾸거나 `declare function require`를 적습니다.\n(2) `Cannot find module 'foo'.`입니다. 타입 선언이 없는 패키지입니다. `npm i -D @types/foo` 또는 `declare module \"foo\";`로 해결합니다. 실제로 선언 없는 패키지를 import하면 \"Could not find a declaration file for module 'untyped'. '…/index.js' implicitly has an 'any' type. Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';`\"(TS7016)로 처방까지 적힌 문구가 옵니다.\n(3) `module.exports = foo`는 `export = foo`로 바꿉니다.\n그리고 '`Object`보다 `{}`를, any는 최후의 수단으로'라고 적습니다.",
+        code: "import greet from \"untyped\";\n// Could not find a declaration file for module 'untyped'. '…/node_modules/untyped/index.js' implicitly\n  has an 'any' type.\n//   Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing\n  `declare module 'untyped';` (TS7016)\n\n// 임시 처방 — shorthand.d.ts\ndeclare module \"untyped\";          // greet 은 any\n// 제대로 — untyped.d.ts\ndeclare module \"untyped\" { function greet(name: string): string; export = greet; }",
       },
       {
         label: "실제로 돌려 보면: 엄격함은 순서대로",
@@ -2894,7 +2894,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `allowJs`만 켜면 .js 파일에 무슨 일이 일어나고 무슨 일은 안 일어나나요? 2) TS7016의 문구가 제안하는 두 처방은? 3) 문서가 권하는 엄격함 플래그 세 개의 순서는? 4) 6.0 이후 마이그레이션 tsconfig의 첫 줄에 무엇을 적어야 하나요?",
+        body: "1) `allowJs`만 켜면 .js 파일에 무슨 일이 일어나고 무슨 일은 안 일어나나요?\n2) TS7016의 문구가 제안하는 두 처방은?\n3) 문서가 권하는 엄격함 플래그 세 개의 순서는?\n4) 6.0 이후 마이그레이션 tsconfig의 첫 줄에 무엇을 적어야 하나요?",
       },
     ],
     sources: [
@@ -2912,17 +2912,17 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "Babel 은 검사하지 않는다",
-        body: "`@babel/preset-typescript`는 타입 어노테이션을 지우고 enum·namespace 같은 것을 변환합니다. 다른 파일을 보지 않고 한 파일씩 처리하기 때문에 타입을 알 수 없고, 따라서 검사도 할 수 없습니다. 실제로 `const n: number = \"not a number\"`가 든 파일을 돌리면 아무 말 없이 `const n = \"not a number\"`가 나왔습니다. 문서의 경고 — 타입 에러가 프로덕션에 갈 수 있다. 그래서 짝으로 `tsc --noEmit`(또는 `emitDeclarationOnly`)이 필요합니다. Babel은 .d.ts도 만들 수 없습니다.",
+        body: "`@babel/preset-typescript`는 타입 어노테이션을 지우고 enum·namespace 같은 것을 변환합니다. 다른 파일을 보지 않고 한 파일씩 처리하기 때문에 타입을 알 수 없고, 따라서 검사도 할 수 없습니다. 실제로 `const n: number = \"not a number\"`가 든 파일을 돌리면 아무 말 없이 `const n = \"not a number\"`가 나왔습니다. 문서는 타입 에러가 프로덕션에 갈 수 있다고 경고합니다. 그래서 짝으로 `tsc --noEmit`(또는 `emitDeclarationOnly`)이 필요합니다. Babel은 .d.ts도 만들 수 없습니다.",
         code: "// in.ts\nconst n: number = \"not a number\";\nenum E { A }\nexport const x: E = E.A;\n\n$ node -e 'require(\"@babel/core\").transformFileSync(\"in.ts\", { presets: [\"@babel/preset-typescript\"] })'\nconst n = \"not a number\";          // ← 타입 에러인데 그냥 나왔다\nvar E = /*#__PURE__*/function (E) { E[E[\"A\"] = 0] = \"A\"; return E; }(E || {});\nexport const x = E.A;",
       },
       {
         label: "실제로 돌려 보면: 분업의 tsconfig",
-        body: "문서의 하이브리드 설정 — `declaration: true`, `emitDeclarationOnly: true`, `isolatedModules: true`. 주석은 '.d.ts는 tsc가 만들되 .js는 만들지 않게'. `isolatedModules`는 '파일 하나만 보고 변환하는 도구가 할 수 없는 일'을 에러로 — 타입만 re-export하는 `export { T } from`(type 없이), const enum 참조, 모듈이 아닌 파일 — 막습니다. 5.0의 `verbatimModuleSyntax`가 그 역할을 더 엄격하게 대신합니다(핸드북 모듈 장의 TS1484). 실제로 `--isolatedModules`만 켠 esm/b.ts는 통과했고 `--verbatimModuleSyntax`는 타입 import에 type을 요구했습니다.",
+        body: "문서의 하이브리드 설정은 `declaration: true`, `emitDeclarationOnly: true`, `isolatedModules: true`입니다. 주석은 '.d.ts는 tsc가 만들되 .js는 만들지 않게'입니다. `isolatedModules`는 '파일 하나만 보고 변환하는 도구가 할 수 없는 일'을 에러로 막습니다. 타입만 re-export하는 `export { T } from`(type 없이), const enum 참조, 모듈이 아닌 파일이 그런 일입니다. 5.0의 `verbatimModuleSyntax`가 그 역할을 더 엄격하게 대신합니다(핸드북 모듈 장의 TS1484). 실제로 `--isolatedModules`만 켠 esm/b.ts는 통과했고 `--verbatimModuleSyntax`는 타입 import에 type을 요구했습니다.",
         code: "{\n  \"compilerOptions\": {\n    \"declaration\": true,\n    \"emitDeclarationOnly\": true,   // .d.ts 만, .js 는 Babel 이\n    \"isolatedModules\": true        // 단일 파일 변환기가 못 하는 일을 금지\n    // 또는 verbatimModuleSyntax: true (5.0+, 더 엄격)\n  }\n}\n\n파이프라인\n  babel src --out-dir dist          # .js (검사 없음)\n  tsc                               # .d.ts + 검사",
       },
       {
         label: "지금의 변환기들: esbuild · swc · Vite · Node",
-        body: "같은 분업이 도구만 바뀌어 이어집니다. Vite는 '.ts 파일 import를 기본 지원하되 변환만 하고 타입 검사는 하지 않는다'(빌드 도구 연동 장). esbuild·swc도 같습니다. Node 24는 아예 런타임이 타입을 벗깁니다 — `process.features.typescript`가 \"strip\"이고 `node file.ts`가 그냥 됩니다. 단 '지우기만으로 JavaScript가 되는' 문법만 — enum은 \"TypeScript enum is not supported in strip-only mode\"로 거부되고 `--experimental-transform-types`를 주면 변환됩니다(실제로 `Up 0 a 1 3 1` 출력). 5.8의 `erasableSyntaxOnly`가 그 부분집합을 tsc 쪽에서 강제하는 옵션입니다. 변환기가 늘수록 '검사는 tsc만'이라는 사실이 더 중요해집니다.",
+        body: "같은 분업이 도구만 바뀌어 이어집니다. Vite는 '.ts 파일 import를 기본 지원하되 변환만 하고 타입 검사는 하지 않는다'입니다(빌드 도구 연동 장). esbuild·swc도 같습니다. Node 24는 아예 런타임이 타입을 벗깁니다. `process.features.typescript`가 \"strip\"이고 `node file.ts`가 그냥 됩니다. 단 '지우기만으로 JavaScript가 되는' 문법만 됩니다. enum은 \"TypeScript enum is not supported in strip-only mode\"로 거부되고, `--experimental-transform-types`를 주면 변환됩니다(실제로 `Up 0 a 1 3 1`이 출력됐습니다). 5.8의 `erasableSyntaxOnly`가 그 부분집합을 tsc 쪽에서 강제하는 옵션입니다. 변환기가 늘수록 '검사는 tsc만'이라는 사실이 더 중요해집니다.",
         code: "$ node -p 'process.features.typescript'\nstrip                                   # Node 24: 기본으로 타입을 벗긴다\n$ node src/enums.ts\nSyntaxError [ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX]: TypeScript enum is not supported in strip-only mode\n$ node --experimental-transform-types rt/enums-run.mts\nUp 0 a 1 3 1                            # 변환 모드면 enum 도 된다\n\n# tsc 쪽에서 '지울 수 있는 문법만' 강제\n$ npx tsc --noEmit --erasableSyntaxOnly src/enums.ts\nerror TS1294: This syntax is not allowed when 'erasableSyntaxOnly' is enabled.",
         codeLang: "bash",
       },
@@ -2938,7 +2938,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) Babel이 타입 에러를 잡지 못하는 구조적 이유는? 2) 하이브리드 설정의 세 옵션과 각 역할은? 3) Node 24에서 `node file.ts`가 되는데 enum은 안 되는 이유는? 4) isolatedModules가 금지하는 것들의 공통점은?",
+        body: "1) Babel이 타입 에러를 잡지 못하는 구조적 이유는?\n2) 하이브리드 설정의 세 옵션과 각 역할은?\n3) Node 24에서 `node file.ts`가 되는데 enum은 안 되는 이유는?\n4) isolatedModules가 금지하는 것들의 공통점은?",
       },
     ],
     sources: [
@@ -2953,7 +2953,7 @@ export const typescriptTheories: Theory[] = [
     name: "릴리스 노트",
     tagline: "언어가 어디로 가고 있는지",
     intro:
-      "버전별로 무엇이 들어왔는지가 쌓여 있는 곳입니다. 처음 배울 때는 볼 일이 없지만, 어느 정도 쓰고 나면 여기가 가장 밀도 높은 문서가 됩니다. 새 기능은 대개 '그동안 사람들이 무엇을 불편해했는가'의 답이라서요.",
+      "버전별로 무엇이 들어왔는지가 쌓여 있는 곳입니다. 처음 배울 때는 볼 일이 없지만, 어느 정도 쓰고 나면 여기가 가장 밀도 높은 문서가 됩니다. 새 기능은 대개 '그동안 사람들이 무엇을 불편해했는가'의 답이기 때문입니다.",
     blocks: [
       {
         label: "버전 목록 그대로",
@@ -2969,13 +2969,13 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 5.0 → 7.0 의 굵은 줄",
-        body: "이 허브의 시트들이 기대는 버전 사실만 모았습니다. 5.0 — 표준 데코레이터, const 타입 매개변수(실제로 `id([\"a\", 1])`가 `readonly [\"a\", 1]`), 모든 enum이 유니온 enum, moduleResolution bundler, verbatimModuleSyntax, extends 배열. 5.2 — using 선언, 데코레이터 메타데이터. 5.4 — NoInfer, module preserve. 5.5 — 추론되는 타입 서술(실제로 filter 결과가 number[]), isolatedDeclarations(실제로 \"Function must have an explicit return type annotation with --isolatedDeclarations.\" TS9007), 정규식 문법 검사, JSDoc @import. 5.7 — rewriteRelativeImportExtensions. 5.8 — erasableSyntaxOnly, require(esm) in nodenext, libReplacement. 5.9 — import defer, module node20, 최소 tsc --init. 6.0 — 기본값 전환(strict·module esnext·target es2025·types []·rootDir .·noUncheckedSideEffectImports)과 폐기 예고. 7.0 — Go 네이티브 컴파일러, 폐기된 것 전부 제거, --checkers/--builders.",
-        code: "5.0  데코레이터(표준) · const 타입 매개변수 · 유니온 enum · bundler · verbatimModuleSyntax\n5.2  using / await using · Symbol.metadata\n5.4  NoInfer · module preserve\n5.5  추론되는 타입 서술 · isolatedDeclarations · 정규식 검사 · @import\n5.7  rewriteRelativeImportExtensions\n5.8  erasableSyntaxOnly · require(esm) · libReplacement · 세분화된 return 검사\n5.9  import defer · node20 · 최소 tsc --init · 확장 가능한 hover\n6.0  strict=true · module=esnext · target=es2025 · types=[] · rootDir=. · 폐기 예고 (es5, node10, classic, baseUrl, outFile …)\n7.0  Go 네이티브 (8~12× 빠름) · 폐기 → 제거 · --checkers · --builders · --singleThreaded · 프로그래밍 API 는 7.1 로",
+        body: "이 허브의 시트들이 기대는 버전 사실만 모았습니다.\n5.0은 표준 데코레이터, const 타입 매개변수(실제로 `id([\"a\", 1])`가 `readonly [\"a\", 1]`이 됩니다), 모든 enum이 유니온 enum이 되는 변화, moduleResolution bundler, verbatimModuleSyntax, extends 배열입니다.\n5.2는 using 선언과 데코레이터 메타데이터입니다.\n5.4는 NoInfer와 module preserve입니다.\n5.5는 추론되는 타입 서술(실제로 filter 결과가 number[]가 됩니다), isolatedDeclarations(실제로 \"Function must have an explicit return type annotation with --isolatedDeclarations.\" TS9007이 납니다), 정규식 문법 검사, JSDoc @import입니다.\n5.7은 rewriteRelativeImportExtensions입니다.\n5.8은 erasableSyntaxOnly, require(esm) in nodenext, libReplacement입니다.\n5.9는 import defer, module node20, 최소 tsc --init입니다.\n6.0은 기본값 전환(strict·module esnext·target es2025·types []·rootDir .·noUncheckedSideEffectImports)과 폐기 예고입니다.\n7.0은 Go 네이티브 컴파일러, 폐기된 것 전부 제거, --checkers/--builders입니다.",
+        code: "5.0  데코레이터(표준) · const 타입 매개변수 · 유니온 enum · bundler · verbatimModuleSyntax\n5.2  using / await using · Symbol.metadata\n5.4  NoInfer · module preserve\n5.5  추론되는 타입 서술 · isolatedDeclarations · 정규식 검사 · @import\n5.7  rewriteRelativeImportExtensions\n5.8  erasableSyntaxOnly · require(esm) · libReplacement · 세분화된 return 검사\n5.9  import defer · node20 · 최소 tsc --init · 확장 가능한 hover\n6.0  strict=true · module=esnext · target=es2025 · types=[] · rootDir=. · 폐기 예고 (es5, node10, classic,\n     baseUrl, outFile …)\n7.0  Go 네이티브 (8~12× 빠름) · 폐기 → 제거 · --checkers · --builders · --singleThreaded · 프로그래밍 API 는 7.1 로",
         codeLang: "text",
       },
       {
         label: "7.0: 무엇이 같고 무엇이 다른가",
-        body: "7.0 발표 글의 요점. 컴파일러를 Go로 옮겼고 구조와 로직은 원본을 그대로 따라서 타입 검사 결과는 6.0과 같게 맞췄습니다. 공유 메모리 멀티스레딩으로 전체 빌드가 8~12배 빨라졌고(vscode 저장소 125.7초 → 10.6초), `--checkers`(기본 4)·`--builders`·`--singleThreaded`로 병렬을 조절합니다. 설치는 그대로 `npm i -D typescript`. 다른 점 — 6.0에서 폐기 예고된 모든 플래그가 에러, 템플릿 리터럴 추론이 유니코드 코드 포인트를 묶어 처리, JS 파일 규칙 변경. 아직 없는 것 — 안정된 프로그래밍 API(7.1 예정). 그래서 Vue·Svelte·Astro·Angular의 템플릿 검사와 webpack 로더처럼 API에 기대는 도구는 6.0 API를 씁니다. `@typescript/typescript6` 패키지로 6.0을 `tsc6`로 나란히 둘 수 있습니다. 실제로 이 허브의 '추론 타입 꺼내기'도 7.0에 JS API가 없어 6.0.3으로 했습니다.",
+        body: "7.0 발표 글의 요점입니다. 컴파일러를 Go로 옮겼고, 구조와 로직은 원본을 그대로 따라서 타입 검사 결과는 6.0과 같게 맞췄습니다. 공유 메모리 멀티스레딩으로 전체 빌드가 8~12배 빨라졌고(vscode 저장소 125.7초 → 10.6초), `--checkers`(기본 4)·`--builders`·`--singleThreaded`로 병렬을 조절합니다. 설치는 그대로 `npm i -D typescript`입니다. 다른 점도 있습니다. 6.0에서 폐기 예고된 모든 플래그가 에러가 됩니다. 템플릿 리터럴 추론이 유니코드 코드 포인트를 묶어 처리합니다. JS 파일 규칙이 바뀌었습니다. 아직 없는 것은 안정된 프로그래밍 API입니다(7.1 예정). 그래서 Vue·Svelte·Astro·Angular의 템플릿 검사와 webpack 로더처럼 API에 기대는 도구는 6.0 API를 씁니다. `@typescript/typescript6` 패키지로 6.0을 `tsc6`로 나란히 둘 수 있습니다. 실제로 이 허브의 '추론 타입 꺼내기'도 7.0에 JS API가 없어 6.0.3으로 했습니다.",
         code: "$ npx tsc --version\nVersion 7.0.2\n$ npx tsc --help --all | grep -A1 -E 'checkers|builders|singleThreaded'\n--checkers         Set the number of checkers per project.\n--singleThreaded   Run in single threaded mode.\n--builders         Set the number of projects to build concurrently.\n\n$ ls node_modules/typescript/\nbin  dist  lib  vendor  …        # lib 에는 lib.*.d.ts 만 — typescript.js (API) 가 없다\n$ npm view typescript dist-tags\n{ latest: '7.0.2', next: '7.1.0-dev.20261111.1', beta: '7.1.0-beta', rc: '7.0.1-rc', … }",
         codeLang: "bash",
       },
@@ -3013,12 +3013,12 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 선언이 없을 때 → 임시 처방 → 제대로",
-        body: "타입 없는 패키지를 import하면 \"Could not find a declaration file for module 'untyped'. … implicitly has an 'any' type. Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';`\"(TS7016)입니다. 문구가 세 길을 안내합니다. @types 설치(가져다 쓰기 장), 축약 앰비언트 선언 `declare module \"untyped\";`(전부 any — 실제로 에러가 사라졌지만 greet은 any), 그리고 제대로 된 .d.ts(템플릿 장). 실제로 `declare module \"untyped\" { function greet(name: string): string; namespace greet { const version: string } export = greet; }`를 두자 `import greet from`, `import greet = require()`, `import * as ns` 세 방식 모두 통과했습니다.",
-        code: "import greet from \"untyped\";\n// TS7016: Could not find a declaration file for module 'untyped'. '…/node_modules/untyped/index.js' implicitly has an 'any' type.\n//   Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';`\n\n// 1) 임시 — 전부 any\ndeclare module \"untyped\";\n// 2) 제대로 — untyped.d.ts\ndeclare module \"untyped\" {\n  function greet(name: string): string;\n  namespace greet { const version: string; }\n  export = greet;\n}",
+        body: "타입 없는 패키지를 import하면 \"Could not find a declaration file for module 'untyped'. … implicitly has an 'any' type. Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing `declare module 'untyped';`\"(TS7016)입니다. 문구가 세 길을 안내합니다.\n첫째는 @types 설치입니다(가져다 쓰기 장).\n둘째는 축약 앰비언트 선언 `declare module \"untyped\";`입니다. 전부 any가 됩니다. 실제로 에러는 사라졌지만 greet은 any였습니다.\n셋째는 제대로 된 .d.ts입니다(템플릿 장).\n실제로 `declare module \"untyped\" { function greet(name: string): string; namespace greet { const version: string } export = greet; }`를 두자 `import greet from`, `import greet = require()`, `import * as ns` 세 방식 모두 통과했습니다.",
+        code: "import greet from \"untyped\";\n// TS7016: Could not find a declaration file for module 'untyped'. '…/node_modules/untyped/index.js'\n  implicitly has an 'any' type.\n//   Try `npm i --save-dev @types/untyped` if it exists or add a new declaration (.d.ts) file containing\n  `declare module 'untyped';`\n\n// 1) 임시 — 전부 any\ndeclare module \"untyped\";\n// 2) 제대로 — untyped.d.ts\ndeclare module \"untyped\" {\n  function greet(name: string): string;\n  namespace greet { const version: string; }\n  export = greet;\n}",
       },
       {
         label: "여덟 갈래의 역할",
-        body: "소개는 지도. 참고서(선언 레퍼런스)는 '이런 JavaScript에는 이런 선언'의 짝 목록. 구조는 '이 라이브러리가 전역인가 모듈인가 UMD인가'를 알아내는 법. 템플릿은 그 판정에 따라 고르는 뼈대 여섯. Do's and Don'ts는 타입 작성 규칙. 심화는 '선언이 네임스페이스·타입·값 중 무엇을 만드는가'라는 이론. 배포는 npm에 .d.ts를 싸는 법(types 필드·typesVersions). 사용은 @types를 받는 법. 읽기만 할 거면 소개·참고서·심화, 쓸 거면 구조 → 템플릿 → Do's and Don'ts → 배포 순서입니다.",
+        body: "소개는 지도입니다.\n참고서(선언 레퍼런스)는 '이런 JavaScript에는 이런 선언'의 짝 목록입니다.\n구조는 '이 라이브러리가 전역인가 모듈인가 UMD인가'를 알아내는 법입니다.\n템플릿은 그 판정에 따라 고르는 뼈대 여섯입니다.\nDo's and Don'ts는 타입 작성 규칙입니다.\n심화는 '선언이 네임스페이스·타입·값 중 무엇을 만드는가'라는 이론입니다.\n배포는 npm에 .d.ts를 싸는 법입니다(types 필드·typesVersions).\n사용은 @types를 받는 법입니다.\n읽기만 하려면 소개·참고서·심화를 보고, 쓰려면 구조 → 템플릿 → Do's and Don'ts → 배포 순서로 갑니다.",
       },
       {
         label: "다음 입구",
@@ -3040,7 +3040,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "세 종류의 독자",
-        body: "(1) 타입 없는 패키지를 쓰려는 사람 — 모듈 .d.ts 템플릿으로 직행. (2) 라이브러리를 만들고 타입을 배포하려는 사람 — 라이브러리 구조 → 템플릿 → 배포. (3) 기존 @types를 고치려는 사람 — 선언 레퍼런스와 Do's and Don'ts. 이 페이지는 '기본 TypeScript는 안다'고 가정하고 타입·모듈은 핸드북으로 넘깁니다.",
+        body: "(1) 타입 없는 패키지를 쓰려는 사람은 모듈 .d.ts 템플릿으로 직행합니다.\n(2) 라이브러리를 만들고 타입을 배포하려는 사람은 라이브러리 구조 → 템플릿 → 배포 순서로 읽습니다.\n(3) 기존 @types를 고치려는 사람은 선언 레퍼런스와 Do's and Don'ts를 봅니다.\n이 페이지는 '기본 TypeScript는 안다'고 가정하고 타입·모듈은 핸드북으로 넘깁니다.",
         code: "독자                         출발점\n──────────────────────────  ─────────────────────────────────────────\n타입 없는 패키지를 쓴다       templates/module.d.ts\n라이브러리 타입을 배포한다    library-structures → templates → publishing\n기존 @types 를 고친다         by-example (선언 레퍼런스) → do-s-and-don-ts\n모두                          do-s-and-don-ts",
         codeLang: "text",
       },
@@ -3065,11 +3065,11 @@ export const typescriptTheories: Theory[] = [
     name: "선언 레퍼런스",
     tagline: "이렇게 쓰이는 JavaScript 에는 이렇게 선언한다 — 짝 목록",
     intro:
-      "'By Example' 페이지입니다. 라이브러리가 어떻게 쓰이는지(사용 코드)를 보고 그에 맞는 선언을 적는 짝 목록. 속성을 가진 객체(declare namespace), 오버로드된 함수, 재사용 타입(interface·type), 타입 묶기(namespace), 클래스(declare class), 전역 변수(declare var/let/const), 전역 함수(declare function).",
+      "'By Example' 페이지입니다. 라이브러리가 어떻게 쓰이는지(사용 코드)를 보고 그에 맞는 선언을 적는 짝 목록입니다. 속성을 가진 객체(declare namespace), 오버로드된 함수, 재사용 타입(interface·type), 타입 묶기(namespace), 클래스(declare class), 전역 변수(declare var/let/const), 전역 함수(declare function)를 다룹니다.",
     blocks: [
       {
         label: "일곱 짝",
-        body: "사용 코드 → 선언. `myLib.makeGreeting(\"a\"); myLib.numberOfGreetings` → `declare namespace myLib { function makeGreeting(s: string): string; let numberOfGreetings: number; }`. `getWidget(43); getWidget(\"all\")` → `declare function getWidget(n: number): Widget; declare function getWidget(s: string): Widget[];`. 설정 객체 → `interface GreetingSettings { greeting: string; duration?: number; color?: string }`. 여러 타입 중 하나 → `type GreetingLike = string | (() => string) | MyGreeter`. 관련 타입 묶기 → `declare namespace GreetingLib { interface LogOptions {…} }`(중첩은 `GreetingLib.Options`). `new Greeter(\"x\")` → `declare class Greeter { constructor(greeting: string); greeting: string; showGreeting(): void; }`. `foo = 1` → `declare var foo: number;`(읽기 전용이면 `declare const`, 블록 스코프면 `declare let`). `greet(\"a\")` → `declare function greet(greeting: string): void;`.",
+        body: "사용 코드를 보고 그에 맞는 선언을 적습니다.\n\n`myLib.makeGreeting(\"a\"); myLib.numberOfGreetings`의 선언은 `declare namespace myLib { function makeGreeting(s: string): string; let numberOfGreetings: number; }`입니다.\n`getWidget(43); getWidget(\"all\")`의 선언은 `declare function getWidget(n: number): Widget; declare function getWidget(s: string): Widget[];`입니다.\n설정 객체는 `interface GreetingSettings { greeting: string; duration?: number; color?: string }`입니다.\n여러 타입 중 하나는 `type GreetingLike = string | (() => string) | MyGreeter`입니다.\n관련 타입 묶기는 `declare namespace GreetingLib { interface LogOptions {…} }`입니다(중첩은 `GreetingLib.Options`로 씁니다).\n`new Greeter(\"x\")`의 선언은 `declare class Greeter { constructor(greeting: string); greeting: string; showGreeting(): void; }`입니다.\n`foo = 1`의 선언은 `declare var foo: number;`입니다(읽기 전용이면 `declare const`, 블록 스코프면 `declare let`입니다).\n`greet(\"a\")`의 선언은 `declare function greet(greeting: string): void;`입니다.",
         code: "// 사용 코드                              // 선언\nmyLib.makeGreeting(\"hello\");              declare namespace myLib {\nmyLib.numberOfGreetings;                    function makeGreeting(s: string): string;\n                                            let numberOfGreetings: number;\n                                          }\ngetWidget(43); getWidget(\"all\");          declare function getWidget(n: number): Widget;\n                                          declare function getWidget(s: string): Widget[];\nconst g = new Greeter(\"Hello\");           declare class Greeter {\ng.showGreeting();                           constructor(greeting: string);\n                                            greeting: string;\n                                            showGreeting(): void;\n                                          }\nfoo = 123;                                declare var foo: number;\ngreet(\"hi\");                              declare function greet(greeting: string): void;",
       },
       {
@@ -3079,7 +3079,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "declare 가 뜻하는 것",
-        body: "`declare`는 '이 이름은 어딘가에 존재한다, 구현은 여기 없다'입니다. 값을 만들지 않으니 emit에 아무것도 남지 않고, .d.ts 파일에서는 최상위 선언에 사실상 항상 붙습니다(interface·type은 원래 값이 없어 생략). 같은 키워드가 `declare module \"x\"`(앰비언트 모듈), `declare global`(전역 보강), 클래스 필드의 `declare x: T`(런타임 코드 없는 필드 재선언, 클래스 장)에도 쓰이고 뜻은 같습니다 — '타입만, 값은 밖에'.",
+        body: "`declare`는 '이 이름은 어딘가에 존재한다, 구현은 여기 없다'는 뜻입니다. 값을 만들지 않으니 emit에 아무것도 남지 않고, .d.ts 파일에서는 최상위 선언에 사실상 항상 붙습니다(interface·type은 원래 값이 없어 생략합니다). 같은 키워드가 `declare module \"x\"`(앰비언트 모듈), `declare global`(전역 보강), 클래스 필드의 `declare x: T`(런타임 코드 없는 필드 재선언, 클래스 장)에도 쓰이고, 뜻은 같습니다. '타입만, 값은 밖에'입니다.",
         code: "declare 의 자리                    뜻\n────────────────────────────────  ──────────────────────────────────\ndeclare var/let/const/function    전역 값이 밖에 있다\ndeclare class                     생성자와 인스턴스 모양만\ndeclare namespace                 속성을 가진 전역 객체의 모양\ndeclare module \"x\" { … }          모듈 \"x\" 의 모양 (앰비언트 모듈)\ndeclare module \"x\";               모듈 \"x\" 는 any (축약)\ndeclare global { … }              모듈 파일 안에서 전역 보강\nclass { declare x: T }            필드 타입만 재선언, 코드 없음",
         codeLang: "text",
       },
@@ -3089,7 +3089,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `myLib.makeGreeting(\"a\")`처럼 속성을 가진 전역 객체는 무엇으로 선언하나요? 2) `declare const`와 `declare let`의 차이가 쓰는 쪽에서 어떻게 나타나나요? 3) `declare`가 emit에 남기는 것은?",
+        body: "1) `myLib.makeGreeting(\"a\")`처럼 속성을 가진 전역 객체는 무엇으로 선언하나요?\n2) `declare const`와 `declare let`의 차이가 쓰는 쪽에서 어떻게 나타나나요?\n3) `declare`가 emit에 남기는 것은?",
       },
     ],
     sources: [
@@ -3107,23 +3107,23 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "세 종류와 단서",
-        body: "모듈 — '거의 모든 현대 Node.js 라이브러리'. 단서: 조건 없는 require/define 호출, import/export, `exports`나 `module.exports`에 대입. window·global 대입은 드묾. 전역 — import 없이 쓴다. 단서: 최상위 var/function, `window.someName = …`, DOM 가정, require/define 없음. 'window에 붙이는 전역 라이브러리를 선언하기 전에 실제로는 UMD가 아닌지 확인하라'. UMD — 모듈로도 전역으로도 쓸 수 있다. 단서: `typeof define`, `typeof window`, `typeof module` 검사 — '이게 보이면 거의 항상 UMD'. 지금 인기 있는 전역 라이브러리는 대부분 UMD입니다.",
-        code: "종류     단서 (라이브러리 코드에서)                                       템플릿\n──────  ─────────────────────────────────────────────────────────  ─────────────────────\n모듈    require()/define() 무조건 호출 · import/export · module.exports =   module.d.ts (+ class/function/plugin)\n전역    최상위 var/function · window.x = · DOM 가정 · import 없음           global.d.ts\nUMD     typeof define / typeof window / typeof module 분기                module.d.ts + export as namespace",
+        body: "모듈은 '거의 모든 현대 Node.js 라이브러리'입니다. 단서는 조건 없는 require/define 호출, import/export, `exports`나 `module.exports`에 대입하는 코드입니다. window·global 대입은 드뭅니다.\n전역은 import 없이 씁니다. 단서는 최상위 var/function, `window.someName = …`, DOM 가정, 그리고 require/define이 없다는 점입니다. 문서는 'window에 붙이는 전역 라이브러리를 선언하기 전에 실제로는 UMD가 아닌지 확인하라'고 적습니다.\nUMD는 모듈로도 전역으로도 쓸 수 있습니다. 단서는 `typeof define`, `typeof window`, `typeof module` 검사입니다. '이게 보이면 거의 항상 UMD'입니다. 지금 인기 있는 전역 라이브러리는 대부분 UMD입니다.",
+        code: "종류   단서 (라이브러리 코드에서)                                     템플릿\n────  ───────────────────────────────────────────────────────  ─────────────────────\n모듈  require()/define() 무조건 호출 · import/export · module.exports =  module.d.ts (+\n                                                                     class/function/plugin)\n전역  최상위 var/function · window.x = · DOM 가정 · import 없음         global.d.ts\nUMD   typeof define / typeof window / typeof module 분기              module.d.ts + export as namespace",
         codeLang: "text",
       },
       {
         label: "템플릿 고르기",
-        body: "모듈이면 다시 묻습니다. 모듈 자체를 호출하는가(`x(42)`) → module-function.d.ts. `new`로 만드는가 → module-class.d.ts. import할 때 다른 모듈을 바꾸는가(플러그인) → module-plugin.d.ts. 아니면 → module.d.ts. 전역이면 global.d.ts, 전역을 바꾸는 모듈이면 global-modifying-module.d.ts. 이 판정이 템플릿 허브와 그 아래 여섯 시트의 입구입니다.",
+        body: "모듈이면 다시 묻습니다.\n모듈 자체를 호출하면(`x(42)`) module-function.d.ts입니다.\n`new`로 만들면 module-class.d.ts입니다.\nimport할 때 다른 모듈을 바꾸면(플러그인) module-plugin.d.ts입니다.\n아니면 module.d.ts입니다.\n전역이면 global.d.ts이고, 전역을 바꾸는 모듈이면 global-modifying-module.d.ts입니다.\n이 판정이 템플릿 허브와 그 아래 여섯 시트의 입구입니다.",
       },
       {
         label: "실제로 돌려 보면: 의존은 종류 조합에 따라 적는다",
-        body: "선언 파일이 다른 라이브러리에 기댈 때. 전역 → 전역: `/// <reference types=\"someLib\" />`. 모듈 → 모듈: `import * as moment from \"moment\"`. 전역 → UMD: `/// <reference types=\"moment\" />`. 모듈·UMD → UMD: import. 문서의 경고 — 'UMD 라이브러리에 대한 의존을 /// <reference 지시어로 선언하지 마라!'. 그리고 `/// <reference types>`는 @types가 프로그램에 들어와야 동작합니다 — 실제로 @types/node가 없을 때 \"Cannot find type definition file for 'node'.\"(TS2688), `--typeRoots`로 알려 주자 통과했습니다. 6.0부터 `types: []`가 기본이라 전역 라이브러리의 타입이 자동으로 안 들어오는 것도 같은 자리의 문제입니다.",
+        body: "선언 파일이 다른 라이브러리에 기댈 때의 규칙입니다.\n전역이 전역에 기대면 `/// <reference types=\"someLib\" />`를 씁니다.\n모듈이 모듈에 기대면 `import * as moment from \"moment\"`를 씁니다.\n전역이 UMD에 기대면 `/// <reference types=\"moment\" />`를 씁니다.\n모듈·UMD가 UMD에 기대면 import를 씁니다.\n문서의 경고는 'UMD 라이브러리에 대한 의존을 /// <reference 지시어로 선언하지 마라!'입니다. 그리고 `/// <reference types>`는 @types가 프로그램에 들어와야 동작합니다. 실제로 @types/node가 없을 때 \"Cannot find type definition file for 'node'.\"(TS2688)이 났고, `--typeRoots`로 알려 주자 통과했습니다. 6.0부터 `types: []`가 기본이라 전역 라이브러리의 타입이 자동으로 안 들어오는 것도 같은 자리의 문제입니다.",
         code: "// 전역 라이브러리가 다른 전역에 기댈 때\n/// <reference types=\"someLib\" />\nfunction getThing(): someLib.Thing;\n\n// 모듈이 모듈에 기댈 때\nimport * as moment from \"moment\";\nexport function getThing(): moment.Moment;\n\n$ npx tsc --noEmit rt/triple.ts\nrt/triple.ts(1,23): error TS2688: Cannot find type definition file for 'node'.   # @types 가 프로그램에 없다",
       },
       {
         label: "두 각주: 이름 충돌과 ES6 의 호출 시그니처",
-        body: "각주 1 — 전역 라이브러리의 타입은 전역의 네임스페이스 안에 두라. `interface KittySettings`를 최상위에 두면 다른 라이브러리와 충돌하니 `declare namespace cats { interface KittySettings {} }`. 각주 2 — ES6 모듈의 최상위 객체는 '절대 호출할 수 없다'. 그래서 `module.exports = function`인 CJS 라이브러리를 ESM에서 쓰려면 default export가 필요하고, TypeScript는 `esModuleInterop: true`로 그 구멍을 메웁니다. 모듈 참고서 부록의 그 문제가 선언 파일 쪽에서는 '`export =`를 쓰되 소비자는 interop에 기댄다'로 나타납니다. 실제로 `export = greet`인 .d.ts를 `module: esnext`에서 `import greet = require()`로 쓰면 TS1202, `import greet from`은 allowSyntheticDefaultImports(bundler가 암묵 켬) 덕에 통과했습니다.",
-        code: "// 각주 1 — 충돌 피하기\ndeclare namespace cats { interface KittySettings { weight: number } }   // cats.KittySettings\n\n// 각주 2 — export = 와 ESM 소비자\ndeclare module \"typed-lib\" { function typedLib(s: string): number; export = typedLib; }\nimport typedLib from \"typed-lib\";        // bundler/nodenext: allowSyntheticDefaultImports 로 OK\nimport typedLib = require(\"typed-lib\");  // module esnext: TS1202 Import assignment cannot be used when targeting ECMAScript modules.",
+        body: "각주 1은 전역 라이브러리의 타입은 전역의 네임스페이스 안에 두라는 것입니다. `interface KittySettings`를 최상위에 두면 다른 라이브러리와 충돌하니 `declare namespace cats { interface KittySettings {} }`로 감쌉니다.\n각주 2는 ES6 모듈의 최상위 객체는 '절대 호출할 수 없다'는 것입니다. 그래서 `module.exports = function`인 CJS 라이브러리를 ESM에서 쓰려면 default export가 필요하고, TypeScript는 `esModuleInterop: true`로 그 구멍을 메웁니다. 모듈 참고서 부록의 그 문제가 선언 파일 쪽에서는 '`export =`를 쓰되 소비자는 interop에 기댄다'로 나타납니다. 실제로 `export = greet`인 .d.ts를 `module: esnext`에서 `import greet = require()`로 쓰면 TS1202가 났고, `import greet from`은 allowSyntheticDefaultImports(bundler가 암묵적으로 켭니다) 덕에 통과했습니다.",
+        code: "// 각주 1 — 충돌 피하기\ndeclare namespace cats { interface KittySettings { weight: number } }   // cats.KittySettings\n\n// 각주 2 — export = 와 ESM 소비자\ndeclare module \"typed-lib\" { function typedLib(s: string): number; export = typedLib; }\nimport typedLib from \"typed-lib\";        // bundler/nodenext: allowSyntheticDefaultImports 로 OK\n// module esnext: TS1202 Import assignment cannot be used when targeting ECMAScript modules.\nimport typedLib = require(\"typed-lib\");",
       },
       {
         label: "다음 입구",
@@ -3131,7 +3131,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 라이브러리 코드에 `typeof define === \"function\"` 분기가 보이면 어떤 종류인가요? 2) 전역 라이브러리 선언을 쓰기 전에 확인하라는 것은? 3) UMD 의존을 `/// <reference>`로 적지 말라는 이유는? 4) ES6 모듈 최상위 객체가 호출 불가인 사실이 선언에 미치는 영향은?",
+        body: "1) 라이브러리 코드에 `typeof define === \"function\"` 분기가 보이면 어떤 종류인가요?\n2) 전역 라이브러리 선언을 쓰기 전에 확인하라는 것은?\n3) UMD 의존을 `/// <reference>`로 적지 말라는 이유는?\n4) ES6 모듈 최상위 객체가 호출 불가인 사실이 선언에 미치는 영향은?",
       },
     ],
     sources: [
@@ -3149,7 +3149,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "여섯 뼈대의 핵심 한 줄",
-        body: "module — `export function`·`export const`, 또는 비객체 export면 `export = x`. plugin — `export module \"대상\" { interface 보강 }`(선언 병합). class — `export = Greeter; declare class Greeter {…}` + 타입용 `declare namespace Greeter`. function — `export = Greeter; declare function Greeter(…)` 오버로드 + 속성용 namespace. global — `declare function`·`declare namespace`, import 없음. global-modifying — 모듈 파일 안의 `declare global { interface String { … } }`.",
+        body: "module은 `export function`·`export const`를 쓰고, 비객체 export면 `export = x`를 씁니다.\nplugin은 `export module \"대상\" { interface 보강 }`입니다(선언 병합).\nclass는 `export = Greeter; declare class Greeter {…}`에 타입용 `declare namespace Greeter`를 더한 꼴입니다.\nfunction은 `export = Greeter; declare function Greeter(…)` 오버로드에 속성용 namespace를 더한 꼴입니다.\nglobal은 `declare function`·`declare namespace`를 쓰고 import가 없습니다.\nglobal-modifying은 모듈 파일 안의 `declare global { interface String { … } }`입니다.",
         code: "템플릿                       핵심 문장                                     언제\n──────────────────────────  ───────────────────────────────────────────  ─────────────────────────────\nmodule.d.ts                 export function f(): T;  /  export = x;        import { f } from \"lib\"\nmodule-plugin.d.ts          export module \"base\" { interface X { … } }     import \"plugin\" 이 base 를 바꿈\nmodule-class.d.ts           export = C; declare class C { … }              new (require(\"lib\"))()\nmodule-function.d.ts        export = f; declare function f(…): …;          require(\"lib\")(42)\nglobal.d.ts                 declare function f(); declare namespace f {}   <script> 로 로드, import 없음\nglobal-modifying-module.d.ts declare global { interface String { … } }     import 하면 prototype 이 바뀜",
         codeLang: "text",
       },
@@ -3174,11 +3174,11 @@ export const typescriptTheories: Theory[] = [
     name: "모듈 d.ts",
     tagline: "CommonJS 와 ESM 의 export 패턴마다 대응하는 선언",
     intro:
-      "가장 흔한 템플릿입니다. 라이브러리의 JavaScript가 어떻게 내보내는지(`module.exports = {…}`, `exports.x =`, `module.exports = 함수`, `export function`)를 보고 선언을 적는 법, 타입을 함께 내보내는 법(제네릭·네임스페이스 병합), UMD 전역 이름(`export as namespace`), 그리고 `@types/myLib/index.d.ts`처럼 파일을 배치하는 법.",
+      "가장 흔한 템플릿입니다. 라이브러리의 JavaScript가 어떻게 내보내는지(`module.exports = {…}`, `exports.x =`, `module.exports = 함수`, `export function`)를 보고 선언을 적는 법, 타입을 함께 내보내는 법(제네릭·네임스페이스 병합), UMD 전역 이름(`export as namespace`), 그리고 `@types/myLib/index.d.ts`처럼 파일을 배치하는 법을 다룹니다.",
     blocks: [
       {
         label: "CommonJS 세 패턴과 ESM",
-        body: "`module.exports = { getArrayLength, maxInterval }` → `export function getArrayLength(arr: any[]): number; export const maxInterval: 12;`. 객체가 아닌 것을 내보내면(`module.exports = /hello( world)?/`) → `declare const helloWorld: RegExp; export = helloWorld;`. 속성이 붙은 함수(`module.exports = getArrayLength; module.exports.maxInterval = 12`) → `declare function getArrayLength(…); declare namespace getArrayLength { const maxInterval: 12; } export = getArrayLength;`. ESM의 `export function`은 선언에서도 그대로 `export function`. 문서의 주의 — 소비자가 쓸 수 있는 import 형태(`import x from`, `import { x }`, `import * as`, `require`)를 전부 지원하려면 'JavaScript 코드가 실제로 그 패턴들을 지원해야 한다'. 선언이 거짓말을 하면 런타임이 깨집니다.",
+        body: "`module.exports = { getArrayLength, maxInterval }`의 선언은 `export function getArrayLength(arr: any[]): number; export const maxInterval: 12;`입니다.\n객체가 아닌 것을 내보내면(`module.exports = /hello( world)?/`) `declare const helloWorld: RegExp; export = helloWorld;`입니다.\n속성이 붙은 함수(`module.exports = getArrayLength; module.exports.maxInterval = 12`)는 `declare function getArrayLength(…); declare namespace getArrayLength { const maxInterval: 12; } export = getArrayLength;`입니다.\nESM의 `export function`은 선언에서도 그대로 `export function`입니다.\n문서의 주의가 하나 있습니다. 소비자가 쓸 수 있는 import 형태(`import x from`, `import { x }`, `import * as`, `require`)를 전부 지원하려면 'JavaScript 코드가 실제로 그 패턴들을 지원해야 한다'는 것입니다. 선언이 거짓말을 하면 런타임이 깨집니다.",
         code: "// JS: module.exports = { getArrayLength, maxInterval }\nexport function getArrayLength(arr: any[]): number;\nexport const maxInterval: 12;\n\n// JS: module.exports = /hello( world)?/\ndeclare const helloWorld: RegExp;\nexport = helloWorld;\n\n// JS: module.exports = getArrayLength; module.exports.maxInterval = 12\ndeclare function getArrayLength(arr: any[]): number;\ndeclare namespace getArrayLength { const maxInterval: 12; }\nexport = getArrayLength;",
       },
       {
@@ -3188,7 +3188,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "UMD 전역 이름과 파일 배치",
-        body: "`export as namespace moduleName;`을 .d.ts에 두면 스크립트 파일(모듈이 아닌 파일)에서 `moduleName.x`로 전역처럼 쓸 수 있습니다 — UMD 라이브러리용. 파일 배치는 라이브러리의 구조를 따라갑니다. `@types/myLib/index.d.ts`, `foo.d.ts`, `bar/index.d.ts`, `bar/baz.d.ts` — `import \"myLib/bar/baz\"`가 그 파일을 찾아가도록. package.json의 `exports`가 있는 패키지라면 `types` 조건이 그 경로를 가리켜야 하고(모듈 레퍼런스 장의 traceResolution에서 \"Matched 'exports' condition 'types'\"), exports에 없는 하위 경로는 `declare module 'pkg/sub'`를 따로 두지 않으면 TS7016입니다.",
+        body: "`export as namespace moduleName;`을 .d.ts에 두면 스크립트 파일(모듈이 아닌 파일)에서 `moduleName.x`로 전역처럼 쓸 수 있습니다. UMD 라이브러리용입니다. 파일 배치는 라이브러리의 구조를 따라갑니다. `@types/myLib/index.d.ts`, `foo.d.ts`, `bar/index.d.ts`, `bar/baz.d.ts`처럼 두어 `import \"myLib/bar/baz\"`가 그 파일을 찾아가게 합니다. package.json의 `exports`가 있는 패키지라면 `types` 조건이 그 경로를 가리켜야 하고(모듈 레퍼런스 장의 traceResolution에서 \"Matched 'exports' condition 'types'\"가 보입니다), exports에 없는 하위 경로는 `declare module 'pkg/sub'`를 따로 두지 않으면 TS7016입니다.",
         code: "// UMD 전역\nexport as namespace myLib;\nexport function greet(): void;\n// 스크립트 파일에서: myLib.greet();\n\n// 배치\n@types/myLib/\n  index.d.ts        ← import \"myLib\"\n  foo.d.ts          ← import \"myLib/foo\"\n  bar/\n    index.d.ts      ← import \"myLib/bar\"\n    baz.d.ts        ← import \"myLib/bar/baz\"",
         codeLang: "text",
       },
@@ -3198,7 +3198,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `module.exports = /regex/`에 대응하는 선언은? 2) 함수에 속성이 붙은 CJS export는 어떻게 선언하나요? 3) `export as namespace`는 어떤 소비자를 위한 것인가요? 4) 선언이 지원한다고 적은 import 형태를 JS가 실제로 지원하지 않으면 무슨 일이 생기나요?",
+        body: "1) `module.exports = /regex/`에 대응하는 선언은?\n2) 함수에 속성이 붙은 CJS export는 어떻게 선언하나요?\n3) `export as namespace`는 어떤 소비자를 위한 것인가요?\n4) 선언이 지원한다고 적은 import 형태를 JS가 실제로 지원하지 않으면 무슨 일이 생기나요?",
       },
     ],
     sources: [
@@ -3216,12 +3216,12 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "템플릿의 세 줄",
-        body: "첫 줄 — '이 모듈이 더하는 대상 모듈을 import한다'(`import { greeter } from \"super-greeter\";`). 둘째 — 대상 모듈을 보강하는 블록. 템플릿은 `export module \"super-greeter\" { … }`로 쓰지만 핸드북 선언 병합 장의 `declare module \"./observable.js\" { … }`와 같은 메커니즘입니다. 셋째 — 보강 안에서 기존 인터페이스에 멤버를 더합니다. 기존 모듈의 `GreeterFunction`이 호출 시그니처 오버로드(`(name: string): void; (time: number): void`)를 가진 인터페이스였기에 메서드를 더할 수 있습니다 — 함수를 `declare function`으로 적었다면 보강할 인터페이스가 없으니, 보강 가능성을 열어 두려면 기반 라이브러리가 인터페이스로 선언해야 합니다.",
+        body: "첫 줄은 '이 모듈이 더하는 대상 모듈을 import한다'입니다(`import { greeter } from \"super-greeter\";`).\n둘째는 대상 모듈을 보강하는 블록입니다. 템플릿은 `export module \"super-greeter\" { … }`로 쓰지만 핸드북 선언 병합 장의 `declare module \"./observable.js\" { … }`와 같은 메커니즘입니다.\n셋째는 보강 안에서 기존 인터페이스에 멤버를 더하는 일입니다. 기존 모듈의 `GreeterFunction`이 호출 시그니처 오버로드(`(name: string): void; (time: number): void`)를 가진 인터페이스였기에 메서드를 더할 수 있습니다. 함수를 `declare function`으로 적었다면 보강할 인터페이스가 없습니다. 보강 가능성을 열어 두려면 기반 라이브러리가 인터페이스로 선언해야 합니다.",
         code: "// super-greeter.d.ts (기반)\nexport interface GreeterFunction { (name: string): void; (time: number): void }\nexport const greeter: GreeterFunction;\n\n// hyper-super-greeter.d.ts (플러그인)\nimport { greeter } from \"super-greeter\";        // 1. 대상 import\nexport module \"super-greeter\" {                 // 2. 대상 모듈 보강 (= declare module)\n  export interface GreeterFunction {            // 3. 기존 인터페이스에 멤버 추가\n    hyperGreet(): void;\n  }\n}",
       },
       {
         label: "실제로 돌려 보면: 보강은 패치만, 새 최상위 선언은 못 한다",
-        body: "핸드북 선언 병합 장에서 돌린 그대로입니다. `declare module \"./observable.js\" { interface Observable<T> { map<U>(…): Observable<U> } }`를 두고 `new Observable(1).map(String)`이 통과했습니다. 한계 — '보강에서는 새 최상위 선언을 할 수 없고 기존 선언에 대한 패치만'. default export는 보강할 수 없고 named만. 그리고 보강 파일 자체가 모듈이어야 하므로(import나 export가 있어야) 다른 export가 없으면 `export {}`를 붙입니다.",
+        body: "핸드북 선언 병합 장에서 돌린 그대로입니다. `declare module \"./observable.js\" { interface Observable<T> { map<U>(…): Observable<U> } }`를 두고 `new Observable(1).map(String)`이 통과했습니다. 한계는 '보강에서는 새 최상위 선언을 할 수 없고 기존 선언에 대한 패치만'입니다. default export는 보강할 수 없고 named만 됩니다. 그리고 보강 파일 자체가 모듈이어야 하므로(import나 export가 있어야 합니다) 다른 export가 없으면 `export {}`를 붙입니다.",
         code: "import \"./observable.js\";\ndeclare module \"./observable.js\" {\n  interface Observable<T> { map<U>(f: (x: T) => U): Observable<U>; }   // 패치 — OK\n}\nexport {};   // 이 파일을 모듈로\n\n// 소비\nnew Observable(1).map((x) => String(x));   // OK",
       },
       {
@@ -3236,7 +3236,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 플러그인 템플릿의 첫 줄이 대상 모듈을 import하는 이유는? 2) 기반 라이브러리가 함수를 `declare function`으로 선언했다면 플러그인이 메서드를 더할 수 있나요? 3) 플러그인에서 타입만 가져오면 왜 런타임 패치가 사라질 수 있나요? 4) ES6 모듈에서 이 패턴이 불가능한 이유는?",
+        body: "1) 플러그인 템플릿의 첫 줄이 대상 모듈을 import하는 이유는?\n2) 기반 라이브러리가 함수를 `declare function`으로 선언했다면 플러그인이 메서드를 더할 수 있나요?\n3) 플러그인에서 타입만 가져오면 왜 런타임 패치가 사라질 수 있나요?\n4) ES6 모듈에서 이 패턴이 불가능한 이유는?",
       },
     ],
     sources: [
@@ -3250,7 +3250,7 @@ export const typescriptTheories: Theory[] = [
     name: "모듈: 클래스",
     tagline: "require 해서 new 로 쓰는 모듈 — export = 와 declare class",
     intro:
-      "`const Greeter = require(\"super-greeter\"); const greeter = new Greeter();`처럼 모듈 자체가 클래스인 라이브러리의 선언입니다. 뼈대는 `export = Greeter;` + `declare class Greeter { constructor(customGreeting?: string); greet: void; myMethod(opts: MyClass.MyClassMethodOptions): number; }` + 타입을 담는 `declare namespace MyClass`. 선택으로 UMD 전역 `export as namespace`. 템플릿 주석이 소비자 쪽 주의를 길게 적습니다.",
+      "`const Greeter = require(\"super-greeter\"); const greeter = new Greeter();`처럼 모듈 자체가 클래스인 라이브러리의 선언입니다. 뼈대는 `export = Greeter;` + `declare class Greeter { constructor(customGreeting?: string); greet: void; myMethod(opts: MyClass.MyClassMethodOptions): number; }` + 타입을 담는 `declare namespace MyClass`입니다. 선택으로 UMD 전역 `export as namespace`를 더합니다. 템플릿 주석이 소비자 쪽 주의를 길게 적습니다.",
     blocks: [
       {
         label: "뼈대",
@@ -3272,7 +3272,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `export = Greeter`가 CJS의 무엇에 대응하나요? 2) `import * as Greeter`가 틀린 이유는? 3) 클래스와 같은 이름의 `declare namespace`는 무엇을 위해 두나요? 4) `module: esnext`에서 쓸 수 없는 import 형태는?",
+        body: "1) `export = Greeter`가 CJS의 무엇에 대응하나요?\n2) `import * as Greeter`가 틀린 이유는?\n3) 클래스와 같은 이름의 `declare namespace`는 무엇을 위해 두나요?\n4) `module: esnext`에서 쓸 수 없는 import 형태는?",
       },
     ],
     sources: [
@@ -3286,11 +3286,11 @@ export const typescriptTheories: Theory[] = [
     name: "모듈: 함수",
     tagline: "require 해서 바로 호출하는 모듈 — 오버로드와 속성용 네임스페이스",
     intro:
-      "`import greeter from \"super-greeter\"; greeter(2); greeter(\"Hello world\");`처럼 모듈 자체가 함수인 라이브러리의 선언입니다. 뼈대는 `declare function Greeter(name: string): Greeter.NamedReturnType; declare function Greeter(length: number): Greeter.LengthReturnType;`(오버로드) + `export = Greeter;` + 속성과 반환 타입을 담는 `declare namespace Greeter`.",
+      "`import greeter from \"super-greeter\"; greeter(2); greeter(\"Hello world\");`처럼 모듈 자체가 함수인 라이브러리의 선언입니다. 뼈대는 `declare function Greeter(name: string): Greeter.NamedReturnType; declare function Greeter(length: number): Greeter.LengthReturnType;`(오버로드) + `export = Greeter;` + 속성과 반환 타입을 담는 `declare namespace Greeter`입니다.",
     blocks: [
       {
         label: "뼈대",
-        body: "함수를 `declare function`으로 오버로드마다 한 줄씩 적고 `export =`로 내보냅니다. 함수에 붙은 속성(`greeter.defaultName`)은 같은 이름의 네임스페이스에 `export const defaultName: string; export let defaultLength: number;`로 적습니다 — 선언 병합의 '네임스페이스 + 함수'. 반환 타입 인터페이스(`LengthReturnType`·`NamedReturnType`)도 그 네임스페이스 안에 둡니다. 템플릿 주석의 소비 예 — `import f = require('super-greeter'); console.log(f.defaultName);`.",
+        body: "함수를 `declare function`으로 오버로드마다 한 줄씩 적고 `export =`로 내보냅니다. 함수에 붙은 속성(`greeter.defaultName`)은 같은 이름의 네임스페이스에 `export const defaultName: string; export let defaultLength: number;`로 적습니다. 선언 병합의 '네임스페이스 + 함수'입니다. 반환 타입 인터페이스(`LengthReturnType`·`NamedReturnType`)도 그 네임스페이스 안에 둡니다. 템플릿 주석의 소비 예는 `import f = require('super-greeter'); console.log(f.defaultName);`입니다.",
         code: "// super-greeter.d.ts\nexport = Greeter;\n\ndeclare function Greeter(name: string): Greeter.NamedReturnType;\ndeclare function Greeter(length: number): Greeter.LengthReturnType;\n\ndeclare namespace Greeter {\n  export interface LengthReturnType { width: number; height: number; }\n  export interface NamedReturnType { firstName: string; lastName: string; }\n  export const defaultName: string;\n  export let defaultLength: number;\n}",
       },
       {
@@ -3300,7 +3300,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "오버로드를 적을 때의 규칙",
-        body: "Do's and Don'ts의 오버로드 규칙이 여기서 바로 쓰입니다. 구체적인 시그니처를 앞에, 일반적인 것을 뒤에(TypeScript는 첫 번째로 맞는 오버로드를 고름). 끝 매개변수만 다르면 오버로드 대신 선택적 매개변수. 한 자리의 타입만 다르면 유니온. 함수 템플릿의 `(name: string)`과 `(length: number)`는 반환 타입이 다르기 때문에 유니온으로 합칠 수 없어 오버로드가 맞습니다 — 반환이 같았다면 `(x: string | number)` 한 줄이 나았을 겁니다.",
+        body: "Do's and Don'ts의 오버로드 규칙이 여기서 바로 쓰입니다.\n구체적인 시그니처를 앞에, 일반적인 것을 뒤에 둡니다(TypeScript는 첫 번째로 맞는 오버로드를 고릅니다).\n끝 매개변수만 다르면 오버로드 대신 선택적 매개변수를 씁니다.\n한 자리의 타입만 다르면 유니온을 씁니다.\n함수 템플릿의 `(name: string)`과 `(length: number)`는 반환 타입이 다르기 때문에 유니온으로 합칠 수 없어 오버로드가 맞습니다. 반환이 같았다면 `(x: string | number)` 한 줄이 나았을 것입니다.",
         code: "// 반환 타입이 다르다 → 오버로드가 맞다\ndeclare function Greeter(name: string): Greeter.NamedReturnType;\ndeclare function Greeter(length: number): Greeter.LengthReturnType;\n\n// 반환이 같다면 → 유니온 한 줄\ndeclare function len(x: string | any[]): number;",
       },
       {
@@ -3309,7 +3309,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 함수에 붙은 속성 `greeter.defaultName`은 어디에 선언하나요? 2) `(name: string)`과 `(length: number)` 오버로드를 유니온 한 줄로 못 합치는 이유는? 3) interop 없는 namespace import의 문제는?",
+        body: "1) 함수에 붙은 속성 `greeter.defaultName`은 어디에 선언하나요?\n2) `(name: string)`과 `(length: number)` 오버로드를 유니온 한 줄로 못 합치는 이유는?\n3) interop 없는 namespace import의 문제는?",
       },
     ],
     sources: [
@@ -3323,16 +3323,16 @@ export const typescriptTheories: Theory[] = [
     name: "전역 d.ts",
     tagline: "import 없이 쓰는 라이브러리 — declare function · declare namespace",
     intro:
-      "`<script>`로 로드하면 `$(…)`처럼 전역에서 바로 쓰는 라이브러리의 선언입니다. 단서는 최상위 var/function, `window.someName = …`, DOM 가정, require/define 없음. 템플릿은 호출 가능한 전역이면 `declare function myLib(a: string): string;`(오버로드), 타입으로도 쓰이면 `interface myLib`, 속성과 타입은 `declare namespace myLib { let timeout: number; const version: string; class Cat; interface CatSettings; type VetID; function checkCat(); }`. 문서의 반복되는 주의 — '인기 있는 전역 라이브러리는 대부분 지금은 UMD다. 전역 선언을 쓰기 전에 확인하라'.",
+      "`<script>`로 로드하면 `$(…)`처럼 전역에서 바로 쓰는 라이브러리의 선언입니다. 단서는 최상위 var/function, `window.someName = …`, DOM 가정, 그리고 require/define이 없다는 점입니다. 템플릿은 호출 가능한 전역이면 `declare function myLib(a: string): string;`(오버로드)을 쓰고, 타입으로도 쓰이면 `interface myLib`를 두고, 속성과 타입은 `declare namespace myLib { let timeout: number; const version: string; class Cat; interface CatSettings; type VetID; function checkCat(); }`에 담습니다. 문서가 반복하는 주의는 '인기 있는 전역 라이브러리는 대부분 지금은 UMD다. 전역 선언을 쓰기 전에 확인하라'입니다.",
     blocks: [
       {
         label: "뼈대와 템플릿의 주석",
-        body: "템플릿의 주석들이 선언의 '뜻'을 적어 줍니다. `let timeout: number` 옆에 'myLib.timeout = 50;은 허용된다', `const version: string` 옆에 'myLib.version은 읽을 수 있지만 바꿀 수 없다', 그리고 `interface myLib` 옆에 '이게 정말 말이 되는지 확인하라! 아니면 이 선언을 지워라…'. 전역 라이브러리의 이름이 함수이면서 타입(`let x: myLib`)으로도 쓰이는 경우가 드물기 때문입니다. 실제로 이 템플릿 그대로 돌린 결과가 선언 레퍼런스 시트에 있습니다 — `timeout` 대입 OK, `version` 대입은 TS2540.",
+        body: "템플릿의 주석들이 선언의 '뜻'을 적어 줍니다. `let timeout: number` 옆에는 'myLib.timeout = 50;은 허용된다', `const version: string` 옆에는 'myLib.version은 읽을 수 있지만 바꿀 수 없다', 그리고 `interface myLib` 옆에는 '이게 정말 말이 되는지 확인하라! 아니면 이 선언을 지워라…'가 있습니다. 전역 라이브러리의 이름이 함수이면서 타입(`let x: myLib`)으로도 쓰이는 경우가 드물기 때문입니다. 실제로 이 템플릿 그대로 돌린 결과가 선언 레퍼런스 시트에 있습니다. `timeout` 대입은 OK였고, `version` 대입은 TS2540이 났습니다.",
         code: "// global.d.ts\ndeclare function myLib(a: string): string;\ndeclare function myLib(a: number): number;\n\ninterface myLib { name: string; length: number; extras?: string[]; }   // 타입으로도 쓰일 때만\n\ndeclare namespace myLib {\n  let timeout: number;          // myLib.timeout = 50  OK\n  const version: string;        // 읽기만\n  class Cat { constructor(n: number); readonly age: number; purr(): void; }\n  interface CatSettings { weight: number; name: string; tailLength?: number; }\n  type VetID = string | number;\n  function checkCat(c: Cat, s?: VetID): void;\n}",
       },
       {
         label: "실제로 돌려 보면: 전역 선언은 '스크립트 파일' 이어야 한다",
-        body: "전역 .d.ts에 import나 export가 하나라도 있으면 그 파일은 모듈이 되고 선언은 전역이 아니게 됩니다(핸드북 모듈 장의 '한 줄의 차이'). 그래서 전역 템플릿에는 import가 없고, 다른 전역에 기대려면 `/// <reference types=\"…\" />`를 씁니다. 반대로 모듈 파일 안에서 전역에 무언가를 더해야 하면 `declare global { … }`(다음 템플릿). 그리고 이 .d.ts가 프로그램에 들어와야 합니다 — `include`에 잡히거나 `types`·`typeRoots`로. 6.0부터 `types: []`가 기본이라 `node_modules/@types`의 전역이 자동으로 안 들어오는 것이 흔한 '갑자기 전역이 사라진' 원인입니다. 실제로 `/// <reference types=\"node\" />`가 @types를 못 찾을 때 TS2688과 함께 `process`가 TS2591로 사라졌습니다.",
+        body: "전역 .d.ts에 import나 export가 하나라도 있으면 그 파일은 모듈이 되고 선언은 전역이 아니게 됩니다(핸드북 모듈 장의 '한 줄의 차이'). 그래서 전역 템플릿에는 import가 없고, 다른 전역에 기대려면 `/// <reference types=\"…\" />`를 씁니다. 반대로 모듈 파일 안에서 전역에 무언가를 더해야 하면 `declare global { … }`를 씁니다(다음 템플릿). 그리고 이 .d.ts가 프로그램에 들어와야 합니다. `include`에 잡히거나 `types`·`typeRoots`로 알려 줍니다. 6.0부터 `types: []`가 기본이라 `node_modules/@types`의 전역이 자동으로 안 들어오는 것이 흔한 '갑자기 전역이 사라진' 원인입니다. 실제로 `/// <reference types=\"node\" />`가 @types를 못 찾을 때 TS2688과 함께 `process`가 TS2591로 사라졌습니다.",
         code: "// 전역 .d.ts 가 모듈이 되는 순간 — 이 한 줄로 전역이 아니게 된다\nimport type { X } from \"./x\";     // ← 있으면 모듈. 전역 선언은 declare global 로 감싸야 한다\ndeclare var legacyGlobal: number; // 모듈 파일 안의 이 선언은 전역이 아니다\n\n// 프로그램에 들어오게\n{ \"compilerOptions\": { \"types\": [\"node\", \"jest\"] } }   // 6.0+: 기본 [] 이라 명시\n// 또는 include 에 .d.ts 경로, 또는 /// <reference types=\"…\" />",
       },
       {
@@ -3345,7 +3345,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 전역 .d.ts에 import를 한 줄 넣으면 무슨 일이 생기나요? 2) `declare namespace` 안의 `let`과 `const`가 쓰는 쪽에서 어떻게 다르게 검사되나요? 3) 6.0에서 전역 타입이 '사라진' 가장 흔한 이유와 처방은? 4) 전역 라이브러리 선언 전에 문서가 확인하라는 것은?",
+        body: "1) 전역 .d.ts에 import를 한 줄 넣으면 무슨 일이 생기나요?\n2) `declare namespace` 안의 `let`과 `const`가 쓰는 쪽에서 어떻게 다르게 검사되나요?\n3) 6.0에서 전역 타입이 '사라진' 가장 흔한 이유와 처방은?\n4) 전역 라이브러리 선언 전에 문서가 확인하라는 것은?",
       },
     ],
     sources: [
@@ -3363,13 +3363,13 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "뼈대",
-        body: "알아보는 법 — '반환값을 쓰지 않는(또는 쓰는) require 호출이 있고, 그 뒤 내장 타입에 메서드가 생긴다'. 선언은 모듈 파일(import/export가 있음) 안에서 `declare global` 블록으로 전역 인터페이스를 보강합니다. 참고서 선언 병합 장의 '전역 보강' 그 자체이고 '모듈 보강과 같은 동작과 한계'를 가집니다 — 패치만, 새 최상위 선언 불가. 템플릿 주석 — 모듈이 호출 가능하거나 생성 가능하면 클래스·함수 템플릿과 합치라.",
+        body: "알아보는 법은 '반환값을 쓰지 않는(또는 쓰는) require 호출이 있고, 그 뒤 내장 타입에 메서드가 생긴다'입니다. 선언은 모듈 파일(import/export가 있는 파일) 안에서 `declare global` 블록으로 전역 인터페이스를 보강합니다. 참고서 선언 병합 장의 '전역 보강' 그 자체이고 '모듈 보강과 같은 동작과 한계'를 가집니다. 패치만 되고, 새 최상위 선언은 못 합니다. 템플릿 주석은 모듈이 호출 가능하거나 생성 가능하면 클래스·함수 템플릿과 합치라고 적습니다.",
         code: "// string-fancy.d.ts\nexport interface StringFormatOptions { fancinessLevel: number; }\nexport function doSomething(): void;          // 모듈 자체의 export (있을 수도 없을 수도)\n\ndeclare global {\n  interface String {\n    fancyFormat(opts: StringFormatOptions): string;\n  }\n}\n// export 가 하나도 없다면:\n// export {};",
       },
       {
         label: "실제로 돌려 보면: declare global 로 Array 와 Window 를 보강",
         body: "참고서 선언 병합 시트에서 돌린 그대로입니다. 모듈 파일(`export {}` 포함)에 `declare global { interface Array<T> { toObservable(): … } interface Window { __APP__: string } }`를 두고 다른 파일에서 `[1].toObservable()`과 `window.__APP__ = \"x\"`가 통과했습니다. 선언하지 않은 `window.__NOT_DECLARED__`는 TS2339. 보강은 그 파일이 프로그램에 들어오는 순간 전역에 적용되므로, 어디서 보강했는지 추적이 어렵다는 것이 '위험'의 타입 쪽 얼굴입니다.",
-        code: "// augment.ts (모듈)\ndeclare global {\n  interface Array<T> { toObservable(): import(\"./observable.js\").Observable<T>; }\n  interface Window { __APP__: string; }\n}\nexport {};\n\n// use.ts\n[1].toObservable();        // OK\nwindow.__APP__ = \"x\";      // OK\nwindow.__NOT_DECLARED__;   // Property '__NOT_DECLARED__' does not exist on type 'Window & typeof globalThis'. (TS2339)",
+        code: "// augment.ts (모듈)\ndeclare global {\n  interface Array<T> { toObservable(): import(\"./observable.js\").Observable<T>; }\n  interface Window { __APP__: string; }\n}\nexport {};\n\n// use.ts\n[1].toObservable();  // OK\nwindow.__APP__ = \"x\";  // OK\nwindow.__NOT_DECLARED__;  // Property '__NOT_DECLARED__' does not exist on type 'Window & typeof\n                          globalThis'. (TS2339)",
       },
       {
         label: "문제의 구조: 전역을 바꾸는 모듈은 '누가 먼저 import 했나' 에 기댄다",
@@ -3383,7 +3383,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `declare global`은 어떤 종류의 파일 안에서만 전역 보강이 되나요? 2) 보강 파일에 다른 export가 없을 때 필요한 한 줄은? 3) 이 패턴이 '위험'한 이유를 타입 쪽과 런타임 쪽으로 나눠 적어 보세요.",
+        body: "1) `declare global`은 어떤 종류의 파일 안에서만 전역 보강이 되나요?\n2) 보강 파일에 다른 export가 없을 때 필요한 한 줄은?\n3) 이 패턴이 '위험'한 이유를 타입 쪽과 런타임 쪽으로 나눠 적어 보세요.",
       },
     ],
     sources: [
@@ -3397,11 +3397,11 @@ export const typescriptTheories: Theory[] = [
     name: "해야 할 것과 하지 말 것",
     tagline: "타입을 적을 때 흔히 하는 실수 — 일반 타입 · 콜백 · 오버로드",
     intro:
-      "선언 파일 섹션에서 '모두가 읽어야 하는' 페이지입니다. 세 묶음 — 일반 타입(Number·String·Boolean·Symbol·Object 쓰지 말기, 쓰지 않는 제네릭 매개변수 금지, any 대신 unknown), 콜백 타입(반환은 void, 선택적 매개변수 금지, 인자 수만 다른 오버로드 금지), 오버로드(구체적인 것 먼저, 끝 매개변수 차이는 선택적으로, 한 자리 차이는 유니온으로).",
+      "선언 파일 섹션에서 '모두가 읽어야 하는' 페이지입니다. 세 묶음입니다.\n일반 타입은 Number·String·Boolean·Symbol·Object를 쓰지 않고, 쓰지 않는 제네릭 매개변수를 두지 않고, any 대신 unknown을 씁니다.\n콜백 타입은 반환을 void로 하고, 선택적 매개변수를 두지 않고, 인자 수만 다른 오버로드를 만들지 않습니다.\n오버로드는 구체적인 것을 먼저 두고, 끝 매개변수 차이는 선택적 매개변수로, 한 자리 차이는 유니온으로 적습니다.",
     blocks: [
       {
         label: "일반 타입: 소문자, 그리고 unknown",
-        body: "`Number`·`String`·`Boolean`·`Symbol`·`Object`는 거의 항상 틀립니다 — 래퍼 객체의 타입이라 원시값 자리에 못 들어갑니다(일상적인 타입의 원시 타입 절). 소문자 `number`·`string`·`boolean`·`symbol`을 쓰고, 원시가 아닌 값에는 `object`(2.2). 타입 매개변수를 쓰지 않는 제네릭(`interface Something<T> { name: string }`)은 만들지 않습니다 — 타입 호환성 장에서 보듯 쓰이지 않는 T는 무시되어 `Something<string>`과 `Something<number>`가 같아지니까요. 'JavaScript를 옮기는 중이 아니면 any를 쓰지 말고, 무엇이든 받으려면 unknown'.",
+        body: "`Number`·`String`·`Boolean`·`Symbol`·`Object`는 거의 항상 틀립니다. 래퍼 객체의 타입이라 원시값 자리에 못 들어갑니다(일상적인 타입의 원시 타입 절). 소문자 `number`·`string`·`boolean`·`symbol`을 씁니다. 원시가 아닌 값에는 `object`를 씁니다(2.2). 타입 매개변수를 쓰지 않는 제네릭(`interface Something<T> { name: string }`)은 만들지 않습니다. 타입 호환성 장에서 보듯 쓰이지 않는 T는 무시되어 `Something<string>`과 `Something<number>`가 같아집니다. 'JavaScript를 옮기는 중이 아니면 any를 쓰지 말고, 무엇이든 받으려면 unknown'이라는 규칙도 있습니다.",
         code: "// Don't\nfunction reverse(s: String): String;\n// Do\nfunction reverse(s: string): string;\n\n// Don't — T 가 안 쓰인다\ninterface Something<T> { name: string }\n// 실제로: Empty<number> 에 Empty<string> 이 그대로 들어간다 (타입 호환성)\n\n// Don't / Do\nfunction fn(x: any): void;\nfunction fn(x: unknown): void;   // 쓰기 전에 좁혀야 한다",
       },
       {
@@ -3411,7 +3411,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "오버로드: 순서 · 선택적 · 유니온",
-        body: "'TypeScript는 첫 번째로 맞는 오버로드를 고른다'. 그래서 일반적인 시그니처(`(x: unknown): unknown`)를 앞에 두면 구체적인 것이 영원히 선택되지 않습니다. 실제로 `fn`(구체→일반)의 `fn(\"s\")`는 string, `bad`(일반→구체)의 `bad(\"s\")`는 unknown으로 잡혔습니다. 끝 매개변수만 다른 오버로드들(`(x)`, `(x, y)`, `(x, y, z)`)은 선택적 매개변수 하나로 — 단 '반환 타입이 전부 같을 때만'. 한 자리의 타입만 다른 오버로드들(`(x: string)`, `(x: number)`)은 유니온 하나로 — 호출하는 쪽도 유니온 값을 바로 넘길 수 있어 더 낫습니다(함수 장의 TS2769가 그 예).",
+        body: "'TypeScript는 첫 번째로 맞는 오버로드를 고른다'는 규칙이 있습니다. 그래서 일반적인 시그니처(`(x: unknown): unknown`)를 앞에 두면 구체적인 것이 영원히 선택되지 않습니다. 실제로 `fn`(구체→일반)의 `fn(\"s\")`는 string으로 잡혔습니다. `bad`(일반→구체)의 `bad(\"s\")`는 unknown으로 잡혔습니다. 끝 매개변수만 다른 오버로드들(`(x)`, `(x, y)`, `(x, y, z)`)은 선택적 매개변수 하나로 합칩니다. 단 '반환 타입이 전부 같을 때만'입니다. 한 자리의 타입만 다른 오버로드들(`(x: string)`, `(x: number)`)은 유니온 하나로 합칩니다. 호출하는 쪽도 유니온 값을 바로 넘길 수 있어 더 낫습니다(함수 장의 TS2769가 그 예입니다).",
         code: "// 순서\nexport declare function fn(x: string): string;\nexport declare function fn(x: number): number;\nexport declare function fn(x: unknown): unknown;    // 일반은 마지막\nexport declare function bad(x: unknown): unknown;   // 일반이 먼저 →\nexport declare function bad(x: string): string;     //   이 줄은 절대 안 뽑힌다\nconst a = fn(\"s\");    // a: string\nconst b = bad(\"s\");   // b: unknown   ← 실제로 그렇게 잡혔다\n\n// 끝 매개변수 → 선택적 (반환이 같을 때)\ndeclare function diff(one: string, two?: string, three?: string): number;\n// 한 자리 타입 → 유니온\ndeclare function moveBy(dx: number | string, dy: number | string): void;",
       },
       {
@@ -3424,7 +3424,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `String`과 `string`의 차이가 선언에서 문제가 되는 이유는? 2) 콜백 반환을 `any`로 적으면 소비자에게 무엇이 허용되나요? 3) 일반 시그니처를 오버로드 맨 앞에 두면 어떻게 되나요(실제 결과로)? 4) 끝 매개변수 차이 오버로드를 선택적 매개변수로 합칠 수 있는 조건은?",
+        body: "1) `String`과 `string`의 차이가 선언에서 문제가 되는 이유는?\n2) 콜백 반환을 `any`로 적으면 소비자에게 무엇이 허용되나요?\n3) 일반 시그니처를 오버로드 맨 앞에 두면 어떻게 되나요(실제 결과로)?\n4) 끝 매개변수 차이 오버로드를 선택적 매개변수로 합칠 수 있는 조건은?",
       },
     ],
     sources: [
@@ -3442,23 +3442,23 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "무엇이 타입을 만들고 무엇이 값을 만드는가",
-        body: "타입을 만드는 것 — 타입 별칭, 인터페이스, 클래스, enum, 타입을 가리키는 import. 값을 만드는 것 — let/const/var, 값을 담은 네임스페이스나 모듈, enum, 클래스, 함수, 값을 가리키는 import. 네임스페이스는 네임스페이스 칸을 만들고, `let x: A.B.C`에서 A.B는 '타입 C가 들어 있는 네임스페이스'일 뿐 그 자체가 타입이거나 값일 필요는 없습니다. 클래스와 enum이 두 칸에 다 나오는 것이 핵심입니다 — 그래서 `class C`는 `new C()`(값)와 `let c: C`(타입) 둘 다 되고, `typeof C`로 값 쪽의 타입을 따로 가리킵니다.",
+        body: "타입을 만드는 것은 타입 별칭, 인터페이스, 클래스, enum, 타입을 가리키는 import입니다. 값을 만드는 것은 let/const/var, 값을 담은 네임스페이스나 모듈, enum, 클래스, 함수, 값을 가리키는 import입니다. 네임스페이스는 네임스페이스 칸을 만듭니다. `let x: A.B.C`에서 A.B는 '타입 C가 들어 있는 네임스페이스'일 뿐입니다. 그 자체가 타입이거나 값일 필요는 없습니다. 클래스와 enum이 두 칸에 다 나오는 것이 핵심입니다. 그래서 `class C`는 `new C()`(값)와 `let c: C`(타입) 둘 다 됩니다. `typeof C`로는 값 쪽의 타입을 따로 가리킵니다.",
         code: "선언            네임스페이스   타입   값\n─────────────  ────────────  ─────  ────\nnamespace       X             —      X (값을 담으면)\nclass           —             X      X\nenum            —             X      X\ninterface       —             X      —\ntype alias      —             X      —\nfunction        —             —      X\nvariable        —             —      X\n\n// 하나의 이름, 세 뜻\nclass C { x = 1 }                 // 타입 C, 값 C\ninterface C { y: number }         // 타입 C 에 병합\nnamespace C { export const z = 3 } // 네임스페이스 C (값도)",
         codeLang: "text",
       },
       {
         label: "실제로 돌려 보면: 같은 칸이 충돌하고 다른 칸은 병합된다",
-        body: "`class C { x = 1 } interface C { y: number } namespace C { export const z = 3 }`는 전부 통과했고 `new C().y = 2`와 `C.z`가 됐습니다 — 클래스의 타입 칸에 인터페이스가 병합되고(패치), 네임스페이스는 다른 칸. `type Alias = …; interface Alias {}`는 \"Duplicate identifier 'Alias'.\"(TS2300) — 타입 별칭은 타입 칸을 공유하지 않습니다(문서: '타입 별칭에는 더할 수 없다'). `enum E { A }`는 `const e: E`(타입)와 `let eVal = E`(값) 둘 다 OK. 타입만 든 `namespace OnlyTypes { export type T }`를 값으로 쓰면 \"Cannot use namespace 'OnlyTypes' as a value.\"(TS2708) — 값을 담지 않은 네임스페이스는 값 칸이 비어 있어 emit도 되지 않습니다.",
+        body: "`class C { x = 1 } interface C { y: number } namespace C { export const z = 3 }`는 전부 통과했습니다. `new C().y = 2`와 `C.z`가 됐습니다. 클래스의 타입 칸에 인터페이스가 병합되고(패치), 네임스페이스는 다른 칸에 들어가기 때문입니다. `type Alias = …; interface Alias {}`는 \"Duplicate identifier 'Alias'.\"(TS2300)였습니다. 타입 별칭은 타입 칸을 공유하지 않습니다(문서: '타입 별칭에는 더할 수 없다'). `enum E { A }`는 `const e: E`(타입)와 `let eVal = E`(값) 둘 다 OK입니다. 타입만 든 `namespace OnlyTypes { export type T }`를 값으로 쓰면 \"Cannot use namespace 'OnlyTypes' as a value.\"(TS2708)입니다. 값을 담지 않은 네임스페이스는 값 칸이 비어 있어 emit도 되지 않습니다.",
         code: "class C { x = 1 } interface C { y: number } namespace C { export const z = 3; }\nconst c = new C(); c.y = 2; C.z;   // 전부 OK\n\ntype Alias = { a: 1 }; interface Alias { b: 2 }\n// Duplicate identifier 'Alias'. (TS2300) ×2 — 타입 별칭은 병합 불가\n\nenum E { A } const e: E = E.A; let eVal = E;   // 타입과 값 둘 다\n\nnamespace OnlyTypes { export type T = string; }\nconst v = OnlyTypes;\n// Cannot use namespace 'OnlyTypes' as a value. (TS2708) — 값 칸이 비어 있다",
       },
       {
         label: "조합 규칙과 export = 의 자리",
-        body: "문서의 규칙(의역) — 값은 값과 충돌한다(네임스페이스로 선언된 것 제외), 타입 별칭은 타입과 충돌한다, 네임스페이스는 절대 충돌하지 않는다. 그래서 '함수 + 네임스페이스'(속성 붙이기), '클래스 + 네임스페이스'(중첩 타입), '클래스 + 인터페이스'(멤버 패치), 'enum + 네임스페이스'(메서드)가 선언 파일 템플릿들의 재료가 됩니다. `export = X`는 'X라는 이름이 가진 모든 칸을 모듈 전체로 내보낸다'입니다 — `export = greet`에서 greet이 함수(값)이자 네임스페이스(타입 Opts를 담음)이면 소비자는 `greet()`과 `greet.Opts` 둘 다 받습니다(함수 템플릿 시트에서 실제로 확인).",
+        body: "문서의 규칙을 의역하면 이렇습니다. 값은 값과 충돌합니다(네임스페이스로 선언된 것 제외). 타입 별칭은 타입과 충돌합니다. 네임스페이스는 절대 충돌하지 않습니다. 그래서 '함수 + 네임스페이스'(속성 붙이기), '클래스 + 네임스페이스'(중첩 타입), '클래스 + 인터페이스'(멤버 패치), 'enum + 네임스페이스'(메서드)가 선언 파일 템플릿들의 재료가 됩니다. `export = X`는 'X라는 이름이 가진 모든 칸을 모듈 전체로 내보낸다'입니다. `export = greet`에서 greet이 함수(값)이자 네임스페이스(타입 Opts를 담음)이면 소비자는 `greet()`과 `greet.Opts` 둘 다 받습니다(함수 템플릿 시트에서 실제로 확인했습니다).",
         code: "// export = 는 이름의 세 칸을 통째로\ndeclare function greet(name: string): string;              // 값\ndeclare namespace greet { const version: string; interface Opts { x: number } }  // 네임스페이스 (값 + 타입)\nexport = greet;\n\n// 소비자\nimport greet = require(\"lib\");\ngreet(\"a\");                   // 값\ngreet.version;                // 네임스페이스의 값\nconst o: greet.Opts = { x: 1 };   // 네임스페이스의 타입",
       },
       {
         label: "문제의 구조: 에러 문구가 '칸' 을 말해 준다",
-        body: "이 장을 알면 몇 에러가 바로 읽힙니다. \"'f' refers to a value, but is being used as a type here. Did you mean 'typeof f'?\"(TS2749) — 값 칸만 있는 이름을 타입 자리에. \"'ReadonlyArray' only refers to a type, but is being used as a value here.\"(TS2693) — 타입 칸만 있는 이름을 값 자리에. \"Cannot use namespace 'X' as a value.\"(TS2708) — 네임스페이스 칸만. \"Duplicate identifier\"(TS2300) — 같은 칸을 둘이 채우려 함. typeof는 값 칸에서 타입 칸으로 건너가는 유일한 다리입니다(typeof 장).",
+        body: "이 장을 알면 몇 에러가 바로 읽힙니다.\n\"'f' refers to a value, but is being used as a type here. Did you mean 'typeof f'?\"(TS2749)는 값 칸만 있는 이름을 타입 자리에 쓴 것입니다.\n\"'ReadonlyArray' only refers to a type, but is being used as a value here.\"(TS2693)는 타입 칸만 있는 이름을 값 자리에 쓴 것입니다.\n\"Cannot use namespace 'X' as a value.\"(TS2708)는 네임스페이스 칸만 있는 이름을 값 자리에 쓴 것입니다.\n\"Duplicate identifier\"(TS2300)는 같은 칸을 둘이 채우려 한 것입니다.\ntypeof는 값 칸에서 타입 칸으로 건너가는 유일한 다리입니다(typeof 장).",
         code: "에러                                                       뜻\n────────────────────────────────────────────────────────  ────────────────────────────\nTS2749 'f' refers to a value, but is being used as a type   값 칸만 → 타입 자리 (typeof f)\nTS2693 'X' only refers to a type, but is being used as a value   타입 칸만 → 값 자리\nTS2708 Cannot use namespace 'X' as a value                 네임스페이스 칸만 → 값 자리\nTS2300 Duplicate identifier 'X'                            같은 칸을 둘이\nTS1361 'X' cannot be used as a value because it was imported using 'import type'   import 가 타입 칸만 가져옴",
         codeLang: "text",
       },
@@ -3468,7 +3468,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 클래스가 만드는 두 칸은 무엇이고, `typeof C`는 어느 칸의 타입인가요? 2) `type A`와 `interface A`가 충돌하는데 `interface A` 둘은 병합되는 이유는? 3) 타입만 든 네임스페이스를 값으로 쓰면 어떤 에러가 나나요? 4) `export = greet`에서 소비자가 받는 것은?",
+        body: "1) 클래스가 만드는 두 칸은 무엇이고, `typeof C`는 어느 칸의 타입인가요?\n2) `type A`와 `interface A`가 충돌하는데 `interface A` 둘은 병합되는 이유는?\n3) 타입만 든 네임스페이스를 값으로 쓰면 어떤 에러가 나나요?\n4) `export = greet`에서 소비자가 받는 것은?",
       },
     ],
     sources: [
@@ -3482,21 +3482,21 @@ export const typescriptTheories: Theory[] = [
     name: "배포하기",
     tagline: "npm 패키지에 .d.ts 를 싸는 법 — types 필드 · dependencies · typesVersions",
     intro:
-      "선언을 세상에 내는 두 길 — 자기 npm 패키지에 함께 넣기, 또는 DefinitelyTyped에 올려 `@types/*`로. 소스에서 생성한 타입이면 패키지에 함께. package.json의 `types`(`typings`와 동의어)가 .d.ts를 가리키고, 선언이 다른 패키지의 타입을 노출하면 그 패키지는 `dependencies`에, `/// <reference path>`는 적신호, TypeScript 버전별로 다른 선언은 `typesVersions`.",
+      "선언을 세상에 내는 길은 둘입니다. 자기 npm 패키지에 함께 넣거나, DefinitelyTyped에 올려 `@types/*`로 배포합니다. 소스에서 생성한 타입이면 패키지에 함께 넣습니다. package.json의 `types`(`typings`와 동의어)가 .d.ts를 가리킵니다. 선언이 다른 패키지의 타입을 노출하면 그 패키지는 `dependencies`에 둡니다. `/// <reference path>`는 적신호입니다. TypeScript 버전별로 다른 선언은 `typesVersions`로 가리킵니다.",
     blocks: [
       {
         label: "types 필드와 dependencies",
-        body: "`\"main\": \"./lib/main.js\", \"types\": \"./lib/main.d.ts\"`. types가 없으면 TypeScript는 main 옆의 `.d.ts`, 그다음 `index.d.ts`를 찾습니다. package.json에 `exports`가 있으면 각 진입점의 `types` 조건이 그 역할을 합니다(모듈 레퍼런스 장의 traceResolution에서 \"Matched 'exports' condition 'types'\"). 선언이 `import { Browserify } from \"browserify\"`처럼 다른 패키지의 타입을 노출하면 `@types/browserify`를 `devDependencies`가 아니라 `dependencies`에 둡니다 — 소비자가 당신의 .d.ts를 읽을 때 그 타입도 필요하니까요. 실제로 `types` 필드 하나만 둔 패키지(`withtypes`)에서 `import { count }`가 그 선언으로 검사됐습니다.",
-        code: "// package.json\n{\n  \"name\": \"awesome\",\n  \"main\": \"./lib/main.js\",\n  \"types\": \"./lib/main.d.ts\",            // 또는 exports[\".\"].types\n  \"dependencies\": { \"@types/browserify\": \"latest\" }   // .d.ts 가 노출하는 타입의 패키지\n}\n\n// exports 가 있으면\n\"exports\": { \".\": { \"types\": \"./dist/index.d.ts\", \"import\": \"./dist/index.js\", \"require\": \"./dist/index.cjs\" } }",
+        body: "`\"main\": \"./lib/main.js\", \"types\": \"./lib/main.d.ts\"`처럼 적습니다. types가 없으면 TypeScript는 main 옆의 `.d.ts`, 그다음 `index.d.ts`를 찾습니다. package.json에 `exports`가 있으면 각 진입점의 `types` 조건이 그 역할을 합니다(모듈 레퍼런스 장의 traceResolution에서 \"Matched 'exports' condition 'types'\"). 선언이 `import { Browserify } from \"browserify\"`처럼 다른 패키지의 타입을 노출하면 `@types/browserify`를 `devDependencies`가 아니라 `dependencies`에 둡니다. 소비자가 당신의 .d.ts를 읽을 때 그 타입도 필요하기 때문입니다. 실제로 `types` 필드 하나만 둔 패키지(`withtypes`)에서 `import { count }`가 그 선언으로 검사됐습니다.",
+        code: "// package.json\n{\n  \"name\": \"awesome\",\n  \"main\": \"./lib/main.js\",\n  \"types\": \"./lib/main.d.ts\",            // 또는 exports[\".\"].types\n  \"dependencies\": { \"@types/browserify\": \"latest\" }   // .d.ts 가 노출하는 타입의 패키지\n}\n\n// exports 가 있으면\n\"exports\": { \".\": { \"types\": \"./dist/index.d.ts\", \"import\": \"./dist/index.js\", \"require\":\n  \"./dist/index.cjs\" } }",
       },
       {
         label: "실제로 돌려 보면: typesVersions 로 TS 버전별 선언",
-        body: "`\"typesVersions\": { \">=3.1\": { \"*\": [\"ts3.1/*\"] } }`처럼 TypeScript 버전 범위마다 다른 폴더를 가리킵니다. 범위는 Node semver, 먼저 맞는 것이 이기므로 순서가 중요합니다(문서의 코드 주석: 거꾸로 두면 \"NOTE: this doesn't work!\"). 파일 단위 리다이렉트(`\"<4.0\": { \"index.d.ts\": [\"index.v3.d.ts\"] }`)도 됩니다. 실제로 `types: ts4/index.d.ts`와 `typesVersions: { \">=6.0\": { \"*\": [\"ts6/*\"] } }`를 둔 패키지에서 7.0.2는 ts6/의 선언(`which: \"ts6\"`)을 읽었습니다. 문서의 주의 — '리다이렉트는 패키지의 외부 API에만 영향을 준다'(패키지 내부 import는 그대로).",
+        body: "`\"typesVersions\": { \">=3.1\": { \"*\": [\"ts3.1/*\"] } }`처럼 TypeScript 버전 범위마다 다른 폴더를 가리킵니다. 범위는 Node semver입니다. 먼저 맞는 것이 이기므로 순서가 중요합니다(문서의 코드 주석: 거꾸로 두면 \"NOTE: this doesn't work!\"). 파일 단위 리다이렉트(`\"<4.0\": { \"index.d.ts\": [\"index.v3.d.ts\"] }`)도 됩니다. 실제로 `types: ts4/index.d.ts`와 `typesVersions: { \">=6.0\": { \"*\": [\"ts6/*\"] } }`를 둔 패키지에서 7.0.2는 ts6/의 선언(`which: \"ts6\"`)을 읽었습니다. 문서의 주의는 '리다이렉트는 패키지의 외부 API에만 영향을 준다'입니다(패키지 내부 import는 그대로입니다).",
         code: "// node_modules/tv/package.json\n{ \"types\": \"ts4/index.d.ts\", \"typesVersions\": { \">=6.0\": { \"*\": [\"ts6/*\"] } } }\n// ts4/index.d.ts: export declare const which: \"ts4\";\n// ts6/index.d.ts: export declare const which: \"ts6\";\n\nimport { which } from \"tv\";\nconst w: \"ts4\" = which;\n// Type '\"ts6\"' is not assignable to type '\"ts4\"'.   ← 7.0.2 가 ts6/ 를 골랐다",
       },
       {
         label: "적신호와 DefinitelyTyped",
-        body: "적신호 — `/// <reference path=\"…\" />`를 쓰지 말고 `/// <reference types=\"…\" />`를. 의존 패키지의 .d.ts를 복사하거나 합쳐 넣지 말고 npm 타입 패키지에 의존하기. 라이브러리 소스가 TypeScript가 아니고 타입을 직접 관리하지 않는다면 DefinitelyTyped(github.com/DefinitelyTyped/DefinitelyTyped)에 올려 `@types/이름`으로 배포합니다. 이론 장의 경고도 여기 붙습니다 — 손으로 쓴 .d.ts는 '위험하고 실수가 잦다'. 소스가 TypeScript면 `tsc --declaration`이 만들어 주는 것을 그대로 싸는 것이 가장 안전하고, 5.5의 `isolatedDeclarations`는 그 생성을 다른 도구도 할 수 있게 합니다.",
+        body: "적신호는 이렇습니다. `/// <reference path=\"…\" />`를 쓰지 말고 `/// <reference types=\"…\" />`를 씁니다. 의존 패키지의 .d.ts를 복사하거나 합쳐 넣지 말고 npm 타입 패키지에 의존합니다. 라이브러리 소스가 TypeScript가 아니고 타입을 직접 관리하지 않는다면 DefinitelyTyped(github.com/DefinitelyTyped/DefinitelyTyped)에 올려 `@types/이름`으로 배포합니다. 이론 장의 경고도 여기 붙습니다. 손으로 쓴 .d.ts는 '위험하고 실수가 잦다'는 것입니다. 소스가 TypeScript면 `tsc --declaration`이 만들어 주는 것을 그대로 싸는 것이 가장 안전합니다. 5.5의 `isolatedDeclarations`는 그 생성을 다른 도구도 할 수 있게 합니다.",
         code: "적신호                                   대신\n──────────────────────────────────────  ─────────────────────────────────────\n/// <reference path=\"../other/x.d.ts\" />  /// <reference types=\"other\" /> 또는 import\n의존 패키지의 .d.ts 를 복사·병합            dependencies 에 @types/other\n손으로 쓴 .d.ts (소스가 TS 인데)            tsc --declaration (+ isolatedDeclarations)\ndevDependencies 에 노출되는 타입 패키지      dependencies 로",
         codeLang: "text",
       },
@@ -3506,7 +3506,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `types` 필드가 없을 때 TypeScript가 .d.ts를 찾는 순서는? 2) 선언이 노출하는 타입의 @types 패키지를 dependencies에 두는 이유는? 3) typesVersions의 범위 순서가 중요한 이유는? 4) 적신호 목록의 `/// <reference path>` 대안은?",
+        body: "1) `types` 필드가 없을 때 TypeScript가 .d.ts를 찾는 순서는?\n2) 선언이 노출하는 타입의 @types 패키지를 dependencies에 두는 이유는?\n3) typesVersions의 범위 순서가 중요한 이유는?\n4) 적신호 목록의 `/// <reference path>` 대안은?",
       },
     ],
     sources: [
@@ -3520,7 +3520,7 @@ export const typescriptTheories: Theory[] = [
     name: "가져다 쓰기",
     tagline: "@types 를 받아 쓰는 법 — 그리고 6.0 의 types: []",
     intro:
-      "타입 없는 패키지를 쓸 때 `npm install --save-dev @types/lodash`로 DefinitelyTyped의 선언을 받습니다. 패키지가 자기 선언을 이미 싸고 있으면 @types는 필요 없습니다. 이름은 `@types/` + npm 패키지 이름. 쓰는 법은 `import * as _ from \"lodash\"`, 또는 모듈이 아닌 코드에서 전역 `_`. 없으면 DefinitelyTyped에 기여할 수 있습니다.",
+      "타입 없는 패키지를 쓸 때 `npm install --save-dev @types/lodash`로 DefinitelyTyped의 선언을 받습니다. 패키지가 자기 선언을 이미 싸고 있으면 @types는 필요 없습니다. 이름은 `@types/` + npm 패키지 이름입니다. 쓰는 법은 `import * as _ from \"lodash\"`입니다. 모듈이 아닌 코드에서는 전역 `_`를 씁니다. 선언이 없으면 DefinitelyTyped에 기여할 수 있습니다.",
     blocks: [
       {
         label: "받고 쓰기",
@@ -3529,13 +3529,13 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 6.0 부터 전역 @types 는 자동으로 들어오지 않는다",
-        body: "모듈 @types(`import`로 쓰는 것)는 import할 때 해석되니 그대로 됩니다. 문제는 전역 @types(node·jest·mocha처럼 `process`·`describe`를 전역에 두는 것)입니다. 6.0 전에는 `node_modules/@types/*`가 전부 자동으로 프로그램에 들어왔는데, 6.0부터 `types`의 기본값이 `[]`로 바뀌어 적어 준 것만 들어옵니다. 그래서 `@types/node`를 설치했는데도 `process`가 \"Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\"(TS2591)로 안 보이는 상황이 생기고, 문구의 둘째 절 — 'then add 'node' to the types field' — 이 처방입니다. 옛 동작으로 돌리려면 `\"types\": [\"*\"]`. 실제로 `--typeRoots`로 @types 위치를 알려 준 뒤 `/// <reference types=\"node\" />`가 통과했습니다.",
+        body: "모듈 @types(`import`로 쓰는 것)는 import할 때 해석되니 그대로 됩니다. 문제는 전역 @types(node·jest·mocha처럼 `process`·`describe`를 전역에 두는 것)입니다. 6.0 전에는 `node_modules/@types/*`가 전부 자동으로 프로그램에 들어왔습니다. 6.0부터는 `types`의 기본값이 `[]`로 바뀌어 적어 준 것만 들어옵니다. 그래서 `@types/node`를 설치했는데도 `process`가 \"Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\"(TS2591)로 안 보이는 상황이 생깁니다. 문구의 둘째 절인 'then add 'node' to the types field'가 처방입니다. 옛 동작으로 돌리려면 `\"types\": [\"*\"]`를 둡니다. 실제로 `--typeRoots`로 @types 위치를 알려 준 뒤 `/// <reference types=\"node\" />`가 통과했습니다.",
         code: "// 6.0+ tsconfig — 전역 @types 는 명시\n{ \"compilerOptions\": { \"types\": [\"node\", \"jest\"] } }\n// 옛 동작 (전부 자동)\n{ \"compilerOptions\": { \"types\": [\"*\"] } }\n\n// 설치했는데도 안 보일 때의 문구\nerror TS2591: Cannot find name 'process'. Do you need to install type definitions for node?\n  Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.",
       },
       {
         label: "문제가 나는 경우: 받았는데 안 될 때",
         body: "소비자 쪽에서 자주 보는 증상입니다.",
-        code: "증상                                              원인                                처방\n────────────────────────────────────────────────  ─────────────────────────────────  ───────────────────────────────\nTS7016 Could not find a declaration file…           선언 없음                            @types 설치 · declare module \"x\"\nTS2591 Cannot find name 'process' (설치했는데)        6.0 types: []                        types: [\"node\"]\nTS2688 Cannot find type definition file for 'x'      /// <reference types> 가 @types 못 찾음  설치 · typeRoots\n@types 와 패키지 버전 불일치로 타입 에러              @types 가 옛 API                      @types 버전 맞추기 · 패키지 자체 types 확인\n같은 전역을 두 @types 가 선언 (jest + mocha)          전역 충돌 TS2300                     types 로 하나만\n패키지의 exports 에 types 조건 없음                   TS7016 (JS 는 찾음)                   패키지 이슈 · paths 로 임시",
+        code: "증상                                       원인                         처방\n─────────────────────────────────────────  ──────────────────────────  ───────────────────────────────\nTS7016 Could not find a declaration file…    선언 없음                     @types 설치 · declare module \"x\"\nTS2591 Cannot find name 'process' (설치했는데)  6.0 types: []                 types: [\"node\"]\nTS2688 Cannot find type definition file for 'x'  /// <reference types> 가 @types 못 찾음  설치 · typeRoots\n@types 와 패키지 버전 불일치로 타입 에러       @types 가 옛 API               @types 버전 맞추기 · 패키지 자체 types 확인\n같은 전역을 두 @types 가 선언 (jest + mocha)   전역 충돌 TS2300              types 로 하나만\n패키지의 exports 에 types 조건 없음            TS7016 (JS 는 찾음)            패키지 이슈 · paths 로 임시",
         codeLang: "text",
       },
       {
@@ -3544,7 +3544,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 패키지가 자기 선언을 가질 때 @types가 필요하지 않은 이유는? 2) 6.0에서 `@types/node`를 설치해도 `process`가 안 보이는 이유와 처방은? 3) 모듈 @types와 전역 @types가 6.0 변경에 다르게 영향받는 이유는?",
+        body: "1) 패키지가 자기 선언을 가질 때 @types가 필요하지 않은 이유는?\n2) 6.0에서 `@types/node`를 설치해도 `process`가 안 보이는 이유와 처방은?\n3) 모듈 @types와 전역 @types가 6.0 변경에 다르게 영향받는 이유는?",
       },
     ],
     sources: [
@@ -3576,7 +3576,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 세 스위치로 강도가 갈린다",
-        body: "같은 .js 파일을 세 조건으로 돌렸습니다. `allowJs`만 — 에러 0(변환만). `// @ts-check` 또는 `checkJs` — 타입 에러 보고(실제로 10개). `// @ts-nocheck` — 그 파일만 0. 문서의 '엄격함 사다리' — 추론만 하는 JS → JSDoc → `// @ts-check` → TypeScript → strict TypeScript. 각 단계가 파일 단위로 고를 수 있어서 코드베이스 전체를 한 번에 옮기지 않아도 됩니다. .js에서 JSDoc 타입을 틀리게 적으면 .ts와 같은 번호의 에러가 납니다(TS2322 등) — 검사기는 같고 입력 문법만 다른 것입니다.",
+        body: "같은 .js 파일을 세 조건으로 돌렸습니다.\n`allowJs`만 켜면 에러 0입니다(변환만 합니다).\n`// @ts-check` 또는 `checkJs`를 켜면 타입 에러를 보고합니다(실제로 10개였습니다).\n`// @ts-nocheck`를 붙이면 그 파일만 0입니다.\n\n문서의 '엄격함 사다리'는 추론만 하는 JS → JSDoc → `// @ts-check` → TypeScript → strict TypeScript 순서입니다. 각 단계를 파일 단위로 고를 수 있어서 코드베이스 전체를 한 번에 옮기지 않아도 됩니다. .js에서 JSDoc 타입을 틀리게 적으면 .ts와 같은 번호의 에러가 납니다(TS2322 등). 검사기는 같고 입력 문법만 다른 것입니다.",
         code: "$ npx tsc --noEmit --allowJs b.js                       # @ts-check 없음\n(에러 없음)\n$ npx tsc --noEmit --allowJs --checkJs --strict a.js    # 또는 파일 첫 줄 // @ts-check\na.js(3,42): error TS2322: Type 'number' is not assignable to type 'string'.\na.js(8,98): error TS2554: Expected 0-2 arguments, but got 3.\na.js(10,29): error TS2339: Property 'y' does not exist on type '{ x: number; }'.\n…\n$ npx tsc --noEmit --allowJs --checkJs c.js             # 첫 줄 // @ts-nocheck\n(에러 없음)",
         codeLang: "bash",
       },
@@ -3596,16 +3596,16 @@ export const typescriptTheories: Theory[] = [
     name: "TS를 쓰는 JS 프로젝트",
     tagline: "에디터 지원은 공짜, 검사는 // @ts-check 한 줄부터",
     intro:
-      "JavaScript 프로젝트에 TypeScript를 들이는 가장 낮은 문턱입니다. 에디터의 자동 완성·심벌 이동·이름 바꾸기는 .js에서도 TypeScript가 뒤에서 돌리고 있습니다. 검사를 켜려면 파일 첫 줄에 `// @ts-check`, 프로젝트 전체면 `jsconfig.json`(또는 tsconfig의 checkJs). 특정 파일을 빼려면 `// @ts-nocheck`, 한 줄을 빼려면 앞 줄에 `// @ts-ignore` 또는 `// @ts-expect-error`.",
+      "JavaScript 프로젝트에 TypeScript를 들이는 가장 낮은 문턱입니다. 에디터의 자동 완성·심벌 이동·이름 바꾸기는 .js에서도 TypeScript가 뒤에서 돌리고 있습니다. 검사를 켜려면 파일 첫 줄에 `// @ts-check`를 적습니다. 프로젝트 전체면 `jsconfig.json`(또는 tsconfig의 checkJs)을 둡니다. 특정 파일을 빼려면 `// @ts-nocheck`를 적습니다. 한 줄을 빼려면 앞 줄에 `// @ts-ignore` 또는 `// @ts-expect-error`를 적습니다.",
     blocks: [
       {
         label: "엄격함의 사다리",
-        body: "문서가 그리는 다섯 단계 — (1) 추론만 하는 JS: 에디터가 타입을 추론해 자동 완성에 쓰지만 에러는 없음. (2) JSDoc: 주석으로 타입을 알려 줘 추론을 돕되 아직 에러 없음(`/** @type {number} */ var x; x = false; // OK?!`). (3) `// @ts-check`: 그 파일에서 에러 보고 시작 — \"Type 'boolean' is not assignable to type 'number'.\"(TS2322). (4) TypeScript: 파일을 .ts로. (5) strict. 문서의 한 줄 — JS 프로젝트에서는 '기본으로는 검사하지 않는다'. 켜야 켜집니다.",
+        body: "문서가 그리는 단계는 다섯입니다.\n(1) 추론만 하는 JS입니다. 에디터가 타입을 추론해 자동 완성에 쓰지만 에러는 없습니다.\n(2) JSDoc입니다. 주석으로 타입을 알려 줘 추론을 돕되 아직 에러는 없습니다(`/** @type {number} */ var x; x = false; // OK?!`).\n(3) `// @ts-check`입니다. 그 파일에서 에러 보고가 시작됩니다. \"Type 'boolean' is not assignable to type 'number'.\"(TS2322)가 그 예입니다.\n(4) TypeScript입니다. 파일을 .ts로 바꿉니다.\n(5) strict입니다.\n\n문서의 한 줄은 JS 프로젝트에서는 '기본으로는 검사하지 않는다'입니다. 켜야 켜집니다.",
         code: "// 2단계 — JSDoc 만, 검사 없음\n/** @type {number} */\nvar x;\nx = 0;      // OK\nx = false;  // OK?!  ← 에러가 아니다\n\n// 3단계 — 첫 줄에 추가\n// @ts-check\n/** @type {number} */\nvar x;\nx = false;  // Type 'boolean' is not assignable to type 'number'. (TS2322)",
       },
       {
         label: "실제로 돌려 보면: 세 지시어 주석",
-        body: "`// @ts-check`는 파일을 검사에 넣고, `// @ts-nocheck`는 뺍니다(checkJs가 켜져 있어도). `// @ts-ignore`는 다음 줄의 에러를 무조건 무시하고, `// @ts-expect-error`는 다음 줄에 에러가 '있어야' 합니다 — 없으면 \"Unused '@ts-expect-error' directive.\"(TS2578). 실제로 에러가 없는 줄 위의 @ts-expect-error가 정확히 그 문구로 걸렸습니다. 그래서 '언젠가 고쳐질 에러'에는 expect-error가 맞습니다 — 고쳐지면 지시어가 에러가 되어 지우라고 알려 줍니다. ignore는 에러가 사라져도 조용히 남습니다.",
+        body: "`// @ts-check`는 파일을 검사에 넣습니다. `// @ts-nocheck`는 뺍니다(checkJs가 켜져 있어도 그렇습니다). `// @ts-ignore`는 다음 줄의 에러를 무조건 무시합니다. `// @ts-expect-error`는 다음 줄에 에러가 '있어야' 합니다. 없으면 \"Unused '@ts-expect-error' directive.\"(TS2578)가 납니다. 실제로 에러가 없는 줄 위의 @ts-expect-error가 정확히 그 문구로 걸렸습니다. 그래서 '언젠가 고쳐질 에러'에는 expect-error가 맞습니다. 고쳐지면 지시어가 에러가 되어 지우라고 알려 줍니다. ignore는 에러가 사라져도 조용히 남습니다.",
         code: "// @ts-expect-error\nconst okErr = 1;        // 에러가 없는 줄\n// Unused '@ts-expect-error' directive. (TS2578)  ← 지시어 자체가 에러\n\n// @ts-ignore\nconst ignored = undefinedVar;   // 조용히 통과 — 나중에 undefinedVar 가 생겨도 조용히 남는다\n\n// @ts-nocheck   (파일 첫 줄)\n/** @type {number} */ const x = \"s\";   // 아무 말 없음",
       },
       {
@@ -3619,7 +3619,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `/** @type {number} */ var x; x = false`가 에러가 아닌 조건과 에러가 되는 조건은? 2) `@ts-ignore`와 `@ts-expect-error`의 차이와, 어느 쪽이 '고쳐졌음'을 알려 주나요? 3) `allowJs`와 `checkJs`가 각각 하는 일은?",
+        body: "1) `/** @type {number} */ var x; x = false`가 에러가 아닌 조건과 에러가 되는 조건은?\n2) `@ts-ignore`와 `@ts-expect-error`의 차이와, 어느 쪽이 '고쳐졌음'을 알려 주나요?\n3) `allowJs`와 `checkJs`가 각각 하는 일은?",
       },
     ],
     sources: [
@@ -3633,7 +3633,7 @@ export const typescriptTheories: Theory[] = [
     name: "JS 파일 타입 검사",
     tagline: ".ts 와 다른 추론 규칙 — 클래스 속성 · CommonJS · 열린 객체 · 선택적 매개변수",
     intro:
-      "JavaScript는 타입을 적을 자리가 없으니 TypeScript는 .js에서 더 관대하게, 그리고 몇 가지를 다르게 추론합니다. 클래스 속성은 생성자·메서드의 대입에서, 생성자 함수는 클래스처럼, `require`/`module.exports`는 import/export처럼, 클래스·함수·객체 리터럴은 네임스페이스처럼, 객체 리터럴은 열려 있고, null/undefined/[] 초기화는 any, 함수 매개변수는 기본으로 선택적, `arguments`를 쓰면 가변 인자, 지정하지 않은 타입 매개변수는 any.",
+      "JavaScript는 타입을 적을 자리가 없으니 TypeScript는 .js에서 더 관대하게, 그리고 몇 가지를 다르게 추론합니다.\n클래스 속성은 생성자·메서드의 대입에서 추론합니다.\n생성자 함수는 클래스처럼 봅니다.\n`require`/`module.exports`는 import/export처럼 봅니다.\n클래스·함수·객체 리터럴은 네임스페이스처럼 봅니다.\n객체 리터럴은 열려 있습니다.\nnull/undefined/[] 초기화는 any입니다.\n함수 매개변수는 기본으로 선택적입니다.\n`arguments`를 쓰면 가변 인자입니다.\n지정하지 않은 타입 매개변수는 any입니다.",
     blocks: [
       {
         label: "클래스 속성은 대입에서 추론된다",
@@ -3642,8 +3642,8 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 열린 객체 · 매개변수 선택적 · null 은 any",
-        body: "객체 리터럴은 .ts에서는 선언한 모양으로 닫히지만 .js에서는 열려 있습니다 — `const obj = { a: 1 }; obj.b = 2`가 허용됩니다. JSDoc으로 타입을 주면 닫힙니다 — 실제로 `/** @type {{a: number}} */`가 붙은 객체의 `.y = 2`는 \"Property 'y' does not exist on type '{ x: number; }'.\"(TS2339). 함수 매개변수는 JSDoc이 없으면 전부 선택적입니다 — `optionalByDefault(1)`은 OK. 단 '너무 많은 인자는 에러' — 실제로 `optionalByDefault(1, 2, 3)`은 \"Expected 0-2 arguments, but got 3.\"(TS2554). strict에서는 그 매개변수들이 \"Parameter 'a' implicitly has an 'any' type.\"(TS7006)로도 걸립니다. `let nul = null`은 any라 `nul = 1; nul = \"s\"`가 전부 통과(strictNullChecks여도).",
-        code: "const open = { x: 1 }; open.y = 2;          // OK — .js 의 객체 리터럴은 열려 있다\n/** @type {{ a: number }} */\nconst closed = { a: 1 }; closed.y = 2;       // Property 'y' does not exist on type '{ a: number; }'. (TS2339)\n\nfunction optionalByDefault(a, b) { return a + b; }\noptionalByDefault(1);         // OK — 매개변수는 기본 선택적\noptionalByDefault(1, 2, 3);   // Expected 0-2 arguments, but got 3. (TS2554)\n\nlet nul = null; nul = 1; nul = \"s\";   // 전부 OK — null 초기화는 any",
+        body: "객체 리터럴은 .ts에서는 선언한 모양으로 닫히지만 .js에서는 열려 있습니다. `const obj = { a: 1 }; obj.b = 2`가 허용됩니다. JSDoc으로 타입을 주면 닫힙니다. 실제로 `/** @type {{a: number}} */`가 붙은 객체의 `.y = 2`는 \"Property 'y' does not exist on type '{ x: number; }'.\"(TS2339)였습니다. 함수 매개변수는 JSDoc이 없으면 전부 선택적입니다. `optionalByDefault(1)`은 OK입니다. 단 '너무 많은 인자는 에러'입니다. 실제로 `optionalByDefault(1, 2, 3)`은 \"Expected 0-2 arguments, but got 3.\"(TS2554)였습니다. strict에서는 그 매개변수들이 \"Parameter 'a' implicitly has an 'any' type.\"(TS7006)로도 걸립니다. `let nul = null`은 any라 `nul = 1; nul = \"s\"`가 전부 통과합니다(strictNullChecks여도 그렇습니다).",
+        code: "const open = { x: 1 }; open.y = 2;          // OK — .js 의 객체 리터럴은 열려 있다\n/** @type {{ a: number }} */\n// Property 'y' does not exist on type '{ a: number; }'. (TS2339)\nconst closed = { a: 1 }; closed.y = 2;\n\nfunction optionalByDefault(a, b) { return a + b; }\noptionalByDefault(1);         // OK — 매개변수는 기본 선택적\noptionalByDefault(1, 2, 3);   // Expected 0-2 arguments, but got 3. (TS2554)\n\nlet nul = null; nul = 1; nul = \"s\";   // 전부 OK — null 초기화는 any",
       },
       {
         label: "CommonJS · 네임스페이스처럼 쓰이는 것 · 가변 인자 · 제네릭 기본",
@@ -3662,7 +3662,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 메서드에서만 대입한 클래스 속성의 타입은 무엇이 되나요? 2) `.js`의 객체 리터럴이 열려 있다는 뜻과 닫는 방법은? 3) `f(1, 2, 3)`이 `function f(a, b)`에서 에러인데 `f(1)`은 왜 OK인가요? 4) `let x = null`의 타입은?",
+        body: "1) 메서드에서만 대입한 클래스 속성의 타입은 무엇이 되나요?\n2) `.js`의 객체 리터럴이 열려 있다는 뜻과 닫는 방법은?\n3) `f(1, 2, 3)`이 `function f(a, b)`에서 에러인데 `f(1)`은 왜 OK인가요?\n4) `let x = null`의 타입은?",
       },
     ],
     sources: [
@@ -3676,21 +3676,21 @@ export const typescriptTheories: Theory[] = [
     name: "JSDoc 레퍼런스",
     tagline: "지원하는 태그 전부 — 타입 · 클래스 · 문서 · 그 밖",
     intro:
-      "TypeScript가 .js에서 타입으로 읽는 JSDoc 태그의 목록입니다. 문서의 두 전제 — '아래에 명시되지 않은 태그(@async 등)는 아직 지원하지 않는다', 'TypeScript 파일에서는 문서 태그만 지원된다. 나머지는 JavaScript 파일에서만'. 타입 태그(@type·@import·@param·@returns·@typedef·@callback·@template·@satisfies), 클래스 태그(@public/@private/@protected/@readonly·@override·@extends·@implements·@class·@this), 문서 태그(@deprecated·@see·@link), 그 밖(@enum·@author).",
+      "TypeScript가 .js에서 타입으로 읽는 JSDoc 태그의 목록입니다. 문서의 전제는 둘입니다. '아래에 명시되지 않은 태그(@async 등)는 아직 지원하지 않는다'와 'TypeScript 파일에서는 문서 태그만 지원된다. 나머지는 JavaScript 파일에서만'입니다. 태그는 이렇게 묶입니다. 타입 태그(@type·@import·@param·@returns·@typedef·@callback·@template·@satisfies), 클래스 태그(@public/@private/@protected/@readonly·@override·@extends·@implements·@class·@this), 문서 태그(@deprecated·@see·@link), 그 밖(@enum·@author)입니다.",
     blocks: [
       {
         label: "타입 태그",
-        body: "`@type {T}` — 변수·속성에 타입. 중괄호 안은 TypeScript 타입 문법 그대로(유니온·제네릭·import 타입·함수 타입). `@param {T} name`과 `@returns {T}` — 함수 시그니처(`@arg`·`@argument`·`@return`도 됨). `@typedef {…} Name` — 타입 별칭, `@callback Name` — 함수 타입 별칭(매개변수는 @param으로). `@template T` — 제네릭 함수·클래스. `@satisfies {T}`(4.9의 satisfies 연산자) — '값이 타입을 구현한다고 선언하되 값의 타입은 바꾸지 않는다'. `@import { X } from \"mod\"`(5.5) — 타입 전용 import, '실제로 파일을 가져오지는 않는다'. 실제로 `@template T @param {T[]} xs @returns {T}`인 head에 `[1, 2]`를 넘기자 결과가 number로 잡혀 `.toUpperCase()`가 \"Property 'toUpperCase' does not exist on type 'number'.\"였고, `@satisfies {Record<string, number>}`에 `b: \"2\"`를 넣자 \"Type 'string' is not assignable to type 'number'.\"였습니다.",
+        body: "`@type {T}`는 변수·속성에 타입을 줍니다. 중괄호 안은 TypeScript 타입 문법 그대로입니다(유니온·제네릭·import 타입·함수 타입).\n`@param {T} name`과 `@returns {T}`는 함수 시그니처입니다(`@arg`·`@argument`·`@return`도 됩니다).\n`@typedef {…} Name`은 타입 별칭입니다. `@callback Name`은 함수 타입 별칭입니다(매개변수는 @param으로 적습니다).\n`@template T`는 제네릭 함수·클래스입니다.\n`@satisfies {T}`(4.9의 satisfies 연산자)는 '값이 타입을 구현한다고 선언하되 값의 타입은 바꾸지 않는다'입니다.\n`@import { X } from \"mod\"`(5.5)는 타입 전용 import입니다. '실제로 파일을 가져오지는 않는다'고 합니다.\n\n실제로 `@template T @param {T[]} xs @returns {T}`인 head에 `[1, 2]`를 넘기자 결과가 number로 잡혔습니다. 그래서 `.toUpperCase()`가 \"Property 'toUpperCase' does not exist on type 'number'.\"였습니다. `@satisfies {Record<string, number>}`에 `b: \"2\"`를 넣자 \"Type 'string' is not assignable to type 'number'.\"였습니다.",
         code: "/** @typedef {{ id: number, name?: string }} User */\n/** @type {User} */ const u = { id: 1 };\nu.name = 3;   // Type 'number' is not assignable to type 'string'. (TS2322)\n\n/** @template T @param {T[]} xs @returns {T} */\nfunction head(xs) { return xs[0]; }\nconst h = head([1, 2]);   // h: number\nh.toUpperCase();          // Property 'toUpperCase' does not exist on type 'number'. (TS2339)\n\n/** @satisfies {Record<string, number>} */\nconst table = { a: 1, b: \"2\" };   // Type 'string' is not assignable to type 'number'. (TS2322)\n\n/** @import { Opts } from \"./lib\" */   // 5.5 — 타입만, 런타임 import 없음\n/** @param {Opts} o */ function useOpts(o) { return o.x; }",
       },
       {
         label: "클래스 태그",
-        body: "`@public`·`@private`·`@protected` — 접근 제한자(TS2341 \"Property 'identifier' is private and only accessible within class 'Car'.\"). 문서의 주의 — '생성자 함수에서는 동작하지 않는다'(클래스에서만). `@readonly` — 초기화 중에만 쓰기. `@override` — `noImplicitOverride: true`를 켜면 검사. `@extends {Base<T>}`(`@augments`) — 제네릭 기반 클래스의 타입 인자. '@extends는 클래스에서만 동작한다'. `@implements {Iface}` — 인터페이스 구현 검사. `@class`/`@constructor` — 함수를 생성자로 표시, `new` 없이 부르면 \"Value of type 'typeof C' is not callable. Did you mean to include 'new'?\"(TS2348). `@this {T}` — 함수 안 this의 타입. 생성자 함수 관련 에러 메시지는 'JSConfig와 checkJs가 켜진 JS 코드베이스에서만' 보입니다.",
+        body: "`@public`·`@private`·`@protected`는 접근 제한자입니다(TS2341 \"Property 'identifier' is private and only accessible within class 'Car'.\"). 문서의 주의는 '생성자 함수에서는 동작하지 않는다'입니다(클래스에서만 됩니다).\n`@readonly`는 초기화 중에만 쓸 수 있게 합니다.\n`@override`는 `noImplicitOverride: true`를 켜면 검사합니다.\n`@extends {Base<T>}`(`@augments`)는 제네릭 기반 클래스의 타입 인자를 줍니다. '@extends는 클래스에서만 동작한다'고 합니다.\n`@implements {Iface}`는 인터페이스 구현을 검사합니다.\n`@class`/`@constructor`는 함수를 생성자로 표시합니다. `new` 없이 부르면 \"Value of type 'typeof C' is not callable. Did you mean to include 'new'?\"(TS2348)입니다.\n`@this {T}`는 함수 안 this의 타입입니다.\n\n생성자 함수 관련 에러 메시지는 'JSConfig와 checkJs가 켜진 JS 코드베이스에서만' 보입니다.",
         code: "class Car {\n  constructor() {\n    /** @private */\n    this.identifier = 100;\n  }\n}\nnew Car().identifier;\n// Property 'identifier' is private and only accessible within class 'Car'. (TS2341)\n\n/** @extends {Set<string>} */\nclass SortableSet extends Set {}   // 기반의 타입 인자를 알린다\n\n/** @constructor */\nfunction C() {}\nconst c = C();\n// Value of type 'typeof C' is not callable. Did you mean to include 'new'? (TS2348)",
       },
       {
         label: "문서 태그와 그 밖, 그리고 지원하지 않는 것",
-        body: "`@deprecated` — 에디터가 취소선을 그림(.ts에서도), `@see`·`@link` — 다른 심벌로 링크(.ts에서도). `@enum {T}` — 객체 리터럴의 모든 멤버가 그 타입임을 선언, '다른 멤버를 허용하지 않음', TypeScript enum과 달리 값이 어떤 타입이든 됨. `@author`. 지원하지 않는 것 — `@memberof`·`@yields`·`@member` 등 목록에 없는 태그는 무시되고, Closure의 후위 `=`(`{string=}`)는 속성을 선택적으로 만들지 않으며, nullable 타입(`?string`)은 strictNullChecks가 켜져야 의미가 있습니다.",
+        body: "`@deprecated`는 에디터가 취소선을 그립니다(.ts에서도 됩니다). `@see`·`@link`는 다른 심벌로 링크합니다(.ts에서도 됩니다).\n`@enum {T}`는 객체 리터럴의 모든 멤버가 그 타입임을 선언합니다. '다른 멤버를 허용하지 않음'이며, TypeScript enum과 달리 값이 어떤 타입이든 됩니다.\n`@author`도 지원합니다.\n\n지원하지 않는 것도 있습니다. `@memberof`·`@yields`·`@member` 등 목록에 없는 태그는 무시됩니다. Closure의 후위 `=`(`{string=}`)는 속성을 선택적으로 만들지 않습니다. nullable 타입(`?string`)은 strictNullChecks가 켜져야 의미가 있습니다.",
         code: "/** @deprecated use newFn */\nfunction oldFn() {}\noldFn();   // 에디터: 취소선 (.ts 에서도)\n\n/** @enum {number} */\nconst JSDocState = { BeginningOfLine: 0, SawAsterisk: 1, SavingComments: 2 };\n\n태그 분류                .js       .ts\n─────────────────────  ────────  ────────\n타입 태그 (@type …)      ✓         ✗\n클래스 태그 (@private …) ✓         ✗\n문서 태그 (@deprecated·@see·@link)  ✓   ✓\n미등록 태그 (@async·@memberof)       무시",
       },
       {
@@ -3701,11 +3701,11 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "다음 입구",
-        body: "JSDoc으로 적은 타입은 `.d.ts`로 뽑아낼 수 있습니다 — 다음 장 JS에서 d.ts 만들기. @satisfies의 .ts 쪽 짝은 참고서 타입 추론 시트의 satisfies, @import의 .ts 쪽 짝은 핸드북 모듈 장의 `import type`입니다.",
+        body: "JSDoc으로 적은 타입은 `.d.ts`로 뽑아낼 수 있습니다. 다음 장 JS에서 d.ts 만들기가 그 이야기입니다. @satisfies의 .ts 쪽 짝은 참고서 타입 추론 시트의 satisfies입니다. @import의 .ts 쪽 짝은 핸드북 모듈 장의 `import type`입니다.",
       },
       {
         label: "확인 질문",
-        body: "1) `@template T`로 적은 함수에 `[1, 2]`를 넘기면 반환 타입이 어떻게 추론되나요? 2) `@satisfies`가 `@type`과 다른 점은? 3) .ts 파일에서도 동작하는 태그 묶음은? 4) `as` 단언을 .js에서 흉내 내는 방법은?",
+        body: "1) `@template T`로 적은 함수에 `[1, 2]`를 넘기면 반환 타입이 어떻게 추론되나요?\n2) `@satisfies`가 `@type`과 다른 점은?\n3) .ts 파일에서도 동작하는 태그 묶음은?\n4) `as` 단언을 .js에서 흉내 내는 방법은?",
       },
     ],
     sources: [
@@ -3720,7 +3720,7 @@ export const typescriptTheories: Theory[] = [
     name: "JS에서 d.ts 만들기",
     tagline: "JSDoc 이 있는 .js 에서 tsc 가 선언 파일을 뽑아낸다",
     intro:
-      "3.7부터 'JSDoc 문법을 쓴 JavaScript에서 .d.ts 파일을 생성하는 지원'이 있습니다. tsconfig에 `allowJs`·`declaration`·`emitDeclarationOnly`·`outDir`(선택으로 `declarationMap`)을 두거나, CLI로 `tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types`. package.json의 `types`가 생성된 파일을 가리키고, 테스트는 tsd나 TSTyche로.",
+      "3.7부터 'JSDoc 문법을 쓴 JavaScript에서 .d.ts 파일을 생성하는 지원'이 있습니다. tsconfig에 `allowJs`·`declaration`·`emitDeclarationOnly`·`outDir`(선택으로 `declarationMap`)을 둡니다. CLI로는 `tsc src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir types`입니다. package.json의 `types`가 생성된 파일을 가리킵니다. 테스트는 tsd나 TSTyche로 합니다.",
     blocks: [
       {
         label: "설정과 명령",
@@ -3735,7 +3735,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "package.json 과 테스트",
-        body: "소비자가 선언을 찾는 순서는 `types` → `main` 옆 → `index.d.ts`. 생성 위치를 `\"types\": \"./dist/main.d.ts\"`로 가리킵니다(배포 장). 생성된 선언이 뜻대로인지는 타입 테스트 도구로 — 문서가 드는 것은 tsd와 TSTyche. 그리고 선언이 어긋나지 않게 하려면 소스 쪽에서 `// @ts-check`나 `checkJs`로 JSDoc 자체가 검사되게 두는 것이 짝입니다 — JSDoc이 틀리면 .d.ts도 틀립니다.",
+        body: "소비자가 선언을 찾는 순서는 `types` → `main` 옆 → `index.d.ts`입니다. 생성 위치를 `\"types\": \"./dist/main.d.ts\"`로 가리킵니다(배포 장). 생성된 선언이 뜻대로인지는 타입 테스트 도구로 확인합니다. 문서가 드는 것은 tsd와 TSTyche입니다. 그리고 선언이 어긋나지 않게 하려면 소스 쪽에서 `// @ts-check`나 `checkJs`로 JSDoc 자체가 검사되게 두는 것이 짝입니다. JSDoc이 틀리면 .d.ts도 틀립니다.",
         code: "{\n  \"name\": \"my-js-lib\",\n  \"main\": \"./src/main.js\",\n  \"types\": \"./dist/main.d.ts\"\n}\n\n// 선언 테스트 (tsd)\nimport { expectType } from \"tsd\";\nimport { greet } from \"./dist/main\";\nexpectType<string>(greet(\"x\"));",
       },
       {
@@ -3744,7 +3744,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `.js`에서 `.d.ts`만 만들 때 켜는 옵션 셋은? 2) `set(x: any)`가 된 이유는? 3) 생성된 선언을 소비자가 찾게 하는 package.json 필드는? 4) JSDoc에서 생성한 선언이 소스와 어긋나지 않게 하는 짝 설정은?",
+        body: "1) `.js`에서 `.d.ts`만 만들 때 켜는 옵션 셋은?\n2) `set(x: any)`가 된 이유는?\n3) 생성된 선언을 소비자가 찾게 하는 package.json 필드는?\n4) JSDoc에서 생성한 선언이 소스와 어긋나지 않게 하는 짝 설정은?",
       },
     ],
     sources: [
@@ -3774,13 +3774,13 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "실제로 돌려 보면: 7.0 의 tsconfig 는 짧아졌고, 옛 옵션은 에러다",
-        body: "6.0이 기본값을 바꾸고 7.0이 폐기 옵션을 제거하면서 이 섹션의 사실이 많이 바뀌었습니다. `strict`는 기본 true, `module`은 esnext, `target`은 es2025, `types`는 `[]`, `rootDir`는 `.`. 그래서 `tsc --init`이 만드는 파일이 열다섯 줄입니다(5.9부터). 거꾸로 옛 tsconfig의 `target: es5`·`moduleResolution: node`·`baseUrl`·`outFile`·`downlevelIteration`·`esModuleInterop: false`는 전부 \"Option '…' has been removed. Please remove it from your configuration.\"로 멈춥니다. 그리고 6.0의 새 에러 — tsconfig가 있는 폴더에서 파일을 명시해 tsc를 부르면 \"tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.\"(TS5112). 옛 글의 설정을 복사할 때 이 표를 먼저 보면 됩니다.",
-        code: "6.0 기본값 변경              7.0 제거 (적으면 TS5102/TS5108)\n──────────────────────────  ─────────────────────────────────────────\nstrict: true                target: es5\nmodule: esnext              module: amd · umd · system · none\ntarget: es2025 (그해 ES)     moduleResolution: classic · node (node10)\ntypes: []                   baseUrl\nrootDir: .                  outFile\nnoUncheckedSideEffectImports: true   downlevelIteration\nlibReplacement: false       esModuleInterop: false · alwaysStrict: false\n\n$ npx tsc --noEmit a.ts     # tsconfig 가 있는 폴더에서\nerror TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.",
+        body: "6.0이 기본값을 바꾸고 7.0이 폐기 옵션을 제거하면서 이 섹션의 사실이 많이 바뀌었습니다. `strict`는 기본 true입니다. `module`은 esnext, `target`은 es2025, `types`는 `[]`, `rootDir`는 `.`입니다. 그래서 `tsc --init`이 만드는 파일이 열다섯 줄입니다(5.9부터). 거꾸로 옛 tsconfig의 `target: es5`·`moduleResolution: node`·`baseUrl`·`outFile`·`downlevelIteration`·`esModuleInterop: false`는 전부 \"Option '…' has been removed. Please remove it from your configuration.\"로 멈춥니다. 그리고 6.0의 새 에러가 있습니다. tsconfig가 있는 폴더에서 파일을 명시해 tsc를 부르면 \"tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.\"(TS5112)가 납니다. 옛 글의 설정을 복사할 때 이 표를 먼저 보면 됩니다.",
+        code: "6.0 기본값 변경              7.0 제거 (적으면 TS5102/TS5108)\n──────────────────────────  ─────────────────────────────────────────\nstrict: true                target: es5\nmodule: esnext              module: amd · umd · system · none\ntarget: es2025 (그해 ES)     moduleResolution: classic · node (node10)\ntypes: []                   baseUrl\nrootDir: .                  outFile\nnoUncheckedSideEffectImports: true   downlevelIteration\nlibReplacement: false       esModuleInterop: false · alwaysStrict: false\n\n$ npx tsc --noEmit a.ts     # tsconfig 가 있는 폴더에서\nerror TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use\n'--ignoreConfig' to skip this error.",
         codeLang: "text",
       },
       {
         label: "다음 입구",
-        body: "tsconfig.json이란 → TSConfig 레퍼런스 → tsc CLI 순서로 읽고, 저장소가 여러 패키지면 프로젝트 참조, 번들러를 쓰면 빌드 도구 연동, 개발 중 재컴파일은 watch, 다음 버전을 미리 보려면 나이틀리입니다. MSBuild는 .NET 프로젝트에만.",
+        body: "tsconfig.json이란 → TSConfig 레퍼런스 → tsc CLI 순서로 읽습니다. 저장소가 여러 패키지면 프로젝트 참조를 봅니다. 번들러를 쓰면 빌드 도구 연동을 봅니다. 개발 중 재컴파일은 watch입니다. 다음 버전을 미리 보려면 나이틀리입니다. MSBuild는 .NET 프로젝트에만 해당합니다.",
       },
     ],
     sources: [
@@ -3798,7 +3798,7 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "files · include · exclude",
-        body: "`files`는 허용 목록 — 적은 파일이 없으면 에러. 실제로 `\"files\": [\"nope.ts\"]`는 \"File '…/nope.ts' not found. The file is in the program because: Part of 'files' list in tsconfig.json\"(TS6053). `include`는 glob(`*`·`?`·`**/`), 기본값은 files가 있으면 `[]`, 없으면 `**/*`. `exclude`는 include가 찾은 것만 걸러냅니다 — 'exclude된 파일도 import·types·/// <reference>·files로 들어올 수 있다'. 실제로 `exclude: [\"gen\"]`인데 src의 파일이 gen/g.ts를 import하자 g.ts가 프로그램에 들어와 그 안의 타입 에러가 보고됐고, `--listFilesOnly`에 g.ts가 찍혔습니다. exclude 기본값은 node_modules·bower_components·jspm_packages와 outDir.",
+        body: "`files`는 허용 목록입니다. 적은 파일이 없으면 에러입니다. 실제로 `\"files\": [\"nope.ts\"]`는 \"File '…/nope.ts' not found. The file is in the program because: Part of 'files' list in tsconfig.json\"(TS6053)였습니다. `include`는 glob입니다(`*`·`?`·`**/`). 기본값은 files가 있으면 `[]`, 없으면 `**/*`입니다. `exclude`는 include가 찾은 것만 걸러냅니다. 'exclude된 파일도 import·types·/// <reference>·files로 들어올 수 있다'고 합니다. 실제로 `exclude: [\"gen\"]`인데 src의 파일이 gen/g.ts를 import하자 g.ts가 프로그램에 들어와 그 안의 타입 에러가 보고됐습니다. `--listFilesOnly`에도 g.ts가 찍혔습니다. exclude 기본값은 node_modules·bower_components·jspm_packages와 outDir입니다.",
         code: "{ \"files\": [\"nope.ts\"] }\n// error TS6053: File '…/nope.ts' not found.\n//   The file is in the program because:\n//     Part of 'files' list in tsconfig.json\n\n{ \"include\": [\"src\"], \"exclude\": [\"gen\"] }\n// src/s.ts: import { g } from \"../gen/g.js\";\n$ npx tsc -p .\ngen/g.ts(1,14): error TS2322: …        # exclude 했지만 import 로 들어왔다\n$ npx tsc -p . --listFilesOnly | grep -v node_modules\n…/gen/g.ts\n…/src/s.ts",
       },
       {
@@ -3809,12 +3809,12 @@ export const typescriptTheories: Theory[] = [
       {
         label: "TSConfig bases: @tsconfig/*",
         body: "github.com/tsconfig/bases의 패키지들은 런타임별 기본을 줍니다 — `\"extends\": \"@tsconfig/node24/tsconfig.json\"`. 문서의 설명 — '런타임 지원을 대신 처리해 tsconfig.json을 단순하게 한다'. 실제로 `@tsconfig/node24` 24.0.6을 받아 보면 `lib: [es2024, ESNext.Array, …]`, `module: nodenext`, `target: es2024`, `types: [\"node\"]`, `strict`, `esModuleInterop`, `skipLibCheck`, `moduleResolution: node16`이 들어 있습니다. `@tsconfig/strictest` 같은 '검사 최대' 베이스도 있습니다. 베이스가 정한 lib·target이 그 Node 버전이 실제로 지원하는 것이라는 점이 쓸모입니다.",
-        code: "$ npm i -D @tsconfig/node24\n// tsconfig.json\n{ \"extends\": \"@tsconfig/node24/tsconfig.json\", \"include\": [\"src\"] }\n\n// @tsconfig/node24/tsconfig.json (24.0.6)\n{\n  \"compilerOptions\": {\n    \"lib\": [\"es2024\", \"ESNext.Array\", \"ESNext.Collection\", \"ESNext.Error\", \"ESNext.Iterator\", \"ESNext.Promise\"],\n    \"module\": \"nodenext\", \"target\": \"es2024\", \"types\": [\"node\"],\n    \"strict\": true, \"esModuleInterop\": true, \"skipLibCheck\": true, \"moduleResolution\": \"node16\"\n  }\n}",
+        code: "$ npm i -D @tsconfig/node24\n// tsconfig.json\n{ \"extends\": \"@tsconfig/node24/tsconfig.json\", \"include\": [\"src\"] }\n\n// @tsconfig/node24/tsconfig.json (24.0.6)\n{\n  \"compilerOptions\": {\n    \"lib\": [\"es2024\", \"ESNext.Array\", \"ESNext.Collection\", \"ESNext.Error\", \"ESNext.Iterator\",\n      \"ESNext.Promise\"],\n    \"module\": \"nodenext\", \"target\": \"es2024\", \"types\": [\"node\"],\n    \"strict\": true, \"esModuleInterop\": true, \"skipLibCheck\": true, \"moduleResolution\": \"node16\"\n  }\n}",
       },
       {
         label: "문제: 명령줄에 파일을 적으면 tsconfig 가 무시된다 — 6.0 은 그걸 에러로",
         body: "문서의 오래된 규칙 — '명령줄에 입력 파일이 지정되면 tsconfig.json 파일은 무시된다'. `tsc src/index.ts`는 tsconfig의 strict·paths·include 전부를 보지 않고 기본값으로 그 파일만 컴파일합니다. 조용히 다른 설정으로 돌아가는 함정이라 6.0이 에러로 올렸습니다 — 실제로 tsconfig가 있는 폴더에서 `tsc --noEmit a.ts`는 TS5112, `--ignoreConfig`를 붙여야 통과. 파일 하나만 검사하고 싶으면 tsconfig의 include를 좁히거나 `-p`로 다른 설정을 쓰는 것이 맞습니다.",
-        code: "$ ls\na.ts  tsconfig.json\n$ npx tsc --noEmit a.ts\nerror TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use '--ignoreConfig' to skip this error.\n$ npx tsc --noEmit --ignoreConfig a.ts      # '정말 무시하겠다' 를 명시\n(통과 — 기본 옵션으로)",
+        code: "$ ls\na.ts  tsconfig.json\n$ npx tsc --noEmit a.ts\nerror TS5112: tsconfig.json is present but will not be loaded if files are specified on commandline. Use\n  '--ignoreConfig' to skip this error.\n$ npx tsc --noEmit --ignoreConfig a.ts      # '정말 무시하겠다' 를 명시\n(통과 — 기본 옵션으로)",
         codeLang: "bash",
       },
       {
@@ -3823,7 +3823,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) exclude한 폴더의 파일이 프로그램에 들어오는 네 가지 경로는? 2) extends에서 물려받지 않는 유일한 필드는? 3) `tsc --showConfig`가 보여 주는 것은? 4) `tsc a.ts`가 6.0에서 에러인 이유와 우회 플래그는?",
+        body: "1) exclude한 폴더의 파일이 프로그램에 들어오는 네 가지 경로는?\n2) extends에서 물려받지 않는 유일한 필드는?\n3) `tsc --showConfig`가 보여 주는 것은?\n4) `tsc a.ts`가 6.0에서 에러인 이유와 우회 플래그는?",
       },
     ],
     sources: [
@@ -3838,7 +3838,7 @@ export const typescriptTheories: Theory[] = [
     name: "MSBuild 컴파일러 옵션",
     tagline: ".NET 프로젝트가 tsc 를 부르는 두 길 — tsconfig 또는 .csproj 속성",
     intro:
-      "ASP.NET Core 같은 MSBuild 프로젝트에서 TypeScript를 설정하는 페이지입니다. 권장은 tsconfig.json을 두고 그것을 파일 목록과 옵션의 단일 진실로 삼는 것. 대안은 .csproj의 PropertyGroup에 `<TypeScriptNoEmitOnError>true</TypeScriptNoEmitOnError>`처럼 XML 속성으로 적는 것 — 각 속성이 tsc 플래그 하나에 대응하고, 대응이 없는 플래그는 `<TypeScriptAdditionalFlags>`로. `<TypeScriptCompileBlocked>`는 다른 빌드 도구를 쓰면서 VS 편집만 받을 때, `<TypeScriptEnableIncrementalMSBuild>`(4.2)는 증분 빌드. Debug/Release는 조건부 PropertyGroup으로 나눕니다.",
+      "ASP.NET Core 같은 MSBuild 프로젝트에서 TypeScript를 설정하는 페이지입니다. 권장은 tsconfig.json을 두고 그것을 파일 목록과 옵션의 단일 진실로 삼는 것입니다. 대안은 .csproj의 PropertyGroup에 `<TypeScriptNoEmitOnError>true</TypeScriptNoEmitOnError>`처럼 XML 속성으로 적는 것입니다. 각 속성이 tsc 플래그 하나에 대응합니다. 대응이 없는 플래그는 `<TypeScriptAdditionalFlags>`로 적습니다. `<TypeScriptCompileBlocked>`는 다른 빌드 도구를 쓰면서 VS 편집만 받을 때 씁니다. `<TypeScriptEnableIncrementalMSBuild>`(4.2)는 증분 빌드입니다. Debug/Release는 조건부 PropertyGroup으로 나눕니다.",
     blocks: [
       {
         label: "한 문단으로",
@@ -3867,23 +3867,23 @@ export const typescriptTheories: Theory[] = [
       {
         label: "그룹 지도",
         body: "그룹 이름이 '이 옵션이 무엇에 영향을 주는가'를 말해 줍니다. 타입 검사 그룹은 에러의 종류를, 모듈 그룹은 import 해석을, Emit 그룹은 출력 파일을, 상호운용 제약은 '단일 파일 도구와 맞추기'(isolatedModules·verbatimModuleSyntax·isolatedDeclarations·erasableSyntaxOnly·esModuleInterop)를, 하위 호환 그룹은 전부 옛 옵션(importsNotUsedAsValues·preserveValueImports·keyofStringsOnly…)이라 새 프로젝트에서는 볼 일이 없습니다.",
-        code: "그룹                 멤버 (일부)\n──────────────────  ───────────────────────────────────────────────────────────────\n타입 검사 (20)        strict · noImplicitAny · strictNullChecks · strictFunctionTypes · exactOptionalPropertyTypes ·\n                     noUncheckedIndexedAccess · noImplicitOverride · noPropertyAccessFromIndexSignature · useUnknownInCatchVariables ·\n                     noUnusedLocals · noUnusedParameters · noImplicitReturns · noFallthroughCasesInSwitch …\n모듈 (19)            module · moduleResolution · paths · rootDir · rootDirs · types · typeRoots · resolveJsonModule ·\n                     allowImportingTsExtensions · rewriteRelativeImportExtensions · noUncheckedSideEffectImports · customConditions …\nEmit (21)            declaration · declarationMap · emitDeclarationOnly · outDir · sourceMap · noEmit · noEmitOnError ·\n                     removeComments · importHelpers · preserveConstEnums · stripInternal …\nJavaScript 지원      allowJs · checkJs · maxNodeModuleJsDepth\n상호운용 제약 (8)     isolatedModules · verbatimModuleSyntax · isolatedDeclarations · erasableSyntaxOnly · esModuleInterop ·\n                     allowSyntheticDefaultImports · forceConsistentCasingInFileNames · preserveSymlinks\n언어와 환경 (13)      target · lib · jsx · jsxFactory · jsxImportSource · experimentalDecorators · emitDecoratorMetadata ·\n                     useDefineForClassFields · moduleDetection · libReplacement · noLib\n프로젝트 (6)          composite · incremental · tsBuildInfoFile · disableSourceOfProjectReferenceRedirect …\n컴파일러 진단 (9)     explainFiles · listFiles · traceResolution · extendedDiagnostics · generateTrace · noCheck\n완전성               skipLibCheck · skipDefaultLibCheck\n하위 호환 (9)         importsNotUsedAsValues · preserveValueImports · keyofStringsOnly · suppressImplicitAnyIndexErrors … (옛것)",
+        code: "그룹         멤버 (일부)\n──────────  ───────────────────────────────────────────────────────────────\n타입 검사 (20)  strict · noImplicitAny · strictNullChecks · strictFunctionTypes ·\n              exactOptionalPropertyTypes ·\n                     noUncheckedIndexedAccess · noImplicitOverride · noPropertyAccessFromIndexSignature ·\n                     useUnknownInCatchVariables ·\n                     noUnusedLocals · noUnusedParameters · noImplicitReturns ·\n                     noFallthroughCasesInSwitch …\n모듈 (19)            module · moduleResolution · paths · rootDir · rootDirs · types · typeRoots ·\n                    resolveJsonModule ·\n                     allowImportingTsExtensions · rewriteRelativeImportExtensions ·\n                     noUncheckedSideEffectImports · customConditions …\nEmit (21)            declaration · declarationMap · emitDeclarationOnly · outDir · sourceMap · noEmit ·\n                     noEmitOnError ·\n                     removeComments · importHelpers · preserveConstEnums · stripInternal …\nJavaScript 지원      allowJs · checkJs · maxNodeModuleJsDepth\n상호운용 제약 (8)     isolatedModules · verbatimModuleSyntax · isolatedDeclarations · erasableSyntaxOnly ·\n                   esModuleInterop ·\n                     allowSyntheticDefaultImports · forceConsistentCasingInFileNames · preserveSymlinks\n언어와 환경 (13)      target · lib · jsx · jsxFactory · jsxImportSource · experimentalDecorators ·\n                   emitDecoratorMetadata ·\n                     useDefineForClassFields · moduleDetection · libReplacement · noLib\n프로젝트 (6)  composite · incremental · tsBuildInfoFile · disableSourceOfProjectReferenceRedirect …\n컴파일러 진단 (9)  explainFiles · listFiles · traceResolution · extendedDiagnostics · generateTrace · noCheck\n완전성   skipLibCheck · skipDefaultLibCheck\n하위 호환 (9)  importsNotUsedAsValues · preserveValueImports · keyofStringsOnly ·\n             suppressImplicitAnyIndexErrors … (옛것)",
         codeLang: "text",
       },
       {
         label: "실제로 돌려 보면: 자주 보는 옵션의 7.0 기본값",
         body: "6.0의 변경을 반영한 표입니다. 옛 문서나 블로그의 '기본값'은 이 표와 다를 수 있습니다. 실제로 확인한 것 — `--explainFiles`가 \"Default library for target 'ES2025'\"를 찍었고(target 기본), `tsc --init`이 strict 등을 명시적으로 적었고, `types: []` 때문에 @types/node가 자동으로 안 들어와 TS2591이 났고, `noUncheckedSideEffectImports`가 켜져 있어 `import \"./missing.css\"`가 TS2882였습니다(false로 끄자 통과).",
-        code: "옵션                          7.0 기본값                      한 줄\n───────────────────────────  ─────────────────────────────  ──────────────────────────────────────\nstrict                        true (6.0+)                     strict 묶음 전부\nnoImplicitAny · strictNullChecks  true (strict)               추론 실패 any 에러 · null 구분\nuseUnknownInCatchVariables    true (strict)                   catch (e) 의 e 가 unknown\nexactOptionalPropertyTypes    false                           ?: 에 undefined 명시 대입 금지 (TS2375)\nnoUncheckedIndexedAccess      false                           인덱스 읽기에 | undefined\nnoImplicitOverride            false                           override 키워드 강제 (TS4113)\nnoPropertyAccessFromIndexSignature false                      인덱스 시그니처는 [\"k\"] 로 (TS4111)\ntarget                        es2025 (그해 ES, 6.0+)           es5 제거\nmodule                        esnext (6.0+)                   amd·umd·system 제거\nmoduleResolution              module 에서 유도                 classic·node10 제거\nlib                           target 에서 유도 (+dom)           dom 에 dom.iterable 포함 (6.0)\nesModuleInterop               true (node16+/preserve 암묵, false 불가)\nverbatimModuleSyntax          false                           켜면 isolatedModules 도 true\nisolatedDeclarations          false (5.5)                     declaration 필요\nerasableSyntaxOnly            false (5.8)                     enum·namespace(값)·매개변수 속성·import= 금지\nskipLibCheck                  false                           .d.ts 전체 검사 생략\ndeclaration · incremental     composite 면 true, 아니면 false\nnoEmit · noEmitOnError · sourceMap  false\nrootDir                       . (tsconfig 폴더, 6.0+)          이전: 입력 파일의 공통 디렉터리\ntypes                         [] (6.0+)                       이전: @types 전부\nnoUncheckedSideEffectImports  true (6.0+)                     TS2882\nlibReplacement                false (6.0+; 5.8 도입)           @typescript/lib-* 대체 끔\nallowJs                       false (checkJs 면 true)\njsx                           (없음)                           preserve·react·react-native·react-jsx·react-jsxdev\nresolveJsonModule             false (nodenext 는 자동)\nallowImportingTsExtensions    false (rewriteRelativeImportExtensions 면 true)   noEmit/emitDeclarationOnly 필요 (TS5096)",
+        code: "옵션                   7.0 기본값               한 줄\n────────────────────  ──────────────────────  ──────────────────────────────────────\nstrict                 true (6.0+)              strict 묶음 전부\nnoImplicitAny · strictNullChecks  true (strict)        추론 실패 any 에러 · null 구분\nuseUnknownInCatchVariables  true (strict)            catch (e) 의 e 가 unknown\nexactOptionalPropertyTypes  false                    ?: 에 undefined 명시 대입 금지 (TS2375)\nnoUncheckedIndexedAccess  false                    인덱스 읽기에 | undefined\nnoImplicitOverride     false                    override 키워드 강제 (TS4113)\nnoPropertyAccessFromIndexSignature false               인덱스 시그니처는 [\"k\"] 로 (TS4111)\ntarget                 es2025 (그해 ES, 6.0+)    es5 제거\nmodule                 esnext (6.0+)            amd·umd·system 제거\nmoduleResolution       module 에서 유도          classic·node10 제거\nlib                    target 에서 유도 (+dom)    dom 에 dom.iterable 포함 (6.0)\nesModuleInterop        true (node16+/preserve 암묵, false 불가)\nverbatimModuleSyntax   false                    켜면 isolatedModules 도 true\nisolatedDeclarations   false (5.5)              declaration 필요\nerasableSyntaxOnly     false (5.8)              enum·namespace(값)·매개변수 속성·import= 금지\nskipLibCheck           false                    .d.ts 전체 검사 생략\ndeclaration · incremental  composite 면 true, 아니면 false\nnoEmit · noEmitOnError · sourceMap  false\nrootDir                . (tsconfig 폴더, 6.0+)   이전: 입력 파일의 공통 디렉터리\ntypes                  [] (6.0+)                이전: @types 전부\nnoUncheckedSideEffectImports  true (6.0+)              TS2882\nlibReplacement         false (6.0+; 5.8 도입)    @typescript/lib-* 대체 끔\nallowJs                false (checkJs 면 true)\njsx                    (없음)                    preserve·react·react-native·react-jsx·react-jsxdev\nresolveJsonModule      false (nodenext 는 자동)\nallowImportingTsExtensions  false (rewriteRelativeImportExtensions 면 true)  noEmit/emitDeclarationOnly\n                                                                            필요 (TS5096)",
         codeLang: "text",
       },
       {
         label: "엄격함을 더 올리는 다섯 개",
-        body: "strict 밖에 있어 따로 켜야 하는 검사들입니다. `exactOptionalPropertyTypes` — `{ a?: number }`에 `{ a: undefined }`를 넣으면 \"Type '{ a: undefined; }' is not assignable to type 'Opt' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\"(TS2375). `noUncheckedIndexedAccess` — `arr[5]`가 `number | undefined`. `noPropertyAccessFromIndexSignature` — `dict.a` 대신 `dict[\"a\"]`(TS4111). `noImplicitOverride` — 기반에 없는 멤버의 override 금지(TS4113). `noUnusedLocals`·`noUnusedParameters` — 안 쓰는 선언. 5.9의 `tsc --init`은 앞의 둘(exactOptionalPropertyTypes·noUncheckedIndexedAccess)을 기본으로 켜 둡니다. 실제로 전부 이 허브의 다른 시트에서 돌려 받은 문구들입니다.",
+        body: "strict 밖에 있어 따로 켜야 하는 검사들입니다.\n`exactOptionalPropertyTypes`는 `{ a?: number }`에 `{ a: undefined }`를 넣으면 \"Type '{ a: undefined; }' is not assignable to type 'Opt' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\"(TS2375)를 냅니다.\n`noUncheckedIndexedAccess`를 켜면 `arr[5]`가 `number | undefined`가 됩니다.\n`noPropertyAccessFromIndexSignature`는 `dict.a` 대신 `dict[\"a\"]`로 쓰게 합니다(TS4111).\n`noImplicitOverride`는 기반에 없는 멤버의 override를 금지합니다(TS4113).\n`noUnusedLocals`·`noUnusedParameters`는 안 쓰는 선언을 검사합니다.\n5.9의 `tsc --init`은 앞의 둘(exactOptionalPropertyTypes·noUncheckedIndexedAccess)을 기본으로 켜 둡니다. 실제로 전부 이 허브의 다른 시트에서 돌려 받은 문구들입니다.",
         code: "--exactOptionalPropertyTypes\ntype Opt = { a?: number }; const op: Opt = { a: undefined };\n// Type '{ a: undefined; }' is not assignable to type 'Opt' with 'exactOptionalPropertyTypes: true'.\n//   Consider adding 'undefined' to the types of the target's properties. (TS2375)\n\n--noUncheckedIndexedAccess\nconst x: number = [1, 2][5];\n// Type 'number | undefined' is not assignable to type 'number'. (TS2322)\n\n--noPropertyAccessFromIndexSignature\nconst dict: Record<string, number> = {}; dict.a;\n// Property 'a' comes from an index signature, so it must be accessed with ['a']. (TS4111)",
       },
       {
         label: "문제의 구조: 옵션은 네 축 위에 있다",
-        body: "백여 개 옵션은 네 질문으로 정리됩니다. (1) 무엇을 에러로 볼까 — 타입 검사 그룹. (2) import를 어떻게 찾을까 — 모듈 그룹. (3) 무엇을 어디에 쓸까 — Emit 그룹. (4) 어떤 환경을 가정할까 — 언어와 환경(target·lib·jsx). 상호운용 제약은 (3)의 특수 사례('다른 도구가 변환해도 깨지지 않게'), 프로젝트 그룹은 (3)의 묶음 단위, 진단 그룹은 '왜 이렇게 됐나'를 묻는 도구. 어떤 옵션을 만나든 이 네 축 중 어디인지 먼저 놓으면 뜻이 반은 읽힙니다.",
+        body: "백여 개 옵션은 네 질문으로 정리됩니다.\n(1) 무엇을 에러로 볼까요? 타입 검사 그룹입니다.\n(2) import를 어떻게 찾을까요? 모듈 그룹입니다.\n(3) 무엇을 어디에 쓸까요? Emit 그룹입니다.\n(4) 어떤 환경을 가정할까요? 언어와 환경(target·lib·jsx)입니다.\n상호운용 제약은 (3)의 특수 사례입니다('다른 도구가 변환해도 깨지지 않게'). 프로젝트 그룹은 (3)의 묶음 단위입니다. 진단 그룹은 '왜 이렇게 됐나'를 묻는 도구입니다. 어떤 옵션을 만나든 이 네 축 중 어디인지 먼저 놓으면 뜻이 반은 읽힙니다.",
         code: "축                 질문                          그룹\n────────────────  ───────────────────────────  ──────────────────────────────\n① 검사            무엇을 에러로 볼까              타입 검사 (strict …)\n② 해석            import 를 어떻게 찾을까         모듈 (module · moduleResolution · paths …)\n③ 출력            무엇을 어디에 쓸까              Emit · 상호운용 제약 · 프로젝트\n④ 환경            어떤 런타임을 가정할까           언어와 환경 (target · lib · jsx …)\n(도구)            왜 이렇게 됐나                  컴파일러 진단 (explainFiles · traceResolution …)",
         codeLang: "text",
       },
@@ -3893,7 +3893,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 6.0에서 기본값이 바뀐 옵션 일곱 개를 적어 보세요. 2) strict에 포함되지 않아 따로 켜야 하는 검사 셋은? 3) `types: []`가 기본이 되면서 생긴 흔한 에러는? 4) 상호운용 제약 그룹의 옵션들이 공통으로 겨냥하는 것은?",
+        body: "1) 6.0에서 기본값이 바뀐 옵션 일곱 개를 적어 보세요.\n2) strict에 포함되지 않아 따로 켜야 하는 검사 셋은?\n3) `types: []`가 기본이 되면서 생긴 흔한 에러는?\n4) 상호운용 제약 그룹의 옵션들이 공통으로 겨냥하는 것은?",
       },
     ],
     sources: [
@@ -3908,30 +3908,30 @@ export const typescriptTheories: Theory[] = [
     name: "tsc CLI 옵션",
     tagline: "tsc 를 부르는 여섯 모양과 전용 플래그",
     intro:
-      "명령줄에서 tsc를 쓰는 법입니다. 사용 형태 — `tsc`(가장 가까운 tsconfig), `tsc index.ts`, `tsc src/*.ts`, `tsc --project tsconfig.production.json`, `tsc index.js --declaration --emitDeclarationOnly`, `tsc app.ts util.ts --target esnext --outfile index.js`(outFile 제거로 마지막은 더는 안 됨). 전용 플래그 — `--init`, `--build`(`-b`), `--watch`(`-w`), `--showConfig`, `--listFilesOnly`, `--explainFiles`, `--ignoreConfig`(6.0), 7.0의 `--checkers`·`--builders`·`--singleThreaded`.",
+      "명령줄에서 tsc를 쓰는 법입니다. 사용 형태는 다음과 같습니다. `tsc`(가장 가까운 tsconfig), `tsc index.ts`, `tsc src/*.ts`, `tsc --project tsconfig.production.json`, `tsc index.js --declaration --emitDeclarationOnly`, `tsc app.ts util.ts --target esnext --outfile index.js`입니다. outFile이 제거되어 마지막 형태는 더는 안 됩니다. 전용 플래그는 `--init`, `--build`(`-b`), `--watch`(`-w`), `--showConfig`, `--listFilesOnly`, `--explainFiles`, `--ignoreConfig`(6.0), 그리고 7.0의 `--checkers`·`--builders`·`--singleThreaded`입니다.",
     blocks: [
       {
         label: "여섯 모양과 한 규칙",
-        body: "모든 compilerOptions는 `--이름 값` 형태로 명령줄에서도 줄 수 있습니다(`--noEmit`, `--target es2022`, `--module nodenext`). 규칙 하나 — '명령줄에 입력 파일을 적으면 tsconfig.json은 무시된다'. 6.0은 그 상황을 TS5112 에러로 바꾸고 `--ignoreConfig`로만 넘어가게 했습니다. 이 허브의 probe들이 전부 `npx tsc --noEmit --strict --target es2022 … 파일`이었는데 tsconfig가 없는 폴더라 가능했던 것입니다. 모르는 옵션은 \"Unknown compiler option '--nope'.\"(TS5023).",
+        body: "모든 compilerOptions는 `--이름 값` 형태로 명령줄에서도 줄 수 있습니다(`--noEmit`, `--target es2022`, `--module nodenext`). 규칙은 하나입니다. '명령줄에 입력 파일을 적으면 tsconfig.json은 무시된다'입니다. 6.0은 그 상황을 TS5112 에러로 바꾸고 `--ignoreConfig`로만 넘어가게 했습니다. 이 허브의 probe들은 전부 `npx tsc --noEmit --strict --target es2022 … 파일`이었습니다. tsconfig가 없는 폴더라 가능했던 것입니다. 모르는 옵션을 주면 \"Unknown compiler option '--nope'.\"(TS5023)이 나옵니다.",
         code: "$ tsc                                        # 가장 가까운 tsconfig.json\n$ tsc -p tsconfig.production.json            # 지정한 설정\n$ tsc --noEmit                               # 검사만 (CI)\n$ tsc index.ts                               # 파일 지정 → tsconfig 무시 (6.0+: 있으면 TS5112)\n$ tsc --ignoreConfig index.ts                # 무시를 명시\n$ tsc index.js --declaration --emitDeclarationOnly --allowJs   # JS 에서 .d.ts\n$ tsc --nope\nerror TS5023: Unknown compiler option '--nope'.",
         codeLang: "bash",
       },
       {
         label: "실제로 돌려 보면: 진단 플래그 셋",
-        body: "`--showConfig` — 최종 설정을 JSON으로 출력하고 빌드하지 않습니다(extends 합친 결과, include가 찍어낸 files). `--listFilesOnly` — 컴파일에 들어가는 파일 목록만. `--explainFiles` — 각 파일이 왜 들어왔는지. 실제로 `--explainFiles`는 `gen/g.ts`를 \"Imported via \"../gen/g.js\" from file 'src/s.ts'\"로, `src/s.ts`를 \"Matched by include pattern 'src' in 'tsconfig.json'\"으로, lib 파일을 \"Default library for target 'ES2025'\"로 설명했습니다. '왜 이 파일이 검사되지'·'왜 이 전역이 보이지'의 답은 거의 이 플래그에 있습니다. `--traceResolution`은 모듈 하나하나의 해석 과정(모듈 레퍼런스 시트).",
+        body: "`--showConfig`는 최종 설정을 JSON으로 출력하고 빌드하지 않습니다(extends 합친 결과, include가 찍어낸 files).\n`--listFilesOnly`는 컴파일에 들어가는 파일 목록만 출력합니다.\n`--explainFiles`는 각 파일이 왜 들어왔는지 설명합니다.\n실제로 `--explainFiles`는 `gen/g.ts`를 \"Imported via \"../gen/g.js\" from file 'src/s.ts'\"로, `src/s.ts`를 \"Matched by include pattern 'src' in 'tsconfig.json'\"으로, lib 파일을 \"Default library for target 'ES2025'\"로 설명했습니다. '왜 이 파일이 검사되지'·'왜 이 전역이 보이지'의 답은 거의 이 플래그에 있습니다. `--traceResolution`은 모듈 하나하나의 해석 과정을 보여 줍니다(모듈 레퍼런스 시트).",
         code: "$ npx tsc -p . --explainFiles\n…/lib.es2025.full.d.ts\n   Default library for target 'ES2025'\ngen/g.ts\n   Imported via \"../gen/g.js\" from file 'src/s.ts'\nsrc/s.ts\n   Matched by include pattern 'src' in 'tsconfig.json'\n\n$ npx tsc -p . --listFilesOnly | grep -v node_modules\n…/gen/g.ts\n…/src/s.ts",
         codeLang: "bash",
       },
       {
         label: "--init · --build · --watch",
-        body: "`tsc --init`은 tsconfig.json을 만듭니다 — 5.9부터 주석 대신 열다섯 줄의 실제 설정(module nodenext·target esnext·strict·verbatimModuleSyntax·isolatedModules·moduleDetection force·skipLibCheck·noUncheckedIndexedAccess·exactOptionalPropertyTypes·declaration·sourceMap·types []…). 실제로 7.0.2에서 그렇게 나왔습니다. `tsc -b`는 프로젝트 참조를 따라 의존 순서대로 빌드하고 최신이면 건너뜁니다(`--verbose`·`--dry`·`--clean`·`--force`). `tsc -w`는 입력 파일을 감시해 재컴파일합니다(watch 설정 장). 7.0 전용 — `--checkers`(프로젝트당 검사기 수, 기본 4), `--builders`(동시 빌드 프로젝트 수), `--singleThreaded`.",
+        body: "`tsc --init`은 tsconfig.json을 만듭니다. 5.9부터는 주석 대신 열다섯 줄의 실제 설정을 적어 줍니다(module nodenext·target esnext·strict·verbatimModuleSyntax·isolatedModules·moduleDetection force·skipLibCheck·noUncheckedIndexedAccess·exactOptionalPropertyTypes·declaration·sourceMap·types []…). 실제로 7.0.2에서 그렇게 나왔습니다.\n`tsc -b`는 프로젝트 참조를 따라 의존 순서대로 빌드하고 최신이면 건너뜁니다(`--verbose`·`--dry`·`--clean`·`--force`).\n`tsc -w`는 입력 파일을 감시해 재컴파일합니다(watch 설정 장).\n7.0 전용 플래그는 `--checkers`(프로젝트당 검사기 수, 기본 4), `--builders`(동시 빌드 프로젝트 수), `--singleThreaded`입니다.",
         code: "$ npx tsc --init          # 7.0.2 → 15줄의 실제 설정 (5.9+)\n$ npx tsc -b --verbose    # 프로젝트 참조 빌드\n$ npx tsc -b --dry        # 무엇을 빌드할지만\n$ npx tsc -w              # 감시\n\n$ npx tsc --help --all | grep -A1 -E 'checkers|builders|singleThreaded'\n--checkers         Set the number of checkers per project.\n--singleThreaded   Run in single threaded mode.\n--builders         Set the number of projects to build concurrently.",
         codeLang: "bash",
       },
       {
         label: "문제가 나는 경우: 명령줄과 tsconfig 가 어긋날 때",
         body: "자주 보는 혼란입니다.",
-        code: "증상                                         원인                                      처방\n──────────────────────────────────────────  ───────────────────────────────────────  ─────────────────────────\n에디터는 에러인데 tsc 파일이름 은 통과          파일을 적어 tsconfig 가 무시됨 (6.0: TS5112)  tsc -p . 또는 --noEmit\n옵션을 줬는데 효과가 없다                       tsconfig 가 같은 옵션을 덮음? (CLI 가 우선)      --showConfig 로 확인\n파일이 왜 들어왔는지 모른다                     import·types·reference 경로               --explainFiles\n전역 타입이 안 보인다 (6.0+)                   types: []                                 tsconfig types 에 추가\n빌드가 매번 전부 다시                           incremental/composite 없음                 -b 또는 incremental: true",
+        code: "증상                                       원인                                    처방\n────────────────────────────────────────  ─────────────────────────────────────  ─────────────────────────\n에디터는 에러인데 tsc 파일이름 은 통과        파일을 적어 tsconfig 가 무시됨 (6.0: TS5112)  tsc -p . 또는 --noEmit\n옵션을 줬는데 효과가 없다                     tsconfig 가 같은 옵션을 덮음? (CLI 가 우선)    --showConfig 로 확인\n파일이 왜 들어왔는지 모른다                   import·types·reference 경로             --explainFiles\n전역 타입이 안 보인다 (6.0+)                 types: []                               tsconfig types 에 추가\n빌드가 매번 전부 다시                         incremental/composite 없음               -b 또는 incremental: true",
         codeLang: "text",
       },
       {
@@ -3940,7 +3940,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `tsc index.ts`와 `tsc -p .`의 차이는? 2) 파일이 왜 컴파일에 들어왔는지 보는 플래그는? 3) 5.9 이후 `tsc --init`이 만드는 파일의 특징은? 4) 7.0에서 추가된 병렬 관련 플래그 셋은?",
+        body: "1) `tsc index.ts`와 `tsc -p .`의 차이는?\n2) 파일이 왜 컴파일에 들어왔는지 보는 플래그는?\n3) 5.9 이후 `tsc --init`이 만드는 파일의 특징은?\n4) 7.0에서 추가된 병렬 관련 플래그 셋은?",
       },
     ],
     sources: [
@@ -3959,24 +3959,24 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "구조와 composite 의 요구",
-        body: "뿌리에 `files: []`와 references만 가진 '솔루션' tsconfig, 패키지마다 자기 tsconfig. 참조되는 쪽은 `composite: true` — 요구 셋: `declaration`이 켜져야(자동), `rootDir`가 명시되지 않으면 tsconfig 폴더, 그리고 '모든 구현 파일이 include나 files에 맞아야' 합니다(안 그러면 TS6307). 참조하는 쪽은 상대 경로 import가 아니라 참조 프로젝트의 출력 .d.ts를 봅니다. 실제로 core에서 composite를 빼자 app 쪽에서 \"Referenced project '…/core' must have setting \"composite\": true.\"(TS6306), core의 include 밖 파일을 import하자 \"File '…/stray.ts' is not under 'rootDir' '…/src'. 'rootDir' is expected to contain all source files.\"(TS6059)와 \"File '…/stray.ts' is not listed within the file list of project '…'. Projects must list all files or use an 'include' pattern.\"(TS6307)였습니다.",
-        code: "// tsconfig.json (솔루션)\n{ \"files\": [], \"references\": [{ \"path\": \"packages/core\" }, { \"path\": \"packages/app\" }] }\n// packages/core/tsconfig.json\n{ \"compilerOptions\": { \"composite\": true, \"declaration\": true, \"rootDir\": \"src\", \"outDir\": \"dist\", \"module\": \"nodenext\" }, \"include\": [\"src\"] }\n// packages/app/tsconfig.json\n{ \"compilerOptions\": { \"rootDir\": \"src\", \"outDir\": \"dist\", \"module\": \"nodenext\" }, \"include\": [\"src\"], \"references\": [{ \"path\": \"../core\" }] }\n\n// composite 없을 때\n// error TS6306: Referenced project '…/packages/core' must have setting \"composite\": true.",
+        body: "뿌리에는 `files: []`와 references만 가진 '솔루션' tsconfig를 두고, 패키지마다 자기 tsconfig를 둡니다. 참조되는 쪽은 `composite: true`가 필요합니다. 그 요구는 셋입니다.\n`declaration`이 켜져야 합니다(자동).\n`rootDir`가 명시되지 않으면 tsconfig 폴더가 됩니다.\n'모든 구현 파일이 include나 files에 맞아야' 합니다(안 그러면 TS6307).\n참조하는 쪽은 상대 경로 import가 아니라 참조 프로젝트의 출력 .d.ts를 봅니다. 실제로 core에서 composite를 빼자 app 쪽에서 \"Referenced project '…/core' must have setting \"composite\": true.\"(TS6306)가 나왔습니다. core의 include 밖 파일을 import하자 \"File '…/stray.ts' is not under 'rootDir' '…/src'. 'rootDir' is expected to contain all source files.\"(TS6059)와 \"File '…/stray.ts' is not listed within the file list of project '…'. Projects must list all files or use an 'include' pattern.\"(TS6307)이 나왔습니다.",
+        code: "// tsconfig.json (솔루션)\n{ \"files\": [], \"references\": [{ \"path\": \"packages/core\" }, { \"path\": \"packages/app\" }] }\n// packages/core/tsconfig.json\n{ \"compilerOptions\": { \"composite\": true, \"declaration\": true, \"rootDir\": \"src\", \"outDir\": \"dist\",\n  \"module\": \"nodenext\" }, \"include\": [\"src\"] }\n// packages/app/tsconfig.json\n{ \"compilerOptions\": { \"rootDir\": \"src\", \"outDir\": \"dist\", \"module\": \"nodenext\" }, \"include\": [\"src\"],\n  \"references\": [{ \"path\": \"../core\" }] }\n\n// composite 없을 때\n// error TS6306: Referenced project '…/packages/core' must have setting \"composite\": true.",
       },
       {
         label: "실제로 돌려 보면: tsc -b 의 동작",
         body: "`tsc -b --verbose`는 빌드에 든 프로젝트 셋을 나열하고, core가 \"out of date because output file 'packages/core/tsconfig.tsbuildinfo' does not exist\"라 빌드하고, app도 빌드했습니다(app의 타입 에러는 그대로 보고). 두 번째 실행은 core가 \"up to date because newest input 'packages/core/src/index.ts' is older than output 'packages/core/tsconfig.tsbuildinfo'\"로 건너뛰었습니다. `--dry`는 \"A non-dry build would build project '…/packages/app/tsconfig.json'\"만 찍었습니다. 그리고 문서의 주의 — '일반 tsc는 --build 없이는 의존 프로젝트를 빌드하지 않는다'. 실제로 core의 dist를 지우고 `tsc -p packages/app`을 돌리면 \"Output file '…/core/dist/index.d.ts' has not been built from source file '…/core/src/index.ts'.\"(TS6305)입니다. 빌드 모드는 `noEmitOnError`가 켜진 것처럼 동작합니다.",
-        code: "$ npx tsc -b --verbose\nProjects in this build:\n    * packages/core/tsconfig.json\n    * packages/app/tsconfig.json\n    * tsconfig.json\nProject 'packages/core/tsconfig.json' is out of date because output file 'packages/core/tsconfig.tsbuildinfo' does not exist\nBuilding project 'packages/core/tsconfig.json'...\n…\n$ npx tsc -b --verbose     # 두 번째\nProject 'packages/core/tsconfig.json' is up to date because newest input 'packages/core/src/index.ts' is older than output 'packages/core/tsconfig.tsbuildinfo'\n\n$ rm -rf packages/core/dist && npx tsc -p packages/app\nerror TS6305: Output file '…/core/dist/index.d.ts' has not been built from source file '…/core/src/index.ts'.",
+        code: "$ npx tsc -b --verbose\nProjects in this build:\n    * packages/core/tsconfig.json\n    * packages/app/tsconfig.json\n    * tsconfig.json\nProject 'packages/core/tsconfig.json' is out of date because output file\n  'packages/core/tsconfig.tsbuildinfo' does not exist\nBuilding project 'packages/core/tsconfig.json'...\n…\n$ npx tsc -b --verbose     # 두 번째\nProject 'packages/core/tsconfig.json' is up to date because newest input 'packages/core/src/index.ts' is\n  older than output 'packages/core/tsconfig.tsbuildinfo'\n\n$ rm -rf packages/core/dist && npx tsc -p packages/app\nerror TS6305: Output file '…/core/dist/index.d.ts' has not been built from source file\n  '…/core/src/index.ts'.",
         codeLang: "bash",
       },
       {
         label: "플래그와 주의",
-        body: "`tsc -b`의 플래그 — `--verbose`(무엇을 왜 빌드하는지), `--dry`(빌드할 것만 표시), `--clean`(출력 삭제, dry와 함께 가능), `--force`(전부 오래된 것으로 취급), `--watch`(verbose와만 조합). 인자는 의존 순서로 재배열됩니다(`tsc -b foo/prd.tsconfig.json bar`). 주의 — 의존하는 쪽은 빌드된 .d.ts가 필요하니 출력을 커밋하거나 클론 뒤 빌드해야 하고, 체크인한 출력은 소스 관리 조작 뒤 `--force`가 필요할 수 있습니다. `declarationMap`을 켜면 정의로 이동이 .d.ts가 아니라 소스로 갑니다. `outFile`과 `prepend`는 제거됐으니 그 절은 역사입니다. MSBuild는 `<TypeScriptBuildMode>true</TypeScriptBuildMode>`.",
+        body: "`tsc -b`에는 다음 플래그가 있습니다. `--verbose`(무엇을 왜 빌드하는지), `--dry`(빌드할 것만 표시), `--clean`(출력 삭제, dry와 함께 가능), `--force`(전부 오래된 것으로 취급), `--watch`(verbose와만 조합)입니다. 인자는 의존 순서로 재배열됩니다(`tsc -b foo/prd.tsconfig.json bar`). 주의할 점이 있습니다. 의존하는 쪽은 빌드된 .d.ts가 필요하니 출력을 커밋하거나 클론 뒤 빌드해야 합니다. 체크인한 출력은 소스 관리 조작 뒤 `--force`가 필요할 수 있습니다. `declarationMap`을 켜면 정의로 이동이 .d.ts가 아니라 소스로 갑니다. `outFile`과 `prepend`는 제거됐으니 그 절은 역사입니다. MSBuild에서는 `<TypeScriptBuildMode>true</TypeScriptBuildMode>`로 적습니다.",
         code: "tsc -b 플래그    하는 일\n──────────────  ─────────────────────────────────────\n--verbose        무엇을 왜 빌드/건너뛰는지\n--dry            빌드할 프로젝트만 표시\n--clean          출력 삭제 (--dry 와 조합 가능)\n--force          전부 다시\n--watch          감시 (--verbose 와만)\n\n주의: -b 는 noEmitOnError 처럼 동작 · 출력 .d.ts 가 있어야 의존 쪽이 검사됨 · outFile/prepend 제거",
         codeLang: "text",
       },
       {
         label: "문제의 구조: 참조는 '타입 경계' 를 .d.ts 로 고정하는 것이다",
-        body: "하나의 tsconfig로 전부를 보면 모든 파일이 하나의 프로그램이라 어디서든 어디로든 import할 수 있고 변경 하나에 전부 다시 검사됩니다. 참조로 나누면 패키지 경계가 '출력 .d.ts'로 고정됩니다 — 의존하는 쪽은 소스가 아니라 선언을 보고, 선언이 안 바뀌면 다시 검사하지 않습니다(tsbuildinfo). 그래서 빨라지고, 동시에 '환경마다 tsconfig 하나'(모듈 가이드)가 가능해집니다 — DOM 코드와 Node 코드가 다른 lib를 가진 채 한 저장소에. 비용은 '빌드 순서'가 생기는 것이고, 그래서 `-b`가 있습니다. 7.0의 `--builders`는 그 순서 안에서 독립적인 것을 동시에 돌립니다.",
+        body: "하나의 tsconfig로 전부를 보면 모든 파일이 하나의 프로그램입니다. 어디서든 어디로든 import할 수 있고, 변경 하나에 전부 다시 검사됩니다. 참조로 나누면 패키지 경계가 '출력 .d.ts'로 고정됩니다. 의존하는 쪽은 소스가 아니라 선언을 봅니다. 선언이 안 바뀌면 다시 검사하지 않습니다(tsbuildinfo). 그래서 빨라집니다. 동시에 '환경마다 tsconfig 하나'(모듈 가이드)가 가능해집니다. DOM 코드와 Node 코드가 다른 lib를 가진 채 한 저장소에 있을 수 있습니다. 비용은 '빌드 순서'가 생기는 것입니다. 그래서 `-b`가 있습니다. 7.0의 `--builders`는 그 순서 안에서 독립적인 것을 동시에 돌립니다.",
         code: "하나의 tsconfig                   프로젝트 참조\n──────────────────────────────  ──────────────────────────────────────\n전부 하나의 프로그램               패키지마다 프로그램, 경계는 .d.ts\n어디서든 import                   references 에 적은 것만\n변경 → 전부 재검사                 tsbuildinfo 로 오래된 것만 (-b)\nlib·module 하나                   환경마다 다르게\n순서 없음                          의존 순서 (tsc -b 가 정렬 · 7.0 --builders 로 병렬)",
         codeLang: "text",
       },
@@ -3986,7 +3986,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) composite가 요구하는 세 가지는? 2) `tsc -p app`이 의존 프로젝트를 빌드하지 않을 때 나는 에러와 처방은? 3) `tsc -b`가 두 번째 실행에서 core를 건너뛴 근거는? 4) 참조로 나누면 패키지 경계가 무엇으로 바뀌나요?",
+        body: "1) composite가 요구하는 세 가지는?\n2) `tsc -p app`이 의존 프로젝트를 빌드하지 않을 때 나는 에러와 처방은?\n3) `tsc -b`가 두 번째 실행에서 core를 건너뛴 근거는?\n4) 참조로 나누면 패키지 경계가 무엇으로 바뀌나요?",
       },
     ],
     sources: [
@@ -4004,14 +4004,14 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "도구별 한 줄",
-        body: "Babel — `@babel/cli @babel/core @babel/preset-typescript` 설치, `.babelrc`에 `{ \"presets\": [\"@babel/preset-typescript\"] }`. Vite — 기본 지원, 변환만. Webpack — `ts-loader`(또는 babel-loader·esbuild-loader). Rollup — `@rollup/plugin-typescript`, `typescript`와 `tslib`이 peer dependency. Svelte — `svelte-preprocess`. Browserify — tsify(Gulp 튜토리얼). MSBuild·NuGet — Microsoft.TypeScript.MSBuild(MSBuild 장). Grunt·Jspm — 역사.",
+        body: "Babel은 `@babel/cli @babel/core @babel/preset-typescript`를 설치하고 `.babelrc`에 `{ \"presets\": [\"@babel/preset-typescript\"] }`를 적습니다.\nVite는 기본 지원이고 변환만 합니다.\nWebpack은 `ts-loader`를 씁니다(또는 babel-loader·esbuild-loader).\nRollup은 `@rollup/plugin-typescript`를 쓰고, `typescript`와 `tslib`이 peer dependency입니다.\nSvelte는 `svelte-preprocess`입니다.\nBrowserify는 tsify입니다(Gulp 튜토리얼).\nMSBuild·NuGet은 Microsoft.TypeScript.MSBuild입니다(MSBuild 장).\nGrunt·Jspm은 역사입니다.",
         code: "도구          끼우는 것                                검사?\n───────────  ──────────────────────────────────────  ──────\nBabel        @babel/preset-typescript                  ✗\nVite         (기본 지원, esbuild)                       ✗\nWebpack      ts-loader / babel-loader / esbuild-loader  ts-loader 만 선택적 ✓ (transpileOnly 면 ✗)\nRollup       @rollup/plugin-typescript (+ tslib)        플러그인 설정에 따라\nSvelte       svelte-preprocess                          ✗ (svelte-check 따로)\nBrowserify   tsify                                      역사\nMSBuild/NuGet Microsoft.TypeScript.MSBuild              ✓ (tsc 호출)\nGrunt/Jspm   grunt-ts (미관리) / 0.16beta               역사",
         codeLang: "text",
       },
       {
         label: "실제로 돌려 보면: 변환기들은 검사하지 않는다",
         body: "Babel 장에서 본 그대로 — `@babel/preset-typescript`는 타입 에러가 있는 파일을 조용히 변환했습니다. Vite의 esbuild도, Node 24의 타입 벗기기도 같습니다(`process.features.typescript`가 \"strip\"). 그래서 어느 도구를 쓰든 파이프라인에 `tsc --noEmit`이 한 줄 들어가야 타입 에러가 빌드를 막습니다. 7.0이 빨라진 것(8~12배)이 이 한 줄의 비용을 크게 줄였고, `--checkers`로 더 병렬화할 수 있습니다. 변환기가 처리하지 못하는 TypeScript 문법(const enum·namespace·매개변수 속성·import=)은 `erasableSyntaxOnly`로 미리 막고, 파일 단위 변환이 못 하는 import 지우기는 `verbatimModuleSyntax`로 — 둘이 '변환기와 맞추는' 옵션입니다.",
-        code: "# package.json scripts — 분업\n\"build\": \"vite build\",              # 변환 + 번들 (검사 없음)\n\"typecheck\": \"tsc --noEmit\",        # 검사만\n\"ci\": \"npm run typecheck && npm run build\"\n\n# 변환기와 맞추는 옵션\n{ \"compilerOptions\": { \"noEmit\": true, \"verbatimModuleSyntax\": true, \"erasableSyntaxOnly\": true, \"isolatedModules\": true } }",
+        code: "# package.json scripts — 분업\n\"build\": \"vite build\",              # 변환 + 번들 (검사 없음)\n\"typecheck\": \"tsc --noEmit\",        # 검사만\n\"ci\": \"npm run typecheck && npm run build\"\n\n# 변환기와 맞추는 옵션\n{ \"compilerOptions\": { \"noEmit\": true, \"verbatimModuleSyntax\": true, \"erasableSyntaxOnly\": true,\n\"isolatedModules\": true } }",
         codeLang: "text",
       },
       {
@@ -4026,7 +4026,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) Vite 항목의 문장이 다른 모든 변환 도구에 적용되는 이유는? 2) CI에 어떤 한 줄이 있어야 타입 에러가 빌드를 막나요? 3) 7.0으로 바로 갈 수 있는 도구와 7.1을 기다리는 도구의 차이는?",
+        body: "1) Vite 항목의 문장이 다른 모든 변환 도구에 적용되는 이유는?\n2) CI에 어떤 한 줄이 있어야 타입 에러가 빌드를 막나요?\n3) 7.0으로 바로 갈 수 있는 도구와 7.1을 기다리는 도구의 차이는?",
       },
     ],
     sources: [
@@ -4044,12 +4044,12 @@ export const typescriptTheories: Theory[] = [
     blocks: [
       {
         label: "watchOptions 의 여섯 항목",
-        body: "문서의 예 — `watchFile: \"useFsEvents\"`, `watchDirectory: \"useFsEvents\"`, `fallbackPolling: \"dynamicPriority\"`, `synchronousWatchDirectory: true`, `excludeDirectories: [\"**/node_modules\", \"_build\"]`, `excludeFiles: [\"build/fileWhichChangesOften.ts\"]`. watchFile 값 — fixedPollingInterval·priorityPollingInterval·dynamicPriorityPolling·fixedChunkSizePolling·useFsEvents·useFsEventsOnParentDirectory. watchDirectory 값 — useFsEvents·fixedPollingInterval·dynamicPriorityPolling·fixedChunkSizePolling. fallbackPolling 값 — fixedInterval·priorityInterval·dynamicPriority·fixedChunkSize. 실제로 이 블록을 tsconfig에 넣고 `--showConfig`를 돌리면 그대로 받아들여 출력됐습니다.",
+        body: "문서의 예는 이렇습니다. `watchFile: \"useFsEvents\"`, `watchDirectory: \"useFsEvents\"`, `fallbackPolling: \"dynamicPriority\"`, `synchronousWatchDirectory: true`, `excludeDirectories: [\"**/node_modules\", \"_build\"]`, `excludeFiles: [\"build/fileWhichChangesOften.ts\"]`입니다.\nwatchFile 값은 fixedPollingInterval·priorityPollingInterval·dynamicPriorityPolling·fixedChunkSizePolling·useFsEvents·useFsEventsOnParentDirectory입니다.\nwatchDirectory 값은 useFsEvents·fixedPollingInterval·dynamicPriorityPolling·fixedChunkSizePolling입니다.\nfallbackPolling 값은 fixedInterval·priorityInterval·dynamicPriority·fixedChunkSize입니다.\n실제로 이 블록을 tsconfig에 넣고 `--showConfig`를 돌리면 그대로 받아들여 출력됐습니다.",
         code: "{\n  \"compilerOptions\": { … },\n  \"watchOptions\": {\n    \"watchFile\": \"useFsEvents\",\n    \"watchDirectory\": \"useFsEvents\",\n    \"fallbackPolling\": \"dynamicPriority\",\n    \"synchronousWatchDirectory\": true,\n    \"excludeDirectories\": [\"**/node_modules\", \"_build\"],\n    \"excludeFiles\": [\"build/fileWhichChangesOften.ts\"]\n  }\n}",
       },
       {
         label: "폴링과 fs 이벤트",
-        body: "두 방식입니다. 폴링 — 일정 간격으로 파일의 수정 시각을 확인(기본 `fs.watchFile` 250ms). 변경을 놓치지 않지만 파일이 많으면 CPU를 씁니다. 'priority'·'dynamic' 변형은 자주 바뀌는 파일을 더 자주 보고 안 바뀌는 파일은 덜 봅니다. fs 이벤트 — OS가 변경을 알려 줌(`fs.watch`). 싸지만 플랫폼·네트워크 드라이브·컨테이너에 따라 못 받는 경우가 있어 fallbackPolling이 있습니다. 디렉터리 감시는 '네이티브 재귀 감시가 있는 플랫폼(macOS·Windows)'에서는 OS가 하고, 없는 플랫폼(Linux)에서는 TypeScript가 하위 디렉터리를 돌며 등록합니다 — `synchronousWatchDirectory`는 그 등록을 동기적으로 하라는 것. 환경 변수 `TSC_WATCHFILE`(PriorityPollingInterval·DynamicPriorityPolling·UseFsEvents·UseFsEventsWithFallbackDynamicPolling·UseFsEventsOnParentDirectory)·`TSC_WATCHDIRECTORY`·`TSC_NONPOLLING_WATCHER`는 옛 길입니다.",
+        body: "두 방식입니다. 폴링은 일정 간격으로 파일의 수정 시각을 확인합니다(기본 `fs.watchFile` 250ms). 변경을 놓치지 않지만 파일이 많으면 CPU를 씁니다. 'priority'·'dynamic' 변형은 자주 바뀌는 파일을 더 자주 보고 안 바뀌는 파일은 덜 봅니다. fs 이벤트는 OS가 변경을 알려 주는 방식입니다(`fs.watch`). 싸지만 플랫폼·네트워크 드라이브·컨테이너에 따라 못 받는 경우가 있어 fallbackPolling이 있습니다. 디렉터리 감시는 '네이티브 재귀 감시가 있는 플랫폼(macOS·Windows)'에서는 OS가 합니다. 없는 플랫폼(Linux)에서는 TypeScript가 하위 디렉터리를 돌며 등록합니다. `synchronousWatchDirectory`는 그 등록을 동기적으로 하라는 것입니다. 환경 변수 `TSC_WATCHFILE`(PriorityPollingInterval·DynamicPriorityPolling·UseFsEvents·UseFsEventsWithFallbackDynamicPolling·UseFsEventsOnParentDirectory)·`TSC_WATCHDIRECTORY`·`TSC_NONPOLLING_WATCHER`는 옛 길입니다.",
         code: "방식          동작                                   비용           함정\n───────────  ────────────────────────────────────  ────────────  ─────────────────────────────\n폴링          주기적으로 mtime 확인 (기본 250ms)       CPU (파일 수에 비례)   느림 · 배터리\nfs 이벤트     OS 가 알림 (fs.watch)                  거의 없음       네트워크 드라이브 · 일부 컨테이너에서 못 받음\n→ fallbackPolling  이벤트가 안 되면 폴링으로           —              —\n재귀 디렉터리  macOS·Windows 는 네이티브, Linux 는 TS 가 하위를 등록",
         codeLang: "text",
       },
@@ -4065,7 +4065,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) 폴링과 fs 이벤트의 교환 조건은? 2) fallbackPolling은 언제 쓰이나요? 3) Linux에서 디렉터리 감시가 macOS와 다른 점은? 4) `excludeDirectories`에 거의 항상 넣을 것은?",
+        body: "1) 폴링과 fs 이벤트의 교환 조건은?\n2) fallbackPolling은 언제 쓰이나요?\n3) Linux에서 디렉터리 감시가 macOS와 다른 점은?\n4) `excludeDirectories`에 거의 항상 넣을 것은?",
       },
     ],
     sources: [
@@ -4105,7 +4105,7 @@ export const typescriptTheories: Theory[] = [
       },
       {
         label: "확인 질문",
-        body: "1) `typescript@next`의 버전 문자열에 들어 있는 것은? 2) 나이틀리를 설치했는데 에디터의 빨간 줄이 CI와 다를 때 확인할 것은? 3) 나이틀리를 CI에 두지 않는 이유는?",
+        body: "1) `typescript@next`의 버전 문자열에 들어 있는 것은?\n2) 나이틀리를 설치했는데 에디터의 빨간 줄이 CI와 다를 때 확인할 것은?\n3) 나이틀리를 CI에 두지 않는 이유는?",
       },
     ],
     sources: [
