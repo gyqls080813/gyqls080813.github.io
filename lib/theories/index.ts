@@ -118,6 +118,7 @@ import { gitTheories } from "./git";
 import { i18nTheories } from "./i18n";
 import { renderTheories } from "./render";
 import { htmlTheories } from "./html";
+import { htmlTagTheories } from "./htmlTags";
 import { cssTheories } from "./css";
 import { cssRefTheories } from "./cssRef";
 import { bundleTheories } from "./bundle";
@@ -136,6 +137,7 @@ export const theories: Theory[] = [
   ...i18nTheories,
   ...renderTheories,
   ...htmlTheories,
+  ...htmlTagTheories,
   ...cssTheories,
   ...cssRefTheories,
   ...bundleTheories,
