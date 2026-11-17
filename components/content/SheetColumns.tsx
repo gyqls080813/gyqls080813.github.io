@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode, Ref } from "react";
+import { useEffect, useRef, useState, type ReactNode, type Ref } from "react";
 import { useRouter } from "next/navigation";
 import { cx } from "@/lib/util";
 import { CloseIcon, ExpandIcon, PanelIcon, ShrinkIcon } from "../icons";
@@ -31,7 +31,24 @@ export default function SheetColumns({
   scrollRoot?: boolean;
 }) {
   const router = useRouter();
-  const { full, tree: treeOpen, nav: navOpen, toggle } = useSheetView();
+  const { full, tree: treeOpen, nav: navOpen, toggle, drawer, setDrawer } = useSheetView();
+
+  /* 패널이 붙박이로 설 폭인가 — 시트 폭을 지켜본다. 기준은 Sheet.module.css의
+     @container와 같다(트리 640px, 목차 1000px). 좁아서 패널이 접혀 있으면 패널
+     버튼은 같은 내용을 서랍으로 띄운다(SheetDrawers) */
+  const toolbarRef = useRef<HTMLDivElement>(null);
+  const [sheetWidth, setSheetWidth] = useState(Infinity);
+  useEffect(() => {
+    const sheet = toolbarRef.current?.closest("article")?.parentElement;
+    if (!sheet) return;
+    const observer = new ResizeObserver(([entry]) => setSheetWidth(entry.contentRect.width));
+    observer.observe(sheet);
+    return () => observer.disconnect();
+  }, []);
+  const treeDocked = sheetWidth > 640;
+  const navDocked = sheetWidth > 1000;
+  const treeShown = treeDocked ? treeOpen : drawer === "menu";
+  const navShown = navDocked ? navOpen : drawer === "toc";
 
   return (
     <>
@@ -44,31 +61,31 @@ export default function SheetColumns({
         {...(scrollRoot ? { [SHEET_SCROLL_ATTR]: true } : {})}
       >
         {/* 조작은 본문 안에 붙어 다닌다 — 양옆 패널이 닫히면 그 자리가 없어진다 */}
-        <div className={styles.toolbar}>
+        <div ref={toolbarRef} className={styles.toolbar}>
           <button
             type="button"
-            className={cx(styles.control, treeOpen && styles.on)}
-            onClick={() => toggle("tree")}
-            aria-pressed={treeOpen}
-            title={treeOpen ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
-            aria-label={treeOpen ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
+            className={cx(styles.control, treeShown && styles.on)}
+            onClick={() => (treeDocked ? toggle("tree") : setDrawer("menu"))}
+            aria-pressed={treeShown}
+            title={treeShown ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
+            aria-label={treeShown ? "노드 탐색기 닫기" : "노드 탐색기 열기"}
           >
             <PanelIcon side="left" />
           </button>
           <button
             type="button"
-            className={cx(styles.control, navOpen && styles.on)}
-            onClick={() => toggle("nav")}
-            aria-pressed={navOpen}
-            title={navOpen ? "목차 닫기" : "목차 열기"}
-            aria-label={navOpen ? "목차 닫기" : "목차 열기"}
+            className={cx(styles.control, navShown && styles.on)}
+            onClick={() => (navDocked ? toggle("nav") : setDrawer("toc"))}
+            aria-pressed={navShown}
+            title={navShown ? "목차 닫기" : "목차 열기"}
+            aria-label={navShown ? "목차 닫기" : "목차 열기"}
           >
             <PanelIcon side="right" />
           </button>
-          <span className={styles.divider} />
+          <span className={cx(styles.divider, styles.wideOnly)} />
           <button
             type="button"
-            className={styles.control}
+            className={cx(styles.control, styles.wideOnly)}
             onClick={() => toggle("full")}
             aria-pressed={full}
             title={full ? "원래 크기로 (Esc)" : "전체 화면"}

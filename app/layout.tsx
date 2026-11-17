@@ -4,6 +4,7 @@ import "@xyflow/react/dist/style.css";
 import "./globals.css";
 import { SheetViewProvider } from "@/components/content/SheetView";
 import SheetChrome from "@/components/content/SheetChrome";
+import SheetDrawers from "@/components/content/SheetDrawers";
 import { SITE_NAME, THEME_KEY } from "@/lib/site";
 import { cx } from "@/lib/util";
 
@@ -56,6 +57,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             시트가 아닌 곳(그래프 홈, 글 목록)에서는 그냥 지나 보낸다. */}
         <SheetViewProvider>
           <SheetChrome>{children}</SheetChrome>
+          {/* 좁은 화면의 메뉴와 목차 서랍 — 홈과 글 목록에서도 열려야 해서 껍데기 밖에 둔다 */}
+          <SheetDrawers />
         </SheetViewProvider>
       </body>
     </html>

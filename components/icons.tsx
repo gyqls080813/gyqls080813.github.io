@@ -72,6 +72,15 @@ export function PanelIcon({ side }: { side: "left" | "right" }) {
   );
 }
 
+/** 가로줄 셋 — 좁은 화면의 메뉴(노드 탐색기)를 연다 */
+export function MenuIcon() {
+  return (
+    <Icon size={18} strokeWidth={2}>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </Icon>
+  );
+}
+
 export function CloseIcon() {
   return (
     <Icon size={13} strokeWidth={2.2}>

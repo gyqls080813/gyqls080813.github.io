@@ -45,6 +45,12 @@ const ExpandArticle = lazy(loadExpandArticle);
 const FOCUS_ZOOM = 1.35;
 const FOCUS_MS = 520;
 
+/** 휴대폰 첫 화면 — 이 폭 아래에서는 전체 맞춤 대신 읽을 수 있는 배율로 연다 */
+const PHONE_QUERY = "(max-width: 720px)";
+const PHONE_ZOOM = 0.75;
+/** 시작점 노드를 화면 왼쪽에서 이만큼 띄운다(px) */
+const PHONE_LEFT = 16;
+
 const rectOf = (box: DOMRect): Rect => ({
   top: box.top,
   left: box.left,
@@ -112,6 +118,29 @@ export default function GraphHome() {
     const id = window.setTimeout(warm, 1500);
     return () => window.clearTimeout(id);
   }, []);
+
+  /* 휴대폰에서는 그래프 전체를 한 화면에 맞추면 노드가 손톱만 해져 읽지도 누르지도
+     못한다. 그래서 처음에는 시작점(민엽)을 왼쪽에 두고 읽을 수 있는 배율로 연다.
+     옆 갈래는 끌어서 보고, 길을 고르는 일은 상단 바의 메뉴가 맡는다.
+     React Flow가 처음 맞춤(fitView)을 마친 다음에 옮겨야 덮어쓰이지 않는다 */
+  const startReadable = (instance: ReactFlowInstance<GraphFlowNode>) => {
+    if (!window.matchMedia(PHONE_QUERY).matches) return;
+    window.setTimeout(() => {
+      const me = instance.getNode("me");
+      if (!me) return;
+      const { height } = sizeOnScreen(me);
+      const stage = stageRef.current?.getBoundingClientRect();
+      if (!stage) return;
+      instance.setViewport(
+        {
+          x: PHONE_LEFT - me.position.x * PHONE_ZOOM,
+          y: stage.height / 2 - (me.position.y + height / 2) * PHONE_ZOOM,
+          zoom: PHONE_ZOOM,
+        },
+        { duration: 320 },
+      );
+    }, 160);
+  };
 
   /* 노드를 화면 가운데로 옮기고 확대한다 — 이동이 끝나는 데 걸리는 ms를 돌려준다 */
   const moveToNode = (nodeId: string): number => {
@@ -195,7 +224,10 @@ export default function GraphHome() {
           onReady={(instance, graph) => {
             flowRef.current = instance;
             const target = pendingNodeRef.current;
-            if (!target) return;
+            if (!target) {
+              startReadable(instance);
+              return;
+            }
             pendingNodeRef.current = null;
             /* 접힌 갈래 안이면 먼저 편다 — 안 그러면 숨은 노드로 날아간다.
                노드가 한 번 그려진 뒤라야 좌표도 맞다 */

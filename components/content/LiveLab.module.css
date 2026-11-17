@@ -314,3 +314,21 @@
     gap: 6px;
   }
 }
+
+/* 손가락으로 누르는 화면 — 버튼을 키우고, 코드 칸은 16px로 둔다.
+   iOS Safari는 16px보다 작은 입력 칸에 포커스가 가면 화면을 확대해 버린다 */
+@media (pointer: coarse) {
+  .code {
+    font-size: 16px;
+  }
+
+  .buttons button {
+    padding: 9px 14px;
+    font-size: 13.5px;
+  }
+
+  .bar button,
+  .widths button {
+    padding: 6px 12px;
+  }
+}

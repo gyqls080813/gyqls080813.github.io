@@ -29,10 +29,45 @@
   flex: 1;
 }
 
+/* 메뉴 버튼 — 넓은 화면에서는 숨는다. 시트 왼쪽의 노드 탐색기와 그래프가 그 일을 한다 */
+.menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin-left: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: none;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.menu:hover {
+  background: var(--surface-node-hover);
+}
+
+/* 시트 양옆의 포트가 숨는 폭부터 메뉴를 꺼낸다 (Sheet.module.css의 860px과 같은 선) */
+@media (max-width: 860px) {
+  .menu {
+    display: flex;
+  }
+}
+
 /* 휴대폰 폭 — 여백을 줄여 브레드크럼에 자리를 준다 */
 @media (max-width: 600px) {
   .bar {
     gap: 12px;
-    padding: 0 16px;
+    padding: 0 12px 0 16px;
+  }
+}
+
+/* 아주 좁으면 시트에서는 글자 로고를 빼고 그림만 남긴다 — 지금 어디인지(브레드크럼)가 더 급하다 */
+@media (max-width: 480px) {
+  .withCrumb .wordmark {
+    display: none;
   }
 }

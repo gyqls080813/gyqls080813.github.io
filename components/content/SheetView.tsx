@@ -2,12 +2,21 @@
 
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 
+/**
+ * 좁은 화면에서 옆에서 밀려 나오는 서랍 — 메뉴(노드 탐색기)와 목차.
+ * 붙박이 패널(tree, nav)이 들어갈 폭이 없을 때 같은 내용을 화면 위에 띄운다.
+ */
+export type SheetDrawer = "menu" | "toc";
+
 /** 시트를 어떻게 볼 것인가 — 내용이 아니라 보는 방식이라 노드가 바뀌어도 남는다 */
 type SheetView = {
   full: boolean;
   tree: boolean;
   nav: boolean;
   toggle: (which: "full" | "tree" | "nav") => void;
+  /** 지금 열린 서랍. 서랍은 보는 방식이 아니라 잠깐 여는 것이라 주소가 바뀌면 닫힌다 */
+  drawer: SheetDrawer | null;
+  setDrawer: (drawer: SheetDrawer | null) => void;
 };
 
 /** 처음 보는 방식 — 전체 화면은 끄고 양옆 패널은 켠다 */
@@ -24,13 +33,16 @@ const SheetViewContext = createContext<SheetView | null>(null);
  */
 export function SheetViewProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState(INITIAL_VIEW);
+  const [drawer, setDrawer] = useState<SheetDrawer | null>(null);
 
   const value = useMemo<SheetView>(
     () => ({
       ...state,
       toggle: (which) => setState((current) => ({ ...current, [which]: !current[which] })),
+      drawer,
+      setDrawer,
     }),
-    [state],
+    [state, drawer],
   );
 
   return <SheetViewContext.Provider value={value}>{children}</SheetViewContext.Provider>;

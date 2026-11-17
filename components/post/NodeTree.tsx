@@ -176,11 +176,35 @@ function TheoryRow({ id }: { id: string }) {
   );
 }
 
+/** 아래가 있는 줄 전부 — 프로젝트(글을 품는다)와 챕터를 가진 개념 */
+const groupIds = [...projects.map((project) => project.id), ...chaptersOf.keys()];
+
+/** 지금 노드가 들어 있는 갈래들 — 접어 두더라도 이 길은 펴 둔다 */
+function pathTo(id: string): Set<string> {
+  const path = new Set<string>();
+  const post = posts.find((item) => item.id === id);
+  if (post?.project) path.add(post.project);
+  for (let at = parentOf.get(id); at; at = parentOf.get(at)) path.add(at);
+  return path;
+}
+
 /** 글 페이지 좌측의 노드 탐색기 — VS Code 탐색기 문법 */
-export default function NodeTree({ activeNodeId }: { activeNodeId: string }) {
+export default function NodeTree({
+  activeNodeId,
+  compact = false,
+}: {
+  activeNodeId: string;
+  /** 처음에 지금 노드로 가는 길만 펴 둔다 — 휴대폰 서랍처럼 세로가 짧은 곳에서 */
+  compact?: boolean;
+}) {
   /* 처음에는 전부 펴 둔다 — 탐색기는 무엇이 어디 있는지 한눈에 보이는 것이
-     먼저고, 길면 접는 것은 보는 사람이 정한다. */
-  const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(() => new Set());
+     먼저고, 길면 접는 것은 보는 사람이 정한다. 다만 서랍(compact)은 화면이
+     좁고 짧아서, 다 펴면 개념 수백 줄을 넘겨야 원하는 갈래에 닿는다 */
+  const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(() => {
+    if (!compact) return new Set();
+    const open = pathTo(activeNodeId);
+    return new Set(groupIds.filter((id) => !open.has(id)));
+  });
 
   const treeState = useMemo(
     () => ({ collapsed, setCollapsed, activeNodeId }),
