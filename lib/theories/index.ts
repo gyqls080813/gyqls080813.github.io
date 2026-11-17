@@ -25,7 +25,7 @@ export type TheoryNote = {
  * 셸 명령은 bash, 그림(←로 그린 커밋 사슬)이나 충돌 표시처럼 문법이 없는 것은 text —
  * tsx로 칠하면 명령어의 낱말이 식별자·연산자 색으로 흩어진다.
  */
-export type CodeLang = "tsx" | "bash" | "text" | "html";
+export type CodeLang = "tsx" | "bash" | "text" | "html" | "css";
 
 /** 지금 값 한 줄 — expr은 작은 창 안에서 계산하는 자바스크립트 식이다 */
 export type TheoryLabCheck = { label: string; expr: string };
@@ -119,6 +119,7 @@ import { i18nTheories } from "./i18n";
 import { renderTheories } from "./render";
 import { htmlTheories } from "./html";
 import { cssTheories } from "./css";
+import { cssRefTheories } from "./cssRef";
 import { bundleTheories } from "./bundle";
 import { metaTheories } from "./meta";
 
@@ -136,6 +137,7 @@ export const theories: Theory[] = [
   ...renderTheories,
   ...htmlTheories,
   ...cssTheories,
+  ...cssRefTheories,
   ...bundleTheories,
   ...metaTheories,
 ];

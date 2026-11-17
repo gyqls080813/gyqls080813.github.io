@@ -309,7 +309,7 @@ export const techBranches: { root: string; label: string; desc: string; topics: 
   {
     root: "css",
     label: "CSS",
-    desc: "MDN 학습 순서를 따라 선언이 이기는 규칙부터 컨테이너 쿼리까지 브라우저에서 재 봅니다",
+    desc: "MDN 학습 순서의 열네 장과 선택자, 속성, 값 참고서를 작은 창에서 직접 바꿔 보며 확인합니다",
     topics: ["캐스케이드", "박스 모델", "플렉스박스", "그리드", "쌓임 맥락", "컨테이너 쿼리"],
   },
   {
