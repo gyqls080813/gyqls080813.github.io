@@ -1150,6 +1150,83 @@ const entriesByDocument: { from: string; entries: DictEntry[] }[] = [
       ],
     },
     {
+      from: "html",
+      entries: [
+        {
+          term: "HTML 파서의 고쳐 읽기",
+          body: "HTML 파서는 틀린 코드에서 멈추지 않고 표준에 적힌 규칙대로 고쳐서 DOM을 만듭니다. 닫지 않은 p는 다음 블록에서 닫고, 겹친 b와 i는 i를 하나 더 만들어 풀고, p 안의 div는 p를 먼저 닫아 빈 p를 하나 남깁니다. 그래서 모든 브라우저가 같은 DOM을 만들지만 실수는 조용합니다. 겹침 같은 구조의 실수만 고치고, ul 안의 div 같은 뜻의 실수는 그대로 둡니다.",
+        },
+        {
+          term: "불 속성 (boolean attribute)",
+          body: "있으면 켜지고 없으면 꺼지는 속성입니다. disabled, checked, required, hidden, open, autoplay, muted가 그렇습니다. 값은 보지 않아서 disabled=\"false\"도 켜진 것입니다. 끄려면 속성을 통째로 지웁니다. 실제로 disabled=\"false\"인 버튼의 disabled는 true였고, 눌러도 click 이벤트가 나지 않았습니다.",
+        },
+        {
+          term: "문자 인코딩을 정하는 순서",
+          body: "BOM, HTTP 응답 헤더의 charset, 문서 앞 1024바이트 안의 meta charset, 브라우저의 추측 순서입니다. 앞이 이깁니다. 서버가 헤더로 charset=utf-8을 보내면 meta는 쓰이지 않습니다. meta charset은 파일을 서버 없이 열거나 헤더가 빠졌을 때를 위한 것입니다.",
+        },
+        {
+          term: "lang 속성",
+          body: "문서나 요소의 언어입니다. 화면 낭독기의 발음, 한중일 한자의 글꼴(같은 '直'도 ko, ja, zh-CN에서 모양이 다릅니다), q의 따옴표(en “ ”, fr « », ja 「 」), 하이픈 나누기, 번역 제안이 이 값을 봅니다. html 요소에 붙이고, 다른 언어 문장에는 그 요소에 다시 붙입니다.",
+        },
+        {
+          term: "문서 개요와 제목 단계",
+          body: "h1~h6가 만드는 목차입니다. 낭독기 사용자는 제목으로 건너뛰며 문서를 훑습니다. MDN은 단계를 건너뛰지 말고, 글자 크기를 얻으려고 제목을 쓰지 말라고 적습니다(크기는 CSS의 일). 크고 굵게 꾸민 p는 개요에 없습니다.",
+        },
+        {
+          term: "랜드마크 역할",
+          body: "header(banner), nav(navigation), main, aside(complementary), footer(contentinfo), 이름 있는 section(region)처럼 페이지의 큰 구역에 붙는 역할입니다. header와 footer는 article, aside, main, nav, section 안이면 랜드마크가 아닙니다. 이름 없는 section은 div와 같습니다. Chrome 개발자 도구의 Accessibility 탭에서 확인합니다.",
+        },
+        {
+          term: "하이퍼링크 따라가기",
+          body: "링크를 누르면 브라우저가 하는 일입니다. click을 페이지 코드가 먼저 받고(preventDefault()로 멈춤), href를 기준 주소로 풀고, download → javascript: → 외부 앱(mailto:, tel:) → 다른 창(target) → 조각(#) → 새 문서 순서로 길을 고릅니다. 새 문서면 pagehide와 load, 같은 문서 안이면 popstate, scroll, hashchange가 납니다.",
+        },
+        {
+          term: "#top과 빈 조각",
+          body: "href=\"#top\"과 href=\"#\"은 id가 top인 요소가 없어도 문서 맨 위로 갑니다. HTML 표준의 조각 찾기 규칙입니다. 버튼 대신 href=\"#\"을 쓴 a를 누르면 화면이 맨 위로 튀는 이유입니다. href=\"\"은 다릅니다. 지금 주소로 문서를 새로 받고, 방문 기록은 늘지 않습니다.",
+        },
+        {
+          term: "noopener와 opener",
+          body: "target=\"_blank\"로 연 새 탭은 요즘 브라우저에서 저절로 noopener라 window.opener가 null입니다. rel=\"opener\"를 적으면 opener가 남아 새 탭이 원래 탭의 주소를 바꿀 수 있습니다. 실제로 새 탭에서 window.opener.location을 바꾸자 원래 탭의 작은 창이 이동했습니다(리버스 탭내빙).",
+        },
+        {
+          term: "srcset과 sizes",
+          body: "img가 받을 파일의 후보와, 그림이 화면에서 차지할 폭입니다. 브라우저는 sizes의 폭에 기기 픽셀 비율을 곱한 만큼의 파일을 고릅니다. 실제로 sizes 300px, 기기 픽셀 비율 2에서 800w를 골랐고, 그때 naturalWidth는 300이었습니다. w 기술자와 x 기술자는 한 srcset에 섞지 않습니다. 고른 결과는 img.currentSrc로 봅니다.",
+        },
+        {
+          term: "width, height와 자리 잡기",
+          body: "img의 본래 크기입니다. 그림을 받는 동안 그 비율로 자리를 잡아 레이아웃 이동을 막습니다. 실제로 lazy 그림은 받기 전 크기를 적으면 200×150, 안 적으면 0×0이었다가 800×600으로 커졌습니다. 이미 실패한 그림에 alt가 있으면 크기를 버리고 alt 글자만큼으로 줄어듭니다.",
+        },
+        {
+          term: "autoplay 정책",
+          body: "소리 있는 미디어의 자동 재생을 브라우저가 막는 규칙입니다. muted면 허락되고, 사용자가 그 사이트를 한 번 누르면 소리 있는 쪽도 풀립니다. 실제로 아무것도 누르지 않은 탭에서 소리 있는 video의 play()는 NotAllowedError, muted 쪽은 재생이었습니다. play()의 Promise로 결과를 받습니다.",
+        },
+        {
+          term: "sandbox",
+          body: "iframe 안 문서의 능력을 빼앗는 속성입니다. 빈 값이면 스크립트, 폼, 팝업을 막고 출처를 \"null\"(불투명 출처)로 만듭니다. allow-*로 하나씩 풉니다. allow-scripts만 주면 스크립트는 돌지만 부모를 읽으면 SecurityError입니다. allow-scripts와 allow-same-origin을 함께 주면 같은 출처 문서가 sandbox를 지울 수 있어 MDN이 말립니다.",
+        },
+        {
+          term: "포스터 페어런팅 (foster parenting)",
+          body: "표 구조 안에 들어갈 수 없는 요소(tr 사이의 p, div)를 파서가 표 바로 앞으로 옮기는 규칙입니다. 칸(td) 안에 넣은 것은 제자리에 남습니다. 같은 이유로 tbody는 적지 않아도 늘 생겨서 table > tr 선택자는 아무것도 고르지 못합니다.",
+        },
+        {
+          term: "폼 보내기와 FormData",
+          body: "폼은 name이 있는 칸의 값만 모아 보냅니다. GET은 action 주소의 ? 뒤에, POST는 요청 본문에 담습니다. 폼 안의 button은 type을 적지 않으면 submit이라, 저장 버튼을 눌렀는데 페이지가 바뀌는 흔한 버그가 생깁니다. 보내기 전 값은 new FormData(form)으로 봅니다.",
+        },
+        {
+          term: "제약 검증 (constraint validation)",
+          body: "required, type=\"email\", pattern, min, maxlength 같은 속성으로 브라우저가 보내기 전에 검사하는 구조입니다. 걸리면 submit 대신 칸마다 invalid가 나고, 이유는 validity의 항목(valueMissing, typeMismatch, patternMismatch, customError)에 있습니다. pattern은 값 전체에 맞춥니다. 편의일 뿐이라 서버에서 다시 검사합니다.",
+        },
+        {
+          term: "dialog와 popover",
+          body: "dialog는 showModal()(또는 command=\"show-modal\" 버튼)로 열면 맨 위층의 모달이 되어 뒤를 inert로 막고 Esc로 닫힙니다. method=\"dialog\" 폼의 버튼으로 닫으면 returnValue가 그 버튼의 value입니다. popover=\"auto\"는 바깥을 누르거나 Esc로 닫히고, manual은 버튼이나 스크립트로만 닫힙니다.",
+        },
+        {
+          term: "inert와 tabindex",
+          body: "inert는 그 요소와 안쪽 전부를 누르기, 포커스, 찾기에서 뺍니다. 모달 뒤가 이 상태입니다. tabindex=\"0\"은 Tab 순서에 문서 순서대로 넣고, \"-1\"은 Tab으로는 못 가고 focus()로만 갑니다. 양수는 순서를 깨므로 쓰지 않습니다.",
+        },
+      ],
+    },
+    {
       from: "css",
       entries: [
         {

@@ -227,6 +227,7 @@ export const dictionarySections: { from: string; heading: string }[] = [
     heading: "TypeScript — typescriptlang.org의 핸드북과 참고서를 따라 읽은 아흔여덟 장",
   },
   { from: "git", heading: "Git — Pro Git과 GitHub 문서로 세운 일곱 단계의 낱말" },
+  { from: "html", heading: "HTML — MDN의 내용 구조 잡기 순서로 세운 열다섯 장의 낱말" },
   { from: "css", heading: "CSS — MDN의 스타일링 기초와 레이아웃 모듈로 세운 열네 장의 낱말" },
   { from: "bundle", heading: "번들링 · Vite — vite.dev 가이드로 세운 열두 장의 낱말" },
   { from: "nn", heading: "Next.js · Nuxt — 같은 질문 열넷에 두 답을 놓은 낱말" },
@@ -298,6 +299,12 @@ export const techBranches: { root: string; label: string; desc: string; topics: 
     label: "브라우저 렌더링",
     desc: "주소 하나가 픽셀이 되기까지를 열두 장으로 나눠, 데모 페이지에서 직접 잽니다",
     topics: ["파싱", "스크립트 차단", "CSSOM", "레이아웃", "페인트와 합성", "하이드레이션"],
+  },
+  {
+    root: "html",
+    label: "HTML",
+    desc: "MDN 학습 순서를 따라 태그 하나하나를 작은 창에서 직접 눌러 보며, 뜻에 붙는 동작을 확인합니다",
+    topics: ["파서", "링크", "이미지", "폼과 검증", "dialog와 popover", "전역 속성"],
   },
   {
     root: "css",

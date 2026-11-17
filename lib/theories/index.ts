@@ -25,7 +25,30 @@ export type TheoryNote = {
  * 셸 명령은 bash, 그림(←로 그린 커밋 사슬)이나 충돌 표시처럼 문법이 없는 것은 text —
  * tsx로 칠하면 명령어의 낱말이 식별자·연산자 색으로 흩어진다.
  */
-export type CodeLang = "tsx" | "bash" | "text";
+export type CodeLang = "tsx" | "bash" | "text" | "html";
+
+/** 지금 값 한 줄 — expr은 작은 창 안에서 계산하는 자바스크립트 식이다 */
+export type TheoryLabCheck = { label: string; expr: string };
+
+/**
+ * 직접 해 보기 — 독자가 고쳐서 실행하는 HTML과, 그 코드가 들어가는 진짜 작은 창.
+ * 작은 창은 public/labs/html/play.html이고 블로그와 같은 출처라, 그 안에서 난 이벤트를
+ * 그대로 받아 기록한다(lib/lab/engine). 보기만 하는 code와 달리 눌러서 동작을 확인한다.
+ */
+export type TheoryLab = {
+  /** 처음 코드. 작은 창의 body에 들어간다 */
+  html: string;
+  /** 작은 창의 높이(px). 기본 160 */
+  height?: number;
+  /** 해 볼 것 — 코드를 어떻게 바꿔 보면 좋은지 한 줄 */
+  tryIt?: string;
+  /** 지금 값 — 이벤트가 날 때마다, 그리고 0.4초마다 다시 잰다 */
+  checks?: TheoryLabCheck[];
+  /** 포커스 이동도 적는다 (tabindex, inert) */
+  logFocus?: boolean;
+  /** 글자를 칠 때마다 input 이벤트도 적는다 */
+  logInput?: boolean;
+};
 
 /** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이, 참고 */
 /**
@@ -50,6 +73,8 @@ export type TheoryBlock = {
   codeLang?: CodeLang;
   terms?: TheoryTerm[];
   notes?: TheoryNote[];
+  /** 코드 다음, 아래 참고 앞에 그린다 */
+  lab?: TheoryLab;
 };
 
 /**
@@ -90,6 +115,7 @@ import { vueTheories } from "./vue";
 import { gitTheories } from "./git";
 import { i18nTheories } from "./i18n";
 import { renderTheories } from "./render";
+import { htmlTheories } from "./html";
 import { cssTheories } from "./css";
 import { bundleTheories } from "./bundle";
 import { metaTheories } from "./meta";
@@ -106,6 +132,7 @@ export const theories: Theory[] = [
   ...gitTheories,
   ...i18nTheories,
   ...renderTheories,
+  ...htmlTheories,
   ...cssTheories,
   ...bundleTheories,
   ...metaTheories,

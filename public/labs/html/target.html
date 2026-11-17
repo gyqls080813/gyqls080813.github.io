@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>도착한 페이지</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0;
+    padding: 10px 16px;
+    background: #fff;
+    color: #111;
+    font: 14px/1.6 system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  }
+  b { color: #1a7f37; }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 6px 0; }
+  dt { color: #555; }
+  dd { margin: 0; word-break: break-all; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
+  button { font: inherit; margin-top: 6px; }
+  .top { font-size: 16px; max-width: 760px; margin: 24px auto; }
+</style>
+</head>
+<body>
+<div><b>target.html에 도착했습니다.</b> 새 문서입니다.</div>
+<dl>
+  <dt>location.href</dt><dd id="href"></dd>
+  <dt>받은 값</dt><dd id="query"></dd>
+  <dt>document.referrer</dt><dd id="ref"></dd>
+  <dt>window.opener</dt><dd id="opener"></dd>
+</dl>
+<div id="tab-tools" hidden>
+  <button id="hijack" type="button">opener의 주소 바꿔 보기</button>
+  <span id="hijack-note"></span>
+</div>
+<script>
+  const inFrame = window !== top;
+  const $ = (id) => document.getElementById(id);
+  $('href').textContent = location.href;
+  const pairs = [...new URLSearchParams(location.search)].map(([k, v]) => `${k} = "${v}"`);
+  $('query').textContent = pairs.length ? pairs.join(', ') : '(없음: 주소에 ? 뒤가 없습니다)';
+  $('ref').textContent = document.referrer || '"" (비어 있음)';
+  $('opener').textContent = window.opener
+    ? '있음: 이 탭이 원래 창을 움직일 수 있습니다'
+    : 'null: 원래 창과 끊겨 있습니다';
+  if (!inFrame) {
+    document.body.classList.add('top');
+    $('tab-tools').hidden = false;
+    $('hijack').onclick = () => {
+      if (!window.opener) {
+        $('hijack-note').textContent = ' opener가 null이라 할 수 없습니다.';
+        return;
+      }
+      window.opener.location = 'target.html?from=opener';
+      $('hijack-note').textContent = ' 원래 탭의 작은 창이 바뀌었습니다. 원래 탭으로 돌아가 보세요.';
+    };
+  }
+  /* 블로그의 직접 해 보기에 도착을 알립니다. 새 탭에서 열렸을 때 원래 탭의 기록에 남습니다. */
+  if ('BroadcastChannel' in window) {
+    new BroadcastChannel('html-lab').postMessage({
+      inFrame, href: location.href, referrer: document.referrer, opener: !!window.opener,
+    });
+  }
+</script>
+</body>
+</html>

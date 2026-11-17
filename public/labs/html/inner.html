@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<style>
+  :root { color-scheme: light; }
+  body { margin: 6px 10px; background: #f6f8fa; color: #111; font: 13px/1.6 system-ui, sans-serif; }
+  p { margin: 0; }
+</style>
+<p id="s">스크립트가 막혔습니다. (이 줄이 그대로면 아래 script가 돌지 않은 것입니다)</p>
+<script>
+  let parentRead;
+  try {
+    void parent.document.title;
+    parentRead = '됨';
+  } catch (e) {
+    parentRead = e.name;
+  }
+  document.getElementById('s').textContent =
+    `스크립트가 돌았습니다. 내 출처: ${self.origin}, 부모 문서 읽기: ${parentRead}`;
+  parent.postMessage({ from: 'inner.html', origin: self.origin, parentRead }, '*');
+</script>

@@ -514,6 +514,24 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "render-s11", label: "11장 · 프레임 안의 프레임", kind: "theory", x: 1620, y: 760 },
   { id: "render-s12", label: "12장 · 프레임워크가 끼어드는 자리", kind: "theory", x: 1620, y: 800 },
 
+  /* HTML — MDN의 'HTML로 내용 구조 잡기' 학습 순서대로 열다섯 장. 장마다 직접 해 보기가 있다 */
+  { id: "html", label: "HTML", kind: "theory", x: 1727, y: 300, hub: true },
+  { id: "html-s1", label: "1장 · 문법과 파서", kind: "theory", x: 1727, y: 360 },
+  { id: "html-s2", label: "2장 · head와 메타데이터", kind: "theory", x: 1727, y: 400 },
+  { id: "html-s3", label: "3장 · 제목, 문단, 강조", kind: "theory", x: 1727, y: 440 },
+  { id: "html-s4", label: "4장 · 목록", kind: "theory", x: 1727, y: 480 },
+  { id: "html-s5", label: "5장 · 고급 텍스트", kind: "theory", x: 1727, y: 520 },
+  { id: "html-s6", label: "6장 · 문서 구조와 랜드마크", kind: "theory", x: 1727, y: 560 },
+  { id: "html-s7", label: "7장 · 링크", kind: "theory", x: 1727, y: 600 },
+  { id: "html-s8", label: "8장 · 이미지", kind: "theory", x: 1727, y: 640 },
+  { id: "html-s9", label: "9장 · 비디오와 오디오", kind: "theory", x: 1727, y: 680 },
+  { id: "html-s10", label: "10장 · iframe과 임베드", kind: "theory", x: 1727, y: 720 },
+  { id: "html-s11", label: "11장 · 표", kind: "theory", x: 1727, y: 760 },
+  { id: "html-s12", label: "12장 · 폼과 버튼", kind: "theory", x: 1727, y: 800 },
+  { id: "html-s13", label: "13장 · 폼 검증", kind: "theory", x: 1727, y: 840 },
+  { id: "html-s14", label: "14장 · 열고 닫는 요소", kind: "theory", x: 1727, y: 880 },
+  { id: "html-s15", label: "15장 · 전역 속성", kind: "theory", x: 1727, y: 920 },
+
   // CSS — MDN 학습 모듈 순서대로 열네 장
   { id: "css", label: "CSS", kind: "theory", x: 1835, y: 300, hub: true },
   { id: "css-s1", label: "1장 · 문법과 선택자", kind: "theory", x: 1835, y: 360 },
@@ -1074,6 +1092,28 @@ export const theoryClusters = [
       "render-s10",
       "render-s11",
       "render-s12",
+    ],
+  },
+
+  /* HTML — 장 순서가 곧 챕터 순서 */
+  {
+    hub: "html",
+    chapters: [
+      "html-s1",
+      "html-s2",
+      "html-s3",
+      "html-s4",
+      "html-s5",
+      "html-s6",
+      "html-s7",
+      "html-s8",
+      "html-s9",
+      "html-s10",
+      "html-s11",
+      "html-s12",
+      "html-s13",
+      "html-s14",
+      "html-s15",
     ],
   },
 

@@ -6,6 +6,7 @@ import { cx } from "@/lib/util";
 import CodeBlock from "./CodeBlock";
 import DataTable from "./DataTable";
 import ExternalLink from "./ExternalLink";
+import LiveLab from "./LiveLab";
 import { Kicker, SectionHeading } from "./Prose";
 import TermNote from "./TermNote";
 import TextBlock from "./TextBlock";
@@ -14,7 +15,7 @@ import styles from "./SheetArticle.module.css";
 
 /** 블록 한 칸 — 이론의 블록이 가장 넓고, TIL·사전은 그 일부만 쓴다 */
 export type SheetBlockData = Pick<TheoryBlock, "label" | "body"> &
-  Partial<Pick<TheoryBlock, "tables" | "code" | "codeLang" | "terms" | "notes">>;
+  Partial<Pick<TheoryBlock, "tables" | "code" | "codeLang" | "terms" | "notes" | "lab">>;
 
 export type SheetSectionData = { heading: string; blocks: SheetBlockData[] };
 
@@ -58,6 +59,8 @@ export function SheetBlock({
         <DataTable key={index} {...table} />
       ))}
       {block.code && <CodeBlock lang={block.codeLang}>{block.code}</CodeBlock>}
+      {/* 직접 해 보기 — 읽은 코드를 고쳐서 진짜 작은 창에서 돌려 본다 */}
+      {block.lab && <LiveLab lab={block.lab} />}
       {/* 코드까지 다 본 뒤에 읽을 참고 — 블록을 마무리하는 곁가지 */}
       {bottomNotes.map((note) => (
         <TermNote key={note.title} term={note.title} kicker="참고">
