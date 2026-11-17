@@ -85,7 +85,18 @@ const isList = (value: unknown): value is ArrayLike<unknown> =>
 
 /** 지금 값·출력 줄에 적을 모양. 작은 창의 객체라 instanceof 대신 모양으로 가린다 */
 export function formatValue(value: unknown, depth = 0): string {
-  if (typeof value === "string") return value.includes("\n") ? value : JSON.stringify(value);
+  if (typeof value === "string") {
+    /* 식이 이미 JSON.stringify로 감싼 글자면(\n을 보이게 하려고) 다시 감싸지 않는다 */
+    if (/^"[\s\S]*"$/.test(value)) {
+      try {
+        JSON.parse(value);
+        return value;
+      } catch {
+        /* 따옴표로 시작하고 끝날 뿐인 보통 글자 */
+      }
+    }
+    return value.includes("\n") ? value : JSON.stringify(value);
+  }
   if (value === null || value === undefined) return String(value);
   if (typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
     return String(value);
@@ -420,9 +431,11 @@ export class LabEngine {
         (PerformanceNavigationTiming & { responseStatus?: number }) | undefined;
       const status = nav?.responseStatus ? `, 서버 응답 ${nav.responseStatus}` : "";
       this.real(`load: 새 문서가 열렸습니다 → ${win.location.href}${status}`);
-      this.real(
-        `document.referrer = ${win.document.referrer || '""'}, history.length ${this.before.len} → ${win.history.length}`,
-      );
+      const history =
+        this.before.href === ""
+          ? `history.length ${win.history.length}`
+          : `history.length ${this.before.len} → ${win.history.length}`;
+      this.real(`document.referrer = ${win.document.referrer || '""'}, ${history}`);
       this.hook(win);
     }
     this.tick();
@@ -528,6 +541,27 @@ export class LabEngine {
       );
     }
     on(win, "scroll", () => this.onScroll(win), false);
+    for (const type of ["transitionend", "animationstart", "animationend"]) {
+      on<TransitionEvent & AnimationEvent>(win, type, (event) => {
+        const what = type === "transitionend" ? event.propertyName : event.animationName;
+        this.real(
+          `${type}: ${openTag(event.target as Element)}의 ${what}, ${event.elapsedTime}초 지점`,
+        );
+      });
+    }
+    /* 폭 버튼으로 창을 바꾸면 미디어 쿼리가 다시 계산된다 — 멈춘 뒤 한 줄만 */
+    let resizeTimer = 0;
+    on(
+      win,
+      "resize",
+      () => {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(() => {
+          if (gen === this.gen) this.real(`resize: 작은 창 폭이 ${win.innerWidth}px가 됐습니다.`);
+        }, 150);
+      },
+      false,
+    );
     on<MessageEvent>(win, "message", (event) => {
       const from = event.origin === "null" ? '"null" (불투명 출처)' : event.origin;
       this.real(`message: ${formatValue(event.data)}, 보낸 출처 ${from}`);
@@ -552,7 +586,8 @@ export class LabEngine {
   private onClick(event: MouseEvent, win: Window) {
     const target = event.target as Element | null;
     if (!target?.closest) return;
-    const link = target.closest("a");
+    /* area도 href가 있으면 링크다 (이미지 지도의 한 칸) */
+    const link = target.closest<HTMLAnchorElement | HTMLAreaElement>("a, area");
     if (link) {
       this.onLinkClick(event, win, link);
       return;
@@ -577,7 +612,7 @@ export class LabEngine {
     if (fresh) this.expectQuiet(win, event, "아무 이벤트도 없었습니다.");
   }
 
-  private onLinkClick(event: MouseEvent, win: Window, a: HTMLAnchorElement) {
+  private onLinkClick(event: MouseEvent, win: Window, a: HTMLAnchorElement | HTMLAreaElement) {
     this.begin(win);
     this.log("click", `${openTag(a)}를 눌렀습니다.`);
     const raw = a.getAttribute("href");

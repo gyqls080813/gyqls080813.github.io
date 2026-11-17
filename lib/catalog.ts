@@ -303,7 +303,7 @@ export const techBranches: { root: string; label: string; desc: string; topics: 
   {
     root: "html",
     label: "HTML",
-    desc: "MDN 학습 순서를 따라 태그 하나하나를 작은 창에서 직접 눌러 보며, 뜻에 붙는 동작을 확인합니다",
+    desc: "MDN 학습 순서의 열다섯 장과 태그, 속성 참고서를 작은 창에서 직접 눌러 보며 확인합니다",
     topics: ["파서", "링크", "이미지", "폼과 검증", "dialog와 popover", "전역 속성"],
   },
   {

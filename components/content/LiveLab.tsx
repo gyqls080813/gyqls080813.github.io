@@ -19,6 +19,8 @@ export default function LiveLab({ lab }: { lab: TheoryLab }) {
   const [rows, setRows] = useState<LabRow[]>([]);
   const [url, setUrl] = useState("");
   const [values, setValues] = useState<string[]>([]);
+  /* 작은 창의 폭(px). null이면 블록 폭에 맞춘다 */
+  const [frameWidth, setFrameWidth] = useState<number | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const logRef = useRef<HTMLOListElement>(null);
@@ -115,7 +117,26 @@ export default function LiveLab({ lab }: { lab: TheoryLab }) {
             새로 고침
           </button>
         </div>
-        <div ref={boxRef} className={styles.frame} style={{ height: lab.height ?? 160 }} />
+        {lab.widths && lab.widths.length > 0 && (
+          <div className={styles.widths} role="group" aria-label="작은 창 폭">
+            <span>창 폭</span>
+            {[...lab.widths, null].map((width) => (
+              <button
+                key={width ?? "fit"}
+                type="button"
+                aria-pressed={frameWidth === width}
+                onClick={() => setFrameWidth(width)}
+              >
+                {width === null ? "맞춤" : `${width}px`}
+              </button>
+            ))}
+          </div>
+        )}
+        <div
+          ref={boxRef}
+          className={styles.frame}
+          style={{ height: lab.height ?? 160, width: frameWidth ?? undefined }}
+        />
       </div>
 
       {lab.checks && lab.checks.length > 0 && (

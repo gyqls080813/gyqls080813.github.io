@@ -48,6 +48,8 @@ export type TheoryLab = {
   logFocus?: boolean;
   /** 글자를 칠 때마다 input 이벤트도 적는다 */
   logInput?: boolean;
+  /** 작은 창 폭 버튼(px) — 미디어 쿼리, 컨테이너 쿼리처럼 폭에 따라 달라지는 것을 볼 때 */
+  widths?: number[];
 };
 
 /** 개념 시트의 한 블록 — 라벨 하나에 문단 하나, 필요하면 코드 한 조각과 낱말 풀이, 참고 */

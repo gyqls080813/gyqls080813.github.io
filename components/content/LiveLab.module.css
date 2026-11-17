@@ -130,6 +130,40 @@
   text-overflow: ellipsis;
 }
 
+/* 폭 버튼 — 미디어 쿼리 실험에서 작은 창의 폭만 바꾼다. 블록보다 넓으면 블록 폭에서 멈춘다 */
+.widths {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: var(--surface-inset);
+  border-bottom: 1px solid var(--border-strong);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.widths button {
+  font: inherit;
+  padding: 2px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.widths button[aria-pressed="true"] {
+  border-color: rgba(var(--theory-rgb), 0.55);
+  background: rgba(var(--theory-rgb), 0.14);
+  color: var(--theory-text);
+}
+
+.frame {
+  max-width: 100%;
+  background: #fff;
+}
+
 .frame iframe {
   display: block;
   width: 100%;
