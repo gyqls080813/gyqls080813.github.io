@@ -1,10 +1,10 @@
-import { projectSummaries, roleTitle, techBranches } from "@/lib/catalog";
+import { endMonth, projectSummaries, roleTitle, techBranches } from "@/lib/catalog";
 import { nodeHref } from "@/lib/nodeTarget";
 import { slugify } from "@/lib/slug";
 /* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
 import { INTRO_HEADINGS as HEADINGS } from "@/lib/headings";
-/* 묶음(./content)으로 가져오면 CodeBlock까지 딸려 와 코드 색칠 결과(수백 KB)가
-   소개 페이지 번들에 실린다 — 쓰는 조각만 파일에서 바로 가져온다 */
+/* 쓰는 조각만 파일에서 바로 가져온다 — 겹침 화면(ExpandShell)이 홈에서 이 시트를 그리므로,
+   CodeBlock(코드 색칠 결과 전체)처럼 무거운 조각이 딸려 오면 홈 번들이 커진다 */
 import Chip from "./content/Chip";
 import { EntryRow } from "./content/Facts";
 import Figure from "./content/Figure";
@@ -49,14 +49,20 @@ const HISTORY = [
   { text: "연세대학교 미래캠퍼스 친환경에너지공학부 학사", date: "2018.03 – 2023.02" },
 ];
 
+/* 프로젝트에서 받은 상은 요약 목록(lib/catalog)의 award에서 — 프로젝트 시트의
+   '성과' 줄과 같은 문구라야 한다. 날짜는 프로젝트가 끝난 달이다 */
+const PROJECT_AWARDS = projectSummaries.flatMap((project) =>
+  project.award ? [{ text: project.award, date: endMonth(project.period) }] : [],
+);
+
+/* 최근 것이 위 — 날짜("2024.11")는 글자로 견줘도 순서가 같다 */
 const AWARDS = [
-  { text: "삼성청년 SW·AI 아카데미 자율 프로젝트 우수상", date: "2026.05" },
-  { text: "삼성청년 SW·AI 아카데미 공통 프로젝트 최우수상", date: "2026.02" },
+  ...PROJECT_AWARDS,
   { text: "연세대 환경에너지공학과 대학원 추계 학술제 발표 우수상", date: "2024.11" },
   { text: "제11회 기초과학연구소 학술제 포스터 발표 최우수상", date: "2023.12" },
   { text: "연세대 환경에너지공학과 추계 학술제 우수포스터발표상", date: "2023.11" },
   { text: "연세대학교 환경공학부 성적우수상", date: "2022.02" },
-];
+].sort((a, b) => b.date.localeCompare(a.date));
 
 /**
  * 소개 시트의 안쪽.

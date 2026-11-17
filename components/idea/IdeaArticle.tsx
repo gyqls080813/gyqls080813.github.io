@@ -1,5 +1,7 @@
 import type { Idea } from "@/lib/ideas";
 import SheetArticle from "../content/SheetArticle";
+import SheetPager from "../content/SheetPager";
+import { SHEET_HEAD } from "@/lib/headings";
 
 /**
  * 생각 시트 안쪽.
@@ -11,15 +13,13 @@ import SheetArticle from "../content/SheetArticle";
 export default function IdeaArticle({ idea }: { idea: Idea }) {
   return (
     <SheetArticle
-      kind="idea"
-      kicker="생각"
-      title={idea.name}
-      tagline={idea.tagline}
+      head={SHEET_HEAD.idea(idea)}
       introLabel="무엇을 정하는가"
       intro={idea.intro}
       blocks={idea.blocks}
       sections={idea.sections}
       sources={idea.sources}
+      footer={<SheetPager nodeId={idea.id} kind="idea" />}
     />
   );
 }

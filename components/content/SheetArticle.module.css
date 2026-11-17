@@ -89,3 +89,10 @@
   font-size: 10px;
   opacity: 0.7;
 }
+
+/* 폰 폭에서는 절 들여쓰기를 거둔다 — 22px도 한 줄에 두 글자를 잃는다 */
+@media (max-width: 520px) {
+  .sectionBlocks {
+    padding-left: 0;
+  }
+}

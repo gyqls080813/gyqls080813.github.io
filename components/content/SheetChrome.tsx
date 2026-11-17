@@ -7,11 +7,10 @@ import TopBar from "../TopBar";
 import KnowledgeGraph from "../graph/flow/KnowledgeGraph";
 import NodeTree from "../post/NodeTree";
 import SheetBreadcrumb from "./SheetBreadcrumb";
-import SheetNav from "./SheetNav";
-import SheetPorts from "./SheetPorts";
+import { OutlinePart } from "./SheetOutline";
 import SheetShell from "./SheetShell";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import { annotatedGraphNodes, navOf, portsOf, sheetNodeId } from "@/lib/outline";
+import { annotatedGraphNodes, sheetNodeId } from "@/lib/outline";
 import styles from "./Sheet.module.css";
 
 /**
@@ -30,13 +29,22 @@ import styles from "./Sheet.module.css";
  *
  * ## 그래서 노드 id 하나만 안다
  *
- * 껍데기는 페이지에서 무엇도 받지 않는다. 주소에서 노드 id를 읽고, 나머지(목차·
- * 포트·머리말)는 빌드 때 lib/sheet가 계산해 둔 색인을 lib/outline으로 읽는다.
+ * 껍데기는 페이지에서 무엇도 받지 않는다. 주소에서 노드 id를 읽고, 머리말의 길은
+ * 그래프에서 계산한다(lib/outline). 노드마다 다른 목차와 포트는 레이아웃의 @outline
+ * 슬롯(outline)이 그 노드 것만 서버에서 그려 넘긴다 — 전부 들고 있으면 모든 페이지가
+ * 수백 KB를 받는다. 껍데기는 그 하나를 목차 칸과 양옆에 놓기만 한다(OutlinePart).
  * 페이지는 본문만 넘긴다.
  *
  * 시트가 아닌 곳(그래프 홈, 글 목록)에서는 아무것도 감싸지 않고 지나 보낸다.
  */
-export default function SheetChrome({ children }: { children: ReactNode }) {
+export default function SheetChrome({
+  children,
+  outline,
+}: {
+  children: ReactNode;
+  /** 열린 노드의 목차와 포트 — app/@outline 슬롯 (components/content/SheetOutline) */
+  outline: ReactNode;
+}) {
   const pathname = usePathname();
   const nodeId = sheetNodeId(pathname ?? "");
   const inSheet = nodeId !== null;
@@ -63,8 +71,6 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
 
   if (!nodeId) return <>{children}</>;
 
-  const ports = portsOf(nodeId);
-
   return (
     <div className={styles.screen}>
       <TopBar breadcrumb={<SheetBreadcrumb nodeId={nodeId} />} />
@@ -87,13 +93,13 @@ export default function SheetChrome({ children }: { children: ReactNode }) {
         <Link href="/" className={styles.scrim} aria-label="그래프로 돌아가기" />
 
         {/* 그래프에서 이 노드에 들어오고 나가는 선이 그대로 포트가 된다 */}
-        <SheetPorts side="left" ports={ports.left} />
-        <SheetPorts side="right" ports={ports.right} />
+        <OutlinePart part="portsLeft">{outline}</OutlinePart>
+        <OutlinePart part="portsRight">{outline}</OutlinePart>
 
         <SheetShell
           nodeId={nodeId}
           tree={<NodeTree activeNodeId={nodeId} />}
-          nav={<SheetNav items={navOf(nodeId)} />}
+          nav={<OutlinePart part="nav">{outline}</OutlinePart>}
         >
           {children}
         </SheetShell>

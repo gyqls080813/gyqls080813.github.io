@@ -16,6 +16,7 @@ export const bundleTheories: Theory[] = [
   {
     id: "bundle",
     name: "번들링과 Vite",
+    graphLabel: "번들링 · Vite",
     tagline: "소스 파일 수백 개를 브라우저가 읽을 수 있는 모양으로 바꾸는 일",
     intro:
       "브라우저는 import 문을 읽을 수 있지만, 수백 개의 파일을 하나씩 요청하면 느리고, TypeScript · JSX · CSS 모듈 · 이미지는 그대로 읽지 못합니다. 번들러는 import 그래프를 따라가며(해석) 각 파일을 브라우저용으로 바꾸고(변환) 적은 수의 파일로 묶어(번들) 필요한 만큼 쪼개고(분할) 캐시 가능한 이름을 붙입니다(해시). Vite는 그 일을 개발과 배포에서 다르게 합니다 — 개발은 묶지 않고 브라우저의 네이티브 ESM에 요청 시 변환으로 응답하고, 배포는 Rolldown으로 묶습니다. 열두 장은 그 두 모드와 그 사이의 모든 도구를 다룹니다.",
@@ -53,6 +54,7 @@ export const bundleTheories: Theory[] = [
   {
     id: "bundle-s1",
     name: "1장 · 왜 묶는가 — 모듈과 요청과 브라우저 ESM",
+    graphLabel: "1장 · 왜 묶는가 — 모듈과 요청",
     tagline: "개발은 묶지 않아도 되고, 배포는 아직 묶어야 한다",
     intro:
       "Vite 문서 'Why Vite'가 꼽는 두 문제는 느린 개발 서버 시작과 느린 갱신입니다. 둘 다 '시작하기 전에 전부 묶는' 번들 기반 개발 서버의 비용입니다. 브라우저가 ESM을 읽게 되자 Vite는 개발을 둘로 갈랐습니다. 의존성은 한 번 사전 번들링하고, 소스는 브라우저가 요청할 때 그 파일만 변환해 네이티브 ESM으로 보냅니다. 배포는 여전히 묶습니다. 묶지 않은 ESM은 중첩 import마다 네트워크 왕복이 생기기 때문입니다. 지금 도구 사슬은 Rolldown(묶기)과 Oxc(파싱, 변환, 압축)입니다. esbuild와 Rollup은 Vite 8에서 물러났습니다.",
@@ -211,6 +213,7 @@ export const bundleTheories: Theory[] = [
   {
     id: "bundle-s4",
     name: "4장 · HMR — 모듈만 갈아 끼우기",
+    graphLabel: "4장 · HMR",
     tagline: "바뀐 모듈과 그 경계까지만 다시 받고, 페이지는 그대로 둔다",
     intro:
       "HMR(Hot Module Replacement)은 파일이 바뀌면 페이지를 새로 고치지 않고 그 모듈만 교체하는 메커니즘입니다. 서버가 파일 변경을 감지해 웹소켓으로 알립니다. `/@vite/client`는 바뀐 모듈을 다시 import 하고, '받아 주겠다'고 선언한 경계(`import.meta.hot.accept`)까지 전파합니다. 경계가 없으면 전체를 새로 고칩니다. Vue와 React 플러그인은 컴포넌트 단위 경계를 자동으로 만듭니다. 문서는 직접 쓰는 API를 '프레임워크·도구 저자용'이라고 합니다.",
@@ -552,6 +555,7 @@ export const bundleTheories: Theory[] = [
   {
     id: "bundle-s10",
     name: "10장 · SSR · 백엔드 통합 · 라이브러리 모드",
+    graphLabel: "10장 · SSR · 백엔드 통합 · 라이브러리",
     tagline: "브라우저 밖에서도 같은 그래프를 쓰는 세 가지 길",
     intro:
       "Vite는 SPA만 위한 도구가 아닙니다.\nSSR은 개발 서버를 미들웨어 모드로 Express에 끼우고, `ssrLoadModule`로 서버 진입점을 실행해 HTML을 만듭니다. 배포는 클라이언트 빌드와 `--ssr` 빌드, 두 번으로 합니다.\n백엔드 통합은 Rails, Laravel, Django 템플릿이 매니페스트를 읽어 Vite가 만든 자산을 가리키게 하는 것입니다.\n라이브러리 모드는 `build.lib`로 패키지(es, umd, cjs)를 내보내는 것입니다.\n문서는 SSR을 '라이브러리·프레임워크 저자용 저수준 API'로 둡니다. 보통은 Nuxt, Next, SvelteKit 같은 상위 도구를 쓰라고 합니다.",

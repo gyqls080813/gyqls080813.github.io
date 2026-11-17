@@ -65,6 +65,12 @@ export type TheoryTable = {
   /** 행마다 head와 같은 수의 칸. 첫 칸은 행의 머리로 굵게 그린다. 칸 안의 \n은 줄바꿈 */
   rows: string[][];
 };
+/**
+ * 확인 질문 하나 — 답은 접어 두고 독자가 먼저 떠올린 뒤 펼친다.
+ * 읽기만 하면 아는 것 같지만, 꺼내 보려고 애쓴 것이 오래 남는다.
+ */
+export type TheoryQuiz = { q: string; a: string };
+
 export type TheoryBlock = {
   label: string;
   body: string;
@@ -73,6 +79,13 @@ export type TheoryBlock = {
   code?: string;
   /** code 바로 다음 줄에 적는다 — 빌드 스크립트(highlight-code.mjs)가 그 자리에서 읽는다 */
   codeLang?: CodeLang;
+  /**
+   * HTML 코드 바로 아래에 브라우저가 그린 모습을 붙인다. 스크립트는 돌지 않는다.
+   * 코드만 보고 결과를 머릿속으로 그리게 하지 않고, 코드와 결과를 한눈에 견주게 한다.
+   */
+  preview?: boolean;
+  /** 확인 질문 — body 아래에 질문마다 접힌 답을 단다 */
+  quiz?: TheoryQuiz[];
   terms?: TheoryTerm[];
   notes?: TheoryNote[];
   /** 코드 다음, 아래 참고 앞에 그린다 */
@@ -100,7 +113,19 @@ export type Theory = {
   /** 그래프의 이론 노드 id와 동일 */
   id: string;
   name: string;
+  /**
+   * 그래프 카드와 트리에 쓰는 이름 — name과 다를 때만 적는다.
+   * 카드는 좁아서 부제를 떼거나(「1장 · 레이아웃」), 같은 이름의 다른 노드와
+   * 구별하려고(「React 개발자 도구」) 줄이거나 늘린다. 그래프 데이터의 label은
+   * 이 값(없으면 name)과 같아야 한다 — tests/graph-integrity가 지킨다.
+   */
+  graphLabel?: string;
   tagline: string;
+  /**
+   * 핵심 정리 — 제목 바로 아래에 서너 줄로 먼저 보여 준다.
+   * 무엇을 얻어 갈지 먼저 알면, 긴 본문을 읽으며 어디에 붙일지가 잡힌다.
+   */
+  keyPoints?: string[];
   /** 이 개념이 답하는 질문 — 화면을 보여주기 전에 */
   intro: string;
   /** 절이 없는 시트 — 길잡이·총론 */

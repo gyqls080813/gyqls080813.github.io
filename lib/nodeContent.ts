@@ -1,6 +1,6 @@
 import { getDictionary } from "./dictionary";
 import { getIdea } from "./ideas";
-import type { NodeOpenKind } from "./nodeKinds";
+import { ME_ID, type NodeOpenKind } from "./nodeKinds";
 import { getPost } from "./posts";
 import { getProject } from "./projects";
 import { getTheory } from "./theories";
@@ -13,7 +13,7 @@ import { getTil } from "./tils";
  * 소개(intro)는 본문 모듈이 없다 — 내용이 소개 시트 컴포넌트에 고정돼 있고 노드는 "me" 하나다.
  */
 export const CONTENT_OF: Record<NodeOpenKind, (nodeId: string) => boolean> = {
-  intro: (id) => id === "me",
+  intro: (id) => id === ME_ID,
   project: (id) => getProject(id) !== undefined,
   post: (id) => getPost(id) !== undefined,
   theory: (id) => getTheory(id) !== undefined,

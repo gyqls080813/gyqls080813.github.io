@@ -15,11 +15,14 @@ import type { NodeKind } from "../graph/types";
 import { ChevronIcon, GraphIcon } from "../icons";
 import { fullGraphNodes, labelOf, nodeById } from "@/lib/graphData";
 import { postOutlines as posts } from "@/lib/outline";
+import { postsOfProject } from "@/lib/catalog";
 import { cx, toggled } from "@/lib/util";
 /* 계층은 머리말과 같은 지도를 쓴다 — 둘이 각자 계산하면 다른 깊이를 말하게 된다 */
 import { chaptersOf, parentOf } from "@/lib/nodePath";
 import { nodeDestination, nodeHref, nodeOpenKind } from "@/lib/nodeTarget";
 import styles from "./NodeTree.module.css";
+import { ME_ID } from "@/lib/nodeKinds";
+import { OWNER_NAME } from "@/lib/site";
 
 /**
  * 트리에서 누르면 글로 곧장 간다.
@@ -222,20 +225,21 @@ export default function NodeTree({
         {/* 그래프의 시작점 — 갈래 셋보다 위에, 이름표 없이 혼자 선다 */}
         <div className={styles.section}>
           <TreeRow
-            id="me"
-            label="민엽"
+            id={ME_ID}
+            label={OWNER_NAME}
             icon={<KindIcon kind="me" size={13} />}
             count={<span className={styles.count}>자기소개</span>}
-            href={treeHref("me")}
+            href={treeHref(ME_ID)}
           />
         </div>
 
         <div className={styles.section}>
           <div className={styles.sectionLabel}>프로젝트</div>
           {projects.map((project) => {
-            const projectPosts = posts
-              .filter((post) => post.project === project.id)
-              .sort((a, b) => b.date.localeCompare(a.date));
+            /* 새 배열로 정렬한다 — 받은 목록이 공용(캐시)이어도 순서를 바꾸지 않는다 */
+            const projectPosts = postsOfProject(project.id).toSorted((a, b) =>
+              b.date.localeCompare(a.date),
+            );
             return (
               <TreeRow
                 key={project.id}

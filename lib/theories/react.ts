@@ -1378,6 +1378,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-dom-hooks",
     name: "React DOM 훅",
+    graphLabel: "DOM 훅",
     tagline: "useFormStatus 하나: 자식이 부모 <form> 제출 상태를 읽습니다",
     intro:
       "react-dom이 내보내는 훅은 useFormStatus 하나입니다. 인자 없이 부르면 { pending, data, method, action }을 돌려줍니다. 가장 가까운 '부모' <form>의 상태입니다. 자기가 렌더하는 <form>이 아니라 자기를 감싼 <form>입니다. 사고는 거의 다 이 한 줄에서 납니다. 실제로 돌려 보면 <form>을 렌더하는 컴포넌트 자신은 pending이 늘 false였습니다. 그 안의 자식 버튼은 제출 중 pending=true, data에 FormData(q='바꿈'), method='get'을 받았습니다. 액션이 끝나자 비제어 입력은 '처음'으로 리셋됐고 제어 입력은 그대로였습니다. 이 노드의 질문은 하나입니다. 폼의 제출 중 상태를 어디서 읽을까요?",
@@ -1440,6 +1441,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-dom-components",
     name: "React DOM 컴포넌트",
+    graphLabel: "DOM 컴포넌트",
     tagline: "브라우저 태그에 React가 더한 것: camelCase, 제어와 비제어, 호이스팅",
     intro:
       "참고서의 DOM 컴포넌트 페이지들입니다. 공통 컴포넌트(<div> 같은 모든 태그에 공통인 props), 폼(<form> <input> <option> <progress> <select> <textarea>), 리소스와 메타데이터(<img> <link> <meta> <script> <style> <title>)로 나뉩니다. React는 HTML을 거의 그대로 쓰되 몇 가지를 바꿨습니다. 속성은 camelCase입니다(tabIndex, className, htmlFor). 이벤트는 onClick이고, style은 객체입니다. 폼 요소는 value를 주면 '제어'됩니다. 19부터는 <title> <meta> <link> <script> <style>은 어디서 렌더해도 <head>로 올라갑니다. 실제로 돌려 보면 깊은 컴포넌트 안의 <title>과 <meta>, precedence가 있는 <link>와 <style>, async인 <script src>가 <head>에 모였습니다. precedence 없는 <link rel=stylesheet>와 인라인 <script>는 제자리에 남았습니다. 이 노드의 질문은 하나입니다. HTML과 어디가 다를까요?",
@@ -1530,6 +1532,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-dom-apis",
     name: "React DOM API",
+    graphLabel: "DOM API",
     tagline: "다른 자리에 그리기(createPortal), 지금 커밋(flushSync), 미리 받기(preload, preinit…)",
     intro:
       "참고서의 react-dom API입니다. createPortal(자식을 다른 DOM 노드에 그리되 React 트리는 그대로), flushSync(콜백 안의 갱신을 동기로 즉시 커밋), 리소스 힌트 여섯(prefetchDNS, preconnect, preload, preloadModule, preinit, preinitModule), 그리고 드물게 쓰는 requestFormReset이 있습니다. 리소스 힌트는 문서도 '프레임워크가 대신 처리하는 경우가 많아 직접 부를 일이 없을 수 있다'고 적습니다. 실제로 돌려 보면 포털 안 버튼의 클릭은 DOM 부모가 아니라 React 부모의 onClick으로 먼저 올라갔습니다. flushSync 뒤에는 DOM이 바로 바뀌어 있었고, 없으면 아직 옛 값이었습니다. 렌더 중 부른 preload는 서버 HTML의 <head>에 <link rel=\"preload\">로 나왔습니다. 이 노드의 질문은 하나입니다. React 트리 밖의 DOM과 시간을 어떻게 다룰까요?",
@@ -1794,6 +1797,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-compiler",
     name: "React 컴파일러",
+    graphLabel: "React 컴파일러 참고서",
     tagline: "빌드가 대신 쓰는 useMemo, useCallback, memo: 규칙을 지킨 코드에만",
     intro:
       "참고서의 React 컴파일러 갈래입니다. babel-plugin-react-compiler는 빌드 때 컴포넌트와 훅을 읽어 '전과 같으면 재사용'하는 코드로 바꿉니다. 손으로 쓰던 useMemo, useCallback, memo를 자동으로 넣는 셈입니다. 조건이 있습니다. 순수성, 훅 규칙, 불변성 같은 React 규칙을 지킨 코드만 바꾸고, 어긴 코드는 건너뜁니다. 이 노드 아래에는 설정(compilationMode, target, panicThreshold, logger, gating)과 지시어('use memo', 'use no memo')가 있습니다. 1.0.0에서 돌려 보니 보통 컴포넌트는 react/compiler-runtime의 c(11)로 슬롯 열한 개를 받아 의존성마다 비교하는 코드가 됐습니다. props를 고치는 컴포넌트는 CompileError 'This value cannot be modified'와 함께 원문 그대로 남았고, 빌드는 계속됐습니다. 배우기 쪽 '시작하기 > React 컴파일러'가 설치와 도입이라면, 이 갈래는 옵션 하나하나입니다.",
@@ -1966,6 +1970,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-devtools",
     name: "개발자 도구",
+    graphLabel: "React 개발자 도구",
     tagline: "React Performance 트랙: 브라우저 Performance 패널에서 렌더, 커밋, 효과를 레인별로",
     intro:
       "참고서의 개발자 도구 갈래는 'React Performance tracks' 한 페이지입니다. React 19.2부터 React가 브라우저 Performance 패널의 타임라인에 자기 트랙을 그립니다. 트랙은 셋입니다. Scheduler 트랙은 Blocking, Transition, Suspense, Idle 레인에 무엇이 스케줄됐는지 보여 줍니다. Components 트랙은 컴포넌트별 렌더 시간과 효과 시간, 마운트와 언마운트를 보여 줍니다. Server 트랙은 서버 요청과 서버 컴포넌트를 보여 주며, 개발 빌드에서만 그립니다. 트랙은 개발 빌드와 프로파일링 빌드(react-dom/profiling)에서만 켜지고, 운영 빌드에서는 꺼져 있습니다. 이 시트는 직접 돌려 보지 않고 문서를 기준으로 썼습니다. 대신 다른 노드에서 잰 결과가 이 트랙에서 어떻게 보일지 함께 적습니다. StrictMode 두 번 렌더, Suspense 300ms 묶음, 전환의 입력 우선이 그 예입니다. 이 노드의 질문은 하나입니다. '느리다'를 어디서 어떻게 읽을까요?",
@@ -2311,6 +2316,7 @@ export const reactTheories: Theory[] = [
   {
     id: "ra-rsc-directives",
     name: "서버 컴포넌트 지시어",
+    graphLabel: "서버 지시어",
     tagline: "'use client'는 번들의 경계, 'use server'는 서버에 남는 함수의 표시",
     intro:
       "참고서의 RSC 지시어 둘입니다. 'use client'는 파일 첫 줄에 두어 '이 모듈과 그것이 import하는 모든 것을 클라이언트 코드로 표시'합니다. 서버 컴포넌트가 이 모듈의 컴포넌트를 렌더하는 곳이 경계입니다. 'use server'는 async 함수 몸 첫 줄(그 함수만)이나 파일 첫 줄(모든 export)에 두어 '클라이언트가 부를 수 있는 서버 함수'로 표시합니다. 둘 다 '파일·함수의 맨 처음, import보다 앞(주석은 괜찮음), 홑·쌍따옴표(백틱 불가)'가 규칙입니다. 실제로 돌려 보면 번들러 없는 Node에서 'use server'는 그냥 문자열이었고, 폼은 클라이언트 액션으로 렌더됐습니다. 컴파일러 지시어처럼 뜻은 도구가 줍니다. 이 노드의 질문은 하나입니다. 경계를 어디에 두고, 무엇을 넘길까요?",
@@ -2408,7 +2414,7 @@ export const reactTheories: Theory[] = [
 
   {
     id: "ra-legacy-apis",
-    name: "레거시 API 목록",
+    name: "레거시 React API",
     tagline: "여덟 각각: 무엇을 했나, 왜 레거시인가, 대신 무엇을 쓰나",
     intro:
       "레거시 API 여덟을 하나씩 봅니다. Children, cloneElement, Component, createElement, createRef, forwardRef, isValidElement, PureComponent입니다. 모두 19.3.1에서 동작합니다. 문서가 '피하라'고 하는 까닭은 깨져서가 아닙니다. 같은 일을 더 명시적으로 하는 길이 생겼기 때문입니다. 실제로 돌려 보면 Children.map + cloneElement로 자식에 data-i를 끼울 수 있었지만, 자식이 어떤 props를 받는지 코드에 드러나지 않았습니다. forwardRef와 ref-as-prop은 결과가 같았습니다. PureComponent와 memo는 같은 props에서 둘 다 한 번만 그렸습니다. 이 노드의 질문은 하나입니다. 기존 코드에서 이것을 만나면 무엇으로 바꿀까요?",

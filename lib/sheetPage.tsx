@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import OutlineSlot from "@/components/content/OutlineSlot";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -31,6 +32,23 @@ export function sheetPage<T extends { id: string }>({
       const item = find((await params).id);
       if (!item) notFound();
       return render(item);
+    },
+  };
+}
+
+/**
+ * 같은 `[id]` 시트의 목차와 포트 — 레이아웃의 @outline 슬롯에 서는 페이지(app/@outline).
+ *
+ * 껍데기는 루트 레이아웃에 있어 페이지가 바뀌어도 살아 있고, 페이지에서 무엇도 받지
+ * 않는다. 노드마다 다른 목차와 포트는 이 슬롯으로 들어온다. 본문 페이지와 같은 목록으로
+ * 정적 경로를 만든다 — 한쪽에만 있는 경로가 생기지 않게.
+ */
+export function outlinePage<T extends { id: string }>(list: readonly T[]) {
+  return {
+    generateStaticParams: () => list.map((item) => ({ id: item.id })),
+    Page: async function OutlinePage({ params }: Params) {
+      const { id } = await params;
+      return list.some((item) => item.id === id) ? <OutlineSlot nodeId={id} /> : null;
     },
   };
 }

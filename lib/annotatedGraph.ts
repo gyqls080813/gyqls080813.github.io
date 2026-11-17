@@ -1,10 +1,12 @@
 import type { GraphNodeData } from "@/components/graph/types";
 import { allClusters, fullGraphNodes } from "./graphData";
 import { getIdea } from "./ideas";
+import { postsOfProject } from "./catalog";
 import { getPost, posts } from "./posts";
 import { getTheory } from "./theories";
 import { getTil } from "./tils";
 import { getDictionary } from "./dictionary";
+import { TIL_ID } from "./nodeKinds";
 
 /**
  * 글 데이터를 집계해 노드에 붙인 그래프.
@@ -28,7 +30,7 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
       : node;
   }
   if (node.kind === "project") {
-    const count = posts.filter((post) => post.project === node.id).length;
+    const count = postsOfProject(node.id).length;
     return { ...node, meta: `트러블 ${count}` };
   }
   /* 내용이 있는 것만 열린다 — 나머지는 이동·확대까지만 */
@@ -46,7 +48,7 @@ export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) =>
   const cluster = allClusters.find((candidate) => candidate.hub === node.id);
   if (cluster) {
     /* TIL 아래는 챕터가 아니라 날짜다 — 세는 것이 다르면 이름도 달라야 한다 */
-    const unit = node.id === "til" ? "기록" : "챕터";
+    const unit = node.id === TIL_ID ? "기록" : "챕터";
     return { ...node, ...openable, meta: `${unit} ${cluster.chapters.length}` };
   }
   const references = posts.filter((post) =>

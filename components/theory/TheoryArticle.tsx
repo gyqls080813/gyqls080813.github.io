@@ -1,8 +1,11 @@
 import type { Theory } from "@/lib/theories";
 import { postSummaries } from "@/lib/catalog";
-import { PostCard, SectionHeading } from "../content";
+import PostCard from "../content/PostCard";
+import { SectionHeading } from "../content/Prose";
 import SheetArticle from "../content/SheetArticle";
+import SheetPager from "../content/SheetPager";
 import styles from "../content/SheetArticle.module.css";
+import { SHEET_HEAD } from "@/lib/headings";
 
 /**
  * 개념 시트 안쪽 — 노드가 열리는 중에도 같은 내용이 그대로 보여야 해서 따로 뒀다.
@@ -16,15 +19,14 @@ export default function TheoryArticle({ theory }: { theory: Theory }) {
 
   return (
     <SheetArticle
-      kind="theory"
-      kicker="이론"
-      title={theory.name}
-      tagline={theory.tagline}
+      head={SHEET_HEAD.theory(theory)}
+      keyPoints={theory.keyPoints}
       introLabel="무엇을 푸는가"
       intro={theory.intro}
       blocks={theory.blocks}
       sections={theory.sections}
       sources={theory.sources}
+      footer={<SheetPager nodeId={theory.id} kind="theory" />}
     >
       {related.length > 0 && (
         <>

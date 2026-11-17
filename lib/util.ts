@@ -18,3 +18,14 @@ export function toggled<T>(set: ReadonlySet<T>, item: T): Set<T> {
   if (!next.delete(item)) next.add(item);
   return next;
 }
+
+/**
+ * 객체를 사전처럼 찾되 자기 키만 본다.
+ *
+ * 생성된 색인(lib/generated/sheetIndex)은 평범한 객체 리터럴이라, `index[id]`로
+ * 찾으면 `constructor`, `toString` 같은 Object의 기본 키까지 걸린다. 주소에서 온
+ * id(`/?node=constructor`)가 그대로 들어오면 함수가 돌아와 뒤에서 깨진다.
+ */
+export function own<T>(record: Readonly<Record<string, T>>, key: string): T | undefined {
+  return Object.hasOwn(record, key) ? record[key] : undefined;
+}

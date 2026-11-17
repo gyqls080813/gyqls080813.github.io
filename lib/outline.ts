@@ -3,16 +3,20 @@ import { postSummaries, type PostSummary } from "./catalog";
 import { fullGraphNodes, nodeById } from "./graphData";
 import { sheetIndex } from "./generated/sheetIndex";
 import { parseRoute } from "./nodeKinds";
-import type { NavItem, Port } from "./sheet";
-import { isDefined } from "./util";
+import { nodePath } from "./nodePath";
+import type { NodeOutline } from "./sheet";
+import { isDefined, own } from "./util";
 
 /**
- * 브라우저가 쓰는 시트 요약 — 목차·포트·머리말·카드 집계·글 뼈대.
+ * 브라우저가 쓰는 시트 요약 — 열림 종류, 카드 집계, 머리말의 길, 글 뼈대.
  *
- * lib/sheet·lib/annotatedGraph가 본문을 보고 계산하던 것을 빌드 때 색인으로
- * 뽑아 두고(scripts/sheet-index.mjs), 여기서는 읽기만 한다. 껍데기는 루트
- * 레이아웃에 있어 모든 페이지에 실리므로, 본문 모듈을 불러오면 모든 페이지가
- * 본문 전체를 JS로 받게 된다. 이 파일은 본문 모듈을 불러오지 않는다.
+ * 껍데기는 루트 레이아웃에 있어 모든 페이지에 실린다. 그래서 여기서 부르는 것도
+ * 모든 페이지가 받는다. 본문 모듈은 부르지 않고, 빌드 때 뽑은 색인(scripts/sheet-index.mjs)은
+ * 모든 노드에 대해 알아야 하는 것(열림 종류, 카드 집계)만 갖는다.
+ *
+ * 노드 하나에만 쓰이는 목차, 포트, 머리는 여기 모으지 않는다 — 노드가 수백 개라
+ * 다 모으면 모든 페이지가 수백 KB를 받는다. 시트 페이지는 레이아웃의 @outline
+ * 슬롯으로, 홈의 겹침 화면은 loadOutline으로 그 노드 것만 받는다.
  */
 
 // ── 지금 어느 노드인가 ───────────────────────────────────
@@ -25,7 +29,7 @@ export function sheetNodeId(pathname: string): string | null {
   const route = parseRoute(pathname);
   /* 없는 노드면 시트가 아니다 — 404 페이지가 그 주소로 뜰 때 껍데기를 그리면,
      서버가 만든 404 HTML(껍데기 없음)과 어긋나 하이드레이션이 깨진다 */
-  return route && sheetIndex.openKind[route.nodeId] === route.kind ? route.nodeId : null;
+  return route && own(sheetIndex.openKind, route.nodeId) === route.kind ? route.nodeId : null;
 }
 
 // ── 요약 ────────────────────────────────────────────────
@@ -36,20 +40,51 @@ export function sheetNodeId(pathname: string): string | null {
  * 전환이 끊기지 않는다(초기 배치 캐시도 같은 배열인지로 알아본다).
  */
 export const annotatedGraphNodes: GraphNodeData[] = fullGraphNodes.map((node) => {
-  const extra = sheetIndex.annotations[node.id];
+  const extra = own(sheetIndex.annotations, node.id);
   return extra ? { ...node, ...extra } : node;
 });
 
-/** 오른쪽 목차 */
-export const navOf = (nodeId: string): NavItem[] => sheetIndex.nav[nodeId] ?? [];
-
-/** 시트 양옆의 포트 = 그래프에서 이 노드에 들어오고 나가는 선 */
-export const portsOf = (nodeId: string): { left: Port[]; right: Port[] } =>
-  sheetIndex.ports[nodeId] ?? { left: [], right: [] };
-
-/** 머리말에 세울 길 — 뿌리부터 지금까지 */
-export const crumbsOf = (nodeId: string): GraphNodeData[] =>
-  (sheetIndex.crumbs[nodeId] ?? []).map((id) => nodeById.get(id)).filter(isDefined);
+/**
+ * 머리말에 세울 길 — 뿌리부터 지금까지.
+ *
+ * 개념·생각은 계층이 간선에 있으므로 nodePath가 그대로 답이다. 트러블 글만
+ * 예외인데, 프로젝트의 자식이지만 개념 계층(허브 → 챕터)에 속하지 않아서
+ * 부모(요약 목록의 project)를 따로 얹어 준다.
+ */
+export function crumbsOf(nodeId: string): GraphNodeData[] {
+  const post = postSummaries.find((item) => item.id === nodeId);
+  if (post) return [post.project, nodeId].map((id) => nodeById.get(id)).filter(isDefined);
+  return nodePath(nodeId);
+}
 
 /** 트리가 쓰는 글의 뼈대 — 본문 없는 요약 목록 그대로다 */
 export const postOutlines: PostSummary[] = postSummaries;
+
+// ── 노드 하나의 목차, 포트, 머리 ─────────────────────────
+
+/**
+ * 빌드 때 노드마다 뽑아 둔 요약 파일의 주소 (scripts/sheet-index.mjs가 public/outline에 쓴다).
+ * id를 그대로 쓴다 — 노드 id는 소문자, 숫자, 하이픈뿐이라 주소에 그대로 들어간다(tests/graph-integrity).
+ */
+export const outlineUrl = (nodeId: string) => `/outline/${nodeId}.json`;
+
+const loading = new Map<string, Promise<NodeOutline | null>>();
+
+/**
+ * 노드 하나의 목차, 포트, 머리 — 홈에서 노드를 누른 순간 받기 시작한다. 카메라가 그
+ * 노드로 옮겨 가는 동안(0.5초) 도착하는 크기다. 한 번 받은 것은 다시 받지 않고,
+ * 못 받았으면 null이다(다음에 누를 때 다시 받는다). 겹침 화면은 그동안 머리 없이 열린다.
+ */
+export function loadOutline(nodeId: string): Promise<NodeOutline | null> {
+  const cached = loading.get(nodeId);
+  if (cached) return cached;
+  const promise = fetch(outlineUrl(nodeId))
+    .then((response) => (response.ok ? (response.json() as Promise<NodeOutline>) : null))
+    .catch(() => null)
+    .then((outline) => {
+      if (!outline) loading.delete(nodeId);
+      return outline;
+    });
+  loading.set(nodeId, promise);
+  return promise;
+}

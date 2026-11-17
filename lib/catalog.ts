@@ -38,7 +38,7 @@ export const projectSummaries: ProjectSummary[] = [
     period: "2026.01.12 – 2026.02.09, 5주",
     team: "6인, 프론트엔드 3인",
     role: "프론트엔드 — 익스텐션 전반",
-    award: "SSAFY 공통 프로젝트 최우수상",
+    award: "삼성청년 SW·AI 아카데미 공통 프로젝트 최우수상",
     repo: "https://github.com/gyqls080813/WITHY",
     stack: [
       "WXT",
@@ -81,7 +81,7 @@ export const projectSummaries: ProjectSummary[] = [
     period: "2026.04.14 – 2026.05.22, 6주",
     team: "6인, 프론트엔드 2인",
     role: "프론트엔드 리더 — 예매 흐름과 봇 탐지",
-    award: "SSAFY 자율 프로젝트 우수상",
+    award: "삼성청년 SW·AI 아카데미 자율 프로젝트 우수상",
     repo: "https://github.com/gyqls080813/Tickle",
     stack: [
       "Next.js",
@@ -99,10 +99,19 @@ export const projectSummaries: ProjectSummary[] = [
   },
 ];
 
+/** "2026.01.12 – 2026.02.09, 5주" → ["2026.01", "2026.02"] — 시작 달과 끝 달 */
+function periodMonths(period: string): string[] {
+  return (period.match(/\d{4}\.\d{2}/g) ?? []).slice(0, 2);
+}
+
 /** "2026.01.12 – 2026.02.09, 5주" → "2026.01 – 2026.02" (그래프 카드의 날짜 줄) */
 export function monthSpan(period: string): string {
-  const months = period.match(/\d{4}\.\d{2}/g) ?? [];
-  return months.slice(0, 2).join(" – ");
+  return periodMonths(period).join(" – ");
+}
+
+/** "2026.01.12 – 2026.02.09, 5주" → "2026.02" (프로젝트가 끝난 달 — 소개의 수상 날짜) */
+export function endMonth(period: string): string {
+  return periodMonths(period).at(-1) ?? "";
 }
 
 /** "프론트엔드 리더 — API 계층과 에러 처리" → "프론트엔드 리더" (소개 카드의 직함) */
@@ -118,6 +127,8 @@ export type PostSummary = {
   /** 그래프의 트러블 노드 id와 동일 */
   id: string;
   title: string;
+  /** 그래프 카드의 짧은 이름 — 글 제목은 문장이라 카드에 들어가지 않는다 */
+  graphLabel: string;
   date: string;
   readMinutes: number;
   /** 발생한 프로젝트 — 프로젝트 → 트러블 간선과 트러블 틀이 여기서 나온다 */
@@ -130,6 +141,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-isolated",
     title: "video.currentTime은 됐는데, 넷플릭스는 그 사실을 몰랐다",
+    graphLabel: "넷플릭스 플레이어 제어",
     date: "2026.02.05",
     readMinutes: 9,
     project: "withy",
@@ -138,6 +150,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-focus",
     title: "넷플릭스가 유휴 상태가 되면 채팅 커서가 사라졌다",
+    graphLabel: "채팅 입력 포커스 유실",
     date: "2026.02.06",
     readMinutes: 7,
     project: "withy",
@@ -149,6 +162,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-sync",
     title: "완벽히 맞추려던 동기화가 오히려 영상을 끊고 있었다",
+    graphLabel: "영상 동기화 불감대",
     date: "2026.02.08",
     readMinutes: 7,
     project: "withy",
@@ -160,6 +174,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-schema",
     title: "백엔드 스키마가 바뀌면 전원이 같은 흰 화면을 봤다",
+    graphLabel: "런타임 스키마 검증",
     date: "2026.03.24",
     readMinutes: 6,
     project: "petfolio",
@@ -171,6 +186,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-tagged",
     title: "에러 타입이 unknown인 채로는, 놓친 분기가 크래시가 된다",
+    graphLabel: "타입 안전 예외 처리",
     date: "2026.03.28",
     readMinutes: 6,
     project: "petfolio",
@@ -182,6 +198,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-canvas",
     title: "DOM으로 그린 좌석은 셀렉터 한 줄에 뚫렸다",
+    graphLabel: "Canvas 좌석 렌더링",
     date: "2026.05.10",
     readMinutes: 7,
     project: "tickle",
@@ -190,6 +207,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-webdriver",
     title: "봇 방어가 서버 AI 한 곳뿐이라는 게 문제였다",
+    graphLabel: "WebDriver 봇 필터링",
     date: "2026.05.15",
     readMinutes: 5,
     project: "tickle",
@@ -198,6 +216,7 @@ export const postSummaries: PostSummary[] = [
   {
     id: "t-buffer",
     title: "행동 데이터를 수집하자 좌석 화면이 버벅였다",
+    graphLabel: "비동기 이벤트 버퍼링",
     date: "2026.05.22",
     readMinutes: 9,
     project: "tickle",
@@ -208,6 +227,15 @@ export const postSummaries: PostSummary[] = [
     ],
   },
 ];
+
+/**
+ * 이 프로젝트에서 나온 글 — 그래프의 간선과 틀, 카드의 「트러블 N」, 프로젝트 시트의
+ * 목차와 포트, 트리가 모두 이 하나를 본다. 화면마다 따로 거르면 원본(요약이냐
+ * 본문이냐)에 따라 숫자가 갈린다. 요약마다 본문이 있다는 것은 tests/graph-integrity가 지킨다.
+ */
+export function postsOfProject(projectId: string): PostSummary[] {
+  return postSummaries.filter((post) => post.project === projectId);
+}
 
 // ── 사전의 절 ─────────────────────────────────────────────
 

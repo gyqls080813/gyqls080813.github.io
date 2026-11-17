@@ -7,6 +7,15 @@
  * 이 파일은 본문 모듈을 부르지 않는다 — 브라우저(트리·그래프·껍데기)에서도 쓴다.
  * 종류마다 본문을 찾는 쪽은 lib/nodeContent에 있다.
  */
+/**
+ * 하나뿐인 노드의 id — 그래프의 시작점(나), 사전, TIL 갈래.
+ * 종류(kind)가 아니라 이 id 자체에 뜻이 붙은 노드라 여러 파일이 이름으로 찾는다.
+ * 글자로 흩어 적지 않고 여기서 가져다 쓴다. 이 파일은 아무것도 부르지 않아 어디서든 쓸 수 있다.
+ */
+export const ME_ID = "me";
+export const DICT_ID = "dict";
+export const TIL_ID = "til";
+
 export const OPEN_KINDS = ["intro", "project", "post", "theory", "idea", "til", "dict"] as const;
 export type NodeOpenKind = (typeof OPEN_KINDS)[number];
 
@@ -20,8 +29,8 @@ const ROUTES: Record<NodeOpenKind, { prefix: string } | { path: string; nodeId: 
   theory: { prefix: "/theories/" },
   idea: { prefix: "/ideas/" },
   til: { prefix: "/tils/" },
-  dict: { path: "/dictionary", nodeId: "dict" },
-  intro: { path: "/about", nodeId: "me" },
+  dict: { path: "/dictionary", nodeId: DICT_ID },
+  intro: { path: "/about", nodeId: ME_ID },
 };
 
 /** 이 종류의 이 노드가 머무는 주소 */

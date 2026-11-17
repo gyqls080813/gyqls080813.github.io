@@ -9,11 +9,19 @@ import {
   type NodeChange,
   type ReactFlowInstance,
 } from "@xyflow/react";
-import { planClaim } from "@/lib/membership";
+import {
+  frameBox,
+  membershipKey,
+  parseMembershipKey,
+  pickDropFrame,
+  planClaim,
+  type FrameState,
+} from "@/lib/membership";
 import { snapToNeighbors, type Guide, type SnapRect } from "@/lib/snap";
-import { ancestorChain, lineageOf } from "@/lib/topology";
+import { lineageOf } from "@/lib/topology";
 import { toggled } from "@/lib/util";
 import { GridIcon } from "../../icons";
+import { useTheme } from "../../useTheme";
 import type { GraphBackdropData, GraphEdgeData, GraphNodeData } from "../types";
 import BackdropNode from "./BackdropNode";
 import KnowledgeNode from "./KnowledgeNode";
@@ -103,23 +111,10 @@ function rectOf(node: GraphFlowNode): SnapRect {
 const memberIdsOf = (node: GraphFlowNode): string[] =>
   node.type === "backdrop" ? node.data.memberIds : [];
 
-/** 소속을 한 줄 글자로 — 노드가 움직일 때마다가 아니라 소속이 바뀔 때만 다시 계산하려고 */
-const membershipKeyOf = (list: readonly GraphFlowNode[]) =>
-  list
-    .flatMap((node) =>
-      node.type === "backdrop" ? [`${node.id}:${node.data.memberIds.join(",")}`] : [],
-    )
-    .join("|");
-
-const parseMembership = (key: string) =>
-  new Map(
-    key
-      .split("|")
-      .filter(Boolean)
-      .map((entry) => {
-        const [id, members] = entry.split(":");
-        return [id, members ? members.split(",") : []] as const;
-      }),
+/** 틀마다의 지금 소속 — 소속은 화면 상태(rfNodes)의 memberIds 한 곳에만 있다 */
+const liveMembership = (list: readonly GraphFlowNode[]): FrameState[] =>
+  list.flatMap((node) =>
+    node.type === "backdrop" ? [{ id: node.id, members: node.data.memberIds }] : [],
   );
 
 interface KnowledgeGraphProps {
@@ -151,6 +146,8 @@ export default function KnowledgeGraph({
   onNodeClick,
   onReady,
 }: KnowledgeGraphProps) {
+  /* React Flow 기본 부품(컨트롤, 배경 점)도 지금 판을 따른다 */
+  const theme = useTheme();
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [guides, setGuides] = useState<Guide[]>([]);
 
@@ -196,11 +193,11 @@ export default function KnowledgeGraph({
    * 소속을 따른다 — 옮긴 노드가 새 틀을 접어도 안 숨고, 정렬하면 옛 틀로 돌아간다.
    * 그래서 끌어 넣기가 바꾸는 화면 상태(memberIds)를 유일한 소속으로 본다.
    */
-  const membershipKey = membershipKeyOf(rfNodes);
+  const liveKey = membershipKey(liveMembership(rfNodes));
   const frames = useMemo<GraphBackdropData[]>(() => {
-    const live = parseMembership(membershipKey);
+    const live = parseMembershipKey(liveKey);
     return backdrops.map((frame) => ({ ...frame, members: live.get(frame.id) ?? frame.members }));
-  }, [backdrops, membershipKey]);
+  }, [backdrops, liveKey]);
 
   /* 접힌 틀이 가리는 노드 → 그 틀 id. 바깥 틀부터 정한다 —
      한 곳에만 붙어야 옮겨 그린 선이 두 갈래로 갈라지지 않는다. */
@@ -367,25 +364,17 @@ export default function KnowledgeGraph({
         const member = byId.get(id);
         return member && !member.hidden && member.id !== node.id ? [member] : [];
       });
-      if (members.length === 0) return node;
-
-      let minX = Infinity;
-      let minY = Infinity;
-      let maxX = -Infinity;
-      let maxY = -Infinity;
-      for (const member of members) {
-        const size = sizeOnScreen(member, collapsed.has(member.id));
-        minX = Math.min(minX, member.position.x);
-        minY = Math.min(minY, member.position.y);
-        maxX = Math.max(maxX, member.position.x + size.width);
-        maxY = Math.max(maxY, member.position.y + size.height);
-      }
-
-      const floor = frameFloors.get(node.id);
-      const width = Math.max(maxX - minX + BACKDROP_PAD * 2, floor?.width ?? 0);
-      const height = Math.max(maxY - minY + BACKDROP_PAD * 2 + BACKDROP_TITLE, floor?.height ?? 0);
-      const x = minX - BACKDROP_PAD;
-      const y = minY - BACKDROP_PAD - BACKDROP_TITLE;
+      const box = frameBox(
+        members.map((member) => ({
+          ...member.position,
+          ...sizeOnScreen(member, collapsed.has(member.id)),
+        })),
+        BACKDROP_PAD,
+        BACKDROP_TITLE,
+        frameFloors.get(node.id),
+      );
+      if (!box) return node;
+      const { x, y, width, height } = box;
       if (
         node.position.x === x &&
         node.position.y === y &&
@@ -469,58 +458,33 @@ export default function KnowledgeGraph({
    * 틀 안에 떨어뜨리면 들어온다 — 가운데 기준, 다른 틀에서는 빠진다(단일 소속).
    * 밖으로 끌어내는 것만으로는 빠지지 않는다 (원작 규칙).
    *
-   * 겹친 틀에서 임자를 고르는 것은 위치가 아니라 계층이다. 틀은 틀을 담으므로
-   * (생각 › TIL) 한 점이 여러 틀 안에 동시에 있다 — 목록에서 먼저 나온 것을
-   * 고르면 언제나 가장 바깥이 걸리고, 안쪽 틀 안에서 노드를 움직이기만 해도
-   * 바깥 틀이 가져가 버린다. 안쪽이 임자다.
+   * 어느 틀이 가져가는지는 lib/membership의 pickDropFrame이 정한다(겹치면 안쪽 틀이 임자).
+   * 여기서는 화면 상태를 그 계산의 입력으로 옮기고, 결과로 소속과 개수를 다시 적는다.
    */
   const claimOnDrop = (node: GraphFlowNode) => {
     if (node.type !== "knowledge") return;
     setRfNodes((current) => {
       const frameNodes = current.flatMap((frame) => (frame.type === "backdrop" ? [frame] : []));
 
-      /* 틀의 계층 — 소속이 목록인 것처럼 부모도 목록에서 읽는다 */
-      const isFrame = new Set(frameNodes.map((frame) => frame.id));
-      const parentOf = new Map<string, string>();
-      for (const frame of frameNodes) {
-        for (const member of frame.data.memberIds) {
-          if (isFrame.has(member)) parentOf.set(member, frame.id);
-        }
-      }
-      /* 이 틀을 감싸는 틀들, 안에서 밖으로 */
-      const ancestorsOf = (id: string) => ancestorChain(id, parentOf);
-
       const size = sizeOnScreen(node);
-      const center = { x: node.position.x + size.width / 2, y: node.position.y + size.height / 2 };
-      /* 접혀 숨은 틀은 그릴 자리가 없으니 받을 수도 없다 */
-      const inside = frameNodes.filter((frame) => {
-        if (frame.hidden) return false;
-        const width = Number(frame.style?.width ?? 0);
-        const height = Number(frame.style?.height ?? 0);
-        return (
-          center.x >= frame.position.x &&
-          center.x <= frame.position.x + width &&
-          center.y >= frame.position.y &&
-          center.y <= frame.position.y + height
-        );
-      });
-      /* 깊은 것이 먼저. 계층이 갈리지 않는 겹침(형제끼리)은 좁은 쪽이 더
-         구체적인 뜻이므로 그쪽을 고른다 */
-      const areaOf = (frame: GraphFlowNode) =>
-        Number(frame.style?.width ?? 0) * Number(frame.style?.height ?? 0);
-      const hit = [...inside].sort(
-        (a, b) => ancestorsOf(b.id).length - ancestorsOf(a.id).length || areaOf(a) - areaOf(b),
-      )[0];
-      const owner = frameNodes.find((frame) => frame.data.memberIds.includes(node.id));
-      if (!hit || hit.id === owner?.id) return current;
-      /* 자기 틀을 감싸는 바깥 틀로는 저절로 옮겨 가지 않는다. 안쪽 틀의 노드는
-         언제나 바깥 틀 안에도 있어서, 이걸 허락하면 「밖으로 나가도 남는다」가
-         무너진다 — 밖으로 내보내는 것은 빼라고 말해야 하는 일이다. */
-      if (owner && ancestorsOf(owner.id).includes(hit.id)) return current;
+      const hitId = pickDropFrame(
+        frameNodes.map((frame) => ({
+          id: frame.id,
+          members: frame.data.memberIds,
+          hidden: frame.hidden,
+          x: frame.position.x,
+          y: frame.position.y,
+          width: Number(frame.style?.width ?? 0),
+          height: Number(frame.style?.height ?? 0),
+        })),
+        node.id,
+        { x: node.position.x + size.width / 2, y: node.position.y + size.height / 2 },
+      );
+      if (!hitId) return current;
 
       const writes = planClaim(
         frameNodes.map((frame) => ({ id: frame.id, members: frame.data.memberIds })),
-        hit.id,
+        hitId,
         [node.id],
       );
       if (writes.length === 0) return current;
@@ -628,7 +592,7 @@ export default function KnowledgeGraph({
           nodes={viewNodes}
           edges={flowEdges}
           nodeTypes={nodeTypes}
-          colorMode="dark"
+          colorMode={theme}
           fitView
           fitViewOptions={{ padding: FIT_PADDING }}
           minZoom={MIN_ZOOM}

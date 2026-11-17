@@ -827,6 +827,7 @@ export const javascriptTheories: Theory[] = [
   {
     id: "js-prototypes",
     name: "프로토타입과 프로토타입 상속",
+    graphLabel: "프로토타입과 상속",
     tagline: "못 찾으면 [[Prototype]]을 따라 올라간다. 그 한 규칙이 상속의 전부다",
     intro:
       "네 편입니다. 프로토타입 상속, 함수의 prototype 프로퍼티, 내장 객체의 프로토타입, 프로토타입 메서드와 __proto__ 없는 객체를 다룹니다. 모든 객체에는 숨은 프로퍼티 [[Prototype]]이 있습니다. 값은 다른 객체나 null입니다. 프로퍼티를 읽을 때 객체에 없으면 [[Prototype]]에서 찾고, 거기도 없으면 다시 그 위에서 찾습니다. null까지 가도 없으면 undefined입니다. 쓰기는 다릅니다. 대입은 늘 객체 자신에 합니다. 메서드 안의 this는 어디서 찾았든 '점 앞의 것'입니다. new F()가 만든 객체의 [[Prototype]]은 F.prototype입니다. 배열의 사슬은 Array.prototype을 거쳐 Object.prototype을 지나 null에서 끝납니다. 실제로 돌려 봐도 전부 그렇습니다. 이 챕터의 질문은 하나입니다. 이 프로퍼티는 누구의 것일까요?",

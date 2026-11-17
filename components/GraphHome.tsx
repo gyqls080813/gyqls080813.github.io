@@ -1,9 +1,10 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import type { ReactFlowInstance } from "@xyflow/react";
 import TopBar from "./TopBar";
+import ExpandShell from "./ExpandShell";
 import KnowledgeGraph from "./graph/flow/KnowledgeGraph";
 import { sizeOnScreen, type GraphFlowNode } from "./graph/flow/sizes";
 import NodeTree from "./post/NodeTree";
@@ -12,10 +13,11 @@ import SheetNav from "./content/SheetNav";
 import SheetPorts from "./content/SheetPorts";
 import { useSheetView } from "./content/SheetView";
 import sheetStyles from "./content/Sheet.module.css";
-import { annotatedGraphNodes, navOf, portsOf } from "@/lib/outline";
+import { annotatedGraphNodes, loadOutline } from "@/lib/outline";
 import { fullGraphBackdrops, fullGraphEdges } from "@/lib/graphData";
-import type { NodeOpenKind } from "@/lib/nodeKinds";
+import { ME_ID, type NodeOpenKind } from "@/lib/nodeKinds";
 import { nodeDestination, nodeOpenKind } from "@/lib/nodeTarget";
+import type { NodeOutline } from "@/lib/sheet";
 import { cx } from "@/lib/util";
 import styles from "./GraphHome.module.css";
 
@@ -37,13 +39,13 @@ interface Expanding {
   stage: Rect;
 }
 
-/* 겹침 화면의 본문 — 본문 모듈·코드 색칠을 끌고 오므로 첫 번들에서 뺀다 (ExpandArticle 참고) */
-const loadExpandArticle = () => import("./ExpandArticle");
-const ExpandArticle = lazy(loadExpandArticle);
-
 /** 그래프 밖에서 들어왔을 때 노드로 옮겨 가는 동작 */
 const FOCUS_ZOOM = 1.35;
 const FOCUS_MS = 520;
+/** 노드 카드가 시트로 커지는 시간 — CSS 전환(GraphHome.module.css)도 --expand-ms로 이 값을 쓴다 */
+const EXPAND_MS = 460;
+/** 이동이나 전환이 끝난 뒤 한 박자 — 마지막 프레임이 칠해지고 나서 다음으로 넘긴다 */
+const SETTLE_MS = 40;
 
 /** 휴대폰 첫 화면 — 이 폭 아래에서는 전체 맞춤 대신 읽을 수 있는 배율로 연다 */
 const PHONE_QUERY = "(max-width: 720px)";
@@ -80,6 +82,9 @@ export default function GraphHome() {
   const router = useRouter();
   const [expanding, setExpanding] = useState<Expanding | null>(null);
   const [opened, setOpened] = useState(false);
+  /* 누른 노드의 목차, 포트, 머리 — 누른 순간 받기 시작해 카메라가 옮겨 가는 동안 도착한다.
+     어느 노드 것인지 같이 적어 둔다 — 늦게 온 답이 다른 노드의 겹침 화면에 붙지 않게 */
+  const [outline, setOutline] = useState<{ nodeId: string; data: NodeOutline } | null>(null);
   const stageRef = useRef<HTMLElement>(null);
   /* 열린 시트가 설 자리를 재는 보이지 않는 상자 — 진짜 시트와 같은 클래스라
      크기·자리를 숫자로 따라 적지 않고 CSS가 정한 그대로 읽는다 */
@@ -106,19 +111,6 @@ export default function GraphHome() {
     window.history.replaceState(null, "", window.location.pathname);
   }, []);
 
-  /* 겹침 화면의 본문을 화면이 한가할 때 미리 받아 둔다 — 누른 뒤에 받기 시작하면
-     카메라 이동(0.5초) 안에 못 올 수 있다 */
-  useEffect(() => {
-    const warm = () => void loadExpandArticle();
-    /* Safari에는 requestIdleCallback이 없다 */
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(warm, { timeout: 3000 });
-      return () => window.cancelIdleCallback(id);
-    }
-    const id = window.setTimeout(warm, 1500);
-    return () => window.clearTimeout(id);
-  }, []);
-
   /* 휴대폰에서는 그래프 전체를 한 화면에 맞추면 노드가 손톱만 해져 읽지도 누르지도
      못한다. 그래서 처음에는 시작점(민엽)을 왼쪽에 두고 읽을 수 있는 배율로 연다.
      옆 갈래는 끌어서 보고, 길을 고르는 일은 상단 바의 메뉴가 맡는다.
@@ -126,7 +118,7 @@ export default function GraphHome() {
   const startReadable = (instance: ReactFlowInstance<GraphFlowNode>) => {
     if (!window.matchMedia(PHONE_QUERY).matches) return;
     window.setTimeout(() => {
-      const me = instance.getNode("me");
+      const me = instance.getNode(ME_ID);
       if (!me) return;
       const { height } = sizeOnScreen(me);
       const stage = stageRef.current?.getBoundingClientRect();
@@ -178,7 +170,7 @@ export default function GraphHome() {
       to: rectOf(sheet),
       stage: rectOf(stage),
     });
-    setTimeout(finish, 500);
+    setTimeout(finish, EXPAND_MS + SETTLE_MS);
   };
 
   /* 노드로 가는 유일한 동작 — 어디서 왔든 같은 순서다: 이동(확대) → 열림.
@@ -192,12 +184,15 @@ export default function GraphHome() {
     const wait = moveToNode(nodeId);
 
     if (!kind) return;
+    void loadOutline(nodeId).then((data) => {
+      if (data) setOutline({ nodeId, data });
+    });
     if (wait === 0) {
       expandNode(nodeId, kind);
       return;
     }
     /* 이동이 끝나 카드가 제자리에 선 뒤에 재야 시작 위치가 어긋나지 않는다 */
-    window.setTimeout(() => expandNode(nodeId, kind), wait + 40);
+    window.setTimeout(() => expandNode(nodeId, kind), wait + SETTLE_MS);
   }
 
   /* 오버레이가 시작 상태로 한 번 그려진 뒤에 열어야 전이가 걸린다 */
@@ -209,10 +204,15 @@ export default function GraphHome() {
     return () => cancelAnimationFrame(raf);
   }, [expanding, opened]);
 
-  const ports = expanding ? portsOf(expanding.nodeId) : null;
+  /* 아직 안 왔으면 목차와 포트 없이 열린다 — 도착하면 그 자리에 들어선다 */
+  const shown = expanding && outline?.nodeId === expanding.nodeId ? outline.data : null;
+  const ports = shown?.ports ?? { left: [], right: [] };
 
   return (
-    <div className={cx(styles.screen, opened && styles.expandOpen)}>
+    <div
+      className={cx(styles.screen, opened && styles.expandOpen)}
+      style={{ "--expand-ms": `${EXPAND_MS}ms` } as CSSProperties}
+    >
       <TopBar />
       <main ref={stageRef} className={styles.graphArea}>
         <KnowledgeGraph
@@ -246,7 +246,7 @@ export default function GraphHome() {
         />
       </main>
 
-      {expanding && ports && (
+      {expanding && (
         <>
           <div className={styles.expandScrim} />
           {/* 카드는 처음부터 시트 자리·크기에 서 있고, 보이는 창(clip-path)만 노드
@@ -272,12 +272,10 @@ export default function GraphHome() {
             >
               <SheetColumns
                 tree={<NodeTree activeNodeId={expanding.nodeId} />}
-                nav={<SheetNav items={navOf(expanding.nodeId)} />}
+                nav={<SheetNav items={shown?.nav ?? []} />}
               >
-                {/* 본문 조각이 아직 안 왔으면 빈 시트로 열리고, 오는 대로 채워진다 */}
-                <Suspense fallback={null}>
-                  <ExpandArticle kind={expanding.kind} nodeId={expanding.nodeId} />
-                </Suspense>
+                {/* 머리말만 그린다 — 본문은 도착한 페이지가 그린다 (ExpandShell 참고) */}
+                <ExpandShell kind={expanding.kind} nodeId={expanding.nodeId} head={shown?.head} />
               </SheetColumns>
             </div>
           </div>

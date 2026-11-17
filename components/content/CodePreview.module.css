@@ -1,0 +1,24 @@
+/* 코드 블록 바로 밑에 붙는다 — 위 코드의 결과라는 것이 자리로 보이게 간격을 좁힌다 */
+.preview {
+  margin: -4px 0 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface-inset);
+}
+
+.caption {
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+/* 작은 창은 실제 브라우저처럼 흰 바탕이다 — 어두운 판에서도 결과는 기본 스타일 그대로 */
+.frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: #fff;
+}

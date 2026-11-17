@@ -1,14 +1,12 @@
 import type { Project } from "@/lib/projects";
-import {
-  Chip,
-  ExternalLink,
-  FactRow,
-  Figure,
-  Kicker,
-  PostCard,
-  SectionHeading,
-  TextBlock,
-} from "../content";
+import Chip from "../content/Chip";
+import ExternalLink from "../content/ExternalLink";
+import { FactRow } from "../content/Facts";
+import Figure from "../content/Figure";
+import { SectionHeading } from "../content/Prose";
+import { ProjectHead } from "../content/ArticleHeads";
+import PostCard from "../content/PostCard";
+import TextBlock from "../content/TextBlock";
 import { slugify } from "@/lib/slug";
 /* 제목은 목차를 만드는 쪽과 같은 것을 봐야 한다 — 각자 적으면 언젠가 어긋난다 */
 import { PROJECT_HEADINGS, troublesOf } from "@/lib/sheet";
@@ -25,10 +23,7 @@ export default function ProjectArticle({ project }: { project: Project }) {
 
   return (
     <div className={sheetStyles.articleInner}>
-      <Kicker kind="project">프로젝트</Kicker>
-
-      <h1 className={styles.title}>{project.name}</h1>
-      <p className={styles.tagline}>{project.tagline}</p>
+      <ProjectHead project={project} />
 
       <div className={styles.factsSection}>
         <FactRow label="기간">{project.period}</FactRow>

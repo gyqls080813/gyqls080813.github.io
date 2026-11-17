@@ -7,3 +7,6 @@ next-env.d.ts
 
 # 생성물 — npm install(postinstall)·dev·build가 매번 다시 만든다 (scripts/highlight-code·sheet-index)
 lib/generated/
+
+# 노드마다의 목차, 포트, 머리 — scripts/sheet-index가 만든다
+public/outline/

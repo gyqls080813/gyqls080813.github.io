@@ -1,28 +1,8 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-import { THEME_KEY } from "@/lib/site";
+import { setTheme, useTheme } from "./useTheme";
 import { MoonIcon, SunIcon } from "./icons";
 import styles from "./ThemeToggle.module.css";
-
-type Theme = "dark" | "light";
-
-/* 지금 판은 <html data-theme>이 쥐고 있다 — 리액트 상태로 옮겨 적지 않고 거기서 읽는다.
-   표식이 바뀌면(이 버튼이든 다른 탭이든) 관찰자가 알려 준다 */
-function subscribeTheme(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-theme"],
-  });
-  return () => observer.disconnect();
-}
-
-const readTheme = (): Theme =>
-  document.documentElement.dataset.theme === "light" ? "light" : "dark";
-
-/* 서버에는 <html>이 없다 — 첫 칠 스크립트의 기본값과 같은 어두운 판으로 둔다 */
-const serverTheme = (): Theme => "dark";
 
 /**
  * 어두운 판 / 밝은 판.
@@ -36,16 +16,7 @@ const serverTheme = (): Theme => "dark";
  * 않기 때문이다. 저장 키는 그 스크립트와 같은 상수(lib/site의 THEME_KEY)다.
  */
 export default function ThemeToggle() {
-  const theme = useSyncExternalStore(subscribeTheme, readTheme, serverTheme);
-
-  const change = (next: Theme) => {
-    document.documentElement.dataset.theme = next;
-    try {
-      window.localStorage.setItem(THEME_KEY, next);
-    } catch {
-      /* 저장소가 막힌 브라우저에서는 이번 방문에만 적용된다 */
-    }
-  };
+  const theme = useTheme();
 
   return (
     <div className={styles.group} role="group" aria-label="화면 모드">
@@ -53,7 +24,7 @@ export default function ThemeToggle() {
         type="button"
         className={styles.option}
         data-active={theme === "dark"}
-        onClick={() => change("dark")}
+        onClick={() => setTheme("dark")}
         aria-pressed={theme === "dark"}
         title="어두운 모드"
         aria-label="어두운 모드"
@@ -64,7 +35,7 @@ export default function ThemeToggle() {
         type="button"
         className={styles.option}
         data-active={theme === "light"}
-        onClick={() => change("light")}
+        onClick={() => setTheme("light")}
         aria-pressed={theme === "light"}
         title="밝은 모드"
         aria-label="밝은 모드"

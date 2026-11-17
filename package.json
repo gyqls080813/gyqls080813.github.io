@@ -1,6 +1,9 @@
 {
   "name": "knowledge-graph-blog",
   "private": true,
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "generate": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs",
     "postinstall": "npm run generate",

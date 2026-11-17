@@ -1,6 +1,7 @@
 import type { Post } from "@/lib/posts";
-import { CodeBlock, SectionHeading } from "../content";
-import PostMeta from "../content/PostMeta";
+import CodeBlock from "../content/CodeBlock";
+import { SectionHeading } from "../content/Prose";
+import { PostHead } from "../content/ArticleHeads";
 import { slugify } from "@/lib/slug";
 import styles from "../content/Sheet.module.css";
 
@@ -8,9 +9,7 @@ import styles from "../content/Sheet.module.css";
 export default function PostArticle({ post }: { post: Post }) {
   return (
     <div className={styles.articleInner}>
-      <PostMeta post={post} className={styles.meta} />
-
-      <h1 className={styles.title}>{post.title}</h1>
+      <PostHead post={post} />
       <p className={styles.lead}>{post.lead}</p>
 
       {post.sections.map((section) => (

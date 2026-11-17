@@ -1,5 +1,6 @@
 import { sheetIndex } from "./generated/sheetIndex";
 import { routeOf, type NodeOpenKind } from "./nodeKinds";
+import { own } from "./util";
 
 /**
  * 노드 하나가 열리면 무엇이 되는가 — 그래프에서 눌렀든 시트의 포트에서 눌렀든
@@ -9,7 +10,7 @@ import { routeOf, type NodeOpenKind } from "./nodeKinds";
  * 않으려고 빌드 때 뽑아 둔 색인을 읽는다.
  */
 export function nodeOpenKind(nodeId: string): NodeOpenKind | null {
-  return sheetIndex.openKind[nodeId] ?? null;
+  return own(sheetIndex.openKind, nodeId) ?? null;
 }
 
 /** 열린 뒤 머무를 주소 — 확대가 끝나는 시점에 여기로 넘어간다 */

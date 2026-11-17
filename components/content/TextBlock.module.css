@@ -6,11 +6,42 @@
    들어가 이 덩어리가 어디서 시작하는지가 흐려진다 — 선의 왼쪽 끝이 곧
    블록의 왼쪽 끝이고, 제목이 그 자리에서 시작해야 한 덩어리로 읽힌다. */
 
+/* 블록 제목 — 본문보다 한눈에 크고 진해야 훑어 읽을 때 걸린다. 갈래 색은 앞의 짧은 막대가 맡는다 */
 .label {
-  margin: 0 0 8px;
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 10px;
+  font-size: var(--fs-sheet-h3);
+  line-height: 1.4;
   font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text-strong);
+}
+
+.label::before {
+  content: "";
+  flex-shrink: 0;
+  width: 4px;
+  height: 1em;
+  border-radius: 2px;
+  background: var(--kind);
+}
+
+/* 직접 해 보기 — 막대 대신 재생 삼각형, 글자는 한 단 작게. 위 개념 블록에 딸린 실습으로 읽힌다 */
+.labLabel {
+  font-size: calc(var(--fs-sheet-h3) - 1.5px);
   color: var(--kind-text);
+}
+
+.labLabel::before {
+  width: 0;
+  height: 0;
+  border-radius: 0;
+  background: none;
+  border-top: 0.36em solid transparent;
+  border-bottom: 0.36em solid transparent;
+  border-left: 0.6em solid var(--kind);
 }
 
 .body {
@@ -18,10 +49,9 @@
   padding-left: 15px;
   border-left: 2px solid var(--border-subtle);
   font-size: var(--fs-sheet-body);
-  line-height: 1.85;
+  line-height: 1.8;
   color: var(--text-body);
-  /* 본문에 적은 줄바꿈(\n)을 그대로 보여 준다 */
-  white-space: pre-line;
-  /* 띄어쓰기 없는 긴 덩어리(H<sub>2</sub>O 같은 태그 줄)는 폰 폭에서 칸을 넘치기 전에 접는다 */
+  /* 문단과 목록은 RichText가 나눈다. 띄어쓰기 없는 긴 덩어리(H<sub>2</sub>O 같은 태그 줄)는
+     폰 폭에서 칸을 넘치기 전에 접는다 */
   overflow-wrap: break-word;
 }

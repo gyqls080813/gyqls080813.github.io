@@ -1,13 +1,15 @@
-/* 노션의 인라인 코드처럼 — 글자보다 조금 작은 고정폭, 옅은 바탕, 둥근 모서리 */
+/* 인라인 코드 — 글자보다 조금 작은 고정폭, 옅은 바탕, 둥근 모서리.
+   글자색은 본문보다 진한 같은 계열로 둔다. 태그와 속성 이름이 한 문장에 여럿 나오는 글에서
+   빨간 글자로 칠하면 문장보다 코드가 먼저 튀어 읽는 흐름이 끊긴다 */
 .code {
-  padding: 0.12em 0.4em;
+  padding: 0.1em 0.38em;
   border-radius: 4px;
   background: var(--surface-inset);
   border: 1px solid var(--border-subtle);
   font-family:
     ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace;
   font-size: 0.86em;
-  color: #eb5757;
+  color: var(--text-strong);
   /* 코드 한 덩어리가 줄 끝에서 둘로 쪼개지지 않게 */
   white-space: nowrap;
 }

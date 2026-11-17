@@ -4,10 +4,15 @@ import type { TheoryBlock, TheorySource } from "@/lib/theories";
 import { sectionBlockId, slugify } from "@/lib/slug";
 import { cx } from "@/lib/util";
 import CodeBlock from "./CodeBlock";
+import CodePreview from "./CodePreview";
 import DataTable from "./DataTable";
 import ExternalLink from "./ExternalLink";
+import KeyPoints from "./KeyPoints";
 import LiveLab from "./LiveLab";
-import { Kicker, SectionHeading } from "./Prose";
+import Quiz from "./Quiz";
+import type { SheetHead } from "@/lib/headings";
+import { SectionHeading } from "./Prose";
+import { SheetArticleHead } from "./ArticleHeads";
 import TermNote from "./TermNote";
 import TextBlock from "./TextBlock";
 import sheetStyles from "./Sheet.module.css";
@@ -15,12 +20,17 @@ import styles from "./SheetArticle.module.css";
 
 /** 블록 한 칸 — 이론의 블록이 가장 넓고, TIL·사전은 그 일부만 쓴다 */
 export type SheetBlockData = Pick<TheoryBlock, "label" | "body"> &
-  Partial<Pick<TheoryBlock, "tables" | "code" | "codeLang" | "terms" | "notes" | "lab">>;
+  Partial<
+    Pick<
+      TheoryBlock,
+      "tables" | "code" | "codeLang" | "preview" | "quiz" | "terms" | "notes" | "lab"
+    >
+  >;
 
 export type SheetSectionData = { heading: string; blocks: SheetBlockData[] };
 
 /**
- * 한 블록 — 문단, 낱말 풀이, 참고(위), 표, 코드, 참고(아래) 순서.
+ * 한 블록 — 문단, 확인 질문, 낱말 풀이, 참고(위), 표, 코드와 결과, 직접 해 보기, 참고(아래) 순서.
  *
  * 이론·생각·TIL·사전이 이 하나를 쓴다. 갈래마다 따로 두었을 때는 이론만 참고와
  * 표를 그리고 생각은 빠뜨려, 생각 시트에 적어 둔 참고가 화면에 나오지 않았다.
@@ -40,9 +50,11 @@ export function SheetBlock({
   const bottomNotes = block.notes?.filter((note) => note.bottom) ?? [];
   return (
     <div className={styles.block} id={id}>
-      <TextBlock label={block.label} accent={accent}>
+      <TextBlock label={block.label} accent={accent} lab={Boolean(block.lab)}>
         {block.body}
       </TextBlock>
+      {/* 확인 질문 — 본문은 짧은 안내, 질문과 접힌 답이 이어진다 */}
+      {block.quiz && block.quiz.length > 0 && <Quiz items={block.quiz} />}
       {block.terms?.map((term) => (
         <TermNote key={term.term} term={term.term}>
           {term.body}
@@ -59,6 +71,10 @@ export function SheetBlock({
         <DataTable key={index} {...table} />
       ))}
       {block.code && <CodeBlock lang={block.codeLang}>{block.code}</CodeBlock>}
+      {/* 코드 바로 밑에 그 코드를 브라우저가 그린 모습 — 코드와 결과를 눈으로 오가며 견준다 */}
+      {block.code && block.preview && block.codeLang === "html" && (
+        <CodePreview html={block.code} />
+      )}
       {/* 직접 해 보기 — 읽은 코드를 고쳐서 진짜 작은 창에서 돌려 본다 */}
       {block.lab && <LiveLab lab={block.lab} />}
       {/* 코드까지 다 본 뒤에 읽을 참고 — 블록을 마무리하는 곁가지 */}
@@ -76,14 +92,11 @@ export function SheetBlock({
  *
  * 이론·생각·TIL·사전 시트가 같은 뼈대에 내용만 다르게 넣는다. 다른 것은 갈래 색과
  * intro의 라벨, 그리고 갈래에만 있는 칸(TIL의 날짜, 이론의 "이 개념이 나온 글")이다.
- * 갈래에만 있는 칸은 afterTitle·children으로 받는다.
+ * 날짜는 머리(head)에, 이론의 칸은 children으로 받는다.
  */
 export default function SheetArticle({
-  kind,
-  kicker,
-  title,
-  afterTitle,
-  tagline,
+  head,
+  keyPoints,
   introLabel,
   intro,
   blocks,
@@ -91,14 +104,12 @@ export default function SheetArticle({
   blockAnchor = sectionBlockId,
   sources,
   children,
+  footer,
 }: {
-  /** 갈래 — 머리표·라벨·절 아이콘의 색과 표식 */
-  kind: NodeKind;
-  kicker: string;
-  title: string;
-  /** 제목 바로 아래 한 줄 (TIL의 날짜) */
-  afterTitle?: ReactNode;
-  tagline: string;
+  /** 머리 — 갈래(색과 표식), 머리표, 제목, 날짜, 한 줄 소개. lib/headings의 SHEET_HEAD로 만든다 */
+  head: SheetHead;
+  /** 핵심 정리 — 머리 바로 아래, 첫 블록보다 먼저 */
+  keyPoints?: string[];
   introLabel: string;
   intro: string;
   /** 절이 없는 시트의 블록 */
@@ -112,15 +123,16 @@ export default function SheetArticle({
   sources?: TheorySource[];
   /** 절 다음, 출처 앞에 붙는 갈래만의 칸 */
   children?: ReactNode;
+  /** 출처 다음, 시트의 맨 끝 — 이전·다음 장처럼 다 읽은 뒤에 갈 곳 */
+  footer?: ReactNode;
 }) {
+  const { kind } = head;
   return (
     /* 이 시트의 갈래 색은 data-kind에서 내려온다 (globals.css의 --kind) */
     <div className={sheetStyles.articleInner} data-kind={kind}>
-      <Kicker kind={kind}>{kicker}</Kicker>
+      <SheetArticleHead head={head} />
 
-      <h1 className={styles.title}>{title}</h1>
-      {afterTitle}
-      <p className={styles.tagline}>{tagline}</p>
+      {keyPoints && keyPoints.length > 0 && <KeyPoints points={keyPoints} />}
 
       <div className={styles.blocks}>
         <TextBlock label={introLabel} accent={kind}>
@@ -163,6 +175,8 @@ export default function SheetArticle({
           ))}
         </div>
       )}
+
+      {footer}
     </div>
   );
 }

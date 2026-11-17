@@ -15,7 +15,12 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # 배포 전에 검사부터 — check.yml과 같은 검사다. 하나라도 실패하면 build와 deploy로 넘어가지 않는다
+  check:
+    uses: ./.github/workflows/check.yml
+
   build:
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

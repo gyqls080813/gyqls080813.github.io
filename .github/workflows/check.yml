@@ -1,0 +1,33 @@
+name: Check
+
+# 린트, 타입, 테스트, 포맷 — master가 아닌 브랜치에 올릴 때 돈다. master에 올리면 배포
+# 워크플로(deploy.yml)가 이 파일을 불러 같은 검사를 먼저 돌리고, 통과해야 빌드한다.
+# 그래서 master push는 여기서 따로 받지 않는다(같은 검사가 두 번 돈다).
+#
+# pull_request는 받지 않는다. 이 저장소의 PR 브랜치는 모두 이 저장소에 있어서 브랜치를
+# 올릴 때 이미 검사가 돌고, PR에서 또 돌면 같은 커밋을 두 번 검사한다. 브랜치에 올리기만
+# 하고 PR 없이 master로 넘기는 흐름도 있어 push 쪽을 남긴다.
+on:
+  push:
+    branches-ignore: [master]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      # postinstall이 생성물(lib/generated, public/outline)을 만든다 — 타입 검사와 테스트가 읽는다
+      - run: npm ci
+      # tests/graph-integrity가 손으로 맞추는 id(노드, 간선, 틀, 요약과 본문)의 어긋남을 잡는다
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run format:check

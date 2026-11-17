@@ -1,4 +1,5 @@
 import { dictionarySections } from "./catalog";
+import { DICT_ID } from "./nodeKinds";
 
 /**
  * 사전 — 문서를 읽다 걸린 낱말을 내 말로 다시 적어 두는 곳.
@@ -38,8 +39,11 @@ export type Dictionary = {
   sections: DictSection[];
 };
 
-/** 문서마다의 낱말 — 절 이름과 순서는 catalog의 dictionarySections가 쥔다 */
-const entriesByDocument: { from: string; entries: DictEntry[] }[] = [
+/**
+ * 문서마다의 낱말 — 절 이름과 순서는 catalog의 dictionarySections가 쥐고, 둘은 from으로
+ * 짝짓는다. 짝이 없으면 낱말이 조용히 사라지므로 tests/graph-integrity가 본다.
+ */
+export const entriesByDocument: { from: string; entries: DictEntry[] }[] = [
     {
       from: "vg-start-intro",
       entries: [
@@ -1460,7 +1464,7 @@ const entriesByDocument: { from: string; entries: DictEntry[] }[] = [
 ];
 
 export const dictionary: Dictionary = {
-  id: "dict",
+  id: DICT_ID,
   name: "사전",
   tagline: "문서를 읽다 걸린 낱말을 내 말로 다시 적는 곳",
   intro:

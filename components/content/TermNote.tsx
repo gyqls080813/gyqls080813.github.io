@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import InlineText from "./InlineText";
+import RichText from "./RichText";
 import styles from "./TermNote.module.css";
 
 /**
@@ -22,9 +22,11 @@ export default function TermNote({
     <aside className={styles.note}>
       <span className={styles.kicker}>{kicker}</span>
       <p className={styles.term}>{term}</p>
-      <p className={styles.body}>
-        <InlineText>{children}</InlineText>
-      </p>
+      {typeof children === "string" ? (
+        <RichText className={styles.body}>{children}</RichText>
+      ) : (
+        <div className={styles.body}>{children}</div>
+      )}
     </aside>
   );
 }

@@ -1,21 +1,23 @@
 /**
- * 시트 껍데기가 쓰는 요약 색인을 빌드 때 뽑아 둔다.
+ * 시트 껍데기가 브라우저에서 쓰는 요약을 빌드 때 뽑아 둔다. 두 가지로 나눠 쓴다.
  *
- * 껍데기(그래프 배경·트리·포트·목차·머리말)는 루트 레이아웃에 있어 모든 페이지에
- * 실린다. 그런데 목차·포트를 알려면 글·이론·생각의 본문 모듈을 불러와야 했고,
- * 그 바람에 모든 페이지가 본문 전체(한글 10만 자)를 JS로 받았다. 껍데기가 실제로
- * 쓰는 것은 제목·절 이름·연결뿐이라, 그것만 여기서 뽑아 lib/generated/sheetIndex.ts에
- * 적는다. 본문 모듈은 서버(페이지)와 겹침 화면(홈)만 쓴다.
+ * 1. lib/generated/sheetIndex.ts — 모든 노드에 대해 알아야 하는 것(열림 종류, 카드 집계).
+ *    껍데기는 루트 레이아웃에 있어 모든 페이지가 이 파일을 받는다. 그래서 작게 둔다.
+ * 2. public/outline/<노드 id>.json — 노드 하나에만 쓰이는 것(목차, 포트, 겹침 화면의 머리).
+ *    홈에서 노드를 누르면 그 노드 것만 받는다. 시트 페이지는 이 파일을 쓰지 않고,
+ *    레이아웃의 @outline 슬롯이 서버에서 같은 계산(lib/sheet의 nodeOutline)을 돌린다.
+ *
+ * 목차, 포트를 알려면 글, 이론, 생각의 본문 모듈을 불러와야 한다. 껍데기가 그걸 직접
+ * 부르면 모든 페이지가 본문 전체를 JS로 받는다. 그래서 여기서 뽑는다.
  *
  * 계산은 전부 원래 함수(lib/sheet·lib/annotatedGraph·lib/openKind)가 한다 —
- * 여기서 규칙을 다시 적으면 언젠가 어긋난다. 글의 뼈대(제목·소속)는 본문 없는
- * 요약 목록(lib/catalog)이 이미 갖고 있어 여기서 뽑지 않는다.
+ * 여기서 규칙을 다시 적으면 언젠가 어긋난다.
  *
  * 여기서 불러오는 모듈은 생성물(lib/generated)을 불러오면 안 된다 — 생성물은 git에
  * 없어서, 처음 받은 저장소에서는 이 스크립트가 만들기 전까지 그 파일이 없다.
  */
 import { register } from "node:module";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -25,11 +27,11 @@ const ROOT = process.cwd();
 const load = (path) => import(pathToFileURL(join(ROOT, path)).href);
 
 const { fullGraphNodes } = await load("lib/graphData.ts");
-const { sheetNavItems, sheetPorts, sheetCrumbs } = await load("lib/sheet.ts");
+const { nodeOutline } = await load("lib/sheet.ts");
 const { nodeOpenKindFromContent } = await load("lib/openKind.ts");
 const { annotatedGraphNodes } = await load("lib/annotatedGraph.ts");
 
-const index = { openKind: {}, nav: {}, ports: {}, crumbs: {}, annotations: {} };
+const index = { openKind: {}, annotations: {} };
 
 /* 카드에 덧붙는 것만 — 노드 자체(라벨·좌표)는 graphData에 이미 있다 */
 const base = new Map(fullGraphNodes.map((node) => [node.id, node]));
@@ -41,15 +43,19 @@ for (const node of annotatedGraphNodes) {
   if (Object.keys(extra).length > 0) index.annotations[node.id] = extra;
 }
 
+/* 지난 빌드에서 지운 노드의 파일이 남지 않게 통째로 새로 쓴다 */
+const OUTLINE_DIR = join(ROOT, "public", "outline");
+rmSync(OUTLINE_DIR, { recursive: true, force: true });
+mkdirSync(OUTLINE_DIR, { recursive: true });
+
 for (const { id } of fullGraphNodes) {
   const kind = nodeOpenKindFromContent(id);
   if (!kind) continue;
   index.openKind[id] = kind;
-  const nav = sheetNavItems(id);
-  if (nav.length > 0) index.nav[id] = nav;
-  const ports = sheetPorts(id);
-  if (ports.left.length > 0 || ports.right.length > 0) index.ports[id] = ports;
-  index.crumbs[id] = sheetCrumbs(id).map((node) => node.id);
+  /* 파일 이름은 id 그대로다 — lib/outline의 outlineUrl과 같은 규칙. 인코딩한 이름으로 쓰면
+     서버가 요청 주소의 %XX를 풀어 찾으므로 어긋난다. id는 소문자, 숫자, 하이픈뿐이다
+     (tests/graph-integrity가 지킨다) */
+  writeFileSync(join(OUTLINE_DIR, `${id}.json`), JSON.stringify(nodeOutline(id)), "utf8");
 }
 
 const OUT = join(ROOT, "lib", "generated", "sheetIndex.ts");
@@ -57,20 +63,16 @@ mkdirSync(join(ROOT, "lib", "generated"), { recursive: true });
 writeFileSync(
   OUT,
   `/* 자동 생성 — scripts/sheet-index.mjs. 직접 고치지 말 것 (git에 올리지 않는다).
-   시트 껍데기가 브라우저에서 쓰는 요약(목차·포트·머리말·열림 종류·카드 집계).
-   본문 모듈을 브라우저로 보내지 않으려고 빌드 때 뽑아 둔다. */
+   모든 노드에 대해 껍데기가 알아야 하는 것(열림 종류, 카드 집계). 모든 페이지가 받으므로
+   노드 하나에만 쓰이는 것(목차, 포트, 머리)은 여기 넣지 않는다 — public/outline에 노드마다 있다. */
 import type { GraphNodeData } from "@/components/graph/types";
 import type { NodeOpenKind } from "../nodeKinds";
-import type { NavItem, Port } from "../sheet";
 
 /** 카드에 덧붙는 집계 — lib/annotatedGraph가 본문을 보고 붙인 값 */
 export type NodeAnnotation = Pick<GraphNodeData, "clickable" | "meta" | "dateLabel">;
 
 export const sheetIndex: {
   openKind: Record<string, NodeOpenKind>;
-  nav: Record<string, NavItem[]>;
-  ports: Record<string, { left: Port[]; right: Port[] }>;
-  crumbs: Record<string, string[]>;
   annotations: Record<string, NodeAnnotation>;
 } = ${JSON.stringify(index, null, 2)};
 `,
@@ -78,5 +80,5 @@ export const sheetIndex: {
 );
 
 console.log(
-  `시트 색인: 노드 ${Object.keys(index.openKind).length}개, 목차 ${Object.keys(index.nav).length}개 → ${relative(ROOT, OUT)}`,
+  `시트 색인: 노드 ${Object.keys(index.openKind).length}개 → ${relative(ROOT, OUT)}, ${relative(ROOT, OUTLINE_DIR)}`,
 );

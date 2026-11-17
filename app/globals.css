@@ -132,8 +132,9 @@
      한 곳에서 정의해 소개·글·프로젝트 시트가 같은 리듬을 쓴다. */
   --fs-sheet-title: clamp(22px, 3.2cqi, 32px);
   --fs-sheet-lead: clamp(14px, 1.6cqi, 15.5px);
-  --fs-sheet-body: clamp(13.5px, 1.5cqi, 15px);
-  --fs-sheet-h2: clamp(15px, 1.8cqi, 17.5px);
+  --fs-sheet-body: clamp(14px, 1.6cqi, 16px);
+  --fs-sheet-h2: clamp(17px, 2cqi, 20px);
+  --fs-sheet-h3: clamp(15.5px, 1.75cqi, 17.5px);
   --pad-sheet-block: clamp(28px, 5cqi, 52px);
   --pad-sheet-inline: clamp(22px, 6cqi, 60px);
   --tree-width: clamp(208px, 26cqi, 288px);

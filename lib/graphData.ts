@@ -3,11 +3,13 @@ import {
   dictionarySections,
   monthSpan,
   postSummaries,
+  postsOfProject,
   projectSummaries,
   techBranches,
   tilEntries,
 } from "./catalog";
 import { descendantsOf } from "./topology";
+import { DICT_ID, ME_ID, TIL_ID } from "./nodeKinds";
 
 /**
  * 전체 그래프(랜딩) 데이터.
@@ -18,7 +20,7 @@ import { descendantsOf } from "./topology";
  */
 export const fullGraphNodes: GraphNodeData[] = [
   // 1열: 그래프의 시작점 — 나
-  { id: "me", label: "Who am I", kind: "me", x: 95, y: 300, hub: true },
+  { id: ME_ID, label: "Who am I", kind: "me", x: 95, y: 300, hub: true },
 
   // 2열 상단: 프로젝트 (가로 배치, 진행 순서대로)
   /* 이름과 날짜 줄은 요약 목록(lib/catalog)에서 — 프로젝트 시트·소개 카드와 같은 값이다 */
@@ -52,7 +54,7 @@ export const fullGraphNodes: GraphNodeData[] = [
      낱말은 노드가 아니라 시트 안의 항목이다 — 낱말마다 노드를 세우면 그래프가
      색인이 되어 버린다. 항목은 lib/dictionary.ts에 쌓이고, 낱말이 나온 문서에서
      이 노드로 선이 들어온다(아래 간선). */
-  { id: "dict", label: "사전", kind: "idea", x: 330, y: 2455, hub: true },
+  { id: DICT_ID, label: "사전", kind: "idea", x: 330, y: 2455, hub: true },
   /* 알고리즘 — 작성법과 같은 모양이지만 닫힌 집합이 아니다. 작성법은 데이터
      생애주기를 덮으려고 만든 것이라 일곱 단계에서 멈추고, 이쪽은 기법을 하나씩
      알아 가는 만큼 늘어난다. 늘어나는 쪽이므로 항목마다 y를 2씩 띄워 둔다. */
@@ -67,7 +69,7 @@ export const fullGraphNodes: GraphNodeData[] = [
 
      항목이 붙을 때는 y를 til보다 크게, 새것일수록 작게 준다 — 열 안의 순서는
      y가 정하므로 그래야 최근 것이 맨 위에 선다. */
-  { id: "til", label: "TIL", kind: "idea", x: 330, y: 2500, hub: true },
+  { id: TIL_ID, label: "TIL", kind: "idea", x: 330, y: 2500, hub: true },
   ...tilEntries.map((entry, index): GraphNodeData => ({
     id: entry.id,
     label: entry.title,
@@ -125,7 +127,7 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "rl-start-compiler", label: "React 컴파일러", kind: "theory", x: 330, y: 955 },
   { id: "rl-learn", label: "React 배우기", kind: "theory", x: 330, y: 1005, hub: true },
   { id: "rl-ui", label: "UI 표현하기", kind: "theory", x: 330, y: 1050 },
-  { id: "rl-interact", label: "상호작용 더하기", kind: "theory", x: 330, y: 1090 },
+  { id: "rl-interact", label: "상호작용성 더하기", kind: "theory", x: 330, y: 1090 },
   { id: "rl-state", label: "State 관리하기", kind: "theory", x: 330, y: 1130 },
   { id: "rl-escape", label: "탈출구", kind: "theory", x: 330, y: 1170 },
 
@@ -146,7 +148,7 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "ra-compiler-directives", label: "컴파일러 지시어", kind: "theory", x: 330, y: 1855 },
   { id: "ra-devtools", label: "React 개발자 도구", kind: "theory", x: 330, y: 1900 },
   { id: "ra-eslint", label: "ESLint 플러그인", kind: "theory", x: 330, y: 1945, hub: true },
-  { id: "ra-eslint-lints", label: "린트 규칙", kind: "theory", x: 330, y: 1990 },
+  { id: "ra-eslint-lints", label: "린트 목록", kind: "theory", x: 330, y: 1990 },
   { id: "ra-rules", label: "React 규칙", kind: "theory", x: 330, y: 2035, hub: true },
   { id: "ra-rules-overview", label: "규칙 개요", kind: "theory", x: 330, y: 2080 },
   { id: "ra-rsc", label: "서버 컴포넌트", kind: "theory", x: 330, y: 2125, hub: true },
@@ -168,7 +170,7 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "js-prototypes", label: "프로토타입과 상속", kind: "theory", x: 545, y: 685 },
   { id: "js-classes", label: "클래스", kind: "theory", x: 545, y: 725 },
   { id: "js-error", label: "에러 핸들링", kind: "theory", x: 545, y: 765 },
-  { id: "js-async", label: "프라미스와 async·await", kind: "theory", x: 545, y: 805 },
+  { id: "js-async", label: "프라미스와 async, await", kind: "theory", x: 545, y: 805 },
   { id: "js-generators", label: "제너레이터와 비동기 이터레이션", kind: "theory", x: 545, y: 845 },
   { id: "js-modules", label: "모듈", kind: "theory", x: 545, y: 885 },
   { id: "js-core-misc", label: "코어 기타", kind: "theory", x: 545, y: 925 },
@@ -770,7 +772,7 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "bundle-s2", label: "2장 · 의존성 해석과 사전 번들링", kind: "theory", x: 2050, y: 400 },
   { id: "bundle-s3", label: "3장 · 개발 서버 — 요청 시 변환", kind: "theory", x: 2050, y: 440 },
   { id: "bundle-s4", label: "4장 · HMR", kind: "theory", x: 2050, y: 480 },
-  { id: "bundle-s5", label: "5장 · CSS 와 정적 자산", kind: "theory", x: 2050, y: 520 },
+  { id: "bundle-s5", label: "5장 · CSS와 정적 자산", kind: "theory", x: 2050, y: 520 },
   {
     id: "bundle-s6",
     label: "6장 · 프로덕션 빌드 — Rolldown · 청크 · 해시",
@@ -809,14 +811,14 @@ export const fullGraphNodes: GraphNodeData[] = [
   { id: "nn-s14", label: "14장 · 확장 — 모듈 · 레이어 · 어댑터", kind: "theory", x: 2265, y: 880 },
 
   // 3열: 트러블슈팅 — 프로젝트와 기술이 만나는 곳 (프로젝트 진행 순서대로)
-  { id: "t-isolated", label: "넷플릭스 플레이어 제어", kind: "trouble", x: 1240, y: 100 },
-  { id: "t-focus", label: "채팅 입력 포커스 유실", kind: "trouble", x: 1240, y: 205 },
-  { id: "t-sync", label: "영상 동기화 불감대", kind: "trouble", x: 1240, y: 310 },
-  { id: "t-schema", label: "런타임 스키마 검증", kind: "trouble", x: 1240, y: 415 },
-  { id: "t-tagged", label: "타입 안전 예외 처리", kind: "trouble", x: 1240, y: 520 },
-  { id: "t-canvas", label: "Canvas 좌석 렌더링", kind: "trouble", x: 1240, y: 625 },
-  { id: "t-webdriver", label: "WebDriver 봇 필터링", kind: "trouble", x: 1240, y: 730 },
-  { id: "t-buffer", label: "비동기 이벤트 버퍼링", kind: "trouble", x: 1240, y: 835 },
+  /* 노드도 요약 목록(lib/catalog)에서 — 글을 추가하면 노드, 간선, 틀이 함께 따라온다 */
+  ...postSummaries.map((post, index): GraphNodeData => ({
+    id: post.id,
+    label: post.graphLabel,
+    kind: "trouble",
+    x: 1240,
+    y: 100 + index * 105,
+  })),
 ];
 
 /**
@@ -839,7 +841,7 @@ export function labelOf(id: string): string {
  */
 export const projectTroubles = projectSummaries.map((project) => ({
   project: project.id,
-  troubles: postSummaries.filter((post) => post.project === project.id).map((post) => post.id),
+  troubles: postsOfProject(project.id).map((post) => post.id),
 }));
 
 /**
@@ -882,7 +884,7 @@ export const ideaClusters = [
   { hub: "algo-bruteforce", chapters: ["swea-5188"] },
   /* TIL도 같은 문법으로 매단다 — 간선·트리·머리말이 전부 이 지도에서 나오므로
      여기 들어와야 기록이 그래프의 어느 가지에서 왔는지가 말이 된다 */
-  { hub: "til", chapters: tilEntries.map((entry) => entry.id) },
+  { hub: TIL_ID, chapters: tilEntries.map((entry) => entry.id) },
 ] as const;
 
 /**
@@ -1627,15 +1629,15 @@ export const allClusters = [...theoryClusters, ...ideaClusters];
 
 export const fullGraphEdges: GraphEdgeData[] = [
   // 나 → 프로젝트, 나 → 기술 갈래의 뿌리 (둘 다 요약 목록에서)
-  ...projectSummaries.map((project) => ({ from: "me", to: project.id })),
-  ...techBranches.map((branch) => ({ from: "me", to: branch.root })),
+  ...projectSummaries.map((project) => ({ from: ME_ID, to: project.id })),
+  ...techBranches.map((branch) => ({ from: ME_ID, to: branch.root })),
 
   // 나 → 생각 (이론이 React·JS·TS·Vue로 바로 가듯, 여기도 갈래로 바로 간다)
-  { from: "me", to: "fe-craft" },
-  { from: "me", to: "fe-philosophy" },
-  { from: "me", to: "algo" },
-  { from: "me", to: "til" },
-  { from: "me", to: "dict" },
+  { from: ME_ID, to: "fe-craft" },
+  { from: ME_ID, to: "fe-philosophy" },
+  { from: ME_ID, to: "algo" },
+  { from: ME_ID, to: TIL_ID },
+  { from: ME_ID, to: DICT_ID },
 
   // 개념 → 챕터 (계층: 하위 내용) — 이론과 생각이 같은 문법을 쓴다
   ...allClusters.flatMap((cluster) =>
@@ -1660,7 +1662,7 @@ export const fullGraphEdges: GraphEdgeData[] = [
      밀린다. 생각은 프로젝트·이론과 나란한 갈래라 같은 열에 서야 한다. */
   ...dictionarySections.map((section): GraphEdgeData => ({
     from: section.from,
-    to: "dict",
+    to: DICT_ID,
     skipLayout: true,
   })),
 ];
@@ -1719,7 +1721,8 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     id: "bd-projects",
     label: "프로젝트",
     tint: "project",
-    members: ["withy", "petfolio", "tickle"],
+    /* 프로젝트 노드와 같은 목록에서 — 프로젝트를 더하면 틀도 따라온다 */
+    members: projectSummaries.map((project) => project.id),
   },
   /* 트러블은 프로젝트별로 틀을 나눈다 — 어느 프로젝트에서 나온 글인지가
      간선뿐 아니라 틀로도 보이게. 한 노드는 최대 한 틀에만 들어간다. */
@@ -1735,7 +1738,7 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     id: "bd-idea",
     label: "생각",
     tint: "idea",
-    members: ["bd-craft", "fe-philosophy", "dict", "bd-algo", "bd-til"],
+    members: ["bd-craft", "fe-philosophy", DICT_ID, "bd-algo", "bd-til"],
   },
   /* 알고리즘 — 작성법·TIL과 같은 모양으로, 접은 채 연다. 지금은 두 항목뿐이라
      펴 둬도 쏟아지지 않지만, 첫 화면에 읽혀야 할 것은 항목이 아니라 갈래
@@ -1756,7 +1759,7 @@ export const fullGraphBackdrops: GraphBackdropData[] = [
     label: "TIL",
     tint: "idea",
     collapsed: true,
-    members: ["til", ...tilEntries.map((entry) => entry.id)],
+    members: [TIL_ID, ...tilEntries.map((entry) => entry.id)],
   },
   {
     id: "bd-craft",

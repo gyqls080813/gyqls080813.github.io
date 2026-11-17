@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import NodeTree from "../post/NodeTree";
 import { CloseIcon } from "../icons";
-import SheetNav from "./SheetNav";
+import { OutlinePart } from "./SheetOutline";
 import { useSheetView } from "./SheetView";
-import { navOf, sheetNodeId } from "@/lib/outline";
+import { sheetNodeId } from "@/lib/outline";
 import { cx } from "@/lib/util";
 import styles from "./SheetDrawers.module.css";
 
@@ -23,7 +23,12 @@ import styles from "./SheetDrawers.module.css";
  * 닫히는 때: 바깥(어둡게 덮은 곳)을 누를 때, 닫기 버튼, Esc, 그리고 메뉴에서
  * 다른 노드로 갔을 때(주소가 바뀜)와 목차에서 한 절을 골랐을 때.
  */
-export default function SheetDrawers() {
+export default function SheetDrawers({
+  outline,
+}: {
+  /** 열린 노드의 목차 — 껍데기와 같은 @outline 슬롯 (SheetChrome 참고) */
+  outline: ReactNode;
+}) {
   const pathname = usePathname() ?? "";
   const nodeId = sheetNodeId(pathname);
   const { drawer, setDrawer } = useSheetView();
@@ -99,7 +104,7 @@ export default function SheetDrawers() {
           {isMenu ? (
             <NodeTree activeNodeId={nodeId ?? ""} compact />
           ) : (
-            <SheetNav items={navOf(nodeId ?? "")} />
+            <OutlinePart part="nav">{outline}</OutlinePart>
           )}
         </div>
       </div>

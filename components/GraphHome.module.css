@@ -12,6 +12,9 @@
 }
 
 /* ── 노드가 열리는 전환: 클릭한 카드가 제자리에서 시트 크기로 커진다 ── */
+/* 열림 전환의 길이는 GraphHome.tsx의 EXPAND_MS가 --expand-ms로 내려 준다 —
+   전환이 끝나는 때에 맞춰 주소를 넘기는 쪽(JS)과 같은 값을 써야 한다.
+   더 짧게 끝나는 전환은 빼기 대신 비율로 적는다 — EXPAND_MS를 줄여도 음수가 되지 않는다 */
 .expandScrim {
   position: fixed;
   /* 상단 바(64px)는 덮지 않는다 — 글 페이지의 스크림 범위와 일치 */
@@ -19,7 +22,7 @@
   z-index: 70;
   background: var(--scrim);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity calc(var(--expand-ms) * 0.87) ease;
 }
 
 .expandCard {
@@ -34,8 +37,8 @@
   /* 자르는 창(clip-path)이 모양을 정한다 — 모서리 둥글기도 창이 맡는다.
      그림자는 창 밖이라 잘리므로 두지 않는다 (열린 뒤엔 곧 진짜 시트로 바뀐다) */
   transition:
-    clip-path 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
-    background 0.46s ease;
+    clip-path var(--expand-ms) cubic-bezier(0.2, 0.8, 0.25, 1),
+    background var(--expand-ms) ease;
 }
 
 .expandOpen .expandScrim {
@@ -62,8 +65,8 @@
   transform-origin: top left;
   opacity: 0;
   transition:
-    transform 0.46s cubic-bezier(0.2, 0.8, 0.25, 1),
-    opacity 0.26s ease;
+    transform var(--expand-ms) cubic-bezier(0.2, 0.8, 0.25, 1),
+    opacity calc(var(--expand-ms) * 0.57) ease;
 }
 
 .expandOpen .expandContent {
@@ -87,7 +90,7 @@
 .overlayPorts {
   position: fixed;
   z-index: 72;
-  transition: transform 0.46s cubic-bezier(0.2, 0.8, 0.25, 1);
+  transition: transform var(--expand-ms) cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
 /* 열린 시트가 설 자리를 재는 상자 — 진짜 시트(.sheet)와 같은 클래스에 보이지만 않는다 */

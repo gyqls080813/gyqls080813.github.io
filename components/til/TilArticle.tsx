@@ -1,7 +1,7 @@
 import type { Til } from "@/lib/tils";
 import { slugify } from "@/lib/slug";
 import SheetArticle from "../content/SheetArticle";
-import styles from "../content/SheetArticle.module.css";
+import { SHEET_HEAD } from "@/lib/headings";
 
 /**
  * TIL 시트 안쪽 — 이론 시트와 같은 뼈대에 출처 대신 날짜를 세운다.
@@ -12,11 +12,7 @@ import styles from "../content/SheetArticle.module.css";
 export default function TilArticle({ til }: { til: Til }) {
   return (
     <SheetArticle
-      kind="til"
-      kicker="TIL"
-      title={til.title}
-      afterTitle={<p className={styles.afterTitle}>{til.date}</p>}
-      tagline={til.tagline}
+      head={SHEET_HEAD.til(til)}
       introLabel="무엇을 붙들고 있었나"
       intro={til.intro}
       sections={til.sections}

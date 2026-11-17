@@ -1,0 +1,45 @@
+/* 문단과 목록 — 글자 크기와 색은 감싸는 쪽(TextBlock, TermNote)이 정하고, 여기는 간격만 */
+.rich {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85em;
+}
+
+.para {
+  margin: 0;
+  /* 문단 안에 적은 줄바꿈(\n)은 그대로 */
+  white-space: pre-line;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+/* 번호를 왼쪽에 매달고, 글은 번호 오른쪽에서 줄을 맞춘다 */
+.item {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 0.55em;
+  align-items: baseline;
+}
+
+.marker {
+  min-width: 1.4em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--kind-text, var(--muted));
+}
+
+.itemText {
+  min-width: 0;
+}
+
+/* 점 목록은 번호보다 좁게 — 점과 글 사이가 벌어지면 다른 칸처럼 보인다 */
+.bullet {
+  min-width: 0.7em;
+}
