@@ -22,4 +22,6 @@
   color: var(--text-body);
   /* 본문에 적은 줄바꿈(\n)을 그대로 보여 준다 */
   white-space: pre-line;
+  /* 띄어쓰기 없는 긴 덩어리(H<sub>2</sub>O 같은 태그 줄)는 폰 폭에서 칸을 넘치기 전에 접는다 */
+  overflow-wrap: break-word;
 }

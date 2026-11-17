@@ -12,6 +12,15 @@
   white-space: nowrap;
 }
 
+/* 긴 코드(선언 여러 개, 규칙 한 줄)는 한 줄로 두면 폰은 물론 넓은 화면에서도 칸을 넘는다.
+   이런 것만 띄어쓰기에서 접고, 그래도 넘치면 아무 데서나 접는다. 접힌 줄마다 박스를 다시 그린다 */
+.long {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /* 강조 — 문단에 묻히면 안 되는 한 문장. 굵기와 이론 색, 형광펜처럼 아래쪽만 옅게 칠한다 */
 .strong {
   font-weight: 700;

@@ -89,7 +89,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('n')).color",
             },
           ],
-          tryIt: "[data-kind=\"TEXT\"]를 [data-kind=\"TEXT\" i]로 바꿔 실행해 보세요. outline-style이 solid가 됩니다.",
+          tryIt: "`[data-kind=\"TEXT\"]`를 `[data-kind=\"TEXT\" i]`로 바꿔 실행해 보세요. outline-style이 solid가 됩니다.",
         },
       },
       {
@@ -129,7 +129,7 @@ export const cssTheories: Theory[] = [
               expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p3')))",
             },
           ],
-          tryIt: "h2와 p1 사이에 <hr>을 넣어 보세요. h2 + p가 아무것도 고르지 못해 빨강이 사라집니다.",
+          tryIt: "h2와 p1 사이에 `<hr>`을 넣어 보세요. `h2 + p`가 아무것도 고르지 못해 빨강이 사라집니다.",
         },
       },
       {
@@ -171,7 +171,7 @@ export const cssTheories: Theory[] = [
               expr: "document.getElementById('card').matches(':has(input:checked)')",
             },
           ],
-          tryIt: ":where(#w)를 :is(#w)로 바꿔 실행해 보세요. sw의 color가 파랑으로 바뀝니다.",
+          tryIt: "`:where(#w)`를 `:is(#w)`로 바꿔 실행해 보세요. sw의 color가 파랑으로 바뀝니다.",
         },
       },
       {
@@ -283,7 +283,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('c')).color",
             },
           ],
-          tryIt: "첫 줄을 @layer theme, base;로 바꿔 실행해 보세요. a와 c의 색이 서로 반대로 바뀝니다.",
+          tryIt: "첫 줄을 `@layer theme, base;`로 바꿔 실행해 보세요. a와 c의 색이 서로 반대로 바뀝니다.",
         },
       },
       {
@@ -334,7 +334,7 @@ export const cssTheories: Theory[] = [
               expr: "['b1', 'b2'].map(id => getComputedStyle(document.getElementById(id)).fontWeight).join(', ')",
             },
           ],
-          tryIt: ".k4의 initial을 revert로 바꿔 보세요. 브라우저 기본 스타일에는 p의 color가 없어서 부모의 green을 물려받습니다.",
+          tryIt: "`.k4`의 initial을 revert로 바꿔 보세요. 브라우저 기본 스타일에는 p의 color가 없어서 부모의 green을 물려받습니다.",
         },
       },
       {
@@ -456,7 +456,7 @@ export const cssTheories: Theory[] = [
               expr: "Math.round(document.getElementById('p2').getBoundingClientRect().height)",
             },
           ],
-          tryIt: "s1에도 class=\"ib\"를 붙여 실행해 보세요. 두 줄의 지금 값이 같아집니다.",
+          tryIt: "s1에도 `class=\"ib\"`를 붙여 실행해 보세요. 두 줄의 지금 값이 같아집니다.",
         },
       },
       {
@@ -499,7 +499,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('par')).display",
             },
           ],
-          tryIt: "주석 하나를 풀어 실행해 보세요. flow-root는 마진을 부모 안에 가둡니다. flex 컨테이너에서는 병합이 없어 형제 간격이 합이 됩니다.",
+          tryIt: "주석 하나를 풀어 실행해 보세요. flow-root는 마진을 부모 안에 가두고, flex 컨테이너에서는 마진 병합이 없어 형제 간격이 두 마진의 합이 됩니다.",
         },
       },
       {
@@ -587,7 +587,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('pct')).paddingTop",
             },
           ],
-          tryIt: ".u의 font-size를 30px로 바꾸면 2em만, html의 font-size를 바꾸면 2rem만 달라집니다.",
+          tryIt: "`.u`의 font-size를 30px로 바꾸면 2em만, html의 font-size를 바꾸면 2rem만 달라집니다.",
         },
       },
       {
@@ -675,7 +675,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('h')).fontSize",
             },
           ],
-          tryIt: "calc의 - 양옆 공백을 지워 calc(100%-4rem)으로 실행해 보세요. 선언이 무효가 되어 폭이 줄 전체로 돌아갑니다.",
+          tryIt: "calc의 `-` 양옆 공백을 지워 `calc(100%-4rem)`으로 실행해 보세요. 선언이 무효가 되어 폭이 줄 전체로 돌아갑니다.",
         },
       },
       {
@@ -757,7 +757,7 @@ export const cssTheories: Theory[] = [
               expr: "['b', 'c'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
             },
           ],
-          tryIt: "#b를 display: inline grid로 바꿔 보세요. 계산값이 inline-grid가 되고 폭이 내용만큼 줄어듭니다.",
+          tryIt: "`#b`를 `display: inline grid`로 바꿔 보세요. 계산값이 inline-grid가 되고 폭이 내용만큼 줄어듭니다.",
         },
       },
       {
@@ -801,7 +801,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('w')).display",
             },
           ],
-          tryIt: "flow-root 대신 overflow: hidden이나 display: inline-block을 넣어 보세요. 둘 다 BFC를 만들어 float을 품습니다.",
+          tryIt: "flow-root 대신 `overflow: hidden`이나 `display: inline-block`을 넣어 보세요. 둘 다 BFC를 만들어 float을 품습니다.",
         },
       },
       {
@@ -848,7 +848,7 @@ export const cssTheories: Theory[] = [
               expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('op').getBoundingClientRect())",
             },
           ],
-          tryIt: "#contents에 padding: 20px를 줘 보세요. contents에는 상자가 없어서 padding이 먹지 않습니다.",
+          tryIt: "`#contents`에 `padding: 20px`를 줘 보세요. contents에는 상자가 없어서 padding이 먹지 않습니다.",
         },
       },
       {
@@ -923,7 +923,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('c')).flexGrow",
             },
           ],
-          tryIt: "b와 c를 flex: auto로 바꿔 보세요. 콘텐츠 크기에서 출발해 남는 공간만 나누므로 b가 더 넓어집니다. .f의 width를 200px로 줄이면 shrink가 일합니다.",
+          tryIt: "b와 c를 `flex: auto`로 바꿔 보세요. 콘텐츠 크기에서 출발해 남는 공간만 나누므로 b가 더 넓어집니다. `.f`의 width를 200px로 줄이면 shrink가 동작합니다.",
         },
       },
       {
@@ -965,7 +965,7 @@ export const cssTheories: Theory[] = [
               expr: "document.getElementById('b').getBoundingClientRect().right > document.getElementById('f').getBoundingClientRect().right",
             },
           ],
-          tryIt: "min-width: 0 대신 #b에 overflow: hidden을 넣어 보세요. 스크롤 컨테이너는 자동 최소가 0이라 폭이 같아지고, 넘친 글자도 잘립니다.",
+          tryIt: "`min-width: 0` 대신 `#b`에 `overflow: hidden`을 넣어 보세요. 스크롤 컨테이너는 자동 최소 크기가 0이라 폭이 같아지고, 넘친 글자도 잘립니다.",
         },
       },
       {
@@ -1006,7 +1006,7 @@ export const cssTheories: Theory[] = [
               expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('b').getBoundingClientRect())",
             },
           ],
-          tryIt: "flex-direction: column을 더한 뒤 #b에 width: auto를 줘 보세요. stretch가 이번에는 가로로 늘립니다.",
+          tryIt: "`flex-direction: column`을 더한 뒤 `#b`에 `width: auto`를 줘 보세요. stretch가 이번에는 가로로 늘립니다.",
         },
       },
       {
@@ -1247,7 +1247,7 @@ export const cssTheories: Theory[] = [
               expr: "(r => Math.round(r.left) + ', ' + Math.round(r.top))(document.getElementById('fix').getBoundingClientRect())",
             },
           ],
-          tryIt: ".xf의 transform을 지우고 실행해 보세요. fixed가 창 왼쪽 위로 갑니다. .rel을 지우면 absolute의 offsetParent가 body로 바뀝니다.",
+          tryIt: "`.xf`의 transform을 지우고 실행해 보세요. fixed 요소가 창 왼쪽 위로 갑니다. `.rel`을 지우면 absolute의 offsetParent가 body로 바뀝니다.",
         },
       },
       {
@@ -1289,7 +1289,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('a')).opacity",
             },
           ],
-          tryIt: "#a의 z-index: 1을 지우고 실행해 보세요. A가 맥락을 만들지 않아 child가 맨 위로 옵니다. 그다음 #a에 opacity: 0.9를 더하면 다시 B가 위로 갑니다.",
+          tryIt: "`#a`의 `z-index: 1`을 지우고 실행해 보세요. A가 쌓임 맥락을 만들지 않아 child가 맨 위로 옵니다. 그다음 `#a`에 `opacity: 0.9`를 더하면 다시 B가 위로 갑니다.",
         },
       },
       {
@@ -1327,7 +1327,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('h')).position",
             },
           ],
-          tryIt: "top: 0을 지워 보세요. 임계값이 없어서 sticky가 붙지 않고 함께 스크롤됩니다. top: 20px로 바꾸면 위에서 20px 떨어진 자리에 붙습니다.",
+          tryIt: "`top: 0`을 지워 보세요. 임계값이 없어서 sticky가 붙지 않고 함께 스크롤됩니다. `top: 20px`로 바꾸면 위에서 20px 떨어진 자리에 붙습니다.",
         },
       },
       {
@@ -1404,7 +1404,7 @@ export const cssTheories: Theory[] = [
               expr: "Math.round(document.getElementById('c').scrollTop)",
             },
           ],
-          tryIt: "#y의 overflow-y: scroll을 overflow-x: hidden으로 바꿔 보세요. 이번에는 적지 않은 overflow-y가 auto가 됩니다.",
+          tryIt: "`#y`의 `overflow-y: scroll`을 `overflow-x: hidden`으로 바꿔 보세요. 이번에는 적지 않은 overflow-y가 auto가 됩니다.",
         },
       },
       {
@@ -1444,7 +1444,7 @@ export const cssTheories: Theory[] = [
               expr: "(e => Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)))(document.getElementById('fit'))",
             },
           ],
-          tryIt: "#fit의 글을 short처럼 짧게 바꿔 보세요. 폭이 글만큼 줄어듭니다. max-width를 지우면 한 줄로 늘어납니다.",
+          tryIt: "`#fit`의 글을 short처럼 짧게 바꿔 보세요. 폭이 글만큼 줄어듭니다. max-width를 지우면 한 줄로 늘어납니다.",
         },
       },
       {
@@ -1480,7 +1480,7 @@ export const cssTheories: Theory[] = [
               expr: "(e => e.scrollWidth > e.clientWidth)(document.getElementById('tok'))",
             },
           ],
-          tryIt: ".t에서 overflow: hidden을 지워 보세요. 말줄임이 사라지고 글이 밖으로 넘칩니다. .tok에 overflow-wrap: anywhere를 넣으면 토큰이 끊깁니다.",
+          tryIt: "`.t`에서 `overflow: hidden`을 지워 보세요. 말줄임이 사라지고 글이 밖으로 넘칩니다. `.tok`에 `overflow-wrap: anywhere`를 넣으면 토큰이 끊깁니다.",
         },
       },
       {
@@ -1566,7 +1566,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('u2')).width",
             },
           ],
-          tryIt: ".cq의 ' / inline-size'를 지워 보세요. 크기 컨테이너가 없어져 쿼리가 꺼지고, 50cqi는 작은 뷰포트 단위로 떨어집니다.",
+          tryIt: "`.cq`의 `/ inline-size`를 지워 보세요. 크기 컨테이너가 없어져 쿼리가 꺼지고, 50cqi는 작은 뷰포트 단위로 계산됩니다.",
         },
       },
       {
@@ -1613,7 +1613,7 @@ export const cssTheories: Theory[] = [
               expr: "matchMedia('(hover: hover)').matches",
             },
           ],
-          tryIt: "(width >= 480px)를 (480px < width)로 바꿔 보세요. 480px 버튼에서는 경계가 빠져 빨강으로 남습니다.",
+          tryIt: "`(width >= 480px)`를 `(480px < width)`로 바꿔 보세요. 480px 버튼에서는 경계가 빠져 빨강으로 남습니다.",
         },
       },
       {
@@ -1657,7 +1657,7 @@ export const cssTheories: Theory[] = [
               expr: "(s => s.width + ' × ' + s.height)(getComputedStyle(document.getElementById('c')))",
             },
           ],
-          tryIt: "dir=\"rtl\"을 dir=\"ltr\"로 바꾸거나, #c의 writing-mode를 vertical-lr로 바꿔 보세요.",
+          tryIt: "`dir=\"rtl\"`을 `dir=\"ltr\"`로 바꾸거나, `#c`의 writing-mode를 vertical-lr로 바꿔 보세요.",
         },
       },
       {
@@ -1751,7 +1751,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('bg')).backgroundColor",
             },
           ],
-          tryIt: ":root의 --text-color를 orange로 바꿔 보세요. iacvt의 글자와 bg의 배경이 주황이 됩니다.",
+          tryIt: "`:root`의 --text-color를 orange로 바꿔 보세요. iacvt의 글자와 bg의 배경이 주황이 됩니다.",
         },
       },
       {
@@ -1794,7 +1794,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('bad')).width",
             },
           ],
-          tryIt: "@property 줄을 지우고 실행해 보세요. kid가 부모 값을 물려받고, bad는 width가 무효가 되어 줄을 다 차지합니다. hover 때도 한 번에 바뀌고 transitionend가 오지 않습니다.",
+          tryIt: "`@property` 줄을 지우고 실행해 보세요. kid가 부모 값을 물려받고, bad는 width가 무효가 되어 줄을 다 차지합니다. hover 때도 값이 한 번에 바뀌고 transitionend가 오지 않습니다.",
         },
       },
       {
@@ -1843,7 +1843,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('bad')).paddingLeft",
             },
           ],
-          tryIt: "--n을 6으로, #ld의 color-scheme을 dark로 바꿔 실행해 보세요.",
+          tryIt: "--n을 6으로, `#ld`의 color-scheme을 dark로 바꿔 실행해 보세요.",
         },
       },
       {
@@ -1919,7 +1919,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('auto')).getPropertyValue('interpolate-size')",
             },
           ],
-          tryIt: ".auto에 interpolate-size: allow-keywords를 더해 보세요. height도 보간되고 transitionend가 찍힙니다.",
+          tryIt: "`.auto`에 `interpolate-size: allow-keywords`를 더해 보세요. height도 보간되고 transitionend가 찍힙니다.",
         },
       },
       {
@@ -1960,7 +1960,7 @@ export const cssTheories: Theory[] = [
               expr: "document.getElementById('pop').getAnimations().map(a => a.transitionProperty).join(', ') || '없음'",
             },
           ],
-          tryIt: "@starting-style 줄을 지우고 실행해 보세요. 나타날 때 페이드 없이 바로 보입니다. allow-discrete를 지우면 사라질 때도 바로 사라집니다.",
+          tryIt: "`@starting-style` 줄을 지우고 실행해 보세요. 나타날 때 페이드 없이 바로 보입니다. allow-discrete를 지우면 사라질 때도 바로 사라집니다.",
         },
       },
       {
@@ -2082,7 +2082,7 @@ export const cssTheories: Theory[] = [
               expr: "(s => [s.fontStyle, s.fontWeight, s.fontSize, s.lineHeight].join(', '))(getComputedStyle(document.getElementById('sh')))",
             },
           ],
-          tryIt: ".ft의 font-family에서 \"Probe\",를 지우고 실행해 보세요. 쓰이지 않는 폰트는 받지 않아 상태가 unloaded로 남습니다.",
+          tryIt: "`.ft`의 font-family에서 `\"Probe\",`를 지우고 실행해 보세요. 쓰이지 않는 폰트는 받지 않아 상태가 unloaded로 남습니다.",
         },
       },
       {
@@ -2126,7 +2126,7 @@ export const cssTheories: Theory[] = [
               expr: "performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => n.endsWith('.woff2')).join(', ') || '없음'",
             },
           ],
-          tryIt: "Latin letters only 끝에 한을 붙여 실행해 보세요. 요청한 파일 목록에 sub-hangul.woff2가 더해집니다.",
+          tryIt: "Latin letters only 끝에 '한'을 붙여 실행해 보세요. 요청한 파일 목록에 sub-hangul.woff2가 더해집니다.",
         },
       },
       {
@@ -2238,7 +2238,7 @@ export const cssTheories: Theory[] = [
               expr: "getComputedStyle(document.getElementById('n4')).color",
             },
           ],
-          tryIt: "&.mod를 & .mod로 띄어 써 보세요. 자손 선택자가 되어 n2가 빨강으로 돌아갑니다.",
+          tryIt: "`&.mod`를 `& .mod`로 띄어 써 보세요. 자손 선택자가 되어 n2가 빨강으로 돌아갑니다.",
         },
       },
       {
@@ -2283,7 +2283,7 @@ c에는 near와 far 두 스코프가 다 맞습니다. 특이성도 같고, 뒤�
               expr: "getComputedStyle(document.getElementById('c')).color",
             },
           ],
-          tryIt: "@scope (.far) 안의 p를 #c로 바꿔 보세요. 특이성이 높아져 근접성보다 먼저 갈리고 초록이 이깁니다.",
+          tryIt: "`@scope (.far)` 안의 p를 `#c`로 바꿔 보세요. 특이성이 높아져 근접성보다 먼저 갈리고 초록이 이깁니다.",
         },
       },
       {
@@ -2329,7 +2329,7 @@ c에는 near와 far 두 스코프가 다 맞습니다. 특이성도 같고, 뒤�
               expr: "getComputedStyle(document.getElementById('b3')).backgroundColor",
             },
           ],
-          tryIt: "첫 줄의 vendor를 맨 끝으로 옮겨 보세요. vendor가 가장 세져 세 버튼이 모두 회색이 됩니다.",
+          tryIt: "첫 줄의 vendor를 맨 끝으로 옮겨 보세요. vendor 레이어가 가장 세져 세 버튼이 모두 회색이 됩니다.",
         },
       },
       {

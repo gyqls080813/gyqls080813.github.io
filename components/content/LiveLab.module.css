@@ -91,6 +91,7 @@
   font-size: 12.5px;
   line-height: 1.7;
   color: var(--text-body);
+  overflow-wrap: break-word;
 }
 
 /* 작은 창 — 브라우저 창처럼 주소 줄 + 문서. 문서는 기본 스타일 그대로라 흰 바탕이다 */
@@ -300,6 +301,14 @@
 }
 
 @media (max-width: 520px) {
+  /* 폰에서는 항목 이름도 접는다 — 한 줄로 두면 표가 블록 밖으로 밀린다 */
+  .checks th {
+    width: 38%;
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
   .row {
     grid-template-columns: 44px 34px 1fr;
     gap: 6px;

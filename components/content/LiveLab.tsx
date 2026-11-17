@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TheoryLab } from "@/lib/theories";
 import { LAB_TAGS, LabEngine, type LabRow } from "@/lib/lab/engine";
+import InlineText from "./InlineText";
 import styles from "./LiveLab.module.css";
 
 /**
@@ -106,7 +107,11 @@ export default function LiveLab({ lab }: { lab: TheoryLab }) {
           처음 코드로
         </button>
       </div>
-      {lab.tryIt && <p className={styles.try}>해 볼 것: {lab.tryIt}</p>}
+      {lab.tryIt && (
+        <p className={styles.try}>
+          해 볼 것: <InlineText>{lab.tryIt}</InlineText>
+        </p>
+      )}
 
       <div className={styles.browser}>
         <div className={styles.bar}>

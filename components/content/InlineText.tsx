@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import styles from "./InlineText.module.css";
 
+/** 이보다 긴 코드는 줄 끝에서 접어도 된다 — 짧은 이름은 한 덩어리로 둔다 */
+const LONG = 28;
+
 /**
  * 본문 문자열에서 표시를 붙인 부분만 모양을 바꿔 그린다.
  * - 백틱(`)으로 감싼 부분 → 인라인 코드 박스
@@ -16,7 +19,10 @@ export default function InlineText({ children }: { children: ReactNode }) {
   // split 에 괄호를 쓰면 구분자도 결과에 남는다 — 홀수 번째가 백틱 사이
   return children.split(/`([^`]+)`/).map((part, index) =>
     index % 2 === 1 ? (
-      <code key={index} className={styles.code}>
+      <code
+        key={index}
+        className={part.length > LONG ? `${styles.code} ${styles.long}` : styles.code}
+      >
         {part}
       </code>
     ) : (
