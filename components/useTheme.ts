@@ -23,7 +23,8 @@ function subscribeTheme(onChange: () => void) {
 const readTheme = (): Theme =>
   document.documentElement.dataset.theme === "light" ? "light" : "dark";
 
-/* 서버에는 <html>이 없다 — 첫 칠 스크립트의 기본값과 같은 어두운 판으로 둔다 */
+/* 서버에는 <html>이 없다 — <html>의 기본 표식(data-theme="dark")과 같게 둔다.
+   실제 판은 첫 칠 스크립트가 저장된 값이나 운영체제 설정으로 이미 정해 뒀다 */
 const serverTheme = (): Theme => "dark";
 
 /** 지금 판 — 판 스위치와 그래프(React Flow의 colorMode)가 같이 쓴다 */

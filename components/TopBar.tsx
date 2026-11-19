@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SITE_NAME } from "@/lib/site";
 import { GraphIcon } from "./icons";
 import MenuButton from "./MenuButton";
+import TextSizeToggle from "./TextSizeToggle";
 import ThemeToggle from "./ThemeToggle";
 import styles from "./TopBar.module.css";
 
@@ -24,6 +25,7 @@ export default function TopBar({ breadcrumb }: TopBarProps) {
 
       <div className={styles.spacer} />
 
+      <TextSizeToggle />
       <ThemeToggle />
     </header>
   );

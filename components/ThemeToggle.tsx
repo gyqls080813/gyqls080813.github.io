@@ -2,7 +2,7 @@
 
 import { setTheme, useTheme } from "./useTheme";
 import { MoonIcon, SunIcon } from "./icons";
-import styles from "./ThemeToggle.module.css";
+import styles from "./Segmented.module.css";
 
 /**
  * 어두운 판 / 밝은 판.
@@ -11,7 +11,7 @@ import styles from "./ThemeToggle.module.css";
  * 바꾼다. 그래서 이 버튼은 무슨 색인지 하나도 모른다 — 토큰을 고치면 이 파일은
  * 손댈 것이 없다.
  *
- * 처음 값은 layout.tsx의 인라인 스크립트가 이미 정해 뒀다. 여기서 다시
+ * 처음 값은 layout.tsx의 인라인 스크립트가 이미 정해 뒀다(고른 적이 없으면 운영체제 설정). 여기서 다시
  * 읽기만 하는 이유는, 리액트가 붙기 전에 칠이 끝나야 화면이 한 번 번쩍이지
  * 않기 때문이다. 저장 키는 그 스크립트와 같은 상수(lib/site의 THEME_KEY)다.
  */

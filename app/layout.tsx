@@ -5,7 +5,7 @@ import "./globals.css";
 import { SheetViewProvider } from "@/components/content/SheetView";
 import SheetChrome from "@/components/content/SheetChrome";
 import SheetDrawers from "@/components/content/SheetDrawers";
-import { SITE_NAME, THEME_KEY } from "@/lib/site";
+import { SITE_NAME, TEXT_SIZE_KEY, TEXT_SIZES, THEME_KEY } from "@/lib/site";
 import { cx } from "@/lib/util";
 
 const spaceGrotesk = Space_Grotesk({
@@ -27,21 +27,30 @@ export const metadata: Metadata = {
 };
 
 /*
-  리액트가 붙기 전에 판을 정한다. 이걸 컴포넌트에서 하면 첫 칠이 한 번
-  어두운 판으로 나갔다가 밝은 판으로 바뀌며 번쩍인다.
+  리액트가 붙기 전에 판과 글자 크기를 정한다. 이걸 컴포넌트에서 하면 첫 칠이 한 번
+  다른 판으로 나갔다가 바뀌며 번쩍이고, 글자가 커지며 본문이 한 번 밀린다.
 
-  운영체제 설정은 따르지 않는다. 이 사이트는 어두운 판을 기본으로 두고
-  만든 것이라, 밝은 판은 고른 사람에게만 간다.
-  키는 토글(ThemeToggle)과 같은 상수(THEME_KEY)를 쓴다.
+  판은 읽는 사람이 고른 적이 없으면 운영체제 설정(prefers-color-scheme)을 따른다.
+  보통 밝기의 방에서는 밝은 바탕에 어두운 글자가 읽기 성적이 좋고(Piepenbrock 외 2013),
+  어두운 방에서는 어두운 판이 눈부심을 줄인다. 그 방의 사정은 운영체제 설정이 가장 잘 안다.
+  고른 적이 없는 동안에는 운영체제 설정이 바뀌면(저녁에 자동으로 어두워지는 등) 따라간다.
+  고르면 그 값을 저장하고 그 뒤로는 그것을 쓴다.
 
-  다른 탭에서 판을 바꾸면 storage 이벤트가 온다. 그 값을 이 문서의 표식에 옮겨
-  적는 일도 여기서 한 번만 붙인다 — 표식이 바뀌면 useTheme의 관찰자가 알아챈다.
+  다른 탭에서 바꾼 값은 storage 이벤트로 온다. 그 값을 이 문서의 표식에 옮겨 적는 일도
+  여기서 한 번만 붙인다 — 표식이 바뀌면 useTheme, useTextSize의 관찰자가 알아챈다.
+  키는 스위치와 같은 상수(lib/site의 THEME_KEY, TEXT_SIZE_KEY)를 쓴다.
 */
 const THEME_SCRIPT =
-  `(function(){var d=document.documentElement,k=${JSON.stringify(THEME_KEY)};` +
+  `(function(){var d=document.documentElement,k=${JSON.stringify(THEME_KEY)},z=${JSON.stringify(TEXT_SIZE_KEY)},` +
+  `sizes=${JSON.stringify(TEXT_SIZES)},q=matchMedia("(prefers-color-scheme: light)");` +
   'function ok(t){return t==="dark"||t==="light"}' +
-  "try{var t=localStorage.getItem(k);if(ok(t))d.dataset.theme=t}catch(e){}" +
-  'addEventListener("storage",function(e){if(e.key===k&&ok(e.newValue))d.dataset.theme=e.newValue})})()';
+  "function read(key){try{return localStorage.getItem(key)}catch(e){return null}}" +
+  'function sys(){return q.matches?"light":"dark"}' +
+  "function theme(t){d.dataset.theme=ok(t)?t:sys()}" +
+  "function size(s){if(sizes.indexOf(s)>0)d.dataset.textSize=s;else delete d.dataset.textSize}" +
+  "theme(read(k));size(read(z));" +
+  'q.addEventListener("change",function(){if(!ok(read(k)))theme(null)});' +
+  'addEventListener("storage",function(e){if(e.key===k)theme(e.newValue);if(e.key===z)size(e.newValue)})})()';
 
 export default function RootLayout({
   children,

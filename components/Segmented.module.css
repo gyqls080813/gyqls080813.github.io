@@ -1,4 +1,4 @@
-/* 두 칸짜리 스위치 — 지금 어느 판인지가 눌린 칸으로 보인다.
+/* 여러 칸짜리 스위치(판, 글자 크기) — 지금 무엇인지가 눌린 칸으로 보인다.
    토글 하나로 두면 "지금이 어두운 건지 어두워지는 건지"를 매번 헷갈린다 */
 .group {
   display: flex;
@@ -33,4 +33,22 @@
 .option[data-active="true"] {
   color: var(--text-strong);
   background: var(--surface-node-hover);
+}
+
+/* 글자 크기 칸의 '가' — 칸마다 크기가 달라 무엇을 고르는지 글자로 보인다 */
+.glyph {
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-title);
+}
+
+.glyph[data-size="m"] {
+  font-size: var(--fs-caption);
+}
+
+.glyph[data-size="l"] {
+  font-size: var(--fs-ui);
+}
+
+.glyph[data-size="xl"] {
+  font-size: var(--fs-ui-lg);
 }

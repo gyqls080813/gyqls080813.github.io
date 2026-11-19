@@ -210,13 +210,16 @@
   --font-mono:
     ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace;
 
-  /* 읽는 글자 — 폰(시트 폭 390)에서 왼쪽 값, 넓은 시트에서 오른쪽 값 */
-  --fs-title: clamp(24px, 3.4cqi, 34px);
-  --fs-h2: clamp(19px, 2.4cqi, 23px);
-  --fs-h3: clamp(16px, 1.85cqi, 18px);
-  --fs-lead: clamp(15.5px, 1.8cqi, 17px);
-  --fs-body: clamp(15px, 1.65cqi, 16px);
-  --fs-body-sm: clamp(14px, 1.5cqi, 15px);
+  /* 읽는 글자 — 폰(시트 폭 390)에서 왼쪽 값, 넓은 시트에서 오른쪽 값.
+     본문은 17px이다. 화면에서는 18px 안팎까지 글자가 클수록 이해도를 해치지 않고 읽기가 나아졌다
+     (Rello 외 2016, CHI). 17px에서 한 줄은 한글 40자 안팎이라 줄 길이도 알맞다.
+     --reading-scale은 읽는 사람이 고른 글자 크기다(상단 바의 글자 크기 스위치). 화면 글자는 그대로 둔다 */
+  --fs-title: calc(clamp(24px, 3.5cqi, 36px) * var(--reading-scale));
+  --fs-h2: calc(clamp(20px, 2.5cqi, 24px) * var(--reading-scale));
+  --fs-h3: calc(clamp(17px, 1.95cqi, 19px) * var(--reading-scale));
+  --fs-lead: calc(clamp(16.5px, 1.85cqi, 18px) * var(--reading-scale));
+  --fs-body: calc(clamp(16px, 1.75cqi, 17px) * var(--reading-scale));
+  --fs-body-sm: calc(clamp(14.5px, 1.6cqi, 15.5px) * var(--reading-scale));
 
   /* 화면 글자 */
   --fs-ui-lg: 16px;
@@ -225,8 +228,9 @@
   --fs-caption: 12px;
   --fs-micro: 11px;
 
-  /* 코드 — 블록은 한 줄 106칸이 넓은 시트에 들어가는 크기다(글 쓰기 규칙과 짝) */
-  --fs-code: 12.5px;
+  /* 코드 — 블록은 한 줄 106칸이 넓은 시트(코드 칸 813px)에 들어가는 크기다(글 쓰기 규칙과 짝).
+     13px이면 106칸이 827px라 넘친다. 읽는 사람이 글자를 키우면 함께 커지고, 넘치는 줄은 칸 안에서 옆으로 민다 */
+  --fs-code: calc(12.5px * var(--reading-scale));
   --fs-code-inline: 0.875em;
   /* 입력칸 — 16px보다 작으면 iOS가 누를 때 화면을 확대한다 */
   --fs-input: 16px;
@@ -259,6 +263,21 @@
 
   /* 코드 블록의 탭 한 칸 */
   --code-tab-size: 2;
+}
+
+/**
+ * 읽는 글자 크기 — 읽는 사람이 고른다. 편한 글자 크기와 글꼴은 사람마다 꽤 다르다
+ * (Wallace 외 2022, ACM TOCHI). 그래서 하나로 정하지 않고 세 단계를 둔다.
+ * <html data-text-size>는 첫 칠 스크립트(app/layout.tsx)가 저장된 값으로 붙인다.
+ */
+:root {
+  --reading-scale: 1;
+}
+:root[data-text-size="l"] {
+  --reading-scale: 1.125;
+}
+:root[data-text-size="xl"] {
+  --reading-scale: 1.25;
 }
 
 /**
