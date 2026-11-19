@@ -4,38 +4,38 @@
 .factsSection {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding: 4px 0;
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  gap: var(--space-0-5);
+  padding: var(--space-1) 0;
+  border-top: var(--border-thin) solid var(--border-subtle);
+  border-bottom: var(--border-thin) solid var(--border-subtle);
 }
 
 /* 사용 기술 <Chip variant="outline"> 묶음 */
 .stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 18px;
+  gap: var(--space-1-5);
+  margin-top: var(--space-4);
 }
 
 /* 본문 <TextBlock> 묶음 — 라벨 하나에 문단 하나, 위아래로 쌓인다 */
 .blocks {
   display: flex;
   flex-direction: column;
-  gap: 26px;
-  margin-top: 34px;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
 }
 
 /* 프로젝트 뷰 <Figure variant="wide"> 묶음 — 화면 한 장에 캡션 한 줄 */
 .views {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: var(--space-5);
 }
 
 /* 트러블 슈팅 <NodeCard> 묶음 */
 .troubles {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--space-2-5);
 }

@@ -18,14 +18,31 @@ export const cssTheories: Theory[] = [
     id: "css",
     name: "CSS",
     tagline: "선언은 많고, 이기는 선언은 하나다",
+    keyPoints: [
+      "CSS 갈래는 MDN 학습 순서를 따라 열네 장입니다. 1~4장은 선언이 값이 되는 과정, 5~9장은 그 값이 상자를 놓는 과정, 10~14장은 조건과 시간과 범위입니다.",
+      "1장부터 차례로 읽습니다. 뒤 장은 특이성, 계산값, BFC, 포함 블록 같은 앞 장의 낱말을 그대로 씁니다.",
+      "한 속성의 값은 선언값, 캐스케이드 값, 계산값, 사용값, 실제값 차례로 정해집니다. `getComputedStyle`은 속성에 따라 계산값이나 사용값을 돌려줍니다.",
+      "장마다 Chrome 156에서 `getComputedStyle`과 `getBoundingClientRect()`로 실제로 잰 값을 붙였습니다.",
+    ],
     intro:
       "CSS는 '이 요소는 이렇게 보인다'는 선언을 쌓는 언어입니다. 어려운 것은 문법이 아닙니다. '어느 선언이 이기는가'(캐스케이드)와 '그 값이 어떤 상자를 어디에 놓는가'(박스와 레이아웃)입니다. 이 허브는 MDN의 학습 순서를 따라 열네 장으로 나눕니다. 문법과 선택자, 캐스케이드와 상속, 박스 모델, 값과 단위, 디스플레이와 흐름, 플렉스박스, 그리드, 위치 지정과 쌓임, 오버플로와 크기, 반응형 쿼리, 커스텀 속성, 트랜지션·애니메이션·트랜스폼, 글꼴과 텍스트, 중첩·레이어·스코프입니다. 장마다 Chrome 156에서 실제로 잰 값을 붙였습니다.",
     blocks: [
       {
         label: "열네 장을 나눈 기준",
         body: "앞의 넷(문법, 캐스케이드, 박스, 값)은 '한 선언이 어떻게 값이 되는가'입니다. 가운데 다섯(디스플레이, 플렉스, 그리드, 위치, 오버플로)은 '그 값이 상자를 어디에 놓는가'입니다. 뒤의 다섯(쿼리, 변수, 움직임, 글꼴, 범위)은 '조건과 시간과 범위에 따라 어떻게 달라지는가'입니다. MDN에서는 스타일링 기초 모듈이 앞의 넷과 오버플로를, 레이아웃 모듈이 가운데를, 모듈별 가이드가 뒤를 다룹니다.",
-        code: "값이 되는 과정          상자를 놓는 과정            조건 · 시간 · 범위\n─────────────────────  ─────────────────────────  ──────────────────────────\n1 문법과 선택자          5 디스플레이와 흐름          10 반응형 — 미디어·컨테이너 쿼리\n2 캐스케이드와 상속      6 플렉스박스                 11 커스텀 속성과 함수\n3 박스 모델              7 그리드                     12 트랜지션 · 애니메이션 · 트랜스폼\n4 값과 단위              8 위치 지정과 쌓임 맥락       13 글꼴과 텍스트\n                        9 오버플로와 크기             14 중첩 · 레이어 · 스코프",
-        codeLang: "text",
+        tables: [
+          {
+            caption: "열네 장의 세 묶음",
+            head: ["값이 되는 과정", "상자를 놓는 과정", "조건, 시간, 범위"],
+            rows: [
+              ["1 문법과 선택자", "5 디스플레이와 흐름", "10 반응형, 미디어 쿼리와 컨테이너 쿼리"],
+              ["2 캐스케이드와 상속", "6 플렉스박스", "11 커스텀 속성과 함수"],
+              ["3 박스 모델", "7 그리드", "12 트랜지션, 애니메이션, 트랜스폼"],
+              ["4 값과 단위", "8 위치 지정과 쌓임 맥락", "13 글꼴과 텍스트"],
+              ["-", "9 오버플로와 크기", "14 중첩, 레이어, 스코프"],
+            ],
+          },
+        ],
       },
       {
         label: "실제로 돌려 보면: 이 허브가 재는 방법",
@@ -54,19 +71,28 @@ export const cssTheories: Theory[] = [
     id: "css-s1",
     name: "1장 · 문법과 선택자",
     tagline: "규칙은 선택자와 선언 블록이고, 선택자는 트리에서 요소를 고르는 식이다",
+    keyPoints: [
+      "CSS 규칙은 선택자와 `{ 속성: 값; }` 선언 블록입니다. 선택자는 문서 트리에서 적용할 요소를 고르는 식입니다.",
+      "결합자는 공백(자손), `>`(자식), `+`(바로 다음 형제), `~`(뒤따르는 형제 전부)입니다. 콜론 하나는 상태를, 둘은 부분을 고릅니다.",
+      "`:is()`는 인자 중 가장 특이한 것의 무게를 따르고 `:where()`는 0입니다. 자식의 상태로 부모를 고르려면 `:has()`를 씁니다.",
+      "`type` 같은 열거형 속성 값은 대소문자를 가리지 않지만 `class`, `id`, `data-*`는 가립니다. `i` 플래그를 붙이면 무시합니다.",
+    ],
     intro:
       "CSS 규칙 하나는 선택자와 `{ 속성: 값; }` 선언 블록입니다. 선택자는 '어느 요소에 적용하나'를 트리 위에서 고르는 식이고, MDN은 '60 개 넘는 선택자와 다섯 결합자'라고 적습니다. 종류(type)·클래스·ID·속성·전체(*) 선택자, 결합자(공백 · > · + · ~), 가상 클래스(:hover · :has())와 가상 요소(::before), 그리고 선택자 목록과 `:is()`·`:where()`가 있습니다. 2장의 특이성은 이 선택자의 모양에서 계산됩니다.",
-    blocks: [
+    sections: [
       {
-        label: "기본 선택자 다섯과 복합 선택자",
-        body: "기본 선택자는 `div`(종류), `.card`(클래스), `#main`(ID), `[type=\"text\"]`(속성), `*`(전체)입니다. 한 요소에 조건을 겹쳐 적으면 복합 선택자(`a.card[href]`)입니다. 이때 종류나 전체 선택자가 맨 앞에 와야 합니다. 속성 선택자는 `[attr]`(존재), `=`(일치), `~=`(공백 목록 중 하나), `|=`(접두 또는 `-`로 이어진 값), `^=` `$=` `*=`(시작, 끝, 포함)로 씁니다. HTML의 열거형 속성(type 등)은 대소문자를 가리지 않습니다. 하지만 class, id, data-*는 가립니다. 이 동작은 `i` 플래그로 바꿀 수 있습니다.",
-        code: "/* 기본 */\ndiv { }  .card { }  #main { }  [type=\"text\"] { }  * { }\n\n/* 복합 — 종류는 맨 앞 */\na.card[href^=\"https\"] { }\n\n/* 속성 선택자 */\n[lang|=\"ko\"]      /* ko, ko-KR */\n[class~=\"active\"] /* 공백 목록 중 하나 */\n[href$=\".pdf\" i]  /* 대소문자 무시 */",
-      },
-      {
-        label: "직접 해 보기: 속성 값의 대소문자",
-        body: "`[type=\"TEXT\"]`는 소문자 text인 input에도 맞습니다. HTML은 type처럼 정해진 값만 받는 속성을 대소문자 없이 견줍니다. 그래서 지금 값의 border-color가 빨강(rgb(255, 0, 0))입니다. data-*와 class는 다릅니다. 대소문자를 가리므로 `[data-kind=\"TEXT\"]`와 `.NOTE`는 맞지 않습니다. outline-style은 none으로 남고, p의 color는 body의 기본 글자색 그대로입니다. 닫는 대괄호 앞에 `i`를 붙이면 대소문자를 무시하고 맞춥니다.",
-        lab: {
-          html: `<style>
+        heading: "기본 선택자와 속성",
+        blocks: [
+          {
+            label: "기본 선택자 다섯과 복합 선택자",
+            body: "기본 선택자는 `div`(종류), `.card`(클래스), `#main`(ID), `[type=\"text\"]`(속성), `*`(전체)입니다. 한 요소에 조건을 겹쳐 적으면 복합 선택자(`a.card[href]`)입니다. 이때 종류나 전체 선택자가 맨 앞에 와야 합니다. 속성 선택자는 `[attr]`(존재), `=`(일치), `~=`(공백 목록 중 하나), `|=`(접두 또는 `-`로 이어진 값), `^=` `$=` `*=`(시작, 끝, 포함)로 씁니다. HTML의 열거형 속성(type 등)은 대소문자를 가리지 않습니다. 하지만 class, id, data-*는 가립니다. 이 동작은 `i` 플래그로 바꿀 수 있습니다.",
+            code: "/* 기본 */\ndiv { }  .card { }  #main { }  [type=\"text\"] { }  * { }\n\n/* 복합 — 종류는 맨 앞 */\na.card[href^=\"https\"] { }\n\n/* 속성 선택자 */\n[lang|=\"ko\"]      /* ko, ko-KR */\n[class~=\"active\"] /* 공백 목록 중 하나 */\n[href$=\".pdf\" i]  /* 대소문자 무시 */",
+          },
+          {
+            label: "직접 해 보기: 속성 값의 대소문자",
+            body: "`[type=\"TEXT\"]`는 소문자 text인 input에도 맞습니다. HTML은 type처럼 정해진 값만 받는 속성을 대소문자 없이 견줍니다. 그래서 지금 값의 border-color가 빨강(rgb(255, 0, 0))입니다. data-*와 class는 다릅니다. 대소문자를 가리므로 `[data-kind=\"TEXT\"]`와 `.NOTE`는 맞지 않습니다. outline-style은 none으로 남고, p의 color는 body의 기본 글자색 그대로입니다. 닫는 대괄호 앞에 `i`를 붙이면 대소문자를 무시하고 맞춥니다.",
+            lab: {
+              html: `<style>
   input { border: 2px solid #999; padding: 4px; width: 260px; }
   [type="TEXT"] { border-color: red; }
   [data-kind="TEXT"] { outline: 3px solid blue; }
@@ -74,34 +100,58 @@ export const cssTheories: Theory[] = [
 </style>
 <input id="t" type="text" data-kind="text" value="type=text, data-kind=text">
 <p class="note" id="n">class="note"인 문단</p>`,
-          height: 150,
-          checks: [
-            {
-              label: "input의 border-color, [type=TEXT]",
-              expr: "getComputedStyle(document.getElementById('t')).borderTopColor",
+              height: 150,
+              checks: [
+                {
+                  label: "input의 border-color, [type=TEXT]",
+                  expr: "getComputedStyle(document.getElementById('t')).borderTopColor",
+                },
+                {
+                  label: "input의 outline-style, [data-kind=TEXT]",
+                  expr: "getComputedStyle(document.getElementById('t')).outlineStyle",
+                },
+                {
+                  label: "p의 color, .NOTE",
+                  expr: "getComputedStyle(document.getElementById('n')).color",
+                },
+              ],
+              tryIt: "`[data-kind=\"TEXT\"]`를 `[data-kind=\"TEXT\" i]`로 바꿔 실행해 보세요. outline-style이 solid가 됩니다.",
             },
-            {
-              label: "input의 outline-style, [data-kind=TEXT]",
-              expr: "getComputedStyle(document.getElementById('t')).outlineStyle",
-            },
-            {
-              label: "p의 color, .NOTE",
-              expr: "getComputedStyle(document.getElementById('n')).color",
-            },
-          ],
-          tryIt: "`[data-kind=\"TEXT\"]`를 `[data-kind=\"TEXT\" i]`로 바꿔 실행해 보세요. outline-style이 solid가 됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "결합자: 트리 위의 관계",
-        body: "공백은 자손을 고릅니다(`article p`, 안쪽 어디든). `>`는 자식(바로 아래), `+`는 다음 형제(바로 뒤 하나), `~`는 뒤따르는 형제(뒤의 어느 것이든)를 고릅니다. 결합자는 특이성에 무게를 더하지 않습니다(2장). 가상 클래스는 트리에 없는 '상태'를 고릅니다(`:hover` `:focus-visible` `:nth-child(2n)` `:target` `:checked`). 가상 요소는 HTML에 없는 '부분'을 고릅니다(`::before` `::after` `::marker` `::first-line` `::placeholder`). 콜론이 하나인지 둘인지가 이 차이를 나타냅니다.",
-        code: "article p { }     /* 자손 */\nul > li { }       /* 자식 */\nh2 + p { }        /* 바로 다음 형제 */\nh2 ~ p { }        /* 뒤따르는 형제 전부 */\n\n/* 가상 클래스(상태) : 하나  ·  가상 요소(부분) :: 둘 */\nli:nth-child(2n) { }   a:focus-visible { }   p::first-line { }   li::marker { }",
-      },
-      {
-        label: "직접 해 보기: 결합자 넷이 고르는 것",
-        body: "`+`는 바로 다음 형제 하나, `~`는 뒤따르는 형제 전부를 고릅니다. `>`는 바로 아래 자식, 공백은 안쪽 어디든 자손을 고릅니다. 지금 값에서 빨강은 p1에만 있어야 합니다. 굵기 700은 p1과 p2에, 밑줄은 article의 자식인 p1과 p2에만 있습니다. 노란 배경은 div 안의 p3까지 셋 모두에 있습니다. p3은 h2의 형제가 아니라서 `+`와 `~`에 걸리지 않습니다.",
-        lab: {
-          html: `<style>
+        heading: "결합자와 가상 클래스",
+        blocks: [
+          {
+            label: "결합자: 트리 위의 관계",
+            body: "공백은 자손을 고릅니다(`article p`, 안쪽 어디든). `>`는 자식(바로 아래), `+`는 다음 형제(바로 뒤 하나), `~`는 뒤따르는 형제(뒤의 어느 것이든)를 고릅니다. 결합자는 특이성에 무게를 더하지 않습니다(2장). 가상 클래스는 트리에 없는 '상태'를 고릅니다(`:hover` `:focus-visible` `:nth-child(2n)` `:target` `:checked`). 가상 요소는 HTML에 없는 '부분'을 고릅니다(`::before` `::after` `::marker` `::first-line` `::placeholder`). 콜론이 하나인지 둘인지가 이 차이를 나타냅니다.",
+            tables: [
+              {
+                caption: "결합자 넷",
+                head: ["결합자", "예", "고르는 것"],
+                rows: [
+                  ["공백", "`article p { }`", "자손"],
+                  ["`>`", "`ul > li { }`", "자식"],
+                  ["`+`", "`h2 + p { }`", "바로 다음 형제"],
+                  ["`~`", "`h2 ~ p { }`", "뒤따르는 형제 전부"],
+                ],
+              },
+              {
+                caption: "가상 클래스와 가상 요소",
+                head: ["종류", "콜론", "고르는 것", "예"],
+                rows: [
+                  ["가상 클래스", "`:` 하나", "상태", "`li:nth-child(2n) { }`, `a:focus-visible { }`"],
+                  ["가상 요소", "`::` 둘", "부분", "`p::first-line { }`, `li::marker { }`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: 결합자 넷이 고르는 것",
+            body: "`+`는 바로 다음 형제 하나, `~`는 뒤따르는 형제 전부를 고릅니다. `>`는 바로 아래 자식, 공백은 안쪽 어디든 자손을 고릅니다. 지금 값에서 빨강은 p1에만 있어야 합니다. 굵기 700은 p1과 p2에, 밑줄은 article의 자식인 p1과 p2에만 있습니다. 노란 배경은 div 안의 p3까지 셋 모두에 있습니다. p3은 h2의 형제가 아니라서 `+`와 `~`에 걸리지 않습니다.",
+            lab: {
+              html: `<style>
   h2 + p { color: red; }
   h2 ~ p { font-weight: 700; }
   article > p { text-decoration: underline; }
@@ -114,34 +164,39 @@ export const cssTheories: Theory[] = [
   <p id="p2">둘째 p</p>
   <div><p id="p3">div 안의 p</p></div>
 </article>`,
-          height: 190,
-          checks: [
-            {
-              label: "p1: color, weight, 밑줄, 배경",
-              expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p1')))",
+              height: 190,
+              checks: [
+                {
+                  label: "p1: color, weight, 밑줄, 배경",
+                  expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p1')))",
+                },
+                {
+                  label: "p2: color, weight, 밑줄, 배경",
+                  expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p2')))",
+                },
+                {
+                  label: "p3: color, weight, 밑줄, 배경",
+                  expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p3')))",
+                },
+              ],
+              tryIt: "h2와 p1 사이에 `<hr>`을 넣어 보세요. `h2 + p`가 아무것도 고르지 못해 빨강이 사라집니다.",
             },
-            {
-              label: "p2: color, weight, 밑줄, 배경",
-              expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p2')))",
-            },
-            {
-              label: "p3: color, weight, 밑줄, 배경",
-              expr: "(s => [s.color, s.fontWeight, s.textDecorationLine, s.backgroundColor].join(', '))(getComputedStyle(document.getElementById('p3')))",
-            },
-          ],
-          tryIt: "h2와 p1 사이에 `<hr>`을 넣어 보세요. `h2 + p`가 아무것도 고르지 못해 빨강이 사라집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: :has(), :is(), :where()와 중첩",
-        body: "`:has()`는 '이 조건의 자손·형제를 가진 요소'를 고르는 관계 선택자입니다. 자식으로 부모를 고르는 유일한 길입니다. Chrome 156에서 `CSS.supports(\"selector(:has(a))\")`가 true였습니다. `:is()`와 `:where()`는 선택자 목록을 하나로 묶어 반복을 줄입니다. 다만 특이성이 다릅니다. `:is()`는 인자 중 가장 특이한 것의 무게를 따르고, `:where()`는 0입니다. 실제로 `:where(#spec-where) .sw` 뒤에 적은 `.sw`가 이겼습니다(둘 다 0-1-0이라 뒤의 것). `:is(.x, #spec-is) .si`는 ID 무게(1-1-0)를 받아 `.si.si2`(0-2-0)를 이겼습니다. 중첩(`.a { .b { } }`)도 지원합니다(`selector(&)` true). `&`로 부모 자리를 정합니다(14장).",
-        code: "/* probe1.html */\n:where(#spec-where) .sw { color: blue; }   /* 0-1-0 — :where 는 0 */\n.sw { color: red; }                        /* 0-1-0, 뒤 → 이김 */\n→ cs(\"sw\", \"color\") = \"rgb(255, 0, 0)\"\n\n:is(.x, #spec-is) .si { color: blue; }     /* 1-1-0 — 가장 특이한 인자 */\n.si.si2 { color: red; }                    /* 0-2-0 */\n→ cs(\"si\", \"color\") = \"rgb(0, 0, 255)\"\n\n/* 부모를 자식으로 고르기 */\n.card:has(img) { display: grid; }\nlabel:has(+ input:invalid) { color: red; }",
-      },
-      {
-        label: "직접 해 보기: :is(), :where(), :has()",
-        body: "`:where()`는 인자가 ID여도 특이성이 0입니다. 그래서 `:where(#w) .sw`와 `.sw`는 둘 다 0-1-0이고, 뒤에 적은 빨강이 이깁니다. `:is()`는 인자 중 가장 특이한 것을 따릅니다. `#i`의 무게를 받아 1-1-0이 되고, 0-2-0인 `.si.si2`를 이겨 파랑이 됩니다.\n아래 체크 상자를 눌러 보세요. 기록에 클릭이 남고, `:has()`가 맞아 부모 label의 배경색이 바뀝니다. 자식의 상태로 부모를 고른 것입니다.",
-        lab: {
-          html: `<style>
+        heading: "묶는 선택자와 :has()",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: :has(), :is(), :where()와 중첩",
+            body: "`:has()`는 '이 조건의 자손·형제를 가진 요소'를 고르는 관계 선택자입니다. 자식으로 부모를 고르는 유일한 길입니다. Chrome 156에서 `CSS.supports(\"selector(:has(a))\")`가 true였습니다. `:is()`와 `:where()`는 선택자 목록을 하나로 묶어 반복을 줄입니다. 다만 특이성이 다릅니다. `:is()`는 인자 중 가장 특이한 것의 무게를 따르고, `:where()`는 0입니다. 실제로 `:where(#spec-where) .sw` 뒤에 적은 `.sw`가 이겼습니다(둘 다 0-1-0이라 뒤의 것). `:is(.x, #spec-is) .si`는 ID 무게(1-1-0)를 받아 `.si.si2`(0-2-0)를 이겼습니다. 중첩(`.a { .b { } }`)도 지원합니다(`selector(&)` true). `&`로 부모 자리를 정합니다(14장).",
+            code: "/* probe1.html */\n:where(#spec-where) .sw { color: blue; }   /* 0-1-0 — :where 는 0 */\n.sw { color: red; }                        /* 0-1-0, 뒤 → 이김 */\n→ cs(\"sw\", \"color\") = \"rgb(255, 0, 0)\"\n\n:is(.x, #spec-is) .si { color: blue; }     /* 1-1-0 — 가장 특이한 인자 */\n.si.si2 { color: red; }                    /* 0-2-0 */\n→ cs(\"si\", \"color\") = \"rgb(0, 0, 255)\"\n\n/* 부모를 자식으로 고르기 */\n.card:has(img) { display: grid; }\nlabel:has(+ input:invalid) { color: red; }",
+          },
+          {
+            label: "직접 해 보기: :is(), :where(), :has()",
+            body: "`:where()`는 인자가 ID여도 특이성이 0입니다. 그래서 `:where(#w) .sw`와 `.sw`는 둘 다 0-1-0이고, 뒤에 적은 빨강이 이깁니다. `:is()`는 인자 중 가장 특이한 것을 따릅니다. `#i`의 무게를 받아 1-1-0이 되고, 0-2-0인 `.si.si2`를 이겨 파랑이 됩니다.\n아래 체크 상자를 눌러 보세요. 기록에 클릭이 남고, `:has()`가 맞아 부모 label의 배경색이 바뀝니다. 자식의 상태로 부모를 고른 것입니다.",
+            lab: {
+              html: `<style>
   :where(#w) .sw { color: blue; }
   .sw { color: red; }
   :is(.x, #i) .si { color: blue; }
@@ -152,47 +207,78 @@ export const cssTheories: Theory[] = [
 <div id="w"><p class="sw" id="sw">:where(#w) .sw 대 .sw</p></div>
 <div id="i"><p class="si si2" id="si">:is(.x, #i) .si 대 .si.si2</p></div>
 <label class="card" id="card"><input type="checkbox"> 체크하면 부모 label의 배경이 바뀝니다</label>`,
-          height: 220,
-          checks: [
-            {
-              label: "sw의 color",
-              expr: "getComputedStyle(document.getElementById('sw')).color",
+              height: 220,
+              checks: [
+                {
+                  label: "sw의 color",
+                  expr: "getComputedStyle(document.getElementById('sw')).color",
+                },
+                {
+                  label: "si의 color",
+                  expr: "getComputedStyle(document.getElementById('si')).color",
+                },
+                {
+                  label: "label의 background-color",
+                  expr: "getComputedStyle(document.getElementById('card')).backgroundColor",
+                },
+                {
+                  label: "label이 :has(input:checked)에 맞나",
+                  expr: "document.getElementById('card').matches(':has(input:checked)')",
+                },
+              ],
+              tryIt: "`:where(#w)`를 `:is(#w)`로 바꿔 실행해 보세요. sw의 color가 파랑으로 바뀝니다.",
             },
-            {
-              label: "si의 color",
-              expr: "getComputedStyle(document.getElementById('si')).color",
-            },
-            {
-              label: "label의 background-color",
-              expr: "getComputedStyle(document.getElementById('card')).backgroundColor",
-            },
-            {
-              label: "label이 :has(input:checked)에 맞나",
-              expr: "document.getElementById('card').matches(':has(input:checked)')",
-            },
-          ],
-          tryIt: "`:where(#w)`를 `:is(#w)`로 바꿔 실행해 보세요. sw의 color가 파랑으로 바뀝니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 선택자가 '안 맞는' 이유",
-        body: "선택자가 요소를 못 고르거나 뜻밖의 것을 고를 때의 표입니다.",
-        code: "증상                                     원인                                  확인\n──────────────────────────────────────  ─────────────────────────────────────  ───────────────────────────\n.a .b 가 형제 .b 에도 맞는다              공백은 '자손' — 형제가 아니라 안쪽        > 또는 + 로 바꾸기\nh2 + p 가 둘째 p 에 안 맞는다             + 는 바로 다음 하나                      ~ 로\n[type=Text] 가 맞는데 [data-k=Text] 는 안 맞음 열거형 속성은 대소문자 무시, data-* 는 구분  i 플래그\n:hover 가 터치에서 걸려 있다               터치 뒤 hover 상태 유지                  @media (hover: hover) 안으로\n::before 가 안 보인다                     content 가 없으면 생성 안 됨              content: \"\" 추가\n부모를 자식 조건으로 못 고른다             CSS 는 아래로만 — :has() 전까지          .parent:has(.child)\n입력창에 ::before 가 안 된다               대체 요소(input·img)엔 가상 요소 없음     래퍼 요소에",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 선택자가 '안 맞는' 이유",
+            body: "선택자가 요소를 못 고르거나 뜻밖의 것을 고를 때의 표입니다.",
+            tables: [
+              {
+                caption: "선택자가 안 맞는 이유",
+                head: ["증상", "원인", "확인"],
+                rows: [
+                  ["`.a .b`가 형제 `.b`에도 맞는다", "공백은 '자손', 형제가 아니라 안쪽", "`>` 또는 `+`로 바꾸기"],
+                  ["`h2 + p`가 둘째 `p`에 안 맞는다", "`+`는 바로 다음 하나", "`~`로"],
+                  ["`[type=Text]`가 맞는데 `[data-k=Text]`는 안 맞음", "열거형 속성은 대소문자 무시, `data-*`는 구분", "`i` 플래그"],
+                  ["`:hover`가 터치에서 걸려 있다", "터치 뒤 hover 상태 유지", "`@media (hover: hover)` 안으로"],
+                  ["`::before`가 안 보인다", "`content`가 없으면 생성 안 됨", "`content: \"\"` 추가"],
+                  ["부모를 자식 조건으로 못 고른다", "CSS는 아래로만 (`:has()` 전까지)", "`.parent:has(.child)`"],
+                  ["입력창에 `::before`가 안 된다", "대체 요소(`input`, `img`)엔 가상 요소 없음", "래퍼 요소에"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 선택자는 '매칭'이고 겹침은 정상이다",
+            body: "선택자는 요소를 '소유'하지 않습니다. 한 요소에 규칙 열 개가 동시에 맞을 수 있고, 규칙마다 자기 선언을 후보로 내놓습니다. 후보 중 하나를 고르는 것이 다음 장의 캐스케이드입니다. 선택자의 모양(ID 몇 개, 클래스 몇 개)은 그 선택의 재료인 특이성이 됩니다. 그래서 '선택자를 더 길게 써서 이기기'는 캐스케이드 싸움을 선택자로 하는 셈입니다. MDN은 그 대신 레이어(14장)를 권합니다.",
+            code: "요소 <a class=\"card\" id=\"x\" href=…>\n\n맞는 규칙들 (전부 후보)         특이성\n  a            { color: … }     0-0-1\n  .card        { color: … }     0-1-0\n  #x           { color: … }     1-0-0\n  a[href]      { color: … }     0-1-1\n  :where(#x) a { color: … }     0-0-1\n           ↓ 캐스케이드(2장)가 하나를 고른다",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 선택자는 '매칭'이고 겹침은 정상이다",
-        body: "선택자는 요소를 '소유'하지 않습니다. 한 요소에 규칙 열 개가 동시에 맞을 수 있고, 규칙마다 자기 선언을 후보로 내놓습니다. 후보 중 하나를 고르는 것이 다음 장의 캐스케이드입니다. 선택자의 모양(ID 몇 개, 클래스 몇 개)은 그 선택의 재료인 특이성이 됩니다. 그래서 '선택자를 더 길게 써서 이기기'는 캐스케이드 싸움을 선택자로 하는 셈입니다. MDN은 그 대신 레이어(14장)를 권합니다.",
-        code: "요소 <a class=\"card\" id=\"x\" href=…>\n\n맞는 규칙들 (전부 후보)         특이성\n  a            { color: … }     0-0-1\n  .card        { color: … }     0-1-0\n  #x           { color: … }     1-0-0\n  a[href]      { color: … }     0-1-1\n  :where(#x) a { color: … }     0-0-1\n           ↓ 캐스케이드(2장)가 하나를 고른다",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "같은 요소에 맞은 후보 중 무엇이 이기는지는 2장입니다. 출처, 중요도, 레이어, 특이성, 순서로 정합니다. 특이성 계산의 정확한 규칙(ID 1-0-0, :is는 가장 특이한 인자, :where는 0)도 거기서 숫자로 나옵니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `article p`와 `article > p`의 차이는?\n2) `:is(.a, #b) .c`와 `:where(.a, #b) .c`의 특이성은 각각?\n3) 자식의 상태로 부모를 고르는 선택자는?\n4) `[type=TEXT]`는 맞는데 `[data-kind=TEXT]`는 안 맞는 이유는?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "같은 요소에 맞은 후보 중 무엇이 이기는지는 2장입니다. 출처, 중요도, 레이어, 특이성, 순서로 정합니다. 특이성 계산의 정확한 규칙(ID 1-0-0, :is는 가장 특이한 인자, :where는 0)도 거기서 숫자로 나옵니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`article p`와 `article > p`의 차이는 무엇인가요?", a: "`article p`는 `article` 안쪽 어디에 있든 자손 `p`를 모두 고르고, `article > p`는 바로 아래 자식 `p`만 고릅니다. 실험에서 `div` 안의 p3은 `article p`의 노란 배경은 받았지만 `article > p`의 밑줄은 받지 않았습니다." },
+              { q: "`:is(.a, #b) .c`와 `:where(.a, #b) .c`의 특이성은 각각 얼마인가요?", a: "`:is(.a, #b) .c`는 1-1-0이고, `:where(.a, #b) .c`는 0-1-0입니다. `:is()`는 인자 중 가장 특이한 `#b`의 무게를 따르고, `:where()`는 인자와 상관없이 0이라 `.c`의 무게만 남습니다." },
+              { q: "자식의 상태로 부모를 고르는 선택자는 무엇인가요?", a: "`:has()`입니다. `.card:has(input:checked)`처럼 쓰면 안의 체크 상자가 체크될 때 부모 `.card`가 골라집니다. Chrome 156에서 `CSS.supports(\"selector(:has(a))\")`는 true였습니다." },
+              { q: "`[type=TEXT]`는 맞는데 `[data-kind=TEXT]`는 안 맞는 이유는 무엇인가요?", a: "HTML은 `type`처럼 정해진 값만 받는 열거형 속성을 대소문자 없이 견주지만, `data-*`, `class`, `id`는 대소문자를 가리기 때문입니다. 닫는 대괄호 앞에 `i` 플래그를 붙여 `[data-kind=TEXT i]`로 쓰면 대소문자를 무시하고 맞습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -206,20 +292,29 @@ export const cssTheories: Theory[] = [
     id: "css-s2",
     name: "2장 · 캐스케이드와 상속",
     tagline: "출처, 중요도, 레이어, 특이성, 순서의 차례로 하나를 고른다",
+    keyPoints: [
+      "캐스케이드는 한 속성에 맞는 선언들을 출처와 중요도, 레이어, 특이성, 스코프 근접성, 등장 순서로 정렬해 하나를 고릅니다. 앞 키가 다르면 뒤 키는 보지 않습니다.",
+      "레이어가 다르면 특이성은 소용없습니다. 뒤 레이어의 0-1-0이 앞 레이어의 1-1-0을 이기고, `!important`가 붙으면 앞 레이어가 이깁니다.",
+      "특이성은 자릿수를 더하지 않고 ID 열부터 견줍니다. 1-0-0인 `#x`가 0-6-0인 `.a .b .c .d .e [data-x]`를 이깁니다.",
+      "맞는 선언이 없으면 `color` 같은 상속 속성은 부모의 계산값을, `border` 같은 비상속 속성은 초깃값을 받습니다. `inherit`, `initial`, `unset`, `revert`로 직접 정합니다.",
+    ],
     intro:
       "같은 요소의 같은 속성에 선언이 여럿 맞으면 캐스케이드가 하나를 고릅니다. MDN이 적은 알고리즘 순서는 관련성 → 출처와 중요도 → 특이성 → 스코프 근접성 → 등장 순서입니다. 특이성보다 먼저, 레이어(@layer)가 출처 안의 순서를 정합니다. 맞는 선언이 하나도 없으면 상속되는 속성은 부모의 계산값을, 아닌 속성은 초깃값을 받습니다. inherit, initial, unset, revert, revert-layer 다섯 키워드로 이 값을 직접 정합니다.",
-    blocks: [
+    sections: [
       {
-        label: "완전한 순서: 출처와 중요도가 먼저다",
-        body: "MDN에는 '완전한 캐스케이드 순서' 표가 있습니다(낮은 것 → 높은 것).\n(1) 사용자 에이전트 normal입니다. 레이어(첫→끝), 비레이어 순입니다.\n(2) 사용자 normal입니다.\n(3) 작성자 normal입니다. 레이어(첫→끝), 비레이어, 인라인 style 순입니다.\n(4) @keyframes 애니메이션입니다.\n(5) 작성자 !important입니다. 비레이어, 레이어(끝→첫), 인라인 !important 순입니다.\n(6) 사용자 !important입니다.\n(7) UA !important입니다.\n(8) 트랜지션이 가장 높습니다.\n핵심은 둘입니다. 하나는 '!important는 레이어의 우선순위를 뒤집는다'는 것입니다. 다른 하나는 특이성이 '출처와 중요도를 정한 뒤에야' 비교된다는 것입니다. 그래서 MDN은 `!important`로 특이성을 이기려는 것을 '나쁜 관행'이라 하고, 레이어를 쓰라고 적습니다.",
-        code: "낮음 ─────────────────────────────────────────────────────────► 높음\nUA normal │ user normal │ author normal (layer 첫→끝 · 비레이어 · inline) │ animations │\nauthor !important (비레이어 · layer 끝→첫 · inline !important) │ user !important │ UA !important │ transitions\n\n같은 칸 안에서만: 특이성 → 스코프 근접성 → 등장 순서",
-        codeLang: "text",
-      },
-      {
-        label: "직접 해 보기: ID 하나, 클래스 여섯, 인라인 style",
-        body: "특이성은 세 자리를 더하지 않습니다. 왼쪽 자리(ID)부터 견주고, 거기서 갈리면 끝입니다. 그래서 1-0-0인 `#x`가 0-6-0을 이겨 x는 빨강입니다.\n인라인 style은 어떤 선택자보다 셉니다. 하지만 `!important`는 그보다 앞 단계인 출처와 중요도에서 갈립니다. 작성자 normal인 인라인 style은 작성자 `!important`에 집니다. 그래서 y의 배경은 인라인의 파랑이 아니라 `p.k`의 노랑입니다.",
-        lab: {
-          html: `<style>
+        heading: "출처, 중요도, 특이성",
+        blocks: [
+          {
+            label: "완전한 순서: 출처와 중요도가 먼저다",
+            body: "MDN에는 '완전한 캐스케이드 순서' 표가 있습니다(낮은 것 → 높은 것).\n(1) 사용자 에이전트 normal입니다. 레이어(첫→끝), 비레이어 순입니다.\n(2) 사용자 normal입니다.\n(3) 작성자 normal입니다. 레이어(첫→끝), 비레이어, 인라인 style 순입니다.\n(4) @keyframes 애니메이션입니다.\n(5) 작성자 !important입니다. 비레이어, 레이어(끝→첫), 인라인 !important 순입니다.\n(6) 사용자 !important입니다.\n(7) UA !important입니다.\n(8) 트랜지션이 가장 높습니다.\n핵심은 둘입니다. 하나는 '!important는 레이어의 우선순위를 뒤집는다'는 것입니다. 다른 하나는 특이성이 '출처와 중요도를 정한 뒤에야' 비교된다는 것입니다. 그래서 MDN은 `!important`로 특이성을 이기려는 것을 '나쁜 관행'이라 하고, 레이어를 쓰라고 적습니다.",
+            code: "낮음 ─────────────────────────────────────────────────────────► 높음\nUA normal │ user normal │ author normal (layer 첫→끝 · 비레이어 · inline) │ animations │\nauthor !important (비레이어 · layer 끝→첫 · inline !important) │ user !important │ UA !important │ transitions\n\n같은 칸 안에서만: 특이성 → 스코프 근접성 → 등장 순서",
+            codeLang: "text",
+          },
+          {
+            label: "직접 해 보기: ID 하나, 클래스 여섯, 인라인 style",
+            body: "특이성은 세 자리를 더하지 않습니다. 왼쪽 자리(ID)부터 견주고, 거기서 갈리면 끝입니다. 그래서 1-0-0인 `#x`가 0-6-0을 이겨 x는 빨강입니다.\n인라인 style은 어떤 선택자보다 셉니다. 하지만 `!important`는 그보다 앞 단계인 출처와 중요도에서 갈립니다. 작성자 normal인 인라인 style은 작성자 `!important`에 집니다. 그래서 y의 배경은 인라인의 파랑이 아니라 `p.k`의 노랑입니다.",
+            lab: {
+              html: `<style>
   #x { color: red; }
   .a .b .c .d .e [data-x] { color: blue; }
   p.k { background: #fef3c7 !important; }
@@ -228,36 +323,41 @@ export const cssTheories: Theory[] = [
   <p id="x" data-x>#x(1-0-0) 대 .a .b .c .d .e [data-x](0-6-0)</p>
   <p id="y" class="k" style="background: #dbeafe">인라인 style 대 p.k의 !important</p>
 </div></div></div></div></div>`,
-          height: 150,
-          checks: [
-            {
-              label: "x의 color",
-              expr: "getComputedStyle(document.getElementById('x')).color",
+              height: 150,
+              checks: [
+                {
+                  label: "x의 color",
+                  expr: "getComputedStyle(document.getElementById('x')).color",
+                },
+                {
+                  label: "y의 background-color",
+                  expr: "getComputedStyle(document.getElementById('y')).backgroundColor",
+                },
+              ],
+              tryIt: "인라인 style의 값 끝에 !important를 붙여 보세요. 인라인 !important가 더 높아 파랑 배경이 이깁니다.",
             },
-            {
-              label: "y의 background-color",
-              expr: "getComputedStyle(document.getElementById('y')).backgroundColor",
-            },
-          ],
-          tryIt: "인라인 style의 값 끝에 !important를 붙여 보세요. 인라인 !important가 더 높아 파랑 배경이 이깁니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: 레이어가 특이성을 이긴다",
-        body: "`@layer base, theme;`로 순서를 정했습니다. base에는 `#lay-id.lay`(1-1-0, 빨강)를, theme에는 `.lay`(0-1-0, 파랑)를 두었습니다. 결과는 파랑이었습니다. 뒤 레이어가 이기고, 특이성은 보지 않습니다. 레이어 밖의 `.lay-unlayered-target.lay`(초록)는 레이어 안의 어떤 선언보다 셉니다. '레이어 밖 스타일은 항상 레이어 안을 덮는다'는 말 그대로입니다. `!important`를 붙이면 이 순서가 뒤집힙니다. theme(뒤)의 `!important` 파랑과 base(앞)의 `!important` 빨강 중 base가 이겨 빨강이 됩니다. 특이성에서는 ID 하나가 클래스와 속성 여럿을 이깁니다. `#spec-id`(1-0-0) 대 `.a .b .c .d .e [data-x]`(0-6-0)의 결과는 빨강입니다. 자릿수를 합쳐 보지 않고 왼쪽 열부터 비교하기 때문입니다.",
-        code: "@layer base, theme;\n@layer theme { .lay { color: blue; } }           /* 0-1-0, 뒤 레이어 */\n@layer base  { #lay-id.lay { color: red; } }     /* 1-1-0, 앞 레이어 */\n→ cs(\"lay-id\", \"color\") = \"rgb(0, 0, 255)\"       /* 레이어 순서 > 특이성 */\n\n.lay-unlayered-target.lay { color: green; }      /* 비레이어 */\n→ \"rgb(0, 128, 0)\"                                /* 비레이어 > 레이어 */\n\n@layer theme { .imp { color: blue !important; } }\n@layer base  { .imp { color: red !important; } }\n→ \"rgb(255, 0, 0)\"                                /* !important 는 앞 레이어가 이김 */\n\n#spec-id { color: red; }                         /* 1-0-0 */\n.a .b .c .d .e [data-x=\"1\"] { color: blue; }     /* 0-6-0 */\n→ \"rgb(255, 0, 0)\"                                /* ID 열이 먼저 */",
-        terms: [
-          {
-            term: "특이성 (specificity)",
-            body: "ID, 클래스, 종류 세 열로 매기는 무게입니다. ID는 1-0-0, 클래스와 속성과 가상 클래스는 0-1-0, 종류와 가상 요소는 0-0-1입니다. `*`, `:where()`, 결합자는 0입니다. `:is()`, `:not()`, `:has()`는 가장 특이한 인자를 따릅니다. 인라인 style은 1-0-0-0처럼 모든 선택자를 이기고, 그 위에는 `!important`만 있습니다. 출처, 레이어, 중요도가 같을 때만 비교합니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: 레이어 순서와 !important 역전",
-        body: "첫 줄 `@layer base, theme;`가 레이어 순서를 정합니다. 뒤에 적은 theme이 이깁니다. 그래서 1-1-0인 base의 선언이 0-1-0인 theme의 선언에 지고, a는 파랑입니다. 레이어 밖의 선언은 어느 레이어보다 셉니다. b는 초록입니다. `!important`가 붙으면 순서가 뒤집혀 앞 레이어가 이깁니다. c는 빨강입니다.",
-        lab: {
-          html: `<style>
+        heading: "레이어와 !important",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 레이어가 특이성을 이긴다",
+            body: "`@layer base, theme;`로 순서를 정했습니다. base에는 `#lay-id.lay`(1-1-0, 빨강)를, theme에는 `.lay`(0-1-0, 파랑)를 두었습니다. 결과는 파랑이었습니다. 뒤 레이어가 이기고, 특이성은 보지 않습니다. 레이어 밖의 `.lay-unlayered-target.lay`(초록)는 레이어 안의 어떤 선언보다 셉니다. '레이어 밖 스타일은 항상 레이어 안을 덮는다'는 말 그대로입니다. `!important`를 붙이면 이 순서가 뒤집힙니다. theme(뒤)의 `!important` 파랑과 base(앞)의 `!important` 빨강 중 base가 이겨 빨강이 됩니다. 특이성에서는 ID 하나가 클래스와 속성 여럿을 이깁니다. `#spec-id`(1-0-0) 대 `.a .b .c .d .e [data-x]`(0-6-0)의 결과는 빨강입니다. 자릿수를 합쳐 보지 않고 왼쪽 열부터 비교하기 때문입니다.",
+            code: "@layer base, theme;\n@layer theme { .lay { color: blue; } }           /* 0-1-0, 뒤 레이어 */\n@layer base  { #lay-id.lay { color: red; } }     /* 1-1-0, 앞 레이어 */\n→ cs(\"lay-id\", \"color\") = \"rgb(0, 0, 255)\"       /* 레이어 순서 > 특이성 */\n\n.lay-unlayered-target.lay { color: green; }      /* 비레이어 */\n→ \"rgb(0, 128, 0)\"                                /* 비레이어 > 레이어 */\n\n@layer theme { .imp { color: blue !important; } }\n@layer base  { .imp { color: red !important; } }\n→ \"rgb(255, 0, 0)\"                                /* !important 는 앞 레이어가 이김 */\n\n#spec-id { color: red; }                         /* 1-0-0 */\n.a .b .c .d .e [data-x=\"1\"] { color: blue; }     /* 0-6-0 */\n→ \"rgb(255, 0, 0)\"                                /* ID 열이 먼저 */",
+            terms: [
+              {
+                term: "특이성 (specificity)",
+                body: "ID, 클래스, 종류 세 열로 매기는 무게입니다. ID는 1-0-0, 클래스와 속성과 가상 클래스는 0-1-0, 종류와 가상 요소는 0-0-1입니다. `*`, `:where()`, 결합자는 0입니다. `:is()`, `:not()`, `:has()`는 가장 특이한 인자를 따릅니다. 인라인 style은 1-0-0-0처럼 모든 선택자를 이기고, 그 위에는 `!important`만 있습니다. 출처, 레이어, 중요도가 같을 때만 비교합니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: 레이어 순서와 !important 역전",
+            body: "첫 줄 `@layer base, theme;`가 레이어 순서를 정합니다. 뒤에 적은 theme이 이깁니다. 그래서 1-1-0인 base의 선언이 0-1-0인 theme의 선언에 지고, a는 파랑입니다. 레이어 밖의 선언은 어느 레이어보다 셉니다. b는 초록입니다. `!important`가 붙으면 순서가 뒤집혀 앞 레이어가 이깁니다. c는 빨강입니다.",
+            lab: {
+              html: `<style>
   @layer base, theme;
   @layer base { #a.lay { color: red; } }
   @layer theme { .lay { color: blue; } }
@@ -268,34 +368,57 @@ export const cssTheories: Theory[] = [
 <p id="a" class="lay">base의 #a.lay 대 theme의 .lay</p>
 <p id="b" class="lay free">레이어 밖의 .free</p>
 <p id="c" class="imp">두 레이어의 !important</p>`,
-          height: 170,
-          checks: [
-            {
-              label: "a의 color",
-              expr: "getComputedStyle(document.getElementById('a')).color",
+              height: 170,
+              checks: [
+                {
+                  label: "a의 color",
+                  expr: "getComputedStyle(document.getElementById('a')).color",
+                },
+                {
+                  label: "b의 color",
+                  expr: "getComputedStyle(document.getElementById('b')).color",
+                },
+                {
+                  label: "c의 color",
+                  expr: "getComputedStyle(document.getElementById('c')).color",
+                },
+              ],
+              tryIt: "첫 줄을 `@layer theme, base;`로 바꿔 실행해 보세요. a와 c의 색이 서로 반대로 바뀝니다.",
             },
-            {
-              label: "b의 color",
-              expr: "getComputedStyle(document.getElementById('b')).color",
-            },
-            {
-              label: "c의 color",
-              expr: "getComputedStyle(document.getElementById('c')).color",
-            },
-          ],
-          tryIt: "첫 줄을 `@layer theme, base;`로 바꿔 실행해 보세요. a와 c의 색이 서로 반대로 바뀝니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: 상속되는 것과 안 되는 것, 다섯 키워드",
-        body: "부모에 `color: green; border: 2px solid; font-size: 20px`를 두었습니다. 자식의 color는 green, font-size는 20px로 상속됐습니다. border-top-width는 상속되지 않아 0px였습니다(border-style의 초깃값이 none). `border: inherit`을 적으면 자식도 2px가 됩니다. `unset`은 상속 속성에서는 inherit처럼(color → green), 비상속 속성에서는 initial처럼(border → 0px) 동작했습니다. MDN은 키워드를 이렇게 정의합니다.\ninherit는 부모의 계산값입니다. 포함 블록이 아니라 문서 트리의 부모입니다.\ninitial은 속성의 초깃값입니다.\nunset은 상속 속성이면 inherit, 아니면 initial입니다.\nrevert는 현재 출처(작성자)의 선언이 없는 것처럼 UA 스타일로 되돌립니다.\nrevert-layer는 이전 레이어의 값으로 되돌립니다.\n`all` 속성은 모든 속성에 한 키워드를 한꺼번에 적용합니다.",
-        code: ".inh { color: green; border: 2px solid green; font-size: 20px; }\n.inh-child  { }                     → color green · font-size 20px · border-top-width 0px\n.inh-child2 { border: inherit; }    → border-top-width 2px\n.inh-unset  { color: unset; border: unset; } → color green(상속처럼) · border 0px(초깃값처럼)\n\n키워드          뜻\n─────────────  ─────────────────────────────────────────\ninherit        부모의 계산값\ninitial        속성 초깃값 (상속 속성에 쓰면 뜻밖일 수 있음)\nunset          상속 속성은 inherit, 아니면 initial\nrevert         이 출처(작성자)가 없었던 것처럼 → UA 값\nrevert-layer   이전 레이어의 값\nall: revert    모든 속성에 한 번에",
-      },
-      {
-        label: "직접 해 보기: inherit, initial, unset, revert",
-        body: "color는 상속되고 border는 상속되지 않습니다. k1은 아무것도 적지 않았는데 color가 green이고, 테두리 두께는 0px입니다. `inherit`를 쓰면 k2처럼 테두리도 부모 값을 받습니다. `unset`은 속성마다 다르게 풉니다. 상속 속성인 color는 inherit처럼, 비상속인 border는 initial처럼 됩니다.\n`initial`은 부모와 상관없이 초깃값으로 갑니다. k4의 color가 green이 아니라 검정인 이유입니다. `revert`는 작성자 선언을 없던 것처럼 돌립니다. 그래서 b2가 브라우저 기본값인 굵은 글씨로 돌아갑니다.",
-        lab: {
-          html: `<style>
+        heading: "상속과 다섯 키워드",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 상속되는 것과 안 되는 것, 다섯 키워드",
+            body: "부모에 `color: green; border: 2px solid; font-size: 20px`를 두었습니다. 자식의 color는 green, font-size는 20px로 상속됐습니다. border-top-width는 상속되지 않아 0px였습니다(border-style의 초깃값이 none). `border: inherit`을 적으면 자식도 2px가 됩니다. `unset`은 상속 속성에서는 inherit처럼(color → green), 비상속 속성에서는 initial처럼(border → 0px) 동작했습니다. MDN은 키워드를 이렇게 정의합니다.\ninherit는 부모의 계산값입니다. 포함 블록이 아니라 문서 트리의 부모입니다.\ninitial은 속성의 초깃값입니다.\nunset은 상속 속성이면 inherit, 아니면 initial입니다.\nrevert는 현재 출처(작성자)의 선언이 없는 것처럼 UA 스타일로 되돌립니다.\nrevert-layer는 이전 레이어의 값으로 되돌립니다.\n`all` 속성은 모든 속성에 한 키워드를 한꺼번에 적용합니다.",
+            tables: [
+              {
+                caption: "값을 직접 정하는 키워드",
+                head: ["키워드", "뜻"],
+                rows: [
+                  ["`inherit`", "부모의 계산값"],
+                  ["`initial`", "속성 초깃값 (상속 속성에 쓰면 뜻밖일 수 있음)"],
+                  ["`unset`", "상속 속성은 `inherit`, 아니면 `initial`"],
+                  ["`revert`", "이 출처(작성자)가 없었던 것처럼 → UA 값"],
+                  ["`revert-layer`", "이전 레이어의 값"],
+                  ["`all: revert`", "모든 속성에 한 번에"],
+                ],
+              },
+            ],
+            code: `.inh { color: green; border: 2px solid green; font-size: 20px; }
+.inh-child  { }                     → color green, font-size 20px, border-top-width 0px
+.inh-child2 { border: inherit; }    → border-top-width 2px
+.inh-unset  { color: unset; border: unset; } → color green(상속처럼), border 0px(초깃값처럼)`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: inherit, initial, unset, revert",
+            body: "color는 상속되고 border는 상속되지 않습니다. k1은 아무것도 적지 않았는데 color가 green이고, 테두리 두께는 0px입니다. `inherit`를 쓰면 k2처럼 테두리도 부모 값을 받습니다. `unset`은 속성마다 다르게 풉니다. 상속 속성인 color는 inherit처럼, 비상속인 border는 initial처럼 됩니다.\n`initial`은 부모와 상관없이 초깃값으로 갑니다. k4의 color가 green이 아니라 검정인 이유입니다. `revert`는 작성자 선언을 없던 것처럼 돌립니다. 그래서 b2가 브라우저 기본값인 굵은 글씨로 돌아갑니다.",
+            lab: {
+              html: `<style>
   .parent { color: green; border: 2px solid green; padding: 2px 8px; }
   .parent p { margin: 4px 0; }
   .k2 { border: inherit; }
@@ -311,49 +434,80 @@ export const cssTheories: Theory[] = [
   <p id="k4" class="k4">color: initial</p>
   <p><b id="b1">b1, 400</b>, <b id="b2" class="rv">b2, revert</b></p>
 </div>`,
-          height: 230,
-          checks: [
-            {
-              label: "k1: color, border-top-width",
-              expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k1')))",
+              height: 230,
+              checks: [
+                {
+                  label: "k1: color, border-top-width",
+                  expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k1')))",
+                },
+                {
+                  label: "k2: color, border-top-width",
+                  expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k2')))",
+                },
+                {
+                  label: "k3: color, border-top-width",
+                  expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k3')))",
+                },
+                {
+                  label: "k4: color, border-top-width",
+                  expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k4')))",
+                },
+                {
+                  label: "b1, b2의 font-weight",
+                  expr: "['b1', 'b2'].map(id => getComputedStyle(document.getElementById(id)).fontWeight).join(', ')",
+                },
+              ],
+              tryIt: "`.k4`의 initial을 revert로 바꿔 보세요. 브라우저 기본 스타일에는 p의 color가 없어서 부모의 green을 물려받습니다.",
             },
-            {
-              label: "k2: color, border-top-width",
-              expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k2')))",
-            },
-            {
-              label: "k3: color, border-top-width",
-              expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k3')))",
-            },
-            {
-              label: "k4: color, border-top-width",
-              expr: "(s => s.color + ', ' + s.borderTopWidth)(getComputedStyle(document.getElementById('k4')))",
-            },
-            {
-              label: "b1, b2의 font-weight",
-              expr: "['b1', 'b2'].map(id => getComputedStyle(document.getElementById(id)).fontWeight).join(', ')",
-            },
-          ],
-          tryIt: "`.k4`의 initial을 revert로 바꿔 보세요. 브라우저 기본 스타일에는 p의 color가 없어서 부모의 green을 물려받습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: '왜 안 먹지'의 진단 순서",
-        body: "선언이 적용되지 않을 때 보는 순서입니다. DevTools의 Styles 패널은 이긴 선언을 위에, 진 선언을 취소선으로 보여 줍니다.",
-        code: "확인 순서                                   흔한 답\n─────────────────────────────────────────  ─────────────────────────────────────────────\n① 선택자가 맞긴 하나 (Elements 에 보이나)     오타 · 공백/> 혼동 · 가상 요소에 content 없음\n② 다른 선언이 이기나 (취소선인가)             더 특이한 선택자 · 뒤의 같은 특이성 · 인라인 style\n③ 레이어 안인가                              비레이어가 레이어를 덮음 · 라이브러리가 레이어를 씀\n④ !important 인가                           레이어 순서가 뒤집힘 · 인라인 !important\n⑤ 상속 때문인가                              부모에 적용됐는데 자식이 덮음 / 비상속 속성\n⑥ 값이 유효한가                              잘못된 값은 선언 전체가 무시 (var() 는 11장 — 다르다)\n⑦ 애니메이션·트랜지션 중인가                  animations 는 normal 보다 위, transitions 는 전부 위",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: '왜 안 먹지'의 진단 순서",
+            body: "선언이 적용되지 않을 때 보는 순서입니다. DevTools의 Styles 패널은 이긴 선언을 위에, 진 선언을 취소선으로 보여 줍니다.",
+            tables: [
+              {
+                caption: "'왜 안 먹지'의 진단 순서",
+                head: ["확인 순서", "흔한 답"],
+                rows: [
+                  ["① 선택자가 맞긴 하나 (Elements에 보이나)", "오타, 공백과 `>` 혼동, 가상 요소에 `content` 없음"],
+                  ["② 다른 선언이 이기나 (취소선인가)", "더 특이한 선택자, 뒤의 같은 특이성, 인라인 `style`"],
+                  ["③ 레이어 안인가", "비레이어가 레이어를 덮음, 라이브러리가 레이어를 씀"],
+                  ["④ `!important`인가", "레이어 순서가 뒤집힘, 인라인 `!important`"],
+                  ["⑤ 상속 때문인가", "부모에 적용됐는데 자식이 덮음, 비상속 속성"],
+                  ["⑥ 값이 유효한가", "잘못된 값은 선언 전체가 무시 (`var()`는 11장, 다르다)"],
+                  ["⑦ 애니메이션, 트랜지션 중인가", "animations는 normal보다 위, transitions는 전부 위"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 캐스케이드는 '싸움'이 아니라 '정렬'이다",
+            body: "캐스케이드는 후보 선언을 (출처와 중요도) → (레이어) → (특이성) → (근접성) → (순서)라는 키로 정렬해 맨 위를 고릅니다. 앞 키가 다르면 뒤 키는 보지 않습니다. 그래서 레이어가 다르면 특이성은 소용이 없고, `!important`가 붙으면 레이어 순서가 뒤집힙니다. 그러니 '이기기 위한 도구'도 층마다 다릅니다. 같은 레이어 안에서는 특이성(또는 순서), 라이브러리와 내 스타일 사이에는 레이어, 프레임워크의 인라인 style을 넘을 때만 `!important`(마지막 수단)입니다. 선언이 없는 자리는 상속이나 초깃값이 메우므로, '적용 안 됨'과 '상속으로 받음'을 구분해야 합니다.",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 캐스케이드는 '싸움'이 아니라 '정렬'이다",
-        body: "캐스케이드는 후보 선언을 (출처와 중요도) → (레이어) → (특이성) → (근접성) → (순서)라는 키로 정렬해 맨 위를 고릅니다. 앞 키가 다르면 뒤 키는 보지 않습니다. 그래서 레이어가 다르면 특이성은 소용이 없고, `!important`가 붙으면 레이어 순서가 뒤집힙니다. 그러니 '이기기 위한 도구'도 층마다 다릅니다. 같은 레이어 안에서는 특이성(또는 순서), 라이브러리와 내 스타일 사이에는 레이어, 프레임워크의 인라인 style을 넘을 때만 `!important`(마지막 수단)입니다. 선언이 없는 자리는 상속이나 초깃값이 메우므로, '적용 안 됨'과 '상속으로 받음'을 구분해야 합니다.",
-      },
-      {
-        label: "다음 입구",
-        body: "이긴 선언의 값이 상자의 어디에 쓰이는지는 3장 박스 모델에서 봅니다. 레이어를 설계 도구로 쓰는 법과 스코프 근접성은 14장에서 다시 다룹니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `@layer a, b;`에서 a의 `#id` 선언과 b의 `.cls` 선언이 같은 속성을 두고 다투면 누가 이기나요?\n2) `!important`가 레이어 순서에 미치는 영향은?\n3) `border`가 자식에 상속되지 않는 이유와 상속시키는 키워드는?\n4) 특이성 1-0-0과 0-9-0 중 이기는 쪽과 그 이유는?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "이긴 선언의 값이 상자의 어디에 쓰이는지는 3장 박스 모델에서 봅니다. 레이어를 설계 도구로 쓰는 법과 스코프 근접성은 14장에서 다시 다룹니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`@layer a, b;`에서 a의 `#id` 선언과 b의 `.cls` 선언이 같은 속성을 두고 다투면 누가 이기나요?", a: "b의 `.cls` 선언이 이깁니다. 레이어 순서는 특이성보다 먼저 비교되고, 뒤에 적은 레이어가 이깁니다. 실험에서도 앞 레이어 base의 `#lay-id.lay`(1-1-0)가 뒤 레이어 theme의 `.lay`(0-1-0)에 져서 파랑이 나왔습니다." },
+              { q: "`!important`가 레이어 순서에 미치는 영향은 무엇인가요?", a: "레이어 순서를 뒤집습니다. normal 선언은 뒤 레이어가 이기지만, `!important` 선언은 앞 레이어가 이깁니다. 실험에서 theme(뒤)의 `!important` 파랑과 base(앞)의 `!important` 빨강 중 base의 빨강이 이겼습니다." },
+              { q: "`border`가 자식에 상속되지 않는 이유와 상속시키는 키워드는 무엇인가요?", a: "`border`는 상속되지 않는 속성이라, 맞는 선언이 없으면 부모 값 대신 초깃값을 받기 때문입니다. `border-style`의 초깃값이 `none`이라 자식의 `border-top-width`는 0px였습니다. `border: inherit`을 적으면 자식도 2px가 됩니다." },
+              { q: "특이성 1-0-0과 0-9-0 중 이기는 쪽과 그 이유는 무엇인가요?", a: "1-0-0이 이깁니다. 특이성은 자릿수를 더하지 않고 왼쪽 열(ID)부터 견주며, 거기서 갈리면 뒤 열은 보지 않습니다. 실험에서도 `#x`(1-0-0)가 `.a .b .c .d .e [data-x]`(0-6-0)를 이겨 빨강이 나왔습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -368,68 +522,93 @@ export const cssTheories: Theory[] = [
     id: "css-s3",
     name: "3장 · 박스 모델",
     tagline: "콘텐츠, 패딩, 테두리, 마진 네 겹과 세로 마진이 합쳐지는 규칙",
+    keyPoints: [
+      "모든 요소는 콘텐츠, 패딩, 테두리, 마진 네 겹의 상자입니다. 배경은 테두리까지 깔리고, 마진은 상자 밖의 빈 거리입니다.",
+      "`width`는 기본값 `content-box`에서 콘텐츠만 가리킵니다. `width: 200px`에 패딩 10px, 테두리 5px이면 렌더 폭은 230px이고, `border-box`면 200px입니다.",
+      "위아래로 이웃한 세로 마진은 더하지 않고 큰 쪽만 남습니다. 30px과 20px 사이는 30px이고, 플렉스나 그리드 안에서는 합쳐지지 않습니다.",
+      "인라인 상자(`<span>`, `<a>`)는 `width`, `height`, 세로 마진을 무시합니다. 크기를 주려면 `inline-block`이나 `block`으로 바꿉니다.",
+    ],
     intro:
       "모든 요소는 상자이고, 상자에는 콘텐츠, 패딩, 테두리, 마진 네 영역이 있습니다. `width`가 어느 영역까지인지 정하는 `box-sizing`(content-box 기본, border-box), 블록 상자와 인라인 상자의 차이, 세로 마진이 겹치면 큰 쪽만 남는 마진 병합을 차례로 봅니다. 레이아웃 버그의 절반이 이 장의 두 규칙인 box-sizing과 마진 병합에서 납니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: content-box 230px, border-box 200px",
-        body: "`width: 200px; padding: 10px; border: 5px solid`인 상자를 두 가지 box-sizing으로 쟀습니다. content-box는 렌더 폭이 230px(200 + 20 + 10)였고, border-box는 200px였습니다. 그런데 둘 다 `getComputedStyle().width`는 \"200px\"로 같습니다. width는 '지정한 값'이고, 어느 영역에 적용되는지만 다르기 때문입니다. MDN의 예와 같은 결과입니다(350px + 10px 테두리 → 370px vs 350px). 초깃값은 content-box이고 상속되지 않습니다. 하지만 브라우저는 table · select · button · 일부 input에 border-box를 기본으로 둡니다. MDN은 노트에 '요소를 배치할 때 box-sizing을 border-box로 두는 것이 종종 유용하다'고 적습니다. 거의 모든 리셋이 `*, *::before, *::after { box-sizing: border-box }`로 시작하는 이유입니다.",
-        code: ".box { width: 200px; padding: 10px; border: 5px solid; }\n.bb  { box-sizing: border-box; }\n\nr(\"box-cb\").width   // 230   = 200 + 10·2 + 5·2  (content-box)\nr(\"box-bb\").width   // 200   (border-box — 콘텐츠는 170)\ncs(\"box-cb\", \"width\") // \"200px\"  ← 둘 다 지정값 그대로\ncs(\"box-bb\", \"width\") // \"200px\"\n\n/* 사실상 표준 리셋 */\n*, *::before, *::after { box-sizing: border-box; }",
-        terms: [
+        heading: "box-sizing과 렌더 폭",
+        blocks: [
           {
-            term: "box-sizing",
-            body: "width와 height가 가리키는 영역입니다. content-box(기본)는 콘텐츠만이라 패딩과 테두리가 바깥에 더해지고, border-box는 테두리까지라 패딩과 테두리가 안쪽을 깎습니다. 마진은 어느 쪽에도 안 들어갑니다. 콘텐츠 상자는 0 아래로 줄지 않습니다.",
+            label: "실제로 돌려 보면: content-box 230px, border-box 200px",
+            body: "`width: 200px; padding: 10px; border: 5px solid`인 상자를 두 가지 box-sizing으로 쟀습니다. content-box는 렌더 폭이 230px(200 + 20 + 10)였고, border-box는 200px였습니다. 그런데 둘 다 `getComputedStyle().width`는 \"200px\"로 같습니다. width는 '지정한 값'이고, 어느 영역에 적용되는지만 다르기 때문입니다. MDN의 예와 같은 결과입니다(350px + 10px 테두리 → 370px vs 350px). 초깃값은 content-box이고 상속되지 않습니다. 하지만 브라우저는 table · select · button · 일부 input에 border-box를 기본으로 둡니다. MDN은 노트에 '요소를 배치할 때 box-sizing을 border-box로 두는 것이 종종 유용하다'고 적습니다. 거의 모든 리셋이 `*, *::before, *::after { box-sizing: border-box }`로 시작하는 이유입니다.",
+            code: ".box { width: 200px; padding: 10px; border: 5px solid; }\n.bb  { box-sizing: border-box; }\n\nr(\"box-cb\").width   // 230   = 200 + 10·2 + 5·2  (content-box)\nr(\"box-bb\").width   // 200   (border-box — 콘텐츠는 170)\ncs(\"box-cb\", \"width\") // \"200px\"  ← 둘 다 지정값 그대로\ncs(\"box-bb\", \"width\") // \"200px\"\n\n/* 사실상 표준 리셋 */\n*, *::before, *::after { box-sizing: border-box; }",
+            terms: [
+              {
+                term: "box-sizing",
+                body: "width와 height가 가리키는 영역입니다. content-box(기본)는 콘텐츠만이라 패딩과 테두리가 바깥에 더해지고, border-box는 테두리까지라 패딩과 테두리가 안쪽을 깎습니다. 마진은 어느 쪽에도 안 들어갑니다. 콘텐츠 상자는 0 아래로 줄지 않습니다.",
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: "직접 해 보기: box-sizing과 렌더 폭",
-        body: "두 상자 모두 `width: 200px`입니다. 지금 값의 계산값 width도 둘이 같습니다. 그런데 렌더 폭은 다릅니다. content-box는 width가 콘텐츠만 가리켜서 패딩과 테두리가 바깥에 더해집니다. border-box는 width가 테두리까지라서 렌더 폭이 width와 같습니다. 대신 콘텐츠 폭이 그만큼 줄어듭니다. 마진은 어느 쪽에도 들어가지 않습니다.",
-        lab: {
-          html: `<style>
+          {
+            label: "직접 해 보기: box-sizing과 렌더 폭",
+            body: "두 상자 모두 `width: 200px`입니다. 지금 값의 계산값 width도 둘이 같습니다. 그런데 렌더 폭은 다릅니다. content-box는 width가 콘텐츠만 가리켜서 패딩과 테두리가 바깥에 더해집니다. border-box는 width가 테두리까지라서 렌더 폭이 width와 같습니다. 대신 콘텐츠 폭이 그만큼 줄어듭니다. 마진은 어느 쪽에도 들어가지 않습니다.",
+            lab: {
+              html: `<style>
   .box { width: 200px; padding: 10px; border: 5px solid #2563eb;
          margin: 8px 0; background: #dbeafe; }
   .bb { box-sizing: border-box; }
 </style>
 <div class="box" id="cb">content-box (기본)</div>
 <div class="box bb" id="bb">border-box</div>`,
-          height: 230,
-          checks: [
-            {
-              label: "cb 렌더 폭 (getBoundingClientRect)",
-              expr: "Math.round(document.getElementById('cb').getBoundingClientRect().width)",
+              height: 230,
+              checks: [
+                {
+                  label: "cb 렌더 폭 (getBoundingClientRect)",
+                  expr: "Math.round(document.getElementById('cb').getBoundingClientRect().width)",
+                },
+                {
+                  label: "cb 계산값 width",
+                  expr: "getComputedStyle(document.getElementById('cb')).width",
+                },
+                {
+                  label: "bb 렌더 폭 (getBoundingClientRect)",
+                  expr: "Math.round(document.getElementById('bb').getBoundingClientRect().width)",
+                },
+                {
+                  label: "bb 계산값 width",
+                  expr: "getComputedStyle(document.getElementById('bb')).width",
+                },
+                {
+                  label: "bb 콘텐츠 폭",
+                  expr: "(e => (s => Math.round(e.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingRight)))(getComputedStyle(e)))(document.getElementById('bb'))",
+                },
+              ],
+              tryIt: "padding을 30px로 바꿔 실행해 보세요. cb는 렌더 폭이 늘고, bb는 렌더 폭 그대로 콘텐츠 폭만 줄어듭니다.",
             },
-            {
-              label: "cb 계산값 width",
-              expr: "getComputedStyle(document.getElementById('cb')).width",
-            },
-            {
-              label: "bb 렌더 폭 (getBoundingClientRect)",
-              expr: "Math.round(document.getElementById('bb').getBoundingClientRect().width)",
-            },
-            {
-              label: "bb 계산값 width",
-              expr: "getComputedStyle(document.getElementById('bb')).width",
-            },
-            {
-              label: "bb 콘텐츠 폭",
-              expr: "(e => (s => Math.round(e.clientWidth - parseFloat(s.paddingLeft) - parseFloat(s.paddingRight)))(getComputedStyle(e)))(document.getElementById('bb'))",
-            },
-          ],
-          tryIt: "padding을 30px로 바꿔 실행해 보세요. cb는 렌더 폭이 늘고, bb는 렌더 폭 그대로 콘텐츠 폭만 줄어듭니다.",
-        },
+          },
+        ],
       },
       {
-        label: "블록 상자와 인라인 상자",
-        body: "블록 상자는 줄을 바꾸고, 기본으로 인라인 방향을 다 채웁니다. width, height, 세로 패딩과 마진이 모두 먹습니다. 인라인 상자(span, a, em)는 줄 안에 흐르고 width와 height가 무시됩니다. 세로 패딩과 테두리는 그려지지만 줄 높이에 영향이 없어 겹치고, 세로 마진은 무시됩니다. 줄 상자(line box)의 높이는 그 줄에서 가장 큰 상자가 정합니다. `inline-block`은 줄 안에 흐르면서 블록처럼 크기를 가집니다. MDN의 다중 키워드 문법으로는 `inline flow-root`입니다(5장). 실제로 `display: inline flow-root`의 계산값이 \"inline-block\"으로 나왔습니다.",
-        code: "                 줄 바꿈   width/height   세로 padding/border   세로 margin\n블록 (div, p)      O         적용            적용                  적용\n인라인 (span, a)   X         무시            그려지되 줄에 영향 X    무시\ninline-block       X         적용            적용                  적용\n\ncs(\"d-ifr\", \"display\")  // \"inline-block\"  ← inline flow-root 의 계산값",
-        codeLang: "text",
-      },
-      {
-        label: "직접 해 보기: 인라인 상자는 크기를 무시한다",
-        body: "두 span에 같은 width, height, margin-top, padding을 줬습니다. 인라인인 s1은 width와 height를 무시합니다. 렌더 크기는 글자 크기에 패딩을 더한 정도입니다. 세로 패딩은 그려지지만 줄 높이에 들어가지 않습니다. 그래서 p1의 높이는 그대로이고, 노란 배경이 점선 밖으로 삐져나옵니다. inline-block인 s2는 줄 안에 있으면서도 width, height, margin-top이 모두 먹습니다. p2의 높이가 그만큼 커집니다.",
-        lab: {
-          html: `<style>
+        heading: "블록 상자와 인라인 상자",
+        blocks: [
+          {
+            label: "블록 상자와 인라인 상자",
+            body: "블록 상자는 줄을 바꾸고, 기본으로 인라인 방향을 다 채웁니다. width, height, 세로 패딩과 마진이 모두 먹습니다. 인라인 상자(span, a, em)는 줄 안에 흐르고 width와 height가 무시됩니다. 세로 패딩과 테두리는 그려지지만 줄 높이에 영향이 없어 겹치고, 세로 마진은 무시됩니다. 줄 상자(line box)의 높이는 그 줄에서 가장 큰 상자가 정합니다. `inline-block`은 줄 안에 흐르면서 블록처럼 크기를 가집니다. MDN의 다중 키워드 문법으로는 `inline flow-root`입니다(5장). 실제로 `display: inline flow-root`의 계산값이 \"inline-block\"으로 나왔습니다.",
+            tables: [
+              {
+                caption: "상자 종류마다 먹는 속성",
+                head: ["상자", "줄 바꿈", "`width`, `height`", "세로 `padding`, `border`", "세로 `margin`"],
+                rows: [
+                  ["블록 (`<div>`, `<p>`)", "O", "적용", "적용", "적용"],
+                  ["인라인 (`<span>`, `<a>`)", "X", "무시", "그려지지만 줄 높이에 영향 X", "무시"],
+                  ["`inline-block`", "X", "적용", "적용", "적용"],
+                ],
+              },
+            ],
+            code: `cs("d-ifr", "display")  // "inline-block"  ← inline flow-root 의 계산값`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: 인라인 상자는 크기를 무시한다",
+            body: "두 span에 같은 width, height, margin-top, padding을 줬습니다. 인라인인 s1은 width와 height를 무시합니다. 렌더 크기는 글자 크기에 패딩을 더한 정도입니다. 세로 패딩은 그려지지만 줄 높이에 들어가지 않습니다. 그래서 p1의 높이는 그대로이고, 노란 배경이 점선 밖으로 삐져나옵니다. inline-block인 s2는 줄 안에 있으면서도 width, height, margin-top이 모두 먹습니다. p2의 높이가 그만큼 커집니다.",
+            lab: {
+              html: `<style>
   span { width: 200px; height: 60px; margin-top: 40px; padding: 10px;
          background: #fde68a; }
   .ib { display: inline-block; }
@@ -437,44 +616,49 @@ export const cssTheories: Theory[] = [
 </style>
 <p id="p1">앞 글자 <span id="s1">inline span</span> 뒤 글자</p>
 <p id="p2">앞 글자 <span id="s2" class="ib">inline-block</span> 뒤 글자</p>`,
-          height: 290,
-          checks: [
-            {
-              label: "s1 렌더 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('s1').getBoundingClientRect())",
+              height: 290,
+              checks: [
+                {
+                  label: "s1 렌더 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('s1').getBoundingClientRect())",
+                },
+                {
+                  label: "p1 높이",
+                  expr: "Math.round(document.getElementById('p1').getBoundingClientRect().height)",
+                },
+                {
+                  label: "s2 렌더 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('s2').getBoundingClientRect())",
+                },
+                {
+                  label: "p2 높이",
+                  expr: "Math.round(document.getElementById('p2').getBoundingClientRect().height)",
+                },
+              ],
+              tryIt: "s1에도 `class=\"ib\"`를 붙여 실행해 보세요. 두 줄의 지금 값이 같아집니다.",
             },
-            {
-              label: "p1 높이",
-              expr: "Math.round(document.getElementById('p1').getBoundingClientRect().height)",
-            },
-            {
-              label: "s2 렌더 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('s2').getBoundingClientRect())",
-            },
-            {
-              label: "p2 높이",
-              expr: "Math.round(document.getElementById('p2').getBoundingClientRect().height)",
-            },
-          ],
-          tryIt: "s1에도 `class=\"ib\"`를 붙여 실행해 보세요. 두 줄의 지금 값이 같아집니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: 마진 병합, 30과 20이 만나면 30",
-        body: "`p { margin: 30px 0 20px }` 두 개를 세웠습니다. 사이 간격은 50이 아니라 30이었습니다. 인접 형제의 세로 마진은 큰 쪽 하나만 남습니다. 이 병합은 부모와 첫 자식 사이에서도 일어납니다. 부모에 테두리, 패딩, 인라인 콘텐츠가 없으면 부모의 top과 첫 자식의 margin-top이 합쳐집니다. 그래서 자식 마진이 부모 '밖'으로 샙니다. 실제로 부모의 top과 첫 p의 top이 같았습니다(true). 막는 방법은 둘입니다. 부모에 1px 패딩을 주거나(실제로 간격 31), 새 BFC를 만듭니다(`display: flow-root`, 간격 30이 부모 안에 남음). 플렉스나 그리드 컨테이너 안에서는 병합하지 않습니다(실제로 flex column의 두 p 사이가 50). 가로 마진, float, absolute도 병합하지 않습니다. 음수 마진은 '가장 큰 양수 + 가장 작은 음수'로 계산합니다.",
-        code: ".mc-parent p { margin: 30px 0 20px; }\n\n인접 형제:          p[1].top − p[0].bottom = 30     (50 아님 — 큰 쪽만)\n부모–첫 자식:        parent.top === p[0].top → true  (자식 마진이 부모 밖으로)\n부모 flow-root:      p.top − parent.top = 30         (BFC 가 막음)\n부모 padding 1px:    p.top − parent.top = 31         (패딩이 막음)\n부모 flex column:    p[1].top − p[0].bottom = 50     (플렉스 안엔 병합 없음)\n\n규칙: 세로만 · 양수는 큰 것 · 음수는 큰 양수 + 작은 음수 · float/absolute/flex/grid 는 없음",
-        terms: [
-          {
-            term: "마진 병합 (margin collapsing)",
-            body: "인접한 세로 마진 둘이 하나로 합쳐지는 규칙입니다. 형제 사이, 빈 블록의 위아래, 그리고 테두리, 패딩, 콘텐츠, 높이로 갈라지지 않은 부모와 첫·마지막 자식 사이에서 일어납니다. 새 BFC(5장)를 만드는 요소는 자식 마진이 밖으로 새지 않습니다. 0 마진도 병합합니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: 마진 병합을 켜고 끄기",
-        body: "위아래로 이웃한 두 마진은 더하지 않고 큰 쪽 하나만 남깁니다. 그래서 형제 사이 간격은 30과 20의 합이 아니라 큰 쪽입니다. 부모와 첫 자식 사이에서도 같은 일이 일어납니다. 부모에 테두리와 패딩이 없어서 첫 p의 margin-top이 부모 밖으로 샙니다. 지금 값의 '첫 p.top − 부모.top'이 0이면 샌 것입니다. 하늘색 배경이 p 바로 위에서 시작하는 것도 보세요.",
-        lab: {
-          html: `<style>
+        heading: "마진 병합",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 마진 병합, 30과 20이 만나면 30",
+            body: "`p { margin: 30px 0 20px }` 두 개를 세웠습니다. 사이 간격은 50이 아니라 30이었습니다. 인접 형제의 세로 마진은 큰 쪽 하나만 남습니다. 이 병합은 부모와 첫 자식 사이에서도 일어납니다. 부모에 테두리, 패딩, 인라인 콘텐츠가 없으면 부모의 top과 첫 자식의 margin-top이 합쳐집니다. 그래서 자식 마진이 부모 '밖'으로 샙니다. 실제로 부모의 top과 첫 p의 top이 같았습니다(true). 막는 방법은 둘입니다. 부모에 1px 패딩을 주거나(실제로 간격 31), 새 BFC를 만듭니다(`display: flow-root`, 간격 30이 부모 안에 남음). 플렉스나 그리드 컨테이너 안에서는 병합하지 않습니다(실제로 flex column의 두 p 사이가 50). 가로 마진, float, absolute도 병합하지 않습니다. 음수 마진은 '가장 큰 양수 + 가장 작은 음수'로 계산합니다.",
+            code: ".mc-parent p { margin: 30px 0 20px; }\n\n인접 형제:          p[1].top − p[0].bottom = 30     (50 아님 — 큰 쪽만)\n부모–첫 자식:        parent.top === p[0].top → true  (자식 마진이 부모 밖으로)\n부모 flow-root:      p.top − parent.top = 30         (BFC 가 막음)\n부모 padding 1px:    p.top − parent.top = 31         (패딩이 막음)\n부모 flex column:    p[1].top − p[0].bottom = 50     (플렉스 안엔 병합 없음)\n\n규칙: 세로만 · 양수는 큰 것 · 음수는 큰 양수 + 작은 음수 · float/absolute/flex/grid 는 없음",
+            terms: [
+              {
+                term: "마진 병합 (margin collapsing)",
+                body: "인접한 세로 마진 둘이 하나로 합쳐지는 규칙입니다. 형제 사이, 빈 블록의 위아래, 그리고 테두리, 패딩, 콘텐츠, 높이로 갈라지지 않은 부모와 첫·마지막 자식 사이에서 일어납니다. 새 BFC(5장)를 만드는 요소는 자식 마진이 밖으로 새지 않습니다. 0 마진도 병합합니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: 마진 병합을 켜고 끄기",
+            body: "위아래로 이웃한 두 마진은 더하지 않고 큰 쪽 하나만 남깁니다. 그래서 형제 사이 간격은 30과 20의 합이 아니라 큰 쪽입니다. 부모와 첫 자식 사이에서도 같은 일이 일어납니다. 부모에 테두리와 패딩이 없어서 첫 p의 margin-top이 부모 밖으로 샙니다. 지금 값의 '첫 p.top − 부모.top'이 0이면 샌 것입니다. 하늘색 배경이 p 바로 위에서 시작하는 것도 보세요.",
+            lab: {
+              html: `<style>
   .parent { background: #e0f2fe; }
   .parent p { margin: 30px 0 20px; background: #fde68a; }
   /* .parent { display: flow-root; } */
@@ -484,43 +668,73 @@ export const cssTheories: Theory[] = [
   <p id="a">첫째 p, margin: 30px 0 20px</p>
   <p id="b">둘째 p, 같은 마진</p>
 </div>`,
-          height: 200,
-          checks: [
-            {
-              label: "형제 사이 간격 (b.top − a.bottom)",
-              expr: "Math.round(document.getElementById('b').getBoundingClientRect().top - document.getElementById('a').getBoundingClientRect().bottom)",
+              height: 200,
+              checks: [
+                {
+                  label: "형제 사이 간격 (b.top − a.bottom)",
+                  expr: "Math.round(document.getElementById('b').getBoundingClientRect().top - document.getElementById('a').getBoundingClientRect().bottom)",
+                },
+                {
+                  label: "첫 p.top − 부모.top",
+                  expr: "Math.round(document.getElementById('a').getBoundingClientRect().top - document.getElementById('par').getBoundingClientRect().top)",
+                },
+                {
+                  label: "부모의 display",
+                  expr: "getComputedStyle(document.getElementById('par')).display",
+                },
+              ],
+              tryIt: "주석 하나를 풀어 실행해 보세요. flow-root는 마진을 부모 안에 가두고, flex 컨테이너에서는 마진 병합이 없어 형제 간격이 두 마진의 합이 됩니다.",
             },
-            {
-              label: "첫 p.top − 부모.top",
-              expr: "Math.round(document.getElementById('a').getBoundingClientRect().top - document.getElementById('par').getBoundingClientRect().top)",
-            },
-            {
-              label: "부모의 display",
-              expr: "getComputedStyle(document.getElementById('par')).display",
-            },
-          ],
-          tryIt: "주석 하나를 풀어 실행해 보세요. flow-root는 마진을 부모 안에 가두고, flex 컨테이너에서는 마진 병합이 없어 형제 간격이 두 마진의 합이 됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 폭이 안 맞고, 간격이 다르다",
-        body: "박스 모델에서 매일 보는 둘입니다.",
-        code: "증상                                    원인                          처방\n─────────────────────────────────────  ───────────────────────────  ─────────────────────────────\nwidth: 100% + padding 이 부모를 넘친다   content-box 라 패딩이 바깥으로    box-sizing: border-box\n두 블록 사이 간격이 margin 합과 다르다    세로 마진 병합 (큰 쪽만)           한쪽에만 주기 · gap(flex/grid)\n첫 자식 margin-top 이 부모 밖으로 샌다    부모–자식 병합                    부모 padding/border · display: flow-root\nspan 에 margin-top 이 안 먹는다           인라인은 세로 마진 무시            inline-block 또는 block\nspan 의 padding 이 윗줄과 겹친다          인라인 세로 패딩은 줄 높이에 안 들어감  inline-block · line-height\nbackground 가 border 밑까지 깔린다        기본 background-clip: border-box   background-clip: padding-box",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 폭이 안 맞고, 간격이 다르다",
+            body: "박스 모델에서 매일 보는 둘입니다.",
+            tables: [
+              {
+                caption: "박스 모델에서 자주 보는 증상",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`width: 100%`에 `padding`을 더하면 부모를 넘친다", "`content-box`라 패딩이 바깥에 더해진다", "`box-sizing: border-box`"],
+                  ["두 블록 사이 간격이 마진의 합과 다르다", "세로 마진 병합 (큰 쪽만 남음)", "한쪽에만 주기, `gap` (flex, grid)"],
+                  ["첫 자식의 `margin-top`이 부모 밖으로 샌다", "부모와 첫 자식의 마진 병합", "부모에 `padding`이나 `border`, `display: flow-root`"],
+                  ["`<span>`에 `margin-top`이 안 먹는다", "인라인은 세로 마진을 무시한다", "`inline-block` 또는 `block`"],
+                  ["`<span>`의 `padding`이 윗줄과 겹친다", "인라인 세로 패딩은 줄 높이에 안 들어간다", "`inline-block`, `line-height`"],
+                  ["`background`가 `border` 밑까지 깔린다", "기본값 `background-clip: border-box`", "`background-clip: padding-box`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 네 겹은 '자기 상자'이고 마진은 '이웃과의 거리'다",
+            body: "콘텐츠, 패딩, 테두리는 그 상자 자신의 것이라 배경이 깔리고 클릭이 닿습니다. 마진은 상자 밖의 빈 거리라 배경이 없고 이웃과 '공유'됩니다. 그래서 병합 규칙은 마진에만 있습니다. box-sizing은 '내 상자의 크기를 어느 겹까지로 셀까'이고, 마진 병합은 '이웃과의 거리를 어떻게 합칠까'입니다. 둘을 나눠 보면 '폭이 안 맞음'은 앞, '간격이 안 맞음'은 뒤로 바로 갈립니다.",
+            code: "┌─ margin (바깥 · 배경 없음 · 이웃과 병합) ──────────┐\n│ ┌─ border ──────────────────────────────────────┐ │\n│ │ ┌─ padding ─────────────────────────────────┐ │ │\n│ │ │  content  ← content-box 의 width           │ │ │\n│ │ └───────────────────────────────────────────┘ │ │\n│ └───────────────────────────────────────────────┘ │  ← border-box 의 width\n└───────────────────────────────────────────────────┘",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 네 겹은 '자기 상자'이고 마진은 '이웃과의 거리'다",
-        body: "콘텐츠, 패딩, 테두리는 그 상자 자신의 것이라 배경이 깔리고 클릭이 닿습니다. 마진은 상자 밖의 빈 거리라 배경이 없고 이웃과 '공유'됩니다. 그래서 병합 규칙은 마진에만 있습니다. box-sizing은 '내 상자의 크기를 어느 겹까지로 셀까'이고, 마진 병합은 '이웃과의 거리를 어떻게 합칠까'입니다. 둘을 나눠 보면 '폭이 안 맞음'은 앞, '간격이 안 맞음'은 뒤로 바로 갈립니다.",
-        code: "┌─ margin (바깥 · 배경 없음 · 이웃과 병합) ──────────┐\n│ ┌─ border ──────────────────────────────────────┐ │\n│ │ ┌─ padding ─────────────────────────────────┐ │ │\n│ │ │  content  ← content-box 의 width           │ │ │\n│ │ └───────────────────────────────────────────┘ │ │\n│ └───────────────────────────────────────────────┘ │  ← border-box 의 width\n└───────────────────────────────────────────────────┘",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "`width: 200px`의 200이 px가 되는 과정(em, rem, %, vw, calc)은 4장 값과 단위입니다. 블록, 인라인, flow-root가 display의 어떤 값인지와 BFC의 정확한 정의는 5장입니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `width: 200px; padding: 10px; border: 5px` 상자의 렌더 폭은 content-box와 border-box에서 각각?\n2) margin-bottom 20px과 margin-top 30px인 형제 사이 간격은?\n3) 부모 밖으로 새는 첫 자식의 margin-top을 막는 두 방법은?\n4) span에 margin-top이 안 먹는 이유는?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "`width: 200px`의 200이 px가 되는 과정(em, rem, %, vw, calc)은 4장 값과 단위입니다. 블록, 인라인, flow-root가 display의 어떤 값인지와 BFC의 정확한 정의는 5장입니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`width: 200px; padding: 10px; border: 5px` 상자의 렌더 폭은 `content-box`와 `border-box`에서 각각 얼마인가요?", a: "`content-box`는 230px, `border-box`는 200px입니다. `content-box`는 패딩 20px과 테두리 10px을 바깥에 더하고, `border-box`는 그만큼 콘텐츠를 170px로 줄입니다. 두 경우 모두 `getComputedStyle().width`는 \"200px\"입니다." },
+              { q: "`margin-bottom: 20px`과 `margin-top: 30px`인 형제 사이 간격은 얼마인가요?", a: "30px입니다. 위아래로 이웃한 세로 마진은 더하지 않고 큰 쪽 하나만 남습니다. 부모가 플렉스나 그리드 컨테이너면 병합이 없어 50px이 됩니다." },
+              { q: "부모 밖으로 새는 첫 자식의 `margin-top`을 막는 두 방법은 무엇인가요?", a: "부모에 패딩이나 테두리를 주는 방법과 부모를 `display: flow-root`로 바꿔 새 BFC를 만드는 방법입니다. 패딩 1px을 주면 간격이 31px이 되고, `flow-root`는 30px 간격을 부모 안에 가둡니다." },
+              { q: "`<span>`에 `margin-top`이 안 먹는 이유는 무엇인가요?", a: "`<span>`은 인라인 상자이고, 인라인 상자는 세로 마진을 무시하기 때문입니다. `width`와 `height`도 무시됩니다. `display: inline-block`이나 `block`으로 바꾸면 먹습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -535,19 +749,28 @@ export const cssTheories: Theory[] = [
     id: "css-s4",
     name: "4장 · 값과 단위",
     tagline: "px, em, rem, %, vw는 각각 무엇을 기준으로 하나",
+    keyPoints: [
+      "단위는 무엇을 기준으로 셀지 정합니다. `px`는 1/96in, `em`은 요소의 글자 크기, `rem`은 루트의 글자 크기, `vw`는 뷰포트 폭의 1%, `cqi`는 컨테이너의 1%입니다.",
+      "글자 크기 20px 요소에서 `2em`은 40px, `2rem`은 32px였습니다. `font-size`에 `em`을 겹치면 부모 기준이라 계속 곱해지고, `rem`은 몇 겹이든 같습니다.",
+      "퍼센트의 기준은 속성마다 다릅니다. `width`와 `padding-top`은 포함 블록의 폭, `height`는 높이라서 부모 높이가 `auto`면 `height: 100%`가 안 먹습니다.",
+      "`clamp(min, 선호, max)`는 선호값을 두 경계 안에 가둡니다. `calc()`의 `+`, `-` 양옆에는 공백이 있어야 하고, 없으면 선언이 무효입니다.",
+    ],
     intro:
       "속성 값에는 길이, 퍼센트, 숫자, 색, 함수가 옵니다. 길이는 절대와 상대로 나뉩니다. 절대는 px(= 1/96in)입니다. 상대는 em(요소의 글자 크기), rem(루트의 글자 크기), vw(뷰포트의 1%), cqi(컨테이너의 1%)입니다. 퍼센트의 기준은 속성마다 다릅니다. width와 padding-top은 포함 블록의 폭, height는 높이, font-size는 부모 글자 크기입니다. calc(), min(), max(), clamp()가 그 사이를 계산합니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 같은 2가 40px, 32px, 172.8px가 된다",
-        body: "글자 크기가 20px인 요소 안에서 쟀습니다. `width: 2em`은 40px였습니다. `2rem`은 루트 16px 기준이라 32px, `10vw`는 뷰포트 1728px의 10%라 172.797px였습니다. `width: 50%`는 부모 폭 400의 200px, `height: 50%`는 부모 높이 100의 50px였습니다. `padding-top: 10%`는 높이가 아니라 '폭'의 10%라서 40px였습니다. 세로 패딩과 마진의 퍼센트가 폭 기준이라서 padding-top으로 가로세로 비율을 맞추는 트릭이 됩니다. `calc(100px + 2em)`은 140px였습니다. `clamp(100px, 10vw, 150px)`는 172.8이 상한에 걸려 150px가 되었습니다.",
-        code: "html { font-size: 16px; }  .u { font-size: 20px; width: 400px; height: 100px; }\n\n.u-em    { width: 2em; }                      → \"40px\"      (요소 글자 20 × 2)\n.u-rem   { width: 2rem; }                     → \"32px\"      (루트 16 × 2)\n.u-vw    { width: 10vw; }                     → \"172.797px\" (1728 × 10%)\n.u-pct   { width: 50%; height: 50%; }         → \"200px\" / \"50px\"\n.u-pct-pad { padding-top: 10%; }              → \"40px\"      (높이 아닌 '폭' 400 의 10%)\n.u-calc  { width: calc(100px + 2em); }        → \"140px\"\n.u-clamp { width: clamp(100px, 10vw, 150px); } → \"150px\"    (상한)",
-      },
-      {
-        label: "직접 해 보기: em, rem, vw, %의 기준",
-        body: "폭 버튼을 눌러 작은 창 폭을 바꿔 보세요. 기록에 resize 줄이 생기고, 10vw의 width만 따라 바뀝니다. vw는 창 폭의 1%이기 때문입니다. 2em은 이 요소의 글자 크기를, 2rem은 html의 글자 크기를 기준으로 합니다. 둘 다 창 폭과 상관없습니다. 50%와 `padding-top: 10%`는 둘 다 부모 폭을 기준으로 합니다. 세로 패딩인데도 높이가 아니라 폭을 봅니다.",
-        lab: {
-          html: `<style>
+        heading: "같은 2, 다른 기준",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 같은 2가 40px, 32px, 172.8px가 된다",
+            body: "글자 크기가 20px인 요소 안에서 쟀습니다. `width: 2em`은 40px였습니다. `2rem`은 루트 16px 기준이라 32px, `10vw`는 뷰포트 1728px의 10%라 172.797px였습니다. `width: 50%`는 부모 폭 400의 200px, `height: 50%`는 부모 높이 100의 50px였습니다. `padding-top: 10%`는 높이가 아니라 '폭'의 10%라서 40px였습니다. 세로 패딩과 마진의 퍼센트가 폭 기준이라서 padding-top으로 가로세로 비율을 맞추는 트릭이 됩니다. `calc(100px + 2em)`은 140px였습니다. `clamp(100px, 10vw, 150px)`는 172.8이 상한에 걸려 150px가 되었습니다.",
+            code: "html { font-size: 16px; }  .u { font-size: 20px; width: 400px; height: 100px; }\n\n.u-em    { width: 2em; }                      → \"40px\"      (요소 글자 20 × 2)\n.u-rem   { width: 2rem; }                     → \"32px\"      (루트 16 × 2)\n.u-vw    { width: 10vw; }                     → \"172.797px\" (1728 × 10%)\n.u-pct   { width: 50%; height: 50%; }         → \"200px\" / \"50px\"\n.u-pct-pad { padding-top: 10%; }              → \"40px\"      (높이 아닌 '폭' 400 의 10%)\n.u-calc  { width: calc(100px + 2em); }        → \"140px\"\n.u-clamp { width: clamp(100px, 10vw, 150px); } → \"150px\"    (상한)",
+          },
+          {
+            label: "직접 해 보기: em, rem, vw, %의 기준",
+            body: "폭 버튼을 눌러 작은 창 폭을 바꿔 보세요. 기록에 resize 줄이 생기고, 10vw의 width만 따라 바뀝니다. vw는 창 폭의 1%이기 때문입니다. 2em은 이 요소의 글자 크기를, 2rem은 html의 글자 크기를 기준으로 합니다. 둘 다 창 폭과 상관없습니다. 50%와 `padding-top: 10%`는 둘 다 부모 폭을 기준으로 합니다. 세로 패딩인데도 높이가 아니라 폭을 봅니다.",
+            lab: {
+              html: `<style>
   html { font-size: 16px; }
   .u { font-size: 20px; width: 240px; }
   .u div { height: 10px; margin: 3px 0; background: #60a5fa; }
@@ -559,54 +782,76 @@ export const cssTheories: Theory[] = [
 <div class="u">
   <div id="em"></div><div id="rem"></div><div id="vw"></div><div id="pct"></div>
 </div>`,
-          height: 130,
-          widths: [320, 480, 640],
-          checks: [
-            {
-              label: "작은 창 폭 (innerWidth)",
-              expr: "innerWidth",
+              height: 130,
+              widths: [320, 480, 640],
+              checks: [
+                {
+                  label: "작은 창 폭 (innerWidth)",
+                  expr: "innerWidth",
+                },
+                {
+                  label: "2em의 width",
+                  expr: "getComputedStyle(document.getElementById('em')).width",
+                },
+                {
+                  label: "2rem의 width",
+                  expr: "getComputedStyle(document.getElementById('rem')).width",
+                },
+                {
+                  label: "10vw의 width",
+                  expr: "getComputedStyle(document.getElementById('vw')).width",
+                },
+                {
+                  label: "50%의 width",
+                  expr: "getComputedStyle(document.getElementById('pct')).width",
+                },
+                {
+                  label: "padding-top: 10%",
+                  expr: "getComputedStyle(document.getElementById('pct')).paddingTop",
+                },
+              ],
+              tryIt: "`.u`의 font-size를 30px로 바꾸면 2em만, html의 font-size를 바꾸면 2rem만 달라집니다.",
             },
-            {
-              label: "2em의 width",
-              expr: "getComputedStyle(document.getElementById('em')).width",
-            },
-            {
-              label: "2rem의 width",
-              expr: "getComputedStyle(document.getElementById('rem')).width",
-            },
-            {
-              label: "10vw의 width",
-              expr: "getComputedStyle(document.getElementById('vw')).width",
-            },
-            {
-              label: "50%의 width",
-              expr: "getComputedStyle(document.getElementById('pct')).width",
-            },
-            {
-              label: "padding-top: 10%",
-              expr: "getComputedStyle(document.getElementById('pct')).paddingTop",
-            },
-          ],
-          tryIt: "`.u`의 font-size를 30px로 바꾸면 2em만, html의 font-size를 바꾸면 2rem만 달라집니다.",
-        },
-      },
-      {
-        label: "단위표: 기준은 무엇인가",
-        body: "MDN의 숫자 데이터 타입 페이지를 표로 옮깁니다. 핵심은 '기준이 무엇인가' 한 열입니다.",
-        code: "단위        기준                                   비고\n─────────  ────────────────────────────────────  ───────────────────────────────\npx         1/96 in (절대)                          1in = 96px · 1pt = 1/72in\nem         이 요소의 font-size                     font-size 자체에 쓰면 부모의 font-size — 중첩되면 곱해짐\nrem        루트(html)의 font-size                  기본 16px · 사용자 설정 따라감\nch · ex · lh  '0' 의 전진폭 · x 높이 · 줄 높이\nvw · vh    뷰포트 폭·높이의 1%                     모바일 주소창 때문에 svh(작은) · lvh(큰) · dvh(동적)\nvmin · vmax 작은 쪽 · 큰 쪽\ncqw · cqi · cqb  컨테이너 쿼리 컨테이너의 1%  컨테이너 없으면 작은 뷰포트 단위로 (10장)\n%  속성마다 다름: width·padding·margin → 포함 블록 폭 / height → 높이 / font-size → 부모 글자 / line-height →\n   자기 font-size\nfr  그리드의 남는 공간 비율 (7장)\n0  길이는 단위 생략 가능 · 시간(s/ms)·각도는 0 도 단위 필요\n1 cm  공백 있으면 무효 — \"1cm\"",
-        codeLang: "text",
-        terms: [
-          {
-            term: "계산값 (computed value)",
-            body: "상대 단위를 바꿀 수 있는 만큼 절대 단위로 바꾼 값입니다. em, rem, vw는 계산값에서 px가 됩니다. %는 대개 레이아웃이 끝나야 알 수 있어서 사용값(used value)에서 px가 됩니다. `getComputedStyle`은 width처럼 레이아웃에 기대는 속성이면 사용값을 돌려줍니다. 그래서 위 측정값이 모두 px입니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: 겹칠수록 커지는 em",
-        body: "font-size에 em을 쓰면 기준이 부모의 글자 크기입니다. 그래서 1.2em을 겹치면 1.2가 계속 곱해집니다. 안쪽으로 갈수록 글자가 커집니다. rem은 늘 html의 글자 크기가 기준이라 몇 겹이든 같습니다. 지금 값에서 em 줄은 화살표마다 커지고, rem 줄은 세 값이 같아야 합니다.",
-        lab: {
-          html: `<style>
+        heading: "단위표와 em 중첩",
+        blocks: [
+          {
+            label: "단위표: 기준은 무엇인가",
+            body: "MDN의 숫자 데이터 타입 페이지를 표로 옮깁니다. 핵심은 '기준이 무엇인가' 한 열입니다.",
+            terms: [
+              {
+                term: "계산값 (computed value)",
+                body: "상대 단위를 바꿀 수 있는 만큼 절대 단위로 바꾼 값입니다. em, rem, vw는 계산값에서 px가 됩니다. %는 대개 레이아웃이 끝나야 알 수 있어서 사용값(used value)에서 px가 됩니다. `getComputedStyle`은 width처럼 레이아웃에 기대는 속성이면 사용값을 돌려줍니다. 그래서 위 측정값이 모두 px입니다.",
+              },
+            ],
+            tables: [
+              {
+                caption: "단위마다 기준",
+                head: ["단위", "기준", "비고"],
+                rows: [
+                  ["`px`", "1/96 in (절대)", "1in = 96px, 1pt = 1/72in"],
+                  ["`em`", "이 요소의 `font-size`", "`font-size` 자체에 쓰면 부모의 `font-size`, 중첩되면 곱해짐"],
+                  ["`rem`", "루트(`html`)의 `font-size`", "기본 16px, 사용자 설정 따라감"],
+                  ["`ch`, `ex`, `lh`", "'0'의 전진폭, x 높이, 줄 높이", "-"],
+                  ["`vw`, `vh`", "뷰포트 폭, 높이의 1%", "모바일 주소창 때문에 `svh`(작은), `lvh`(큰), `dvh`(동적)"],
+                  ["`vmin`, `vmax`", "작은 쪽, 큰 쪽", "-"],
+                  ["`cqw`, `cqi`, `cqb`", "컨테이너 쿼리 컨테이너의 1%", "컨테이너 없으면 작은 뷰포트 단위로 (10장)"],
+                  ["`%`", "속성마다 다름", "`width`, `padding`, `margin` → 포함 블록 폭, `height` → 높이, `font-size` → 부모 글자, `line-height` → 자기 `font-size`"],
+                  ["`fr`", "그리드의 남는 공간 비율 (7장)", "-"],
+                  ["`0`", "길이는 단위 생략 가능", "시간(`s`, `ms`), 각도는 0에도 단위 필요"],
+                  ["`1 cm`", "공백 있으면 무효", "`\"1cm\"`로 붙여 쓰기"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: 겹칠수록 커지는 em",
+            body: "font-size에 em을 쓰면 기준이 부모의 글자 크기입니다. 그래서 1.2em을 겹치면 1.2가 계속 곱해집니다. 안쪽으로 갈수록 글자가 커집니다. rem은 늘 html의 글자 크기가 기준이라 몇 겹이든 같습니다. 지금 값에서 em 줄은 화살표마다 커지고, rem 줄은 세 값이 같아야 합니다.",
+            lab: {
+              html: `<style>
   .em { font-size: 1.2em; }
   .rem { font-size: 1.2rem; }
   .em, .rem { margin-left: 8px; }
@@ -617,30 +862,36 @@ export const cssTheories: Theory[] = [
 <div class="rem" id="r1">1.2rem
   <div class="rem" id="r2">그 안의 1.2rem
     <div class="rem" id="r3">세 겹째 1.2rem</div></div></div>`,
-          height: 260,
-          checks: [
-            {
-              label: "em 세 겹의 font-size",
-              expr: "['e1', 'e2', 'e3'].map(id => getComputedStyle(document.getElementById(id)).fontSize).join(' → ')",
+              height: 260,
+              checks: [
+                {
+                  label: "em 세 겹의 font-size",
+                  expr: "['e1', 'e2', 'e3'].map(id => getComputedStyle(document.getElementById(id)).fontSize).join(' → ')",
+                },
+                {
+                  label: "rem 세 겹의 font-size",
+                  expr: "['r1', 'r2', 'r3'].map(id => getComputedStyle(document.getElementById(id)).fontSize).join(' → ')",
+                },
+              ],
+              tryIt: "1.2em을 0.8em으로 바꿔 보세요. 이번에는 겹칠수록 작아집니다.",
             },
-            {
-              label: "rem 세 겹의 font-size",
-              expr: "['r1', 'r2', 'r3'].map(id => getComputedStyle(document.getElementById(id)).fontSize).join(' → ')",
-            },
-          ],
-          tryIt: "1.2em을 0.8em으로 바꿔 보세요. 이번에는 겹칠수록 작아집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "함수: calc, min, max, clamp",
-        body: "`calc()`은 단위를 섞어 계산합니다(`100% - 2rem`). 연산자 `+ -` 양옆에는 공백이 있어야 합니다. `min(a, b)`는 작은 쪽, `max(a, b)`는 큰 쪽입니다. `clamp(min, 선호, max)`는 선호값을 두 경계 안에 가둡니다. `max(min, min(선호, max))`와 같습니다. clamp는 '뷰포트에 따라 자라되 한계가 있는' 값에 씁니다. 반응형 글자 크기 `font-size: clamp(1rem, 0.5rem + 1vw, 2rem)`가 그 예이고, 미디어 쿼리 없는 유동 타이포그래피의 재료입니다. 실제로 선호값 10vw(172.8px)가 max 150px에 걸려 150px가 되었습니다.",
-        code: ".sidebar { width: calc(100% - 2rem); }        /* 단위 섞기 — + - 양옆 공백 */\n.card    { width: min(90%, 60ch); }           /* 작은 쪽 */\nh1       { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); }   /* 유동 + 경계 */\n/* clamp(a, b, c) === max(a, min(b, c)) */",
-      },
-      {
-        label: "직접 해 보기: calc, min, clamp와 창 폭",
-        body: "폭 버튼을 차례로 눌러 보세요. calc는 부모 폭에서 4rem을 뺀 만큼이라 창을 따라 늘고 줄어듭니다. min은 두 값 중 작은 쪽이라 넓은 창에서는 200px에 멈춥니다. clamp는 가운데 선호값 40vw를 두 경계 안에 가둡니다. 좁은 창에서는 하한 100px에, 넓은 창에서는 상한 220px에 걸립니다. 제목의 font-size도 같은 식으로 자라다 멈춥니다.",
-        lab: {
-          html: `<style>
+        heading: "calc와 clamp 함수",
+        blocks: [
+          {
+            label: "함수: calc, min, max, clamp",
+            body: "`calc()`은 단위를 섞어 계산합니다(`100% - 2rem`). 연산자 `+ -` 양옆에는 공백이 있어야 합니다. `min(a, b)`는 작은 쪽, `max(a, b)`는 큰 쪽입니다. `clamp(min, 선호, max)`는 선호값을 두 경계 안에 가둡니다. `max(min, min(선호, max))`와 같습니다. clamp는 '뷰포트에 따라 자라되 한계가 있는' 값에 씁니다. 반응형 글자 크기 `font-size: clamp(1rem, 0.5rem + 1vw, 2rem)`가 그 예이고, 미디어 쿼리 없는 유동 타이포그래피의 재료입니다. 실제로 선호값 10vw(172.8px)가 max 150px에 걸려 150px가 되었습니다.",
+            code: ".sidebar { width: calc(100% - 2rem); }        /* 단위 섞기 — + - 양옆 공백 */\n.card    { width: min(90%, 60ch); }           /* 작은 쪽 */\nh1       { font-size: clamp(1.5rem, 1rem + 2vw, 3rem); }   /* 유동 + 경계 */\n/* clamp(a, b, c) === max(a, min(b, c)) */",
+            codeLang: "css",
+          },
+          {
+            label: "직접 해 보기: calc, min, clamp와 창 폭",
+            body: "폭 버튼을 차례로 눌러 보세요. calc는 부모 폭에서 4rem을 뺀 만큼이라 창을 따라 늘고 줄어듭니다. min은 두 값 중 작은 쪽이라 넓은 창에서는 200px에 멈춥니다. clamp는 가운데 선호값 40vw를 두 경계 안에 가둡니다. 좁은 창에서는 하한 100px에, 넓은 창에서는 상한 220px에 걸립니다. 제목의 font-size도 같은 식으로 자라다 멈춥니다.",
+            lab: {
+              html: `<style>
   h1 { font-size: clamp(1rem, 0.5rem + 3vw, 2rem); margin: 0 0 6px; }
   .c { height: 22px; margin: 4px 0; background: #a7f3d0; font-size: 13px; }
   #calc { width: calc(100% - 4rem); }
@@ -651,52 +902,95 @@ export const cssTheories: Theory[] = [
 <div class="c" id="calc">calc(100% - 4rem)</div>
 <div class="c" id="min">min(90%, 200px)</div>
 <div class="c" id="clamp">clamp(100px, 40vw, 220px)</div>`,
-          height: 190,
-          widths: [240, 400, 640],
-          checks: [
-            {
-              label: "작은 창 폭 (innerWidth)",
-              expr: "innerWidth",
+              height: 190,
+              widths: [240, 400, 640],
+              checks: [
+                {
+                  label: "작은 창 폭 (innerWidth)",
+                  expr: "innerWidth",
+                },
+                {
+                  label: "calc의 폭",
+                  expr: "Math.round(document.getElementById('calc').getBoundingClientRect().width)",
+                },
+                {
+                  label: "min의 폭",
+                  expr: "Math.round(document.getElementById('min').getBoundingClientRect().width)",
+                },
+                {
+                  label: "clamp의 폭",
+                  expr: "Math.round(document.getElementById('clamp').getBoundingClientRect().width)",
+                },
+                {
+                  label: "h1의 font-size",
+                  expr: "getComputedStyle(document.getElementById('h')).fontSize",
+                },
+              ],
+              tryIt: "calc의 `-` 양옆 공백을 지워 `calc(100%-4rem)`으로 실행해 보세요. 선언이 무효가 되어 폭이 줄 전체로 돌아갑니다.",
             },
-            {
-              label: "calc의 폭",
-              expr: "Math.round(document.getElementById('calc').getBoundingClientRect().width)",
-            },
-            {
-              label: "min의 폭",
-              expr: "Math.round(document.getElementById('min').getBoundingClientRect().width)",
-            },
-            {
-              label: "clamp의 폭",
-              expr: "Math.round(document.getElementById('clamp').getBoundingClientRect().width)",
-            },
-            {
-              label: "h1의 font-size",
-              expr: "getComputedStyle(document.getElementById('h')).fontSize",
-            },
-          ],
-          tryIt: "calc의 `-` 양옆 공백을 지워 `calc(100%-4rem)`으로 실행해 보세요. 선언이 무효가 되어 폭이 줄 전체로 돌아갑니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 단위를 섞을 때",
-        body: "기준을 잘못 짚어 나는 일들입니다.",
-        code: "증상                                      원인                                   처방\n───────────────────────────────────────  ────────────────────────────────────  ──────────────────────────\n중첩될수록 글자가 커진다(작아진다)          font-size 에 em 은 부모 기준 → 곱해짐        rem\npadding-top: 50% 가 높이의 반이 아니다      세로 % 패딩은 '폭' 기준                    aspect-ratio 로 비율\nheight: 100% 가 안 먹는다                  부모 높이가 auto 면 % 기준이 없음           부모에 높이 · 또는 vh/dvh\n모바일에서 100vh 가 주소창 뒤로 넘친다      vh 는 큰 뷰포트 기준                        dvh · svh\ncalc(100%-2rem) 이 무효                    - 양옆 공백 필요                           calc(100% - 2rem)\n'1 cm' 가 무효                             단위와 숫자 사이 공백                       1cm\n0.5s 를 0 으로 줄여 '0' 만 적으니 무효        시간·각도는 0 에도 단위                      0s",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 단위를 섞을 때",
+            body: "기준을 잘못 짚어 나는 일들입니다.",
+            tables: [
+              {
+                caption: "단위를 섞을 때 나는 일",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["중첩될수록 글자가 커진다(작아진다)", "`font-size`에 `em`은 부모 기준 → 곱해짐", "`rem`"],
+                  ["`padding-top: 50%`가 높이의 반이 아니다", "세로 % 패딩은 '폭' 기준", "`aspect-ratio`로 비율"],
+                  ["`height: 100%`가 안 먹는다", "부모 높이가 `auto`면 % 기준이 없음", "부모에 높이, 또는 `vh`, `dvh`"],
+                  ["모바일에서 `100vh`가 주소창 뒤로 넘친다", "`vh`는 큰 뷰포트 기준", "`dvh`, `svh`"],
+                  ["`calc(100%-2rem)`이 무효", "`-` 양옆 공백 필요", "`calc(100% - 2rem)`"],
+                  ["`1 cm`가 무효", "단위와 숫자 사이 공백", "`1cm`"],
+                  ["`0.5s`를 0으로 줄여 `0`만 적으니 무효", "시간, 각도는 0에도 단위", "`0s`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 단위는 '어디를 기준으로 셀 것인가'의 선언이다",
+            body: "px는 장치, em은 요소, rem은 문서, vw는 창을 기준으로 합니다. cqi는 컨테이너, %는 속성이 정한 기준을 따릅니다. 같은 '2'가 40도 되고 32도 되고 172도 되는 것은 기준이 달라서입니다. 기준이 바뀌면 값도 따라 바뀝니다. 상대 단위의 쓸모가 여기서 나옵니다. 사용자 글자 크기 설정을 존중하고, 컴포넌트를 다시 쓸 수 있습니다. 중첩된 em이라는 함정도 여기서 나옵니다. 반응형의 두 축도 여기서 갈립니다. 창에 반응하려면 vw와 미디어 쿼리를 씁니다. 놓인 자리에 반응하려면 cqi와 컨테이너 쿼리를 씁니다(10장).",
+            tables: [
+              {
+                caption: "기준마다 단위와 바뀌는 때",
+                head: ["기준", "단위", "바뀌는 때"],
+                rows: [
+                  ["장치", "`px`", "(고정)"],
+                  ["요소", "`em`, `ch`, `lh`", "요소의 `font-size`가 바뀔 때"],
+                  ["문서", "`rem`, `rlh`", "`html` `font-size` (사용자 설정)"],
+                  ["창", "`vw`, `vh`, `dvh`", "창 크기, 주소창"],
+                  ["컨테이너", "`cqi`, `cqb`", "놓인 자리의 크기 (10장)"],
+                  ["속성별", "`%`", "포함 블록의 폭, 높이 등"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 단위는 '어디를 기준으로 셀 것인가'의 선언이다",
-        body: "px는 장치, em은 요소, rem은 문서, vw는 창을 기준으로 합니다. cqi는 컨테이너, %는 속성이 정한 기준을 따릅니다. 같은 '2'가 40도 되고 32도 되고 172도 되는 것은 기준이 달라서입니다. 기준이 바뀌면 값도 따라 바뀝니다. 상대 단위의 쓸모가 여기서 나옵니다. 사용자 글자 크기 설정을 존중하고, 컴포넌트를 다시 쓸 수 있습니다. 중첩된 em이라는 함정도 여기서 나옵니다. 반응형의 두 축도 여기서 갈립니다. 창에 반응하려면 vw와 미디어 쿼리를 씁니다. 놓인 자리에 반응하려면 cqi와 컨테이너 쿼리를 씁니다(10장).",
-        code: "기준          단위              바뀌는 때\n───────────  ───────────────  ─────────────────────────\n장치          px               (고정)\n요소          em · ch · lh      요소의 font-size 가 바뀔 때\n문서          rem · rlh         html font-size (사용자 설정)\n창            vw · vh · dvh     창 크기 · 주소창\n컨테이너      cqi · cqb         놓인 자리의 크기 (10장)\n속성별        %                 포함 블록의 폭/높이 등",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "width와 height가 적용되는 상자의 종류(블록, 인라인, flex, grid)는 5장 디스플레이와 흐름에서 다룹니다. `%`의 기준인 '포함 블록'은 8장 위치 지정에서 정의합니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) font-size 20px 요소의 `2em`과 루트 16px의 `2rem`은 각각 몇 px인가요?\n2) `padding-top: 10%`의 기준은 폭인가요, 높이인가요?\n3) `height: 100%`가 안 먹는 흔한 이유는?\n4) 뷰포트 1728px에서 `clamp(100px, 10vw, 150px)`는 몇 px가 되고, 왜 그런가요?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "width와 height가 적용되는 상자의 종류(블록, 인라인, flex, grid)는 5장 디스플레이와 흐름에서 다룹니다. `%`의 기준인 '포함 블록'은 8장 위치 지정에서 정의합니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "font-size 20px 요소의 `2em`과 루트 16px의 `2rem`은 각각 몇 px인가요?", a: "`2em`은 40px, `2rem`은 32px입니다. `em`은 그 요소의 글자 크기 20px의 2배이고, `rem`은 루트 `html`의 글자 크기 16px의 2배입니다." },
+              { q: "`padding-top: 10%`의 기준은 폭인가요, 높이인가요?", a: "폭입니다. 세로 패딩과 마진의 퍼센트도 포함 블록의 폭을 기준으로 합니다. 폭 400px, 높이 100px인 부모 안에서 `padding-top: 10%`는 40px였습니다." },
+              { q: "`height: 100%`가 안 먹는 흔한 이유는 무엇인가요?", a: "부모의 높이가 `auto`라서 퍼센트의 기준이 없기 때문입니다. 부모에 높이를 정해 주거나 `vh`, `dvh` 같은 뷰포트 단위를 씁니다." },
+              { q: "뷰포트 1728px에서 `clamp(100px, 10vw, 150px)`는 몇 px가 되고, 왜 그런가요?", a: "150px가 됩니다. 선호값 `10vw`는 1728px의 10%인 172.8px인데, 상한 150px를 넘어서 상한에 걸립니다. `clamp(a, b, c)`는 `max(a, min(b, c))`와 같습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -710,20 +1004,45 @@ export const cssTheories: Theory[] = [
     id: "css-s5",
     name: "5장 · 디스플레이와 흐름",
     tagline: "display에는 바깥(block/inline)과 안쪽(flow/flex/grid) 두 값이 있다",
+    keyPoints: [
+      "`display`는 바깥 값(부모 안에서 `block`인가 `inline`인가)과 안쪽 값(자식을 `flow`, `flow-root`, `flex`, `grid` 중 무엇으로 놓나)을 함께 정합니다.",
+      "안쪽 값은 직접 자식에게만 적용됩니다. `display: flex`인 요소 자신은 블록처럼 줄을 바꾸고, 자식만 플렉스 아이템이 되며 손자는 아닙니다.",
+      "BFC는 안쪽 float을 부모 높이에 넣고, 바깥 float을 밀어내고, 마진 병합을 막습니다. 만들 때는 부작용이 없는 `display: flow-root`를 씁니다.",
+      "`display: none`은 자리까지 빠져 0×0이 되고, `visibility: hidden`은 자리(800×19)를 차지한 채 안 보입니다. `display: contents`는 자기 상자만 없앱니다.",
+    ],
     intro:
       "`display`는 두 가지를 함께 정합니다. 하나는 상자가 바깥에서 어떻게 놓이는가입니다(block-level인가, inline-level인가). 다른 하나는 안쪽 자식들을 어떻게 배치하는가입니다(flow · flow-root · flex · grid). MDN의 다중 키워드 문법은 그 둘을 갈라 적습니다. `block` = `block flow`, `inline-block` = `inline flow-root`, `flex` = `block flex`입니다. 기본은 정상 흐름(normal flow)입니다. `flow-root`가 만드는 블록 서식 맥락(BFC)은 float과 마진 병합을 가둡니다. `none` · `contents` · `visibility: hidden`의 차이도 여기서 다룹니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 두 값 문법의 계산값",
-        body: "`display: inline flow-root`의 계산값은 \"inline-block\"으로, `block flex`는 \"flex\"로 나왔습니다. 브라우저가 옛 한 단어 이름으로 되돌려 적습니다. 바깥 값만 적으면 안쪽은 flow가 됩니다. 안쪽 값만 적으면 바깥은 block(ruby만 inline)입니다. 그래서 `display: flex`인 요소 자신은 블록처럼 줄을 바꾸고, 그 '자식들'이 플렉스로 놓입니다. `inline-flex`와 `inline-grid`는 바깥만 인라인으로 바꾼 것입니다.",
-        code: "한 단어          두 값               뜻\n──────────────  ─────────────────  ─────────────────────────────────\nblock           block flow          줄 바꿈 · 자식은 정상 흐름\ninline          inline flow         줄 안 · 자식은 정상 흐름\ninline-block    inline flow-root    줄 안 · 자식은 새 BFC (크기 가짐)\nflow-root       block flow-root     줄 바꿈 · 새 BFC\nflex            block flex          줄 바꿈 · 자식은 플렉스\ninline-flex     inline flex\ngrid            block grid\n\ncs(\"d-ifr\", \"display\")   // \"inline-block\"\ncs(\"d-bflex\", \"display\") // \"flex\"",
-        codeLang: "text",
-      },
-      {
-        label: "직접 해 보기: 두 값 display의 계산값",
-        body: "두 값 문법으로 적어도 브라우저는 계산값을 옛 한 단어 이름으로 돌려줍니다. `inline flow-root`는 inline-block, `block flex`는 flex가 됩니다. 바깥 값은 상자가 놓이는 자리를 정합니다. block인 b는 줄을 다 차지하고, inline인 c는 내용만큼만 차지합니다. 지금 값의 두 폭을 견줘 보세요. 안쪽 값은 자식을 어떻게 놓을지만 정합니다.",
-        lab: {
-          html: `<style>
+        heading: "바깥 값과 안쪽 값",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 두 값 문법의 계산값",
+            body: "`display: inline flow-root`의 계산값은 \"inline-block\"으로, `block flex`는 \"flex\"로 나왔습니다. 브라우저가 옛 한 단어 이름으로 되돌려 적습니다. 바깥 값만 적으면 안쪽은 flow가 됩니다. 안쪽 값만 적으면 바깥은 block(ruby만 inline)입니다. 그래서 `display: flex`인 요소 자신은 블록처럼 줄을 바꾸고, 그 '자식들'이 플렉스로 놓입니다. `inline-flex`와 `inline-grid`는 바깥만 인라인으로 바꾼 것입니다.",
+            tables: [
+              {
+                caption: "한 단어 이름과 두 값 문법",
+                head: ["한 단어", "두 값", "뜻"],
+                rows: [
+                  ["`block`", "`block flow`", "줄 바꿈, 자식은 정상 흐름"],
+                  ["`inline`", "`inline flow`", "줄 안, 자식은 정상 흐름"],
+                  ["`inline-block`", "`inline flow-root`", "줄 안, 자식은 새 BFC (크기 가짐)"],
+                  ["`flow-root`", "`block flow-root`", "줄 바꿈, 새 BFC"],
+                  ["`flex`", "`block flex`", "줄 바꿈, 자식은 플렉스"],
+                  ["`inline-flex`", "`inline flex`", "-"],
+                  ["`grid`", "`block grid`", "-"],
+                ],
+              },
+            ],
+            code: `cs("d-ifr", "display")   // "inline-block"
+cs("d-bflex", "display") // "flex"`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: 두 값 display의 계산값",
+            body: "두 값 문법으로 적어도 브라우저는 계산값을 옛 한 단어 이름으로 돌려줍니다. `inline flow-root`는 inline-block, `block flex`는 flex가 됩니다. 바깥 값은 상자가 놓이는 자리를 정합니다. block인 b는 줄을 다 차지하고, inline인 c는 내용만큼만 차지합니다. 지금 값의 두 폭을 견줘 보세요. 안쪽 값은 자식을 어떻게 놓을지만 정합니다.",
+            lab: {
+              html: `<style>
   .x { background: #e0f2fe; border: 1px solid #60a5fa; margin: 4px 0; padding: 2px 6px; }
   #a { display: inline flow-root; }
   #b { display: block flex; }
@@ -734,87 +1053,112 @@ export const cssTheories: Theory[] = [
 <div class="x" id="b"><span>block flex</span></div>
 <div class="x" id="c"><span>inline flex</span></div>
 <div class="x" id="d">flow-root</div>`,
-          height: 200,
-          checks: [
-            {
-              label: "a의 display",
-              expr: "getComputedStyle(document.getElementById('a')).display",
+              height: 200,
+              checks: [
+                {
+                  label: "a의 display",
+                  expr: "getComputedStyle(document.getElementById('a')).display",
+                },
+                {
+                  label: "b의 display",
+                  expr: "getComputedStyle(document.getElementById('b')).display",
+                },
+                {
+                  label: "c의 display",
+                  expr: "getComputedStyle(document.getElementById('c')).display",
+                },
+                {
+                  label: "d의 display",
+                  expr: "getComputedStyle(document.getElementById('d')).display",
+                },
+                {
+                  label: "b의 폭, c의 폭",
+                  expr: "['b', 'c'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
+                },
+              ],
+              tryIt: "`#b`를 `display: inline grid`로 바꿔 보세요. 계산값이 inline-grid가 되고 폭이 내용만큼 줄어듭니다.",
             },
-            {
-              label: "b의 display",
-              expr: "getComputedStyle(document.getElementById('b')).display",
-            },
-            {
-              label: "c의 display",
-              expr: "getComputedStyle(document.getElementById('c')).display",
-            },
-            {
-              label: "d의 display",
-              expr: "getComputedStyle(document.getElementById('d')).display",
-            },
-            {
-              label: "b의 폭, c의 폭",
-              expr: "['b', 'c'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
-            },
-          ],
-          tryIt: "`#b`를 `display: inline grid`로 바꿔 보세요. 계산값이 inline-grid가 되고 폭이 내용만큼 줄어듭니다.",
-        },
-      },
-      {
-        label: "정상 흐름과 블록 서식 맥락(BFC)",
-        body: "정상 흐름에서 블록 상자는 세로로 쌓이고, 인라인 상자는 줄 상자 안에서 가로로 흐릅니다. BFC는 '블록들이 놓이는 독립된 구역'입니다. MDN이 적는 생성 조건은 다음과 같습니다. 루트, float, absolute/fixed, inline-block, table-cell, `overflow`가 visible이나 clip이 아닌 블록, `display: flow-root`, `contain: layout/content/paint`, 스스로 컨테이너가 아닌 flex와 grid 아이템, 멀티컬럼, `container-type`이 normal이 아닌 요소입니다. BFC는 세 가지 일을 합니다. 안쪽 float을 부모 높이에 넣고, 바깥 float을 밀어내고, 마진 병합을 막습니다. overflow로 BFC를 만들면 '원치 않는 스크롤바나 잘린 그림자'가 생깁니다. 그래서 MDN은 `flow-root`를 권합니다.",
-        code: "/* float 자식이 부모 높이에 안 잡힐 때 */\n.wrap { display: flow-root; }   /* 새 BFC — float 포함, 마진 병합 차단, 부작용 없음 */\n\n/* 옛 방법들의 부작용 */\n.wrap { overflow: hidden; }     /* 그림자·툴팁이 잘린다 */\n.wrap::after { content: \"\"; display: block; clear: both; }   /* clearfix */",
-        terms: [
-          {
-            term: "블록 서식 맥락 (BFC, block formatting context)",
-            body: "블록 상자들이 세로로 쌓이는 독립 구역입니다. 구역 안의 float과 마진은 밖으로 나가지 않습니다. 3장의 '부모 flow-root가 자식 마진을 가뒀다'가 BFC의 효과였습니다. 간격 30이 부모 안에 남았습니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: float을 품는 flow-root",
-        body: "float은 정상 흐름에서 빠집니다. 그래서 부모 wrap의 높이는 글 한 줄만큼입니다. 노란 float이 파란 테두리 밖으로 늘어지고, 다음 문단도 float 옆으로 밀려 흐릅니다. 주석을 풀어 `display: flow-root`를 켜고 실행해 보세요. wrap이 새 BFC가 되어 float을 높이에 넣습니다. 지금 값의 '품었나'가 true로 바뀝니다.",
-        lab: {
-          html: `<style>
+        heading: "정상 흐름과 BFC",
+        blocks: [
+          {
+            label: "정상 흐름과 블록 서식 맥락(BFC)",
+            body: "정상 흐름에서 블록 상자는 세로로 쌓이고, 인라인 상자는 줄 상자 안에서 가로로 흐릅니다. BFC는 '블록들이 놓이는 독립된 구역'입니다. MDN이 적는 생성 조건은 다음과 같습니다. 루트, float, absolute/fixed, inline-block, table-cell, `overflow`가 visible이나 clip이 아닌 블록, `display: flow-root`, `contain: layout/content/paint`, 스스로 컨테이너가 아닌 flex와 grid 아이템, 멀티컬럼, `container-type`이 normal이 아닌 요소입니다. BFC는 세 가지 일을 합니다. 안쪽 float을 부모 높이에 넣고, 바깥 float을 밀어내고, 마진 병합을 막습니다. overflow로 BFC를 만들면 '원치 않는 스크롤바나 잘린 그림자'가 생깁니다. 그래서 MDN은 `flow-root`를 권합니다.",
+            code: "/* float 자식이 부모 높이에 안 잡힐 때 */\n.wrap { display: flow-root; }   /* 새 BFC — float 포함, 마진 병합 차단, 부작용 없음 */\n\n/* 옛 방법들의 부작용 */\n.wrap { overflow: hidden; }     /* 그림자·툴팁이 잘린다 */\n.wrap::after { content: \"\"; display: block; clear: both; }   /* clearfix */",
+            codeLang: "css",
+            terms: [
+              {
+                term: "블록 서식 맥락 (BFC, block formatting context)",
+                body: "블록 상자들이 세로로 쌓이는 독립 구역입니다. 구역 안의 float과 마진은 밖으로 나가지 않습니다. 3장의 '부모 flow-root가 자식 마진을 가뒀다'가 BFC의 효과였습니다. 간격 30이 부모 안에 남았습니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: float을 품는 flow-root",
+            body: "float은 정상 흐름에서 빠집니다. 그래서 부모 wrap의 높이는 글 한 줄만큼입니다. 노란 float이 파란 테두리 밖으로 늘어지고, 다음 문단도 float 옆으로 밀려 흐릅니다. 주석을 풀어 `display: flow-root`를 켜고 실행해 보세요. wrap이 새 BFC가 되어 float을 높이에 넣습니다. 지금 값의 '품었나'가 true로 바뀝니다.",
+            lab: {
+              html: `<style>
   .wrap { border: 2px solid #2563eb; margin-bottom: 8px; }
   .fl { float: left; width: 80px; height: 80px; margin-right: 8px; background: #fde68a; }
   /* .wrap { display: flow-root; } */
 </style>
 <div class="wrap" id="w"><div class="fl" id="f">float</div>짧은 글 한 줄</div>
 <p id="next">다음 문단</p>`,
-          height: 170,
-          checks: [
-            {
-              label: "wrap 높이",
-              expr: "Math.round(document.getElementById('w').getBoundingClientRect().height)",
+              height: 170,
+              checks: [
+                {
+                  label: "wrap 높이",
+                  expr: "Math.round(document.getElementById('w').getBoundingClientRect().height)",
+                },
+                {
+                  label: "float 높이",
+                  expr: "Math.round(document.getElementById('f').getBoundingClientRect().height)",
+                },
+                {
+                  label: "wrap이 float을 품었나",
+                  expr: "document.getElementById('w').getBoundingClientRect().bottom >= document.getElementById('f').getBoundingClientRect().bottom",
+                },
+                {
+                  label: "wrap의 display",
+                  expr: "getComputedStyle(document.getElementById('w')).display",
+                },
+              ],
+              tryIt: "flow-root 대신 `overflow: hidden`이나 `display: inline-block`을 넣어 보세요. 둘 다 BFC를 만들어 float을 품습니다.",
             },
-            {
-              label: "float 높이",
-              expr: "Math.round(document.getElementById('f').getBoundingClientRect().height)",
-            },
-            {
-              label: "wrap이 float을 품었나",
-              expr: "document.getElementById('w').getBoundingClientRect().bottom >= document.getElementById('f').getBoundingClientRect().bottom",
-            },
-            {
-              label: "wrap의 display",
-              expr: "getComputedStyle(document.getElementById('w')).display",
-            },
-          ],
-          tryIt: "flow-root 대신 `overflow: hidden`이나 `display: inline-block`을 넣어 보세요. 둘 다 BFC를 만들어 float을 품습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: none, contents, visibility: hidden",
-        body: "`display: none` 요소의 rect는 0×0이었습니다. 레이아웃에서 빠지고, MDN에 따르면 접근성 트리에서도 빠집니다. `visibility: hidden`은 rect가 800×19로 자리를 차지했지만 보이지 않았습니다. 자식이 `visibility: visible`이면 그 자식은 다시 보입니다. probe2에서 자식이 visible이었고, 클릭도 자식에 닿았습니다. `display: contents`는 요소 자신의 상자를 없애고 자식만 남깁니다. 자신의 rect는 0×0이고, 자식은 그대로 그려집니다. MDN은 두 가지를 주의하라고 합니다. 일부 브라우저는 contents 요소를 접근성 트리에서도 빼는데, 이는 '명세상 잘못된 동작'입니다. 또 표 요소를 block/grid/flex로 바꾸면 접근성 표현이 바뀔 수 있습니다. `display`는 이산(discrete) 애니메이션이고, 12장의 `transition-behavior: allow-discrete`로 이어집니다.",
-        code: "                   레이아웃 자리   보임   접근성 트리        자식\ndisplay: none       X             X     제거              함께 사라짐\nvisibility: hidden  O (800×19)    X     (이름 없이 남음)    visible 로 되살릴 수 있음 (실제로)\ndisplay: contents   자기 상자 X   —     (브라우저 버그)     그대로 그려짐\nopacity: 0          O             X     남음 (포커스 가능)   함께 투명\n\nr(\"d-none\")     // { w: 0, h: 0 }\nr(\"d-hidden\")   // { w: 800, h: 19 }   cs(\"d-hidden\", \"visibility\") = \"hidden\"\nr(\"d-contents\") // { w: 0, h: 0 }  — 자식 span 은 그려진다",
-        codeLang: "text",
-      },
-      {
-        label: "직접 해 보기: none, hidden, contents의 자리",
-        body: "네 요소의 자리를 지금 값에서 견줘 보세요. `display: none`은 크기가 0이라 레이아웃에서 빠집니다. `visibility: hidden`은 자리를 그대로 차지한 채 보이지 않습니다. 자식에 visible을 주면 그 자식만 다시 보입니다. `display: contents`는 자기 상자만 없앱니다. 자신의 크기는 0인데 자식 span은 그려지고, 테두리와 배경은 함께 사라집니다. `opacity: 0`은 자리도 있고 클릭도 받지만 투명할 뿐입니다.",
-        lab: {
-          html: `<style>
+        heading: "숨기는 방법의 차이",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: none, contents, visibility: hidden",
+            body: "`display: none` 요소의 rect는 0×0이었습니다. 레이아웃에서 빠지고, MDN에 따르면 접근성 트리에서도 빠집니다. `visibility: hidden`은 rect가 800×19로 자리를 차지했지만 보이지 않았습니다. 자식이 `visibility: visible`이면 그 자식은 다시 보입니다. probe2에서 자식이 visible이었고, 클릭도 자식에 닿았습니다. `display: contents`는 요소 자신의 상자를 없애고 자식만 남깁니다. 자신의 rect는 0×0이고, 자식은 그대로 그려집니다. MDN은 두 가지를 주의하라고 합니다. 일부 브라우저는 contents 요소를 접근성 트리에서도 빼는데, 이는 '명세상 잘못된 동작'입니다. 또 표 요소를 block/grid/flex로 바꾸면 접근성 표현이 바뀔 수 있습니다. `display`는 이산(discrete) 애니메이션이고, 12장의 `transition-behavior: allow-discrete`로 이어집니다.",
+            tables: [
+              {
+                caption: "숨기는 방법마다 남는 것",
+                head: ["방법", "레이아웃 자리", "보임", "접근성 트리", "자식"],
+                rows: [
+                  ["`display: none`", "X", "X", "제거", "함께 사라짐"],
+                  ["`visibility: hidden`", "O (800×19)", "X", "제거 (화면 읽기 프로그램이 읽지 않음)", "`visible`로 되살릴 수 있음 (실제로)"],
+                  ["`display: contents`", "자기 상자 X", "-", "(브라우저 버그)", "그대로 그려짐"],
+                  ["`opacity: 0`", "O", "X", "남음 (포커스 가능)", "함께 투명"],
+                ],
+              },
+            ],
+            code: `r("d-none")     // { w: 0, h: 0 }
+r("d-hidden")   // { w: 800, h: 19 }   cs("d-hidden", "visibility") = "hidden"
+r("d-contents") // { w: 0, h: 0 }  ← 자식 span 은 그려진다`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: none, hidden, contents의 자리",
+            body: "네 요소의 자리를 지금 값에서 견줘 보세요. `display: none`은 크기가 0이라 레이아웃에서 빠집니다. `visibility: hidden`은 자리를 그대로 차지한 채 보이지 않습니다. 자식에 visible을 주면 그 자식만 다시 보입니다. `display: contents`는 자기 상자만 없앱니다. 자신의 크기는 0인데 자식 span은 그려지고, 테두리와 배경은 함께 사라집니다. `opacity: 0`은 자리도 있고 클릭도 받지만 투명할 뿐입니다.",
+            lab: {
+              html: `<style>
   .row { background: #e0f2fe; border: 1px solid #60a5fa; margin: 4px 0; }
   #none { display: none; }
   #hidden { visibility: hidden; }
@@ -825,51 +1169,82 @@ export const cssTheories: Theory[] = [
 <div class="row" id="hidden">visibility: hidden <span class="back">자식만 visible</span></div>
 <div class="row" id="contents"><span id="kid">display: contents의 자식</span></div>
 <div class="row" id="op" style="opacity: 0">opacity: 0</div>`,
-          height: 150,
-          checks: [
-            {
-              label: "none의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('none').getBoundingClientRect())",
+              height: 150,
+              checks: [
+                {
+                  label: "none의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('none').getBoundingClientRect())",
+                },
+                {
+                  label: "hidden의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('hidden').getBoundingClientRect())",
+                },
+                {
+                  label: "contents의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('contents').getBoundingClientRect())",
+                },
+                {
+                  label: "contents 자식 span의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('kid').getBoundingClientRect())",
+                },
+                {
+                  label: "opacity: 0의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('op').getBoundingClientRect())",
+                },
+              ],
+              tryIt: "`#contents`에 `padding: 20px`를 줘 보세요. contents에는 상자가 없어서 padding이 먹지 않습니다.",
             },
-            {
-              label: "hidden의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('hidden').getBoundingClientRect())",
-            },
-            {
-              label: "contents의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('contents').getBoundingClientRect())",
-            },
-            {
-              label: "contents 자식 span의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('kid').getBoundingClientRect())",
-            },
-            {
-              label: "opacity: 0의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('op').getBoundingClientRect())",
-            },
-          ],
-          tryIt: "`#contents`에 `padding: 20px`를 줘 보세요. contents에는 상자가 없어서 padding이 먹지 않습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: display를 바꿨는데",
-        body: "display 값이 바뀔 때 함께 바뀌는 것들입니다.",
-        code: "증상                               원인                          처방\n────────────────────────────────  ───────────────────────────  ─────────────────────────\nspan 에 width 가 안 먹는다           inline 은 크기 무시              inline-block / block\nflex 로 바꾸니 자식 마진 병합이 사라졌다  플렉스 컨테이너 안엔 병합 없음 (3장)  의도된 것 — gap 으로\nfloat 자식이 있는 부모 높이가 0       float 은 흐름에서 빠짐            display: flow-root\nul 을 flex 로 바꾸니 스크린리더가 목록을 안 읽음  display 가 역할 표현에 영향 (Safari)  role=\"list\" 명시\ndisplay: none 토글에 transition 이 안 된다  none 은 이산 값                   allow-discrete +\n                                                                        @starting-style (12장)\ninline-block 들 사이 틈               줄 안의 공백 문자                flex 또는 font-size: 0\n하나만 숨겼는데 자리까지 사라진다       none 은 자리도 뺀다               visibility: hidden",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: display를 바꿨는데",
+            body: "display 값이 바뀔 때 함께 바뀌는 것들입니다.",
+            tables: [
+              {
+                caption: "display를 바꿨을 때 함께 바뀌는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`span`에 `width`가 안 먹는다", "`inline`은 크기 무시", "`inline-block`, `block`"],
+                  ["`flex`로 바꾸니 자식 마진 병합이 사라졌다", "플렉스 컨테이너 안엔 병합 없음 (3장)", "의도된 것, `gap`으로"],
+                  ["`float` 자식이 있는 부모 높이가 0", "`float`은 흐름에서 빠짐", "`display: flow-root`"],
+                  ["`ul`을 `flex`로 바꾸니 스크린리더가 목록을 안 읽음", "`display`가 역할 표현에 영향 (Safari)", "`role=\"list\"` 명시"],
+                  ["`display: none` 토글에 `transition`이 안 된다", "`none`은 이산 값", "`allow-discrete` + `@starting-style` (12장)"],
+                  ["`inline-block`들 사이 틈", "줄 안의 공백 문자", "`flex` 또는 `font-size: 0`"],
+                  ["하나만 숨겼는데 자리까지 사라진다", "`none`은 자리도 뺀다", "`visibility: hidden`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: display는 상자의 종류와 자식의 배치를 함께 정한다",
+            body: "바깥 값은 부모의 레이아웃 안에서 이 상자를 어떻게 다룰지 정합니다(블록 레벨 또는 인라인 레벨). 안쪽 값은 이 상자가 자식에게 줄 레이아웃 모드를 정합니다(정상 흐름, 플렉스, 그리드). 플렉스와 그리드 장의 규칙은 모두 안쪽 값이 flex/grid인 컨테이너의 직접 자식에게만 적용됩니다. 손자에게는 적용되지 않습니다. BFC는 안쪽 값 flow-root(또는 같은 효과를 내는 다른 조건)가 만드는 '격리'입니다. 결국 display 하나가 줄 바꿈, 크기, 자식 배치, 격리 네 가지를 정합니다.",
+            code: "display: <바깥> <안쪽>\n           │       └── 자식의 레이아웃 모드 (flow · flow-root · flex · grid)\n           └────────── 부모 안에서 나의 종류 (block · inline)\n\n부모 (display: flex)\n ├─ 자식 A  ← 플렉스 아이템 (안쪽 값의 영향)\n │   └─ 손자  ← 아님 — A 의 안쪽 값(flow)이 정함\n └─ 자식 B  ← 플렉스 아이템",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: display는 상자의 종류와 자식의 배치를 함께 정한다",
-        body: "바깥 값은 부모의 레이아웃 안에서 이 상자를 어떻게 다룰지 정합니다(블록 레벨 또는 인라인 레벨). 안쪽 값은 이 상자가 자식에게 줄 레이아웃 모드를 정합니다(정상 흐름, 플렉스, 그리드). 플렉스와 그리드 장의 규칙은 모두 안쪽 값이 flex/grid인 컨테이너의 직접 자식에게만 적용됩니다. 손자에게는 적용되지 않습니다. BFC는 안쪽 값 flow-root(또는 같은 효과를 내는 다른 조건)가 만드는 '격리'입니다. 결국 display 하나가 줄 바꿈, 크기, 자식 배치, 격리 네 가지를 정합니다.",
-        code: "display: <바깥> <안쪽>\n           │       └── 자식의 레이아웃 모드 (flow · flow-root · flex · grid)\n           └────────── 부모 안에서 나의 종류 (block · inline)\n\n부모 (display: flex)\n ├─ 자식 A  ← 플렉스 아이템 (안쪽 값의 영향)\n │   └─ 손자  ← 아님 — A 의 안쪽 값(flow)이 정함\n └─ 자식 B  ← 플렉스 아이템",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "안쪽 값이 flex일 때의 규칙은 6장, grid일 때는 7장입니다. 요소를 정상 흐름에서 빼내는 position과 포함 블록, 쌓임 맥락은 8장입니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `display: inline-block`을 두 값 문법으로 쓰면?\n2) BFC를 만들면 달라지는 세 가지는?\n3) `display: none`과 `visibility: hidden`의 차이를 레이아웃, 접근성, 자식으로 나눠 적어 보세요.\n4) `display: flex`가 손자에게 영향을 주지 않는 이유는?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "안쪽 값이 flex일 때의 규칙은 6장, grid일 때는 7장입니다. 요소를 정상 흐름에서 빼내는 position과 포함 블록, 쌓임 맥락은 8장입니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`display: inline-block`을 두 값 문법으로 쓰면 무엇인가요?", a: "`display: inline flow-root`입니다. 바깥은 줄 안에 흐르는 `inline`이고, 안쪽은 새 BFC를 만드는 `flow-root`입니다. 실제로 `inline flow-root`의 계산값은 \"inline-block\"으로 나왔습니다." },
+              { q: "BFC를 만들면 달라지는 세 가지는 무엇인가요?", a: "안쪽 float을 부모 높이에 넣고, 바깥 float을 밀어내고, 마진 병합을 막습니다. 그래서 부모를 `display: flow-root`로 바꾸면 float 자식이 부모 테두리 안에 들어오고, 첫 자식의 마진이 부모 밖으로 새지 않습니다." },
+              { q: "`display: none`과 `visibility: hidden`의 차이를 레이아웃, 접근성, 자식으로 나누면 어떻게 되나요?", a: "레이아웃에서 `none`은 자리가 없어 0×0이고, `hidden`은 자리를 그대로 차지합니다(800×19). 접근성 트리에서 `none`은 빠지고, `hidden`은 이름 없이 남습니다. 자식은 `none`이면 함께 사라지지만, `hidden`이면 자식에 `visibility: visible`을 줘서 되살릴 수 있습니다." },
+              { q: "`display: flex`가 손자에게 영향을 주지 않는 이유는 무엇인가요?", a: "`display`의 안쪽 값은 그 상자의 직접 자식에게 줄 레이아웃 모드만 정하기 때문입니다. 자식은 플렉스 아이템이 되지만, 손자의 배치는 자식 자신의 안쪽 값(기본 `flow`)이 정합니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -884,19 +1259,47 @@ export const cssTheories: Theory[] = [
     id: "css-s6",
     name: "6장 · 플렉스박스",
     tagline: "한 축 위에서 남는 공간을 grow, shrink, basis로 나눈다",
+    keyPoints: [
+      "플렉스박스는 한 축 위의 레이아웃입니다. 아이템은 `flex-basis`에서 출발해 남는 공간은 `flex-grow`, 모자란 공간은 `flex-shrink` 비율로 나눕니다.",
+      "기본값 `0 1 auto`는 자라지 않고 줄어듭니다. `flex: 1`은 `1 1 0`이라 콘텐츠와 상관없이 남는 공간을 같은 폭으로 나눕니다.",
+      "플렉스 아이템은 `min-width: auto` 때문에 `min-content` 아래로 줄지 않습니다. 폭 300 컨테이너에서 긴 단어 아이템이 698px로 넘쳤고, `min-width: 0`을 주자 150px씩이 됐습니다.",
+      "`justify-content`는 주축, `align-items`는 교차축을 맡습니다. `order`는 보이는 순서만 바꾸고 탭 순서는 그대로입니다.",
+    ],
     intro:
       "플렉스박스는 행이나 열, 한 차원의 레이아웃입니다. 컨테이너가 주축(flex-direction)과 교차축을 정합니다. 아이템 크기는 세 값으로 정해집니다. `flex-basis`는 출발 크기, `flex-grow`는 남는 공간을 나눠 받는 비율, `flex-shrink`는 모자라는 공간을 내놓는 비율입니다. 기본값 `0 1 auto`는 자라지 않고, 줄어들고, 콘텐츠 크기에서 출발한다는 뜻입니다. `flex: 1`은 `1 1 0`입니다. 가장 자주 부딪히는 것은 아이템의 `min-width: auto`입니다. 이 값 때문에 아이템이 콘텐츠보다 작게 줄지 않습니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 기본값과 flex: 1",
-        body: "`display: flex` 안에 아무 설정 없는 아이템을 두고 계산값을 읽었습니다. 아이템은 flex-grow 0, flex-shrink 1, flex-basis auto, min-width auto였습니다. 컨테이너는 align-items normal(stretch로 동작), justify-content normal(flex-start로 동작), flex-wrap nowrap이었습니다. `flex: 1`을 주면 flex-basis 계산값이 \"0%\"가 됩니다. MDN은 `1 1 0`으로 적지만, 브라우저는 0%로 돌려줍니다. basis 0은 '콘텐츠 크기를 무시하고 남는 공간만 비율로 나눈다'는 뜻입니다. 그래서 두 아이템이 콘텐츠와 무관하게 같은 폭이 됩니다. 단, 아래의 min-width: auto에 걸리지 않을 때만 그렇습니다.",
-        code: "cs(\"f-def\", \"flex-grow\")    // \"0\"\ncs(\"f-def\", \"flex-shrink\")  // \"1\"\ncs(\"f-def\", \"flex-basis\")   // \"auto\"\ncs(\"f-def\", \"min-width\")    // \"auto\"   ← 아래 함정의 근원\ncs(\"f1\", \"align-items\")     // \"normal\" (stretch 처럼)\ncs(\"f1\", \"justify-content\") // \"normal\" (flex-start 처럼)\ncs(\"f-a\", \"flex-basis\")     // \"0%\"     ← flex: 1 = 1 1 0\n\n단축          grow shrink basis   뜻\nflex: initial  0    1     auto    기본 — 안 자라고 줄어든다\nflex: auto     1    1     auto    콘텐츠에서 출발해 자라고 줄어든다\nflex: none     0    0     auto    고정\nflex: 1        1    1     0       남는 공간만 비율로 (같은 폭)",
-      },
-      {
-        label: "직접 해 보기: grow, shrink, basis로 나누기",
-        body: "a는 기본값 `0 1 auto`라 콘텐츠 크기에서 멈추고 자라지 않습니다. b와 c는 `flex: 1`, `flex: 2`라 basis가 0입니다. 콘텐츠 길이와 상관없이 남는 공간을 1 대 2로 나눕니다. 그래서 글자가 더 긴 b가 c보다 좁습니다. 지금 값에서 b의 flex-basis가 0%인 것도 보세요.",
-        lab: {
-          html: `<style>
+        heading: "flex의 세 값",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 기본값과 flex: 1",
+            body: "`display: flex` 안에 아무 설정 없는 아이템을 두고 계산값을 읽었습니다. 아이템은 flex-grow 0, flex-shrink 1, flex-basis auto, min-width auto였습니다. 컨테이너는 align-items normal(stretch로 동작), justify-content normal(flex-start로 동작), flex-wrap nowrap이었습니다. `flex: 1`을 주면 flex-basis 계산값이 \"0%\"가 됩니다. MDN은 `1 1 0`으로 적지만, 브라우저는 0%로 돌려줍니다. basis 0은 '콘텐츠 크기를 무시하고 남는 공간만 비율로 나눈다'는 뜻입니다. 그래서 두 아이템이 콘텐츠와 무관하게 같은 폭이 됩니다. 단, 아래의 min-width: auto에 걸리지 않을 때만 그렇습니다.",
+            tables: [
+              {
+                caption: "`flex` 단축 값",
+                head: ["단축", "grow", "shrink", "basis", "뜻"],
+                rows: [
+                  ["`flex: initial`", "0", "1", "auto", "기본, 안 자라고 줄어든다"],
+                  ["`flex: auto`", "1", "1", "auto", "콘텐츠에서 출발해 자라고 줄어든다"],
+                  ["`flex: none`", "0", "0", "auto", "고정"],
+                  ["`flex: 1`", "1", "1", "0", "남는 공간만 비율로 (같은 폭)"],
+                ],
+              },
+            ],
+            code: `cs("f-def", "flex-grow")    // "0"
+cs("f-def", "flex-shrink")  // "1"
+cs("f-def", "flex-basis")   // "auto"
+cs("f-def", "min-width")    // "auto"   ← 아래 함정의 근원
+cs("f1", "align-items")     // "normal" (stretch 처럼)
+cs("f1", "justify-content") // "normal" (flex-start 처럼)
+cs("f-a", "flex-basis")     // "0%"     ← flex: 1 = 1 1 0`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: grow, shrink, basis로 나누기",
+            body: "a는 기본값 `0 1 auto`라 콘텐츠 크기에서 멈추고 자라지 않습니다. b와 c는 `flex: 1`, `flex: 2`라 basis가 0입니다. 콘텐츠 길이와 상관없이 남는 공간을 1 대 2로 나눕니다. 그래서 글자가 더 긴 b가 c보다 좁습니다. 지금 값에서 b의 flex-basis가 0%인 것도 보세요.",
+            lab: {
+              html: `<style>
   .f { display: flex; width: 400px; border: 2px solid #2563eb; }
   .f > div { background: #fde68a; border-right: 1px solid #b45309; }
   #a { flex: initial; }
@@ -908,40 +1311,45 @@ export const cssTheories: Theory[] = [
   <div id="b">flex: 1이고 글자가 조금 더 깁니다</div>
   <div id="c">flex: 2</div>
 </div>`,
-          height: 160,
-          checks: [
-            {
-              label: "a, b, c의 폭",
-              expr: "['a', 'b', 'c'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
+              height: 160,
+              checks: [
+                {
+                  label: "a, b, c의 폭",
+                  expr: "['a', 'b', 'c'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
+                },
+                {
+                  label: "b의 flex-basis",
+                  expr: "getComputedStyle(document.getElementById('b')).flexBasis",
+                },
+                {
+                  label: "c의 flex-grow",
+                  expr: "getComputedStyle(document.getElementById('c')).flexGrow",
+                },
+              ],
+              tryIt: "b와 c를 `flex: auto`로 바꿔 보세요. 콘텐츠 크기에서 출발해 남는 공간만 나누므로 b가 더 넓어집니다. `.f`의 width를 200px로 줄이면 shrink가 동작합니다.",
             },
-            {
-              label: "b의 flex-basis",
-              expr: "getComputedStyle(document.getElementById('b')).flexBasis",
-            },
-            {
-              label: "c의 flex-grow",
-              expr: "getComputedStyle(document.getElementById('c')).flexGrow",
-            },
-          ],
-          tryIt: "b와 c를 `flex: auto`로 바꿔 보세요. 콘텐츠 크기에서 출발해 남는 공간만 나누므로 b가 더 넓어집니다. `.f`의 width를 200px로 줄이면 shrink가 동작합니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: 긴 단어가 컨테이너를 터뜨린다(min-width: auto)",
-        body: "폭 300 컨테이너에 `flex: 1` 아이템 둘을 두고, 둘째에 띄어쓰기 없는 긴 문자열을 넣었습니다. 150/150을 기대했지만 실제는 a 8px, b 698px였습니다. 둘째가 컨테이너를 넘어 698까지 커졌습니다. MDN은 '작은 아이템은 min-content 크기 아래로 줄어들지 않는다'고 적습니다. 플렉스와 그리드 아이템에서는 `min-width` 초깃값 auto가 '자동 최소 = min-content'로 풀리기 때문입니다. 블록 요소에서는 0입니다. 둘째에 `min-width: 0`을 주면 150/150이 됩니다. `overflow: hidden`처럼 visible이 아닌 값도 효과가 같습니다. 스크롤 컨테이너가 되어 자동 최소가 0이 되기 때문입니다. 플렉스 아이템에서 말줄임(`text-overflow: ellipsis`)이 안 되는 이유도 모두 이것입니다.",
-        code: ".f { display: flex; width: 300px; }  .f > div { flex: 1; }\n/* 둘째에 'bbbb…'(끊기지 않는 80자) */\nr(\"f-a\").width, r(\"f-b\").width     // 8, 698   ← 넘침\n\n.f-min0 { min-width: 0; }\nr(\"f-c\").width, r(\"f-d\").width     // 150, 150 ← 고쳐짐\n\n/* 같은 효과: overflow: hidden (스크롤 컨테이너는 자동 최소 0) · 말줄임의 전제 */\n.item { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }",
-        terms: [
-          {
-            term: "min-content · max-content",
-            body: "min-content는 '모든 줄바꿈 기회에서 줄을 바꿨을 때'의 폭, 즉 가장 긴 단어의 폭입니다. max-content는 '전혀 줄을 바꾸지 않았을 때'의 폭입니다. 실제로 'short words here'는 min-content 41px, max-content 115px였습니다. 플렉스와 그리드 아이템의 자동 최소 크기는 min-content입니다. 그래서 끊기지 않는 긴 단어가 그대로 최소 폭이 됩니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: 긴 단어와 min-width: auto",
-        body: "두 아이템 모두 `flex: 1`인데 폭이 같지 않습니다. 둘째의 띄어쓰기 없는 긴 단어가 빨간 컨테이너 밖으로 넘칩니다. 플렉스 아이템의 min-width 초깃값은 auto입니다. 이 auto는 'min-content보다 작게 줄지 않는다'로 풀립니다. 그래서 긴 단어 하나가 그대로 최소 폭이 됩니다.\n주석을 풀어 `min-width: 0`을 켜 보세요. 두 폭이 같아지고 '넘쳤나'가 false가 됩니다. 다만 상자만 줄 뿐, 글자는 여전히 상자 밖으로 그려집니다.",
-        lab: {
-          html: `<style>
+        heading: "긴 단어와 자동 최소 크기",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 긴 단어가 컨테이너를 터뜨린다(min-width: auto)",
+            body: "폭 300 컨테이너에 `flex: 1` 아이템 둘을 두고, 둘째에 띄어쓰기 없는 긴 문자열을 넣었습니다. 150/150을 기대했지만 실제는 a 8px, b 698px였습니다. 둘째가 컨테이너를 넘어 698까지 커졌습니다. MDN은 '작은 아이템은 min-content 크기 아래로 줄어들지 않는다'고 적습니다. 플렉스와 그리드 아이템에서는 `min-width` 초깃값 auto가 '자동 최소 = min-content'로 풀리기 때문입니다. 블록 요소에서는 0입니다. 둘째에 `min-width: 0`을 주면 150/150이 됩니다. `overflow: hidden`처럼 visible이 아닌 값도 효과가 같습니다. 스크롤 컨테이너가 되어 자동 최소가 0이 되기 때문입니다. 플렉스 아이템에서 말줄임(`text-overflow: ellipsis`)이 안 되는 이유도 모두 이것입니다.",
+            code: ".f { display: flex; width: 300px; }  .f > div { flex: 1; }\n/* 둘째에 'bbbb…'(끊기지 않는 80자) */\nr(\"f-a\").width, r(\"f-b\").width     // 8, 698   ← 넘침\n\n.f-min0 { min-width: 0; }\nr(\"f-c\").width, r(\"f-d\").width     // 150, 150 ← 고쳐짐\n\n/* 같은 효과: overflow: hidden (스크롤 컨테이너는 자동 최소 0) · 말줄임의 전제 */\n.item { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }",
+            terms: [
+              {
+                term: "min-content · max-content",
+                body: "min-content는 '모든 줄바꿈 기회에서 줄을 바꿨을 때'의 폭, 즉 가장 긴 단어의 폭입니다. max-content는 '전혀 줄을 바꾸지 않았을 때'의 폭입니다. 실제로 'short words here'는 min-content 41px, max-content 115px였습니다. 플렉스와 그리드 아이템의 자동 최소 크기는 min-content입니다. 그래서 끊기지 않는 긴 단어가 그대로 최소 폭이 됩니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: 긴 단어와 min-width: auto",
+            body: "두 아이템 모두 `flex: 1`인데 폭이 같지 않습니다. 둘째의 띄어쓰기 없는 긴 단어가 빨간 컨테이너 밖으로 넘칩니다. 플렉스 아이템의 min-width 초깃값은 auto입니다. 이 auto는 'min-content보다 작게 줄지 않는다'로 풀립니다. 그래서 긴 단어 하나가 그대로 최소 폭이 됩니다.\n주석을 풀어 `min-width: 0`을 켜 보세요. 두 폭이 같아지고 '넘쳤나'가 false가 됩니다. 다만 상자만 줄 뿐, 글자는 여전히 상자 밖으로 그려집니다.",
+            lab: {
+              html: `<style>
   .f { display: flex; width: 300px; border: 2px solid #dc2626; }
   .f > div { flex: 1; background: #e0f2fe; outline: 1px solid #60a5fa; }
   /* #b { min-width: 0; } */
@@ -950,35 +1358,40 @@ export const cssTheories: Theory[] = [
   <div id="a">짧은 글</div>
   <div id="b">Supercalifragilisticexpialidociousandsomemoreletters</div>
 </div>`,
-          height: 110,
-          checks: [
-            {
-              label: "a의 폭, b의 폭",
-              expr: "['a', 'b'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
+              height: 110,
+              checks: [
+                {
+                  label: "a의 폭, b의 폭",
+                  expr: "['a', 'b'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().width)).join(', ')",
+                },
+                {
+                  label: "b의 min-width 계산값",
+                  expr: "getComputedStyle(document.getElementById('b')).minWidth",
+                },
+                {
+                  label: "b가 컨테이너 밖으로 넘쳤나",
+                  expr: "document.getElementById('b').getBoundingClientRect().right > document.getElementById('f').getBoundingClientRect().right",
+                },
+              ],
+              tryIt: "`min-width: 0` 대신 `#b`에 `overflow: hidden`을 넣어 보세요. 스크롤 컨테이너는 자동 최소 크기가 0이라 폭이 같아지고, 넘친 글자도 잘립니다.",
             },
-            {
-              label: "b의 min-width 계산값",
-              expr: "getComputedStyle(document.getElementById('b')).minWidth",
-            },
-            {
-              label: "b가 컨테이너 밖으로 넘쳤나",
-              expr: "document.getElementById('b').getBoundingClientRect().right > document.getElementById('f').getBoundingClientRect().right",
-            },
-          ],
-          tryIt: "`min-width: 0` 대신 `#b`에 `overflow: hidden`을 넣어 보세요. 스크롤 컨테이너는 자동 최소 크기가 0이라 폭이 같아지고, 넘친 글자도 잘립니다.",
-        },
+          },
+        ],
       },
       {
-        label: "축과 정렬: justify는 주축, align은 교차축",
-        body: "`flex-direction`이 주축을 정합니다(row 기본, column이면 세로). `justify-content`는 주축 방향으로 분배합니다(flex-start · center · space-between · space-around · space-evenly). `align-items`는 교차축으로 정렬합니다(stretch 기본 · center · flex-start · baseline). `align-self`는 아이템 하나만 정렬합니다. `flex-wrap: wrap`이면 줄마다 별도 플렉스 컨테이너처럼 동작합니다. 이때 `align-content`가 줄들을 정렬합니다. `gap`은 아이템 사이 간격입니다. 마진과 달리 병합이나 가장자리 문제가 없습니다. MDN은 'justify-items는 플렉스에서 무시된다'고 적습니다(그리드 전용). `order`는 시각 순서만 바꿉니다. 탭 순서·읽기 순서는 바꾸지 않습니다.",
-        code: "flex-direction: row            주축 →  (justify-content)      교차축 ↓ (align-items)\nflex-direction: column         주축 ↓  (justify-content)      교차축 → (align-items)\n\n.center-both { display: flex; justify-content: center; align-items: center; }\n.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; }\n.push-right { margin-left: auto; }   /* auto 마진이 남는 공간을 먹는다 */",
-        codeLang: "text",
-      },
-      {
-        label: "직접 해 보기: 주축과 교차축 바꾸기",
-        body: "`justify-content`는 주축, `align-items`는 교차축을 맡습니다. 지금은 주축이 가로라 A, B, C가 양 끝으로 벌어집니다. 세로로는 가운데에 놓입니다. B만 `align-self: stretch`라 컨테이너 높이까지 늘어납니다.\n`.f`에 `flex-direction: column`을 더해 실행해 보세요. 같은 두 줄이 이번에는 세로로 벌리고 가로로 가운데에 놓습니다. 지금 값의 x와 y가 서로 역할을 바꿉니다.",
-        lab: {
-          html: `<style>
+        heading: "주축과 교차축 정렬",
+        blocks: [
+          {
+            label: "축과 정렬: justify는 주축, align은 교차축",
+            body: "`flex-direction`이 주축을 정합니다(row 기본, column이면 세로). `justify-content`는 주축 방향으로 분배합니다(flex-start · center · space-between · space-around · space-evenly). `align-items`는 교차축으로 정렬합니다(stretch 기본 · center · flex-start · baseline). `align-self`는 아이템 하나만 정렬합니다. `flex-wrap: wrap`이면 줄마다 별도 플렉스 컨테이너처럼 동작합니다. 이때 `align-content`가 줄들을 정렬합니다. `gap`은 아이템 사이 간격입니다. 마진과 달리 병합이나 가장자리 문제가 없습니다. MDN은 'justify-items는 플렉스에서 무시된다'고 적습니다(그리드 전용). `order`는 시각 순서만 바꿉니다. 탭 순서·읽기 순서는 바꾸지 않습니다.",
+            code: "flex-direction: row            주축 →  (justify-content)      교차축 ↓ (align-items)\nflex-direction: column         주축 ↓  (justify-content)      교차축 → (align-items)\n\n.center-both { display: flex; justify-content: center; align-items: center; }\n.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: baseline; }\n.push-right { margin-left: auto; }   /* auto 마진이 남는 공간을 먹는다 */",
+            codeLang: "text",
+          },
+          {
+            label: "직접 해 보기: 주축과 교차축 바꾸기",
+            body: "`justify-content`는 주축, `align-items`는 교차축을 맡습니다. 지금은 주축이 가로라 A, B, C가 양 끝으로 벌어집니다. 세로로는 가운데에 놓입니다. B만 `align-self: stretch`라 컨테이너 높이까지 늘어납니다.\n`.f`에 `flex-direction: column`을 더해 실행해 보세요. 같은 두 줄이 이번에는 세로로 벌리고 가로로 가운데에 놓습니다. 지금 값의 x와 y가 서로 역할을 바꿉니다.",
+            lab: {
+              html: `<style>
   .f { display: flex; height: 140px; border: 2px solid #2563eb;
        justify-content: space-between; align-items: center; }
   .f > div { width: 60px; background: #fde68a; text-align: center; }
@@ -987,47 +1400,89 @@ export const cssTheories: Theory[] = [
 <div class="f" id="f">
   <div id="a">A</div><div id="b">B</div><div id="c">C</div>
 </div>`,
-          height: 180,
-          checks: [
-            {
-              label: "flex-direction",
-              expr: "getComputedStyle(document.getElementById('f')).flexDirection",
+              height: 180,
+              checks: [
+                {
+                  label: "flex-direction",
+                  expr: "getComputedStyle(document.getElementById('f')).flexDirection",
+                },
+                {
+                  label: "A의 x, y (컨테이너 기준)",
+                  expr: "(f => (r => Math.round(r.left - f.left) + ', ' + Math.round(r.top - f.top))(document.getElementById('a').getBoundingClientRect()))(document.getElementById('f').getBoundingClientRect())",
+                },
+                {
+                  label: "C의 x, y (컨테이너 기준)",
+                  expr: "(f => (r => Math.round(r.left - f.left) + ', ' + Math.round(r.top - f.top))(document.getElementById('c').getBoundingClientRect()))(document.getElementById('f').getBoundingClientRect())",
+                },
+                {
+                  label: "B의 크기",
+                  expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('b').getBoundingClientRect())",
+                },
+              ],
+              tryIt: "`flex-direction: column`을 더한 뒤 `#b`에 `width: auto`를 줘 보세요. stretch가 이번에는 가로로 늘립니다.",
             },
-            {
-              label: "A의 x, y (컨테이너 기준)",
-              expr: "(f => (r => Math.round(r.left - f.left) + ', ' + Math.round(r.top - f.top))(document.getElementById('a').getBoundingClientRect()))(document.getElementById('f').getBoundingClientRect())",
-            },
-            {
-              label: "C의 x, y (컨테이너 기준)",
-              expr: "(f => (r => Math.round(r.left - f.left) + ', ' + Math.round(r.top - f.top))(document.getElementById('c').getBoundingClientRect()))(document.getElementById('f').getBoundingClientRect())",
-            },
-            {
-              label: "B의 크기",
-              expr: "(r => Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('b').getBoundingClientRect())",
-            },
-          ],
-          tryIt: "`flex-direction: column`을 더한 뒤 `#b`에 `width: auto`를 줘 보세요. stretch가 이번에는 가로로 늘립니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 플렉스에서 자주 보는 것",
-        body: "플렉스 레이아웃이 뜻대로 안 될 때의 표입니다.",
-        code: "증상                               원인                          처방\n────────────────────────────────  ───────────────────────────  ──────────────────────────────\nflex: 1 둘인데 폭이 다르다           한쪽 콘텐츠가 min-content 로 더 크다  min-width: 0\n긴 텍스트가 넘친다 · 말줄임이 안 된다  자동 최소 = min-content         min-width: 0 또는 overflow: hidden\n아이템이 세로로 늘어난다             align-items 기본 stretch         align-items: flex-start\nimg 가 찌그러진다                    stretch + 비율 없는 늘어남        align-self: flex-start · img {\n                                                                max-width: 100% }\n세로 중앙 정렬이 안 된다              컨테이너 높이가 콘텐츠 높이        컨테이너에 높이 (min-height: 100dvh)\n자식의 margin 이 병합되지 않는다       플렉스 안엔 병합 없음              gap 으로 통일\n마지막 줄이 양쪽 정렬로 벌어진다       space-between + wrap            gap + flex-start · 또는 grid\norder 로 순서 바꿨는데 탭이 원래 순서  시각 순서만 바뀜                  DOM 순서를 바꾸기",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 플렉스에서 자주 보는 것",
+            body: "플렉스 레이아웃이 뜻대로 안 될 때의 표입니다.",
+            tables: [
+              {
+                caption: "플렉스에서 자주 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`flex: 1` 둘인데 폭이 다르다", "한쪽 콘텐츠가 `min-content`로 더 크다", "`min-width: 0`"],
+                  ["긴 텍스트가 넘친다, 말줄임이 안 된다", "자동 최소 = `min-content`", "`min-width: 0` 또는 `overflow: hidden`"],
+                  ["아이템이 세로로 늘어난다", "`align-items` 기본 `stretch`", "`align-items: flex-start`"],
+                  ["`img`가 찌그러진다", "`stretch` + 비율 없는 늘어남", "`align-self: flex-start`, `img { max-width: 100% }`"],
+                  ["세로 중앙 정렬이 안 된다", "컨테이너 높이가 콘텐츠 높이", "컨테이너에 높이 (`min-height: 100dvh`)"],
+                  ["자식의 `margin`이 병합되지 않는다", "플렉스 안엔 병합 없음", "`gap`으로 통일"],
+                  ["마지막 줄이 양쪽 정렬로 벌어진다", "`space-between` + `wrap`", "`gap` + `flex-start`, 또는 `grid`"],
+                  ["`order`로 순서 바꿨는데 탭이 원래 순서", "시각 순서만 바뀜", "DOM 순서를 바꾸기"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 출발 크기 → 공간 분배 → 최소/최대 고정",
+            body: "(1) 각 아이템의 가설 크기는 flex-basis입니다. auto면 width나 콘텐츠 크기입니다.\n(2) 컨테이너 주축 크기에서 가설 크기의 합을 뺀 것이 남는 공간입니다. 양수면 flex-grow 비율로 더하고, 음수면 flex-shrink × basis 비율로 뺍니다.\n(3) 그 결과를 min-width/max-width 안으로 고정(clamp)합니다. 고정에 걸린 아이템을 빼고 (2)를 다시 돕니다.\n`min-width: auto`는 (3)에서 min-content로 작동합니다. 그래서 긴 단어 아이템은 줄지 않고, 나머지가 그만큼 더 줄어듭니다. a가 8px까지 밀린 이유입니다. `flex: 1`의 basis 0은 (1)을 0으로 만듭니다. 그러면 남는 공간이 컨테이너 전체가 되고, 이를 1:1로 나눠 같은 폭이 됩니다.",
+            tables: [
+              {
+                caption: "긴 단어 실험으로 본 세 단계",
+                head: ["단계", "규칙", "긴 단어 실험"],
+                rows: [
+                  ["① 가설 크기", "basis (`auto` → `width`나 콘텐츠)", "[a: 8] [b: 698], 또는 `flex: 1` → [0] [0]"],
+                  ["② 분배", "남는 공간 = 300 − Σ", "음수 → `shrink`로 빼기, 양수 → `grow`로 더하기"],
+                  ["③ 고정", "`min-width: auto` = `min-content`", "b는 698 아래로 못 줄음 → a가 대신 줄어 8"],
+                  ["③ 고정 (`min-width: 0`)", "`min-width: 0`이면", "150 / 150"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 출발 크기 → 공간 분배 → 최소/최대 고정",
-        body: "(1) 각 아이템의 가설 크기는 flex-basis입니다. auto면 width나 콘텐츠 크기입니다.\n(2) 컨테이너 주축 크기에서 가설 크기의 합을 뺀 것이 남는 공간입니다. 양수면 flex-grow 비율로 더하고, 음수면 flex-shrink × basis 비율로 뺍니다.\n(3) 그 결과를 min-width/max-width 안으로 고정(clamp)합니다. 고정에 걸린 아이템을 빼고 (2)를 다시 돕니다.\n`min-width: auto`는 (3)에서 min-content로 작동합니다. 그래서 긴 단어 아이템은 줄지 않고, 나머지가 그만큼 더 줄어듭니다. a가 8px까지 밀린 이유입니다. `flex: 1`의 basis 0은 (1)을 0으로 만듭니다. 그러면 남는 공간이 컨테이너 전체가 되고, 이를 1:1로 나눠 같은 폭이 됩니다.",
-        code: "① 가설 크기   basis(auto → width/콘텐츠)        [a: 8]  [b: 698]      또는 flex:1 → [0] [0]\n② 분배        남는 공간 = 300 − Σ               음수 → shrink 로 빼기 / 양수 → grow 로 더하기\n③ 고정        min-width:auto = min-content        b 는 698 아래로 못 줄음 → a 가 대신 줄어 8\n              min-width: 0 이면                   150 / 150",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "두 차원이 필요하면 7장 그리드입니다. 플렉스는 '아이템이 흐르며 크기를 정하는' 쪽, 그리드는 '컨테이너가 트랙을 정하고 아이템을 놓는' 쪽입니다. 이 차이가 둘을 고르는 기준입니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `flex: 1`의 세 값과, basis 0이 '같은 폭'을 만드는 이유는?\n2) 긴 단어 아이템이 `flex: 1`인데도 커지는 이유와 두 가지 처방은?\n3) justify-content와 align-items는 각각 어느 축인가요?\n4) 플렉스에서 `order`가 바꾸지 않는 것은?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "두 차원이 필요하면 7장 그리드입니다. 플렉스는 '아이템이 흐르며 크기를 정하는' 쪽, 그리드는 '컨테이너가 트랙을 정하고 아이템을 놓는' 쪽입니다. 이 차이가 둘을 고르는 기준입니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`flex: 1`의 세 값과, basis 0이 '같은 폭'을 만드는 이유는 무엇인가요?", a: "`flex: 1`은 `flex-grow: 1`, `flex-shrink: 1`, `flex-basis: 0`입니다(브라우저 계산값은 \"0%\"). basis가 0이면 가설 크기가 0이라 남는 공간이 컨테이너 전체가 되고, 이를 1:1로 나누므로 콘텐츠와 상관없이 같은 폭이 됩니다. 단, `min-width: auto`에 걸리지 않을 때만입니다." },
+              { q: "긴 단어 아이템이 `flex: 1`인데도 커지는 이유와 두 가지 처방은 무엇인가요?", a: "플렉스 아이템의 `min-width` 초깃값 `auto`가 자동 최소 크기 `min-content`로 풀려, 끊기지 않는 단어 폭 아래로 줄지 않기 때문입니다. 처방은 그 아이템에 `min-width: 0`이나 `overflow: hidden`을 주는 것입니다. 폭 300에서 8px과 698px이던 두 아이템이 150px씩이 됐습니다." },
+              { q: "`justify-content`와 `align-items`는 각각 어느 축인가요?", a: "`justify-content`는 주축, `align-items`는 교차축입니다. 주축은 `flex-direction`이 정하므로 `row`면 `justify-content`가 가로를, `column`이면 세로를 맡습니다." },
+              { q: "플렉스에서 `order`가 바꾸지 않는 것은 무엇인가요?", a: "탭 순서와 읽기 순서입니다. `order`는 시각 순서만 바꾸므로, 순서를 정말 바꾸려면 DOM 순서를 바꿔야 합니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1042,25 +1497,34 @@ export const cssTheories: Theory[] = [
     id: "css-s7",
     name: "7장 · 그리드",
     tagline: "컨테이너가 선과 트랙을 정하고, 아이템을 셀과 영역에 놓는다",
+    keyPoints: [
+      "그리드는 두 차원 레이아웃입니다. 컨테이너가 `grid-template-columns`, `grid-template-rows`로 트랙을 정하고, 아이템을 선 번호나 영역 이름으로 놓습니다.",
+      "`fr`은 고정 트랙과 `gap`을 뺀 남는 공간의 비율입니다. 폭 400의 `100px 1fr 2fr`, `gap: 10px`은 280을 나눠 93.33px과 186.67px이 됩니다.",
+      "`auto-fill`은 빈 트랙도 자리를 남기고 `auto-fit`은 빈 트랙을 0px로 접습니다. 아이템이 적을 때 줄을 채우려면 `auto-fit`을 씁니다.",
+      "하한 없는 `1fr`은 `minmax(auto, 1fr)`이라 긴 단어 폭 아래로 줄지 않습니다. 정말 같은 폭을 원하면 `minmax(0, 1fr)`을 씁니다.",
+    ],
     intro:
       "그리드는 두 차원 레이아웃입니다. `display: grid` 컨테이너가 `grid-template-columns/rows`로 트랙(열과 행)을 정합니다. 트랙 사이의 선(line)에는 번호가 붙고, 아이템은 선 번호나 영역 이름으로 놓입니다. `fr`은 남는 공간의 비율입니다. `repeat()`, `minmax()`, `auto-fill`, `auto-fit`이 반응형 트랙을 만듭니다. 정하지 않은 자리로 아이템이 넘치면 `grid-auto-rows` 크기의 암묵적 트랙이 생깁니다. `subgrid`를 쓰면 자식이 부모의 트랙을 그대로 씁니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: fr은 간격을 뺀 뒤의 비율이다",
-        body: "폭 400에서 `grid-template-columns: 100px 1fr 2fr; gap: 10px`의 계산값은 `100px 93.3281px 186.672px`였습니다. 400 − 100 − 10·2(gap) = 280을 1:2로 나눠 93.33과 186.67이 됩니다. MDN은 '간격은 fr 트랙보다 먼저 할당되고, 간격에는 아무것도 놓을 수 없다'고 적습니다. 암묵적 트랙도 봤습니다. 열 하나에 아이템 셋을 넣으면 행이 셋 생깁니다. `grid-auto-rows: 40px`이면 행마다 40입니다. 실제로 `grid-template-rows` 계산값은 `40px 40px 40px`, 높이는 120이었습니다. `getComputedStyle`의 grid-template-* 는 레이아웃이 끝난 뒤의 px 트랙 목록을 돌려줍니다. 그래서 트랙을 디버깅할 때 바로 쓸 수 있습니다.",
-        code: ".g { display: grid; grid-template-columns: 100px 1fr 2fr; gap: 10px; width: 400px; }\ncs(\"g1\", \"grid-template-columns\")   // \"100px 93.3281px 186.672px\"\n// (400 − 100 − 10×2) = 280 → 1fr = 93.33, 2fr = 186.67\n\n.g-implicit { grid-template-columns: 1fr; grid-auto-rows: 40px; }   /* 아이템 3 */\ncs(\"g-imp\", \"grid-template-rows\")   // \"40px 40px 40px\"  ← 암묵적 행 셋\nr(\"g-imp\").height                   // 120",
-        terms: [
+        heading: "fr과 암묵적 트랙",
+        blocks: [
           {
-            term: "fr (fraction)",
-            body: "고정 트랙과 간격을 뺀 '남는 공간'을 나누는 단위입니다. `1fr 2fr`은 1:2로 나눕니다. `minmax(100px, 1fr)`처럼 하한을 둘 수 있습니다. 하한 없는 `1fr`은 사실 `minmax(auto, 1fr)`입니다. 그래서 min-content 아래로 줄지 않습니다. 플렉스의 min-width: auto와 같은 문제입니다. 정말 같은 폭을 원하면 `minmax(0, 1fr)`을 씁니다.",
+            label: "실제로 돌려 보면: fr은 간격을 뺀 뒤의 비율이다",
+            body: "폭 400에서 `grid-template-columns: 100px 1fr 2fr; gap: 10px`의 계산값은 `100px 93.3281px 186.672px`였습니다. 400 − 100 − 10·2(gap) = 280을 1:2로 나눠 93.33과 186.67이 됩니다. MDN은 '간격은 fr 트랙보다 먼저 할당되고, 간격에는 아무것도 놓을 수 없다'고 적습니다. 암묵적 트랙도 봤습니다. 열 하나에 아이템 셋을 넣으면 행이 셋 생깁니다. `grid-auto-rows: 40px`이면 행마다 40입니다. 실제로 `grid-template-rows` 계산값은 `40px 40px 40px`, 높이는 120이었습니다. `getComputedStyle`의 grid-template-* 는 레이아웃이 끝난 뒤의 px 트랙 목록을 돌려줍니다. 그래서 트랙을 디버깅할 때 바로 쓸 수 있습니다.",
+            code: ".g { display: grid; grid-template-columns: 100px 1fr 2fr; gap: 10px; width: 400px; }\ncs(\"g1\", \"grid-template-columns\")   // \"100px 93.3281px 186.672px\"\n// (400 − 100 − 10×2) = 280 → 1fr = 93.33, 2fr = 186.67\n\n.g-implicit { grid-template-columns: 1fr; grid-auto-rows: 40px; }   /* 아이템 3 */\ncs(\"g-imp\", \"grid-template-rows\")   // \"40px 40px 40px\"  ← 암묵적 행 셋\nr(\"g-imp\").height                   // 120",
+            terms: [
+              {
+                term: "fr (fraction)",
+                body: "고정 트랙과 간격을 뺀 '남는 공간'을 나누는 단위입니다. `1fr 2fr`은 1:2로 나눕니다. `minmax(100px, 1fr)`처럼 하한을 둘 수 있습니다. 하한 없는 `1fr`은 사실 `minmax(auto, 1fr)`입니다. 그래서 min-content 아래로 줄지 않습니다. 플렉스의 min-width: auto와 같은 문제입니다. 정말 같은 폭을 원하면 `minmax(0, 1fr)`을 씁니다.",
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: "직접 해 보기: fr과 간격, 암묵적 행",
-        body: "fr은 고정 트랙과 간격을 먼저 뺀 나머지를 나눕니다. 지금 값의 열 목록에서 둘째와 셋째 트랙이 1 대 2인지 보세요. 아이템은 넷인데 열은 셋이라 넷째는 새 행으로 넘어갑니다. 정하지 않은 행이 저절로 생긴 것이 암묵적 트랙입니다. 그 높이는 `grid-auto-rows`를 따릅니다. getComputedStyle은 트랙 목록을 레이아웃이 끝난 px로 돌려줍니다.",
-        lab: {
-          html: `<style>
+          {
+            label: "직접 해 보기: fr과 간격, 암묵적 행",
+            body: "fr은 고정 트랙과 간격을 먼저 뺀 나머지를 나눕니다. 지금 값의 열 목록에서 둘째와 셋째 트랙이 1 대 2인지 보세요. 아이템은 넷인데 열은 셋이라 넷째는 새 행으로 넘어갑니다. 정하지 않은 행이 저절로 생긴 것이 암묵적 트랙입니다. 그 높이는 `grid-auto-rows`를 따릅니다. getComputedStyle은 트랙 목록을 레이아웃이 끝난 px로 돌려줍니다.",
+            lab: {
+              html: `<style>
   .g { display: grid; width: 400px; gap: 10px;
        grid-template-columns: 100px 1fr 2fr; grid-auto-rows: 40px; }
   .g > div { background: #dbeafe; padding: 2px 6px; }
@@ -1068,34 +1532,39 @@ export const cssTheories: Theory[] = [
 <div class="g" id="g">
   <div>1</div><div>2</div><div>3</div><div>4</div>
 </div>`,
-          height: 150,
-          checks: [
-            {
-              label: "grid-template-columns",
-              expr: "getComputedStyle(document.getElementById('g')).gridTemplateColumns",
+              height: 150,
+              checks: [
+                {
+                  label: "grid-template-columns",
+                  expr: "getComputedStyle(document.getElementById('g')).gridTemplateColumns",
+                },
+                {
+                  label: "grid-template-rows",
+                  expr: "getComputedStyle(document.getElementById('g')).gridTemplateRows",
+                },
+                {
+                  label: "그리드 높이",
+                  expr: "Math.round(document.getElementById('g').getBoundingClientRect().height)",
+                },
+              ],
+              tryIt: "div를 셋 더 넣어 보세요. 행 목록이 하나 늘어납니다. gap을 0으로 바꾸면 fr 트랙이 그만큼 넓어집니다.",
             },
-            {
-              label: "grid-template-rows",
-              expr: "getComputedStyle(document.getElementById('g')).gridTemplateRows",
-            },
-            {
-              label: "그리드 높이",
-              expr: "Math.round(document.getElementById('g').getBoundingClientRect().height)",
-            },
-          ],
-          tryIt: "div를 셋 더 넣어 보세요. 행 목록이 하나 늘어납니다. gap을 0으로 바꾸면 fr 트랙이 그만큼 넓어집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: auto-fill과 auto-fit의 차이",
-        body: "폭 350에서 `repeat(auto-fill, minmax(100px, 1fr))`에 아이템 둘을 넣자 트랙이 셋 나왔습니다. `116.656px 116.672px 116.656px`, 즉 350/3입니다. 빈 셋째 트랙도 자리를 차지합니다. `repeat(auto-fit, …)`에 아이템 둘을 넣으면 `175px 175px 0px`입니다. MDN 설명대로 '빈 반복 트랙은 0으로 접히고 양옆 간격도 접힌다'는 결과입니다. 그래서 아이템이 적으면 auto-fit은 늘어나 채우고, auto-fill은 빈 칸을 남깁니다. 둘 다 컨테이너에 들어가는 만큼 반복합니다. 미디어 쿼리 없는 반응형 카드 격자의 표준 식입니다. 제한도 있습니다. 자동 반복은 fr이나 내재 크기만으로는 쓸 수 없고, minmax로 하한을 줘야 합니다. 한 목록에는 자동 반복을 하나만 쓸 수 있습니다.",
-        code: ".cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); width: 350px; }\n\nauto-fill, 아이템 2:  \"116.656px 116.672px 116.656px\"   ← 빈 트랙이 남는다\nauto-fit,  아이템 2:  \"175px 175px 0px\"                 ← 빈 트랙이 0 으로 접힌다\n\n/* 반응형 카드 격자의 표준 */\n.cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }",
-      },
-      {
-        label: "직접 해 보기: auto-fill과 auto-fit",
-        body: "두 그리드 모두 '들어가는 만큼 100px 이상의 트랙을 반복한다'는 식입니다. 아이템은 둘뿐입니다. 폭 버튼으로 창을 넓혀 보세요. auto-fill은 빈 트랙도 자리를 지켜서 아이템이 왼쪽에 작게 남습니다. auto-fit은 빈 트랙을 0px로 접어서 두 아이템이 줄을 다 채웁니다. 트랙 목록 끝에 0px가 붙는 쪽이 auto-fit입니다. 좁은 창에서 트랙이 둘만 들어가면 두 식의 결과가 같아집니다.",
-        lab: {
-          html: `<style>
+        heading: "자동 반복 트랙",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: auto-fill과 auto-fit의 차이",
+            body: "폭 350에서 `repeat(auto-fill, minmax(100px, 1fr))`에 아이템 둘을 넣자 트랙이 셋 나왔습니다. `116.656px 116.672px 116.656px`, 즉 350/3입니다. 빈 셋째 트랙도 자리를 차지합니다. `repeat(auto-fit, …)`에 아이템 둘을 넣으면 `175px 175px 0px`입니다. MDN 설명대로 '빈 반복 트랙은 0으로 접히고 양옆 간격도 접힌다'는 결과입니다. 그래서 아이템이 적으면 auto-fit은 늘어나 채우고, auto-fill은 빈 칸을 남깁니다. 둘 다 컨테이너에 들어가는 만큼 반복합니다. 미디어 쿼리 없는 반응형 카드 격자의 표준 식입니다. 제한도 있습니다. 자동 반복은 fr이나 내재 크기만으로는 쓸 수 없고, minmax로 하한을 줘야 합니다. 한 목록에는 자동 반복을 하나만 쓸 수 있습니다.",
+            code: ".cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); width: 350px; }\n\nauto-fill, 아이템 2:  \"116.656px 116.672px 116.656px\"   ← 빈 트랙이 남는다\nauto-fit,  아이템 2:  \"175px 175px 0px\"                 ← 빈 트랙이 0 으로 접힌다\n\n/* 반응형 카드 격자의 표준 */\n.cards { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }",
+          },
+          {
+            label: "직접 해 보기: auto-fill과 auto-fit",
+            body: "두 그리드 모두 '들어가는 만큼 100px 이상의 트랙을 반복한다'는 식입니다. 아이템은 둘뿐입니다. 폭 버튼으로 창을 넓혀 보세요. auto-fill은 빈 트랙도 자리를 지켜서 아이템이 왼쪽에 작게 남습니다. auto-fit은 빈 트랙을 0px로 접어서 두 아이템이 줄을 다 채웁니다. 트랙 목록 끝에 0px가 붙는 쪽이 auto-fit입니다. 좁은 창에서 트랙이 둘만 들어가면 두 식의 결과가 같아집니다.",
+            lab: {
+              html: `<style>
   .g { display: grid; gap: 8px; margin-bottom: 10px; outline: 1px dashed #94a3b8; }
   #fill { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
   #fit { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
@@ -1103,41 +1572,52 @@ export const cssTheories: Theory[] = [
 </style>
 <div class="g" id="fill"><div>fill 1</div><div>fill 2</div></div>
 <div class="g" id="fit"><div>fit 1</div><div>fit 2</div></div>`,
-          height: 200,
-          widths: [240, 480, 640],
-          checks: [
-            {
-              label: "작은 창 폭 (innerWidth)",
-              expr: "innerWidth",
+              height: 200,
+              widths: [240, 480, 640],
+              checks: [
+                {
+                  label: "작은 창 폭 (innerWidth)",
+                  expr: "innerWidth",
+                },
+                {
+                  label: "auto-fill의 트랙",
+                  expr: "getComputedStyle(document.getElementById('fill')).gridTemplateColumns",
+                },
+                {
+                  label: "auto-fit의 트랙",
+                  expr: "getComputedStyle(document.getElementById('fit')).gridTemplateColumns",
+                },
+              ],
+              tryIt: "두 그리드에 아이템을 다섯 개씩 넣어 보세요. 빈 트랙이 없어지면 두 식이 같은 결과를 냅니다.",
             },
-            {
-              label: "auto-fill의 트랙",
-              expr: "getComputedStyle(document.getElementById('fill')).gridTemplateColumns",
-            },
-            {
-              label: "auto-fit의 트랙",
-              expr: "getComputedStyle(document.getElementById('fit')).gridTemplateColumns",
-            },
-          ],
-          tryIt: "두 그리드에 아이템을 다섯 개씩 넣어 보세요. 빈 트랙이 없어지면 두 식이 같은 결과를 냅니다.",
-        },
+          },
+        ],
       },
       {
-        label: "선, 영역, 배치, 자동 배치",
-        body: "선 번호는 앞에서 1부터, 끝에서 −1부터 셉니다. `grid-column: 1 / -1`은 첫 선부터 마지막 선까지, 즉 전체 폭입니다. `grid-row: 2 / span 2`는 2번 선에서 두 트랙입니다. `grid-template-areas`로 이름을 그려 두고 `grid-area: header`처럼 놓을 수도 있습니다. 이름 붙인 선(`[main-start]`)도 쓸 수 있습니다. 자동 배치는 기본이 행 방향이라, 소스 순서대로 셀을 하나씩 채웁니다. `grid-auto-flow: column`이면 열 방향입니다. `dense`는 뒤의 작은 아이템으로 앞의 빈 칸을 채웁니다. 이때 MDN은 '탭 순서는 문서 순서를 따른다'고 주의시킵니다. 아이템이 겹치면 `z-index`가 위아래를 정하고, 없으면 소스에서 뒤에 오는 것이 위에 놓입니다. 정렬 속성은 `justify-items/self`(인라인 축), `align-items/self`(블록 축), `justify-content/align-content`(트랙 전체)입니다.",
-        code: ".layout {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  grid-template-areas:\n    \"header header\"\n    \"nav    main\"\n    \"footer footer\";\n}\n.header { grid-area: header; }\n.full   { grid-column: 1 / -1; }        /* 전체 폭 */\n.tall   { grid-row: 2 / span 2; }\n\n/* 선 번호 */\n|1    |2         |3\n 200px   1fr",
-        codeLang: "text",
+        heading: "선과 영역으로 배치",
+        blocks: [
+          {
+            label: "선, 영역, 배치, 자동 배치",
+            body: "선 번호는 앞에서 1부터, 끝에서 −1부터 셉니다. `grid-column: 1 / -1`은 첫 선부터 마지막 선까지, 즉 전체 폭입니다. `grid-row: 2 / span 2`는 2번 선에서 두 트랙입니다. `grid-template-areas`로 이름을 그려 두고 `grid-area: header`처럼 놓을 수도 있습니다. 이름 붙인 선(`[main-start]`)도 쓸 수 있습니다. 자동 배치는 기본이 행 방향이라, 소스 순서대로 셀을 하나씩 채웁니다. `grid-auto-flow: column`이면 열 방향입니다. `dense`는 뒤의 작은 아이템으로 앞의 빈 칸을 채웁니다. 이때 MDN은 '탭 순서는 문서 순서를 따른다'고 주의시킵니다. 아이템이 겹치면 `z-index`가 위아래를 정하고, 없으면 소스에서 뒤에 오는 것이 위에 놓입니다. 정렬 속성은 `justify-items/self`(인라인 축), `align-items/self`(블록 축), `justify-content/align-content`(트랙 전체)입니다.",
+            code: ".layout {\n  display: grid;\n  grid-template-columns: 200px 1fr;\n  grid-template-areas:\n    \"header header\"\n    \"nav    main\"\n    \"footer footer\";\n}\n.header { grid-area: header; }\n.full   { grid-column: 1 / -1; }        /* 전체 폭 */\n.tall   { grid-row: 2 / span 2; }\n\n/* 선 번호 */\n|1    |2         |3\n 200px   1fr",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "subgrid와 중첩",
-        body: "중첩 그리드는 기본으로 부모 트랙을 모릅니다. 그래서 자식 그리드의 열이 부모 열과 어긋납니다. `grid-template-columns: subgrid`를 주면 자식이 부모의 트랙 선을 그대로 씁니다. 그러면 카드 안의 제목, 본문, 버튼이 카드끼리 줄이 맞습니다. Chrome 156에서 `CSS.supports(\"grid-template-columns: subgrid\")`는 true였습니다. 간격도 부모를 따르지만, 자식에서 다시 줄 수 있습니다.",
-        code: ".cards { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto auto; }\n.card  { display: grid; grid-row: span 3; grid-template-rows: subgrid; }   /* 부모 행 선을 그대로 */\n/* 카드마다 제목·본문·버튼이 같은 행 선에 놓인다 */",
-      },
-      {
-        label: "직접 해 보기: subgrid로 카드 줄 맞추기",
-        body: "두 카드는 제목 길이가 다릅니다. 그래도 본문과 버튼이 같은 높이에 놓입니다. 카드가 `grid-template-rows: subgrid`로 바깥 그리드의 행 선을 그대로 쓰기 때문입니다. 긴 제목이 첫 행을 키우면 두 카드의 첫 행이 함께 커집니다. 지금 값의 top 차이가 둘 다 0입니다.\nsubgrid 줄을 지우고 실행해 보세요. 카드마다 자기 행을 따로 가져서 차이가 0이 아니게 됩니다.",
-        lab: {
-          html: `<style>
+        heading: "subgrid와 중첩",
+        blocks: [
+          {
+            label: "subgrid와 중첩",
+            body: "중첩 그리드는 기본으로 부모 트랙을 모릅니다. 그래서 자식 그리드의 열이 부모 열과 어긋납니다. `grid-template-columns: subgrid`를 주면 자식이 부모의 트랙 선을 그대로 씁니다. 그러면 카드 안의 제목, 본문, 버튼이 카드끼리 줄이 맞습니다. Chrome 156에서 `CSS.supports(\"grid-template-columns: subgrid\")`는 true였습니다. 간격도 부모를 따르지만, 자식에서 다시 줄 수 있습니다.",
+            code: ".cards { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto auto auto; }\n.card  { display: grid; grid-row: span 3; grid-template-rows: subgrid; }   /* 부모 행 선을 그대로 */\n/* 카드마다 제목·본문·버튼이 같은 행 선에 놓인다 */",
+            codeLang: "css",
+          },
+          {
+            label: "직접 해 보기: subgrid로 카드 줄 맞추기",
+            body: "두 카드는 제목 길이가 다릅니다. 그래도 본문과 버튼이 같은 높이에 놓입니다. 카드가 `grid-template-rows: subgrid`로 바깥 그리드의 행 선을 그대로 쓰기 때문입니다. 긴 제목이 첫 행을 키우면 두 카드의 첫 행이 함께 커집니다. 지금 값의 top 차이가 둘 다 0입니다.\nsubgrid 줄을 지우고 실행해 보세요. 카드마다 자기 행을 따로 가져서 차이가 0이 아니게 됩니다.",
+            lab: {
+              html: `<style>
   .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 360px; }
   .card { display: grid; grid-row: span 3; gap: 4px;
           grid-template-rows: subgrid;
@@ -1150,43 +1630,85 @@ export const cssTheories: Theory[] = [
   <div class="card"><h3>제목이 길어서 여러 줄로 넘어가는 카드</h3><p id="p2">본문</p>
     <button id="k2">버튼</button></div>
 </div>`,
-          height: 200,
-          checks: [
-            {
-              label: "두 본문의 top 차이",
-              expr: "Math.round(document.getElementById('p2').getBoundingClientRect().top - document.getElementById('p1').getBoundingClientRect().top)",
+              height: 200,
+              checks: [
+                {
+                  label: "두 본문의 top 차이",
+                  expr: "Math.round(document.getElementById('p2').getBoundingClientRect().top - document.getElementById('p1').getBoundingClientRect().top)",
+                },
+                {
+                  label: "두 버튼의 top 차이",
+                  expr: "Math.round(document.getElementById('k2').getBoundingClientRect().top - document.getElementById('k1').getBoundingClientRect().top)",
+                },
+                {
+                  label: "바깥 그리드의 행",
+                  expr: "getComputedStyle(document.querySelector('.cards')).gridTemplateRows",
+                },
+              ],
+              tryIt: "subgrid는 그대로 두고 둘째 카드의 본문을 길게 늘려 보세요. 이번에는 둘째 행이 두 카드에서 함께 커집니다.",
             },
-            {
-              label: "두 버튼의 top 차이",
-              expr: "Math.round(document.getElementById('k2').getBoundingClientRect().top - document.getElementById('k1').getBoundingClientRect().top)",
-            },
-            {
-              label: "바깥 그리드의 행",
-              expr: "getComputedStyle(document.querySelector('.cards')).gridTemplateRows",
-            },
-          ],
-          tryIt: "subgrid는 그대로 두고 둘째 카드의 본문을 길게 늘려 보세요. 이번에는 둘째 행이 두 카드에서 함께 커집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 그리드가 뜻대로 안 될 때",
-        body: "그리드에서 자주 보는 것들입니다.",
-        code: "증상                            원인                           처방\n─────────────────────────────  ────────────────────────────  ─────────────────────────────\n1fr 열이 콘텐츠 때문에 넓어진다    1fr = minmax(auto, 1fr), 하한 min-content  minmax(0, 1fr)\n아이템이 적을 때 카드가 왼쪽에 작게 모인다  auto-fill 은 빈 트랙을 남김       auto-fit\n행 높이가 멋대로                   암묵적 행은 auto                 grid-auto-rows: minmax(100px, auto)\n빈 칸이 생긴다                     자동 배치가 앞으로 못 감           grid-auto-flow: dense (탭 순서 주의)\n% 높이 · 세로 중앙이 안 된다       컨테이너 높이 없음                 min-height · align-items: center\n중첩 그리드 열이 부모와 어긋남        자식은 부모 트랙을 모름            subgrid\n텍스트 긴 셀이 넘친다               자동 최소 = min-content (플렉스와 같음)  min-width: 0 · minmax(0, 1fr) ·\n                                                                  overflow-wrap",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 그리드가 뜻대로 안 될 때",
+            body: "그리드에서 자주 보는 것들입니다.",
+            tables: [
+              {
+                caption: "그리드에서 자주 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`1fr` 열이 콘텐츠 때문에 넓어진다", "`1fr` = `minmax(auto, 1fr)`, 하한 `min-content`", "`minmax(0, 1fr)`"],
+                  ["아이템이 적을 때 카드가 왼쪽에 작게 모인다", "`auto-fill`은 빈 트랙을 남김", "`auto-fit`"],
+                  ["행 높이가 멋대로", "암묵적 행은 `auto`", "`grid-auto-rows: minmax(100px, auto)`"],
+                  ["빈 칸이 생긴다", "자동 배치가 앞으로 못 감", "`grid-auto-flow: dense` (탭 순서 주의)"],
+                  ["% 높이, 세로 중앙이 안 된다", "컨테이너 높이 없음", "`min-height`, `align-items: center`"],
+                  ["중첩 그리드 열이 부모와 어긋남", "자식은 부모 트랙을 모름", "`subgrid`"],
+                  ["텍스트 긴 셀이 넘친다", "자동 최소 = `min-content` (플렉스와 같음)", "`min-width: 0`, `minmax(0, 1fr)`, `overflow-wrap`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 그리드는 컨테이너가 정하고, 플렉스는 아이템이 흐른다",
+            body: "플렉스는 '콘텐츠 → 컨테이너' 방향입니다. 아이템의 콘텐츠 크기에서 출발해 남는 공간을 나눕니다. 그리드는 '컨테이너 → 콘텐츠' 방향입니다. 컨테이너가 트랙을 먼저 정하고 아이템을 끼웁니다. 그래서 표처럼 열이 어긋나지 않는 정렬은 그리드가 쉽고, 툴바나 태그 목록처럼 내용에 맞춰 흐르는 줄은 플렉스가 쉽습니다. 공통 함정은 '자동 최소 = min-content'입니다(`minmax(0, 1fr)`, `min-width: 0`). 공통 도구는 `gap`과 박스 정렬 속성입니다. 한 축이면 플렉스, 두 축이거나 줄을 맞춰야 하면 그리드를 먼저 고릅니다.",
+            tables: [
+              {
+                caption: "플렉스와 그리드",
+                head: ["견줄 것", "플렉스", "그리드"],
+                rows: [
+                  ["축", "한 축 (`row` 또는 `column`)", "두 축 (행 × 열)"],
+                  ["크기를 정하는 차례", "아이템 크기 → 분배 (콘텐츠가 주도)", "트랙 정의 → 배치 (컨테이너가 주도)"],
+                  ["줄", "줄마다 독립 (`wrap`)", "열이 전체에서 맞음"],
+                  ["맞는 자리", "툴바, 태그, 중앙 정렬", "페이지 골격, 카드 격자, 폼 레이아웃"],
+                  ["공통", "`gap`, `justify`와 `align`, 자동 최소 `min-content`", "같음"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 그리드는 컨테이너가 정하고, 플렉스는 아이템이 흐른다",
-        body: "플렉스는 '콘텐츠 → 컨테이너' 방향입니다. 아이템의 콘텐츠 크기에서 출발해 남는 공간을 나눕니다. 그리드는 '컨테이너 → 콘텐츠' 방향입니다. 컨테이너가 트랙을 먼저 정하고 아이템을 끼웁니다. 그래서 표처럼 열이 어긋나지 않는 정렬은 그리드가 쉽고, 툴바나 태그 목록처럼 내용에 맞춰 흐르는 줄은 플렉스가 쉽습니다. 공통 함정은 '자동 최소 = min-content'입니다(`minmax(0, 1fr)`, `min-width: 0`). 공통 도구는 `gap`과 박스 정렬 속성입니다. 한 축이면 플렉스, 두 축이거나 줄을 맞춰야 하면 그리드를 먼저 고릅니다.",
-        code: "플렉스                                   그리드\n──────────────────────────────────────  ──────────────────────────────────────\n한 축 (row 또는 column)                   두 축 (행 × 열)\n아이템 크기 → 분배 (콘텐츠가 주도)           트랙 정의 → 배치 (컨테이너가 주도)\n줄마다 독립 (wrap)                        열이 전체에서 맞음\n툴바 · 태그 · 중앙 정렬                     페이지 골격 · 카드 격자 · 폼 레이아웃\n공통: gap · justify/align · 자동 최소 min-content",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "요소를 흐름에서 빼내는 position과 포함 블록, 쌓임 맥락은 8장입니다. 그리드 아이템에 z-index를 주면 쌓임 맥락이 생긴다는 점이 그 장과 이어집니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) 폭 400, `100px 1fr 2fr`, gap 10에서 1fr은 몇 px?\n2) auto-fill과 auto-fit의 차이를 '빈 트랙'으로 설명하세요.\n3) `1fr` 열이 긴 단어 때문에 넓어지는 이유와 처방은?\n4) 어떤 레이아웃에 그리드를, 어떤 것에 플렉스를 고르나요?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "요소를 흐름에서 빼내는 position과 포함 블록, 쌓임 맥락은 8장입니다. 그리드 아이템에 z-index를 주면 쌓임 맥락이 생긴다는 점이 그 장과 이어집니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "폭 400, `100px 1fr 2fr`, gap 10에서 1fr은 몇 px인가요?", a: "약 93.33px입니다. 간격이 fr보다 먼저 할당되므로 400 − 100 − 10×2 = 280을 1:2로 나눕니다. 계산값은 `100px 93.3281px 186.672px`였습니다." },
+              { q: "`auto-fill`과 `auto-fit`의 차이를 '빈 트랙'으로 설명하면 어떻게 되나요?", a: "`auto-fill`은 빈 트랙도 자리를 남기고, `auto-fit`은 빈 트랙을 0px로 접습니다. 폭 350에 아이템 둘이면 `auto-fill`은 `116.656px 116.672px 116.656px`로 빈 칸을 남겼고, `auto-fit`은 `175px 175px 0px`로 두 아이템이 줄을 채웠습니다." },
+              { q: "`1fr` 열이 긴 단어 때문에 넓어지는 이유와 처방은 무엇인가요?", a: "하한 없는 `1fr`은 사실 `minmax(auto, 1fr)`이라 `min-content` 아래로 줄지 않기 때문입니다. 플렉스의 `min-width: auto`와 같은 문제입니다. 정말 같은 폭을 원하면 `minmax(0, 1fr)`을 쓰고, 셀에는 `min-width: 0`이나 `overflow-wrap`을 줍니다." },
+              { q: "어떤 레이아웃에 그리드를, 어떤 것에 플렉스를 고르나요?", a: "두 축이거나 줄을 맞춰야 하는 페이지 골격, 카드 격자, 폼 레이아웃에는 그리드를 고릅니다. 한 축으로 내용에 맞춰 흐르는 툴바, 태그 목록, 중앙 정렬에는 플렉스를 고릅니다. 그리드는 컨테이너가 트랙을 먼저 정하고, 플렉스는 아이템의 콘텐츠 크기에서 출발합니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1201,25 +1723,52 @@ export const cssTheories: Theory[] = [
     id: "css-s8",
     name: "8장 · 위치 지정과 쌓임 맥락",
     tagline: "position은 무엇을 기준으로 옮길지, z-index는 어느 맥락 안에서 비교할지 정한다",
+    keyPoints: [
+      "`position`은 기준을 정합니다. `relative`는 자기 자리, `absolute`는 가장 가까운 non-static 조상의 패딩 상자, `fixed`는 뷰포트, `sticky`는 가장 가까운 스크롤 조상이 기준입니다.",
+      "조상에 `transform`, `filter`, `perspective` 등이 있으면 그 조상이 `fixed`의 기준을 가로챕니다. `translateZ(0)`처럼 아무것도 안 옮기는 값이어도 그렇습니다.",
+      "`z-index`는 쌓임 맥락 안에서만 비교됩니다. `z-index: 1`인 부모 안의 999는 형제의 2에 지고, `opacity`가 1보다 작아도 맥락이 생깁니다.",
+      "sticky가 안 붙으면 중간 조상의 `overflow`부터 봅니다. `overflow: hidden`이나 `auto`인 조상이 있으면 그 안에서만 붙습니다.",
+    ],
     intro:
       "`position` 값은 다섯입니다. static은 기본값이고, relative는 흐름을 지킨 채 자기 자리 기준으로 옮깁니다. absolute는 흐름에서 빠져 포함 블록 기준, fixed는 뷰포트 기준입니다. sticky는 임계까지 relative, 넘으면 고정입니다. absolute의 '포함 블록'은 position이 static이 아닌 가장 가까운 조상의 패딩 상자입니다. fixed는 뷰포트 기준이지만, transform이나 filter 등이 있는 조상이 있으면 그 조상이 기준입니다. z-index는 전역 순서가 아니라 '쌓임 맥락' 안에서만 비교됩니다. 모달이 헤더 뒤에 깔리는 버그는 거의 다 이 두 규칙 때문입니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 포함 블록과 transform의 함정",
-        body: "`position: relative` 부모 안의 `absolute; top: 10px; left: 10px` 자식은 부모 기준 (10, 10)에 놓였습니다. `position: fixed; top: 0; left: 0`은 뷰포트 기준이어야 합니다. 그런데 부모에 `transform: translateZ(0)`이 있으면 그 부모 기준 (0, 0)이 됩니다. 변형된 부모를 뷰포트 밖(x −9999)에 두자 fixed 요소의 rect.x도 −9999였습니다. MDN 규칙에서 포함 블록은 absolute면 '가장 가까운 non-static 조상의 패딩 상자', fixed면 '뷰포트'입니다. 하지만 `transform`, `filter`, `backdrop-filter`, `perspective`, `translate/rotate/scale`, `contain: layout/paint/strict/content`, `content-visibility: auto`가 있거나, 이를 `will-change`로 예고한 조상이 둘 다를 가로챕니다. 'perspective와 filter가 포함 블록을 만드는 데는 브라우저 간 차이가 있다'는 주의도 있습니다.",
-        code: ".pos-rel { position: relative; } .pos-abs { position: absolute; top: 10px; left: 10px; }\nr(\"pos-abs\") − r(\"pos-rel\")           // { x: 10, y: 10 }\n\n.pos-xform { transform: translateZ(0); }   /* 조상에 transform */\n.pos-fixed { position: fixed; top: 0; left: 0; }\nr(\"pos-fixed\") − r(\"pos-xform\")       // { x: 0, y: 0 }  ← 뷰포트가 아니라 변형된 조상 기준\nr(\"pos-fixed\").x                      // −9999 (조상을 따라 화면 밖)\n\n포함 블록                      기준\n──────────────────────────    ────────────────────────────────────────\nstatic · relative · sticky     가장 가까운 블록 컨테이너의 콘텐츠 상자\nabsolute                       가장 가까운 non-static 조상의 패딩 상자 (없으면 초기 포함 블록)\nfixed                          뷰포트 — 단 transform/filter/perspective/contain/will-change 조상이 있으면 그 조상",
-        terms: [
+        heading: "포함 블록과 transform",
+        blocks: [
           {
-            term: "포함 블록 (containing block)",
-            body: "위치와 퍼센트의 기준이 되는 상자입니다. `top/left/width/%`는 모두 이 상자를 기준으로 풀립니다. top/bottom/height는 포함 블록의 높이를, left/right/width/margin/padding은 폭을 기준으로 삼습니다. 4장의 '%의 기준'이 바로 이 상자입니다.",
+            label: "실제로 돌려 보면: 포함 블록과 transform의 함정",
+            body: "`position: relative` 부모 안의 `absolute; top: 10px; left: 10px` 자식은 부모 기준 (10, 10)에 놓였습니다. `position: fixed; top: 0; left: 0`은 뷰포트 기준이어야 합니다. 그런데 부모에 `transform: translateZ(0)`이 있으면 그 부모 기준 (0, 0)이 됩니다. 변형된 부모를 뷰포트 밖(x −9999)에 두자 fixed 요소의 rect.x도 −9999였습니다. MDN 규칙에서 포함 블록은 absolute면 '가장 가까운 non-static 조상의 패딩 상자', fixed면 '뷰포트'입니다. 하지만 `transform`, `filter`, `backdrop-filter`, `perspective`, `translate/rotate/scale`, `contain: layout/paint/strict/content`, `content-visibility: auto`가 있거나, 이를 `will-change`로 예고한 조상이 둘 다를 가로챕니다. 'perspective와 filter가 포함 블록을 만드는 데는 브라우저 간 차이가 있다'는 주의도 있습니다.",
+            terms: [
+              {
+                term: "포함 블록 (containing block)",
+                body: "위치와 퍼센트의 기준이 되는 상자입니다. `top/left/width/%`는 모두 이 상자를 기준으로 풀립니다. top/bottom/height는 포함 블록의 높이를, left/right/width/margin/padding은 폭을 기준으로 삼습니다. 4장의 '%의 기준'이 바로 이 상자입니다.",
+              },
+            ],
+            tables: [
+              {
+                caption: "`position` 값마다 포함 블록",
+                head: ["`position`", "포함 블록의 기준"],
+                rows: [
+                  ["`static`, `relative`, `sticky`", "가장 가까운 블록 컨테이너의 콘텐츠 상자"],
+                  ["`absolute`", "가장 가까운 non-static 조상의 패딩 상자 (없으면 초기 포함 블록)"],
+                  ["`fixed`", "뷰포트, 단 `transform`, `filter`, `perspective`, `contain`, `will-change` 조상이 있으면 그 조상"],
+                ],
+              },
+            ],
+            code: `.pos-rel { position: relative; } .pos-abs { position: absolute; top: 10px; left: 10px; }
+r("pos-abs") − r("pos-rel")           // { x: 10, y: 10 }
+
+.pos-xform { transform: translateZ(0); }   /* 조상에 transform */
+.pos-fixed { position: fixed; top: 0; left: 0; }
+r("pos-fixed") − r("pos-xform")       // { x: 0, y: 0 }  ← 뷰포트가 아니라 변형된 조상 기준
+r("pos-fixed").x                      // −9999 (조상을 따라 화면 밖)`,
+            codeLang: "tsx",
           },
-        ],
-      },
-      {
-        label: "직접 해 보기: absolute와 fixed의 기준",
-        body: "absolute는 position이 static이 아닌 가장 가까운 조상을 기준으로 놓입니다. 여기서는 o1이라 o1 안에서 top과 left만큼 떨어진 자리에 놓입니다. fixed는 원래 창이 기준입니다. 그런데 조상 o2에 `transform`이 있어서 o2가 기준을 가로챕니다. 지금 값에서 fix는 창 기준이 아니라 o2 기준으로 (0, 0)에 있습니다. `translateX(0)`처럼 아무것도 옮기지 않는 transform이어도 그렇습니다.",
-        lab: {
-          html: `<style>
+          {
+            label: "직접 해 보기: absolute와 fixed의 기준",
+            body: "absolute는 position이 static이 아닌 가장 가까운 조상을 기준으로 놓입니다. 여기서는 o1이라 o1 안에서 top과 left만큼 떨어진 자리에 놓입니다. fixed는 원래 창이 기준입니다. 그런데 조상 o2에 `transform`이 있어서 o2가 기준을 가로챕니다. 지금 값에서 fix는 창 기준이 아니라 o2 기준으로 (0, 0)에 있습니다. `translateX(0)`처럼 아무것도 옮기지 않는 transform이어도 그렇습니다.",
+            lab: {
+              html: `<style>
   .outer { width: 220px; height: 70px; margin: 16px 0 0 40px; outline: 2px dashed #64748b; }
   .rel { position: relative; }
   .xf { transform: translateX(0); }
@@ -1228,44 +1777,49 @@ export const cssTheories: Theory[] = [
 </style>
 <div class="outer rel" id="o1"><span class="abs" id="abs">absolute</span></div>
 <div class="outer xf" id="o2"><span class="fix" id="fix">fixed</span></div>`,
-          height: 200,
-          checks: [
-            {
-              label: "abs의 offsetParent",
-              expr: "document.getElementById('abs').offsetParent",
+              height: 200,
+              checks: [
+                {
+                  label: "abs의 offsetParent",
+                  expr: "document.getElementById('abs').offsetParent",
+                },
+                {
+                  label: "abs의 x, y (o1 기준)",
+                  expr: "(o => (r => Math.round(r.left - o.left) + ', ' + Math.round(r.top - o.top))(document.getElementById('abs').getBoundingClientRect()))(document.getElementById('o1').getBoundingClientRect())",
+                },
+                {
+                  label: "fix의 x, y (o2 기준)",
+                  expr: "(o => (r => Math.round(r.left - o.left) + ', ' + Math.round(r.top - o.top))(document.getElementById('fix').getBoundingClientRect()))(document.getElementById('o2').getBoundingClientRect())",
+                },
+                {
+                  label: "fix의 x, y (창 기준)",
+                  expr: "(r => Math.round(r.left) + ', ' + Math.round(r.top))(document.getElementById('fix').getBoundingClientRect())",
+                },
+              ],
+              tryIt: "`.xf`의 transform을 지우고 실행해 보세요. fixed 요소가 창 왼쪽 위로 갑니다. `.rel`을 지우면 absolute의 offsetParent가 body로 바뀝니다.",
             },
-            {
-              label: "abs의 x, y (o1 기준)",
-              expr: "(o => (r => Math.round(r.left - o.left) + ', ' + Math.round(r.top - o.top))(document.getElementById('abs').getBoundingClientRect()))(document.getElementById('o1').getBoundingClientRect())",
-            },
-            {
-              label: "fix의 x, y (o2 기준)",
-              expr: "(o => (r => Math.round(r.left - o.left) + ', ' + Math.round(r.top - o.top))(document.getElementById('fix').getBoundingClientRect()))(document.getElementById('o2').getBoundingClientRect())",
-            },
-            {
-              label: "fix의 x, y (창 기준)",
-              expr: "(r => Math.round(r.left) + ', ' + Math.round(r.top))(document.getElementById('fix').getBoundingClientRect())",
-            },
-          ],
-          tryIt: "`.xf`의 transform을 지우고 실행해 보세요. fixed 요소가 창 왼쪽 위로 갑니다. `.rel`을 지우면 absolute의 offsetParent가 body로 바뀝니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: z-index 999가 z-index 2에 진다",
-        body: "`.sc-a { position: relative; z-index: 1 }` 안에 `.child { position: absolute; z-index: 999 }`를, 형제로 `.sc-b { position: relative; z-index: 2 }`를 두었습니다. 겹친 자리를 `elementFromPoint`로 찍으면 `sc-b`가 나옵니다. 999가 2에 진 것입니다. child의 999는 sc-a의 맥락 안에서만 비교되고, 밖에서 sc-a는 z-index 1인 한 층입니다. `opacity: 0.5`인 부모 안의 `z-index: 10` 자식도 형제의 `z-index: 1`에 졌습니다(`op-sib`가 위). opacity < 1도 맥락을 만들기 때문입니다. MDN이 꼽는 생성 조건은 이렇습니다.\n루트, z-index가 auto가 아닌 positioned, fixed/sticky(z-index 무관), z-index가 있는 flex/grid 아이템, opacity < 1, transform, filter, backdrop-filter, perspective, clip-path, mask, mix-blend-mode, isolation: isolate, will-change(해당 속성), contain: layout/paint, container-type: size/inline-size, top layer(::backdrop)입니다.",
-        code: "<div class=\"sc-a\">            position: relative; z-index: 1     ← 쌓임 맥락 A\n  <div class=\"child\">         position: absolute; z-index: 999  ← A 안에서만 999\n</div>\n<div class=\"sc-b\">            position: relative; z-index: 2     ← A 와 같은 맥락에서 2 > 1\n\ndocument.elementFromPoint(겹친 자리).id   // \"sc-b\"   ← 999 가 진다\n\n.op-parent { opacity: 0.5 } > .child { position: absolute; z-index: 10 }  vs  .op-sib { z-index: 1 }\n→ \"op-sib\"   ← opacity < 1 도 맥락을 만든다",
-        terms: [
-          {
-            term: "쌓임 맥락 (stacking context)",
-            body: "z 순서를 따로 비교하는 묶음입니다. 묶음 안의 z-index는 밖에서 보이지 않고, 묶음 전체가 부모 맥락에서 한 층으로 다뤄집니다. '맥락을 만들지 않는 요소는 부모 맥락에 흡수된다'. 모달이나 툴팁이 뒤에 깔리면 '어느 조상이 맥락을 만들었나'부터 봅니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: z-index 999가 지는 자리",
-        body: "child의 z-index는 999이고 B는 2입니다. 그런데 둘이 겹친 자리의 맨 위는 B입니다. 부모 A가 `position: relative; z-index: 1`로 쌓임 맥락을 만들었기 때문입니다. child의 999는 A 안에서만 견줘집니다. 바깥에서 A는 통째로 z-index 1인 한 층이고, 2인 B 아래에 깔립니다. 지금 값은 겹친 자리의 가운데를 `elementFromPoint`로 찍은 결과입니다.",
-        lab: {
-          html: `<style>
+        heading: "쌓임 맥락과 z-index",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: z-index 999가 z-index 2에 진다",
+            body: "`.sc-a { position: relative; z-index: 1 }` 안에 `.child { position: absolute; z-index: 999 }`를, 형제로 `.sc-b { position: relative; z-index: 2 }`를 두었습니다. 겹친 자리를 `elementFromPoint`로 찍으면 `sc-b`가 나옵니다. 999가 2에 진 것입니다. child의 999는 sc-a의 맥락 안에서만 비교되고, 밖에서 sc-a는 z-index 1인 한 층입니다. `opacity: 0.5`인 부모 안의 `z-index: 10` 자식도 형제의 `z-index: 1`에 졌습니다(`op-sib`가 위). opacity < 1도 맥락을 만들기 때문입니다. MDN이 꼽는 생성 조건은 이렇습니다.\n루트, z-index가 auto가 아닌 positioned, fixed/sticky(z-index 무관), z-index가 있는 flex/grid 아이템, opacity < 1, transform, filter, backdrop-filter, perspective, clip-path, mask, mix-blend-mode, isolation: isolate, will-change(해당 속성), contain: layout/paint, container-type: size/inline-size, top layer(::backdrop)입니다.",
+            code: "<div class=\"sc-a\">            position: relative; z-index: 1     ← 쌓임 맥락 A\n  <div class=\"child\">         position: absolute; z-index: 999  ← A 안에서만 999\n</div>\n<div class=\"sc-b\">            position: relative; z-index: 2     ← A 와 같은 맥락에서 2 > 1\n\ndocument.elementFromPoint(겹친 자리).id   // \"sc-b\"   ← 999 가 진다\n\n.op-parent { opacity: 0.5 } > .child { position: absolute; z-index: 10 }  vs  .op-sib { z-index: 1 }\n→ \"op-sib\"   ← opacity < 1 도 맥락을 만든다",
+            terms: [
+              {
+                term: "쌓임 맥락 (stacking context)",
+                body: "z 순서를 따로 비교하는 묶음입니다. 묶음 안의 z-index는 밖에서 보이지 않고, 묶음 전체가 부모 맥락에서 한 층으로 다뤄집니다. '맥락을 만들지 않는 요소는 부모 맥락에 흡수된다'. 모달이나 툴팁이 뒤에 깔리면 '어느 조상이 맥락을 만들었나'부터 봅니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: z-index 999가 지는 자리",
+            body: "child의 z-index는 999이고 B는 2입니다. 그런데 둘이 겹친 자리의 맨 위는 B입니다. 부모 A가 `position: relative; z-index: 1`로 쌓임 맥락을 만들었기 때문입니다. child의 999는 A 안에서만 견줘집니다. 바깥에서 A는 통째로 z-index 1인 한 층이고, 2인 B 아래에 깔립니다. 지금 값은 겹친 자리의 가운데를 `elementFromPoint`로 찍은 결과입니다.",
+            lab: {
+              html: `<style>
   .box { position: relative; width: 170px; height: 70px; padding: 4px; }
   #a { z-index: 1; background: #fecaca; }
   #child { position: absolute; z-index: 999; left: 70px; top: 40px;
@@ -1274,34 +1828,39 @@ export const cssTheories: Theory[] = [
 </style>
 <div class="box" id="a">A, z-index 1<div id="child">child, z-index 999</div></div>
 <div class="box" id="b">B, z-index 2</div>`,
-          height: 180,
-          checks: [
-            {
-              label: "겹친 자리의 맨 위 요소",
-              expr: "(c => (b => document.elementFromPoint((Math.max(c.left, b.left) + Math.min(c.right, b.right)) / 2, (Math.max(c.top, b.top) + Math.min(c.bottom, b.bottom)) / 2))(document.getElementById('b').getBoundingClientRect()))(document.getElementById('child').getBoundingClientRect())",
+              height: 180,
+              checks: [
+                {
+                  label: "겹친 자리의 맨 위 요소",
+                  expr: "(c => (b => document.elementFromPoint((Math.max(c.left, b.left) + Math.min(c.right, b.right)) / 2, (Math.max(c.top, b.top) + Math.min(c.bottom, b.bottom)) / 2))(document.getElementById('b').getBoundingClientRect()))(document.getElementById('child').getBoundingClientRect())",
+                },
+                {
+                  label: "A의 z-index",
+                  expr: "getComputedStyle(document.getElementById('a')).zIndex",
+                },
+                {
+                  label: "A의 opacity",
+                  expr: "getComputedStyle(document.getElementById('a')).opacity",
+                },
+              ],
+              tryIt: "`#a`의 `z-index: 1`을 지우고 실행해 보세요. A가 쌓임 맥락을 만들지 않아 child가 맨 위로 옵니다. 그다음 `#a`에 `opacity: 0.9`를 더하면 다시 B가 위로 갑니다.",
             },
-            {
-              label: "A의 z-index",
-              expr: "getComputedStyle(document.getElementById('a')).zIndex",
-            },
-            {
-              label: "A의 opacity",
-              expr: "getComputedStyle(document.getElementById('a')).opacity",
-            },
-          ],
-          tryIt: "`#a`의 `z-index: 1`을 지우고 실행해 보세요. A가 쌓임 맥락을 만들지 않아 child가 맨 위로 옵니다. 그다음 `#a`에 `opacity: 0.9`를 더하면 다시 B가 위로 갑니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: sticky는 '스크롤 조상' 안에서 붙는다",
-        body: "`position: sticky; top: 0` 헤더는 스크롤 전에 top 260에 있다가, 400만큼 스크롤하자 top 0에 붙었습니다. 안쪽 스크롤 컨테이너(`overflow: auto`)에 든 sticky는 그 컨테이너 위쪽에 붙습니다. 실제로 컨테이너 top과의 차이가 0이었습니다. MDN에 따르면 sticky는 '임계값(top: 10px 등)까지 relative처럼, 넘으면 fixed처럼' 동작합니다. 기준은 '가장 가까운 스크롤 메커니즘을 가진 조상'입니다. 그래서 중간 조상에 `overflow: hidden/auto`가 있으면 그 조상 안에서만 붙고, 문서 스크롤에는 붙지 않습니다. sticky가 안 되는 가장 흔한 이유입니다. 또 sticky 요소는 부모 상자 안에서만 움직여서, 부모가 끝나면 함께 올라갑니다. z-index가 없어도 쌓임 맥락을 만듭니다.",
-        code: "r(\"sticky\").top   // 스크롤 전 260 → scrollTo(0, 400) 뒤 0\n\n.scroller { overflow: auto; height: 100px; } .sticky2 { position: sticky; top: 0; }\nr(\"sticky2\").top − r(\"scroller\").top   // 0  ← 안쪽 스크롤 컨테이너에 붙는다\n\nsticky 가 안 될 때: 중간 조상의 overflow (hidden/auto/scroll) · 부모 높이가 자기 높이와 같음 · top 미지정",
-      },
-      {
-        label: "직접 해 보기: sticky가 붙는 자리",
-        body: "회색 상자 안을 스크롤해 보세요. 머리는 처음에 위 내용 아래에 있습니다. 스크롤해서 상자 위쪽에 닿으면 거기에 붙습니다. 지금 값의 '머리 top − 상자 안쪽 top'이 줄다가 0에서 멈춥니다. sticky의 기준은 문서가 아니라 가장 가까운 스크롤 조상입니다. 여기서는 `overflow: auto`인 scroller입니다.",
-        lab: {
-          html: `<style>
+        heading: "sticky의 기준",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: sticky는 '스크롤 조상' 안에서 붙는다",
+            body: "`position: sticky; top: 0` 헤더는 스크롤 전에 top 260에 있다가, 400만큼 스크롤하자 top 0에 붙었습니다. 안쪽 스크롤 컨테이너(`overflow: auto`)에 든 sticky는 그 컨테이너 위쪽에 붙습니다. 실제로 컨테이너 top과의 차이가 0이었습니다. MDN에 따르면 sticky는 '임계값(top: 10px 등)까지 relative처럼, 넘으면 fixed처럼' 동작합니다. 기준은 '가장 가까운 스크롤 메커니즘을 가진 조상'입니다. 그래서 중간 조상에 `overflow: hidden/auto`가 있으면 그 조상 안에서만 붙고, 문서 스크롤에는 붙지 않습니다. sticky가 안 되는 가장 흔한 이유입니다. 또 sticky 요소는 부모 상자 안에서만 움직여서, 부모가 끝나면 함께 올라갑니다. z-index가 없어도 쌓임 맥락을 만듭니다.",
+            code: "r(\"sticky\").top   // 스크롤 전 260 → scrollTo(0, 400) 뒤 0\n\n.scroller { overflow: auto; height: 100px; } .sticky2 { position: sticky; top: 0; }\nr(\"sticky2\").top − r(\"scroller\").top   // 0  ← 안쪽 스크롤 컨테이너에 붙는다\n\nsticky 가 안 될 때: 중간 조상의 overflow (hidden/auto/scroll) · 부모 높이가 자기 높이와 같음 · top 미지정",
+          },
+          {
+            label: "직접 해 보기: sticky가 붙는 자리",
+            body: "회색 상자 안을 스크롤해 보세요. 머리는 처음에 위 내용 아래에 있습니다. 스크롤해서 상자 위쪽에 닿으면 거기에 붙습니다. 지금 값의 '머리 top − 상자 안쪽 top'이 줄다가 0에서 멈춥니다. sticky의 기준은 문서가 아니라 가장 가까운 스크롤 조상입니다. 여기서는 `overflow: auto`인 scroller입니다.",
+            lab: {
+              html: `<style>
   .scroller { height: 150px; overflow: auto; border: 2px solid #64748b; }
   .scroller p { margin: 8px; }
   .head { position: sticky; top: 0; background: #fde68a; padding: 4px 8px; }
@@ -1312,43 +1871,74 @@ export const cssTheories: Theory[] = [
   <div class="head" id="h">sticky 머리, top: 0</div>
   <div class="tall">긴 내용</div>
 </div>`,
-          height: 190,
-          checks: [
-            {
-              label: "scroller의 scrollTop",
-              expr: "Math.round(document.getElementById('sc').scrollTop)",
+              height: 190,
+              checks: [
+                {
+                  label: "scroller의 scrollTop",
+                  expr: "Math.round(document.getElementById('sc').scrollTop)",
+                },
+                {
+                  label: "머리 top − 상자 안쪽 top",
+                  expr: "(s => Math.round(document.getElementById('h').getBoundingClientRect().top - s.getBoundingClientRect().top - s.clientTop))(document.getElementById('sc'))",
+                },
+                {
+                  label: "머리의 position",
+                  expr: "getComputedStyle(document.getElementById('h')).position",
+                },
+              ],
+              tryIt: "`top: 0`을 지워 보세요. 임계값이 없어서 sticky가 붙지 않고 함께 스크롤됩니다. `top: 20px`로 바꾸면 위에서 20px 떨어진 자리에 붙습니다.",
             },
-            {
-              label: "머리 top − 상자 안쪽 top",
-              expr: "(s => Math.round(document.getElementById('h').getBoundingClientRect().top - s.getBoundingClientRect().top - s.clientTop))(document.getElementById('sc'))",
-            },
-            {
-              label: "머리의 position",
-              expr: "getComputedStyle(document.getElementById('h')).position",
-            },
-          ],
-          tryIt: "`top: 0`을 지워 보세요. 임계값이 없어서 sticky가 붙지 않고 함께 스크롤됩니다. `top: 20px`로 바꾸면 위에서 20px 떨어진 자리에 붙습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 위치와 층",
-        body: "position과 z-index에서 매일 보는 것들입니다.",
-        code: "증상                                 원인                                처방\n──────────────────────────────────  ─────────────────────────────────  ──────────────────────────────\nz-index: 9999 모달이 헤더 뒤에         모달의 조상이 쌓임 맥락 (transform/opacity/z-index)  모달을 body 끝으로\n                                   (Portal/Teleport) · 조상 맥락 제거\nposition: fixed 가 스크롤을 따라간다     조상에 transform/filter                그 조상 밖으로 · transform 대신\n                                                                         다른 방법\nabsolute 가 엉뚱한 곳에                가까운 조상이 전부 static                부모에 position: relative\nsticky 가 안 붙는다                    중간 조상 overflow · 부모가 짧음 · top 없음  overflow 제거 · 부모 높이 ·\n                                                                           top 지정\nz-index 가 안 먹는다                   static 요소 (flex/grid 아이템 제외)      position 또는 플렉스/그리드 아이템\n툴팁이 overflow: hidden 부모에 잘린다    absolute 도 조상의 overflow 에 잘림 (포함 블록 밖이어도)  Portal · overflow:\n                                    clip 대신 visible\n% top 이 안 먹는다                     포함 블록 높이가 auto                    부모 높이 지정",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 위치와 층",
+            body: "position과 z-index에서 매일 보는 것들입니다.",
+            tables: [
+              {
+                caption: "위치와 층에서 매일 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`z-index: 9999` 모달이 헤더 뒤에", "모달의 조상이 쌓임 맥락 (`transform`, `opacity`, `z-index`)", "모달을 `body` 끝으로 (Portal, Teleport), 조상 맥락 제거"],
+                  ["`position: fixed`가 스크롤을 따라간다", "조상에 `transform`, `filter`", "그 조상 밖으로, `transform` 대신 다른 방법"],
+                  ["`absolute`가 엉뚱한 곳에", "가까운 조상이 전부 `static`", "부모에 `position: relative`"],
+                  ["`sticky`가 안 붙는다", "중간 조상 `overflow`, 부모가 짧음, `top` 없음", "`overflow` 제거, 부모 높이, `top` 지정"],
+                  ["`z-index`가 안 먹는다", "`static` 요소 (flex, grid 아이템 제외)", "`position` 또는 플렉스, 그리드 아이템"],
+                  ["툴팁이 `overflow: hidden` 부모에 잘린다", "`absolute`도 조상의 `overflow`에 잘림 (포함 블록 밖이어도)", "Portal, `overflow`는 `clip` 대신 `visible`"],
+                  ["% `top`이 안 먹는다", "포함 블록 높이가 `auto`", "부모 높이 지정"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 포함 블록 트리와 쌓임 맥락 트리",
+            body: "CSS는 DOM 트리 하나 위에 서로 다른 트리 둘을 세웁니다. 포함 블록 트리는 '위치의 기준'입니다(non-static 조상, 또는 transform 등이 있는 조상). 쌓임 맥락 트리는 'z 순서의 울타리'입니다(z-index가 있는 positioned, opacity, transform …). 두 트리를 함께 만드는 조건(transform, filter, will-change)이 있어서, 속성 하나가 두 문제를 함께 일으킵니다. transform 하나가 fixed의 기준을 바꾸고 z-index 울타리도 세웁니다. 그래서 Portal/Teleport로 모달, 드롭다운, 툴팁을 DOM 끝(body 바로 아래)에 그립니다. 두 트리 모두에서 가장 바깥으로 나가는 처방입니다. 애니메이션 성능을 위해 `will-change: transform`을 남발하면 두 트리가 어지러워집니다.",
+            code: "DOM                      포함 블록 트리 (position 기준)        쌓임 맥락 트리 (z-index 울타리)\nbody                      초기 포함 블록                        루트 맥락\n └ header (transform)      ← fixed 자손의 기준이 됨               ← 새 맥락: 자손 z-index 가 밖에서 안 보임\n    └ .modal (fixed, z 9999)  header 기준으로 놓임                 header 층 안의 9999\n └ main (z-index: 1, rel)                                         main 층 1  → header 가 z 없으면 main 이 위!\n\n처방: .modal 을 body 끝으로 (Portal) → 초기 포함 블록 + 루트 맥락",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 포함 블록 트리와 쌓임 맥락 트리",
-        body: "CSS는 DOM 트리 하나 위에 서로 다른 트리 둘을 세웁니다. 포함 블록 트리는 '위치의 기준'입니다(non-static 조상, 또는 transform 등이 있는 조상). 쌓임 맥락 트리는 'z 순서의 울타리'입니다(z-index가 있는 positioned, opacity, transform …). 두 트리를 함께 만드는 조건(transform, filter, will-change)이 있어서, 속성 하나가 두 문제를 함께 일으킵니다. transform 하나가 fixed의 기준을 바꾸고 z-index 울타리도 세웁니다. 그래서 Portal/Teleport로 모달, 드롭다운, 툴팁을 DOM 끝(body 바로 아래)에 그립니다. 두 트리 모두에서 가장 바깥으로 나가는 처방입니다. 애니메이션 성능을 위해 `will-change: transform`을 남발하면 두 트리가 어지러워집니다.",
-        code: "DOM                      포함 블록 트리 (position 기준)        쌓임 맥락 트리 (z-index 울타리)\nbody                      초기 포함 블록                        루트 맥락\n └ header (transform)      ← fixed 자손의 기준이 됨               ← 새 맥락: 자손 z-index 가 밖에서 안 보임\n    └ .modal (fixed, z 9999)  header 기준으로 놓임                 header 층 안의 9999\n └ main (z-index: 1, rel)                                         main 층 1  → header 가 z 없으면 main 이 위!\n\n처방: .modal 을 body 끝으로 (Portal) → 초기 포함 블록 + 루트 맥락",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "overflow는 스크롤 컨테이너와 BFC를 만들고, sticky의 기준이 되고, absolute 자손까지 자릅니다. 이는 9장 오버플로와 크기에서 다룹니다. transform이 쌓임 맥락과 포함 블록을 만든다는 점은 12장 트랜스폼에서 다시 나옵니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `position: fixed`가 뷰포트 기준이 아니게 되는 조상의 속성 셋은?\n2) z-index 999가 z-index 2에 지는 상황을 쌓임 맥락으로 설명하세요.\n3) opacity: 0.5가 z 순서에 영향을 주는 이유는?\n4) sticky가 안 붙을 때 먼저 볼 조상의 속성은?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "overflow는 스크롤 컨테이너와 BFC를 만들고, sticky의 기준이 되고, absolute 자손까지 자릅니다. 이는 9장 오버플로와 크기에서 다룹니다. transform이 쌓임 맥락과 포함 블록을 만든다는 점은 12장 트랜스폼에서 다시 나옵니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`position: fixed`가 뷰포트 기준이 아니게 되는 조상의 속성 셋은 무엇인가요?", a: "`transform`, `filter`, `perspective`입니다. 이 밖에 `backdrop-filter`, `contain`, 이를 `will-change`로 예고한 조상도 기준을 가로챕니다. 부모에 `transform: translateZ(0)`을 주자 `fixed; top: 0; left: 0` 요소가 뷰포트가 아니라 그 부모 기준 (0, 0)에 놓였습니다." },
+              { q: "z-index 999가 z-index 2에 지는 상황을 쌓임 맥락으로 설명하면 어떻게 되나요?", a: "999인 자식의 부모가 `position: relative; z-index: 1`로 쌓임 맥락을 만든 상황입니다. 자식의 999는 그 맥락 안에서만 비교되고, 바깥에서 부모는 통째로 z-index 1인 한 층입니다. 그래서 같은 맥락의 z-index 2인 형제가 위에 오고, `elementFromPoint`도 `sc-b`를 돌려줬습니다." },
+              { q: "`opacity: 0.5`가 z 순서에 영향을 주는 이유는 무엇인가요?", a: "`opacity`가 1보다 작으면 새 쌓임 맥락을 만들기 때문입니다. 그래서 `opacity: 0.5`인 부모 안의 `z-index: 10` 자식도 밖에서는 부모 층에 묶여, 형제의 `z-index: 1`에 졌습니다." },
+              { q: "sticky가 안 붙을 때 먼저 볼 조상의 속성은 무엇인가요?", a: "중간 조상의 `overflow`입니다. sticky는 가장 가까운 스크롤 조상을 기준으로 붙어서, 중간 조상에 `overflow: hidden`이나 `auto`가 있으면 그 조상 안에서만 붙고 문서 스크롤에는 붙지 않습니다. 부모 높이가 자기 높이와 같거나 `top`이 없어도 안 붙습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1363,20 +1953,47 @@ export const cssTheories: Theory[] = [
     id: "css-s9",
     name: "9장 · 오버플로와 크기",
     tagline: "넘친 것을 어떻게 다루고, 상자 크기는 어디서 오나",
+    keyPoints: [
+      "`overflow`는 넘친 콘텐츠를 보이게(`visible`), 자르게(`hidden`, `clip`), 스크롤하게(`scroll`, `auto`) 합니다. `visible`과 `clip`이 아닌 값은 스크롤 컨테이너이자 BFC를 만듭니다.",
+      "`overflow-y: scroll`만 적으면 `overflow-x`의 계산값은 `auto`가 됩니다. `hidden`은 스크롤 컨테이너라 `scrollTop = 5`가 먹고, `clip`은 0에 머물며 잘리기만 합니다.",
+      "넘침은 지정한 외재 크기보다 콘텐츠의 내재 크기가 클 때 납니다. 'short words here'의 min-content는 41px, max-content는 115px였습니다.",
+      "한 줄 말줄임에는 `white-space: nowrap`, `overflow: hidden`, `text-overflow: ellipsis`가 함께 있어야 하고, 플렉스 아이템이면 `min-width: 0`도 필요합니다.",
+    ],
     intro:
       "콘텐츠가 상자보다 크면 넘칩니다(overflow). `overflow` 값 visible(기본), hidden, clip, scroll, auto가 넘친 것을 어떻게 다룰지 정합니다. visible과 clip이 아닌 값은 상자를 '스크롤 컨테이너'이자 BFC로 만듭니다. 넘침의 원인과 처방을 알려면 세 가지를 봐야 합니다. 한 축만 지정하면 다른 축이 따라 바뀌는 규칙, hidden과 clip의 차이, 그리고 크기입니다. 크기는 내재(min-content, max-content, fit-content)와 외재(width, %, vw)로 나뉩니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 한 축만 scroll로 두면 다른 축은 auto가 된다",
-        body: "`overflow-y: scroll`만 적은 요소의 `overflow-x` 계산값은 \"auto\"였습니다. MDN의 규칙은 '한 축이 visible·clip 이 아니면 다른 축의 visible은 auto로, clip은 hidden으로 계산된다'입니다. 그래서 '세로만 스크롤하고 가로는 보이게'는 overflow 두 값으로 만들 수 없습니다. `overflow: hidden`과 `clip`도 다릅니다. hidden은 스크롤바가 없어도 스크롤 컨테이너입니다. 그래서 `scrollTop = 5`가 먹고(실제로 5), 프로그램(scrollIntoView, 포커스 이동)으로도 스크롤됩니다. clip은 스크롤 컨테이너가 아니어서 `scrollTop`이 실제로 0에 머물렀고, 잘리기만 합니다. MDN은 'visible과 clip을 제외한 모든 값은 새 BFC를 만든다'고 적습니다. 잉크 오버플로(그림자, 외곽선)는 스크롤 영역을 늘리지 않습니다.",
-        code: ".ov-y { overflow-y: scroll; }\ncs(\"ov-y\", \"overflow-x\")   // \"auto\"  ← 지정 안 했는데 visible 이 아니다\n\n.ov-hidden { overflow: hidden; }  el.scrollTop = 5 → 5   (스크롤 컨테이너 — 프로그램 스크롤 됨)\n.ov-clip   { overflow: clip; }    el.scrollTop = 5 → 0   (스크롤 컨테이너 아님 — 잘리기만)\n\n값        잘림   스크롤바        스크롤 컨테이너   BFC\nvisible   X      X               X                X\nhidden    O      X               O (프로그램만)    O\nclip      O      X               X                X  (overflow-clip-margin 으로 여유)\nscroll    O      항상            O                O\nauto      O      넘칠 때만        O                O",
-      },
-      {
-        label: "직접 해 보기: overflow 한 축과 hidden, clip",
-        body: `y에는 overflow-y만 적었습니다. 그런데 overflow-x의 계산값이 visible이 아닙니다. 한 축이 visible이나 clip이 아니면, 다른 축의 visible은 auto로 바뀝니다.
+        heading: "overflow 값의 차이",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 한 축만 scroll로 두면 다른 축은 auto가 된다",
+            body: "`overflow-y: scroll`만 적은 요소의 `overflow-x` 계산값은 \"auto\"였습니다. MDN의 규칙은 '한 축이 visible·clip 이 아니면 다른 축의 visible은 auto로, clip은 hidden으로 계산된다'입니다. 그래서 '세로만 스크롤하고 가로는 보이게'는 overflow 두 값으로 만들 수 없습니다. `overflow: hidden`과 `clip`도 다릅니다. hidden은 스크롤바가 없어도 스크롤 컨테이너입니다. 그래서 `scrollTop = 5`가 먹고(실제로 5), 프로그램(scrollIntoView, 포커스 이동)으로도 스크롤됩니다. clip은 스크롤 컨테이너가 아니어서 `scrollTop`이 실제로 0에 머물렀고, 잘리기만 합니다. MDN은 'visible과 clip을 제외한 모든 값은 새 BFC를 만든다'고 적습니다. 잉크 오버플로(그림자, 외곽선)는 스크롤 영역을 늘리지 않습니다.",
+            tables: [
+              {
+                caption: "`overflow` 값마다 생기는 것",
+                head: ["값", "잘림", "스크롤바", "스크롤 컨테이너", "BFC"],
+                rows: [
+                  ["`visible`", "X", "X", "X", "X"],
+                  ["`hidden`", "O", "X", "O (프로그램만)", "O"],
+                  ["`clip`", "O", "X", "X", "X (`overflow-clip-margin`으로 여유)"],
+                  ["`scroll`", "O", "항상", "O", "O"],
+                  ["`auto`", "O", "넘칠 때만", "O", "O"],
+                ],
+              },
+            ],
+            code: `.ov-y { overflow-y: scroll; }
+cs("ov-y", "overflow-x")   // "auto"  ← 지정 안 했는데 visible 이 아니다
+
+.ov-hidden { overflow: hidden; }  el.scrollTop = 5 → 5   (스크롤 컨테이너, 프로그램 스크롤 됨)
+.ov-clip   { overflow: clip; }    el.scrollTop = 5 → 0   (스크롤 컨테이너 아님, 잘리기만)`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: overflow 한 축과 hidden, clip",
+            body: `y에는 overflow-y만 적었습니다. 그런데 overflow-x의 계산값이 visible이 아닙니다. 한 축이 visible이나 clip이 아니면, 다른 축의 visible은 auto로 바뀝니다.
 아래 스크립트는 두 상자의 scrollTop에 20을 넣습니다. hidden은 스크롤바가 없어도 스크롤 컨테이너라 값이 들어가고, 글이 위로 밀립니다. clip은 스크롤 컨테이너가 아니라서 scrollTop이 0에 머뭅니다. 잘리기만 합니다.`,
-        lab: {
-          html: `<style>
+            lab: {
+              html: `<style>
   .b { width: 180px; height: 52px; border: 1px solid #64748b; margin-bottom: 6px; }
   #y { overflow-y: scroll; }
   #h { overflow: hidden; }
@@ -1389,34 +2006,39 @@ export const cssTheories: Theory[] = [
   document.getElementById('h').scrollTop = 20;
   document.getElementById('c').scrollTop = 20;
 </script>`,
-          height: 220,
-          checks: [
-            {
-              label: "y의 overflow-x, overflow-y 계산값",
-              expr: "(s => s.overflowX + ', ' + s.overflowY)(getComputedStyle(document.getElementById('y')))",
+              height: 220,
+              checks: [
+                {
+                  label: "y의 overflow-x, overflow-y 계산값",
+                  expr: "(s => s.overflowX + ', ' + s.overflowY)(getComputedStyle(document.getElementById('y')))",
+                },
+                {
+                  label: "hidden 상자의 scrollTop",
+                  expr: "Math.round(document.getElementById('h').scrollTop)",
+                },
+                {
+                  label: "clip 상자의 scrollTop",
+                  expr: "Math.round(document.getElementById('c').scrollTop)",
+                },
+              ],
+              tryIt: "`#y`의 `overflow-y: scroll`을 `overflow-x: hidden`으로 바꿔 보세요. 이번에는 적지 않은 overflow-y가 auto가 됩니다.",
             },
-            {
-              label: "hidden 상자의 scrollTop",
-              expr: "Math.round(document.getElementById('h').scrollTop)",
-            },
-            {
-              label: "clip 상자의 scrollTop",
-              expr: "Math.round(document.getElementById('c').scrollTop)",
-            },
-          ],
-          tryIt: "`#y`의 `overflow-y: scroll`을 `overflow-x: hidden`으로 바꿔 보세요. 이번에는 적지 않은 overflow-y가 auto가 됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: min-content와 max-content",
-        body: "'short words here'의 min-content 폭은 41px로, 가장 긴 단어 'short'의 폭입니다. max-content는 115px로, 한 줄 전체의 폭입니다. `fit-content`는 '가능한 공간 안에서 max-content까지, 모자라면 min-content까지'입니다. `width: fit-content; max-width: 150px`에 더 긴 문장을 넣으면 150에 걸렸습니다. MDN은 크기를 둘로 나눕니다. 내재(intrinsic) 크기는 콘텐츠나 파일에서 옵니다. 빈 div는 높이가 0이고, 이미지는 파일 크기입니다. 외재(extrinsic) 크기는 width/height로 준 크기라서 콘텐츠가 넘칠 수 있습니다. `min-height`는 '적어도 이만큼'이라는 뜻입니다. `max-width: 100%`는 이미지가 내재 폭을 넘지 않게 합니다. 반면 100%는 작은 이미지를 늘려 깨뜨립니다.",
-        code: ".ov-min { width: min-content; }  → 41px   ('short')\n.ov-max { width: max-content; }  → 115px  (한 줄)\n.ov-fit { width: fit-content; max-width: 150px; }  → 150px (공간에 맞춤)\n\n내재 크기 (콘텐츠에서)        외재 크기 (지정)\n빈 div 높이 0                 height: 200px → 콘텐츠가 넘칠 수 있다\nimg 는 파일 크기              img { max-width: 100%; height: auto } ← 넘침 방지, 작은 건 안 늘림\n텍스트는 min/max-content      width: 50% (포함 블록 폭)",
-      },
-      {
-        label: "직접 해 보기: 내재 크기 세 가지",
-        body: "같은 글이어도 크기를 정하는 말에 따라 폭이 다릅니다. min-content는 줄을 바꿀 수 있는 곳에서 모두 바꿨을 때의 폭입니다. 가장 긴 단어 하나의 폭이 됩니다. max-content는 한 번도 줄을 바꾸지 않은 폭입니다. fit-content는 공간이 넉넉하면 max-content이고, 모자라면 그보다 좁아집니다. 여기서는 max-width가 공간을 줄여서 fit이 여러 줄로 접힙니다.",
-        lab: {
-          html: `<style>
+        heading: "내재 크기와 외재 크기",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: min-content와 max-content",
+            body: "'short words here'의 min-content 폭은 41px로, 가장 긴 단어 'short'의 폭입니다. max-content는 115px로, 한 줄 전체의 폭입니다. `fit-content`는 '가능한 공간 안에서 max-content까지, 모자라면 min-content까지'입니다. `width: fit-content; max-width: 150px`에 더 긴 문장을 넣으면 150에 걸렸습니다. MDN은 크기를 둘로 나눕니다. 내재(intrinsic) 크기는 콘텐츠나 파일에서 옵니다. 빈 div는 높이가 0이고, 이미지는 파일 크기입니다. 외재(extrinsic) 크기는 width/height로 준 크기라서 콘텐츠가 넘칠 수 있습니다. `min-height`는 '적어도 이만큼'이라는 뜻입니다. `max-width: 100%`는 이미지가 내재 폭을 넘지 않게 합니다. 반면 100%는 작은 이미지를 늘려 깨뜨립니다.",
+            code: ".ov-min { width: min-content; }  → 41px   ('short')\n.ov-max { width: max-content; }  → 115px  (한 줄)\n.ov-fit { width: fit-content; max-width: 150px; }  → 150px (공간에 맞춤)\n\n내재 크기 (콘텐츠에서)        외재 크기 (지정)\n빈 div 높이 0                 height: 200px → 콘텐츠가 넘칠 수 있다\nimg 는 파일 크기              img { max-width: 100%; height: auto } ← 넘침 방지, 작은 건 안 늘림\n텍스트는 min/max-content      width: 50% (포함 블록 폭)",
+          },
+          {
+            label: "직접 해 보기: 내재 크기 세 가지",
+            body: "같은 글이어도 크기를 정하는 말에 따라 폭이 다릅니다. min-content는 줄을 바꿀 수 있는 곳에서 모두 바꿨을 때의 폭입니다. 가장 긴 단어 하나의 폭이 됩니다. max-content는 한 번도 줄을 바꾸지 않은 폭입니다. fit-content는 공간이 넉넉하면 max-content이고, 모자라면 그보다 좁아집니다. 여기서는 max-width가 공간을 줄여서 fit이 여러 줄로 접힙니다.",
+            lab: {
+              html: `<style>
   .s { background: #fde68a; margin: 4px 0; padding: 0 4px; }
   #min { width: min-content; }
   #max { width: max-content; }
@@ -1425,38 +2047,44 @@ export const cssTheories: Theory[] = [
 <div class="s" id="min">short words here</div>
 <div class="s" id="max">short words here</div>
 <div class="s" id="fit">fit-content는 공간이 모자라면 줄을 바꿉니다</div>`,
-          height: 190,
-          checks: [
-            {
-              label: "min-content의 폭",
-              expr: "Math.round(document.getElementById('min').getBoundingClientRect().width)",
+              height: 190,
+              checks: [
+                {
+                  label: "min-content의 폭",
+                  expr: "Math.round(document.getElementById('min').getBoundingClientRect().width)",
+                },
+                {
+                  label: "max-content의 폭",
+                  expr: "Math.round(document.getElementById('max').getBoundingClientRect().width)",
+                },
+                {
+                  label: "fit-content의 폭",
+                  expr: "Math.round(document.getElementById('fit').getBoundingClientRect().width)",
+                },
+                {
+                  label: "fit-content의 줄 수",
+                  expr: "(e => Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)))(document.getElementById('fit'))",
+                },
+              ],
+              tryIt: "`#fit`의 글을 short처럼 짧게 바꿔 보세요. 폭이 글만큼 줄어듭니다. max-width를 지우면 한 줄로 늘어납니다.",
             },
-            {
-              label: "max-content의 폭",
-              expr: "Math.round(document.getElementById('max').getBoundingClientRect().width)",
-            },
-            {
-              label: "fit-content의 폭",
-              expr: "Math.round(document.getElementById('fit').getBoundingClientRect().width)",
-            },
-            {
-              label: "fit-content의 줄 수",
-              expr: "(e => Math.round(e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)))(document.getElementById('fit'))",
-            },
-          ],
-          tryIt: "`#fit`의 글을 short처럼 짧게 바꿔 보세요. 폭이 글만큼 줄어듭니다. max-width를 지우면 한 줄로 늘어납니다.",
-        },
+          },
+        ],
       },
       {
-        label: "넘침의 세 원인과 처방",
-        body: "(1) 끊기지 않는 긴 문자열(URL, 토큰)입니다. `overflow-wrap: anywhere`나 `word-break: break-all`을 씁니다. 플렉스나 그리드 아이템이면 `min-width: 0`도 필요합니다(6장, 7장).\n(2) 고정 높이에 긴 콘텐츠입니다. `min-height`로 바꾸거나 `overflow: auto`를 줍니다.\n(3) 자식 폭이 부모보다 큰 경우입니다(width: 100% + padding, 큰 이미지, 고정 폭 표). `box-sizing: border-box`(3장)와 `max-width: 100%`를 쓰고, 표는 `overflow-x: auto` 래퍼로 감쌉니다.\n말줄임에는 `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` 셋이 함께 있어야 합니다. 여러 줄은 `-webkit-line-clamp`나 표준 `line-clamp`를 씁니다. 앞의 것은 display: -webkit-box가 있어야 합니다.",
-        code: "/* 긴 토큰 */\n.text { overflow-wrap: anywhere; }\n/* 한 줄 말줄임 — 셋이 전부 필요 */\n.one { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }\n/* 여러 줄 */\n.three { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }\n/* 표 */\n.table-wrap { overflow-x: auto; }",
-      },
-      {
-        label: "직접 해 보기: 말줄임과 긴 토큰",
-        body: "말줄임에는 세 속성이 함께 있어야 합니다. `white-space: nowrap`은 줄을 안 바꿉니다. `overflow: hidden`은 넘친 것을 자릅니다. `text-overflow: ellipsis`는 잘린 끝에 …를 그립니다. span은 플렉스 아이템입니다. overflow가 hidden이라 자동 최소 폭이 0이 되어 줄어들 수 있습니다. 아래 p의 긴 토큰은 끊을 곳이 없어 상자 밖으로 넘칩니다. 지금 값의 '넘쳤나'가 true입니다.",
-        lab: {
-          html: `<style>
+        heading: "넘침의 원인과 말줄임",
+        blocks: [
+          {
+            label: "넘침의 세 원인과 처방",
+            body: "(1) 끊기지 않는 긴 문자열(URL, 토큰)입니다. `overflow-wrap: anywhere`나 `word-break: break-all`을 씁니다. 플렉스나 그리드 아이템이면 `min-width: 0`도 필요합니다(6장, 7장).\n(2) 고정 높이에 긴 콘텐츠입니다. `min-height`로 바꾸거나 `overflow: auto`를 줍니다.\n(3) 자식 폭이 부모보다 큰 경우입니다(width: 100% + padding, 큰 이미지, 고정 폭 표). `box-sizing: border-box`(3장)와 `max-width: 100%`를 쓰고, 표는 `overflow-x: auto` 래퍼로 감쌉니다.\n말줄임에는 `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` 셋이 함께 있어야 합니다. 여러 줄은 `-webkit-line-clamp`나 표준 `line-clamp`를 씁니다. 앞의 것은 display: -webkit-box가 있어야 합니다.",
+            code: "/* 긴 토큰 */\n.text { overflow-wrap: anywhere; }\n/* 한 줄 말줄임 — 셋이 전부 필요 */\n.one { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }\n/* 여러 줄 */\n.three { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }\n/* 표 */\n.table-wrap { overflow-x: auto; }",
+            codeLang: "css",
+          },
+          {
+            label: "직접 해 보기: 말줄임과 긴 토큰",
+            body: "말줄임에는 세 속성이 함께 있어야 합니다. `white-space: nowrap`은 줄을 안 바꿉니다. `overflow: hidden`은 넘친 것을 자릅니다. `text-overflow: ellipsis`는 잘린 끝에 …를 그립니다. span은 플렉스 아이템입니다. overflow가 hidden이라 자동 최소 폭이 0이 되어 줄어들 수 있습니다. 아래 p의 긴 토큰은 끊을 곳이 없어 상자 밖으로 넘칩니다. 지금 값의 '넘쳤나'가 true입니다.",
+            lab: {
+              html: `<style>
   .row { display: flex; gap: 6px; width: 260px; border: 1px solid #94a3b8; }
   .row b { flex: none; }
   .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1465,43 +2093,74 @@ export const cssTheories: Theory[] = [
 <div class="row"><b>파일</b>
   <span class="t" id="t">아주 긴 파일 이름이 들어가면 말줄임표로 끝나야 합니다.pdf</span></div>
 <p class="tok" id="tok">Averyveryverylongtokenwithoutanyspacesorbreakopportunities</p>`,
-          height: 150,
-          checks: [
-            {
-              label: "span이 잘렸나 (scrollWidth > clientWidth)",
-              expr: "(e => e.scrollWidth > e.clientWidth)(document.getElementById('t'))",
+              height: 150,
+              checks: [
+                {
+                  label: "span이 잘렸나 (scrollWidth > clientWidth)",
+                  expr: "(e => e.scrollWidth > e.clientWidth)(document.getElementById('t'))",
+                },
+                {
+                  label: "span의 폭",
+                  expr: "Math.round(document.getElementById('t').getBoundingClientRect().width)",
+                },
+                {
+                  label: "p의 토큰이 넘쳤나 (scrollWidth > clientWidth)",
+                  expr: "(e => e.scrollWidth > e.clientWidth)(document.getElementById('tok'))",
+                },
+              ],
+              tryIt: "`.t`에서 `overflow: hidden`을 지워 보세요. 말줄임이 사라지고 글이 밖으로 넘칩니다. `.tok`에 `overflow-wrap: anywhere`를 넣으면 토큰이 끊깁니다.",
             },
-            {
-              label: "span의 폭",
-              expr: "Math.round(document.getElementById('t').getBoundingClientRect().width)",
-            },
-            {
-              label: "p의 토큰이 넘쳤나 (scrollWidth > clientWidth)",
-              expr: "(e => e.scrollWidth > e.clientWidth)(document.getElementById('tok'))",
-            },
-          ],
-          tryIt: "`.t`에서 `overflow: hidden`을 지워 보세요. 말줄임이 사라지고 글이 밖으로 넘칩니다. `.tok`에 `overflow-wrap: anywhere`를 넣으면 토큰이 끊깁니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: overflow를 켰다가 생기는 일",
-        body: "overflow는 넘침만 다루지 않습니다. BFC, 스크롤 컨테이너, sticky 기준, absolute 자손 잘림, 자동 최소 0도 함께 바꿉니다.",
-        code: "증상                                  원인                            처방\n───────────────────────────────────  ─────────────────────────────  ──────────────────────────\n드롭다운·툴팁이 잘린다                   조상 overflow: hidden 이 absolute 자손도 자름  Portal · clip-path 대신\n                                                                              · visible\nsticky 가 안 붙는다                     중간 조상 overflow 가 스크롤 조상이 됨  overflow 제거 (8장)\n가로 스크롤바가 갑자기                   overflow-y 만 줬는데 x 가 auto     overflow-x: hidden 또는 clip\n그림자가 잘린다                         hidden 이 잉크 오버플로도 자름       clip + overflow-clip-margin · padding\n모바일에서 가로로 흔들린다                어떤 자식이 100vw + 스크롤바 폭       html { overflow-x: clip } · 100% 로\nscrollIntoView 가 hidden 안을 스크롤해 버림  hidden 은 스크롤 컨테이너            clip\n텍스트가 플렉스 아이템 밖으로              자동 최소 min-content             min-width: 0",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: overflow를 켰다가 생기는 일",
+            body: "overflow는 넘침만 다루지 않습니다. BFC, 스크롤 컨테이너, sticky 기준, absolute 자손 잘림, 자동 최소 0도 함께 바꿉니다.",
+            tables: [
+              {
+                caption: "overflow를 켰다가 생기는 일",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["드롭다운, 툴팁이 잘린다", "조상 `overflow: hidden`이 `absolute` 자손도 자름", "Portal, 대신 `clip-path`, `visible`"],
+                  ["`sticky`가 안 붙는다", "중간 조상 `overflow`가 스크롤 조상이 됨", "`overflow` 제거 (8장)"],
+                  ["가로 스크롤바가 갑자기", "`overflow-y`만 줬는데 x가 `auto`", "`overflow-x: hidden` 또는 `clip`"],
+                  ["그림자가 잘린다", "`hidden`이 잉크 오버플로도 자름", "`clip` + `overflow-clip-margin`, `padding`"],
+                  ["모바일에서 가로로 흔들린다", "어떤 자식이 `100vw` + 스크롤바 폭", "`html { overflow-x: clip }`, `100%`로"],
+                  ["`scrollIntoView`가 `hidden` 안을 스크롤해 버림", "`hidden`은 스크롤 컨테이너", "`clip`"],
+                  ["텍스트가 플렉스 아이템 밖으로", "자동 최소 `min-content`", "`min-width: 0`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 크기는 '안에서' 또는 '밖에서' 오고, 둘이 다르면 넘친다",
+            body: "상자의 크기는 콘텐츠가 정하거나(내재) 지정값·부모가 정합니다(외재). 넘침은 그 둘이 어긋나는 자리 — 외재로 잡은 크기보다 내재 크기가 클 때 — 에서 납니다. overflow는 그 어긋남을 '보이게·자르게·스크롤하게' 처리하는 세 선택이고, 그중 스크롤은 상자를 스크롤 컨테이너로 만들어 다른 규칙(BFC · sticky · 자동 최소 0)을 끌어옵니다. 그래서 넘침의 첫 질문은 '이 크기가 안에서 왔나 밖에서 왔나'이고, 답에 따라 처방이 '내재 크기를 줄이기'(줄바꿈·말줄임·min-width 0)와 '외재 크기를 풀기'(min-height·auto·max-width 100%)로 갈립니다.",
+            code: "내재 (콘텐츠) ──┐\n                ├── 같으면 OK · 다르면 넘침 ──► overflow: visible(보임) · hidden/clip(자름) · auto/scroll(스크롤 컨테이너)\n외재 (지정)   ──┘                                              └── BFC · sticky 기준 · 자동 최소 0 · absolute 자손 잘림",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 크기는 '안에서' 또는 '밖에서' 오고, 둘이 다르면 넘친다",
-        body: "상자의 크기는 콘텐츠가 정하거나(내재) 지정값·부모가 정합니다(외재). 넘침은 그 둘이 어긋나는 자리 — 외재로 잡은 크기보다 내재 크기가 클 때 — 에서 납니다. overflow는 그 어긋남을 '보이게·자르게·스크롤하게' 처리하는 세 선택이고, 그중 스크롤은 상자를 스크롤 컨테이너로 만들어 다른 규칙(BFC · sticky · 자동 최소 0)을 끌어옵니다. 그래서 넘침의 첫 질문은 '이 크기가 안에서 왔나 밖에서 왔나'이고, 답에 따라 처방이 '내재 크기를 줄이기'(줄바꿈·말줄임·min-width 0)와 '외재 크기를 풀기'(min-height·auto·max-width 100%)로 갈립니다.",
-        code: "내재 (콘텐츠) ──┐\n                ├── 같으면 OK · 다르면 넘침 ──► overflow: visible(보임) · hidden/clip(자름) · auto/scroll(스크롤 컨테이너)\n외재 (지정)   ──┘                                              └── BFC · sticky 기준 · 자동 최소 0 · absolute 자손 잘림",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "크기가 '놓인 자리'에 따라 달라져야 한다면 10장 반응형으로 갑니다. 미디어 쿼리(창 기준)와 컨테이너 쿼리(부모 기준)를 다룹니다. cqi 단위가 컨테이너 폭의 1%라는 것이 4장 단위표의 마지막 줄과 이어집니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `overflow-y: scroll`만 적었을 때 `overflow-x`의 계산값과 그 규칙은?\n2) hidden과 clip의 차이를 `scrollTop`으로 설명하세요.\n3) 'short words here'의 min-content와 max-content는 각각 무엇에 해당하나요?\n4) 한 줄 말줄임에 필요한 세 속성과, 플렉스 아이템에서 추가로 필요한 것은?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "크기가 '놓인 자리'에 따라 달라져야 한다면 10장 반응형으로 갑니다. 미디어 쿼리(창 기준)와 컨테이너 쿼리(부모 기준)를 다룹니다. cqi 단위가 컨테이너 폭의 1%라는 것이 4장 단위표의 마지막 줄과 이어집니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`overflow-y: scroll`만 적었을 때 `overflow-x`의 계산값과 그 규칙은 무엇인가요?", a: "계산값은 \"auto\"입니다. 한 축이 `visible`이나 `clip`이 아니면 다른 축의 `visible`은 `auto`로, `clip`은 `hidden`으로 계산됩니다. 그래서 세로만 스크롤하고 가로는 보이게 하는 것은 `overflow` 두 값으로 만들 수 없습니다." },
+              { q: "`hidden`과 `clip`의 차이를 `scrollTop`으로 설명하면 어떻게 되나요?", a: "`hidden`은 스크롤바가 없어도 스크롤 컨테이너라 `scrollTop = 5`를 넣으면 5가 됩니다. `clip`은 스크롤 컨테이너가 아니어서 `scrollTop`이 0에 머물고 잘리기만 합니다. 그래서 `hidden` 안은 `scrollIntoView`나 포커스 이동으로도 스크롤됩니다." },
+              { q: "'short words here'의 min-content와 max-content는 각각 무엇에 해당하나요?", a: "min-content는 41px로, 줄을 바꿀 수 있는 곳에서 모두 바꿨을 때인 가장 긴 단어 'short'의 폭입니다. max-content는 115px로, 줄을 전혀 바꾸지 않은 한 줄 전체의 폭입니다." },
+              { q: "한 줄 말줄임에 필요한 세 속성과, 플렉스 아이템에서 추가로 필요한 것은 무엇인가요?", a: "`white-space: nowrap`, `overflow: hidden`, `text-overflow: ellipsis` 셋입니다. 플렉스 아이템이면 자동 최소 폭이 `min-content`라 줄지 않을 수 있으므로 `min-width: 0`도 줍니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1517,25 +2176,34 @@ export const cssTheories: Theory[] = [
     name: "10장 · 반응형 — 미디어 쿼리와 컨테이너 쿼리",
     graphLabel: "10장 · 반응형 — 미디어·컨테이너 쿼리",
     tagline: "창에 반응할 것인가, 놓인 자리에 반응할 것인가",
+    keyPoints: [
+      "`@media`는 창과 장치 조건으로, `@container`는 조상 컨테이너의 크기로 규칙을 켭니다. 같은 컴포넌트가 폭 500 컨테이너에서는 파랑, 300에서는 빨강이 됐습니다.",
+      "컨테이너 쿼리는 조상에 `container-type: inline-size`가 있어야 켜집니다. 이 선언은 크기 격리를 함께 가져와 컨테이너가 자기 콘텐츠로 그 축의 크기를 정하지 못합니다.",
+      "범위 문법 `(width >= 600px)`가 `min-width`, `max-width`를 대신합니다. 모바일에서는 viewport 메타 태그가 있어야 미디어 쿼리가 동작합니다.",
+      "논리 속성은 좌우 대신 시작과 끝으로 적어 쓰기 방향을 따릅니다. `vertical-rl`에서 `margin-inline-start: 10px`는 `margin-top: 10px`가 됐습니다.",
+    ],
     intro:
       "`@media`는 뷰포트와 장치 조건(폭, 색 모드, 모션 선호, 포인터)으로 규칙을 켜고 끕니다. 범위 문법(`width >= 600px`)이 min-/max- 를 대신합니다. `@container`는 조상 컨테이너의 크기로 규칙을 켭니다. 같은 컴포넌트가 사이드바에서는 세로, 본문에서는 가로가 되게 할 수 있습니다. 컨테이너는 `container-type: inline-size`로 선언해야 합니다. 이 선언에는 '컨테이너는 자기 콘텐츠로 크기를 못 정한다'는 격리가 따라옵니다. 논리 속성은 좌우 대신 시작과 끝으로 적어 쓰기 방향을 따릅니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 같은 컴포넌트가 500 컨테이너에선 파랑, 300에선 빨강",
-        body: "`.cq { container-type: inline-size; container-name: card }`를 폭 500과 300으로 두 개 만들고, 안에 같은 `.cq-target`을 넣었습니다. 기본 색은 빨강입니다. `@container card (min-width: 400px) { .cq-target { color: blue } }`를 두면 500 안은 파랑, 300 안은 빨강이 됩니다. 창 폭(1728)과 상관없이 '놓인 자리'로 갈립니다. `width: 50cqi`는 컨테이너 500의 50%인 250px입니다. 미디어 쿼리 `@media (width >= 600px)`는 창 1728에서 켜져 파랑이 됩니다. `prefers-reduced-motion: reduce`는 이 Chrome에서 꺼져 있어(matchMedia false) 기본 검정입니다. MDN은 '컨테이너 쿼리는 미디어 쿼리의 대안'이라고 적습니다. container-type이 normal(기본)이면 크기 쿼리 컨테이너가 아닙니다.",
-        code: ".cq { container-type: inline-size; container-name: card; }\n.cq-target { color: red; }\n@container card (min-width: 400px) { .cq-target { color: blue; } }\n.cq-unit { width: 50cqi; }\n\n500px 컨테이너 안:  cs(\"cq-t1\", \"color\") = \"rgb(0, 0, 255)\"   cs(\"cq-unit\", \"width\") = \"250px\"\n300px 컨테이너 안:  cs(\"cq-t2\", \"color\") = \"rgb(255, 0, 0)\"\n\n@media (width >= 600px) { .mq { color: blue; } }     → 창 1728: \"rgb(0, 0, 255)\"\n@media (prefers-reduced-motion: reduce) { … }        → matchMedia(...).matches = false → 기본값",
-        terms: [
+        heading: "컨테이너 쿼리 기초",
+        blocks: [
           {
-            term: "container-type",
-            body: "size는 두 축을, inline-size는 인라인 축만 다룹니다. normal은 기본값으로, 크기 쿼리 컨테이너가 아니고 이름 쿼리와 스타일 쿼리만 됩니다. size/inline-size는 레이아웃, 스타일, 크기 격리(containment)를 함께 켭니다. '자식이 컨테이너 크기를 바꾸면 무한 루프'를 막기 위해서입니다. 그래서 컨테이너는 자기 콘텐츠로 그 축의 크기를 정할 수 없습니다. 쌓임 맥락도 생깁니다(8장).",
+            label: "실제로 돌려 보면: 같은 컴포넌트가 500 컨테이너에선 파랑, 300에선 빨강",
+            body: "`.cq { container-type: inline-size; container-name: card }`를 폭 500과 300으로 두 개 만들고, 안에 같은 `.cq-target`을 넣었습니다. 기본 색은 빨강입니다. `@container card (min-width: 400px) { .cq-target { color: blue } }`를 두면 500 안은 파랑, 300 안은 빨강이 됩니다. 창 폭(1728)과 상관없이 '놓인 자리'로 갈립니다. `width: 50cqi`는 컨테이너 500의 50%인 250px입니다. 미디어 쿼리 `@media (width >= 600px)`는 창 1728에서 켜져 파랑이 됩니다. `prefers-reduced-motion: reduce`는 이 Chrome에서 꺼져 있어(matchMedia false) 기본 검정입니다. MDN은 '컨테이너 쿼리는 미디어 쿼리의 대안'이라고 적습니다. container-type이 normal(기본)이면 크기 쿼리 컨테이너가 아닙니다.",
+            code: ".cq { container-type: inline-size; container-name: card; }\n.cq-target { color: red; }\n@container card (min-width: 400px) { .cq-target { color: blue; } }\n.cq-unit { width: 50cqi; }\n\n500px 컨테이너 안:  cs(\"cq-t1\", \"color\") = \"rgb(0, 0, 255)\"   cs(\"cq-unit\", \"width\") = \"250px\"\n300px 컨테이너 안:  cs(\"cq-t2\", \"color\") = \"rgb(255, 0, 0)\"\n\n@media (width >= 600px) { .mq { color: blue; } }     → 창 1728: \"rgb(0, 0, 255)\"\n@media (prefers-reduced-motion: reduce) { … }        → matchMedia(...).matches = false → 기본값",
+            terms: [
+              {
+                term: "container-type",
+                body: "size는 두 축을, inline-size는 인라인 축만 다룹니다. normal은 기본값으로, 크기 쿼리 컨테이너가 아니고 이름 쿼리와 스타일 쿼리만 됩니다. size/inline-size는 레이아웃, 스타일, 크기 격리(containment)를 함께 켭니다. '자식이 컨테이너 크기를 바꾸면 무한 루프'를 막기 위해서입니다. 그래서 컨테이너는 자기 콘텐츠로 그 축의 크기를 정할 수 없습니다. 쌓임 맥락도 생깁니다(8장).",
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: "직접 해 보기: 컨테이너 폭으로 바뀌는 색",
-        body: "두 컨테이너에 같은 p가 들어 있습니다. 규칙은 '컨테이너가 400px 이상이면 파랑' 하나입니다. 폭 버튼을 눌러 보세요. c1은 창을 따라 넓어지다 어느 순간 파랑으로 바뀝니다. 폭이 고정된 c2는 창이 넓어도 빨강 그대로입니다. 기준이 창이 아니라 놓인 자리이기 때문입니다. 50cqi도 컨테이너 폭의 절반이라 c1 쪽만 창을 따라 바뀝니다.",
-        lab: {
-          html: `<style>
+          {
+            label: "직접 해 보기: 컨테이너 폭으로 바뀌는 색",
+            body: "두 컨테이너에 같은 p가 들어 있습니다. 규칙은 '컨테이너가 400px 이상이면 파랑' 하나입니다. 폭 버튼을 눌러 보세요. c1은 창을 따라 넓어지다 어느 순간 파랑으로 바뀝니다. 폭이 고정된 c2는 창이 넓어도 빨강 그대로입니다. 기준이 창이 아니라 놓인 자리이기 때문입니다. 50cqi도 컨테이너 폭의 절반이라 c1 쪽만 창을 따라 바뀝니다.",
+            lab: {
+              html: `<style>
   .cq { container: card / inline-size; border: 1px dashed #64748b; margin-bottom: 6px; padding: 4px; }
   .t { color: red; margin: 0; }
   @container card (min-width: 400px) { .t { color: blue; } }
@@ -1543,95 +2211,130 @@ export const cssTheories: Theory[] = [
 </style>
 <div class="cq" id="c1"><p class="t" id="t1">창 폭을 따라가는 컨테이너</p><div class="u" id="u1"></div></div>
 <div class="cq" id="c2" style="width: 260px"><p class="t" id="t2">폭 260px 컨테이너</p><div class="u" id="u2"></div></div>`,
-          height: 140,
-          widths: [320, 480, 640],
-          checks: [
-            {
-              label: "c1의 콘텐츠 폭",
-              expr: "getComputedStyle(document.getElementById('c1')).width",
+              height: 140,
+              widths: [320, 480, 640],
+              checks: [
+                {
+                  label: "c1의 콘텐츠 폭",
+                  expr: "getComputedStyle(document.getElementById('c1')).width",
+                },
+                {
+                  label: "t1의 color",
+                  expr: "getComputedStyle(document.getElementById('t1')).color",
+                },
+                {
+                  label: "u1의 width (50cqi)",
+                  expr: "getComputedStyle(document.getElementById('u1')).width",
+                },
+                {
+                  label: "t2의 color",
+                  expr: "getComputedStyle(document.getElementById('t2')).color",
+                },
+                {
+                  label: "u2의 width (50cqi)",
+                  expr: "getComputedStyle(document.getElementById('u2')).width",
+                },
+              ],
+              tryIt: "`.cq`의 `/ inline-size`를 지워 보세요. 크기 컨테이너가 없어져 쿼리가 꺼지고, 50cqi는 작은 뷰포트 단위로 계산됩니다.",
             },
-            {
-              label: "t1의 color",
-              expr: "getComputedStyle(document.getElementById('t1')).color",
-            },
-            {
-              label: "u1의 width (50cqi)",
-              expr: "getComputedStyle(document.getElementById('u1')).width",
-            },
-            {
-              label: "t2의 color",
-              expr: "getComputedStyle(document.getElementById('t2')).color",
-            },
-            {
-              label: "u2의 width (50cqi)",
-              expr: "getComputedStyle(document.getElementById('u2')).width",
-            },
-          ],
-          tryIt: "`.cq`의 `/ inline-size`를 지워 보세요. 크기 컨테이너가 없어져 쿼리가 꺼지고, 50cqi는 작은 뷰포트 단위로 계산됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "미디어 쿼리: 타입, 특징, 범위, 논리",
-        body: "형식은 `@media [타입] (특징)`입니다. 타입은 all(기본), screen, print입니다. 특징은 이산형(orientation)과 범위형(width, height, resolution에 min-/max-)이 있습니다. 범위 문법 `(400px <= width <= 800px)`이 min/max 쌍을 대신하고, `<`로 경계를 뺄 수도 있습니다. 논리 연산자는 `and`, `not`, `,`(or), `or`입니다. 'and·not과 같은 수준에 or는 못 씀'이라 괄호로 묶습니다. 사용자 선호는 `prefers-color-scheme: dark`, `prefers-reduced-motion: reduce`, `prefers-contrast`, `forced-colors`로 묻습니다. 입력은 `(hover: hover)`(호버 가능)와 `(pointer: coarse)`(터치)로 가립니다. 쿼리가 거짓이어도 `<link media>` 스타일시트는 '그래도 다운로드된다'고 MDN은 적습니다. 우선순위만 낮습니다. 모바일에서는 `<meta name=\"viewport\" content=\"width=device-width\">`가 있어야 미디어 쿼리가 동작합니다.",
-        code: "@media (width >= 600px) { }                 /* 범위 문법 = (min-width: 600px) */\n@media (400px <= width < 800px) { }\n@media screen and (prefers-color-scheme: dark) { }\n@media (hover: hover) and (pointer: fine) { .btn:hover { … } }   /* 터치에서 hover 잔상 방지 */\n@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }\n@media print { nav { display: none; } }",
-      },
-      {
-        label: "직접 해 보기: 미디어 쿼리와 matchMedia",
-        body: "작은 창 안의 미디어 쿼리는 그 창의 뷰포트 폭을 봅니다. 폭 버튼을 누르면 기록에 resize 줄이 생기고 쿼리가 다시 계산됩니다. 480px부터 mq가 파랑으로 바뀝니다. 범위 문법에서 `<=`는 경계를 넣고 `<`는 뺍니다. 그래서 노란 배경은 400px 이상 600px 미만에서만 켜집니다. matchMedia로 같은 조건을 자바스크립트에서 읽을 수 있습니다. 마지막 두 줄은 지금 쓰는 기기와 설정의 값입니다.",
-        lab: {
-          html: `<style>
+        heading: "미디어 쿼리",
+        blocks: [
+          {
+            label: "미디어 쿼리: 타입, 특징, 범위, 논리",
+            body: "형식은 `@media [타입] (특징)`입니다. 타입은 all(기본), screen, print입니다. 특징은 이산형(orientation)과 범위형(width, height, resolution에 min-/max-)이 있습니다. 범위 문법 `(400px <= width <= 800px)`이 min/max 쌍을 대신하고, `<`로 경계를 뺄 수도 있습니다. 논리 연산자는 `and`, `not`, `,`(or), `or`입니다. 'and·not과 같은 수준에 or는 못 씀'이라 괄호로 묶습니다. 사용자 선호는 `prefers-color-scheme: dark`, `prefers-reduced-motion: reduce`, `prefers-contrast`, `forced-colors`로 묻습니다. 입력은 `(hover: hover)`(호버 가능)와 `(pointer: coarse)`(터치)로 가립니다. 쿼리가 거짓이어도 `<link media>` 스타일시트는 '그래도 다운로드된다'고 MDN은 적습니다. 우선순위만 낮습니다. 모바일에서는 `<meta name=\"viewport\" content=\"width=device-width\">`가 있어야 미디어 쿼리가 동작합니다.",
+            code: "@media (width >= 600px) { }                 /* 범위 문법 = (min-width: 600px) */\n@media (400px <= width < 800px) { }\n@media screen and (prefers-color-scheme: dark) { }\n@media (hover: hover) and (pointer: fine) { .btn:hover { … } }   /* 터치에서 hover 잔상 방지 */\n@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }\n@media print { nav { display: none; } }",
+          },
+          {
+            label: "직접 해 보기: 미디어 쿼리와 matchMedia",
+            body: "작은 창 안의 미디어 쿼리는 그 창의 뷰포트 폭을 봅니다. 폭 버튼을 누르면 기록에 resize 줄이 생기고 쿼리가 다시 계산됩니다. 480px부터 mq가 파랑으로 바뀝니다. 범위 문법에서 `<=`는 경계를 넣고 `<`는 뺍니다. 그래서 노란 배경은 400px 이상 600px 미만에서만 켜집니다. matchMedia로 같은 조건을 자바스크립트에서 읽을 수 있습니다. 마지막 두 줄은 지금 쓰는 기기와 설정의 값입니다.",
+            lab: {
+              html: `<style>
   .mq { color: red; }
   @media (width >= 480px) { .mq { color: blue; } }
   @media (400px <= width < 600px) { .range { background: #fde68a; } }
 </style>
 <p class="mq" id="mq">width >= 480px면 파랑</p>
 <p class="range" id="range">400px 이상 600px 미만이면 노란 배경</p>`,
-          height: 130,
-          widths: [320, 480, 640],
-          checks: [
-            {
-              label: "작은 창 폭 (innerWidth)",
-              expr: "innerWidth",
+              height: 130,
+              widths: [320, 480, 640],
+              checks: [
+                {
+                  label: "작은 창 폭 (innerWidth)",
+                  expr: "innerWidth",
+                },
+                {
+                  label: "(width >= 480px)",
+                  expr: "matchMedia('(width >= 480px)').matches",
+                },
+                {
+                  label: "mq의 color",
+                  expr: "getComputedStyle(document.getElementById('mq')).color",
+                },
+                {
+                  label: "range의 background-color",
+                  expr: "getComputedStyle(document.getElementById('range')).backgroundColor",
+                },
+                {
+                  label: "(prefers-color-scheme: dark)",
+                  expr: "matchMedia('(prefers-color-scheme: dark)').matches",
+                },
+                {
+                  label: "(hover: hover)",
+                  expr: "matchMedia('(hover: hover)').matches",
+                },
+              ],
+              tryIt: "`(width >= 480px)`를 `(480px < width)`로 바꿔 보세요. 480px 버튼에서는 경계가 빠져 빨강으로 남습니다.",
             },
-            {
-              label: "(width >= 480px)",
-              expr: "matchMedia('(width >= 480px)').matches",
-            },
-            {
-              label: "mq의 color",
-              expr: "getComputedStyle(document.getElementById('mq')).color",
-            },
-            {
-              label: "range의 background-color",
-              expr: "getComputedStyle(document.getElementById('range')).backgroundColor",
-            },
-            {
-              label: "(prefers-color-scheme: dark)",
-              expr: "matchMedia('(prefers-color-scheme: dark)').matches",
-            },
-            {
-              label: "(hover: hover)",
-              expr: "matchMedia('(hover: hover)').matches",
-            },
-          ],
-          tryIt: "`(width >= 480px)`를 `(480px < width)`로 바꿔 보세요. 480px 버튼에서는 경계가 빠져 빨강으로 남습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "컨테이너 쿼리 더 보기: 이름, 단위, 스타일 쿼리",
-        body: "`container-name`으로 어느 조상을 볼지 고릅니다. 이름이 없으면 가장 가까운 컨테이너를 봅니다. 단위 cqw, cqh, cqi, cqb, cqmin, cqmax는 컨테이너의 1%이고, '적합한 컨테이너가 없으면 작은 뷰포트 단위로' 떨어집니다. 스타일 쿼리 `@container style(--theme: dark)`는 커스텀 속성 값으로 분기하며, container-type이 필요 없습니다. MDN은 '현재 지원되는 스타일 특징은 커스텀 속성만'이라고 적습니다. 등록(@property)된 속성은 초깃값과 다를 때만 참입니다. 값은 문자열로 비교하지만, `@property`로 등록하면 계산값으로 비교합니다.",
-        code: ".sidebar { container: sidebar / inline-size; }     /* 단축: 이름 / 타입 */\n@container sidebar (width < 300px) { .card { flex-direction: column; } }\n\n.card h2 { font-size: clamp(1rem, 4cqi, 2rem); }   /* 컨테이너에 비례 */\n\n.theme { --theme: dark; }\n@container style(--theme: dark) { .card { background: #222; } }   /* 스타일 쿼리 */",
+        heading: "이름, 단위, 스타일 쿼리",
+        blocks: [
+          {
+            label: "컨테이너 쿼리 더 보기: 이름, 단위, 스타일 쿼리",
+            body: "`container-name`으로 어느 조상을 볼지 고릅니다. 이름이 없으면 가장 가까운 컨테이너를 봅니다. 단위 cqw, cqh, cqi, cqb, cqmin, cqmax는 컨테이너의 1%이고, '적합한 컨테이너가 없으면 작은 뷰포트 단위로' 떨어집니다. 스타일 쿼리 `@container style(--theme: dark)`는 커스텀 속성 값으로 분기하며, container-type이 필요 없습니다. MDN은 '현재 지원되는 스타일 특징은 커스텀 속성만'이라고 적습니다. 등록(@property)된 속성은 초깃값과 다를 때만 참입니다. 값은 문자열로 비교하지만, `@property`로 등록하면 계산값으로 비교합니다.",
+            code: ".sidebar { container: sidebar / inline-size; }     /* 단축: 이름 / 타입 */\n@container sidebar (width < 300px) { .card { flex-direction: column; } }\n\n.card h2 { font-size: clamp(1rem, 4cqi, 2rem); }   /* 컨테이너에 비례 */\n\n.theme { --theme: dark; }\n@container style(--theme: dark) { .card { background: #222; } }   /* 스타일 쿼리 */",
+          },
+        ],
       },
       {
-        label: "논리 속성: 좌우가 아니라 시작과 끝",
-        body: "`margin-left` 대신 `margin-inline-start`, `width` 대신 `inline-size`, `top` 대신 `inset-block-start`를 씁니다. 인라인 축은 '글이 흐르는 방향', 블록 축은 '블록이 쌓이는 방향'입니다. 물리 방향은 `writing-mode`와 `direction`에 따라 바뀝니다. 실제로 `writing-mode: vertical-rl; inline-size: 100px; block-size: 200px` 요소는 축이 돌아가 계산값이 width 200px, height 100px였습니다. `margin-inline-start: 10px`은 margin-top 10px로, `padding-block-start: 5px`은 padding-right 5px로 바뀌었습니다. 아랍어나 히브리어(RTL), 세로쓰기를 지원해야 하는 i18n에서 이것이 '한 번 쓰면 모든 방향에서 맞는' 길입니다.",
-        code: ".lg { writing-mode: vertical-rl; inline-size: 100px; block-size: 200px; margin-inline-start: 10px;\n  padding-block-start: 5px; }\n\ncs(\"lg\", \"width\")   // \"200px\"  (inline-size 가 세로축으로)\ncs(\"lg\", \"height\")  // \"100px\"\nmargin-inline-start 10px → margin-top: 10px   (vertical-rl 의 인라인 시작 = 위)\npadding-block-start 5px  → padding-right: 5px (vertical-rl 의 블록 시작 = 오른쪽)\n\n물리         논리 (가로쓰기 LTR 기준)\nwidth        inline-size\nheight       block-size\nmargin-left  margin-inline-start\ntop          inset-block-start\ntext-align: left   text-align: start",
-      },
-      {
-        label: "직접 해 보기: 논리 속성이 고르는 물리 방향",
-        body: "세 상자는 같은 논리 속성을 씁니다. `margin-inline-start`는 '글이 시작하는 쪽'의 마진입니다. ltr에서는 왼쪽, rtl에서는 오른쪽, 세로쓰기(vertical-rl)에서는 위쪽이 됩니다. 지금 값에서 24px가 어느 칸에 있는지 보세요. 파란 테두리도 같은 쪽으로 옮겨 갑니다. 세로쓰기에서는 inline-size가 세로가 되어 width와 height가 서로 바뀝니다.",
-        lab: {
-          html: `<style>
+        heading: "논리 속성",
+        blocks: [
+          {
+            label: "논리 속성: 좌우가 아니라 시작과 끝",
+            body: "`margin-left` 대신 `margin-inline-start`, `width` 대신 `inline-size`, `top` 대신 `inset-block-start`를 씁니다. 인라인 축은 '글이 흐르는 방향', 블록 축은 '블록이 쌓이는 방향'입니다. 물리 방향은 `writing-mode`와 `direction`에 따라 바뀝니다. 실제로 `writing-mode: vertical-rl; inline-size: 100px; block-size: 200px` 요소는 축이 돌아가 계산값이 width 200px, height 100px였습니다. `margin-inline-start: 10px`은 margin-top 10px로, `padding-block-start: 5px`은 padding-right 5px로 바뀌었습니다. 아랍어나 히브리어(RTL), 세로쓰기를 지원해야 하는 i18n에서 이것이 '한 번 쓰면 모든 방향에서 맞는' 길입니다.",
+            tables: [
+              {
+                caption: "물리 속성과 논리 속성 (가로쓰기 LTR 기준)",
+                head: ["물리", "논리"],
+                rows: [
+                  ["`width`", "`inline-size`"],
+                  ["`height`", "`block-size`"],
+                  ["`margin-left`", "`margin-inline-start`"],
+                  ["`top`", "`inset-block-start`"],
+                  ["`text-align: left`", "`text-align: start`"],
+                ],
+              },
+            ],
+            code: `.lg { writing-mode: vertical-rl; inline-size: 100px; block-size: 200px; margin-inline-start: 10px;
+  padding-block-start: 5px; }
+
+cs("lg", "width")   // "200px"  (inline-size 가 세로축으로)
+cs("lg", "height")  // "100px"
+margin-inline-start 10px → margin-top: 10px   (vertical-rl 의 인라인 시작 = 위)
+padding-block-start 5px  → padding-right: 5px (vertical-rl 의 블록 시작 = 오른쪽)`,
+            codeLang: "tsx",
+          },
+          {
+            label: "직접 해 보기: 논리 속성이 고르는 물리 방향",
+            body: "세 상자는 같은 논리 속성을 씁니다. `margin-inline-start`는 '글이 시작하는 쪽'의 마진입니다. ltr에서는 왼쪽, rtl에서는 오른쪽, 세로쓰기(vertical-rl)에서는 위쪽이 됩니다. 지금 값에서 24px가 어느 칸에 있는지 보세요. 파란 테두리도 같은 쪽으로 옮겨 갑니다. 세로쓰기에서는 inline-size가 세로가 되어 width와 height가 서로 바뀝니다.",
+            lab: {
+              html: `<style>
   .lg { inline-size: 140px; block-size: 50px; margin-inline-start: 24px;
         border-inline-start: 6px solid #2563eb; background: #e0f2fe; }
   #c { writing-mode: vertical-rl; }
@@ -1639,47 +2342,88 @@ export const cssTheories: Theory[] = [
 <div class="lg" id="a">가로쓰기 ltr</div>
 <div dir="rtl"><div class="lg" id="b">가로쓰기 rtl</div></div>
 <div class="lg" id="c">세로쓰기</div>`,
-          height: 310,
-          checks: [
-            {
-              label: "a의 margin 왼쪽, 오른쪽, 위",
-              expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('a')))",
+              height: 310,
+              checks: [
+                {
+                  label: "a의 margin 왼쪽, 오른쪽, 위",
+                  expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('a')))",
+                },
+                {
+                  label: "b의 margin 왼쪽, 오른쪽, 위",
+                  expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('b')))",
+                },
+                {
+                  label: "c의 margin 왼쪽, 오른쪽, 위",
+                  expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('c')))",
+                },
+                {
+                  label: "c의 width × height",
+                  expr: "(s => s.width + ' × ' + s.height)(getComputedStyle(document.getElementById('c')))",
+                },
+              ],
+              tryIt: "`dir=\"rtl\"`을 `dir=\"ltr\"`로 바꾸거나, `#c`의 writing-mode를 vertical-lr로 바꿔 보세요.",
             },
-            {
-              label: "b의 margin 왼쪽, 오른쪽, 위",
-              expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('b')))",
-            },
-            {
-              label: "c의 margin 왼쪽, 오른쪽, 위",
-              expr: "(s => [s.marginLeft, s.marginRight, s.marginTop].join(', '))(getComputedStyle(document.getElementById('c')))",
-            },
-            {
-              label: "c의 width × height",
-              expr: "(s => s.width + ' × ' + s.height)(getComputedStyle(document.getElementById('c')))",
-            },
-          ],
-          tryIt: "`dir=\"rtl\"`을 `dir=\"ltr\"`로 바꾸거나, `#c`의 writing-mode를 vertical-lr로 바꿔 보세요.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 반응형에서",
-        body: "쿼리가 안 켜지거나 뜻밖에 켜지는 자리들입니다.",
-        code: "증상                                원인                              처방\n─────────────────────────────────  ───────────────────────────────  ─────────────────────────────\n모바일에서 미디어 쿼리가 안 먹는다      viewport meta 없음 → 980px 가상 뷰포트  <meta name=viewport\n                                                                    content=\"width=device-width\">\n@container 가 안 먹는다               조상에 container-type 없음 (normal)  container-type: inline-size\n컨테이너가 콘텐츠 높이를 안 가진다       container-type: size 는 블록 축도 격리  inline-size 로\ncqi 가 뷰포트 크기처럼 나온다          적합한 컨테이너 없음 → 작은 뷰포트 단위  컨테이너 선언 확인\n터치 기기에서 hover 스타일이 남는다      터치 뒤 hover 유지                 @media (hover: hover)\n미디어 쿼리 안에서 var() 를 썼는데 무효   '변수는 미디어·컨테이너 쿼리 안에서 동작 안 함'  값을 직접 · 또는 스타일 쿼리\nRTL 에서 아이콘 마진이 반대            margin-left 는 물리                margin-inline-start",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 반응형에서",
+            body: "쿼리가 안 켜지거나 뜻밖에 켜지는 자리들입니다.",
+            tables: [
+              {
+                caption: "반응형에서 쿼리가 안 켜지거나 뜻밖에 켜질 때",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["모바일에서 미디어 쿼리가 안 먹는다", "viewport meta 없음 → 980px 가상 뷰포트", "`<meta name=viewport content=\"width=device-width\">`"],
+                  ["`@container`가 안 먹는다", "조상에 `container-type` 없음 (`normal`)", "`container-type: inline-size`"],
+                  ["컨테이너가 콘텐츠 높이를 안 가진다", "`container-type: size`는 블록 축도 격리", "`inline-size`로"],
+                  ["`cqi`가 뷰포트 크기처럼 나온다", "적합한 컨테이너 없음 → 작은 뷰포트 단위", "컨테이너 선언 확인"],
+                  ["터치 기기에서 hover 스타일이 남는다", "터치 뒤 hover 유지", "`@media (hover: hover)`"],
+                  ["미디어 쿼리 안에서 `var()`를 썼는데 무효", "'변수는 미디어, 컨테이너 쿼리 안에서 동작 안 함'", "값을 직접, 또는 스타일 쿼리"],
+                  ["RTL에서 아이콘 마진이 반대", "`margin-left`는 물리", "`margin-inline-start`"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 창이면 미디어, 자리면 컨테이너, 방향이면 논리",
+            body: "반응형에는 세 축이 있습니다. 미디어 쿼리는 문서 전체가 함께 쓰는 조건(창 크기, 장치, 사용자 선호)이라 페이지 골격과 접근성 선호에 맞습니다. 컨테이너 쿼리는 컴포넌트가 어디에 놓이든 자기 자리에 맞추므로 재사용 컴포넌트에 맞습니다. 논리 속성은 같은 스타일이 쓰기 방향을 따라 돌게 하므로 i18n에 맞습니다. 요즘 기본형은 셋을 섞는 것입니다. 페이지는 미디어로 열 수를 정하고, 카드는 컨테이너로 자기 배치를 정하고, 안의 간격은 논리 속성으로 적습니다. 그 사이를 4장의 clamp() 유동 값이 '쿼리 없는 반응'으로 메웁니다.",
+            tables: [
+              {
+                caption: "반응형의 기준과 도구",
+                head: ["기준", "도구", "맞는 자리"],
+                rows: [
+                  ["창, 장치", "`@media`, `vw`, `dvh`", "페이지 골격, 다크 모드, 모션 선호, 인쇄"],
+                  ["놓인 자리", "`@container`, `cqi`", "재사용 컴포넌트 (카드, 위젯)"],
+                  ["쓰기 방향", "논리 속성, `start`와 `end`", "RTL, 세로쓰기 (i18n)"],
+                  ["연속", "`clamp()`, `min()`, `max()`", "유동 글자 크기, 간격 (쿼리 없이)"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 창이면 미디어, 자리면 컨테이너, 방향이면 논리",
-        body: "반응형에는 세 축이 있습니다. 미디어 쿼리는 문서 전체가 함께 쓰는 조건(창 크기, 장치, 사용자 선호)이라 페이지 골격과 접근성 선호에 맞습니다. 컨테이너 쿼리는 컴포넌트가 어디에 놓이든 자기 자리에 맞추므로 재사용 컴포넌트에 맞습니다. 논리 속성은 같은 스타일이 쓰기 방향을 따라 돌게 하므로 i18n에 맞습니다. 요즘 기본형은 셋을 섞는 것입니다. 페이지는 미디어로 열 수를 정하고, 카드는 컨테이너로 자기 배치를 정하고, 안의 간격은 논리 속성으로 적습니다. 그 사이를 4장의 clamp() 유동 값이 '쿼리 없는 반응'으로 메웁니다.",
-        code: "기준        도구                      맞는 자리\n─────────  ───────────────────────  ───────────────────────────────\n창 · 장치   @media · vw · dvh         페이지 골격 · 다크 모드 · 모션 선호 · 인쇄\n놓인 자리   @container · cqi          재사용 컴포넌트 (카드 · 위젯)\n쓰기 방향   논리 속성 · start/end     RTL · 세로쓰기 (i18n)\n연속        clamp() · min() · max()   유동 글자 크기 · 간격 (쿼리 없이)",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "쿼리 안에서 `var()`를 못 쓰는 이유와, 대신 커스텀 속성으로 테마와 토큰을 세우는 법은 11장입니다. 논리 속성의 쓰임은 i18n 허브의 '텍스트 방향' 단계에 있습니다. 뷰포트 메타가 레이아웃 뷰포트를 바꾸는 방식은 렌더링 허브에서 다룹니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) 같은 컴포넌트가 두 컨테이너에서 다른 색이 된 이유를 `container-type`으로 설명하세요.\n2) `container-type: inline-size`가 함께 가져오는 격리는 무엇을 막기 위한 것인가요?\n3) `(400px <= width < 800px)`를 옛 문법으로 쓰면?\n4) `margin-inline-start`가 `vertical-rl`에서 어느 물리 방향이 됐나요?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "쿼리 안에서 `var()`를 못 쓰는 이유와, 대신 커스텀 속성으로 테마와 토큰을 세우는 법은 11장입니다. 논리 속성의 쓰임은 i18n 허브의 '텍스트 방향' 단계에 있습니다. 뷰포트 메타가 레이아웃 뷰포트를 바꾸는 방식은 렌더링 허브에서 다룹니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "같은 컴포넌트가 두 컨테이너에서 다른 색이 된 이유를 `container-type`으로 설명하면 어떻게 되나요?", a: "두 조상이 `container-type: inline-size`로 크기 쿼리 컨테이너가 되어, `@container card (min-width: 400px)`가 창이 아니라 각 컨테이너의 폭을 봤기 때문입니다. 폭 500 안은 조건이 맞아 파랑, 300 안은 맞지 않아 기본 빨강이 됐습니다. `container-type`이 기본값 `normal`이면 크기 쿼리가 켜지지 않습니다." },
+              { q: "`container-type: inline-size`가 함께 가져오는 격리는 무엇을 막기 위한 것인가요?", a: "자식이 컨테이너 크기를 바꾸고, 바뀐 크기가 다시 쿼리 결과를 바꾸는 무한 루프를 막기 위한 것입니다. 그래서 레이아웃, 스타일, 크기 격리가 함께 켜지고, 컨테이너는 자기 콘텐츠로 그 축의 크기를 정할 수 없습니다." },
+              { q: "`(400px <= width < 800px)`를 옛 문법으로 쓰면 무엇인가요?", a: "`(min-width: 400px) and (max-width: 800px)`에 가깝습니다. 다만 `max-width`는 경계를 포함하므로, `< 800px`처럼 800px를 빼려면 `(max-width: 799.98px)`처럼 조금 작은 값을 적습니다." },
+              { q: "`margin-inline-start`가 `vertical-rl`에서 어느 물리 방향이 됐나요?", a: "위쪽입니다. `vertical-rl`에서는 글이 위에서 아래로 흘러 인라인 시작이 위이므로, `margin-inline-start: 10px`의 계산값이 `margin-top: 10px`로 나왔습니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1694,25 +2438,34 @@ export const cssTheories: Theory[] = [
     id: "css-s11",
     name: "11장 · 커스텀 속성과 함수",
     tagline: "--이름은 상속되는 값 저장소이고, 잘못된 var()는 무시되지 않고 초깃값이 된다",
+    keyPoints: [
+      "커스텀 속성은 `--brand: #0a0`처럼 선언하고 `var(--brand, 대체값)`으로 읽는, 상속되는 값 저장소입니다. 값은 쓰는 요소에서 치환됩니다.",
+      "`var()`로 넣은 값이 틀리면 선언이 무시되지 않고 계산값 시점에 무효가 됩니다. `color: green; color: var(--x)`에서 `--x`가 16px면 green이 아니라 검정이 됐습니다.",
+      "`@property`로 `syntax`, `inherits`, `initial-value`를 등록하면 틀린 값은 등록한 초깃값으로 떨어지고, 값이 보간되어 트랜지션이 됩니다.",
+      "`var(--n)px`처럼 단위를 이어 붙이면 무효입니다. `calc(var(--n) * 1px)`로 붙이고, 미디어 쿼리 안에서는 `var()`를 쓸 수 없습니다.",
+    ],
     intro:
       "커스텀 속성은 `--brand: #0a0`처럼 선언하고 `var(--brand, 대체값)`으로 읽는, 상속되는 값 저장소입니다. 일반 선언과 크게 다른 점이 하나 있습니다. 잘못된 값을 `var()`로 넣어도 그 선언은 무시되지 않습니다. '계산값 시점에 무효'가 되어 속성이 초깃값(또는 상속값)으로 떨어집니다. `@property`로 타입, 상속 여부, 초깃값을 등록하면 타입 검사와 애니메이션이 됩니다. 그 위에서 calc(), 색 함수, color-mix(), light-dark()가 계산합니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 같은 '잘못된 값'이 다르게 끝난다",
-        body: "`.cp-invalid-plain { color: green; color: 16px }`에서 16px는 색이 아니라서 파싱 때 버려집니다. 앞의 green이 남아 실제로 초록이었습니다. `.cp-invalid { color: green; color: var(--text-color) }`에 `--text-color: 16px`를 주면 다릅니다. var()는 파싱 때 유효하므로 green을 덮습니다. 계산값 시점에야 16px가 색이 아님을 알고 '계산값 시점 무효'가 됩니다. 결과는 green이 아니라 초깃값 검정, 실제로 `rgb(0, 0, 0)`이었습니다. MDN의 예와 같습니다. 대체값을 보면 `var(--nope, red)`는 red, 중첩 `var(--nope, var(--brand, red))`는 brand(파랑)가 됩니다. 대체값은 '첫 콤마부터 끝까지'라서 `var(--x, 1px, 2px)`의 대체는 `1px, 2px`입니다. 이름은 대소문자를 가립니다.",
-        code: ":root { --text-color: 16px; --brand: blue; }\n\n.cp-invalid-plain { color: green; color: 16px; }            → \"rgb(0, 128, 0)\"  (파싱 무효 → 무시 → green)\n.cp-invalid       { color: green; color: var(--text-color); } → \"rgb(0, 0, 0)\"    (계산값 시점 무효 → 초깃값!)\n.cp-fallback      { color: var(--nope, red); }               → \"rgb(255, 0, 0)\"\n.cp-nested        { color: var(--nope, var(--brand, red)); }  → \"rgb(0, 0, 255)\"",
-        terms: [
+        heading: "계산값 시점 무효",
+        blocks: [
           {
-            term: "계산값 시점 무효 (invalid at computed-value time)",
-            body: "`var()`를 치환한 값이 그 속성에 맞지 않을 때의 상태입니다. 파서가 var()를 통과시켜 앞선 선언은 이미 덮였습니다. 계산 시점에는 되돌아갈 선언이 없어서 상속 속성은 부모 값, 비상속 속성은 초깃값이 됩니다. '대체값은 정의되지 않았거나 무효인 변수용이고, 브라우저가 커스텀 속성을 모를 때를 위한 것이 아니다'.",
+            label: "실제로 돌려 보면: 같은 '잘못된 값'이 다르게 끝난다",
+            body: "`.cp-invalid-plain { color: green; color: 16px }`에서 16px는 색이 아니라서 파싱 때 버려집니다. 앞의 green이 남아 실제로 초록이었습니다. `.cp-invalid { color: green; color: var(--text-color) }`에 `--text-color: 16px`를 주면 다릅니다. var()는 파싱 때 유효하므로 green을 덮습니다. 계산값 시점에야 16px가 색이 아님을 알고 '계산값 시점 무효'가 됩니다. 결과는 green이 아니라 초깃값 검정, 실제로 `rgb(0, 0, 0)`이었습니다. MDN의 예와 같습니다. 대체값을 보면 `var(--nope, red)`는 red, 중첩 `var(--nope, var(--brand, red))`는 brand(파랑)가 됩니다. 대체값은 '첫 콤마부터 끝까지'라서 `var(--x, 1px, 2px)`의 대체는 `1px, 2px`입니다. 이름은 대소문자를 가립니다.",
+            code: ":root { --text-color: 16px; --brand: blue; }\n\n.cp-invalid-plain { color: green; color: 16px; }            → \"rgb(0, 128, 0)\"  (파싱 무효 → 무시 → green)\n.cp-invalid       { color: green; color: var(--text-color); } → \"rgb(0, 0, 0)\"    (계산값 시점 무효 → 초깃값!)\n.cp-fallback      { color: var(--nope, red); }               → \"rgb(255, 0, 0)\"\n.cp-nested        { color: var(--nope, var(--brand, red)); }  → \"rgb(0, 0, 255)\"",
+            terms: [
+              {
+                term: "계산값 시점 무효 (invalid at computed-value time)",
+                body: "`var()`를 치환한 값이 그 속성에 맞지 않을 때의 상태입니다. 파서가 var()를 통과시켜 앞선 선언은 이미 덮였습니다. 계산 시점에는 되돌아갈 선언이 없어서 상속 속성은 부모 값, 비상속 속성은 초깃값이 됩니다. '대체값은 정의되지 않았거나 무효인 변수용이고, 브라우저가 커스텀 속성을 모를 때를 위한 것이 아니다'.",
+              },
+            ],
           },
-        ],
-      },
-      {
-        label: "직접 해 보기: 파싱 무효와 계산값 시점 무효",
-        body: "plain과 iacvt는 둘 다 색이 아닌 16px를 color에 넣습니다. 결과는 다릅니다. plain의 16px는 파싱할 때 버려져서 앞의 purple이 남습니다. iacvt의 `var()`는 파싱할 때는 유효해서 purple을 이미 덮었습니다. 계산값을 낼 때에야 무효인 것을 알고, 되돌아갈 선언이 없습니다.\ncolor는 상속 속성이라 부모의 green을 받습니다. 비상속인 background-color는 초깃값인 투명으로 떨어집니다. 대체값은 변수가 없을 때 쓰이고, 중첩할 수 있습니다.",
-        lab: {
-          html: `<style>
+          {
+            label: "직접 해 보기: 파싱 무효와 계산값 시점 무효",
+            body: "plain과 iacvt는 둘 다 색이 아닌 16px를 color에 넣습니다. 결과는 다릅니다. plain의 16px는 파싱할 때 버려져서 앞의 purple이 남습니다. iacvt의 `var()`는 파싱할 때는 유효해서 purple을 이미 덮었습니다. 계산값을 낼 때에야 무효인 것을 알고, 되돌아갈 선언이 없습니다.\ncolor는 상속 속성이라 부모의 green을 받습니다. 비상속인 background-color는 초깃값인 투명으로 떨어집니다. 대체값은 변수가 없을 때 쓰이고, 중첩할 수 있습니다.",
+            lab: {
+              html: `<style>
   :root { --text-color: 16px; --brand: blue; }
   .parent { color: green; }
   .parent p { margin: 2px 0; }
@@ -1729,42 +2482,47 @@ export const cssTheories: Theory[] = [
   <p id="nest">var(--nope, var(--brand, red))</p>
   <p id="bg">background-color: var(--text-color)</p>
 </div>`,
-          height: 190,
-          checks: [
-            {
-              label: "plain의 color",
-              expr: "getComputedStyle(document.getElementById('plain')).color",
+              height: 190,
+              checks: [
+                {
+                  label: "plain의 color",
+                  expr: "getComputedStyle(document.getElementById('plain')).color",
+                },
+                {
+                  label: "iacvt의 color",
+                  expr: "getComputedStyle(document.getElementById('iacvt')).color",
+                },
+                {
+                  label: "fb의 color",
+                  expr: "getComputedStyle(document.getElementById('fb')).color",
+                },
+                {
+                  label: "nest의 color",
+                  expr: "getComputedStyle(document.getElementById('nest')).color",
+                },
+                {
+                  label: "bg의 background-color",
+                  expr: "getComputedStyle(document.getElementById('bg')).backgroundColor",
+                },
+              ],
+              tryIt: "`:root`의 --text-color를 orange로 바꿔 보세요. iacvt의 글자와 bg의 배경이 주황이 됩니다.",
             },
-            {
-              label: "iacvt의 color",
-              expr: "getComputedStyle(document.getElementById('iacvt')).color",
-            },
-            {
-              label: "fb의 color",
-              expr: "getComputedStyle(document.getElementById('fb')).color",
-            },
-            {
-              label: "nest의 color",
-              expr: "getComputedStyle(document.getElementById('nest')).color",
-            },
-            {
-              label: "bg의 background-color",
-              expr: "getComputedStyle(document.getElementById('bg')).backgroundColor",
-            },
-          ],
-          tryIt: "`:root`의 --text-color를 orange로 바꿔 보세요. iacvt의 글자와 bg의 배경이 주황이 됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: @property가 타입, 상속, 초깃값을 정한다",
-        body: "`@property --typed { syntax: \"<length>\"; inherits: false; initial-value: 7px }`를 두고 `--typed: not-a-length`를 주면 `width: var(--typed)`가 7px이 됩니다. 등록한 초깃값으로 떨어진 것이고, 실제로 그랬습니다. 유효한 `42px`를 주면 42px입니다. `inherits: false`라서 부모에 `--typed: 99px`가 있어도 자식은 실제로 7px이었습니다. 등록하지 않은 커스텀 속성은 모두 상속됩니다. `--inh: 3`인 부모 아래에서 `calc(var(--inh) * 10px)`는 30px이었습니다. MDN에 따르면 세 디스크립터 중 syntax와 inherits는 필수입니다. initial-value는 syntax가 `\"*\"`가 아니면 필수이고, '하나라도 빠지면 규칙 전체가 무효'입니다. initial-value는 계산 독립적이어야 해서 `3em`은 안 되고 `10px`는 됩니다. 등록하면 숫자, 색, 길이로 '보간'되어 트랜지션과 애니메이션이 됩니다(12장). 등록하지 않으면 이산으로 바뀝니다.",
-        code: "@property --typed { syntax: \"<length>\"; inherits: false; initial-value: 7px; }\n\n.cp-typed    { --typed: not-a-length; width: var(--typed); }  → \"7px\"   (타입 검사 → 초깃값)\n.cp-typed-ok { --typed: 42px; width: var(--typed); }          → \"42px\"\n<div style=\"--typed: 99px\"><div class=\"cp-noinherit-child\">  → \"7px\"   (inherits: false)\n\n.cp-inherit-parent { --inh: 3; } .cp-inherit-child { width: calc(var(--inh) * 10px); } → \"30px\" (미등록은\n  상속)\n\n/* 애니메이션 가능한 커스텀 속성 */\n@property --angle { syntax: \"<angle>\"; inherits: false; initial-value: 0deg; }\n.spin { background: conic-gradient(from var(--angle), …); transition: --angle 300ms; }\n.spin:hover { --angle: 90deg; }",
-      },
-      {
-        label: "직접 해 보기: @property로 등록한 변수",
-        body: "--size를 `<length>`로 등록하고 상속을 껐습니다. 부모 .p가 120px를 줘도 kid는 물려받지 않고 등록한 초깃값을 씁니다. bad의 not-a-length는 길이가 아니라서 역시 초깃값으로 떨어집니다.\n이제 kid 위에 마우스를 올려 보세요. 등록한 변수는 길이로 보간되어 막대가 부드럽게 늘어납니다. 올려 둔 동안 지금 값이 바뀝니다. 다 늘어나면 기록에 --size의 transitionend가 찍힙니다.",
-        lab: {
-          html: `<style>
+        heading: "@property 등록",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: @property가 타입, 상속, 초깃값을 정한다",
+            body: "`@property --typed { syntax: \"<length>\"; inherits: false; initial-value: 7px }`를 두고 `--typed: not-a-length`를 주면 `width: var(--typed)`가 7px이 됩니다. 등록한 초깃값으로 떨어진 것이고, 실제로 그랬습니다. 유효한 `42px`를 주면 42px입니다. `inherits: false`라서 부모에 `--typed: 99px`가 있어도 자식은 실제로 7px이었습니다. 등록하지 않은 커스텀 속성은 모두 상속됩니다. `--inh: 3`인 부모 아래에서 `calc(var(--inh) * 10px)`는 30px이었습니다. MDN에 따르면 세 디스크립터 중 syntax와 inherits는 필수입니다. initial-value는 syntax가 `\"*\"`가 아니면 필수이고, '하나라도 빠지면 규칙 전체가 무효'입니다. initial-value는 계산 독립적이어야 해서 `3em`은 안 되고 `10px`는 됩니다. 등록하면 숫자, 색, 길이로 '보간'되어 트랜지션과 애니메이션이 됩니다(12장). 등록하지 않으면 이산으로 바뀝니다.",
+            code: "@property --typed { syntax: \"<length>\"; inherits: false; initial-value: 7px; }\n\n.cp-typed    { --typed: not-a-length; width: var(--typed); }  → \"7px\"   (타입 검사 → 초깃값)\n.cp-typed-ok { --typed: 42px; width: var(--typed); }          → \"42px\"\n<div style=\"--typed: 99px\"><div class=\"cp-noinherit-child\">  → \"7px\"   (inherits: false)\n\n.cp-inherit-parent { --inh: 3; } .cp-inherit-child { width: calc(var(--inh) * 10px); } → \"30px\" (미등록은\n  상속)\n\n/* 애니메이션 가능한 커스텀 속성 */\n@property --angle { syntax: \"<angle>\"; inherits: false; initial-value: 0deg; }\n.spin { background: conic-gradient(from var(--angle), …); transition: --angle 300ms; }\n.spin:hover { --angle: 90deg; }",
+          },
+          {
+            label: "직접 해 보기: @property로 등록한 변수",
+            body: "--size를 `<length>`로 등록하고 상속을 껐습니다. 부모 .p가 120px를 줘도 kid는 물려받지 않고 등록한 초깃값을 씁니다. bad의 not-a-length는 길이가 아니라서 역시 초깃값으로 떨어집니다.\n이제 kid 위에 마우스를 올려 보세요. 등록한 변수는 길이로 보간되어 막대가 부드럽게 늘어납니다. 올려 둔 동안 지금 값이 바뀝니다. 다 늘어나면 기록에 --size의 transitionend가 찍힙니다.",
+            lab: {
+              html: `<style>
   @property --size { syntax: "<length>"; inherits: false; initial-value: 40px; }
   .p { --size: 120px; }
   .bar { width: var(--size); background: #60a5fa; margin: 6px 0; padding: 2px 6px;
@@ -1776,38 +2534,43 @@ export const cssTheories: Theory[] = [
   <div class="bar" id="kid">올려 보세요</div>
   <div class="bar" id="bad">--size: not-a-length</div>
 </div>`,
-          height: 110,
-          checks: [
-            {
-              label: "kid의 --size",
-              expr: "getComputedStyle(document.getElementById('kid')).getPropertyValue('--size')",
+              height: 110,
+              checks: [
+                {
+                  label: "kid의 --size",
+                  expr: "getComputedStyle(document.getElementById('kid')).getPropertyValue('--size')",
+                },
+                {
+                  label: "kid의 width",
+                  expr: "getComputedStyle(document.getElementById('kid')).width",
+                },
+                {
+                  label: "bad의 --size",
+                  expr: "getComputedStyle(document.getElementById('bad')).getPropertyValue('--size')",
+                },
+                {
+                  label: "bad의 width",
+                  expr: "getComputedStyle(document.getElementById('bad')).width",
+                },
+              ],
+              tryIt: "`@property` 줄을 지우고 실행해 보세요. kid가 부모 값을 물려받고, bad는 width가 무효가 되어 줄을 다 차지합니다. hover 때도 값이 한 번에 바뀌고 transitionend가 오지 않습니다.",
             },
-            {
-              label: "kid의 width",
-              expr: "getComputedStyle(document.getElementById('kid')).width",
-            },
-            {
-              label: "bad의 --size",
-              expr: "getComputedStyle(document.getElementById('bad')).getPropertyValue('--size')",
-            },
-            {
-              label: "bad의 width",
-              expr: "getComputedStyle(document.getElementById('bad')).width",
-            },
-          ],
-          tryIt: "`@property` 줄을 지우고 실행해 보세요. kid가 부모 값을 물려받고, bad는 width가 무효가 되어 줄을 다 차지합니다. hover 때도 값이 한 번에 바뀌고 transitionend가 오지 않습니다.",
-        },
+          },
+        ],
       },
       {
-        label: "함수들: 색과 계산",
-        body: "색 함수에는 `rgb()` `hsl()` `hwb()` `lab()` `lch()` `oklab()` `oklch()` `color()` `color-mix()` `light-dark()` `contrast-color()`가 있습니다. 실제 계산값은 이렇습니다.\n`color-mix(in srgb, red 50%, blue)`는 `color(srgb 0.5 0 0.5)`입니다.\n`oklch(70% 0.1 200)`는 `oklch(0.7 0.1 200)`로 직렬화됩니다.\n상대 색 `rgb(from var(--c) r g b / 50%)`는 `color(srgb 1 0 0 / 0.5)`입니다.\n`light-dark(black, white)`는 `color-scheme: light`에서 black, `currentColor`는 그 요소의 color(초록)입니다.\noklch는 '지각적으로 균일'해서 L을 고정하고 H만 돌리면 밝기가 같은 팔레트가 나옵니다. `calc()`에는 var()를 섞을 수 있고(`calc(var(--gap) * 2)`), `min()` `max()` `clamp()`로 경계를 정합니다. 단위 규칙은 4장과 같습니다. 단위 없는 숫자를 변수에 두고 `calc(var(--n) * 1px)`로 단위를 붙입니다. `var(--n)px`처럼 이어 붙이면 안 됩니다.",
-        code: ".col-mix  { color: color-mix(in srgb, red 50%, blue); }   → \"color(srgb 0.5 0 0.5)\"\n.col-rel  { --c: red; color: rgb(from var(--c) r g b / 50%); } → \"color(srgb 1 0 0 / 0.5)\"\n.col-ld   { color-scheme: light; color: light-dark(black, white); } → \"rgb(0, 0, 0)\"\n.col-cur  { color: green; border: 1px solid; }  → border-top-color \"rgb(0, 128, 0)\" (currentColor)\n\n/* 토큰 → 파생 */\n:root { --space: 4; --brand: oklch(60% 0.15 250); }\n.card { padding: calc(var(--space) * 2px); background: oklch(from var(--brand) calc(l + 0.3) c h); }",
-      },
-      {
-        label: "직접 해 보기: 색 함수와 calc(var())",
-        body: "색 함수의 계산값은 지금 값처럼 직렬화됩니다. color-mix는 두 색을 섞은 색을, 상대 색은 --c를 풀어 알파만 바꾼 색을 돌려줍니다. light-dark는 그 요소의 color-scheme을 보고 둘 중 하나를 고릅니다.\n아래 두 줄은 변수에 단위를 붙이는 법입니다. `calc(var(--n) * 10px)`는 길이가 됩니다. `var(--n)px`는 숫자 뒤에 글자 px가 따로 붙은 것입니다. 그래서 계산값 시점에 무효가 되어 초깃값 0px로 떨어집니다.",
-        lab: {
-          html: `<style>
+        heading: "색 함수와 calc",
+        blocks: [
+          {
+            label: "함수들: 색과 계산",
+            body: "색 함수에는 `rgb()` `hsl()` `hwb()` `lab()` `lch()` `oklab()` `oklch()` `color()` `color-mix()` `light-dark()` `contrast-color()`가 있습니다. 실제 계산값은 이렇습니다.\n`color-mix(in srgb, red 50%, blue)`는 `color(srgb 0.5 0 0.5)`입니다.\n`oklch(70% 0.1 200)`는 `oklch(0.7 0.1 200)`로 직렬화됩니다.\n상대 색 `rgb(from var(--c) r g b / 50%)`는 `color(srgb 1 0 0 / 0.5)`입니다.\n`light-dark(black, white)`는 `color-scheme: light`에서 black, `currentColor`는 그 요소의 color(초록)입니다.\noklch는 '지각적으로 균일'해서 L을 고정하고 H만 돌리면 밝기가 같은 팔레트가 나옵니다. `calc()`에는 var()를 섞을 수 있고(`calc(var(--gap) * 2)`), `min()` `max()` `clamp()`로 경계를 정합니다. 단위 규칙은 4장과 같습니다. 단위 없는 숫자를 변수에 두고 `calc(var(--n) * 1px)`로 단위를 붙입니다. `var(--n)px`처럼 이어 붙이면 안 됩니다.",
+            code: ".col-mix  { color: color-mix(in srgb, red 50%, blue); }   → \"color(srgb 0.5 0 0.5)\"\n.col-rel  { --c: red; color: rgb(from var(--c) r g b / 50%); } → \"color(srgb 1 0 0 / 0.5)\"\n.col-ld   { color-scheme: light; color: light-dark(black, white); } → \"rgb(0, 0, 0)\"\n.col-cur  { color: green; border: 1px solid; }  → border-top-color \"rgb(0, 128, 0)\" (currentColor)\n\n/* 토큰 → 파생 */\n:root { --space: 4; --brand: oklch(60% 0.15 250); }\n.card { padding: calc(var(--space) * 2px); background: oklch(from var(--brand) calc(l + 0.3) c h); }",
+          },
+          {
+            label: "직접 해 보기: 색 함수와 calc(var())",
+            body: "색 함수의 계산값은 지금 값처럼 직렬화됩니다. color-mix는 두 색을 섞은 색을, 상대 색은 --c를 풀어 알파만 바꾼 색을 돌려줍니다. light-dark는 그 요소의 color-scheme을 보고 둘 중 하나를 고릅니다.\n아래 두 줄은 변수에 단위를 붙이는 법입니다. `calc(var(--n) * 10px)`는 길이가 됩니다. `var(--n)px`는 숫자 뒤에 글자 px가 따로 붙은 것입니다. 그래서 계산값 시점에 무효가 되어 초깃값 0px로 떨어집니다.",
+            lab: {
+              html: `<style>
   :root { --n: 4; --c: red; }
   p { margin: 2px 0; }
   #mix { color: color-mix(in srgb, red 50%, blue); }
@@ -1821,51 +2584,83 @@ export const cssTheories: Theory[] = [
 <p id="ld">light-dark(black, white)</p>
 <p id="pad">calc(var(--n) * 10px)</p>
 <p id="bad">var(--n)px</p>`,
-          height: 180,
-          checks: [
-            {
-              label: "mix의 color",
-              expr: "getComputedStyle(document.getElementById('mix')).color",
+              height: 180,
+              checks: [
+                {
+                  label: "mix의 color",
+                  expr: "getComputedStyle(document.getElementById('mix')).color",
+                },
+                {
+                  label: "rel의 color",
+                  expr: "getComputedStyle(document.getElementById('rel')).color",
+                },
+                {
+                  label: "ld의 color",
+                  expr: "getComputedStyle(document.getElementById('ld')).color",
+                },
+                {
+                  label: "pad의 padding-left",
+                  expr: "getComputedStyle(document.getElementById('pad')).paddingLeft",
+                },
+                {
+                  label: "bad의 padding-left",
+                  expr: "getComputedStyle(document.getElementById('bad')).paddingLeft",
+                },
+              ],
+              tryIt: "--n을 6으로, `#ld`의 color-scheme을 dark로 바꿔 실행해 보세요.",
             },
-            {
-              label: "rel의 color",
-              expr: "getComputedStyle(document.getElementById('rel')).color",
-            },
-            {
-              label: "ld의 color",
-              expr: "getComputedStyle(document.getElementById('ld')).color",
-            },
-            {
-              label: "pad의 padding-left",
-              expr: "getComputedStyle(document.getElementById('pad')).paddingLeft",
-            },
-            {
-              label: "bad의 padding-left",
-              expr: "getComputedStyle(document.getElementById('bad')).paddingLeft",
-            },
-          ],
-          tryIt: "--n을 6으로, `#ld`의 color-scheme을 dark로 바꿔 실행해 보세요.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 변수를 쓸 때",
-        body: "커스텀 속성에서 자주 보는 것들입니다.",
-        code: "증상                                   원인                                     처방\n────────────────────────────────────  ──────────────────────────────────────  ───────────────────────────\n잘못된 토큰 하나에 색이 검정으로 떨어졌다   계산값 시점 무효 → 초깃값 (앞 선언으로 안 돌아감)  @property 초깃값 · 대체값\n@media 안에 var() 가 안 먹는다            변수는 쿼리 안에서 불가                     값 직접 · @container style()\n변수에 'px' 를 붙여 쓰려는데 안 된다        var(--n)px 는 문자열 연결이 아님             calc(var(--n) * 1px)\n커스텀 속성 transition 이 뚝뚝 끊긴다       미등록은 이산 보간                          @property syntax 등록\n자식에서 변수 값이 바뀌었는데 부모 효과가 안 바뀜  값은 '쓰는 자리' 에서 계산 — 부모는 자기 값으로  부모에서 재선언\n--My-color 가 안 잡힌다                   대소문자 구분                               이름 통일\n:root 에 둔 값이 shadow DOM 에 안 들어온다 (반대)  커스텀 속성은 shadow 경계를 상속으로 통과한다 — 들어온다  의도면 OK\n                                            · 아니면 재설정\n선택자 이름이나 속성 이름에 var() 를 썼다    var() 는 값 자리에만                        전처리기",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 변수를 쓸 때",
+            body: "커스텀 속성에서 자주 보는 것들입니다.",
+            tables: [
+              {
+                caption: "커스텀 속성에서 자주 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["잘못된 토큰 하나에 색이 검정으로 떨어졌다", "계산값 시점 무효 → 초깃값 (앞 선언으로 안 돌아감)", "`@property` 초깃값, 대체값"],
+                  ["`@media` 안에 `var()`가 안 먹는다", "변수는 쿼리 안에서 불가", "값 직접, `@container style()`"],
+                  ["변수에 'px'를 붙여 쓰려는데 안 된다", "`var(--n)px`는 문자열 연결이 아님", "`calc(var(--n) * 1px)`"],
+                  ["커스텀 속성 `transition`이 뚝뚝 끊긴다", "미등록은 이산 보간", "`@property` `syntax` 등록"],
+                  ["자식에서 변수 값이 바뀌었는데 부모 효과가 안 바뀜", "값은 '쓰는 자리'에서 계산, 부모는 자기 값으로", "부모에서 재선언"],
+                  ["`--My-color`가 안 잡힌다", "대소문자 구분", "이름 통일"],
+                  ["`:root`에 둔 값이 shadow DOM에 안 들어온다 (반대)", "커스텀 속성은 shadow 경계를 상속으로 통과한다, 들어온다", "의도면 OK, 아니면 재설정"],
+                  ["선택자 이름이나 속성 이름에 `var()`를 썼다", "`var()`는 값 자리에만", "전처리기"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 커스텀 속성은 토큰이고, 치환은 쓰는 자리에서 일어난다",
+            body: "커스텀 속성의 값은 정의한 자리에서 계산되지 않고 '쓰는 요소'에서 치환됩니다. 그래서 상속을 타고 내려가 자식마다 다르게 풀릴 수 있고(테마 스위치 `.dark { --bg: … }` 하나로 아래 전부가 바뀜), 거꾸로 부모의 효과는 자식의 재선언에 영향받지 않습니다. 치환이 늦게 일어나는 대가가 '계산값 시점 무효' — 파서가 검증할 수 없으니 틀린 값이 초깃값으로 떨어집니다. `@property`는 그 검증을 등록 시점으로 당기고(타입), 상속을 끄고(컴포넌트 지역 변수), 보간을 켭니다(애니메이션). 디자인 토큰 체계는 결국 ':root의 원시 토큰 → 컴포넌트의 의미 토큰 → 속성' 세 층의 var() 사슬입니다.",
+            code: ":root        { --blue-500: oklch(60% 0.15 250); }          ← 원시 토큰 (값)\n.button      { --btn-bg: var(--blue-500); }                 ← 의미 토큰 (역할)\n.button      { background: var(--btn-bg); }                 ← 속성 (쓰는 자리에서 치환)\n.dark        { --blue-500: oklch(75% 0.12 250); }           ← 한 줄로 아래 전부 바뀜\n\n치환 시점: 쓰는 요소의 계산값 단계 → 실패하면 초깃값/상속값 (파싱 단계가 아니라 되돌릴 선언이 없다)",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 커스텀 속성은 토큰이고, 치환은 쓰는 자리에서 일어난다",
-        body: "커스텀 속성의 값은 정의한 자리에서 계산되지 않고 '쓰는 요소'에서 치환됩니다. 그래서 상속을 타고 내려가 자식마다 다르게 풀릴 수 있고(테마 스위치 `.dark { --bg: … }` 하나로 아래 전부가 바뀜), 거꾸로 부모의 효과는 자식의 재선언에 영향받지 않습니다. 치환이 늦게 일어나는 대가가 '계산값 시점 무효' — 파서가 검증할 수 없으니 틀린 값이 초깃값으로 떨어집니다. `@property`는 그 검증을 등록 시점으로 당기고(타입), 상속을 끄고(컴포넌트 지역 변수), 보간을 켭니다(애니메이션). 디자인 토큰 체계는 결국 ':root의 원시 토큰 → 컴포넌트의 의미 토큰 → 속성' 세 층의 var() 사슬입니다.",
-        code: ":root        { --blue-500: oklch(60% 0.15 250); }          ← 원시 토큰 (값)\n.button      { --btn-bg: var(--blue-500); }                 ← 의미 토큰 (역할)\n.button      { background: var(--btn-bg); }                 ← 속성 (쓰는 자리에서 치환)\n.dark        { --blue-500: oklch(75% 0.12 250); }           ← 한 줄로 아래 전부 바뀜\n\n치환 시점: 쓰는 요소의 계산값 단계 → 실패하면 초깃값/상속값 (파싱 단계가 아니라 되돌릴 선언이 없다)",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "12장 트랜지션과 애니메이션은 등록된 커스텀 속성이 '보간'된다는 데서 출발합니다. 무엇이 보간되고 무엇이 이산으로 바뀌는지, display를 트랜지션하는 법까지 다룹니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `color: green; color: 16px`와 `color: green; color: var(--x)`(--x가 16px)의 결과가 다른 이유는?\n2) `@property`의 필수 디스크립터와 '규칙 전체 무효' 조건은?\n3) `inherits: false`가 쓰이는 자리는?\n4) `var(--n)px`가 안 되는 이유와 대안은?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "12장 트랜지션과 애니메이션은 등록된 커스텀 속성이 '보간'된다는 데서 출발합니다. 무엇이 보간되고 무엇이 이산으로 바뀌는지, display를 트랜지션하는 법까지 다룹니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`color: green; color: 16px`와 `color: green; color: var(--x)`(`--x`가 16px)의 결과가 다른 이유는 무엇인가요?", a: "앞의 `16px`는 파싱할 때 색이 아니라서 버려져 `green`이 남지만, `var()`는 파싱할 때 유효해서 `green`을 이미 덮기 때문입니다. 계산값 시점에야 16px가 색이 아님을 알고 되돌아갈 선언이 없어 `rgb(0, 0, 0)` 검정이 됐습니다. `color`는 상속 속성이라 부모에 색이 있으면 부모 값을 받습니다." },
+              { q: "`@property`의 필수 디스크립터와 '규칙 전체 무효' 조건은 무엇인가요?", a: "`syntax`와 `inherits`는 늘 필수이고, `initial-value`는 `syntax`가 `\"*\"`가 아니면 필수입니다. 이 중 하나라도 빠지면 규칙 전체가 무효입니다. `initial-value`는 계산 독립적이어야 해서 `3em`은 안 되고 `10px`는 됩니다." },
+              { q: "`inherits: false`가 쓰이는 자리는 어디인가요?", a: "부모의 값을 물려받으면 안 되는 컴포넌트 지역 변수 자리입니다. `inherits: false`로 등록하면 부모에 `--typed: 99px`가 있어도 자식은 등록한 초깃값 7px를 썼습니다. 등록하지 않은 커스텀 속성은 모두 상속됩니다." },
+              { q: "`var(--n)px`가 안 되는 이유와 대안은 무엇인가요?", a: "`var(--n)px`는 문자열 연결이 아니라 숫자 뒤에 글자 px가 따로 붙은 것이라 계산값 시점에 무효가 되기 때문입니다. 실험에서는 초깃값 0px로 떨어졌습니다. 단위 없는 숫자를 변수에 두고 `calc(var(--n) * 1px)`로 단위를 붙입니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -1879,20 +2674,29 @@ export const cssTheories: Theory[] = [
     id: "css-s12",
     name: "12장 · 트랜지션 · 애니메이션 · 트랜스폼",
     tagline: "값의 변화를 시간 위에 펴고, 상자를 흐름 밖에서 움직인다",
+    keyPoints: [
+      "트랜지션은 값이 바뀔 때 사이를 보간하고, `@keyframes` 애니메이션은 거쳐 갈 상태를 직접 적습니다. 길이, 색, 숫자, `transform`은 보간되고 `display`, `visibility`는 이산입니다.",
+      "`height: auto`는 길이가 아니라 보간되지 않아 곧바로 바뀝니다. 부드럽게 바꾸려면 `interpolate-size: allow-keywords`나 `calc-size()`를 씁니다.",
+      "`display: none`에서 페이드하려면 `allow-discrete`와 `@starting-style`이 함께 필요합니다. `@starting-style`이 없으면 출발값이 없어 바로 보입니다.",
+      "`transform` 함수는 오른쪽부터 적용됩니다. `transform`과 `opacity`는 합성 단계만 건드려 가장 싸고, `width`나 `top`을 움직이면 프레임마다 레이아웃이 다시 돕니다.",
+    ],
     intro:
       "트랜지션은 속성값이 바뀔 때 그 사이를 보간해 암묵적 애니메이션을 만듭니다. `@keyframes` 애니메이션은 거쳐 갈 상태들을 직접 적어 시간 위에 놓습니다. 길이, 색, 숫자, transform은 보간되는 속성이고, display와 visibility는 이산 속성입니다. display를 트랜지션하려면 `transition-behavior: allow-discrete`와 `@starting-style`이 필요합니다. 트랜스폼은 레이아웃을 건드리지 않고 좌표계를 바꿉니다. 대신 포함 블록과 쌓임 맥락을 만듭니다(8장). 캐스케이드에서 애니메이션은 normal보다 위에, 트랜지션은 그 모두보다 위에 있습니다(2장).",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 이벤트 순서와 auto의 함정",
-        body: "`transition: width 100ms`인 요소의 너비를 클래스로 100에서 200으로 바꿨습니다. 바꾼 순간 `getComputedStyle().width`는 아직 100px였습니다. 트랜지션은 다음 스타일 계산부터 시작합니다. 이벤트는 transitionrun, transitionstart, …, `transitionend`(propertyName width, elapsedTime 100ms) 순이었고, 600ms 뒤 200px가 됐습니다.\n\n`height: auto`에 `transition: height`를 걸면 자식 높이를 바꿔도 곧바로 60px가 됩니다. MDN은 '명세는 auto 로의/로부터의 애니메이션을 권하지 않는다'고 적습니다. 처방은 `interpolate-size: allow-keywords`, `calc-size()`, grid-template-rows 0fr→1fr 트릭입니다.\n\n막 삽입했거나 display:none에서 바뀐 요소는 '초기 상태가 없었던 것처럼' 처리되므로 `@starting-style`이 필요합니다.",
-        code: ".tr { width: 100px; transition: width 100ms linear; }  .tr.go { width: 200px; }\n\n클래스 추가 직후:  cs(\"tr\", \"width\") = \"100px\"      (아직)\n이벤트:  transitionrun → transitionstart → transitionend:width:100ms\n600ms 뒤:          \"200px\"\n\n.tr-auto { height: auto; transition: height 100ms; }  자식 20 → 60px\n바꾼 직후:         cs(\"tr-auto\", \"height\") = \"60px\"  ← 보간 없음 (auto)\n\n/* auto 를 보간하려면 */\n.panel { interpolate-size: allow-keywords; transition: height 300ms; }   /* 또는 height: calc-size(auto,\n  size) */",
-      },
-      {
-        label: "직접 해 보기: 트랜지션과 height: auto",
-        body: `체크 상자를 눌러 보세요. 파란 막대의 width는 800ms 동안 보간되며 늘어납니다. 지금 값은 0.4초마다 다시 재므로 중간값이 보입니다. 끝나면 기록에 width의 transitionend가 찍힙니다.
+        heading: "트랜지션과 auto",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 이벤트 순서와 auto의 함정",
+            body: "`transition: width 100ms`인 요소의 너비를 클래스로 100에서 200으로 바꿨습니다. 바꾼 순간 `getComputedStyle().width`는 아직 100px였습니다. 트랜지션은 다음 스타일 계산부터 시작합니다. 이벤트는 transitionrun, transitionstart, …, `transitionend`(propertyName width, elapsedTime 100ms) 순이었고, 600ms 뒤 200px가 됐습니다.\n\n`height: auto`에 `transition: height`를 걸면 자식 높이를 바꿔도 곧바로 60px가 됩니다. MDN은 '명세는 auto 로의/로부터의 애니메이션을 권하지 않는다'고 적습니다. 처방은 `interpolate-size: allow-keywords`, `calc-size()`, grid-template-rows 0fr→1fr 트릭입니다.\n\n막 삽입했거나 display:none에서 바뀐 요소는 '초기 상태가 없었던 것처럼' 처리되므로 `@starting-style`이 필요합니다.",
+            code: ".tr { width: 100px; transition: width 100ms linear; }  .tr.go { width: 200px; }\n\n클래스 추가 직후:  cs(\"tr\", \"width\") = \"100px\"      (아직)\n이벤트:  transitionrun → transitionstart → transitionend:width:100ms\n600ms 뒤:          \"200px\"\n\n.tr-auto { height: auto; transition: height 100ms; }  자식 20 → 60px\n바꾼 직후:         cs(\"tr-auto\", \"height\") = \"60px\"  ← 보간 없음 (auto)\n\n/* auto 를 보간하려면 */\n.panel { interpolate-size: allow-keywords; transition: height 300ms; }   /* 또는 height: calc-size(auto,\n  size) */",
+          },
+          {
+            label: "직접 해 보기: 트랜지션과 height: auto",
+            body: `체크 상자를 눌러 보세요. 파란 막대의 width는 800ms 동안 보간되며 늘어납니다. 지금 값은 0.4초마다 다시 재므로 중간값이 보입니다. 끝나면 기록에 width의 transitionend가 찍힙니다.
 노란 상자는 height를 auto로 바꾸는데, 한 번에 늘어납니다. auto는 길이가 아니어서 보간할 수 없기 때문입니다. height의 transitionend도 오지 않습니다.`,
-        lab: {
-          html: `<style>
+            lab: {
+              html: `<style>
   .tr { width: 100px; height: 28px; background: #60a5fa; transition: width 800ms linear; }
   .auto { height: 26px; overflow: hidden; background: #fde68a; transition: height 800ms; }
   body:has(#go:checked) .tr { width: 300px; }
@@ -1901,44 +2705,49 @@ export const cssTheories: Theory[] = [
 <label><input type="checkbox" id="go"> 바꾸기</label>
 <div class="tr" id="tr"></div>
 <div class="auto" id="auto">height: 26px에서 auto로 갑니다.<br>둘째 줄<br>셋째 줄</div>`,
-          height: 170,
-          checks: [
-            {
-              label: "막대의 width",
-              expr: "Math.round(parseFloat(getComputedStyle(document.getElementById('tr')).width))",
+              height: 170,
+              checks: [
+                {
+                  label: "막대의 width",
+                  expr: "Math.round(parseFloat(getComputedStyle(document.getElementById('tr')).width))",
+                },
+                {
+                  label: "막대에서 도는 트랜지션 수",
+                  expr: "document.getElementById('tr').getAnimations().length",
+                },
+                {
+                  label: "노란 상자의 height",
+                  expr: "Math.round(parseFloat(getComputedStyle(document.getElementById('auto')).height))",
+                },
+                {
+                  label: "노란 상자의 interpolate-size",
+                  expr: "getComputedStyle(document.getElementById('auto')).getPropertyValue('interpolate-size')",
+                },
+              ],
+              tryIt: "`.auto`에 `interpolate-size: allow-keywords`를 더해 보세요. height도 보간되고 transitionend가 찍힙니다.",
             },
-            {
-              label: "막대에서 도는 트랜지션 수",
-              expr: "document.getElementById('tr').getAnimations().length",
-            },
-            {
-              label: "노란 상자의 height",
-              expr: "Math.round(parseFloat(getComputedStyle(document.getElementById('auto')).height))",
-            },
-            {
-              label: "노란 상자의 interpolate-size",
-              expr: "getComputedStyle(document.getElementById('auto')).getPropertyValue('interpolate-size')",
-            },
-          ],
-          tryIt: "`.auto`에 `interpolate-size: allow-keywords`를 더해 보세요. height도 보간되고 transitionend가 찍힙니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: display를 트랜지션하기",
-        body: "display를 트랜지션하려면 allow-discrete와 @starting-style이 함께 필요합니다. `display: none; opacity: 0`을 `display: block; opacity: 1`로 바꾸며 `transition: opacity 100ms, display 100ms allow-discrete`와 `@starting-style { opacity: 0 }`을 두었습니다. `display-transition:opacity` 이벤트가 왔고, 끝 값은 display block, opacity 1이었습니다.\n\nMDN에 따르면 display와 content-visibility는 '50% 지점에서 뒤집히는' 이산 애니메이션입니다. 다만 none과 오갈 때는 0%(보이기)나 100%(숨기기)에서 뒤집혀 내용이 내내 보입니다.\n\n`@starting-style`은 '요소가 첫 스타일 업데이트를 받을 때'의 출발값이고, '트랜지션에만 관련'됩니다. 특이성이 같으니 원 규칙 '뒤'에 둡니다. 팝오버와 다이얼로그의 등장 애니메이션이 이 둘로 됩니다.",
-        code: ".tr-display { display: none; opacity: 0; transition: opacity 100ms, display 100ms allow-discrete; }\n.tr-display.go { display: block; opacity: 1; @starting-style { opacity: 0; } }\n\n이벤트:  display-transition:opacity        (opacity 는 보간, display 는 이산)\n끝:      display \"block\" · opacity \"1\"\n\n/* 숨길 때도 되게: 양쪽에 allow-discrete, 사라지는 쪽은 display 가 100% 에서 none 으로 */\n[popover] { transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; opacity: 0; }\n[popover]:popover-open { opacity: 1; @starting-style { opacity: 0; } }",
-        terms: [
-          {
-            term: "보간 (interpolation)과 이산 (discrete)",
-            body: "길이, 색, 숫자, 각도, transform은 두 값 사이를 계산해 부드럽게 바뀝니다(보간). display, visibility, font-family처럼 사이값이 없는 속성은 50%에서 한 번에 바뀝니다(이산). `transition-behavior: allow-discrete`가 없으면 이산 속성은 트랜지션되지 않습니다. 등록하지 않은 커스텀 속성도 이산입니다(11장).",
           },
         ],
       },
       {
-        label: "직접 해 보기: display: none에서 페이드로",
-        body: "체크 상자를 켜면 상자가 서서히 나타나고, 끄면 서서히 사라집니다. 켤 때는 `@starting-style`이 출발값 opacity 0을 줍니다. display: none이던 요소에는 이전 스타일이 없습니다. 그래서 출발값을 따로 주지 않으면 트랜지션이 시작되지 않습니다. 끌 때는 `allow-discrete`가 display를 끝까지 block으로 붙잡아 둡니다. 그동안 opacity가 줄고, 마지막에 none으로 바뀝니다. 기록의 transitionend 줄과 지금 값의 display를 함께 보세요.",
-        lab: {
-          html: `<style>
+        heading: "display 트랜지션",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: display를 트랜지션하기",
+            body: "display를 트랜지션하려면 allow-discrete와 @starting-style이 함께 필요합니다. `display: none; opacity: 0`을 `display: block; opacity: 1`로 바꾸며 `transition: opacity 100ms, display 100ms allow-discrete`와 `@starting-style { opacity: 0 }`을 두었습니다. `display-transition:opacity` 이벤트가 왔고, 끝 값은 display block, opacity 1이었습니다.\n\nMDN에 따르면 display와 content-visibility는 '50% 지점에서 뒤집히는' 이산 애니메이션입니다. 다만 none과 오갈 때는 0%(보이기)나 100%(숨기기)에서 뒤집혀 내용이 내내 보입니다.\n\n`@starting-style`은 '요소가 첫 스타일 업데이트를 받을 때'의 출발값이고, '트랜지션에만 관련'됩니다. 특이성이 같으니 원 규칙 '뒤'에 둡니다. 팝오버와 다이얼로그의 등장 애니메이션이 이 둘로 됩니다.",
+            code: ".tr-display { display: none; opacity: 0; transition: opacity 100ms, display 100ms allow-discrete; }\n.tr-display.go { display: block; opacity: 1; @starting-style { opacity: 0; } }\n\n이벤트:  display-transition:opacity        (opacity 는 보간, display 는 이산)\n끝:      display \"block\" · opacity \"1\"\n\n/* 숨길 때도 되게: 양쪽에 allow-discrete, 사라지는 쪽은 display 가 100% 에서 none 으로 */\n[popover] { transition: opacity .2s, display .2s allow-discrete, overlay .2s allow-discrete; opacity: 0; }\n[popover]:popover-open { opacity: 1; @starting-style { opacity: 0; } }",
+            terms: [
+              {
+                term: "보간 (interpolation)과 이산 (discrete)",
+                body: "길이, 색, 숫자, 각도, transform은 두 값 사이를 계산해 부드럽게 바뀝니다(보간). display, visibility, font-family처럼 사이값이 없는 속성은 50%에서 한 번에 바뀝니다(이산). `transition-behavior: allow-discrete`가 없으면 이산 속성은 트랜지션되지 않습니다. 등록하지 않은 커스텀 속성도 이산입니다(11장).",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: display: none에서 페이드로",
+            body: "체크 상자를 켜면 상자가 서서히 나타나고, 끄면 서서히 사라집니다. 켤 때는 `@starting-style`이 출발값 opacity 0을 줍니다. display: none이던 요소에는 이전 스타일이 없습니다. 그래서 출발값을 따로 주지 않으면 트랜지션이 시작되지 않습니다. 끌 때는 `allow-discrete`가 display를 끝까지 block으로 붙잡아 둡니다. 그동안 opacity가 줄고, 마지막에 none으로 바뀝니다. 기록의 transitionend 줄과 지금 값의 display를 함께 보세요.",
+            lab: {
+              html: `<style>
   .pop { display: none; opacity: 0; background: #fde68a; padding: 8px; margin-top: 6px;
          transition: opacity 600ms, display 600ms allow-discrete; }
   body:has(#show:checked) .pop { display: block; opacity: 1; }
@@ -1946,34 +2755,39 @@ export const cssTheories: Theory[] = [
 </style>
 <label><input type="checkbox" id="show"> 보이기</label>
 <div class="pop" id="pop">페이드로 나타나고 사라지는 상자</div>`,
-          height: 120,
-          checks: [
-            {
-              label: "상자의 display",
-              expr: "getComputedStyle(document.getElementById('pop')).display",
+              height: 120,
+              checks: [
+                {
+                  label: "상자의 display",
+                  expr: "getComputedStyle(document.getElementById('pop')).display",
+                },
+                {
+                  label: "상자의 opacity",
+                  expr: "Number(getComputedStyle(document.getElementById('pop')).opacity).toFixed(2)",
+                },
+                {
+                  label: "상자에서 도는 트랜지션",
+                  expr: "document.getElementById('pop').getAnimations().map(a => a.transitionProperty).join(', ') || '없음'",
+                },
+              ],
+              tryIt: "`@starting-style` 줄을 지우고 실행해 보세요. 나타날 때 페이드 없이 바로 보입니다. allow-discrete를 지우면 사라질 때도 바로 사라집니다.",
             },
-            {
-              label: "상자의 opacity",
-              expr: "Number(getComputedStyle(document.getElementById('pop')).opacity).toFixed(2)",
-            },
-            {
-              label: "상자에서 도는 트랜지션",
-              expr: "document.getElementById('pop').getAnimations().map(a => a.transitionProperty).join(', ') || '없음'",
-            },
-          ],
-          tryIt: "`@starting-style` 줄을 지우고 실행해 보세요. 나타날 때 페이드 없이 바로 보입니다. allow-discrete를 지우면 사라질 때도 바로 사라집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "실제로 돌려 보면: @keyframes와 fill-mode, 트랜스폼의 좌표",
-        body: "`animation: slide 100ms 50ms both`에서 첫 시간은 duration, 둘째는 delay입니다. 이벤트는 animationstart, animationend 순이었고, elapsedTime은 delay를 뺀 100ms였습니다. `both`/`forwards`는 끝난 뒤에도 마지막 키프레임 값을 유지합니다. `an-fill`의 translate도 끝난 뒤 100px였습니다. MDN은 이 값이 'will-change에 포함된 것처럼' 동작한다고 합니다(쌓임 맥락 등).\n\n`transform: rotate(90deg) translateX(10px)`의 계산값은 `matrix(0, 1, -1, 0, 0, 10)`였고, 100×50 상자가 50×100으로 돌았습니다. 함수는 '오른쪽부터' 적용되어 translate가 먼저입니다. `rotate: 45deg; scale: 2; translate: 10px`처럼 개별 속성은 따로 트랜지션됩니다. `transform-origin` 기본값은 중심(`50px 25px`)입니다. `top left`로 바꾸면 scale(2)가 왼쪽 위에서 커져 rect가 (0,·)에서 200×100이 됩니다.",
-        code: "@keyframes slide { from { translate: 0; } to { translate: 100px; } }\n.an { animation: slide 100ms 50ms both; }        /* duration 100, delay 50 */\n이벤트: animationstart → animationend:slide:100ms\n.an-fill { animation: slide 100ms forwards; }    끝난 뒤 cs(\"an-fill\", \"translate\") = \"100px\"\n\n.tf { width: 100px; height: 50px; transform: rotate(90deg) translateX(10px); }\ncs(\"tf\", \"transform\")        // \"matrix(0, 1, -1, 0, 0, 10)\"   r(\"tf\") → 50×100\ncs(\"tf\", \"transform-origin\") // \"50px 25px\" (중심)\n.tf-ind { rotate: 45deg; scale: 2; translate: 10px 0; }   // 계산값 각각 \"45deg\" \"2\" \"10px\"\n.tf-origin { transform: scale(2); transform-origin: top left; }  → rect 200×100, 왼쪽 위 고정",
-      },
-      {
-        label: "직접 해 보기: fill-mode와 transform 순서",
-        body: "`animation: slide 1s 500ms`에서 첫 시간은 길이, 둘째는 지연입니다. 기록에 animationstart와 animationend가 두 상자 몫으로 찍힙니다. 끝난 지점은 지연을 뺀 길이입니다. 끝나면 none 상자는 제자리로 돌아가고, both 상자는 마지막 키프레임 값을 붙잡습니다. 지연 동안에도 both는 첫 키프레임 값을 씁니다. 지금 값의 translate로 확인하세요.\n아래 상자의 transform 함수는 오른쪽부터 적용됩니다. translateX가 먼저 옮기고, rotate가 그 결과를 돌립니다. 계산값은 matrix 하나로 합쳐집니다.",
-        lab: {
-          html: `<style>
+        heading: "키프레임과 트랜스폼",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: @keyframes와 fill-mode, 트랜스폼의 좌표",
+            body: "`animation: slide 100ms 50ms both`에서 첫 시간은 duration, 둘째는 delay입니다. 이벤트는 animationstart, animationend 순이었고, elapsedTime은 delay를 뺀 100ms였습니다. `both`/`forwards`는 끝난 뒤에도 마지막 키프레임 값을 유지합니다. `an-fill`의 translate도 끝난 뒤 100px였습니다. MDN은 이 값이 'will-change에 포함된 것처럼' 동작한다고 합니다(쌓임 맥락 등).\n\n`transform: rotate(90deg) translateX(10px)`의 계산값은 `matrix(0, 1, -1, 0, 0, 10)`였고, 100×50 상자가 50×100으로 돌았습니다. 함수는 '오른쪽부터' 적용되어 translate가 먼저입니다. `rotate: 45deg; scale: 2; translate: 10px`처럼 개별 속성은 따로 트랜지션됩니다. `transform-origin` 기본값은 중심(`50px 25px`)입니다. `top left`로 바꾸면 scale(2)가 왼쪽 위에서 커져 rect가 (0,·)에서 200×100이 됩니다.",
+            code: "@keyframes slide { from { translate: 0; } to { translate: 100px; } }\n.an { animation: slide 100ms 50ms both; }        /* duration 100, delay 50 */\n이벤트: animationstart → animationend:slide:100ms\n.an-fill { animation: slide 100ms forwards; }    끝난 뒤 cs(\"an-fill\", \"translate\") = \"100px\"\n\n.tf { width: 100px; height: 50px; transform: rotate(90deg) translateX(10px); }\ncs(\"tf\", \"transform\")        // \"matrix(0, 1, -1, 0, 0, 10)\"   r(\"tf\") → 50×100\ncs(\"tf\", \"transform-origin\") // \"50px 25px\" (중심)\n.tf-ind { rotate: 45deg; scale: 2; translate: 10px 0; }   // 계산값 각각 \"45deg\" \"2\" \"10px\"\n.tf-origin { transform: scale(2); transform-origin: top left; }  → rect 200×100, 왼쪽 위 고정",
+          },
+          {
+            label: "직접 해 보기: fill-mode와 transform 순서",
+            body: "`animation: slide 1s 500ms`에서 첫 시간은 길이, 둘째는 지연입니다. 기록에 animationstart와 animationend가 두 상자 몫으로 찍힙니다. 끝난 지점은 지연을 뺀 길이입니다. 끝나면 none 상자는 제자리로 돌아가고, both 상자는 마지막 키프레임 값을 붙잡습니다. 지연 동안에도 both는 첫 키프레임 값을 씁니다. 지금 값의 translate로 확인하세요.\n아래 상자의 transform 함수는 오른쪽부터 적용됩니다. translateX가 먼저 옮기고, rotate가 그 결과를 돌립니다. 계산값은 matrix 하나로 합쳐집니다.",
+            lab: {
+              html: `<style>
   @keyframes slide { from { translate: 0; } to { translate: 120px; } }
   .an { width: 70px; height: 24px; margin: 6px 0; background: #60a5fa; color: #fff; }
   #both { animation: slide 1s 500ms both; }
@@ -1984,53 +2798,103 @@ export const cssTheories: Theory[] = [
 <div class="an" id="both">both</div>
 <div class="an" id="none">none</div>
 <div class="tf" id="tf">transform</div>`,
-          height: 230,
-          checks: [
-            {
-              label: "both의 translate",
-              expr: "getComputedStyle(document.getElementById('both')).translate",
+              height: 230,
+              checks: [
+                {
+                  label: "both의 translate",
+                  expr: "getComputedStyle(document.getElementById('both')).translate",
+                },
+                {
+                  label: "none의 translate",
+                  expr: "getComputedStyle(document.getElementById('none')).translate",
+                },
+                {
+                  label: "tf의 transform 계산값",
+                  expr: "getComputedStyle(document.getElementById('tf')).transform",
+                },
+                {
+                  label: "tf의 x, y, 렌더 크기",
+                  expr: "(r => Math.round(r.left) + ', ' + Math.round(r.top) + ', ' + Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('tf').getBoundingClientRect())",
+                },
+              ],
+              tryIt: "transform의 두 함수 순서를 바꿔 실행해 보세요. 렌더 위치가 달라집니다. 작은 창의 새로 고침을 누르면 애니메이션을 다시 봅니다.",
             },
-            {
-              label: "none의 translate",
-              expr: "getComputedStyle(document.getElementById('none')).translate",
-            },
-            {
-              label: "tf의 transform 계산값",
-              expr: "getComputedStyle(document.getElementById('tf')).transform",
-            },
-            {
-              label: "tf의 x, y, 렌더 크기",
-              expr: "(r => Math.round(r.left) + ', ' + Math.round(r.top) + ', ' + Math.round(r.width) + ' × ' + Math.round(r.height))(document.getElementById('tf').getBoundingClientRect())",
-            },
-          ],
-          tryIt: "transform의 두 함수 순서를 바꿔 실행해 보세요. 렌더 위치가 달라집니다. 작은 창의 새로 고침을 누르면 애니메이션을 다시 봅니다.",
-        },
+          },
+        ],
       },
       {
-        label: "성능과 접근성: 무엇을 움직일 것인가",
-        body: "MDN은 '박스 모델에 영향을 주는 속성을 바꾸면 성능에 나쁘다'고 적습니다. width, margin, top을 애니메이션하면 프레임마다 레이아웃이 다시 돕니다. `transform`과 `opacity`는 레이아웃과 페인트 없이 합성 단계에서 처리되어 가장 쌉니다(렌더링 허브의 합성 장). 그래서 '이동은 translate로, 크기는 scale로'가 기본입니다. `will-change`는 레이어를 미리 떼어 두라는 힌트입니다. 남발하면 메모리를 쓰고, 8장의 두 트리인 포함 블록과 쌓임 맥락을 어지럽힙니다. 접근성을 위해 `prefers-reduced-motion: reduce`일 때는 큰 움직임을 끄거나 줄입니다(10장). 스크롤 연동 애니메이션은 `animation-timeline: scroll()`/`view()`로 JS 없이 만듭니다(Chrome 156 지원 true).",
-        code: "/* 싼 것 (합성만) */           /* 비싼 것 (레이아웃 → 페인트 → 합성) */\ntransform: translateX(…)        left / margin-left\ntransform: scale(…)             width / height\nopacity                         display / visibility (이산)\n\n@media (prefers-reduced-motion: reduce) { .hero { animation: none; transition-duration: 0.01ms; } }\n\n.bar { animation: grow linear both; animation-timeline: scroll(root); }   /* 스크롤 연동 */",
-        codeLang: "text",
+        heading: "성능과 접근성",
+        blocks: [
+          {
+            label: "성능과 접근성: 무엇을 움직일 것인가",
+            body: "MDN은 '박스 모델에 영향을 주는 속성을 바꾸면 성능에 나쁘다'고 적습니다. width, margin, top을 애니메이션하면 프레임마다 레이아웃이 다시 돕니다. `transform`과 `opacity`는 레이아웃과 페인트 없이 합성 단계에서 처리되어 가장 쌉니다(렌더링 허브의 합성 장). 그래서 '이동은 translate로, 크기는 scale로'가 기본입니다. `will-change`는 레이어를 미리 떼어 두라는 힌트입니다. 남발하면 메모리를 쓰고, 8장의 두 트리인 포함 블록과 쌓임 맥락을 어지럽힙니다. 접근성을 위해 `prefers-reduced-motion: reduce`일 때는 큰 움직임을 끄거나 줄입니다(10장). 스크롤 연동 애니메이션은 `animation-timeline: scroll()`/`view()`로 JS 없이 만듭니다(Chrome 156 지원 true).",
+            tables: [
+              {
+                caption: "움직일 때 싼 속성과 비싼 속성",
+                head: ["싼 것 (합성만)", "비싼 것 (레이아웃 → 페인트 → 합성)"],
+                rows: [
+                  ["`transform: translateX(…)`", "`left`, `margin-left`"],
+                  ["`transform: scale(…)`", "`width`, `height`"],
+                  ["`opacity`", "`display`, `visibility` (이산)"],
+                ],
+              },
+            ],
+            code: `@media (prefers-reduced-motion: reduce) { .hero { animation: none; transition-duration: 0.01ms; } }
+
+.bar { animation: grow linear both; animation-timeline: scroll(root); }   /* 스크롤 연동 */`,
+            codeLang: "css",
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 안 움직이거나 뚝뚝 끊길 때",
-        body: "움직임에서 자주 보는 것들입니다.",
-        code: "증상                              원인                             처방\n───────────────────────────────  ──────────────────────────────  ─────────────────────────────\nheight: auto 로 트랜지션이 안 된다   auto 는 보간 불가                  interpolate-size · calc-size ·\n                                                                grid 0fr→1fr\ndisplay: none 토글에 페이드가 안 된다  display 는 이산 · 초기 상태 없음     allow-discrete + @starting-style\n막 삽입한 요소의 트랜지션이 안 된다   첫 스타일 업데이트엔 트랜지션 없음    @starting-style (또는 한 프레임 뒤 클래스)\n커스텀 속성 트랜지션이 뚝 바뀐다      미등록 → 이산                     @property syntax 등록\n트랜지션 중 끝 이벤트가 안 온다       중간에 취소됨 (transitioncancel)   transitioncancel 도 처리\nfixed 자식이 transform 부모에 갇힌다  transform 이 포함 블록 생성 (8장)   부모 transform 제거 · Portal\n애니메이션이 !important 를 뚫는다/안 뚫는다  animations 는 normal 위, !important 아래; transitions 는 전부 위 (2장)\n                                     레이어·우선순위 확인\n스크롤이 버벅인다                   top/left/width 애니메이션 → 레이아웃  transform/opacity 로",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 안 움직이거나 뚝뚝 끊길 때",
+            body: "움직임에서 자주 보는 것들입니다.",
+            tables: [
+              {
+                caption: "움직임에서 자주 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["`height: auto`로 트랜지션이 안 된다", "`auto`는 보간 불가", "`interpolate-size`, `calc-size`, grid `0fr→1fr`"],
+                  ["`display: none` 토글에 페이드가 안 된다", "`display`는 이산, 초기 상태 없음", "`allow-discrete` + `@starting-style`"],
+                  ["막 삽입한 요소의 트랜지션이 안 된다", "첫 스타일 업데이트엔 트랜지션 없음", "`@starting-style` (또는 한 프레임 뒤 클래스)"],
+                  ["커스텀 속성 트랜지션이 뚝 바뀐다", "미등록 → 이산", "`@property` `syntax` 등록"],
+                  ["트랜지션 중 끝 이벤트가 안 온다", "중간에 취소됨 (`transitioncancel`)", "`transitioncancel`도 처리"],
+                  ["`fixed` 자식이 `transform` 부모에 갇힌다", "`transform`이 포함 블록 생성 (8장)", "부모 `transform` 제거, Portal"],
+                  ["애니메이션이 `!important`를 뚫는다, 안 뚫는다", "animations는 normal 위, `!important` 아래, transitions는 전부 위 (2장)", "레이어, 우선순위 확인"],
+                  ["스크롤이 버벅인다", "`top`, `left`, `width` 애니메이션 → 레이아웃", "`transform`, `opacity`로"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 시간 축의 세 층, 무엇이 어떻게 어디서 바뀌나",
+            body: "트랜지션·애니메이션은 '값이 시간에 따라 어떻게 바뀌나'(보간 vs 이산, easing, delay)를 정하고, 트랜스폼은 '그 값이 상자를 어떻게 움직이나'(레이아웃 밖 좌표 변환)를 정하며, 렌더링 파이프라인은 '어느 단계가 다시 도나'(레이아웃 · 페인트 · 합성)를 정합니다. 세 층이 만나는 자리가 성능 규칙입니다 — transform·opacity는 보간되고 합성 단계만 건드리니 싸고, display는 이산이고 레이아웃을 바꾸니 트랜지션에 특별한 문법이 필요하고, 커스텀 속성은 등록해야 보간됩니다. 캐스케이드 순서(애니메이션 > normal, 트랜지션 > 전부)는 '움직이는 중의 값은 그 어떤 선언보다 우선'이라는 설계입니다.",
+            code: "값의 변화    보간: length · color · number · transform · 등록된 --var    이산: display · visibility ·\n                                                                    미등록 --var\n시간         transition (상태 바뀔 때 암묵)  ·  @keyframes animation (명시 열)  ·  animation-timeline: scroll()\n상자 이동     transform / translate·rotate·scale (레이아웃 불변, 포함 블록·쌓임 맥락 생성)\n파이프라인    합성만 (transform · opacity)  <  페인트 (color · background)  <  레이아웃 (width · top · display)",
+            codeLang: "text",
+          },
+        ],
       },
       {
-        label: "문제의 구조: 시간 축의 세 층, 무엇이 어떻게 어디서 바뀌나",
-        body: "트랜지션·애니메이션은 '값이 시간에 따라 어떻게 바뀌나'(보간 vs 이산, easing, delay)를 정하고, 트랜스폼은 '그 값이 상자를 어떻게 움직이나'(레이아웃 밖 좌표 변환)를 정하며, 렌더링 파이프라인은 '어느 단계가 다시 도나'(레이아웃 · 페인트 · 합성)를 정합니다. 세 층이 만나는 자리가 성능 규칙입니다 — transform·opacity는 보간되고 합성 단계만 건드리니 싸고, display는 이산이고 레이아웃을 바꾸니 트랜지션에 특별한 문법이 필요하고, 커스텀 속성은 등록해야 보간됩니다. 캐스케이드 순서(애니메이션 > normal, 트랜지션 > 전부)는 '움직이는 중의 값은 그 어떤 선언보다 우선'이라는 설계입니다.",
-        code: "값의 변화    보간: length · color · number · transform · 등록된 --var    이산: display · visibility ·\n                                                                    미등록 --var\n시간         transition (상태 바뀔 때 암묵)  ·  @keyframes animation (명시 열)  ·  animation-timeline: scroll()\n상자 이동     transform / translate·rotate·scale (레이아웃 불변, 포함 블록·쌓임 맥락 생성)\n파이프라인    합성만 (transform · opacity)  <  페인트 (color · background)  <  레이아웃 (width · top · display)",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "글꼴 로딩도 '시간'의 문제입니다. 폰트가 오기 전후의 글자 교체(FOUT/FOIT)와 `font-display`는 13장에서 다룹니다. transform과 opacity가 싼 이유는 렌더링 허브의 합성·레이어 장이 파이프라인 쪽에서 설명합니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `height: auto` 트랜지션이 즉시 바뀐 이유와 두 가지 처방은?\n2) display를 페이드와 함께 토글하려면 필요한 두 문법은?\n3) `transform: rotate(90deg) translateX(10px)`에서 먼저 적용되는 함수는?\n4) transform·opacity가 '싼' 이유를 파이프라인 단계로 설명하세요.",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "글꼴 로딩도 '시간'의 문제입니다. 폰트가 오기 전후의 글자 교체(FOUT/FOIT)와 `font-display`는 13장에서 다룹니다. transform과 opacity가 싼 이유는 렌더링 허브의 합성·레이어 장이 파이프라인 쪽에서 설명합니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`height: auto` 트랜지션이 즉시 바뀐 이유와 두 가지 처방은 무엇인가요?", a: "`auto`는 길이가 아니라 보간할 수 없어서, 자식 높이를 바꾸자 보간 없이 곧바로 60px가 됐습니다. 처방은 `interpolate-size: allow-keywords`를 주는 것과 `height: calc-size(auto, size)`를 쓰는 것입니다. `grid-template-rows`를 `0fr`에서 `1fr`로 바꾸는 트릭도 있습니다." },
+              { q: "`display`를 페이드와 함께 토글하려면 필요한 두 문법은 무엇인가요?", a: "`transition-behavior: allow-discrete`(또는 `transition`에 붙이는 `allow-discrete`)와 `@starting-style`입니다. `@starting-style`은 `display: none`이던 요소에 출발값 `opacity: 0`을 주고, `allow-discrete`는 숨길 때 `display`를 끝까지 `block`으로 붙잡아 둡니다." },
+              { q: "`transform: rotate(90deg) translateX(10px)`에서 먼저 적용되는 함수는 무엇인가요?", a: "`translateX(10px)`입니다. transform 함수는 오른쪽부터 적용되므로 먼저 옮기고, 그 결과를 `rotate(90deg)`가 돌립니다. 계산값은 `matrix(0, 1, -1, 0, 0, 10)` 하나로 합쳐졌습니다." },
+              { q: "`transform`, `opacity`가 '싼' 이유를 파이프라인 단계로 설명하면 어떻게 되나요?", a: "레이아웃과 페인트를 다시 돌리지 않고 합성 단계에서만 처리되기 때문입니다. 반대로 `width`, `margin`, `top`을 애니메이션하면 프레임마다 레이아웃, 페인트, 합성이 다시 돕니다. 그래서 이동은 `translate`로, 크기는 `scale`로 합니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -2045,70 +2909,103 @@ export const cssTheories: Theory[] = [
     id: "css-s13",
     name: "13장 · 글꼴과 텍스트",
     tagline: "@font-face가 파일을 글꼴 이름에 묶고, font-display가 기다리는 법을 정한다",
+    keyPoints: [
+      "`font-family`는 대체 목록입니다. 웹 폰트는 `@font-face`로 파일을 이름에 묶고, 실제로 그려지는 글꼴은 그 글자를 가진 첫 후보 파일입니다.",
+      "`font-display`가 폰트를 기다리는 법을 정합니다. `block`은 글자를 숨기고(FOIT), `swap`은 대체 글꼴을 먼저 보이고(FOUT), `optional`은 늦으면 이번 방문은 대체 글꼴로 둡니다.",
+      "`unicode-range`로 범위를 나누면 그 범위의 글자가 쓰일 때만 파일을 받습니다. 한글 폰트를 서브셋으로 쪼개는 표준 방법입니다.",
+      "`line-height`는 단위 없는 숫자로 적습니다. `150%`나 `24px`는 계산된 px가 상속되어 32px 글자 자식의 줄 상자가 글자보다 낮아집니다.",
+    ],
     intro:
       "`font-family`는 대체 목록(스택)입니다. 맨 끝의 일반 가족(sans-serif, system-ui)이 마지막 보루입니다. 웹 폰트는 `@font-face`로 파일(src)을 이름에 묶습니다. `font-display`는 '폰트가 오기 전에 무엇을 보여 줄까'를 정합니다. 값은 block(숨김), swap(대체 글꼴 먼저), fallback, optional입니다. `unicode-range`로 글자 범위마다 파일을 나누고, 가변 폰트는 `@font-face` 하나에 weight 범위를 둡니다. 로딩 상태는 `document.fonts`(CSS Font Loading API)가 알려 줍니다. 텍스트 쪽에서는 줄 높이, 줄바꿈, 말줄임, `text-wrap: balance`를 다룹니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 없는 폰트는 loading → error, 그동안 대체 글꼴",
-        body: "`@font-face { font-family: \"ProbeFont\"; src: url(\"missing.woff2\"); font-display: swap }`과 `.ft { font-family: \"ProbeFont\", sans-serif }`를 썼습니다. 계산값 font-family는 스택 그대로 `\"ProbeFont, sans-serif\"`였습니다. `document.fonts`의 상태는 처음 `ProbeFont:loading`, `document.fonts.ready` 뒤 `ProbeFont:error`(404)였고, `document.fonts.check(\"12px ProbeFont\")`는 false였습니다. swap이라 그동안 글자는 sans-serif로 보였습니다.\n\nfont 단축 `italic bold 20px/1.5 system-ui, sans-serif`는 style italic, weight 700, size 20px, line-height 30px(1.5 × 20), family `system-ui, sans-serif`로 계산됐습니다. 단축은 생략한 하위 속성을 초깃값으로 되돌리고, 순서(style variant weight stretch size/line-height family)를 지켜야 합니다.",
-        code: "@font-face { font-family: \"ProbeFont\"; src: url(\"missing.woff2\") format(\"woff2\"); font-display: swap; }\n.ft { font-family: \"ProbeFont\", sans-serif; }\n\ncs(\"ft\", \"font-family\")      // \"ProbeFont, sans-serif\"  (스택은 그대로 — 어느 것이 그려졌는지는 안 보임)\n[...document.fonts]           // [\"ProbeFont:loading\"] → fonts.ready 뒤 [\"ProbeFont:error\"]\ndocument.fonts.check(\"12px ProbeFont\")   // false\n\n.ft-stack { font: italic bold 20px/1.5 system-ui, sans-serif; }\n→ style italic · weight 700 · size 20px · line-height 30px · family \"system-ui, sans-serif\"",
-      },
-      {
-        label: "직접 해 보기: document.fonts로 본 폰트 상태",
-        body: "@font-face가 가리키는 파일은 없는 파일입니다. 지금 값의 document.fonts에서 Probe의 상태가 곧 error가 됩니다. 받으려다 실패한 것입니다. 그동안에도 글자는 보입니다. `font-display: swap`이라 대체 글꼴인 sans-serif로 먼저 그리기 때문입니다. 계산값 font-family는 스택을 그대로 돌려줄 뿐, 어느 글꼴로 그렸는지는 알려 주지 않습니다. 아래 줄은 font 단축 속성입니다. 한 줄에 적은 값이 하위 속성으로 풀립니다.",
-        lab: {
-          html: `<style>
+        heading: "폰트 로딩 상태",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 없는 폰트는 loading → error, 그동안 대체 글꼴",
+            body: "`@font-face { font-family: \"ProbeFont\"; src: url(\"missing.woff2\"); font-display: swap }`과 `.ft { font-family: \"ProbeFont\", sans-serif }`를 썼습니다. 계산값 font-family는 스택 그대로 `\"ProbeFont, sans-serif\"`였습니다. `document.fonts`의 상태는 처음 `ProbeFont:loading`, `document.fonts.ready` 뒤 `ProbeFont:error`(404)였고, `document.fonts.check(\"12px ProbeFont\")`는 false였습니다. swap이라 그동안 글자는 sans-serif로 보였습니다.\n\nfont 단축 `italic bold 20px/1.5 system-ui, sans-serif`는 style italic, weight 700, size 20px, line-height 30px(1.5 × 20), family `system-ui, sans-serif`로 계산됐습니다. 단축은 생략한 하위 속성을 초깃값으로 되돌리고, 순서(style variant weight stretch size/line-height family)를 지켜야 합니다.",
+            code: "@font-face { font-family: \"ProbeFont\"; src: url(\"missing.woff2\") format(\"woff2\"); font-display: swap; }\n.ft { font-family: \"ProbeFont\", sans-serif; }\n\ncs(\"ft\", \"font-family\")      // \"ProbeFont, sans-serif\"  (스택은 그대로 — 어느 것이 그려졌는지는 안 보임)\n[...document.fonts]           // [\"ProbeFont:loading\"] → fonts.ready 뒤 [\"ProbeFont:error\"]\ndocument.fonts.check(\"12px ProbeFont\")   // false\n\n.ft-stack { font: italic bold 20px/1.5 system-ui, sans-serif; }\n→ style italic · weight 700 · size 20px · line-height 30px · family \"system-ui, sans-serif\"",
+          },
+          {
+            label: "직접 해 보기: document.fonts로 본 폰트 상태",
+            body: "@font-face가 가리키는 파일은 없는 파일입니다. 지금 값의 document.fonts에서 Probe의 상태가 곧 error가 됩니다. 받으려다 실패한 것입니다. 그동안에도 글자는 보입니다. `font-display: swap`이라 대체 글꼴인 sans-serif로 먼저 그리기 때문입니다. 계산값 font-family는 스택을 그대로 돌려줄 뿐, 어느 글꼴로 그렸는지는 알려 주지 않습니다. 아래 줄은 font 단축 속성입니다. 한 줄에 적은 값이 하위 속성으로 풀립니다.",
+            lab: {
+              html: `<style>
   @font-face { font-family: "Probe"; src: url("missing.woff2") format("woff2"); font-display: swap; }
   .ft { font-family: "Probe", sans-serif; font-size: 20px; }
   .sh { font: italic bold 20px/1.5 system-ui, sans-serif; }
 </style>
 <p class="ft" id="ft">없는 폰트를 부른 글자</p>
 <p class="sh" id="sh">font 단축 한 줄</p>`,
-          height: 140,
-          checks: [
-            {
-              label: "ft의 font-family 계산값",
-              expr: "getComputedStyle(document.getElementById('ft')).fontFamily",
+              height: 140,
+              checks: [
+                {
+                  label: "ft의 font-family 계산값",
+                  expr: "getComputedStyle(document.getElementById('ft')).fontFamily",
+                },
+                {
+                  label: "document.fonts의 상태",
+                  expr: "[...document.fonts].map(f => f.family + ' ' + f.status).join(', ')",
+                },
+                {
+                  label: "document.fonts.check('20px Probe')",
+                  expr: "document.fonts.check('20px Probe')",
+                },
+                {
+                  label: "sh의 style, weight, size, line-height",
+                  expr: "(s => [s.fontStyle, s.fontWeight, s.fontSize, s.lineHeight].join(', '))(getComputedStyle(document.getElementById('sh')))",
+                },
+              ],
+              tryIt: "`.ft`의 font-family에서 `\"Probe\",`를 지우고 실행해 보세요. 쓰이지 않는 폰트는 받지 않아 상태가 unloaded로 남습니다.",
             },
-            {
-              label: "document.fonts의 상태",
-              expr: "[...document.fonts].map(f => f.family + ' ' + f.status).join(', ')",
-            },
-            {
-              label: "document.fonts.check('20px Probe')",
-              expr: "document.fonts.check('20px Probe')",
-            },
-            {
-              label: "sh의 style, weight, size, line-height",
-              expr: "(s => [s.fontStyle, s.fontWeight, s.fontSize, s.lineHeight].join(', '))(getComputedStyle(document.getElementById('sh')))",
-            },
-          ],
-          tryIt: "`.ft`의 font-family에서 `\"Probe\",`를 지우고 실행해 보세요. 쓰이지 않는 폰트는 받지 않아 상태가 unloaded로 남습니다.",
-        },
-      },
-      {
-        label: "font-display 네 값과 FOIT, FOUT",
-        body: "폰트 로딩에는 '차단 기간'(글자를 숨김)과 '교체 기간'(대체 글꼴로 보이다가 오면 바꿈)이 있습니다.\nblock은 차단이 길고(약 3초) 교체는 무한입니다. 글자가 안 보이는 FOIT입니다.\nswap은 차단이 거의 0이고 교체는 무한입니다. 대체 글꼴이 먼저 보이다 바뀌는 FOUT입니다.\nfallback은 차단이 아주 짧고(약 100ms) 교체도 짧습니다(약 3초). 그 안에 안 오면 대체 글꼴로 굳습니다.\noptional은 차단이 아주 짧고 교체가 없습니다. 빨리 안 오면 이번 방문은 대체 글꼴로 보이고, 다음 방문에 캐시된 폰트를 씁니다.\nauto는 브라우저 기본값이며 대개 block과 비슷합니다.\n본문에는 swap이나 optional을 씁니다. 아이콘 폰트에는 block을 씁니다. 대체 글자로는 깨져 보이기 때문입니다. 교체 때의 레이아웃 흔들림(CLS)은 `size-adjust`와 `ascent-override`로 대체 글꼴의 메트릭을 맞춰 줄입니다.",
-        code: "값         차단 기간      교체 기간     보이는 것                      쓰는 곳\n────────  ────────────  ──────────  ────────────────────────────  ─────────────────\nblock      ~3s           무한         숨김 → 폰트 (FOIT)              아이콘 폰트\nswap       ~0            무한         대체 → 폰트 (FOUT)              본문 (기본 권장)\nfallback   ~100ms        ~3s          짧게 숨김 → 대체 → 늦으면 대체 고정  본문 (흔들림 적게)\noptional   ~100ms        없음         늦으면 이번엔 대체               성능 우선\n\n/* 대체 글꼴 메트릭 맞추기 — 교체 때 흔들림 줄이기 */\n@font-face { font-family: \"Fallback\"; src: local(\"Arial\"); size-adjust: 105%; ascent-override: 92%; }",
-        codeLang: "text",
-        terms: [
-          {
-            term: "FOIT · FOUT",
-            body: "Flash Of Invisible Text는 폰트가 올 때까지 글자를 숨깁니다. Flash Of Unstyled Text는 대체 글꼴로 보이다 바뀝니다. 어느 쪽일지는 font-display가 정합니다. 둘 다 '시간'의 문제라 12장의 트랜지션과 같은 축에 있습니다. 교체 순간의 레이아웃 이동은 CLS 지표에 잡힙니다.",
           },
         ],
       },
       {
-        label: "@font-face 디스크립터와 가변 폰트, unicode-range",
-        body: "`src`에는 여러 후보를 적고, 브라우저는 지원하는 첫 포맷을 씁니다(`url() format(\"woff2\")`, `local()`로 설치된 폰트 우선). `font-weight: 100 900`처럼 범위를 적으면 가변 폰트 하나로 모든 굵기를 씁니다. MDN도 '한 @font-face 선언으로 모든 스타일을 포함한 가변 폰트를 가져올 수 있다'고 적습니다. `unicode-range: U+AC00-D7A3`처럼 글자 범위를 적으면, 그 범위의 글자가 실제로 쓰일 때만 그 파일을 받습니다. 한글(11,172자)·한자처럼 큰 폰트를 서브셋으로 쪼개는 표준 방법입니다. 같은 family 이름으로 여러 @font-face를 두면 범위별로 합쳐집니다. `font-feature-settings` · `font-variation-settings`로 OpenType 기능·축을 직접 건드립니다. 미리 받으려면 `<link rel=\"preload\" as=\"font\" type=\"font/woff2\" crossorigin>`을 씁니다(렌더링 허브).",
-        code: "@font-face {\n  font-family: \"Pretendard\";\n  src: local(\"Pretendard\"), url(\"/fonts/pretendard-ko.woff2\") format(\"woff2\");\n  font-weight: 100 900;                 /* 가변 폰트 — 한 파일로 모든 굵기 */\n  font-display: swap;\n  unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F;   /* 한글만 — 쓰일 때 받음 */\n}\n@font-face {\n  font-family: \"Pretendard\";            /* 같은 이름, 다른 범위 → 합쳐짐 */\n  src: url(\"/fonts/pretendard-latin.woff2\") format(\"woff2\");\n  font-display: swap;\n  unicode-range: U+0000-00FF;\n}",
+        heading: "font-display 정책",
+        blocks: [
+          {
+            label: "font-display 네 값과 FOIT, FOUT",
+            body: "폰트 로딩에는 '차단 기간'(글자를 숨김)과 '교체 기간'(대체 글꼴로 보이다가 오면 바꿈)이 있습니다.\nblock은 차단이 길고(약 3초) 교체는 무한입니다. 글자가 안 보이는 FOIT입니다.\nswap은 차단이 거의 0이고 교체는 무한입니다. 대체 글꼴이 먼저 보이다 바뀌는 FOUT입니다.\nfallback은 차단이 아주 짧고(약 100ms) 교체도 짧습니다(약 3초). 그 안에 안 오면 대체 글꼴로 굳습니다.\noptional은 차단이 아주 짧고 교체가 없습니다. 빨리 안 오면 이번 방문은 대체 글꼴로 보이고, 다음 방문에 캐시된 폰트를 씁니다.\nauto는 브라우저 기본값이며 대개 block과 비슷합니다.\n본문에는 swap이나 optional을 씁니다. 아이콘 폰트에는 block을 씁니다. 대체 글자로는 깨져 보이기 때문입니다. 교체 때의 레이아웃 흔들림(CLS)은 `size-adjust`와 `ascent-override`로 대체 글꼴의 메트릭을 맞춰 줄입니다.",
+            terms: [
+              {
+                term: "FOIT · FOUT",
+                body: "Flash Of Invisible Text는 폰트가 올 때까지 글자를 숨깁니다. Flash Of Unstyled Text는 대체 글꼴로 보이다 바뀝니다. 어느 쪽일지는 font-display가 정합니다. 둘 다 '시간'의 문제라 12장의 트랜지션과 같은 축에 있습니다. 교체 순간의 레이아웃 이동은 CLS 지표에 잡힙니다.",
+              },
+            ],
+            tables: [
+              {
+                caption: "`font-display` 네 값",
+                head: ["값", "차단 기간", "교체 기간", "보이는 것", "쓰는 곳"],
+                rows: [
+                  ["`block`", "~3s", "무한", "숨김 → 폰트 (FOIT)", "아이콘 폰트"],
+                  ["`swap`", "~0", "무한", "대체 → 폰트 (FOUT)", "본문 (기본 권장)"],
+                  ["`fallback`", "~100ms", "~3s", "짧게 숨김 → 대체 → 늦으면 대체 고정", "본문 (흔들림 적게)"],
+                  ["`optional`", "~100ms", "없음", "늦으면 이번엔 대체", "성능 우선"],
+                ],
+              },
+            ],
+            code: `/* 대체 글꼴 메트릭 맞추기, 교체 때 흔들림 줄이기 */
+@font-face { font-family: "Fallback"; src: local("Arial"); size-adjust: 105%; ascent-override: 92%; }`,
+            codeLang: "css",
+          },
+        ],
       },
       {
-        label: "직접 해 보기: unicode-range는 쓰일 때만 받는다",
-        body: `같은 이름 Sub에 @font-face 둘을 묶었습니다. 하나는 라틴 문자 범위, 하나는 한글 음절 범위입니다. 지금 글은 영어뿐이라 라틴 쪽만 받으러 갑니다. 한글 쪽은 unloaded로 남고, 요청한 파일 목록에도 없습니다. p에 한글을 한 글자 넣고 실행해 보세요. 한글 쪽도 받으러 가서 상태가 바뀝니다. 두 파일 모두 없는 파일이라 끝은 error입니다.
+        heading: "@font-face와 서브셋",
+        blocks: [
+          {
+            label: "@font-face 디스크립터와 가변 폰트, unicode-range",
+            body: "`src`에는 여러 후보를 적고, 브라우저는 지원하는 첫 포맷을 씁니다(`url() format(\"woff2\")`, `local()`로 설치된 폰트 우선). `font-weight: 100 900`처럼 범위를 적으면 가변 폰트 하나로 모든 굵기를 씁니다. MDN도 '한 @font-face 선언으로 모든 스타일을 포함한 가변 폰트를 가져올 수 있다'고 적습니다. `unicode-range: U+AC00-D7A3`처럼 글자 범위를 적으면, 그 범위의 글자가 실제로 쓰일 때만 그 파일을 받습니다. 한글(11,172자)·한자처럼 큰 폰트를 서브셋으로 쪼개는 표준 방법입니다. 같은 family 이름으로 여러 @font-face를 두면 범위별로 합쳐집니다. `font-feature-settings` · `font-variation-settings`로 OpenType 기능·축을 직접 건드립니다. 미리 받으려면 `<link rel=\"preload\" as=\"font\" type=\"font/woff2\" crossorigin>`을 씁니다(렌더링 허브).",
+            code: "@font-face {\n  font-family: \"Pretendard\";\n  src: local(\"Pretendard\"), url(\"/fonts/pretendard-ko.woff2\") format(\"woff2\");\n  font-weight: 100 900;                 /* 가변 폰트 — 한 파일로 모든 굵기 */\n  font-display: swap;\n  unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F;   /* 한글만 — 쓰일 때 받음 */\n}\n@font-face {\n  font-family: \"Pretendard\";            /* 같은 이름, 다른 범위 → 합쳐짐 */\n  src: url(\"/fonts/pretendard-latin.woff2\") format(\"woff2\");\n  font-display: swap;\n  unicode-range: U+0000-00FF;\n}",
+            codeLang: "css",
+          },
+          {
+            label: "직접 해 보기: unicode-range는 쓰일 때만 받는다",
+            body: `같은 이름 Sub에 @font-face 둘을 묶었습니다. 하나는 라틴 문자 범위, 하나는 한글 음절 범위입니다. 지금 글은 영어뿐이라 라틴 쪽만 받으러 갑니다. 한글 쪽은 unloaded로 남고, 요청한 파일 목록에도 없습니다. p에 한글을 한 글자 넣고 실행해 보세요. 한글 쪽도 받으러 가서 상태가 바뀝니다. 두 파일 모두 없는 파일이라 끝은 error입니다.
 반대로 한글만 적어도 라틴 쪽은 받습니다. 브라우저는 줄의 기준 높이를 잴 글꼴로, 공백 문자(U+0020)를 가진 첫 글꼴을 쓰기 때문입니다.`,
-        lab: {
-          html: `<style>
+            lab: {
+              html: `<style>
   @font-face { font-family: "Sub"; src: url("sub-latin.woff2") format("woff2");
                unicode-range: U+0000-00FF; }
   @font-face { font-family: "Sub"; src: url("sub-hangul.woff2") format("woff2");
@@ -2116,30 +3013,35 @@ export const cssTheories: Theory[] = [
   p { font-family: "Sub", sans-serif; font-size: 20px; }
 </style>
 <p id="txt">Latin letters only</p>`,
-          height: 100,
-          checks: [
-            {
-              label: "두 FontFace의 범위와 상태",
-              expr: "[...document.fonts].map(f => f.unicodeRange + ' ' + f.status).join(', ')",
+              height: 100,
+              checks: [
+                {
+                  label: "두 FontFace의 범위와 상태",
+                  expr: "[...document.fonts].map(f => f.unicodeRange + ' ' + f.status).join(', ')",
+                },
+                {
+                  label: "요청한 폰트 파일",
+                  expr: "performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => n.endsWith('.woff2')).join(', ') || '없음'",
+                },
+              ],
+              tryIt: "Latin letters only 끝에 '한'을 붙여 실행해 보세요. 요청한 파일 목록에 sub-hangul.woff2가 더해집니다.",
             },
-            {
-              label: "요청한 폰트 파일",
-              expr: "performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => n.endsWith('.woff2')).join(', ') || '없음'",
-            },
-          ],
-          tryIt: "Latin letters only 끝에 '한'을 붙여 실행해 보세요. 요청한 파일 목록에 sub-hangul.woff2가 더해집니다.",
-        },
+          },
+        ],
       },
       {
-        label: "텍스트: 줄 높이, 줄바꿈, 균형",
-        body: "`line-height`는 단위 없는 숫자(1.5)로 적어야 자식이 '비율'을 상속합니다. `150%`나 `24px`는 계산된 px가 상속되므로, 글자 크기가 다른 자식에서 어긋납니다. `overflow-wrap: anywhere`는 긴 토큰도 끊습니다. `word-break: keep-all`은 한국어와 일본어에서 단어 단위로만 끊어 어절을 지킵니다. `hyphens: auto`도 있습니다. `text-wrap: balance`는 제목의 줄 길이를 고르게 맞춥니다(Chrome 156 지원 true). `text-wrap: pretty`는 마지막 줄의 외톨이 단어를 줄입니다. `white-space`와 `text-overflow: ellipsis` 조합은 9장에서 다룹니다. 세로쓰기와 RTL의 `text-align: start`는 10장의 논리값입니다.",
-        code: "body { line-height: 1.5; }        /* 숫자 — 비율로 상속 */\nh1   { text-wrap: balance; }       /* 줄 길이 균형 */\np    { text-wrap: pretty; overflow-wrap: anywhere; }\n.ko  { word-break: keep-all; }      /* 한국어 어절 보존 */\n\n/* line-height 단위의 차이 */\n.parent { font-size: 16px; line-height: 1.5; }   .child { font-size: 32px; }  → 자식 48px (비율)\n.parent { font-size: 16px; line-height: 24px; }  .child { font-size: 32px; }  → 자식 24px (겹침!)",
-      },
-      {
-        label: "직접 해 보기: line-height의 숫자, px, %",
-        body: "세 부모 모두 16px 글자에 줄 높이 1.5배를 줬습니다. 적은 방식만 다릅니다. 숫자 1.5는 비율 그대로 상속됩니다. 그래서 32px인 자식도 자기 글자 크기의 1.5배를 씁니다. 24px와 150%는 부모에서 px로 계산된 값이 상속됩니다. 글자가 두 배인 자식도 부모의 줄 높이를 그대로 써서, 줄 상자가 글자보다 낮아집니다. 노란 배경의 높이를 견줘 보세요.",
-        lab: {
-          html: `<style>
+        heading: "줄 높이와 줄바꿈",
+        blocks: [
+          {
+            label: "텍스트: 줄 높이, 줄바꿈, 균형",
+            body: "`line-height`는 단위 없는 숫자(1.5)로 적어야 자식이 '비율'을 상속합니다. `150%`나 `24px`는 계산된 px가 상속되므로, 글자 크기가 다른 자식에서 어긋납니다. `overflow-wrap: anywhere`는 긴 토큰도 끊습니다. `word-break: keep-all`은 한국어와 일본어에서 단어 단위로만 끊어 어절을 지킵니다. `hyphens: auto`도 있습니다. `text-wrap: balance`는 제목의 줄 길이를 고르게 맞춥니다(Chrome 156 지원 true). `text-wrap: pretty`는 마지막 줄의 외톨이 단어를 줄입니다. `white-space`와 `text-overflow: ellipsis` 조합은 9장에서 다룹니다. 세로쓰기와 RTL의 `text-align: start`는 10장의 논리값입니다.",
+            code: "body { line-height: 1.5; }        /* 숫자 — 비율로 상속 */\nh1   { text-wrap: balance; }       /* 줄 길이 균형 */\np    { text-wrap: pretty; overflow-wrap: anywhere; }\n.ko  { word-break: keep-all; }      /* 한국어 어절 보존 */\n\n/* line-height 단위의 차이 */\n.parent { font-size: 16px; line-height: 1.5; }   .child { font-size: 32px; }  → 자식 48px (비율)\n.parent { font-size: 16px; line-height: 24px; }  .child { font-size: 32px; }  → 자식 24px (겹침!)",
+          },
+          {
+            label: "직접 해 보기: line-height의 숫자, px, %",
+            body: "세 부모 모두 16px 글자에 줄 높이 1.5배를 줬습니다. 적은 방식만 다릅니다. 숫자 1.5는 비율 그대로 상속됩니다. 그래서 32px인 자식도 자기 글자 크기의 1.5배를 씁니다. 24px와 150%는 부모에서 px로 계산된 값이 상속됩니다. 글자가 두 배인 자식도 부모의 줄 높이를 그대로 써서, 줄 상자가 글자보다 낮아집니다. 노란 배경의 높이를 견줘 보세요.",
+            lab: {
+              html: `<style>
   .p { font-size: 16px; margin-bottom: 6px; background: #f1f5f9; }
   #n { line-height: 1.5; }
   #px { line-height: 24px; }
@@ -2149,39 +3051,81 @@ export const cssTheories: Theory[] = [
 <div class="p" id="n">1.5<span id="n2">자식은 32px 글자</span></div>
 <div class="p" id="px">24px<span id="px2">자식은 32px 글자</span></div>
 <div class="p" id="pc">150%<span id="pc2">자식은 32px 글자</span></div>`,
-          height: 260,
-          checks: [
-            {
-              label: "자식 셋의 line-height",
-              expr: "['n2', 'px2', 'pc2'].map(id => getComputedStyle(document.getElementById(id)).lineHeight).join(', ')",
+              height: 260,
+              checks: [
+                {
+                  label: "자식 셋의 line-height",
+                  expr: "['n2', 'px2', 'pc2'].map(id => getComputedStyle(document.getElementById(id)).lineHeight).join(', ')",
+                },
+                {
+                  label: "자식 셋의 높이",
+                  expr: "['n2', 'px2', 'pc2'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().height)).join(', ')",
+                },
+              ],
+              tryIt: "자식 span에 글자를 더 넣어 두 줄로 만들어 보세요. px와 % 쪽은 줄끼리 겹칩니다.",
             },
-            {
-              label: "자식 셋의 높이",
-              expr: "['n2', 'px2', 'pc2'].map(id => Math.round(document.getElementById(id).getBoundingClientRect().height)).join(', ')",
-            },
-          ],
-          tryIt: "자식 span에 글자를 더 넣어 두 줄로 만들어 보세요. px와 % 쪽은 줄끼리 겹칩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 글꼴에서",
-        body: "웹 폰트와 텍스트에서 자주 보는 것들입니다.",
-        code: "증상                                원인                             처방\n─────────────────────────────────  ──────────────────────────────  ─────────────────────────────\n글자가 잠깐 안 보인다 (FOIT)          font-display: block/auto          swap · optional\n폰트 오면서 레이아웃이 튄다 (CLS)      대체 글꼴 메트릭 차이                size-adjust/ascent-override · preload\n한글 폰트가 2MB                      전체 글리프 한 파일                  unicode-range 서브셋 · woff2\n굵기마다 파일이 다르다                 정적 폰트                          가변 폰트 + font-weight 범위\nbold 가 가짜 굵기 (faux bold)         그 굵기 파일 없음 → 합성             해당 weight 선언 · font-synthesis: none\n자식 줄 간격이 겹친다                  line-height 를 px/% 로               단위 없는 숫자\n한국어 단어가 중간에서 끊긴다           기본 줄바꿈                         word-break: keep-all\n폰트가 적용됐는지 모른다               computed font-family 는 스택 그대로   document.fonts.check · DevTools\n                                                                    Rendered Fonts",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 글꼴에서",
+            body: "웹 폰트와 텍스트에서 자주 보는 것들입니다.",
+            tables: [
+              {
+                caption: "글꼴에서 자주 보는 것",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["글자가 잠깐 안 보인다 (FOIT)", "`font-display: block`, `auto`", "`swap`, `optional`"],
+                  ["폰트 오면서 레이아웃이 튄다 (CLS)", "대체 글꼴 메트릭 차이", "`size-adjust`, `ascent-override`, `preload`"],
+                  ["한글 폰트가 2MB", "전체 글리프 한 파일", "`unicode-range` 서브셋, `woff2`"],
+                  ["굵기마다 파일이 다르다", "정적 폰트", "가변 폰트 + `font-weight` 범위"],
+                  ["`bold`가 가짜 굵기 (faux bold)", "그 굵기 파일 없음 → 합성", "해당 weight 선언, `font-synthesis: none`"],
+                  ["자식 줄 간격이 겹친다", "`line-height`를 px, %로", "단위 없는 숫자"],
+                  ["한국어 단어가 중간에서 끊긴다", "기본 줄바꿈", "`word-break: keep-all`"],
+                  ["폰트가 적용됐는지 모른다", "computed `font-family`는 스택 그대로", "`document.fonts.check`, DevTools Rendered Fonts"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 글꼴은 '파일'이고 텍스트는 '그 파일로 그린 상자'다",
+            body: "`font-family`는 이름 목록일 뿐입니다. 실제로 그려지는 글꼴은 '그 글자를 가진 첫 후보 파일'입니다. 그래서 글자(코드 포인트)마다 다른 파일이 쓰일 수 있고, 그 선택을 unicode-range로 설계합니다. 파일은 네트워크로 오니 시간이 걸립니다. font-display는 그동안의 정책입니다. 텍스트는 글꼴의 메트릭(ascent, descent, 글자 폭)으로 줄 상자를 채운 결과입니다. 글꼴이 바뀌면 줄 높이와 줄바꿈이 바뀌고 레이아웃이 움직입니다. 그래서 글꼴 최적화는 '파일 크기(서브셋 · 가변 · woff2) → 로딩 정책(font-display · preload) → 메트릭 맞춤(size-adjust)' 세 겹입니다.",
+            tables: [
+              {
+                caption: "글꼴이 줄 상자가 되기까지 (위에서 아래로)",
+                head: ["단계", "정하는 것", "최적화 도구"],
+                rows: [
+                  ["① `font-family` 스택", "`\"A\", \"B\", sans`", "-"],
+                  ["② 글자마다 '가진 첫 파일'", "`unicode-range`로 설계", "서브셋, 가변, `woff2`"],
+                  ["③ 파일 로딩 (시간)", "`font-display` 정책", "`preload`, `optional`"],
+                  ["④ 메트릭으로 줄 상자", "`line-height`, 줄바꿈, CLS", "`size-adjust`, `ascent-override`"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 글꼴은 '파일'이고 텍스트는 '그 파일로 그린 상자'다",
-        body: "`font-family`는 이름 목록일 뿐입니다. 실제로 그려지는 글꼴은 '그 글자를 가진 첫 후보 파일'입니다. 그래서 글자(코드 포인트)마다 다른 파일이 쓰일 수 있고, 그 선택을 unicode-range로 설계합니다. 파일은 네트워크로 오니 시간이 걸립니다. font-display는 그동안의 정책입니다. 텍스트는 글꼴의 메트릭(ascent, descent, 글자 폭)으로 줄 상자를 채운 결과입니다. 글꼴이 바뀌면 줄 높이와 줄바꿈이 바뀌고 레이아웃이 움직입니다. 그래서 글꼴 최적화는 '파일 크기(서브셋 · 가변 · woff2) → 로딩 정책(font-display · preload) → 메트릭 맞춤(size-adjust)' 세 겹입니다.",
-        code: "font-family 스택  →  글자마다 '가진 첫 파일'      →  파일 로딩 (시간)        →  메트릭으로 줄 상자\n\"A\", \"B\", sans     unicode-range 로 설계           font-display 정책         line-height · 줄바꿈 · CLS\n                   서브셋 · 가변 · woff2            preload · optional        size-adjust · ascent-override",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "마지막 장은 스타일을 '범위'로 가두는 세 도구(중첩, 레이어, @scope)를 다룹니다. 컴포넌트 프레임워크의 scoped CSS와 CSS Modules가 무엇을 흉내 내는지도 봅니다. 글꼴 파일의 preload와 렌더링 차단은 렌더링 허브로, 한국어·일본어 조판은 i18n 허브로 이어집니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `document.fonts`의 상태가 loading에서 error로 바뀌는 동안 글자가 보인 이유는?\n2) swap과 optional의 차이를 '교체 기간'으로 설명하세요.\n3) 한글 폰트를 '쓰일 때만' 받게 하는 디스크립터는?\n4) `line-height: 150%`가 자식에서 문제가 되는 이유는?",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "마지막 장은 스타일을 '범위'로 가두는 세 도구(중첩, 레이어, @scope)를 다룹니다. 컴포넌트 프레임워크의 scoped CSS와 CSS Modules가 무엇을 흉내 내는지도 봅니다. 글꼴 파일의 preload와 렌더링 차단은 렌더링 허브로, 한국어·일본어 조판은 i18n 허브로 이어집니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`document.fonts`의 상태가 loading에서 error로 바뀌는 동안 글자가 보인 이유는 무엇인가요?", a: "`font-display: swap`이라 차단 기간이 거의 0이어서, 폰트를 기다리지 않고 대체 글꼴 `sans-serif`로 먼저 그렸기 때문입니다. 폰트 파일은 404로 끝내 오지 않아 상태가 error가 됐고, 글자는 계속 대체 글꼴로 보였습니다." },
+              { q: "`swap`과 `optional`의 차이를 '교체 기간'으로 설명하면 어떻게 되나요?", a: "`swap`은 교체 기간이 무한이라, 대체 글꼴로 보이다가 폰트가 언제 오든 바꿉니다(FOUT). `optional`은 교체 기간이 없어, 아주 짧은 차단 기간 안에 안 오면 이번 방문은 대체 글꼴로 굳고 다음 방문에 캐시된 폰트를 씁니다." },
+              { q: "한글 폰트를 '쓰일 때만' 받게 하는 디스크립터는 무엇인가요?", a: "`unicode-range`입니다. `unicode-range: U+AC00-D7A3`처럼 한글 범위를 적으면 그 범위의 글자가 실제로 쓰일 때만 그 파일을 받습니다. 실험에서 글이 영어뿐이면 한글 쪽 파일은 unloaded로 남았습니다." },
+              { q: "`line-height: 150%`가 자식에서 문제가 되는 이유는 무엇인가요?", a: "`150%`는 부모에서 px로 계산된 값이 상속되기 때문입니다. 16px 부모의 24px가 32px 글자 자식에게 그대로 가서 줄 상자가 글자보다 낮아지고, 여러 줄이면 겹칩니다. 단위 없는 숫자 `1.5`로 적으면 비율이 상속되어 자식은 48px가 됩니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [
@@ -2196,19 +3140,28 @@ export const cssTheories: Theory[] = [
     id: "css-s14",
     name: "14장 · 중첩 · 레이어 · 스코프",
     tagline: "스타일에 범위를 주는 세 도구, 그리고 프레임워크가 그중 무엇을 흉내 내는가",
+    keyPoints: [
+      "중첩은 선택자 구조를, `@layer`는 규칙 묶음 사이의 우선순위를, `@scope`는 선택자가 닿는 DOM 범위를 다룹니다. 셋은 캐스케이드의 다른 칸이라 함께 씁니다.",
+      "중첩에서 결합자 없이 적은 `.child`는 `.nest .child`, `&.mod`는 `.nest.mod`가 됩니다. Sass처럼 `&__elem`으로 이름을 이어 붙일 수는 없습니다.",
+      "`@scope`는 뿌리에서 시작해 한계 앞에서 멈추고, 두 스코프가 맞으면 뿌리가 가까운 쪽이 이깁니다. 근접성은 등장 순서는 이기고 특이성에는 집니다.",
+      "라이브러리는 `@import url(lib.css) layer(vendor)`로 낮은 레이어에 넣습니다. 레이어 순서가 특이성을 이겨 1-1-0인 vendor 선택자도 뒤 레이어의 `.btn`에 집니다.",
+    ],
     intro:
       "CSS의 전역성을 다루는 네이티브 도구 셋입니다. 중첩(nesting)은 선택자를 부모 안에 적어 '어디에 속한 규칙인지'를 코드 구조로 보여 줍니다. 캐스케이드 레이어(@layer)는 규칙 묶음 사이의 우선순위를 특이성과 상관없이 정합니다. @scope는 선택자가 닿는 DOM 범위를 뿌리와 한계로 가둡니다. Vue의 scoped, CSS Modules, BEM은 이 도구들이 없던 시절의 대안입니다. 지금은 셋 다 Chrome 156에서 쓸 수 있습니다.",
-    blocks: [
+    sections: [
       {
-        label: "실제로 돌려 보면: 중첩에서 &의 자리와 특이성",
-        body: "`.nest { color: red; .child { color: blue } &.mod { color: green } }`에서 자식 `.child`는 파랑입니다. `.nest .child`로 풀리기 때문입니다. `.nest.mod`는 초록입니다. &가 붙어 복합 선택자가 됩니다. `.nest2 { .deep & { color: blue } }`는 `&`를 뒤에 둬서 `.deep .nest2`가 됩니다. 부모 문맥을 자식 뒤에 붙이는 것이고, 실제로 파랑이었습니다. MDN의 규칙은 이렇습니다. 결합자 없이 적으면 자손(`.parent .child`)이 됩니다. 복합으로 붙이려면 `&`가 필수입니다(`&.mod`). `&` 없이 `h2 { + p {} }`처럼 결합자로 시작해도 됩니다. 특이성은 ':is()처럼 연관 선택자 목록 중 가장 높은 것'으로 계산합니다. 경고도 있습니다. '`&__child` 같은 문자열 이어붙이기는 불가'라서 BEM식 Sass 습관이 안 통합니다. 그리고 중첩 규칙 뒤에 오는 선언은 `CSSNestedDeclarations`로 감싸져 순서가 유지됩니다. 하지만 '지원하지 않는 브라우저는 잘못된 순서로 파싱할 수 있다'고 합니다.",
-        code: ".nest { color: red;\n  .child { color: blue; }      /* → .nest .child     cs(\"nest-child\") = blue */\n  &.mod  { color: green; }     /* → .nest.mod        cs(\"nest-mod\")   = green */\n}\n.nest2 { .deep & { color: blue; } }   /* → .deep .nest2  cs(\"nest2\") = blue */\n\n/* 안 되는 것 */\n.block { &__elem { } }         /* 문자열 이어붙이기 아님 — .block__elem 이 되지 않는다 */\n/* 되는 것 */\n.card { & h2 { } @media (width >= 600px) { padding: 2rem; } }   /* at-rule 중첩 */",
-      },
-      {
-        label: "직접 해 보기: 중첩과 &의 자리",
-        body: "& 없이 적은 `.child`는 `.nest .child`로 풀려 자손을 고릅니다. `&.mod`는 &가 붙어 `.nest.mod`라는 한 요소의 조건이 됩니다. `.deep &`처럼 &를 뒤에 두면 부모 문맥이 앞으로 갑니다. 마지막 `&__elem`은 Sass처럼 이름을 이어 붙이는 뜻이 아닙니다. 그래서 n4에는 맞지 않고, body의 기본 글자색으로 남습니다. 네 요소의 color를 지금 값에서 확인하세요.",
-        lab: {
-          html: `<style>
+        heading: "중첩과 &의 자리",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: 중첩에서 &의 자리와 특이성",
+            body: "`.nest { color: red; .child { color: blue } &.mod { color: green } }`에서 자식 `.child`는 파랑입니다. `.nest .child`로 풀리기 때문입니다. `.nest.mod`는 초록입니다. &가 붙어 복합 선택자가 됩니다. `.nest2 { .deep & { color: blue } }`는 `&`를 뒤에 둬서 `.deep .nest2`가 됩니다. 부모 문맥을 자식 뒤에 붙이는 것이고, 실제로 파랑이었습니다. MDN의 규칙은 이렇습니다. 결합자 없이 적으면 자손(`.parent .child`)이 됩니다. 복합으로 붙이려면 `&`가 필수입니다(`&.mod`). `&` 없이 `h2 { + p {} }`처럼 결합자로 시작해도 됩니다. 특이성은 ':is()처럼 연관 선택자 목록 중 가장 높은 것'으로 계산합니다. 경고도 있습니다. '`&__child` 같은 문자열 이어붙이기는 불가'라서 BEM식 Sass 습관이 안 통합니다. 그리고 중첩 규칙 뒤에 오는 선언은 `CSSNestedDeclarations`로 감싸져 순서가 유지됩니다. 하지만 '지원하지 않는 브라우저는 잘못된 순서로 파싱할 수 있다'고 합니다.",
+            code: ".nest { color: red;\n  .child { color: blue; }      /* → .nest .child     cs(\"nest-child\") = blue */\n  &.mod  { color: green; }     /* → .nest.mod        cs(\"nest-mod\")   = green */\n}\n.nest2 { .deep & { color: blue; } }   /* → .deep .nest2  cs(\"nest2\") = blue */\n\n/* 안 되는 것 */\n.block { &__elem { } }         /* 문자열 이어붙이기 아님 — .block__elem 이 되지 않는다 */\n/* 되는 것 */\n.card { & h2 { } @media (width >= 600px) { padding: 2rem; } }   /* at-rule 중첩 */",
+          },
+          {
+            label: "직접 해 보기: 중첩과 &의 자리",
+            body: "& 없이 적은 `.child`는 `.nest .child`로 풀려 자손을 고릅니다. `&.mod`는 &가 붙어 `.nest.mod`라는 한 요소의 조건이 됩니다. `.deep &`처럼 &를 뒤에 두면 부모 문맥이 앞으로 갑니다. 마지막 `&__elem`은 Sass처럼 이름을 이어 붙이는 뜻이 아닙니다. 그래서 n4에는 맞지 않고, body의 기본 글자색으로 남습니다. 네 요소의 color를 지금 값에서 확인하세요.",
+            lab: {
+              html: `<style>
   .nest { color: red;
     .child { color: blue; }
     &.mod { color: green; }
@@ -2220,45 +3173,50 @@ export const cssTheories: Theory[] = [
 <div class="nest mod" id="n2">.nest.mod</div>
 <div class="deep"><div class="nest" id="n3">.deep .nest</div></div>
 <div class="nest__elem" id="n4">.nest__elem일까?</div>`,
-          height: 170,
-          checks: [
-            {
-              label: "c1의 color",
-              expr: "getComputedStyle(document.getElementById('c1')).color",
+              height: 170,
+              checks: [
+                {
+                  label: "c1의 color",
+                  expr: "getComputedStyle(document.getElementById('c1')).color",
+                },
+                {
+                  label: "n2의 color",
+                  expr: "getComputedStyle(document.getElementById('n2')).color",
+                },
+                {
+                  label: "n3의 color",
+                  expr: "getComputedStyle(document.getElementById('n3')).color",
+                },
+                {
+                  label: "n4의 color",
+                  expr: "getComputedStyle(document.getElementById('n4')).color",
+                },
+              ],
+              tryIt: "`&.mod`를 `& .mod`로 띄어 써 보세요. 자손 선택자가 되어 n2가 빨강으로 돌아갑니다.",
             },
-            {
-              label: "n2의 color",
-              expr: "getComputedStyle(document.getElementById('n2')).color",
-            },
-            {
-              label: "n3의 color",
-              expr: "getComputedStyle(document.getElementById('n3')).color",
-            },
-            {
-              label: "n4의 color",
-              expr: "getComputedStyle(document.getElementById('n4')).color",
-            },
-          ],
-          tryIt: "`&.mod`를 `& .mod`로 띄어 써 보세요. 자손 선택자가 되어 n2가 빨강으로 돌아갑니다.",
-        },
-      },
-      {
-        label: "실제로 돌려 보면: @scope의 뿌리, 한계, 근접성",
-        body: "`@scope (.scope-outer) to (.scope-limit) { p { color: blue } }`에서 뿌리 안의 p는 파랑이고, 한계(.scope-limit) 안의 p는 기본색 검정입니다. '도넛' 스코핑입니다. `@scope (.scope-near) { p { color: red } }`와 `@scope (.scope-far) { p { color: green } }`가 둘 다 맞는 p(far 안의 near 안)는 빨강이었습니다. 가까운 뿌리가 이깁니다. MDN에 따르면 스코프 근접성은 '등장 순서를 이기되 특이성·레이어·중요도에는 진다'고 합니다. 2장 알고리즘 순서의 바로 그 자리입니다. 스코프 안의 선택자는 앞에 `:where(:scope)`가 붙은 것처럼 특이성을 0만 더합니다. `:scope`를 직접 쓰면 0-1-0입니다. 상속은 가두지 않습니다. color 같은 상속 속성은 한계를 넘어 내려갑니다. 지원 상태는 'Baseline 2026, 새로 사용 가능'입니다.",
-        code: "@scope (.scope-outer) to (.scope-limit) { p { color: blue; } }\n.scope-outer > p            → \"rgb(0, 0, 255)\"   (뿌리 안)\n.scope-outer .scope-limit p → \"rgb(0, 0, 0)\"     (한계 안 — 제외)\n\n@scope (.scope-near) { p { color: red; } }\n@scope (.scope-far)  { p { color: green; } }\n.scope-far > .scope-near > p → \"rgb(255, 0, 0)\"  (가까운 뿌리가 이김 — 근접성)\n\n/* 컴포넌트 안에서만, 슬롯 내용은 제외 */\n@scope (.card) to (.card-content) { img { border-radius: 8px; } }",
-        terms: [
-          {
-            term: "스코프 근접성 (scoping proximity)",
-            body: "같은 요소에 두 스코프 규칙이 맞으면 DOM에서 뿌리가 더 가까운 쪽이 이깁니다. 캐스케이드 순서에서는 특이성 뒤, 등장 순서 앞입니다. 중첩 컴포넌트에서 안쪽 스타일이 바깥 것을 이기게 하는 자연스러운 장치입니다.",
           },
         ],
       },
       {
-        label: "직접 해 보기: @scope의 한계와 근접성",
-        body: `첫 스코프는 .outer에서 시작해 .limit 앞에서 멈춥니다. a는 파랑이고, 한계 안의 b는 기본 글자색으로 남습니다. 가운데가 빠진 도넛 모양의 범위입니다.
+        heading: "@scope와 근접성",
+        blocks: [
+          {
+            label: "실제로 돌려 보면: @scope의 뿌리, 한계, 근접성",
+            body: "`@scope (.scope-outer) to (.scope-limit) { p { color: blue } }`에서 뿌리 안의 p는 파랑이고, 한계(.scope-limit) 안의 p는 기본색 검정입니다. '도넛' 스코핑입니다. `@scope (.scope-near) { p { color: red } }`와 `@scope (.scope-far) { p { color: green } }`가 둘 다 맞는 p(far 안의 near 안)는 빨강이었습니다. 가까운 뿌리가 이깁니다. MDN에 따르면 스코프 근접성은 '등장 순서를 이기되 특이성·레이어·중요도에는 진다'고 합니다. 2장 알고리즘 순서의 바로 그 자리입니다. 스코프 안의 선택자는 앞에 `:where(:scope)`가 붙은 것처럼 특이성을 0만 더합니다. `:scope`를 직접 쓰면 0-1-0입니다. 상속은 가두지 않습니다. color 같은 상속 속성은 한계를 넘어 내려갑니다. 지원 상태는 'Baseline 2026, 새로 사용 가능'입니다.",
+            code: "@scope (.scope-outer) to (.scope-limit) { p { color: blue; } }\n.scope-outer > p            → \"rgb(0, 0, 255)\"   (뿌리 안)\n.scope-outer .scope-limit p → \"rgb(0, 0, 0)\"     (한계 안 — 제외)\n\n@scope (.scope-near) { p { color: red; } }\n@scope (.scope-far)  { p { color: green; } }\n.scope-far > .scope-near > p → \"rgb(255, 0, 0)\"  (가까운 뿌리가 이김 — 근접성)\n\n/* 컴포넌트 안에서만, 슬롯 내용은 제외 */\n@scope (.card) to (.card-content) { img { border-radius: 8px; } }",
+            terms: [
+              {
+                term: "스코프 근접성 (scoping proximity)",
+                body: "같은 요소에 두 스코프 규칙이 맞으면 DOM에서 뿌리가 더 가까운 쪽이 이깁니다. 캐스케이드 순서에서는 특이성 뒤, 등장 순서 앞입니다. 중첩 컴포넌트에서 안쪽 스타일이 바깥 것을 이기게 하는 자연스러운 장치입니다.",
+              },
+            ],
+          },
+          {
+            label: "직접 해 보기: @scope의 한계와 근접성",
+            body: `첫 스코프는 .outer에서 시작해 .limit 앞에서 멈춥니다. a는 파랑이고, 한계 안의 b는 기본 글자색으로 남습니다. 가운데가 빠진 도넛 모양의 범위입니다.
 c에는 near와 far 두 스코프가 다 맞습니다. 특이성도 같고, 뒤에 적은 것은 far입니다. 그런데도 빨강이 이깁니다. 뿌리가 DOM에서 더 가까운 스코프가 이기기 때문입니다. 근접성은 등장 순서보다 먼저 봅니다.`,
-        lab: {
-          html: `<style>
+            lab: {
+              html: `<style>
   @scope (.outer) to (.limit) { p { color: blue; } }
   @scope (.near) { p { color: red; } }
   @scope (.far) { p { color: green; } }
@@ -2269,34 +3227,39 @@ c에는 near와 far 두 스코프가 다 맞습니다. 특이성도 같고, 뒤�
   <div class="limit"><p id="b">한계 안의 p</p></div>
 </div>
 <div class="far"><div class="near"><p id="c">far 안, near 안의 p</p></div></div>`,
-          height: 140,
-          checks: [
-            {
-              label: "a의 color",
-              expr: "getComputedStyle(document.getElementById('a')).color",
+              height: 140,
+              checks: [
+                {
+                  label: "a의 color",
+                  expr: "getComputedStyle(document.getElementById('a')).color",
+                },
+                {
+                  label: "b의 color",
+                  expr: "getComputedStyle(document.getElementById('b')).color",
+                },
+                {
+                  label: "c의 color",
+                  expr: "getComputedStyle(document.getElementById('c')).color",
+                },
+              ],
+              tryIt: "`@scope (.far)` 안의 p를 `#c`로 바꿔 보세요. 특이성이 높아져 근접성보다 먼저 갈리고 초록이 이깁니다.",
             },
-            {
-              label: "b의 color",
-              expr: "getComputedStyle(document.getElementById('b')).color",
-            },
-            {
-              label: "c의 color",
-              expr: "getComputedStyle(document.getElementById('c')).color",
-            },
-          ],
-          tryIt: "`@scope (.far)` 안의 p를 `#c`로 바꿔 보세요. 특이성이 높아져 근접성보다 먼저 갈리고 초록이 이깁니다.",
-        },
+          },
+        ],
       },
       {
-        label: "레이어로 설계하기: 리셋 → 베이스 → 컴포넌트 → 유틸리티",
-        body: "2장에서 본 대로 레이어 순서는 특이성을 이깁니다. 그래서 전체 스타일을 역할별 레이어로 나누면, '유틸리티가 컴포넌트를 항상 이긴다' 같은 약속을 선택자 모양과 상관없이 지킬 수 있습니다. 맨 위에 `@layer reset, base, components, utilities;`를 선언해 순서를 정하고, 파일마다 `@layer components { … }`로 붙입니다. 서드파티 CSS는 `@import url(lib.css) layer(vendor)`로 가장 낮은 레이어에 넣습니다. 그러면 내 스타일이 특이성 싸움 없이 이깁니다. 레이어 밖 선언은 모든 레이어를 이기니 '탈출구'로만 씁니다. `!important`는 순서를 뒤집어, reset 레이어의 important가 가장 셉니다. `revert-layer`는 한 레이어의 선언을 '없었던 것처럼' 되돌립니다.",
-        code: "/* 맨 위 — 순서 확정 (여기 적은 순서가 전부) */\n@layer reset, vendor, base, components, utilities;\n\n@import url(\"normalize.css\") layer(reset);\n@import url(\"some-lib.css\") layer(vendor);      /* 라이브러리는 낮은 레이어로 */\n\n@layer base { body { line-height: 1.5; } }\n@layer components { .btn { padding: .5rem 1rem; } .btn-primary { background: var(--brand); } }\n@layer utilities { .p-0 { padding: 0; } }       /* .p-0 (0-1-0) 이 .btn-primary 를 항상 이김 */\n\n/* 레이어 밖 = 모든 레이어 위 — 탈출구로만 */",
-      },
-      {
-        label: "직접 해 보기: 레이어로 라이브러리 이기기",
-        body: "vendor 레이어의 `#app .btn`은 특이성이 1-1-0입니다. 그래도 뒤 레이어인 components의 `.btn`에 집니다. 그래서 b1의 배경은 royalblue입니다. components가 정하지 않은 color는 vendor의 white가 그대로 남습니다. utilities는 맨 뒤라 b2를 seagreen으로 바꿉니다. b3의 `revert-layer`는 utilities의 선언을 없던 것처럼 하고, 앞 레이어의 값으로 돌아갑니다.",
-        lab: {
-          html: `<style>
+        heading: "레이어로 설계하기",
+        blocks: [
+          {
+            label: "레이어로 설계하기: 리셋 → 베이스 → 컴포넌트 → 유틸리티",
+            body: "2장에서 본 대로 레이어 순서는 특이성을 이깁니다. 그래서 전체 스타일을 역할별 레이어로 나누면, '유틸리티가 컴포넌트를 항상 이긴다' 같은 약속을 선택자 모양과 상관없이 지킬 수 있습니다. 맨 위에 `@layer reset, base, components, utilities;`를 선언해 순서를 정하고, 파일마다 `@layer components { … }`로 붙입니다. 서드파티 CSS는 `@import url(lib.css) layer(vendor)`로 가장 낮은 레이어에 넣습니다. 그러면 내 스타일이 특이성 싸움 없이 이깁니다. 레이어 밖 선언은 모든 레이어를 이기니 '탈출구'로만 씁니다. `!important`는 순서를 뒤집어, reset 레이어의 important가 가장 셉니다. `revert-layer`는 한 레이어의 선언을 '없었던 것처럼' 되돌립니다.",
+            code: "/* 맨 위 — 순서 확정 (여기 적은 순서가 전부) */\n@layer reset, vendor, base, components, utilities;\n\n@import url(\"normalize.css\") layer(reset);\n@import url(\"some-lib.css\") layer(vendor);      /* 라이브러리는 낮은 레이어로 */\n\n@layer base { body { line-height: 1.5; } }\n@layer components { .btn { padding: .5rem 1rem; } .btn-primary { background: var(--brand); } }\n@layer utilities { .p-0 { padding: 0; } }       /* .p-0 (0-1-0) 이 .btn-primary 를 항상 이김 */\n\n/* 레이어 밖 = 모든 레이어 위 — 탈출구로만 */",
+          },
+          {
+            label: "직접 해 보기: 레이어로 라이브러리 이기기",
+            body: "vendor 레이어의 `#app .btn`은 특이성이 1-1-0입니다. 그래도 뒤 레이어인 components의 `.btn`에 집니다. 그래서 b1의 배경은 royalblue입니다. components가 정하지 않은 color는 vendor의 white가 그대로 남습니다. utilities는 맨 뒤라 b2를 seagreen으로 바꿉니다. b3의 `revert-layer`는 utilities의 선언을 없던 것처럼 하고, 앞 레이어의 값으로 돌아갑니다.",
+            lab: {
+              html: `<style>
   @layer reset, vendor, components, utilities;
   @layer vendor { #app .btn { background: gray; color: white; } }
   @layer components { .btn { background: royalblue; } }
@@ -2311,53 +3274,113 @@ c에는 near와 far 두 스코프가 다 맞습니다. 특이성도 같고, 뒤�
   <button class="btn bg-green" id="b2">utilities</button>
   <button class="btn bg-green undo" id="b3">revert-layer</button>
 </div>`,
-          height: 100,
-          checks: [
-            {
-              label: "b1의 background-color",
-              expr: "getComputedStyle(document.getElementById('b1')).backgroundColor",
+              height: 100,
+              checks: [
+                {
+                  label: "b1의 background-color",
+                  expr: "getComputedStyle(document.getElementById('b1')).backgroundColor",
+                },
+                {
+                  label: "b1의 color",
+                  expr: "getComputedStyle(document.getElementById('b1')).color",
+                },
+                {
+                  label: "b2의 background-color",
+                  expr: "getComputedStyle(document.getElementById('b2')).backgroundColor",
+                },
+                {
+                  label: "b3의 background-color",
+                  expr: "getComputedStyle(document.getElementById('b3')).backgroundColor",
+                },
+              ],
+              tryIt: "첫 줄의 vendor를 맨 끝으로 옮겨 보세요. vendor 레이어가 가장 세져 세 버튼이 모두 회색이 됩니다.",
             },
-            {
-              label: "b1의 color",
-              expr: "getComputedStyle(document.getElementById('b1')).color",
-            },
-            {
-              label: "b2의 background-color",
-              expr: "getComputedStyle(document.getElementById('b2')).backgroundColor",
-            },
-            {
-              label: "b3의 background-color",
-              expr: "getComputedStyle(document.getElementById('b3')).backgroundColor",
-            },
-          ],
-          tryIt: "첫 줄의 vendor를 맨 끝으로 옮겨 보세요. vendor 레이어가 가장 세져 세 버튼이 모두 회색이 됩니다.",
-        },
+          },
+        ],
       },
       {
-        label: "프레임워크의 스코프: Vue scoped, CSS Modules, Tailwind",
-        body: "Vue의 `<style scoped>`는 컴파일러가 선택자에 `[data-v-abc123]`를 붙이고, 요소에도 같은 속성을 찍습니다. 그래서 '이 컴포넌트의 요소만' 맞습니다. Vue 허브의 SFC 장에서 실제로 `.a[data-v-abc123]`를 확인했습니다. @scope를 속성으로 흉내 낸 셈입니다. 부작용으로 특이성이 0-1-0씩 올라가고, 자식 컴포넌트의 루트에는 스타일이 샙니다. CSS Modules는 클래스 이름을 `_title_1a2d1_1`처럼 해시로 바꿔 충돌을 없앱니다(번들링 허브에서 실제로 확인). 범위가 아니라 '이름의 유일성'으로 푸는 길입니다. Tailwind 같은 유틸리티는 레이어(`@layer base, components, utilities`)를 실제로 씁니다. 셋의 공통 목표는 '전역 네임스페이스에서 충돌 없이, 예측 가능한 우선순위로'입니다. 네이티브 셋(중첩, @layer, @scope)이 그 목표의 표준 답이 되어 갑니다.",
-        code: "도구            방법                                  범위의 뜻                    우선순위\n─────────────  ───────────────────────────────────  ──────────────────────────  ─────────────────────\nVue scoped      .a → .a[data-v-abc]  (속성 선택자)      이 컴포넌트의 요소만            특이성 +0-1-0 (부작용)\nCSS Modules     .title → ._title_1a2d1_1 (해시 이름)    이름이 유일 → 충돌 없음         보통 특이성\nBEM             .block__elem--mod (관례)               사람이 지키는 약속              전부 0-1-0\n@scope          @scope (.card) to (.slot)              DOM 뿌리~한계                   근접성 (특이성 아래)\n@layer          @layer components { … }               (범위 아님) 묶음의 우선순위       특이성 위\n중첩            .card { .title { } }                   코드 구조 = 선택자 구조          :is() 식 특이성",
-        codeLang: "text",
+        heading: "프레임워크의 스코프",
+        blocks: [
+          {
+            label: "프레임워크의 스코프: Vue scoped, CSS Modules, Tailwind",
+            body: "Vue의 `<style scoped>`는 컴파일러가 선택자에 `[data-v-abc123]`를 붙이고, 요소에도 같은 속성을 찍습니다. 그래서 '이 컴포넌트의 요소만' 맞습니다. Vue 허브의 SFC 장에서 실제로 `.a[data-v-abc123]`를 확인했습니다. @scope를 속성으로 흉내 낸 셈입니다. 부작용으로 특이성이 0-1-0씩 올라가고, 자식 컴포넌트의 루트에는 스타일이 샙니다. CSS Modules는 클래스 이름을 `_title_1a2d1_1`처럼 해시로 바꿔 충돌을 없앱니다(번들링 허브에서 실제로 확인). 범위가 아니라 '이름의 유일성'으로 푸는 길입니다. Tailwind 같은 유틸리티는 레이어(`@layer base, components, utilities`)를 실제로 씁니다. 셋의 공통 목표는 '전역 네임스페이스에서 충돌 없이, 예측 가능한 우선순위로'입니다. 네이티브 셋(중첩, @layer, @scope)이 그 목표의 표준 답이 되어 갑니다.",
+            tables: [
+              {
+                caption: "범위를 주는 도구들",
+                head: ["도구", "방법", "범위의 뜻", "우선순위"],
+                rows: [
+                  ["Vue scoped", "`.a` → `.a[data-v-abc]` (속성 선택자)", "이 컴포넌트의 요소만", "특이성 +0-1-0 (부작용)"],
+                  ["CSS Modules", "`.title` → `._title_1a2d1_1` (해시 이름)", "이름이 유일 → 충돌 없음", "보통 특이성"],
+                  ["BEM", "`.block__elem--mod` (관례)", "사람이 지키는 약속", "전부 0-1-0"],
+                  ["`@scope`", "`@scope (.card) to (.slot)`", "DOM 뿌리~한계", "근접성 (특이성 아래)"],
+                  ["`@layer`", "`@layer components { … }`", "(범위 아님) 묶음의 우선순위", "특이성 위"],
+                  ["중첩", "`.card { .title { } }`", "코드 구조 = 선택자 구조", "`:is()` 식 특이성"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제가 나는 경우: 범위 도구를 섞을 때",
-        body: "세 도구와 프레임워크 스코프가 부딪히는 자리입니다.",
-        code: "증상                                     원인                                 처방\n──────────────────────────────────────  ──────────────────────────────────  ─────────────────────────────\nSass 처럼 &__elem 을 썼는데 안 맞는다        네이티브 중첩은 이어붙이기 없음           클래스를 그대로 적기\n중첩 규칙 뒤의 선언이 옛 브라우저에서 순서가 다르다  CSSNestedDeclarations 미지원           선언을 중첩 규칙 '앞'에\n@scope 안인데 color 가 한계 밖으로 샌다      상속은 가두지 않음                     한계 안에서 재설정\n라이브러리 스타일을 못 이긴다                 같은 레이어(비레이어)에서 특이성 싸움       @import … layer(vendor) 로 아래에\n레이어를 썼는데 내 스타일이 진다              비레이어 선언이 레이어를 덮음 · !important 역전  전부 레이어 안으로 ·\n                                                                               important 점검\nVue scoped 가 자식 컴포넌트 안에 안 먹는다    속성이 자식 루트까지만                   :deep() · 또는 @scope\nCSS Modules 클래스를 전역 선택자로 못 잡는다  이름이 해시                            :global() · data 속성",
-        codeLang: "text",
+        heading: "증상에서 원인 찾기",
+        blocks: [
+          {
+            label: "문제가 나는 경우: 범위 도구를 섞을 때",
+            body: "세 도구와 프레임워크 스코프가 부딪히는 자리입니다.",
+            tables: [
+              {
+                caption: "범위 도구를 섞을 때",
+                head: ["증상", "원인", "처방"],
+                rows: [
+                  ["Sass처럼 `&__elem`을 썼는데 안 맞는다", "네이티브 중첩은 이어붙이기 없음", "클래스를 그대로 적기"],
+                  ["중첩 규칙 뒤의 선언이 옛 브라우저에서 순서가 다르다", "`CSSNestedDeclarations` 미지원", "선언을 중첩 규칙 '앞'에"],
+                  ["`@scope` 안인데 `color`가 한계 밖으로 샌다", "상속은 가두지 않음", "한계 안에서 재설정"],
+                  ["라이브러리 스타일을 못 이긴다", "같은 레이어(비레이어)에서 특이성 싸움", "`@import … layer(vendor)`로 아래에"],
+                  ["레이어를 썼는데 내 스타일이 진다", "비레이어 선언이 레이어를 덮음, `!important` 역전", "전부 레이어 안으로, important 점검"],
+                  ["Vue scoped가 자식 컴포넌트 안에 안 먹는다", "속성이 자식 루트까지만", "`:deep()`, 또는 `@scope`"],
+                  ["CSS Modules 클래스를 전역 선택자로 못 잡는다", "이름이 해시", "`:global()`, data 속성"],
+                ],
+              },
+            ],
+          },
+          {
+            label: "문제의 구조: 세 도구는 캐스케이드의 다른 칸을 다룬다",
+            body: "2장의 정렬 키 (출처·중요도) → (레이어) → (특이성) → (근접성) → (순서)에 셋을 놓으면 겹치지 않습니다. @layer는 두 번째 칸(묶음의 순서)을 다룹니다. @scope는 네 번째 칸(근접성)과 '어느 요소에 맞는가'(관련성)를, 중첩은 선택자 자체(세 번째 칸의 재료)를 다룹니다. 그래서 셋은 함께 씁니다. 레이어로 큰 우선순위를 세우고, 스코프로 컴포넌트 범위를 가두고, 중첩으로 그 안의 구조를 적습니다. 프레임워크 스코프는 모두 세 번째 칸(특이성)이나 이름(관련성)에서 싸우던 방법이었습니다. 네이티브 도구는 그 싸움을 다른 칸으로 옮겼습니다.",
+            tables: [
+              {
+                caption: "캐스케이드 정렬 키마다 손대는 도구",
+                head: ["캐스케이드 정렬 키", "손대는 도구"],
+                rows: [
+                  ["① 관련성 (맞는가)", "선택자, `@scope`의 뿌리~한계, CSS Modules의 유일 이름"],
+                  ["② 출처, 중요도", "(`!important`, 레이어 역전 주의)"],
+                  ["③ 레이어", "`@layer`, `@import layer()`"],
+                  ["④ 특이성", "선택자 모양, 중첩(`:is` 식), Vue scoped의 +0-1-0"],
+                  ["⑤ 스코프 근접성", "`@scope`"],
+                  ["⑥ 등장 순서", "파일 순서, 번들 순서"],
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
-        label: "문제의 구조: 세 도구는 캐스케이드의 다른 칸을 다룬다",
-        body: "2장의 정렬 키 (출처·중요도) → (레이어) → (특이성) → (근접성) → (순서)에 셋을 놓으면 겹치지 않습니다. @layer는 두 번째 칸(묶음의 순서)을 다룹니다. @scope는 네 번째 칸(근접성)과 '어느 요소에 맞는가'(관련성)를, 중첩은 선택자 자체(세 번째 칸의 재료)를 다룹니다. 그래서 셋은 함께 씁니다. 레이어로 큰 우선순위를 세우고, 스코프로 컴포넌트 범위를 가두고, 중첩으로 그 안의 구조를 적습니다. 프레임워크 스코프는 모두 세 번째 칸(특이성)이나 이름(관련성)에서 싸우던 방법이었습니다. 네이티브 도구는 그 싸움을 다른 칸으로 옮겼습니다.",
-        code: "캐스케이드 정렬 키            손대는 도구\n──────────────────────────  ─────────────────────────────────────\n① 관련성 (맞는가)             선택자 · @scope 의 뿌리~한계 · CSS Modules 의 유일 이름\n② 출처 · 중요도               (!important — 레이어 역전 주의)\n③ 레이어                      @layer · @import layer()\n④ 특이성                      선택자 모양 · 중첩(:is 식) · Vue scoped 의 +0-1-0\n⑤ 스코프 근접성               @scope\n⑥ 등장 순서                   파일 순서 · 번들 순서",
-        codeLang: "text",
-      },
-      {
-        label: "다음 입구",
-        body: "CSS 허브는 여기서 끝납니다. 스타일이 파일로 묶여(CSS Modules, PostCSS, Lightning CSS, 코드 분할) 브라우저에 전달되는 과정은 번들링 허브에 있습니다. 컴포넌트 안의 scoped가 컴파일되는 방식은 Vue 허브의 SFC 장에, 스타일이 레이아웃과 페인트로 바뀌는 과정은 렌더링 허브에 있습니다.",
-      },
-      {
-        label: "확인 질문",
-        body: "1) `.a { .b { } &.c { } .d & { } }`가 각각 어떤 선택자로 풀리나요?\n2) @scope의 근접성이 캐스케이드 순서에서 어디에 있고, 무엇에는 지나요?\n3) 라이브러리 CSS를 특이성 싸움 없이 이기는 레이어 설정은?\n4) Vue scoped와 @scope의 차이를 '방법'과 '부작용'으로 적어 보세요.",
+        heading: "점검하고 넘어가기",
+        blocks: [
+          {
+            label: "다음 입구",
+            body: "CSS 허브는 여기서 끝납니다. 스타일이 파일로 묶여(CSS Modules, PostCSS, Lightning CSS, 코드 분할) 브라우저에 전달되는 과정은 번들링 허브에 있습니다. 컴포넌트 안의 scoped가 컴파일되는 방식은 Vue 허브의 SFC 장에, 스타일이 레이아웃과 페인트로 바뀌는 과정은 렌더링 허브에 있습니다.",
+          },
+          {
+            label: "확인 질문",
+            body: "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.",
+            quiz: [
+              { q: "`.a { .b { } &.c { } .d & { } }`가 각각 어떤 선택자로 풀리나요?", a: "`.b`는 `.a .b`, `&.c`는 `.a.c`, `.d &`는 `.d .a`로 풀립니다. 결합자 없이 적으면 자손이 되고, `&`를 붙이면 한 요소의 복합 선택자가 되며, `&`를 뒤에 두면 부모 문맥이 앞으로 갑니다." },
+              { q: "`@scope`의 근접성이 캐스케이드 순서에서 어디에 있고, 무엇에는 지나요?", a: "특이성 뒤, 등장 순서 앞에 있습니다. 그래서 등장 순서는 이기지만 특이성, 레이어, 중요도에는 집니다. 실험에서 뒤에 적은 far보다 뿌리가 가까운 near의 빨강이 이겼습니다. far 안의 `p`를 `#c`로 바꾸면 특이성에서 먼저 갈려 초록이 이깁니다." },
+              { q: "라이브러리 CSS를 특이성 싸움 없이 이기는 레이어 설정은 무엇인가요?", a: "맨 위에 `@layer reset, vendor, base, components, utilities;`처럼 순서를 선언하고, 라이브러리를 `@import url(lib.css) layer(vendor)`로 낮은 레이어에 넣는 것입니다. 레이어 순서는 특이성을 이기므로 vendor의 `#app .btn`(1-1-0)도 뒤 레이어 components의 `.btn`에 집니다." },
+              { q: "Vue scoped와 `@scope`의 차이를 '방법'과 '부작용'으로 나누면 어떻게 되나요?", a: "방법에서 Vue scoped는 컴파일러가 선택자와 요소에 `[data-v-abc123]` 속성을 붙이고, `@scope`는 브라우저가 DOM의 뿌리와 한계로 범위를 정합니다. 부작용으로 Vue scoped는 특이성이 0-1-0씩 올라가고 자식 컴포넌트 루트에 스타일이 샙니다. `@scope`는 특이성을 0만 더하지만 상속은 한계 밖으로 내려갑니다." },
+            ],
+          },
+        ],
       },
     ],
     sources: [

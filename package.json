@@ -5,7 +5,7 @@
     "node": ">=22.18"
   },
   "scripts": {
-    "generate": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs",
+    "generate": "node scripts/highlight-code.mjs && node scripts/sheet-index.mjs && node scripts/tokens-css.mjs",
     "postinstall": "npm run generate",
     "dev": "npm run generate && next dev",
     "build": "npm run generate && next build",

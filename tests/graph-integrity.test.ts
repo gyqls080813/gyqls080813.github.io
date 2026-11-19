@@ -224,3 +224,44 @@ describe("결과 미리보기", () => {
     expect(wrong).toEqual([]);
   });
 });
+
+describe("배우는 장치", () => {
+  const blocksOf = (theory: (typeof theories)[number]) => [
+    ...(theory.blocks ?? []),
+    ...(theory.sections ?? []).flatMap((s) => s.blocks),
+  ];
+
+  it("표의 행마다 칸 수가 머리와 같다 — 모자라면 칸이 밀려 다른 열의 값으로 읽힌다", () => {
+    const wrong = theories.flatMap((theory) =>
+      blocksOf(theory).flatMap((block) =>
+        (block.tables ?? []).flatMap((table, t) =>
+          table.rows
+            .map((row, r) => [row.length, r] as const)
+            .filter(([length]) => length !== table.head.length)
+            .map(([length, r]) => `${theory.id}: ${block.label} 표${t} ${r}행 ${length}칸`),
+        ),
+      ),
+    );
+    expect(wrong).toEqual([]);
+  });
+
+  it("확인 질문은 질문과 답이 짝으로 있다", () => {
+    const wrong = theories.flatMap((theory) =>
+      blocksOf(theory).flatMap((block) =>
+        (block.quiz ?? [])
+          .filter((item) => !item.q.trim() || !item.a.trim())
+          .map(() => `${theory.id}: ${block.label}`),
+      ),
+    );
+    expect(wrong).toEqual([]);
+  });
+
+  it("절에는 블록이 하나 이상 있다", () => {
+    const empty = theories.flatMap((theory) =>
+      (theory.sections ?? [])
+        .filter((section) => section.blocks.length === 0)
+        .map((section) => `${theory.id}: ${section.heading}`),
+    );
+    expect(empty).toEqual([]);
+  });
+});

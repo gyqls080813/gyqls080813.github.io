@@ -1,31 +1,31 @@
 /* 제목 아래 첫 상자 — 갈래 색을 옅게 깐다. 본문 블록과 다른 표면이라 '요약'으로 읽힌다 */
 .box {
-  margin: 0 0 6px;
-  padding: 16px 20px 16px 18px;
-  border: 1px solid rgba(var(--kind-rgb, var(--theory-rgb)), 0.28);
-  border-radius: 12px;
-  background: rgba(var(--kind-rgb, var(--theory-rgb)), 0.07);
+  margin: 0 0 var(--space-1-5);
+  padding: var(--space-4) var(--space-5) var(--space-4) var(--space-4);
+  border: var(--border-thin) solid var(--kind-border);
+  border-radius: var(--radius-xl);
+  background: var(--kind-surface);
 }
 
 .title {
-  margin: 0 0 8px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   color: var(--kind-text);
 }
 
 .list {
   margin: 0;
-  padding-left: 1.15em;
+  padding-left: var(--list-indent-bullet);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--space-1);
 }
 
 .item {
-  font-size: var(--fs-sheet-body);
-  line-height: 1.7;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-strong);
   overflow-wrap: break-word;
 }

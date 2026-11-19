@@ -2,16 +2,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  /* 작은 창에 미리 넣은 스타일은 이것뿐입니다. 나머지는 브라우저 기본 스타일입니다. */
+  /* 토큰: scripts/tokens-css.mjs가 app/globals.css에서 옮겨 적는다 — 고치지 말 것 */
+  :root { --preview-bg: #ffffff; --preview-font: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; --preview-lh: 1.6; --preview-pad: var(--space-3) var(--space-4); --preview-target: #f59e0b; --preview-target-width: 3px; --preview-text: #111111; --space-3: 12px; --space-4: 16px; }
+  /* 토큰 끝 */
+  /* 작은 창에 미리 넣은 스타일은 이것뿐입니다. 나머지는 브라우저 기본 스타일입니다.
+     값은 블로그와 같은 토큰에서 옵니다(위 표시 사이, 원본은 app/globals.css). */
   :root { color-scheme: light; }
   body {
-    margin: 12px 16px;
-    background: #fff;
-    color: #111;
-    font-family: system-ui, sans-serif;
-    line-height: 1.6;
+    margin: var(--preview-pad);
+    background: var(--preview-bg);
+    color: var(--preview-text);
+    font-family: var(--preview-font);
+    line-height: var(--preview-lh);
   }
-  :target { outline: 3px solid #f59e0b; outline-offset: 3px; }
+  :target { outline: var(--preview-target-width) solid var(--preview-target); outline-offset: var(--preview-target-width); }
 </style>
 <script>
   /*

@@ -36,7 +36,7 @@ const sources = [
 ];
 
 /** lib/theories의 CodeLang과 같은 목록 — 모르는 문법이면 조용히 tsx로 칠하지 않고 멈춘다 */
-const LANGS = new Set(["tsx", "bash", "text", "html", "css"]);
+const LANGS = new Set(["tsx", "bash", "text", "html", "css", "vue"]);
 
 /** 값을 훑어 code 칸을 모은다 — 문법은 같은 객체의 codeLang(없으면 tsx) */
 function collect(value, found, seen = new Set()) {

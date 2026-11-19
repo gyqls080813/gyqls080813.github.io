@@ -1,0 +1,80 @@
+/* 핵심 정리 위의 상자 — 본문과 같은 판 색에 테두리만 둘러, 요약(핵심 정리)보다 한 단 가볍게 읽힌다 */
+.box {
+  margin: 0 0 var(--space-3-5);
+  padding: var(--space-3-5) var(--space-4);
+  border: var(--border-thin) solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--panel-deep);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3-5);
+}
+
+.part + .part {
+  padding-top: var(--space-3-5);
+  border-top: var(--border-thin) dashed var(--border-subtle);
+}
+
+.title {
+  margin: 0 0 var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2-5);
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--kind-text);
+}
+
+.from {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: var(--space-0-5);
+}
+
+.from:hover {
+  color: var(--text);
+}
+
+.lead {
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+  color: var(--muted);
+}
+
+.questions {
+  margin: 0;
+  padding-left: var(--list-indent-number);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+  color: var(--text-body);
+}
+
+.questions li::marker {
+  font-size: var(--fs-caption);
+  color: var(--kind-text);
+}
+
+.toQuiz {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-size: var(--fs-caption);
+  color: var(--muted);
+}
+
+.toQuiz:hover {
+  color: var(--kind-text);
+}
+
+@media (max-width: 520px) {
+  .box {
+    padding: var(--space-3) var(--space-3);
+  }
+}

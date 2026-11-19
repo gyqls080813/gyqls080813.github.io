@@ -7,22 +7,22 @@
   height: 100%;
   overflow-y: auto;
   scrollbar-gutter: stable;
-  padding: 16px 10px;
-  font-size: 14px;
+  padding: var(--space-4) var(--space-2-5);
+  font-size: var(--fs-ui);
 }
 
 .graphLink {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 16px;
-  padding: 8px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: 8px;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  padding: var(--space-2) var(--space-2-5);
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-md);
   background: var(--panel);
   color: var(--text-soft);
-  font-size: 12.5px;
-  font-weight: 500;
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-medium);
   text-decoration: none;
 }
 
@@ -33,24 +33,24 @@
 }
 
 .section {
-  margin-bottom: 18px;
+  margin-bottom: var(--space-4);
 }
 
 .sectionLabel {
-  padding: 0 8px 7px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  padding: 0 var(--space-2) var(--space-1-5);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   color: var(--faint);
 }
 
 .row {
   display: flex;
   align-items: center;
-  gap: 7px;
-  min-height: 27px;
-  padding: 3px 8px;
-  border-radius: 6px;
+  gap: var(--space-1-5);
+  min-height: var(--space-7);
+  padding: var(--space-0-5) var(--space-2);
+  border-radius: var(--radius-sm);
   /* 기본을 한 단 낮춰 둬야 활성 행을 밝기만으로 띄울 여지가 생긴다 */
   color: var(--muted);
   text-decoration: none;
@@ -79,22 +79,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
+  width: var(--space-3-5);
   color: var(--faint);
-  transition: transform 0.14s ease;
+  transition: transform var(--duration-base) var(--ease-standard);
 }
 
 .chevronOpen {
-  transform: rotate(90deg);
+  transform: rotate(var(--rotate-open));
 }
 
 .dot {
   flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
+  width: var(--space-1-5);
+  height: var(--space-1-5);
+  border-radius: var(--radius-pill);
   /* 색은 data-kind에서 (globals.css의 --kind) */
-  border: 1.5px solid var(--kind);
+  border: var(--border-medium) solid var(--kind);
 }
 
 .rowLabel {
@@ -110,13 +110,13 @@
    픽셀 격자에 맞춰 주지 못한다. 어차피 색이 --muted에서 --text로 한 단
    밝아지므로, 이 줄이 묶음이라는 건 굵기 하나에만 기대지 않는다. */
 .groupLabel {
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   color: var(--text);
 }
 
 .count {
   flex-shrink: 0;
-  font-size: 11px;
+  font-size: var(--fs-caption);
   color: var(--faint);
 }
 
@@ -133,11 +133,11 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 22px;
-  min-height: 27px;
+  width: var(--space-5);
+  min-height: var(--space-7);
   padding: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: none;
   color: var(--faint);
   cursor: pointer;
@@ -150,19 +150,19 @@
 
 .togglePad {
   flex-shrink: 0;
-  width: 22px;
+  width: var(--space-5);
 }
 
 .rowGrow {
   width: auto;
   flex: 1;
   min-width: 0;
-  padding-left: 7px;
+  padding-left: var(--space-1-5);
 }
 
 /* VS Code처럼 들여쓰기 가이드 라인 */
 .children {
-  margin-left: 15px;
-  padding-left: 7px;
-  border-left: 1px solid var(--divider);
+  margin-left: var(--space-3-5);
+  padding-left: var(--space-1-5);
+  border-left: var(--border-thin) solid var(--divider);
 }

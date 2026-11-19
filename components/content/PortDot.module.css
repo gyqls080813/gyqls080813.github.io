@@ -2,25 +2,25 @@
 .dot {
   display: block;
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   background: var(--surface-inset);
   border-style: solid;
   border-color: var(--kind);
   transition:
-    background 0.15s ease,
-    box-shadow 0.15s ease;
+    background var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
 }
 
 /* 카드·행 안의 작은 점 */
 .sm {
-  width: 9px;
-  height: 9px;
-  border-width: 2px;
+  width: var(--space-2);
+  height: var(--space-2);
+  border-width: var(--border-thick);
 }
 
 /* 시트 가장자리의 큰 포트 */
 .md {
-  width: 15px;
-  height: 15px;
-  border-width: 2.5px;
+  width: var(--space-3-5);
+  height: var(--space-3-5);
+  border-width: var(--border-thick);
 }

@@ -140,7 +140,7 @@ export default function LiveLab({ lab }: { lab: TheoryLab }) {
         <div
           ref={boxRef}
           className={styles.frame}
-          style={{ height: lab.height ?? 160, width: frameWidth ?? undefined }}
+          style={{ height: lab.height, width: frameWidth ?? undefined }}
         />
       </div>
 

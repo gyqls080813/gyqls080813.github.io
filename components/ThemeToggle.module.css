@@ -2,10 +2,10 @@
    토글 하나로 두면 "지금이 어두운 건지 어두워지는 건지"를 매번 헷갈린다 */
 .group {
   display: flex;
-  gap: 2px;
-  padding: 3px;
-  border: 1px solid var(--border-strong);
-  border-radius: 9px;
+  gap: var(--space-0-5);
+  padding: var(--space-0-5);
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-md);
   background: var(--panel);
 }
 
@@ -13,17 +13,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 28px;
+  width: var(--space-7);
+  height: var(--space-7);
   padding: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background: none;
   color: var(--faint);
   cursor: pointer;
   transition:
-    color 0.14s ease,
-    background 0.14s ease;
+    color var(--duration-base) var(--ease-standard),
+    background var(--duration-base) var(--ease-standard);
 }
 
 .option:hover {

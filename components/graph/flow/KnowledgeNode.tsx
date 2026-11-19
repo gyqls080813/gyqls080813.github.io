@@ -18,7 +18,8 @@ export default function KnowledgeNode({ id, data }: NodeProps<KnowledgeFlowNode>
       className={cx(styles.card, data.hub && styles.hub, data.clickable && styles.clickable)}
       /* 포트·아이콘의 색은 여기 단 종류에서 내려온다 (globals.css의 --kind) */
       data-kind={data.kind}
-      style={{ width: cardWidth(data), opacity: dimmed ? 0.18 : 1 }}
+      style={{ width: cardWidth(data) }}
+      data-dimmed={dimmed || undefined}
     >
       {/* 포트: 왼쪽 = 입력, 오른쪽 = 출력. 나는 출력만, 트러블은 입력만 —
           흐름은 나 → (프로젝트 · 기술) → 트러블 */}

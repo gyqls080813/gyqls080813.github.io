@@ -7,12 +7,11 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: rgba(var(--tint), 0.04);
-  border: 1px dashed rgba(var(--tint), 0.32);
-  border-radius: 12px;
+  background: var(--kind-wash);
+  border: var(--border-thin) dashed var(--kind-border);
+  border-radius: var(--radius-xl);
   pointer-events: none;
-  /* 갈래 색 — data-kind에서 (globals.css의 --kind-rgb). 아래 규칙은 전부 이 값을 쓴다 */
-  --tint: var(--kind-rgb);
+  /* 갈래 색 — data-kind에서 (globals.css의 --kind-* 칠 토큰) */
 }
 
 /**
@@ -25,15 +24,14 @@
  */
 .collapsed {
   /* 노드는 중립 회색, 틀은 갈래 색이 옅게 배어 있다 */
-  background:
-    linear-gradient(rgba(var(--tint), 0.11), rgba(var(--tint), 0.05)), var(--surface-node);
+  background: linear-gradient(var(--kind-surface-strong), var(--kind-wash)), var(--surface-node);
   border-style: solid;
-  border-color: rgba(var(--tint), 0.45);
+  border-color: var(--kind-line);
   box-shadow:
-    0 4px 0 -1px var(--bg),
-    0 4px 0 0 rgba(var(--tint), 0.3),
-    0 8px 0 -2px var(--bg),
-    0 8px 0 -1px rgba(var(--tint), 0.18),
+    0 var(--space-1) 0 calc(var(--space-px) * -1) var(--bg),
+    0 var(--space-1) 0 0 var(--kind-border),
+    0 var(--space-2) 0 calc(var(--space-0-5) * -1) var(--bg),
+    0 var(--space-2) 0 calc(var(--space-px) * -1) var(--kind-ring),
     var(--shadow-frame);
 }
 
@@ -45,11 +43,11 @@
 /* 접힌 틀의 포트 — 안쪽 노드가 숨은 동안 선을 대신 받는다.
    노드 카드의 포트와 같은 모양이라야 같은 것으로 읽힌다 */
 .port {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--radius-round);
   background: var(--surface-inset);
-  border-width: 2px;
+  border-width: var(--border-thick);
   border-style: solid;
   /* 색은 카드의 data-kind에서 (globals.css의 --kind) */
   border-color: var(--kind);
@@ -60,12 +58,12 @@
 .title {
   display: flex;
   align-items: center;
-  gap: 6px;
-  height: 28px;
-  padding: 0 8px;
-  background: rgba(var(--tint), 0.07);
-  border-bottom: 1px solid rgba(var(--tint), 0.16);
-  border-radius: 11px 11px 0 0;
+  gap: var(--space-1-5);
+  height: var(--space-7);
+  padding: 0 var(--space-2);
+  background: var(--kind-surface);
+  border-bottom: var(--border-thin) solid var(--kind-ring);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   /* 몸통은 클릭을 통과시키지만 제목 줄은 잡을 수 있다 */
   pointer-events: auto;
   cursor: grab;
@@ -81,39 +79,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
-  margin-left: -2px;
+  width: var(--space-3-5);
+  height: var(--space-3-5);
+  margin-left: calc(var(--space-0-5) * -1);
   padding: 0;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   background: transparent;
-  color: rgba(var(--tint), 0.85);
+  color: var(--kind-text);
   cursor: pointer;
   transition:
-    color 0.15s ease,
-    background 0.15s ease;
+    color var(--duration-base) var(--ease-standard),
+    background var(--duration-base) var(--ease-standard);
 }
 
 .toggle svg {
-  transition: transform 0.18s ease;
+  transition: transform var(--duration-base) var(--ease-standard);
 }
 
 .toggle[aria-expanded="true"] svg {
-  transform: rotate(90deg);
+  transform: rotate(var(--rotate-open));
 }
 
 .toggle:hover {
   color: var(--text-strong);
-  background: rgba(var(--tint), 0.18);
+  background: var(--kind-ring);
 }
 
 .label {
   flex: 1;
   min-width: 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: var(--fs-graph-body);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-heading);
   color: var(--text);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -123,12 +121,12 @@
 /* 개수 — 알약으로 감싸 제목과 다른 층위임을 보인다 */
 .count {
   flex-shrink: 0;
-  padding: 1px 6px;
-  border-radius: 99px;
-  background: rgba(var(--tint), 0.12);
-  color: rgba(var(--tint), 0.95);
-  font-size: 9.5px;
-  font-weight: 500;
+  padding: var(--space-px) var(--space-1-5);
+  border-radius: var(--radius-pill);
+  background: var(--kind-surface-strong);
+  color: var(--kind-text);
+  font-size: var(--fs-graph-count);
+  font-weight: var(--fw-medium);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }

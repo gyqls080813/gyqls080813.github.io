@@ -3,7 +3,9 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
   type Dispatch,
   type ReactNode,
@@ -191,6 +193,16 @@ function pathTo(id: string): Set<string> {
   return path;
 }
 
+/** 세로로 스크롤되는 가장 가까운 조상 — 트리 칸이거나, 서랍에서는 서랍 본문이다 */
+function scrollParentOf(el: HTMLElement): HTMLElement | null {
+  for (let at = el.parentElement; at; at = at.parentElement) {
+    const { overflowY } = getComputedStyle(at);
+    if ((overflowY === "auto" || overflowY === "scroll") && at.scrollHeight > at.clientHeight)
+      return at;
+  }
+  return null;
+}
+
 /** 글 페이지 좌측의 노드 탐색기 — VS Code 탐색기 문법 */
 export default function NodeTree({
   activeNodeId,
@@ -209,6 +221,30 @@ export default function NodeTree({
     return new Set(groupIds.filter((id) => !open.has(id)));
   });
 
+  /* 다른 노드로 옮겨 가면, 그 노드로 가는 길이 접혀 있을 때 한 번 편다. 렌더 중에 고쳐
+     같은 커밋에 반영한다 — 효과에서 고치면 접힌 채 한 번 그려진 뒤 다시 그려진다.
+     옮겨 간 뒤에 보는 사람이 다시 접는 것은 막지 않는다 */
+  const [openedFor, setOpenedFor] = useState(activeNodeId);
+  if (openedFor !== activeNodeId) {
+    setOpenedFor(activeNodeId);
+    const path = pathTo(activeNodeId);
+    if ([...path].some((id) => collapsed.has(id)))
+      setCollapsed(new Set([...collapsed].filter((id) => !path.has(id))));
+  }
+
+  /* 지금 노드의 행이 트리 칸 밖에 있으면 칸 가운데로 굴린다. 이미 보이면 그대로 둔다 —
+     트리에서 직접 누른 경우까지 목록이 움직이면 누른 자리를 놓친다 */
+  const navRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const row = navRef.current?.querySelector<HTMLElement>('[aria-current="page"]');
+    const box = row && scrollParentOf(row);
+    if (!row || !box) return;
+    const outer = box.getBoundingClientRect();
+    const inner = row.getBoundingClientRect();
+    if (inner.top >= outer.top && inner.bottom <= outer.bottom) return;
+    box.scrollTop += inner.top - outer.top - (outer.height - inner.height) / 2;
+  }, [activeNodeId]);
+
   const treeState = useMemo(
     () => ({ collapsed, setCollapsed, activeNodeId }),
     [collapsed, activeNodeId],
@@ -216,7 +252,7 @@ export default function NodeTree({
 
   return (
     <TreeState.Provider value={treeState}>
-      <nav className={styles.tree} aria-label="노드 탐색기">
+      <nav ref={navRef} className={styles.tree} aria-label="노드 탐색기">
         <Link href="/" className={styles.graphLink}>
           <GraphIcon />
           전체 그래프로 돌아가기

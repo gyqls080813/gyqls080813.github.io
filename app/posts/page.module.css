@@ -1,68 +1,69 @@
 .screen {
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: var(--size-screen);
+  min-height: var(--size-screen-dynamic);
   display: flex;
   flex-direction: column;
 }
 
 .main {
   flex: 1;
-  padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 56px);
+  padding: var(--layout-page-pad);
 }
 
 .inner {
-  max-width: 720px;
+  max-width: var(--layout-page);
   margin: 0 auto;
 }
 
 .heading {
-  margin: 0 0 6px;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-heading);
   color: var(--text-strong);
 }
 
 .sub {
-  margin: 0 0 28px;
-  font-size: 13.5px;
+  margin: 0 0 var(--space-7);
+  font-size: var(--fs-ui);
   color: var(--muted);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .card {
   display: block;
-  padding: 18px 20px;
+  padding: var(--space-4) var(--space-5);
   background: var(--panel);
-  border: 1px solid var(--divider);
-  border-radius: 12px;
+  border: var(--border-thin) solid var(--divider);
+  border-radius: var(--radius-xl);
   text-decoration: none;
-  transition: border-color 0.15s ease;
+  transition: border-color var(--duration-base) var(--ease-standard);
 }
 
 .card:hover {
-  border-color: rgba(var(--trouble-rgb), 0.4);
+  border-color: var(--trouble-line);
 }
 
 .cardTitle {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: var(--fs-ui-lg);
+  font-weight: var(--fw-semibold);
   color: var(--text);
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-2);
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--space-2);
 }
 
 .cardDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 99px;
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: var(--radius-pill);
   background: var(--trouble);
   flex-shrink: 0;
 }

@@ -1,6 +1,6 @@
 .screen {
-  height: 100vh;
-  height: 100dvh;
+  height: var(--size-screen);
+  height: var(--size-screen-dynamic);
   display: flex;
   flex-direction: column;
 }
@@ -40,14 +40,14 @@
   transform: translate(-50%, -50%);
   width: 90%;
   height: 93%;
-  max-width: 1500px;
-  max-height: 940px;
+  max-width: var(--layout-sheet);
+  max-height: var(--layout-sheet-h);
   container-type: inline-size;
   display: flex;
   overflow: hidden;
   background: var(--bg-elevated);
-  border: 1px solid var(--border-node-strong);
-  border-radius: 14px;
+  border: var(--border-thin) solid var(--border-node-strong);
+  border-radius: var(--radius-2xl);
   /* 노드→시트 확장(홈의 한 동작)이 이미 이 모습으로 끝났다 — 여기선 그대로 이어받는다 */
   box-shadow: var(--shadow-sheet);
 }
@@ -69,29 +69,29 @@
    max()로 실제 시트 모서리를 따라간다 (.sheet의 max-width와 함께 맞출 것). ── */
 .portsLeft {
   position: absolute;
-  left: calc(max(5%, (100% - 1500px) / 2) - 8px);
+  left: calc(max(var(--layout-sheet-gutter), (100% - var(--layout-sheet)) / 2) - var(--space-2));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  z-index: 6;
+  gap: var(--space-7);
+  z-index: var(--z-ports);
 }
 
 .portsRight {
   position: absolute;
-  right: calc(max(5%, (100% - 1500px) / 2) - 8px);
+  right: calc(max(var(--layout-sheet-gutter), (100% - var(--layout-sheet)) / 2) - var(--space-2));
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  z-index: 6;
+  gap: var(--space-7);
+  z-index: var(--z-ports);
 }
 
 /* 하위 챕터가 많은 개념(참고서 15개 등)은 30px 간격으로는 화면 밖으로 흐른다 */
 .portsDense {
-  gap: 13px;
+  gap: var(--space-3);
 }
 
 /* 좁은 화면에서는 포트가 본문을 침범한다 — 숨기고 트리·브레드크럼이 대신한다.
@@ -121,24 +121,24 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-0-5);
   white-space: nowrap;
-  padding: 8px 13px;
+  padding: var(--space-2) var(--space-3);
   background: var(--surface-node);
-  border: 1px solid var(--border-node-strong);
-  border-radius: 8px;
+  border: var(--border-thin) solid var(--border-node-strong);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-node);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--duration-base) var(--ease-standard);
 }
 
 .portsLeft .portPopover {
-  left: calc(100% + 10px);
+  left: calc(100% + var(--space-2-5));
 }
 
 .portsRight .portPopover {
-  right: calc(100% + 10px);
+  right: calc(100% + var(--space-2-5));
 }
 
 .port:hover .portPopover {
@@ -146,20 +146,20 @@
 }
 
 .popRole {
-  font-size: 10.5px;
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
 .popName {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-semibold);
   color: var(--text);
 }
 
 .treePanel {
   width: var(--tree-width);
   flex-shrink: 0;
-  border-right: 1px solid var(--border);
+  border-right: var(--border-thin) solid var(--border);
   background: var(--bg-elevated);
   min-height: 0;
 }
@@ -192,9 +192,9 @@
 /* 오른쪽 목차 — 이 노드 "안"에서 옮겨 다니는 길. 왼쪽 트리(노드 "사이")와
    반대편에 세워 층위가 다르다는 걸 자리로 알린다 */
 .navPanel {
-  width: clamp(168px, 19cqi, 228px);
+  width: var(--layout-nav);
   flex-shrink: 0;
-  border-left: 1px solid var(--border);
+  border-left: var(--border-thin) solid var(--border);
   background: var(--bg-elevated);
   min-height: 0;
 }
@@ -219,35 +219,36 @@
    바깥 .article이 패딩을 맡으므로 여기서는 폭만 정한다.
    읽기 좋은 줄길이로 상한을 두되, 좁을 땐 100%까지 준다 */
 .articleInner {
-  max-width: min(900px, 100%);
+  max-width: min(var(--layout-content), 100%);
   margin: 0 auto;
 }
 
 .meta {
   /* 줄 모양은 <PostMeta>가 — 여기는 제목과의 간격만 */
-  margin-bottom: 18px;
+  margin-bottom: var(--space-4);
 }
 
 .title {
-  margin: 0 0 18px;
-  font-size: var(--fs-sheet-title);
-  line-height: 1.32;
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-title);
   color: var(--text-strong);
 }
 .lead {
-  margin: 0 0 26px;
-  font-size: var(--fs-sheet-lead);
-  line-height: 1.75;
+  margin: 0 0 var(--space-6);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
   color: var(--text-body);
 }
 
 /* 섹션 제목은 <SectionHeading> 로 옮겨졌다 */
 .sectionBody {
-  margin: 0 0 24px;
-  font-size: var(--fs-sheet-body);
-  line-height: 1.75;
+  margin: 0 0 var(--space-6);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-body);
 }
 
@@ -257,8 +258,8 @@
 .breadcrumb {
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-size: 13px;
+  gap: var(--space-2);
+  font-size: var(--fs-ui-sm);
   min-width: 0;
   /* 좁은 화면에서 머리줄이 페이지 폭을 밀어내지 않게 — 알약이 줄어든다 */
   overflow: hidden;
@@ -282,27 +283,27 @@
 .crumb {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  border-radius: 99px;
-  background: rgba(var(--kind-rgb), 0.1);
-  border: 1px solid rgba(var(--kind-rgb), 0.35);
+  gap: var(--space-1-5);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--kind-surface-strong);
+  border: var(--border-thin) solid var(--kind-border);
   color: var(--kind-text);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   white-space: nowrap;
 }
 
 .crumbDot {
-  width: 7px;
-  height: 7px;
-  border-radius: 99px;
-  border: 1.5px solid var(--kind);
+  width: var(--space-1-5);
+  height: var(--space-1-5);
+  border-radius: var(--radius-pill);
+  border: var(--border-medium) solid var(--kind);
   flex-shrink: 0;
 }
 
 /* 길의 마지막 칸 = 지금 보고 있는 것 */
 .crumbHere {
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .breadcrumb > .crumbHere {

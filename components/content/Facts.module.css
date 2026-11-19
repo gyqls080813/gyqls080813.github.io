@@ -2,8 +2,8 @@
 .factRow {
   display: flex;
   align-items: baseline;
-  gap: 14px;
-  padding: 7px 2px;
+  gap: var(--space-3-5);
+  padding: var(--space-1-5) var(--space-0-5);
 }
 
 /* 12px이 아니라 13.5px인 이유는 트리(NodeTree.module.css의 .tree)와 같다 —
@@ -12,16 +12,16 @@
    값의 구분은 색(--c-text)과 자리(고정 폭)가 대신 맡는다. */
 .label {
   flex-shrink: 0;
-  width: 48px;
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  width: var(--space-12);
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   color: var(--kind-text);
 }
 
 .value {
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
   color: var(--text-body);
 }
 
@@ -30,7 +30,7 @@
   color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--border-subtle);
-  text-underline-offset: 3px;
+  text-underline-offset: var(--space-0-5);
 }
 
 .value a:hover {
@@ -41,10 +41,10 @@
 .entryRow {
   display: flex;
   align-items: baseline;
-  gap: 11px;
-  padding: 7px 10px;
-  border-radius: 7px;
-  transition: background 100ms ease;
+  gap: var(--space-2-5);
+  padding: var(--space-1-5) var(--space-2-5);
+  border-radius: var(--radius-sm);
+  transition: background var(--duration-fast) var(--ease-standard);
 }
 
 .entryRow:hover {
@@ -53,24 +53,24 @@
 
 .entryBullet {
   flex-shrink: 0;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+  width: var(--space-1);
+  height: var(--space-1);
+  border-radius: var(--radius-round);
   background: var(--faint);
-  transform: translateY(-3px);
+  transform: translateY(calc(var(--space-0-5) * -1));
 }
 
 .entryText {
   flex: 1;
   min-width: 0;
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
   color: var(--text-body);
 }
 
 .entryDate {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: var(--fs-caption);
   color: var(--faint);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;

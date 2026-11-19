@@ -2,8 +2,18 @@
 <html lang="ko">
 <meta charset="utf-8">
 <style>
+  /* 토큰: scripts/tokens-css.mjs가 app/globals.css에서 옮겨 적는다 — 고치지 말 것 */
+  :root { --fs-ui-sm: 13px; --preview-bg-subtle: #f6f8fa; --preview-font: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; --preview-lh: 1.6; --preview-text: #111111; --space-1-5: 6px; --space-2-5: 10px; }
+  /* 토큰 끝 */
   :root { color-scheme: light; }
-  body { margin: 6px 10px; background: #f6f8fa; color: #111; font: 13px/1.6 system-ui, sans-serif; }
+  body {
+    margin: var(--space-1-5) var(--space-2-5);
+    background: var(--preview-bg-subtle);
+    color: var(--preview-text);
+    font-family: var(--preview-font);
+    font-size: var(--fs-ui-sm);
+    line-height: var(--preview-lh);
+  }
   p { margin: 0; }
 </style>
 <p id="s">스크립트가 막혔습니다. (이 줄이 그대로면 아래 script가 돌지 않은 것입니다)</p>

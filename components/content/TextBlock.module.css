@@ -10,27 +10,27 @@
 .label {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin: 0 0 10px;
-  font-size: var(--fs-sheet-h3);
-  line-height: 1.4;
-  font-weight: 700;
-  letter-spacing: -0.005em;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2-5);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-heading);
   color: var(--text-strong);
 }
 
 .label::before {
   content: "";
   flex-shrink: 0;
-  width: 4px;
-  height: 1em;
-  border-radius: 2px;
+  width: var(--space-1);
+  height: var(--size-text);
+  border-radius: var(--radius-xs);
   background: var(--kind);
 }
 
 /* 직접 해 보기 — 막대 대신 재생 삼각형, 글자는 한 단 작게. 위 개념 블록에 딸린 실습으로 읽힌다 */
 .labLabel {
-  font-size: calc(var(--fs-sheet-h3) - 1.5px);
+  font-size: calc(var(--fs-h3) - var(--space-0-5));
   color: var(--kind-text);
 }
 
@@ -39,17 +39,17 @@
   height: 0;
   border-radius: 0;
   background: none;
-  border-top: 0.36em solid transparent;
-  border-bottom: 0.36em solid transparent;
-  border-left: 0.6em solid var(--kind);
+  border-top: var(--play-icon-h) solid transparent;
+  border-bottom: var(--play-icon-h) solid transparent;
+  border-left: var(--play-icon-w) solid var(--kind);
 }
 
 .body {
   margin: 0;
-  padding-left: 15px;
-  border-left: 2px solid var(--border-subtle);
-  font-size: var(--fs-sheet-body);
-  line-height: 1.8;
+  padding-left: var(--space-3-5);
+  border-left: var(--border-thick) solid var(--border-subtle);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
   color: var(--text-body);
   /* 문단과 목록은 RichText가 나눈다. 띄어쓰기 없는 긴 덩어리(H<sub>2</sub>O 같은 태그 줄)는
      폰 폭에서 칸을 넘치기 전에 접는다 */

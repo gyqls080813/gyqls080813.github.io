@@ -3,24 +3,24 @@
   display: flex;
   /* 여러 줄이라 아이콘은 설명이 아니라 제목 옆(위)에 붙는다 */
   align-items: flex-start;
-  gap: 12px;
+  gap: var(--space-3);
   width: 100%;
-  padding: 14px 16px;
+  padding: var(--space-3-5) var(--space-4);
   background: var(--surface-node);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+  border: var(--border-thin) solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   text-align: left;
   text-decoration: none;
   font-family: inherit;
   transition:
-    background 120ms ease,
-    border-color 120ms ease;
+    background var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
 }
 
 .card:hover {
   background: var(--surface-node-hover);
-  border-color: color-mix(in srgb, var(--kind) 45%, transparent);
+  border-color: var(--kind-line);
 }
 
 .text {
@@ -31,36 +31,36 @@
 .head {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .title {
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.45;
+  font-size: var(--fs-ui-lg);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-h3);
   color: var(--text);
 }
 
 .desc {
   display: block;
-  margin-top: 4px;
-  font-size: 12.5px;
-  line-height: 1.5;
+  margin-top: var(--space-1);
+  font-size: var(--fs-ui-sm);
+  line-height: var(--lh-ui);
   color: var(--muted);
 }
 
 .meta {
   display: block;
-  margin-top: 4px;
-  font-size: 12px;
+  margin-top: var(--space-1);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 9px;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
 }
 
 .card:hover .tags :global(*) {
@@ -75,5 +75,5 @@
 
 .card:hover .port {
   background: var(--kind);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kind) 16%, transparent);
+  box-shadow: 0 0 0 var(--space-1) var(--kind-ring);
 }

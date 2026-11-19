@@ -1,26 +1,8 @@
 import Link from "next/link";
 import { labelOf } from "@/lib/graphData";
 import { routeOf, type NodeOpenKind } from "@/lib/nodeKinds";
-import { chaptersOf, parentOf } from "@/lib/nodePath";
-import { nodeOpenKind } from "@/lib/nodeTarget";
+import { sheetNeighbors } from "@/lib/sheetNeighbors";
 import styles from "./SheetPager.module.css";
-
-/**
- * 같은 허브 아래에서 바로 앞, 바로 뒤의 시트. 같은 종류로 열리는 노드만 센다 —
- * 아직 내용이 없는 노드나 다른 종류로 열리는 노드는 건너뛴다.
- *
- * 열리는지는 본문이 아니라 빌드 때 뽑은 색인(lib/nodeTarget)으로 본다. 이 부품은 본문 모듈을
- * 부르지 않으므로 홈이나 껍데기 같은 브라우저 번들에 들어가도 본문이 따라오지 않는다.
- */
-function neighbors(nodeId: string, kind: NodeOpenKind): { prev?: string; next?: string } {
-  const hub = parentOf.get(nodeId);
-  const siblings = (hub ? (chaptersOf.get(hub) ?? []) : []).filter(
-    (id) => nodeOpenKind(id) === kind,
-  );
-  const at = siblings.indexOf(nodeId);
-  if (at < 0) return {};
-  return { prev: siblings[at - 1], next: siblings[at + 1] };
-}
 
 /**
  * 이전·다음 — 같은 갈래의 앞뒤 장으로 바로 넘어간다.
@@ -30,7 +12,7 @@ function neighbors(nodeId: string, kind: NodeOpenKind): { prev?: string; next?: 
  * 맥락을 내려놓게 된다. 포트는 그래프를 거쳐 가지만, 여기는 시트에서 시트로 곧장 간다.
  */
 export default function SheetPager({ nodeId, kind }: { nodeId: string; kind: NodeOpenKind }) {
-  const { prev, next } = neighbors(nodeId, kind);
+  const { prev, next } = sheetNeighbors(nodeId, kind);
   if (!prev && !next) return null;
   return (
     <nav className={styles.pager} aria-label="이전, 다음 장">

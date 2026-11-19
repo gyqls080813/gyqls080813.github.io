@@ -1,74 +1,72 @@
 /* 직접 해 보기 — 코드 블록과 같은 판(panel-deep) 위에 편집기, 작은 창, 기록을 세로로 쌓는다.
    좁은 화면에서도 같은 순서라 옆으로 밀리지 않는다. */
 .lab {
-  margin: 0 0 26px;
-  border: 1px solid var(--divider);
-  border-left: 2px solid rgba(var(--theory-rgb), 0.55);
-  border-radius: 10px;
+  margin: 0 0 var(--space-6);
+  border: var(--border-thin) solid var(--divider);
+  border-left: var(--border-thick) solid var(--kind-line);
+  border-radius: var(--radius-lg);
   background: var(--panel-deep);
-  --lab-mono:
-    ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace;
 }
 
 .head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 10px;
-  padding: 12px 14px 0;
+  gap: var(--space-1) var(--space-2-5);
+  padding: var(--space-3) var(--space-3-5) 0;
 }
 
 .kicker {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   color: var(--theory-text);
 }
 
 .hint {
-  font-size: 12px;
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
 .code {
-  font-family: var(--lab-mono);
+  font-family: var(--font-mono);
   display: block;
   box-sizing: border-box;
-  width: calc(100% - 28px);
-  margin: 10px 14px 0;
-  padding: 10px 12px;
-  font-size: 12.5px;
-  line-height: 1.7;
+  width: calc(100% - var(--space-7));
+  margin: var(--space-2-5) var(--space-3-5) 0;
+  padding: var(--space-2-5) var(--space-3);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
   color: var(--text-soft);
   background: var(--surface-inset);
-  border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border: var(--border-thin) solid var(--border-subtle);
+  border-radius: var(--radius-md);
   resize: vertical;
   /* 코드 줄은 접지 않는다 — 넘치면 칸 안에서 옆으로 */
   white-space: pre;
   overflow-x: auto;
-  tab-size: 2;
+  tab-size: var(--code-tab-size);
 }
 
 .code:focus-visible {
-  outline: 2px solid rgba(var(--theory-rgb), 0.6);
-  outline-offset: 1px;
+  outline: var(--border-thick) solid var(--kind-line);
+  outline-offset: var(--space-px);
 }
 
 .buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 8px 14px 0;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3-5) 0;
 }
 
 .buttons button,
 .bar button {
   font: inherit;
-  font-size: 12.5px;
-  padding: 5px 12px;
-  border: 1px solid var(--border-strong);
-  border-radius: 7px;
+  font-size: var(--fs-ui-sm);
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-sm);
   background: var(--panel);
   color: var(--text-soft);
   cursor: pointer;
@@ -80,51 +78,51 @@
 }
 
 .buttons .primary {
-  border-color: rgba(var(--theory-rgb), 0.55);
-  background: rgba(var(--theory-rgb), 0.14);
+  border-color: var(--kind-line);
+  background: var(--kind-surface-strong);
   color: var(--theory-text);
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .try {
-  margin: 10px 14px 0;
-  font-size: 12.5px;
-  line-height: 1.7;
+  margin: var(--space-2-5) var(--space-3-5) 0;
+  font-size: var(--fs-ui-sm);
+  line-height: var(--lh-body-sm);
   color: var(--text-body);
   overflow-wrap: break-word;
 }
 
 /* 작은 창 — 브라우저 창처럼 주소 줄 + 문서. 문서는 기본 스타일 그대로라 흰 바탕이다 */
 .browser {
-  margin: 12px 14px 0;
-  border: 1px solid var(--border-strong);
-  border-radius: 8px;
+  margin: var(--space-3) var(--space-3-5) 0;
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  background: #fff;
+  background: var(--preview-bg);
 }
 
 .bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 6px 5px 8px;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-1-5) var(--space-1) var(--space-2);
   background: var(--surface-inset);
-  border-bottom: 1px solid var(--border-strong);
+  border-bottom: var(--border-thin) solid var(--border-strong);
 }
 
 .bar button {
-  padding: 3px 10px;
-  font-size: 12px;
+  padding: var(--space-0-5) var(--space-2-5);
+  font-size: var(--fs-caption);
 }
 
 .url {
-  font-family: var(--lab-mono);
+  font-family: var(--font-mono);
   flex: 1;
   min-width: 0;
-  padding: 3px 8px;
-  border-radius: 5px;
+  padding: var(--space-0-5) var(--space-2);
+  border-radius: var(--radius-xs);
   background: var(--panel-deep);
-  font-size: 11.5px;
+  font-size: var(--fs-caption);
   color: var(--text-soft);
   white-space: nowrap;
   overflow: hidden;
@@ -136,33 +134,34 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  padding: 5px 8px;
+  gap: var(--space-1-5);
+  padding: var(--space-1) var(--space-2);
   background: var(--surface-inset);
-  border-bottom: 1px solid var(--border-strong);
-  font-size: 12px;
+  border-bottom: var(--border-thin) solid var(--border-strong);
+  font-size: var(--fs-caption);
   color: var(--muted);
 }
 
 .widths button {
   font: inherit;
-  padding: 2px 9px;
-  border: 1px solid var(--border-strong);
-  border-radius: 6px;
+  padding: var(--space-0-5) var(--space-2);
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-sm);
   background: var(--panel);
   color: var(--text-soft);
   cursor: pointer;
 }
 
 .widths button[aria-pressed="true"] {
-  border-color: rgba(var(--theory-rgb), 0.55);
-  background: rgba(var(--theory-rgb), 0.14);
+  border-color: var(--kind-line);
+  background: var(--kind-surface-strong);
   color: var(--theory-text);
 }
 
 .frame {
   max-width: 100%;
-  background: #fff;
+  height: var(--lab-frame-h);
+  background: var(--preview-bg);
 }
 
 .frame iframe {
@@ -170,87 +169,87 @@
   width: 100%;
   height: 100%;
   border: 0;
-  background: #fff;
+  background: var(--preview-bg);
 }
 
 .checks {
-  width: calc(100% - 28px);
-  margin: 12px 14px 0;
+  width: calc(100% - var(--space-7));
+  margin: var(--space-3) var(--space-3-5) 0;
   border-collapse: collapse;
-  font-size: 12.5px;
+  font-size: var(--fs-ui-sm);
 }
 
 .checks caption {
   text-align: left;
-  padding-bottom: 4px;
-  font-size: 12px;
-  font-weight: 600;
+  padding-bottom: var(--space-1);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
   color: var(--muted);
 }
 
 .checks th,
 .checks td {
-  padding: 5px 0;
+  padding: var(--space-1) 0;
   vertical-align: top;
-  border-top: 1px solid var(--divider);
+  border-top: var(--border-thin) solid var(--divider);
 }
 
 .checks th {
   width: 1%;
-  padding-right: 12px;
+  padding-right: var(--space-3);
   text-align: left;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-body);
   white-space: nowrap;
 }
 
 .checks code {
-  font-family: var(--lab-mono);
-  font-size: 12px;
-  line-height: 1.6;
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-ui);
   color: var(--text-soft);
   white-space: pre-wrap;
   word-break: break-all;
 }
 
 .logTitle {
-  margin: 12px 14px 0;
-  font-size: 12px;
-  font-weight: 600;
+  margin: var(--space-3) var(--space-3-5) 0;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
   color: var(--muted);
 }
 
 .log {
   list-style: none;
-  margin: 4px 14px 14px;
-  padding: 6px 0 2px;
-  max-height: 300px;
+  margin: var(--space-1) var(--space-3-5) var(--space-3-5);
+  padding: var(--space-1-5) 0 var(--space-0-5);
+  max-height: var(--layout-log-h);
   overflow-y: auto;
-  border-top: 1px solid var(--divider);
+  border-top: var(--border-thin) solid var(--divider);
 }
 
 .row {
   display: grid;
-  grid-template-columns: 56px 38px 1fr;
-  gap: 8px;
+  grid-template-columns: var(--space-14) var(--space-10) 1fr;
+  gap: var(--space-2);
   align-items: baseline;
-  padding: 3px 0;
-  font-size: 12.5px;
-  line-height: 1.6;
+  padding: var(--space-0-5) 0;
+  font-size: var(--fs-ui-sm);
+  line-height: var(--lh-ui);
 }
 
 .ms {
-  font-family: var(--lab-mono);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
   color: var(--faint);
   text-align: right;
 }
 
 .tag {
-  padding: 1px 0;
-  border-radius: 5px;
-  font-size: 11px;
-  font-weight: 700;
+  padding: var(--space-px) 0;
+  border-radius: var(--radius-xs);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
   text-align: center;
   color: var(--muted);
   background: var(--surface-inset);
@@ -258,28 +257,28 @@
 
 .tag[data-tag="click"] {
   color: var(--theory-text);
-  background: rgba(var(--theory-rgb), 0.16);
+  background: var(--theory-tint);
 }
 
 .tag[data-tag="guess"] {
   color: var(--idea-text);
-  background: rgba(var(--idea-rgb), 0.16);
+  background: var(--idea-tint);
 }
 
 .tag[data-tag="real"] {
   color: var(--project-text);
-  background: rgba(var(--project-rgb), 0.16);
+  background: var(--project-tint);
 }
 
 .tag[data-tag="stop"],
 .tag[data-tag="err"] {
   color: var(--trouble);
-  background: rgba(var(--trouble-rgb), 0.16);
+  background: var(--trouble-tint);
 }
 
 .tag[data-tag="out"] {
-  color: var(--me-bright);
-  background: rgba(var(--me-rgb), 0.18);
+  color: var(--me-text);
+  background: var(--me-tint);
 }
 
 .text {
@@ -289,14 +288,14 @@
 }
 
 .sep {
-  height: 1px;
-  margin: 6px 0;
+  height: var(--space-px);
+  margin: var(--space-1-5) 0;
   background: var(--divider);
 }
 
 .empty {
-  padding: 4px 0;
-  font-size: 12.5px;
+  padding: var(--space-1) 0;
+  font-size: var(--fs-ui-sm);
   color: var(--muted);
 }
 
@@ -310,8 +309,8 @@
   }
 
   .row {
-    grid-template-columns: 44px 34px 1fr;
-    gap: 6px;
+    grid-template-columns: var(--space-10) var(--space-8) 1fr;
+    gap: var(--space-1-5);
   }
 }
 
@@ -319,16 +318,16 @@
    iOS Safari는 16px보다 작은 입력 칸에 포커스가 가면 화면을 확대해 버린다 */
 @media (pointer: coarse) {
   .code {
-    font-size: 16px;
+    font-size: var(--fs-input);
   }
 
   .buttons button {
-    padding: 9px 14px;
-    font-size: 13.5px;
+    padding: var(--space-2) var(--space-3-5);
+    font-size: var(--fs-ui);
   }
 
   .bar button,
   .widths button {
-    padding: 6px 12px;
+    padding: var(--space-1-5) var(--space-3);
   }
 }

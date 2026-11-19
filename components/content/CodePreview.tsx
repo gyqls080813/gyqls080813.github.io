@@ -3,17 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./CodePreview.module.css";
 
-/** 이보다 길면 칸 안에서 스크롤한다 — 예시 하나가 화면을 다 덮지 않게 */
-const MAX_HEIGHT = 460;
-
 /**
  * 작은 창의 첫머리 — 직접 해 보기(public/labs/html/play.html)와 같은 기본 여백과 글꼴이다.
  * base는 실험 파일이 있는 폴더라, 예시의 상대 주소(cat.jpg, target.html)가 실험과 같은 파일로 풀린다.
  */
 const HEAD =
   '<!doctype html><meta charset="utf-8"><base href="/labs/html/">' +
-  "<style>:root{color-scheme:light}body{margin:12px 16px;background:#fff;color:#111;" +
-  "font-family:system-ui,sans-serif;line-height:1.6}</style>";
+  '<link rel="stylesheet" href="/tokens.css">' +
+  "<style>:root{color-scheme:light}body{margin:var(--preview-pad);background:var(--preview-bg);" +
+  "color:var(--preview-text);font-family:var(--preview-font);line-height:var(--preview-lh)}</style>";
 
 /**
  * 결과 미리보기 — HTML 코드 바로 아래에 브라우저가 그린 모습을 붙인다.
@@ -29,14 +27,16 @@ const HEAD =
  */
 export default function CodePreview({ html }: { html: string }) {
   const frameRef = useRef<HTMLIFrameElement>(null);
-  const [height, setHeight] = useState(64);
+  /* 잰 문서 높이 — 최소와 최대(넘치면 칸 안에서 스크롤)는 CSS의 --preview-min-h, --preview-max-h가 맡는다 */
+  const [height, setHeight] = useState<number>();
 
   useEffect(() => {
     const frame = frameRef.current;
     if (!frame) return;
     const measure = () => {
       const root = frame.contentDocument?.documentElement;
-      if (root) setHeight(Math.min(Math.max(root.scrollHeight, 40), MAX_HEIGHT));
+      /* scrollHeight는 창 높이보다 작아지지 않아 한 번 커지면 줄지 않는다 — 문서 자체의 높이를 잰다 */
+      if (root) setHeight(Math.ceil(root.getBoundingClientRect().height));
     };
     const observer = new ResizeObserver(measure);
     /* srcdoc 문서는 load 때 새로 선다 — 그때마다 새 문서의 body를 지켜본다 */

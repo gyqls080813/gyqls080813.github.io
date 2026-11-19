@@ -10,3 +10,6 @@ lib/generated/
 
 # 노드마다의 목차, 포트, 머리 — scripts/sheet-index가 만든다
 public/outline/
+
+# 작은 창 문서가 읽는 토큰 — scripts/tokens-css가 app/globals.css에서 만든다
+public/tokens.css

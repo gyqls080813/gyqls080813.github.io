@@ -7,20 +7,20 @@
 /* 자동 정렬 버튼 — 흐트러뜨린 배치를 처음 자리로 */
 .tidyButton {
   position: absolute;
-  right: 20px;
-  bottom: 40px;
-  z-index: 5;
+  right: var(--space-5);
+  bottom: var(--space-10);
+  z-index: var(--z-graph-controls);
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 8px 13px;
+  gap: var(--space-1-5);
+  padding: var(--space-2) var(--space-3);
   background: var(--panel);
-  border: 1px solid var(--border-strong);
-  border-radius: 9px;
+  border: var(--border-thin) solid var(--border-strong);
+  border-radius: var(--radius-md);
   color: var(--muted);
   font-family: inherit;
-  font-size: 12.5px;
-  font-weight: 500;
+  font-size: var(--fs-ui-sm);
+  font-weight: var(--fw-medium);
   cursor: pointer;
 }
 
@@ -35,5 +35,5 @@
   position: absolute;
   background: var(--guide);
   pointer-events: none;
-  z-index: 10;
+  z-index: var(--z-graph-guide);
 }

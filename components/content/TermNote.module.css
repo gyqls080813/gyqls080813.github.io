@@ -1,33 +1,33 @@
 /* 본문보다 한 단 들어가고, 표면도 다르다 — 곁길이라는 걸 모양으로 알린다 */
 .note {
-  margin: 0 0 22px 22px;
-  padding: 13px 16px 14px;
-  border: 1px solid var(--divider);
-  border-left: 2px solid rgba(var(--theory-rgb), 0.45);
-  border-radius: 0 9px 9px 0;
+  margin: 0 0 var(--space-5) var(--space-5);
+  padding: var(--space-3) var(--space-4) var(--space-3-5);
+  border: var(--border-thin) solid var(--divider);
+  border-left: var(--border-thick) solid var(--kind-line);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   background: var(--panel-deep);
 }
 
 .kicker {
   display: block;
-  margin-bottom: 5px;
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   color: var(--faint);
 }
 
 .term {
-  margin: 0 0 6px;
-  font-size: 13.5px;
-  font-weight: 700;
+  margin: 0 0 var(--space-1-5);
+  font-size: var(--fs-ui);
+  font-weight: var(--fw-bold);
   color: var(--theory-text);
 }
 
 .body {
   margin: 0;
-  font-size: 13.5px;
-  line-height: 1.75;
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
   color: var(--text-soft);
   overflow-wrap: break-word;
 }

@@ -96,6 +96,7 @@ export function SheetBlock({
  */
 export default function SheetArticle({
   head,
+  beforeReading,
   keyPoints,
   introLabel,
   intro,
@@ -108,6 +109,8 @@ export default function SheetArticle({
 }: {
   /** 머리 — 갈래(색과 표식), 머리표, 제목, 날짜, 한 줄 소개. lib/headings의 SHEET_HEAD로 만든다 */
   head: SheetHead;
+  /** 읽기 전에 — 지난 장 다시 떠올리기와 이 장의 질문. 핵심 정리보다 먼저 */
+  beforeReading?: ReactNode;
   /** 핵심 정리 — 머리 바로 아래, 첫 블록보다 먼저 */
   keyPoints?: string[];
   introLabel: string;
@@ -131,6 +134,8 @@ export default function SheetArticle({
     /* 이 시트의 갈래 색은 data-kind에서 내려온다 (globals.css의 --kind) */
     <div className={sheetStyles.articleInner} data-kind={kind}>
       <SheetArticleHead head={head} />
+
+      {beforeReading}
 
       {keyPoints && keyPoints.length > 0 && <KeyPoints points={keyPoints} />}
 

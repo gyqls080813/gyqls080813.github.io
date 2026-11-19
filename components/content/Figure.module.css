@@ -1,20 +1,20 @@
 .img {
   display: block;
   width: 100%;
-  max-width: var(--fig-max, 340px);
+  max-width: var(--fig-max, var(--layout-figure-max));
   height: auto;
   /* 짧은 화면에서 넘치지 않게 높이도 상한 */
-  max-height: 62dvh;
+  max-height: var(--layout-figure-h);
   object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  border: var(--border-thin) solid var(--border-subtle);
 }
 
 /* 시트가 좁아 세로로 설 때 — 다시 유동 폭 (고정으로 작아지던 문제 방지) */
 @container (max-width: 760px) {
   .img {
-    width: clamp(184px, 46cqi, 264px);
-    max-height: 46dvh;
+    width: var(--layout-figure);
+    max-height: var(--layout-figure-h-narrow);
   }
 }
 
@@ -31,12 +31,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2-5);
 }
 
 .caption {
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-ui);
   color: var(--muted);
   text-align: center;
 }

@@ -1,22 +1,22 @@
 .pager {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 40px;
+  gap: var(--space-3);
+  margin-top: var(--space-10);
 }
 
 .link {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
   min-width: 0;
-  padding: 14px 16px;
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+  padding: var(--space-3-5) var(--space-4);
+  border: var(--border-thin) solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   text-decoration: none;
   transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
+    border-color var(--duration-base) var(--ease-standard),
+    background var(--duration-base) var(--ease-standard);
 }
 
 .link[data-side="next"] {
@@ -25,18 +25,18 @@
 
 .link:hover {
   border-color: var(--kind);
-  background: rgba(var(--kind-rgb), 0.06);
+  background: var(--kind-surface);
 }
 
 .dir {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
   color: var(--muted);
 }
 
 .name {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--fs-ui-lg);
+  font-weight: var(--fw-bold);
   color: var(--text-strong);
   overflow-wrap: anywhere;
 }

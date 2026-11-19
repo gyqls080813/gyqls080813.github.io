@@ -5,20 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>도착한 페이지</title>
 <style>
+  /* 토큰: scripts/tokens-css.mjs가 app/globals.css에서 옮겨 적는다 — 고치지 말 것 */
+  :root { --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace; --fs-code: 12.5px; --fs-ui: 14px; --fs-ui-lg: 16px; --preview-bg: #ffffff; --preview-doc-max: 760px; --preview-font: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; --preview-lh: 1.6; --preview-muted: #555555; --preview-ok: #1a7f37; --preview-text: #111111; --space-0-5: 2px; --space-1-5: 6px; --space-2-5: 10px; --space-3: 12px; --space-4: 16px; --space-6: 24px; }
+  /* 토큰 끝 */
   :root { color-scheme: light; }
   body {
     margin: 0;
-    padding: 10px 16px;
-    background: #fff;
-    color: #111;
-    font: 14px/1.6 system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    padding: var(--space-2-5) var(--space-4);
+    background: var(--preview-bg);
+    color: var(--preview-text);
+    font-family: var(--preview-font);
+    font-size: var(--fs-ui);
+    line-height: var(--preview-lh);
   }
-  b { color: #1a7f37; }
-  dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; margin: 6px 0; }
-  dt { color: #555; }
-  dd { margin: 0; word-break: break-all; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
-  button { font: inherit; margin-top: 6px; }
-  .top { font-size: 16px; max-width: 760px; margin: 24px auto; }
+  b { color: var(--preview-ok); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-0-5) var(--space-3); margin: var(--space-1-5) 0; }
+  dt { color: var(--preview-muted); }
+  dd { margin: 0; word-break: break-all; font-family: var(--font-mono); font-size: var(--fs-code); }
+  button { font: inherit; margin-top: var(--space-1-5); }
+  .top { font-size: var(--fs-ui-lg); max-width: var(--preview-doc-max); margin: var(--space-6) auto; }
 </style>
 </head>
 <body>

@@ -52,11 +52,17 @@ export default function RootLayout({
   outline: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" data-theme="dark" suppressHydrationWarning>
+    <html
+      lang="ko"
+      data-theme="dark"
+      /* 글꼴 변수는 :root에 있어야 globals.css의 --font-sans 같은 토큰이 풀린다 */
+      className={cx(spaceGrotesk.variable, plexKr.variable)}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body className={cx(spaceGrotesk.variable, plexKr.variable)}>
+      <body>
         {/* 시트 보기 설정(전체 화면·양옆 패널)은 페이지가 바뀌어도 남아야 해서
             루트에 둔다 — 레이아웃은 클라이언트 이동에서 다시 만들어지지 않는다.
 

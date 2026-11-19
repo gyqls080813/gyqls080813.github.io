@@ -1,140 +1,397 @@
 /**
- * 색은 전부 여기 있다.
+ * 색 체계 — 두 층이다. 색은 전부 여기 있다.
  *
- * :root가 어두운 판, [data-theme="light"]가 밝은 판이다. 컴포넌트는 토큰만
- * 쓰므로 이 두 덩어리 바깥에 색을 적으면 한쪽 모드에서 반드시 어긋난다.
+ * 원색   회색 사다리(--gray-1 … --gray-12)와 갈래 색 다섯(이론, 프로젝트, 트러블, 나, 생각).
+ * 역할   컴포넌트가 쓰는 이름(--bg, --text-body, --kind-surface …). 역할은 원색만 가리킨다.
+ * 컴포넌트는 역할 토큰만 쓴다. 색 숫자나 rgba(), color-mix()를 직접 쓰면 tests/design-tokens.test.ts가 막는다.
  *
- * 갈래 색마다 -rgb 짝을 둔 이유는 rgba(var(--x-rgb), 0.1) 같은 옅은 칠 때문이다.
- * 색 하나를 여러 농도로 쓰는 자리가 많아 색상값만으로는 모자란다.
+ * 회색은 한 색상(260°, 파랑 쪽)에 채도를 아주 낮게(0.011) 둔 OKLCH 사다리다. 예전에는 남색 판에
+ * 무채색 카드(그래프 노드, 인라인 코드)가 섞여 판마다 색온도가 달랐다. 어두운 판의 바탕도 한 단
+ * 올려(밝기 0.18) 글자 둘레가 번져 보이는 것(헐레이션)을 줄였다.
+ * 갈래 색 다섯은 OKLCH에서 밝기와 채도를 맞추고 색상만 달리했다. 그래서 어느 갈래도 혼자 튀지 않는다.
+ * 뜻(청록=이론, 주황=프로젝트, 산호=트러블, 보라=나, 초록=생각)은 그대로다.
+ *
+ * 대비 — tests/color-contrast.test.ts가 두 판에서 잰다.
+ *   본문, 보조 글자, 흐린 글자, 갈래 글자는 바탕, 시트, 칸 위에서 4.5:1 이상 (WCAG AA)
+ *
+ * :root가 어두운 판, [data-theme="light"]가 밝은 판이다. 밝은 판은 어두운 판을 뒤집지 않았다 —
+ * 같은 색상을 유지한 채 밝기만 낮춰, 흰 종이 위에서도 갈래 글자를 읽을 수 있게 했다.
  */
 :root {
   color-scheme: dark;
 
-  /* surfaces */
-  --bg: #0b0e14;
-  --bg-elevated: #0d1119;
-  --panel: #131826;
-  --panel-deep: #10151f;
-  --border: #1b2230;
-  --border-strong: #212a3a;
-  --divider: #1e2530;
+  /* 원색: 회색 사다리 */
+  --gray-1: #0f1217;
+  --gray-2: #13161b;
+  --gray-3: #181b20;
+  --gray-4: #1d2025;
+  --gray-5: #23262b;
+  --gray-6: #2b2e33;
+  --gray-7: #35383e;
+  --gray-8: #4c5056;
+  --gray-9: #8a8e95;
+  --gray-10: #a1a5ac;
+  --gray-11: #babec5;
+  --gray-12: #eaeff6;
 
-  /* text */
-  --text: #e7eaf0;
-  --text-strong: #f2f4f8;
-  --text-soft: #c6cdd9;
-  --text-body: #a9b1c0;
-  --muted: #8b93a3;
-  --faint: #565e6d;
+  /* 원색: 갈래 색 — 선과 점(solid), 글자(-text), 옅은 칠의 재료(-rgb) */
+  --theory: #4fc4d1;
+  --theory-text: #72d6e1;
+  --theory-rgb: 79, 196, 209;
+  --project: #daa663;
+  --project-text: #ebba7e;
+  --project-rgb: 218, 166, 99;
+  --trouble: #ec978d;
+  --trouble-text: #fcada3;
+  --trouble-rgb: 236, 151, 141;
+  --me: #b6a4ed;
+  --me-text: #c8b8fc;
+  --me-rgb: 182, 164, 237;
+  --idea: #7fc48e;
+  --idea-text: #97d6a4;
+  --idea-rgb: 127, 196, 142;
 
-  /* node semantics: theory / project / troubleshooting / me / idea */
-  --theory: #5fc4d6;
-  --theory-bright: #8ad8e6;
-  --theory-text: #7dd3e2;
-  --theory-rgb: 95, 196, 214;
-  --project: #e3ab5c;
-  --project-bright: #f2d5a5;
-  --project-text: #efc689;
-  --project-rgb: 227, 171, 92;
-  --trouble: #e88b7d;
-  --trouble-bright: #eda99d;
-  --trouble-rgb: 232, 139, 125;
-  /* 사람(그래프의 시작점) — asset-pipeline의 source 보라 */
-  --me: #9575cd;
-  --me-bright: #b39ddb;
-  --me-rgb: 149, 117, 205;
-  --idea: #7cc98f;
-  --idea-bright: #a5dcb2;
-  --idea-text: #96d5a5;
-  --idea-rgb: 124, 201, 143;
+  /* 역할: 판과 선 */
+  --bg: var(--gray-1);
+  --bg-elevated: var(--gray-2);
+  --panel: var(--gray-4);
+  --panel-deep: var(--gray-3);
+  --surface-inset: var(--gray-4);
+  --surface-node: var(--gray-4);
+  --surface-node-hover: var(--gray-5);
+  --divider: var(--gray-5);
+  --border: var(--gray-5);
+  --border-subtle: var(--gray-6);
+  --border-strong: var(--gray-7);
+  --border-node-strong: var(--gray-8);
+  --edge: var(--gray-6);
+  --edge-active: var(--gray-8);
 
-  /* graph */
-  --edge: #232c3b;
-  --edge-active: #58657d;
-  --guide: #64b5f6;
+  /* 역할: 글자 */
+  --text-strong: var(--gray-12);
+  --text: var(--gray-12);
+  --text-soft: var(--gray-11);
+  --text-body: var(--gray-11);
+  --muted: var(--gray-10);
+  --faint: var(--gray-9);
 
-  /* 노드 카드 — asset-pipeline의 노드 표면 값을 그대로 (tokens.css 참조) */
-  --surface-node: #23272f;
-  --surface-node-hover: #2a2f38;
-  --surface-inset: #171a20;
-  --border-subtle: #2e343e;
-  --border-node-strong: #3d4551;
+  /* 역할: 그 밖 */
+  --link: var(--theory-text);
+  --link-hover: var(--text-strong);
+  --guide: var(--theory);
   --shadow-node: 0 2px 8px rgb(0 0 0 / 0.35);
   --shadow-sheet: 0 24px 80px rgba(0, 0, 0, 0.55);
   --shadow-frame: 0 10px 22px rgba(0, 0, 0, 0.45);
-  /* 그래프를 가라앉히는 막 — 배경색과 같은 색이라야 시트만 떠 보인다 */
-  --scrim: rgba(11, 14, 20, 0.72);
+  /* 그래프를 가라앉히는 막 — 바탕과 같은 색이라야 시트만 떠 보인다 */
+  --scrim: rgb(from var(--gray-1) r g b / 0.72);
 }
 
-/**
- * 밝은 판.
- *
- * 어두운 판을 그대로 뒤집지 않았다. 갈래 색은 어두운 바탕에서 밝게 빛나도록
- * 고른 값이라 흰 종이 위에서는 글자로 못 읽는다 — 같은 색상(hue)을 유지한 채
- * 명도만 낮춰 대비를 되찾았다. 뜻(청록=이론, 주황=프로젝트…)은 그대로다.
- */
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #f6f7f9;
-  --bg-elevated: #ffffff;
-  --panel: #eff1f5;
-  --panel-deep: #f4f6f9;
-  --border: #e2e6ec;
-  --border-strong: #d2d8e1;
-  --divider: #e8ebf0;
+  /* 원색: 회색 사다리 */
+  --gray-1: #ffffff;
+  --gray-2: #f7f9fc;
+  --gray-3: #f2f4f6;
+  --gray-4: #edeef1;
+  --gray-5: #e7e8eb;
+  --gray-6: #dee0e2;
+  --gray-7: #d1d3d5;
+  --gray-8: #b9bbbd;
+  --gray-9: #67696b;
+  --gray-10: #57585a;
+  --gray-11: #3e4042;
+  --gray-12: #18191b;
 
-  --text: #1d232d;
-  --text-strong: #0c1017;
-  --text-soft: #3b4550;
-  --text-body: #4d5768;
-  --muted: #6d7686;
-  --faint: #99a1ae;
+  /* 원색: 갈래 색 — 선과 점(solid), 글자(-text), 옅은 칠의 재료(-rgb) */
+  --theory: #0088a5;
+  --theory-text: #00728c;
+  --theory-rgb: 0, 136, 165;
+  --project: #a9650a;
+  --project-text: #8f5300;
+  --project-rgb: 169, 101, 10;
+  --trouble: #b55749;
+  --trouble-text: #9a463a;
+  --trouble-rgb: 181, 87, 73;
+  --me: #7d66b9;
+  --me-text: #69549d;
+  --me-rgb: 125, 102, 185;
+  --idea: #358b4e;
+  --idea-text: #26753e;
+  --idea-rgb: 53, 139, 78;
 
-  --theory: #1a8296;
-  --theory-bright: #0f6b7c;
-  --theory-text: #167284;
-  --theory-rgb: 26, 130, 150;
-  --project: #a8721a;
-  --project-bright: #8a5c10;
-  --project-text: #96660f;
-  --project-rgb: 168, 114, 26;
-  --trouble: #c24a36;
-  --trouble-bright: #a33a29;
-  --trouble-rgb: 194, 74, 54;
-  --me: #6544a8;
-  --me-bright: #533690;
-  --me-rgb: 101, 68, 168;
-  --idea: #2a8a4e;
-  --idea-bright: #1d7340;
-  --idea-text: #237a45;
-  --idea-rgb: 42, 138, 78;
+  /* 역할: 판과 선 */
+  --bg: var(--gray-2);
+  --bg-elevated: var(--gray-1);
+  --panel: var(--gray-4);
+  --panel-deep: var(--gray-3);
+  --surface-inset: var(--gray-4);
+  --surface-node: var(--gray-1);
+  --surface-node-hover: var(--gray-3);
+  --divider: var(--gray-5);
+  --border: var(--gray-6);
+  --border-subtle: var(--gray-6);
+  --border-strong: var(--gray-7);
+  --border-node-strong: var(--gray-8);
+  --edge: var(--gray-7);
+  --edge-active: var(--gray-9);
 
-  --edge: #c9cfd9;
-  --edge-active: #7d8798;
-  --guide: #1976d2;
+  /* 역할: 글자 */
+  --text-strong: var(--gray-12);
+  --text: var(--gray-12);
+  --text-soft: var(--gray-11);
+  --text-body: var(--gray-11);
+  --muted: var(--gray-10);
+  --faint: var(--gray-9);
 
-  --surface-node: #ffffff;
-  --surface-node-hover: #f1f3f7;
-  --surface-inset: #f4f6f9;
-  --border-subtle: #dfe3ea;
-  --border-node-strong: #c3cad5;
+  --link: var(--theory-text);
+  --link-hover: var(--text-strong);
+  --guide: var(--theory);
   --shadow-node: 0 2px 8px rgb(15 20 30 / 0.1);
   --shadow-sheet: 0 24px 80px rgba(15, 20, 30, 0.18);
   --shadow-frame: 0 10px 22px rgba(15, 20, 30, 0.12);
-  --scrim: rgba(246, 247, 249, 0.72);
+  --scrim: rgb(from var(--gray-2) r g b / 0.72);
+}
+
+/**
+ * 판과 상관없는 색 — 결과 미리보기와 직접 해 보기의 작은 창은 브라우저 기본 모습(흰 종이,
+ * 검은 글자)을 보여 주는 자리라 어느 판에서나 같다. 작은 창 안의 문서는 public/tokens.css로 같은 값을 읽는다.
+ */
+:root {
+  --preview-bg: #ffffff;
+  --preview-bg-subtle: #f6f8fa;
+  --preview-text: #111111;
+  --preview-muted: #555555;
+  --preview-ok: #1a7f37;
+  --preview-target: #f59e0b;
+  --preview-font: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --preview-lh: 1.6;
+
+  /* 갈래 색의 옅은 칠 — 갈래를 가리지 않고 색 자체를 뜻으로 쓰는 자리(실험 기록의 표식 등) */
+  --theory-tint: rgba(var(--theory-rgb), 0.16);
+  --project-tint: rgba(var(--project-rgb), 0.16);
+  --trouble-tint: rgba(var(--trouble-rgb), 0.16);
+  --me-tint: rgba(var(--me-rgb), 0.18);
+  --idea-tint: rgba(var(--idea-rgb), 0.16);
+  --trouble-line: rgba(var(--trouble-rgb), 0.4);
+}
+
+/**
+ * 글자 체계 — 글꼴, 크기, 줄 간격, 자간은 전부 여기서 고른다.
+ * 컴포넌트는 아래 토큰만 쓴다. 숫자를 직접 적으면 tests/typography.test.ts가 막는다.
+ *
+ * 글꼴 세 벌
+ *   --font-sans     본문과 화면 글자. IBM Plex Sans KR 한 벌이 한글과 영문을 함께 맡는다.
+ *                   한 문장 안에서 영문만 다른 글꼴로 바뀌면 글자 높이와 굵기가 들쭉날쭉해진다.
+ *   --font-display  시트 제목과 사이트 이름. 영문은 Space Grotesk, 한글은 본문 글꼴로 넘어간다.
+ *   --font-mono     코드.
+ *
+ * 크기 두 갈래
+ *   읽는 글자 — 시트 폭(cqi)에 따라 늘고 준다. .sheet / .expandContent가 컨테이너이고,
+ *     컨테이너 밖(평면 페이지)에서는 뷰포트 폭을 따른다.
+ *       title   시트 제목            h2  절 제목(기본 익히기)     h3  블록 제목(언제 쓰나)
+ *       lead    제목 밑 한 줄 소개    body  본문                   body-sm  풀이, 답, 낱말 풀이
+ *   화면 글자 — 트리, 목차, 단추, 표, 캡션. 폭과 상관없이 고정이다.
+ *       ui-lg 16  카드와 다음 장 이름    ui 14  트리, 값      ui-sm 13  목차, 단추, 표
+ *       caption 12  캡션, 메타, 이름표   micro 11  숫자와 영문 약어만
+ *
+ * 규칙
+ *   - 한글이 들어가는 글자는 12px 아래로 내리지 않는다. micro(11px)는 숫자와 영문에만 쓴다.
+ *   - 단계 사이가 1.125배보다 가까우면 굵기나 색으로도 갈리지 않는다. 절 제목(h2)과
+ *     블록 제목(h3)은 1.25배 넘게 벌린다.
+ *   - 굵기는 넷이다. 400 본문, 500 화면 글자 강조, 600 이름표와 단추, 700 제목.
+ *   - 한글 이름표에는 자간을 크게 벌리지 않는다. 넓은 자간은 영문 대문자에서나 읽기를 돕는다.
+ *   - 줄 간격은 한글 본문 1.8, 화면 글자 1.5, 제목은 크기가 클수록 좁힌다.
+ *   - 그래프 캔버스(components/graph/flow)는 확대 배율이 실제 크기를 정하므로 이 표 밖이다.
+ */
+:root {
+  --font-sans: var(--font-plex-kr), system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-plex-kr), system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Consolas, "D2Coding", monospace;
+
+  /* 읽는 글자 — 폰(시트 폭 390)에서 왼쪽 값, 넓은 시트에서 오른쪽 값 */
+  --fs-title: clamp(24px, 3.4cqi, 34px);
+  --fs-h2: clamp(19px, 2.4cqi, 23px);
+  --fs-h3: clamp(16px, 1.85cqi, 18px);
+  --fs-lead: clamp(15.5px, 1.8cqi, 17px);
+  --fs-body: clamp(15px, 1.65cqi, 16px);
+  --fs-body-sm: clamp(14px, 1.5cqi, 15px);
+
+  /* 화면 글자 */
+  --fs-ui-lg: 16px;
+  --fs-ui: 14px;
+  --fs-ui-sm: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+
+  /* 코드 — 블록은 한 줄 106칸이 넓은 시트에 들어가는 크기다(글 쓰기 규칙과 짝) */
+  --fs-code: 12.5px;
+  --fs-code-inline: 0.875em;
+  /* 입력칸 — 16px보다 작으면 iOS가 누를 때 화면을 확대한다 */
+  --fs-input: 16px;
+
+  --lh-title: 1.25;
+  --lh-h2: 1.35;
+  --lh-h3: 1.45;
+  --lh-lead: 1.7;
+  --lh-body: 1.8;
+  --lh-body-sm: 1.7;
+  --lh-ui: 1.5;
+  --lh-code: 1.7;
+
+  --ls-title: -0.02em;
+  --ls-heading: -0.01em;
+  --ls-label: 0.02em;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* 그래프 캔버스 — 확대 배율이 실제 크기를 정하므로 화면 글자 표와 따로 둔다(배율 1일 때의 크기) */
+  --fs-graph-count: 9.5px;
+  --fs-graph-meta: 10.5px;
+  --fs-graph-summary: 11px;
+  --fs-graph-body: 12px;
+  --fs-graph-title: 13px;
+  --fs-graph-hub: 14px;
+
+  /* 코드 블록의 탭 한 칸 */
+  --code-tab-size: 2;
+}
+
+/**
+ * 치수 체계 — 간격, 크기, 모서리, 선 굵기, 겹침 순서, 움직임, 화면 폭 기준.
+ * 컴포넌트는 숫자 대신 아래 토큰을 쓴다. px, ms 숫자를 직접 적으면 tests/design-tokens.test.ts가 막는다.
+ *
+ * 간격과 작은 크기 — 4px 격자
+ *   --space-1 4 · 2 8 · 3 12 · 4 16 · 5 20 · 6 24 · 7 28 · 8 32 · 10 40 · 12 48 · 14 56 · 16 64
+ *   반 칸(--space-0-5 2, 1-5 6, 2-5 10, 3-5 14)은 칩, 행, 단추처럼 촘촘한 화면 글자 둘레에만 쓴다.
+ *   --space-px(1px)는 선 하나만큼 밀 때만 쓴다.
+ *   여백(padding, margin, gap)과 점, 아이콘, 단추 같은 작은 크기가 같은 눈금을 쓴다.
+ *   그래서 한 화면의 거리들이 서로 배수로 맞아 떨어진다.
+ * 레이아웃 크기 — 시트, 본문 칸, 서랍처럼 화면 구조를 정하는 큰 값은 눈금이 아니라 이름으로 부른다.
+ * 모서리 — xs 4 칩 안, sm 6 칩, md 8 카드와 행, lg 10 코드와 실험, xl 12 상자, 2xl 14 시트, pill 알약, round 원
+ * 선 굵기 — thin 1 테두리와 구분선, medium 1.5 점의 테두리, thick 2 강조 선과 포커스
+ * 겹침 순서 — 아래에서 위로: raised 2 < graph-controls 5 < ports 6 < graph-guide 10 < expand 70~72 < drawer 100
+ * 움직임 — fast 120ms 누름과 색, base 150ms 펼침과 옮김, slow 220ms 큰 상자.
+ *   이음새는 standard(ease)와 emphasized(빨리 출발해 부드럽게 멈춤) 둘이다.
+ *   노드가 시트로 커지는 시간은 자바스크립트가 재야 해서 GraphHome의 EXPAND_MS에 있다.
+ * 화면 폭 기준 — CSS는 @media, @container 안에 변수를 못 쓴다. 그래서 값을 여기에 정하고
+ *   테스트가 이 값만 쓰게 막는다.
+ *   @media      480 작은 폰, 520 폰, 600 큰 폰, 720 태블릿, 860 좁은 노트북
+ *   @container  520 좁은 소개, 640 좁은 시트, 760 그림 칸, 1000 넓은 시트
+ */
+:root {
+  --space-px: 1px;
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-2-5: 10px;
+  --space-3: 12px;
+  --space-3-5: 14px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+
+  /* 손가락으로 누르는 단추의 최소 크기 (WCAG 2.5.5) */
+  --size-touch: 44px;
+
+  --layout-topbar: 64px;
+  --layout-page: 720px;
+  --layout-content: 900px;
+  --layout-sheet: 1500px;
+  --layout-sheet-h: 940px;
+  --layout-drawer: 340px;
+  --layout-drawer-head: 56px;
+  --layout-nav: clamp(168px, 19cqi, 228px);
+  --layout-photo: clamp(150px, 26cqi, 220px);
+  --layout-photo-max: 220px;
+  --layout-figure: clamp(184px, 46cqi, 264px);
+  --layout-figure-max: 340px;
+  --layout-log-h: 300px;
+  --layout-graph-intrinsic: 500px;
+  --layout-drawer-w: min(var(--layout-drawer), 86vw);
+  --layout-photo-narrow: min(var(--layout-photo-max), 60%);
+  --layout-figure-h: 62dvh;
+  --layout-figure-h-narrow: 46dvh;
+  --layout-page-pad: clamp(var(--space-7), 5vw, var(--space-12))
+    clamp(var(--space-5), 5vw, var(--space-14));
+  /* 시트 양옆의 최소 여백 — 화면 폭의 비율 */
+  --layout-sheet-gutter: 5%;
+  --size-screen: 100vh;
+  --size-screen-dynamic: 100dvh;
+
+  /* 글자 크기를 따라가는 길이(em) — 글자 토큰이 바뀌면 함께 바뀐다 */
+  --code-inline-pad: 0.1em 0.38em;
+  --flow-paragraph: 0.85em;
+  --flow-list-item: 0.35em;
+  --list-marker-gap: 0.55em;
+  --list-indent-number: 1.4em;
+  --list-indent-bullet: 1.15em;
+  --list-bullet-w: 0.7em;
+  --table-cell-min: 6.5em;
+  --play-icon-h: 0.36em;
+  --play-icon-w: 0.6em;
+  /* 형광펜이 글자 아래쪽 몇 %부터 칠하나 */
+  --mark-start: 62%;
+
+  --opacity-muted: 0.7;
+  --opacity-dimmed: 0.18;
+
+  /* 글자 한 줄 높이만큼 — 제목 옆 막대처럼 글자에 맞추는 것 */
+  --size-text: 1em;
+  /* 펼친 갈래의 화살표 */
+  --rotate-open: 90deg;
+
+  /* 작은 창(결과 미리보기, 직접 해 보기)의 문서 여백과 높이 */
+  --preview-pad: var(--space-3) var(--space-4);
+  --preview-target-width: 3px;
+  --preview-doc-max: 760px;
+  --preview-min-h: 64px;
+  --preview-max-h: 460px;
+  --lab-frame-h: 160px;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+  --radius-pill: 999px;
+  --radius-round: 50%;
+
+  --border-thin: 1px;
+  --border-medium: 1.5px;
+  --border-thick: 2px;
+
+  --z-raised: 2;
+  --z-graph-controls: 5;
+  --z-ports: 6;
+  --z-graph-guide: 10;
+  --z-expand-scrim: 70;
+  --z-expand-card: 71;
+  --z-expand-ports: 72;
+  --z-drawer: 100;
+
+  --duration-fast: 120ms;
+  --duration-base: 150ms;
+  --duration-slow: 220ms;
+  --ease-standard: ease;
+  --ease-emphasized: cubic-bezier(0.2, 0.8, 0.25, 1);
 }
 
 :root {
-  /* ── 유동 스케일 ──
-     값은 "담긴 시트의 폭"(cqi)에 반응한다 — .sheet / .expandContent가 컨테이너.
-     컨테이너 밖(평면 페이지)에서 cqi는 뷰포트로 자연 폴백된다.
-     한 곳에서 정의해 소개·글·프로젝트 시트가 같은 리듬을 쓴다. */
-  --fs-sheet-title: clamp(22px, 3.2cqi, 32px);
-  --fs-sheet-lead: clamp(14px, 1.6cqi, 15.5px);
-  --fs-sheet-body: clamp(14px, 1.6cqi, 16px);
-  --fs-sheet-h2: clamp(17px, 2cqi, 20px);
-  --fs-sheet-h3: clamp(15.5px, 1.75cqi, 17.5px);
+  /* ── 유동 여백 ──
+     글자와 같은 컨테이너(cqi)를 따라 시트 안 여백도 함께 늘고 준다. */
   --pad-sheet-block: clamp(28px, 5cqi, 52px);
   --pad-sheet-inline: clamp(22px, 6cqi, 60px);
   --tree-width: clamp(208px, 26cqi, 288px);
@@ -142,14 +399,20 @@
 }
 
 /**
- * 노드 종류 → 색. 화면 어디서든 data-kind만 달면 아래 셋을 받는다.
- *   --kind       선·점·아이콘의 색
- *   --kind-text  글자 색 (바탕 위에서 읽히는 밝기)
- *   --kind-rgb   옅게 칠할 때 쓰는 세 숫자 (rgba(var(--kind-rgb), 0.1))
+ * 노드 종류 → 색. 화면 어디서든 data-kind만 달면 아래를 받는다.
+ *   --kind        선, 점, 아이콘의 색
+ *   --kind-text   글자 색 (바탕 위에서 4.5:1 이상)
+ *   --kind-rgb    옅은 칠의 재료 — 컴포넌트는 직접 쓰지 않고 아래 칠 토큰을 쓴다
+ *   옅은 칠, 진하기 순서:
+ *     --kind-wash 0.04 넓은 바탕        --kind-surface 0.07 상자 바탕     --kind-surface-strong 0.12 고른 것
+ *     --kind-ring 0.18 포커스 고리      --kind-mark 0.22 형광펜           --kind-border 0.32 상자 테두리
+ *     --kind-line 0.5 강조 선
  *
  * 이 표가 종류와 색을 잇는 유일한 곳이다. 컴포넌트는 종류를 묻지 않고 변수만 쓴다.
  * 기록(til)은 자기 색이 없다 — 색은 갈래(생각)가 정하고, 종류는 아이콘이 가른다.
+ * data-kind가 없는 곳은 이론 색을 쓴다(:root).
  */
+:root,
 [data-kind="theory"] {
   --kind: var(--theory);
   --kind-text: var(--theory-text);
@@ -162,12 +425,12 @@
 }
 [data-kind="trouble"] {
   --kind: var(--trouble);
-  --kind-text: var(--trouble-bright);
+  --kind-text: var(--trouble-text);
   --kind-rgb: var(--trouble-rgb);
 }
 [data-kind="me"] {
   --kind: var(--me);
-  --kind-text: var(--me-bright);
+  --kind-text: var(--me-text);
   --kind-rgb: var(--me-rgb);
 }
 [data-kind="idea"],
@@ -175,6 +438,18 @@
   --kind: var(--idea);
   --kind-text: var(--idea-text);
   --kind-rgb: var(--idea-rgb);
+}
+/* 칠 토큰은 data-kind가 달린 요소마다 다시 계산해야 그 갈래의 색이 된다 —
+   :root에서 한 번만 계산하면 자식들이 이론 색을 물려받는다 */
+:root,
+[data-kind] {
+  --kind-wash: rgba(var(--kind-rgb), 0.04);
+  --kind-surface: rgba(var(--kind-rgb), 0.07);
+  --kind-surface-strong: rgba(var(--kind-rgb), 0.12);
+  --kind-ring: rgba(var(--kind-rgb), 0.18);
+  --kind-mark: rgba(var(--kind-rgb), 0.22);
+  --kind-border: rgba(var(--kind-rgb), 0.32);
+  --kind-line: rgba(var(--kind-rgb), 0.5);
 }
 
 * {
@@ -190,16 +465,46 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-space-grotesk), var(--font-plex-kr), system-ui, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* 한글은 낱말 중간에서 줄을 바꾸지 않는다("자리"가 "자/리"로 갈리지 않게).
+     칸보다 긴 낱말 하나만 어쩔 수 없이 쪼갠다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 제목은 줄마다 길이를 고르게, 문단은 마지막 줄에 한 글자만 남지 않게 */
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+figcaption,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* 단추와 입력칸은 브라우저가 따로 글꼴을 준다 — 본문 글꼴을 물려받게 한다 */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 a {
-  color: var(--theory);
+  color: var(--link);
 }
 
 a:hover {
-  color: var(--theory-bright);
+  color: var(--link-hover);
 }
 
 /**

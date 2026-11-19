@@ -1,17 +1,17 @@
 .bar {
-  height: 64px;
+  height: var(--layout-topbar);
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 0 28px;
-  border-bottom: 1px solid var(--border);
+  gap: var(--space-6);
+  padding: 0 var(--space-7);
+  border-bottom: var(--border-thin) solid var(--border);
   background: var(--bg-elevated);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2-5);
   text-decoration: none;
   /* 로고는 줄지 않는다 — 줄어드는 것은 브레드크럼 */
   flex-shrink: 0;
@@ -19,9 +19,10 @@
 
 .wordmark {
   white-space: nowrap;
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-bold);
+  font-family: var(--font-display);
+  font-size: var(--fs-ui-lg);
+  letter-spacing: var(--ls-heading);
   color: var(--text);
 }
 
@@ -35,12 +36,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  margin-left: -8px;
+  width: var(--space-10);
+  height: var(--space-10);
+  margin-left: calc(var(--space-2) * -1);
   padding: 0;
   border: 0;
-  border-radius: 9px;
+  border-radius: var(--radius-md);
   background: none;
   color: var(--text-soft);
   cursor: pointer;
@@ -60,8 +61,8 @@
 /* 휴대폰 폭 — 여백을 줄여 브레드크럼에 자리를 준다 */
 @media (max-width: 600px) {
   .bar {
-    gap: 12px;
-    padding: 0 12px 0 16px;
+    gap: var(--space-3);
+    padding: 0 var(--space-3) 0 var(--space-4);
   }
 }
 

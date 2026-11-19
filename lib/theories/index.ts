@@ -24,8 +24,9 @@ export type TheoryNote = {
  * 코드 조각을 칠할 문법. 적지 않으면 tsx다.
  * 셸 명령은 bash, 그림(←로 그린 커밋 사슬)이나 충돌 표시처럼 문법이 없는 것은 text —
  * tsx로 칠하면 명령어의 낱말이 식별자·연산자 색으로 흩어진다.
+ * Vue 단일 파일 컴포넌트(<template>, <script setup>)는 vue — tsx로 칠하면 템플릿 지시어가 그냥 글자가 된다.
  */
-export type CodeLang = "tsx" | "bash" | "text" | "html" | "css";
+export type CodeLang = "tsx" | "bash" | "text" | "html" | "css" | "vue";
 
 /** 지금 값 한 줄 — expr은 작은 창 안에서 계산하는 자바스크립트 식이다 */
 export type TheoryLabCheck = { label: string; expr: string };
@@ -171,4 +172,31 @@ export const theories: Theory[] = [
 
 export function getTheory(id: string): Theory | undefined {
   return theories.find((theory) => theory.id === id);
+}
+
+/** 확인 질문 블록의 기본 안내 — 이 글이 아니면 블록 본문은 질문들이 기대는 상황 설명이다 */
+export const QUIZ_PROMPT = "답을 먼저 떠올려 본 뒤 펼쳐서 맞춰 보세요.";
+
+/** 시트의 확인 질문 — 어느 절의 어느 블록인지(앵커용), 상황 설명, 질문과 답 */
+export type TheoryQuizSpot = {
+  section?: string;
+  label: string;
+  lead?: string;
+  items: TheoryQuiz[];
+};
+
+export function quizOf(theory: Theory): TheoryQuizSpot | undefined {
+  const spots = [
+    ...(theory.blocks ?? []).map((block) => ({ section: undefined, block })),
+    ...(theory.sections ?? []).flatMap((s) => s.blocks.map((block) => ({ section: s.heading, block }))),
+  ];
+  const spot = spots.find(({ block }) => block.quiz?.length);
+  if (!spot) return undefined;
+  const { section, block } = spot;
+  return {
+    section,
+    label: block.label,
+    lead: block.body && block.body !== QUIZ_PROMPT ? block.body : undefined,
+    items: block.quiz!,
+  };
 }

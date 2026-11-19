@@ -1,54 +1,54 @@
 /* 표 — 코드 블록과 같은 판(panel-deep) 위에 칸을 나눈다.
    시트 안의 다른 블록과 같은 표면이라야 한 페이지로 읽힌다. */
 .figure {
-  margin: 0 0 26px;
+  margin: 0 0 var(--space-6);
 }
 
 .caption {
-  margin: 0 0 8px;
-  font-size: 12.5px;
-  font-weight: 600;
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
   color: var(--muted);
 }
 
 /* 좁은 화면에서는 표만 옆으로 민다 — 시트 전체가 밀리면 안 된다 */
 .scroll {
   overflow-x: auto;
-  border: 1px solid var(--divider);
-  border-radius: 10px;
+  border: var(--border-thin) solid var(--divider);
+  border-radius: var(--radius-lg);
   background: var(--panel-deep);
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
-  line-height: 1.65;
+  font-size: var(--fs-ui-sm);
+  line-height: var(--lh-body-sm);
   color: var(--text-soft);
 }
 
 .table th,
 .table td {
-  padding: 9px 14px;
+  padding: var(--space-2) var(--space-3-5);
   text-align: left;
   vertical-align: top;
-  border-bottom: 1px solid var(--divider);
+  border-bottom: var(--border-thin) solid var(--divider);
   /* 칸 안에 적은 줄바꿈(\n)은 그대로, 긴 칸은 칸 안에서 접는다 */
   white-space: pre-line;
   /* 좁은 화면에서 칸이 한 글자 폭으로 짜부라지지 않게 */
-  min-width: 6.5em;
+  min-width: var(--table-cell-min);
 }
 
 .table thead th {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
   color: var(--muted);
   background: var(--surface-inset);
 }
 
 /* 행의 머리 — 그 행이 무엇인지 */
 .table tbody th {
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--text-strong);
 }
 
@@ -60,5 +60,5 @@
 .table th + th,
 .table th + td,
 .table td + td {
-  border-left: 1px solid var(--divider);
+  border-left: var(--border-thin) solid var(--divider);
 }
